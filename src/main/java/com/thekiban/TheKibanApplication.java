@@ -9,9 +9,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 @EnableAutoConfiguration(exclude = {DataSourceAutoConfiguration.class})
 public class TheKibanApplication {
 
-  public static void main(String[] args) {
-
-    SpringApplication.run(TheKibanApplication.class, args);
+  public static void main(String[] args) { SpringApplication.run(TheKibanApplication.class, args);
 
   }
 

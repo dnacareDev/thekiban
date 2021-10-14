@@ -17,12 +17,4 @@ public class AccountController {
     return mv;
   }
 
-  @GetMapping("sign-up")
-  public ModelAndView getRegistryPage(ModelAndView mv) {
-
-    mv.setViewName("account/sign-up");
-
-    return mv;
-  }
-
 }
