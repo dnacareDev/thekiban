@@ -55,13 +55,44 @@
                                 <input type="file" name="upload-3" class="upload-one" id="upload">
                             </div>
                         </div>
-                        <button type="button" class="btn btn-secondary btn-sm">분석 실행</button>
+                        <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#analysis">분석 실행</button>
                         <button type="button" class="btn btn-primary btn-sm">Example data download</button>
                     </div>
                 </div>
             </div>
         </div>
 
+    </div>
+
+    <!-- modal code -->
+    <div class="modal-basic modal fade show" id="analysis" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content modal-bg-white ">
+                <div class="modal-body">
+                    <form action="" name="searchForm" class="d-flex align-items-center add-contact__form my-sm-0 my-2">
+                        회복율 정렬
+                        <select class="form-control form-control-lg mt-10 mb-10 mr-10" style="width: 250px;">
+                            <option>원래대로</option>
+                            <option>null</option>
+                            <option>null</option>
+                        </select>
+                    </form>
+                    <div class="form-group mb-0">
+                        <span>회복율 필터</span>
+                        <input type="text" class="form-control form-control-lg" value="%" style="text-align: right">
+                    </div>
+                    <div>
+                        <img class="" width="100px" height="100px" alt="img"/>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border: none">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-primary btn-sm">
+                        <span data-feather="download"></span>download
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
 </main>

@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping(value = "/account")
 public class AccountController {
 
-  @GetMapping("/login")
+  @GetMapping("login")
   public ModelAndView getLoginPage(ModelAndView mv) {
 
     mv.setViewName("account/login");
@@ -17,7 +17,7 @@ public class AccountController {
     return mv;
   }
 
-  @GetMapping("/signup")
+  @GetMapping("sign-up")
   public ModelAndView getRegistryPage(ModelAndView mv) {
 
     mv.setViewName("account/sign-up");

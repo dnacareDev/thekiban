@@ -24,4 +24,12 @@ public class GenomeController {
 
     return mv;
   }
+
+  @GetMapping(value = "test_harvest")
+  public ModelAndView getTestHarvestList(ModelAndView mv) {
+
+    mv.setViewName("genome/test_harvest");
+
+    return mv;
+  }
 }

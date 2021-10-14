@@ -23,6 +23,14 @@
             background-color: white;
         }
 
+        #table1 {
+
+        }
+
+        #table2 {
+            display: none;
+        }
+
     </style>
 
 </head>
@@ -45,11 +53,15 @@
                     <div class="card">
                         <div class="card-extra mt-20 mr-20">
                             <div class="breadcrumb-main" style="float: left;">
-                                <h4 class="text-capitalize breadcrumb-title">품종 관리</h4>
+                                <h4 class="text-capitalize breadcrumb-title">시교 자원 관리</h4>
                             </div>
                             <!-- 버튼 등록하는 곳 -->
                             <div class="action-btn d-flex justify-content-end">
                                 <div class="atbd-button-list d-flex flex-wrap">
+                                    <div class="btn-group atbd-button-group btn-group-normal my-2" role="group">
+                                        <button type="button" class="btn btn-xs btn-outline-light" onclick="view(1)">시교관리</button>
+                                        <button type="button" class="btn btn-xs btn-outline-light" onclick="view(2)">시교수출관리</button>
+                                    </div>
                                     <form action="" name="searchForm" class="d-flex align-items-center add-contact__form my-sm-0 my-2">
                                         <select class="form-control form-control-lg mt-10 mb-10 mr-10" style="width: 250px;">
                                             <option>작물 선택</option>
@@ -65,18 +77,16 @@
                         <div class="card-body">
                             <div class="bg-white">
                                 <div class="table-responsive">
-                                    <table class="table">
+                                    <table class="table" id="table1">
                                         <thead class="text-center">
                                         <tr>
                                             <th></th>
                                             <th>첨부파일</th>
-                                            <th>ID</th>
-                                            <th>품종명</th>
-                                            <th>특성상태</th>
-                                            <th>모계 계통명</th>
-                                            <th>부계 계통명</th>
-                                            <th>생산판매(신고번호)</th>
-                                            <th>생산판매(신고일자)</th>
+                                            <th>시교명(ID)</th>
+                                            <th>목표 지역</th>
+                                            <th>구분</th>
+                                            <th>교배번호</th>
+                                            <th>종자번호(ID)</th>
                                         </tr>
                                         </thead>
                                         <tbody class="text-center">
@@ -87,12 +97,10 @@
                                                         data-toggle="modal" data-target="#gen-attach"><span data-feather="file-plus"></span></button>
                                             </td>
                                             <td><span>19PC4155</span></td>
-                                            <td><span>에이스</span></td>
-                                            <td><span>Empty</span></td>
-                                            <td><span>CGMS-1234A</span></td>
-                                            <td><span>A42-1</span></td>
-                                            <td><span>02-0205-2019-111</span></td>
-                                            <td><span>2017-11-11</span></td>
+                                            <td><span>국내</span></td>
+                                            <td><span>건고추</span></td>
+                                            <td><span>-</span></td>
+                                            <td><span>P20C0080</span></td>
                                         </tr>
                                         <tr>
                                             <td><input type="checkbox"></td>
@@ -101,23 +109,10 @@
                                                         data-toggle="modal" data-target="#gen-attach"><span data-feather="file-plus"></span></button>
                                             </td>
                                             <td><span>19PC4155</span></td>
-                                            <td><span>KI_1</span></td>
-                                            <td><span>Progress</span></td>
-                                            <td><span>PaP001</span></td>
-                                            <td><span>RRFS</span></td>
-                                            <td><span>02-0205-2020-888</span></td>
-                                            <td><span>2017-11-11</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td><span><i></i></span></td>
-                                            <td><span>19PC4155</span></td>
-                                            <td><span>KI_1</span></td>
-                                            <td><span>Progress</span></td>
-                                            <td><span>CGMS-1234A</span></td>
+                                            <td><span>국내</span></td>
+                                            <td><span>건고추</span></td>
                                             <td><span>-</span></td>
-                                            <td><span>-</span></td>
-                                            <td><span>-</span></td>
+                                            <td><span>P20C0080</span></td>
                                         </tr>
                                         <tr>
                                             <td><input type="checkbox"></td>
@@ -126,12 +121,10 @@
                                                         data-toggle="modal" data-target="#gen-attach"><span data-feather="file-plus"></span></button>
                                             </td>
                                             <td><span>19PC4155</span></td>
+                                            <td><span>국내</span></td>
+                                            <td><span>건고추</span></td>
                                             <td><span>-</span></td>
-                                            <td><span>Progress</span></td>
-                                            <td><span>FDEF-2155</span></td>
-                                            <td><span>-</span></td>
-                                            <td><span>-</span></td>
-                                            <td><span>-</span></td>
+                                            <td><span>P20C0080</span></td>
                                         </tr>
                                         <tr>
                                             <td><input type="checkbox"></td>
@@ -140,12 +133,10 @@
                                                         data-toggle="modal" data-target="#gen-attach"><span data-feather="file-plus"></span></button>
                                             </td>
                                             <td><span>19PC4155</span></td>
-                                            <td><span>KI_1</span></td>
-                                            <td><span>Empty</span></td>
+                                            <td><span>국내</span></td>
+                                            <td><span>건고추</span></td>
                                             <td><span>-</span></td>
-                                            <td><span>-</span></td>
-                                            <td><span>-</span></td>
-                                            <td><span>-</span></td>
+                                            <td><span>P20C0080</span></td>
                                         </tr>
                                         <tr>
                                             <td><input type="checkbox"></td>
@@ -154,45 +145,10 @@
                                                         data-toggle="modal" data-target="#gen-attach"><span data-feather="file-plus"></span></button>
                                             </td>
                                             <td><span>19PC4155</span></td>
-                                            <td><span>KI_1</span></td>
-                                            <td><span>Empty</span></td>
-                                            <td><span>GTGG-7474A</span></td>
-                                            <td><span>DWDW</span></td>
-                                            <td><span>02-0205-2019-111</span></td>
-                                            <td><span>2018-05-16</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td><span><i></i></span></td>
-                                            <td><span>19PC4155</span></td>
+                                            <td><span>국내</span></td>
+                                            <td><span>건고추</span></td>
                                             <td><span>-</span></td>
-                                            <td><span>Progress</span></td>
-                                            <td><span>-</span></td>
-                                            <td><span>DWDW</span></td>
-                                            <td><span>02-0205-2020-888</span></td>
-                                            <td><span>-</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td><span><i></i></span></td>
-                                            <td><span>19PC4155</span></td>
-                                            <td><span>KI_1</span></td>
-                                            <td><span>Progress</span></td>
-                                            <td><span>CGMS-1234A</span></td>
-                                            <td><span>A42-1</span></td>
-                                            <td><span>-</span></td>
-                                            <td><span>2016-05-21</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td><span><i></i></span></td>
-                                            <td><span>19PC4155</span></td>
-                                            <td><span>KI_1</span></td>
-                                            <td><span>Progress</span></td>
-                                            <td><span>PaP001</span></td>
-                                            <td><span>RRFS</span></td>
-                                            <td><span>-</span></td>
-                                            <td><span>-</span></td>
+                                            <td><span>P20C0080</span></td>
                                         </tr>
                                         <tr>
                                             <td><input type="checkbox"></td>
@@ -201,10 +157,216 @@
                                                         data-toggle="modal" data-target="#gen-attach"><span data-feather="file-plus"></span></button>
                                             </td>
                                             <td><span>19PC4155</span></td>
+                                            <td><span>국내</span></td>
+                                            <td><span>건고추</span></td>
                                             <td><span>-</span></td>
-                                            <td><span>Empty</span></td>
-                                            <td><span>CGMS-1234A</span></td>
+                                            <td><span>P20C0080</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="checkbox"></td>
+                                            <td>
+                                                <button class="btn btn-light btn-default btn-squared btn-transparent-light"
+                                                        data-toggle="modal" data-target="#gen-attach"><span data-feather="file-plus"></span></button>
+                                            </td>
+                                            <td><span>19PC4155</span></td>
+                                            <td><span>국내</span></td>
+                                            <td><span>건고추</span></td>
                                             <td><span>-</span></td>
+                                            <td><span>P20C0080</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="checkbox"></td>
+                                            <td>
+                                                <button class="btn btn-light btn-default btn-squared btn-transparent-light"
+                                                        data-toggle="modal" data-target="#gen-attach"><span data-feather="file-plus"></span></button>
+                                            </td>
+                                            <td><span>19PC4155</span></td>
+                                            <td><span>국내</span></td>
+                                            <td><span>건고추</span></td>
+                                            <td><span>-</span></td>
+                                            <td><span>P20C0080</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="checkbox"></td>
+                                            <td>
+                                                <button class="btn btn-light btn-default btn-squared btn-transparent-light"
+                                                        data-toggle="modal" data-target="#gen-attach"><span data-feather="file-plus"></span></button>
+                                            </td>
+                                            <td><span>19PC4155</span></td>
+                                            <td><span>국내</span></td>
+                                            <td><span>건고추</span></td>
+                                            <td><span>-</span></td>
+                                            <td><span>P20C0080</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="checkbox"></td>
+                                            <td>
+                                                <button class="btn btn-light btn-default btn-squared btn-transparent-light"
+                                                        data-toggle="modal" data-target="#gen-attach"><span data-feather="file-plus"></span></button>
+                                            </td>
+                                            <td><span>19PC4155</span></td>
+                                            <td><span>국내</span></td>
+                                            <td><span>건고추</span></td>
+                                            <td><span>-</span></td>
+                                            <td><span>P20C0080</span></td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <table class="table" id="table2">
+                                        <thead class="text-center">
+                                        <tr>
+                                            <th></th>
+                                            <th>시교명</th>
+                                            <th>종자번호(ID)</th>
+                                            <th>종자 보유량</th>
+                                            <th>입고량</th>
+                                            <th>출고량</th>
+                                            <th>재고량</th>
+                                            <th>담당자</th>
+                                            <th>인수자</th>
+                                            <th>날짜</th>
+                                            <th>시교종료일자</th>
+                                            <th>지역구분</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="text-center">
+                                        <tr>
+                                            <td><input type="checkbox"></td>
+                                            <td><span>19PC4155</span></td>
+                                            <td><span>P20C0080</span></td>
+                                            <td><span>0</span></td>
+                                            <td><span>40</span></td>
+                                            <td><span>0</span></td>
+                                            <td><span>40</span></td>
+                                            <td><span>백향구</span></td>
+                                            <td><span>이호석</span></td>
+                                            <td><span>2019-11-11</span></td>
+                                            <td><span>-</span></td>
+                                            <td><span>-</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="checkbox"></td>
+                                            <td><span>19PC4155</span></td>
+                                            <td><span>P20C0080</span></td>
+                                            <td><span>0</span></td>
+                                            <td><span>40</span></td>
+                                            <td><span>0</span></td>
+                                            <td><span>40</span></td>
+                                            <td><span>백향구</span></td>
+                                            <td><span>이호석</span></td>
+                                            <td><span>2019-11-11</span></td>
+                                            <td><span>-</span></td>
+                                            <td><span>-</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="checkbox"></td>
+                                            <td><span>19PC4155</span></td>
+                                            <td><span>P20C0080</span></td>
+                                            <td><span>0</span></td>
+                                            <td><span>40</span></td>
+                                            <td><span>0</span></td>
+                                            <td><span>40</span></td>
+                                            <td><span>백향구</span></td>
+                                            <td><span>이호석</span></td>
+                                            <td><span>2019-11-11</span></td>
+                                            <td><span>-</span></td>
+                                            <td><span>-</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="checkbox"></td>
+                                            <td><span>19PC4155</span></td>
+                                            <td><span>P20C0080</span></td>
+                                            <td><span>0</span></td>
+                                            <td><span>40</span></td>
+                                            <td><span>0</span></td>
+                                            <td><span>40</span></td>
+                                            <td><span>백향구</span></td>
+                                            <td><span>이호석</span></td>
+                                            <td><span>2019-11-11</span></td>
+                                            <td><span>-</span></td>
+                                            <td><span>-</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="checkbox"></td>
+                                            <td><span>19PC4155</span></td>
+                                            <td><span>P20C0080</span></td>
+                                            <td><span>0</span></td>
+                                            <td><span>40</span></td>
+                                            <td><span>0</span></td>
+                                            <td><span>40</span></td>
+                                            <td><span>백향구</span></td>
+                                            <td><span>이호석</span></td>
+                                            <td><span>2019-11-11</span></td>
+                                            <td><span>-</span></td>
+                                            <td><span>-</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="checkbox"></td>
+                                            <td><span>19PC4155</span></td>
+                                            <td><span>P20C0080</span></td>
+                                            <td><span>0</span></td>
+                                            <td><span>40</span></td>
+                                            <td><span>0</span></td>
+                                            <td><span>40</span></td>
+                                            <td><span>백향구</span></td>
+                                            <td><span>이호석</span></td>
+                                            <td><span>2019-11-11</span></td>
+                                            <td><span>-</span></td>
+                                            <td><span>-</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="checkbox"></td>
+                                            <td><span>19PC4155</span></td>
+                                            <td><span>P20C0080</span></td>
+                                            <td><span>0</span></td>
+                                            <td><span>40</span></td>
+                                            <td><span>0</span></td>
+                                            <td><span>40</span></td>
+                                            <td><span>백향구</span></td>
+                                            <td><span>이호석</span></td>
+                                            <td><span>2019-11-11</span></td>
+                                            <td><span>-</span></td>
+                                            <td><span>-</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="checkbox"></td>
+                                            <td><span>19PC4155</span></td>
+                                            <td><span>P20C0080</span></td>
+                                            <td><span>0</span></td>
+                                            <td><span>40</span></td>
+                                            <td><span>0</span></td>
+                                            <td><span>40</span></td>
+                                            <td><span>백향구</span></td>
+                                            <td><span>이호석</span></td>
+                                            <td><span>2019-11-11</span></td>
+                                            <td><span>-</span></td>
+                                            <td><span>-</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="checkbox"></td>
+                                            <td><span>19PC4155</span></td>
+                                            <td><span>P20C0080</span></td>
+                                            <td><span>0</span></td>
+                                            <td><span>40</span></td>
+                                            <td><span>0</span></td>
+                                            <td><span>40</span></td>
+                                            <td><span>백향구</span></td>
+                                            <td><span>이호석</span></td>
+                                            <td><span>2019-11-11</span></td>
+                                            <td><span>-</span></td>
+                                            <td><span>-</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="checkbox"></td>
+                                            <td><span>19PC4155</span></td>
+                                            <td><span>P20C0080</span></td>
+                                            <td><span>0</span></td>
+                                            <td><span>40</span></td>
+                                            <td><span>0</span></td>
+                                            <td><span>40</span></td>
+                                            <td><span>백향구</span></td>
+                                            <td><span>이호석</span></td>
+                                            <td><span>2019-11-11</span></td>
                                             <td><span>-</span></td>
                                             <td><span>-</span></td>
                                         </tr>
@@ -214,13 +376,9 @@
 
                                 <div class="row">
                                     <div class="col-4">
-                                        <button class="btn btn-icon btn-light btn-circle" data-toggle="modal" data-target="#grid">
-                                            <span data-feather="plus">temp</span>
-                                        </button>
                                         <button class="btn btn-icon btn-light btn-circle" data-toggle="modal" data-target="#gen-insert">
                                             <span data-feather="plus"></span>
                                         </button>
-
                                         <button class="btn btn-icon btn-light btn-circle">
                                             <span data-feather="trash-2"></span>
                                         </button>
@@ -247,7 +405,11 @@
                                             </nav>
                                         </div>
                                     </div>
-
+                                    <div class="col-4">
+                                        <button class="btn btn-lg btn-primary" data-toggle="modal" data-target="#recent">
+                                            <span>시교 진행 현황</span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -300,82 +462,16 @@
         </div>
     </div>
 
-    <div class="modal-basic modal fade show" id="grid" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-basic modal fade show" id="recent" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white ">
                 <div class="modal-header" style="border: none">
-                    <h6 class="modal-title">품종관리 > 원예형질[종자원 기준]</h6>
-                    시교명 ID : <span></span>
+                    <h6 class="modal-title">시교 진행 현황</h6>
                 </div>
                 <div class="modal-body">
-                    <div class="tab-pane fade show active" id="control1" role="tabpanel" aria-labelledby="control1-tab">
-                        <div class="tab-slide-content">
-                            <div class="atbd-tab tab-horizontal">
-                                <ul class="nav nav-tabs vertical-tabs" role="tablist">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" id="tab-horizontal-1-tab" data-toggle="tab"
-                                           href="#tab-horizontal-1" role="tab" aria-controls="tab-horizontal-1"
-                                           aria-selected="true">원예형질[종자원 기준]</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="tab-horizontal-2-tab" data-toggle="tab"
-                                           href="#tab-horizontal-2" role="tab" aria-controls="tab-horizontal-2"
-                                           aria-selected="false">원예형질[사내 기준]</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="tab-horizontal-3-tab" data-toggle="tab"
-                                           href="#tab-horizontal-3" role="tab" aria-controls="tab-horizontal-3"
-                                           aria-selected="false">병저항성[종자원 기준]</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="tab-horizontal-4-tab" data-toggle="tab"
-                                           href="#tab-horizontal-4" role="tab" aria-controls="tab-horizontal-4"
-                                           aria-selected="false">병저항성[사내 기준]</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="tab-horizontal-5-tab" data-toggle="tab"
-                                           href="#tab-horizontal-5" role="tab" aria-controls="tab-horizontal-5"
-                                           aria-selected="false">성분정보[종자원 기준]</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" id="tab-horizontal-6-tab" data-toggle="tab"
-                                           href="#tab-horizontal-6" role="tab" aria-controls="tab-horizontal-6"
-                                           aria-selected="false">마커정보</a>
-                                    </li>
-                                </ul>
-                                <div class="tab-content">
-                                    <div class="tab-pane fade show active" id="tab-horizontal-1" role="tabpanel"
-                                         aria-labelledby="tab-horizontal-1-tab">
-                                        <p>Content of Tab Pane 1</p>
-                                    </div>
-                                    <div class="tab-pane fade" id="tab-horizontal-2" role="tabpanel"
-                                         aria-labelledby="tab-horizontal-2-tab">
-                                        <p>Content of Tab Pane 2</p>
-                                    </div>
-                                    <div class="tab-pane fade" id="tab-horizontal-3" role="tabpanel"
-                                         aria-labelledby="tab-horizontal-3-tab">
-                                        <p>Content of Tab Pane 3</p>
-                                    </div>
-                                    <div class="tab-pane fade" id="tab-horizontal-4" role="tabpanel"
-                                         aria-labelledby="tab-horizontal-4-tab">
-                                        <p>Content of Tab Pane 4</p>
-                                    </div>
-                                    <div class="tab-pane fade" id="tab-horizontal-5" role="tabpanel"
-                                         aria-labelledby="tab-horizontal-5-tab">
-                                        <p>Content of Tab Pane 5</p>
-                                    </div>
-                                    <div class="tab-pane fade" id="tab-horizontal-6" role="tabpanel"
-                                         aria-labelledby="tab-horizontal-6-tab">
-                                        <p>Content of Tab Pane 6</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <div class="modal-footer" style="border: none">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-primary btn-sm">저장</button>
                 </div>
             </div>
         </div>
@@ -433,7 +529,18 @@
 <th:block th:include="@{/fragments/commonjs.html}"></th:block>
 
 <script type="text/javascript">
+function view(arg) {
+    var t1 = document.getElementById("table1");
+    var t2 = document.getElementById("table2");
 
+    if(arg == 1) {
+        t1.style.display = "block";
+        t2.style.display = "none";
+    } else {
+        t1.style.display = "none";
+        t2.style.display = "block";
+    }
+}
 </script>
 
 </body>
