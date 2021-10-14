@@ -1,93 +1,101 @@
 <!doctype html>
 <html lang="en" dir="ltr"
-	xmlns:th="http://www.thymeleaf.org">
-	
+      xmlns:th="http://www.thymeleaf.org">
+
 <head>
 
-<!-- 공통 헤더 -->
-<th:block th:include="@{/fragments/header.html}"></th:block>
+    <!-- 공통 헤더 -->
+    <th:block th:include="@{/fragments/header.html}"></th:block>
+
+    <style>
+        #doughnut .slick-slider__single {
+            background: #FFFFFF;
+            height: 400px;
+            justify-content: space-evenly;
+        }
+    </style>
 
 </head>
 
 <body class="layout-light top-menu overlayScroll">
-	<div class="mobile-search"></div>
-	
-	<div class="mobile-author-actions"></div>
-	
-	<!-- 공통 topbar -->
-	<th:block th:include="@{/fragments/topbar.html}"></th:block>
-	
-	<main class="main-content" style="background-color: #fafef5;">
-	
-		<div class="contents" style="background-color: #fafef5;">
+<div class="mobile-search"></div>
 
-			<div class="container-fluid">
-		        <div class="row">
-		            <div class="col-lg-12">
-						<div class="card">
-		                      <div class="card-body">
-                                  <div class="slick-slider slick-dots-bottom" data-dots-slick='true'>
-                                      <div class="slick-slider__single d-flex">
-                                          <div>
-                                              <p class="color-primary fa-lg mb-3 mt-5 ml-3">총 품종 수</p>
-                                              <canvas id="doughnut1" height="100px"></canvas>
-                                          </div>
-                                          <div>
-                                              <p class="color-primary fa-lg mb-3 mt-5 ml-3">생산 판매 신고</p>
-                                              <canvas id="doughnut2" height="100px"></canvas>
-                                          </div>
-                                      </div>
-                                      <div class="slick-slider__single d-flex ">
-                                          <div>
-                                              <p class="color-primary fa-lg mb-3 mt-5 ml-3">품종 보호 출원</p>
-                                              <canvas id="doughnut3" height="100px"></canvas>
-                                          </div>
-                                          <div>
-                                              <p class="color-primary fa-lg mb-3 mt-5 ml-3">품종 보호 등록</p>
-                                              <canvas id="doughnut4" height="100px"></canvas>
-                                          </div>
-                                      </div>
-                                  </div>
-		                      </div>
-		                  </div>
-		            </div>
-		        </div>
-		    </div>
+<div class="mobile-author-actions"></div>
 
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <p class="color-primary fa-lg mb-3 mt-5 ml-3">작물별 품종 수</p>
-                            <div class="card-body">
-                                <div>
-                                    <canvas id="bar1" height="100px"></canvas>
+<!-- 공통 topbar -->
+<th:block th:include="@{/fragments/topbar.html}"></th:block>
+
+<main class="main-content" style="background-color: #fafef5;">
+
+    <div class="contents" style="background-color: #fafef5;">
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body" style="height: 500px;">
+                            <div id="doughnut" class="slick-slider slick-dots-bottom" data-dots-slick='true'>
+                                <div class="slick-slider__single d-flex">
+                                    <p class="color-primary fa-lg mb-3 mt-5 ml-3" style="color: black">총 품종 수</p>
+                                    <div>
+                                        <canvas id="doughnut1" height="300px"></canvas>
+                                    </div>
+                                    <p class="color-primary fa-lg mb-3 mt-5 ml-3" style="color: black">생산 판매 신고</p>
+                                    <div>
+                                        <canvas id="doughnut2" height="300px"></canvas>
+                                    </div>
+                                </div>
+                                <div class="slick-slider__single d-flex">
+                                    <p class="color-primary fa-lg mb-3 mt-5 ml-3" style="color: black">품종 보호 출원</p>
+                                    <div>
+                                        <canvas id="doughnut3" height="300px"></canvas>
+                                    </div>
+                                    <p class="color-primary fa-lg mb-3 mt-5 ml-3" style="color: black">품종 보호 등록</p>
+                                    <div>
+                                        <canvas id="doughnut4" height="300px"></canvas>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <p class="color-primary fa-lg mb-3 mt-5 ml-3">시교 진행 현황</p>
-                            <div class="card-body">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <p class="color-primary fa-lg mb-3 mt-5 ml-3">작물별 품종 수</p>
+                        <div class="card-body">
+                            <div>
+                                <canvas id="bar1" height="100px"></canvas>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-		</div>
-	
-	</main>
-	
-	<!-- 공통 하단 -->
-    <th:block th:include="@{/fragments/footer.html}"></th:block>
-    <!-- 공통 js -->
-    <th:block th:include="@{/fragments/commonjs.html}"></th:block>
+        </div>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card">
+                        <p class="color-primary fa-lg mb-3 mt-5 ml-3">시교 진행 현황</p>
+                        <div class="card-body">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<!-- 공통 하단 -->
+<th:block th:include="@{/fragments/footer.html}"></th:block>
+<!-- 공통 js -->
+<th:block th:include="@{/fragments/commonjs.html}"></th:block>
 
 <script type="text/javascript">
 
@@ -95,36 +103,31 @@
     var doughnut1 = new Chart(ctx, {
         type: 'doughnut',
         data: {
-            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+            labels: ["고추", "대파", "멜론", "무", "배추", "수박", "양배추", "양파", "참외", "토마토"],
             datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
+                label: '#',
+                data: [20.81, 8.09, 4.62, 8.09, 8.09, 2, 5.02, 8.61, 20.81, 14.45],
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
+                    'rgb(255, 155, 147)',
+                    'rgb(255, 207, 141)',
+                    'rgb(247, 235, 137)',
+                    'rgb(188, 227, 220)',
+                    'rgb(184, 229, 252)',
+                    'rgb(120, 210, 236)',
+                    'rgb(178, 162, 207)',
+                    'rgb(248, 184, 198)',
+                    'rgb(243, 216, 197)',
+                    'rgb(206, 187, 173)'
+                ]
             }]
         },
         options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
+            responsive: true,
+            legend: {
+                position: 'right',
+                labels: {
+                    fontColor: "black"
+                }
             }
         }
     });
@@ -133,36 +136,31 @@
     var doughnut2 = new Chart(ctx, {
         type: 'doughnut',
         data: {
-            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+            labels: ["고추", "대파", "멜론", "무", "배추", "수박", "양배추", "양파", "참외", "토마토"],
             datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
+                label: '#',
+                data: [20.81, 8.09, 4.62, 8.09, 8.09, 2, 5.02, 8.61, 20.81, 14.45],
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
+                    'rgb(255, 155, 147)',
+                    'rgb(255, 207, 141)',
+                    'rgb(247, 235, 137)',
+                    'rgb(188, 227, 220)',
+                    'rgb(184, 229, 252)',
+                    'rgb(120, 210, 236)',
+                    'rgb(178, 162, 207)',
+                    'rgb(248, 184, 198)',
+                    'rgb(243, 216, 197)',
+                    'rgb(206, 187, 173)'
+                ]
             }]
         },
         options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
+            responsive: true,
+            legend: {
+                position: 'right',
+                labels: {
+                    fontColor: "black"
+                }
             }
         }
     });
@@ -171,36 +169,31 @@
     var doughnut3 = new Chart(ctx, {
         type: 'doughnut',
         data: {
-            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+            labels: ["고추", "대파", "멜론", "무", "배추", "수박", "양배추", "양파", "참외", "토마토"],
             datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
+                label: '#',
+                data: [20.81, 8.09, 4.62, 8.09, 8.09, 2, 5.02, 8.61, 20.81, 14.45],
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
+                    'rgb(255, 155, 147)',
+                    'rgb(255, 207, 141)',
+                    'rgb(247, 235, 137)',
+                    'rgb(188, 227, 220)',
+                    'rgb(184, 229, 252)',
+                    'rgb(120, 210, 236)',
+                    'rgb(178, 162, 207)',
+                    'rgb(248, 184, 198)',
+                    'rgb(243, 216, 197)',
+                    'rgb(206, 187, 173)'
+                ]
             }]
         },
         options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
+            responsive: true,
+            legend: {
+                position: 'right',
+                labels: {
+                    fontColor: "black"
+                }
             }
         }
     });
@@ -209,36 +202,31 @@
     var doughnut4 = new Chart(ctx, {
         type: 'doughnut',
         data: {
-            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+            labels: ["고추", "대파", "멜론", "무", "배추", "수박", "양배추", "양파", "참외", "토마토"],
             datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
+                label: '#',
+                data: [20.81, 8.09, 4.62, 8.09, 8.09, 2, 5.02, 8.61, 20.81, 14.45],
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
+                    'rgb(255, 155, 147)',
+                    'rgb(255, 207, 141)',
+                    'rgb(247, 235, 137)',
+                    'rgb(188, 227, 220)',
+                    'rgb(184, 229, 252)',
+                    'rgb(120, 210, 236)',
+                    'rgb(178, 162, 207)',
+                    'rgb(248, 184, 198)',
+                    'rgb(243, 216, 197)',
+                    'rgb(206, 187, 173)'
+                ]
             }]
         },
         options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
+            responsive: true,
+            legend: {
+                position: 'right',
+                labels: {
+                    fontColor: "black"
+                }
             }
         }
     });
@@ -247,34 +235,81 @@
     var bar1 = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
-            datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255,99,132,1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
-                borderWidth: 1
-            }]
+            labels: ["2017", "2018", "2019", "2020", "2021"],
+            datasets: [
+                {
+                    data: [210, 315, 390, 70, 300],
+                    backgroundColor: [
+                        'rgb(255, 155, 147)',
+                    ]
+                },
+                {
+                    data: [200, 400, 115, 500, 270],
+                    backgroundColor: [
+                        'rgb(255, 207, 141)',
+                    ]
+                },
+                {
+                    data: [35, 35, 60, 260, 300],
+                    backgroundColor: [
+                        'rgb(247, 235, 137)',
+                    ]
+                },
+                {
+                    data: [450, 430, 80, 210, 50],
+                    backgroundColor: [
+                        'rgb(188, 227, 220)',
+                    ]
+                },
+                {
+                    data: [440, 60, 180, 290, 300],
+                    backgroundColor: [
+                        'rgb(184, 229, 252)',
+                    ]
+                },
+                {
+                    data: [50, 80, 160, 470, 70],
+                    backgroundColor: [
+                        'rgb(120, 210, 236)',
+                    ]
+                },
+                {
+                    data: [480, 180, 230, 360, 20],
+                    backgroundColor: [
+                        'rgb(178, 162, 207)',
+                    ]
+                },
+                {
+                    data: [460, 90, 400, 350, 330],
+                    backgroundColor: [
+                        'rgb(248, 184, 198)',
+                    ]
+                },
+                {
+                    data: [450, 260, 330, 180, 410],
+                    backgroundColor: [
+                        'rgb(243, 216, 197)',
+                    ]
+                },
+                {
+                    data: [490, 280, 230, 400, 370],
+                    backgroundColor: [
+                        'rgb(206, 187, 173)',
+                    ]
+                }
+            ]
         },
         options: {
             scales: {
-                yAxes: [{
+                xAxes: [{
                     ticks: {
                         beginAtZero: true
+                    }
+                }],
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true,
+                        stepSize: 100,
                     }
                 }]
             }
