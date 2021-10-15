@@ -57,7 +57,9 @@
                                             <option>이름</option>
                                         </select>
                                     </form>
-                                    <button class="btn btn-lg btn-primary"><span data-feather="upload"></span>엑셀</button>
+                                    <button class="btn btn-lg btn-primary" th:action="@{/excel/read}" method="POST" enctype="multipart/form-data">
+                                        <span data-feather="upload"></span>엑셀
+                                    </button>
                                     <button class="btn btn-lg btn-primary"><span data-feather="download"></span>CSV</button>
                                 </div>
                             </div>
