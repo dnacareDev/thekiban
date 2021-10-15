@@ -425,7 +425,7 @@
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white ">
                 <div class="modal-header" style="border: none">
-                    <h6 class="modal-title">품종관리 > 첨부파일</h6>
+                    <h6 class="modal-title">시교자원관리 > 첨부파일</h6>
                 </div>
                 <div class="modal-body">
                     <div class="form-group mb-0">
@@ -529,18 +529,18 @@
 <th:block th:include="@{/fragments/commonjs.html}"></th:block>
 
 <script type="text/javascript">
-function view(arg) {
-    var t1 = document.getElementById("table1");
-    var t2 = document.getElementById("table2");
+    function view(arg) {
+        var t1 = document.getElementById("table1");
+        var t2 = document.getElementById("table2");
 
-    if(arg == 1) {
-        t1.style.display = "block";
-        t2.style.display = "none";
-    } else {
-        t1.style.display = "none";
-        t2.style.display = "block";
+        if (arg == 1) {
+            t1.style.display = "block";
+            t2.style.display = "none";
+        } else {
+            t1.style.display = "none";
+            t2.style.display = "block";
+        }
     }
-}
 </script>
 
 </body>

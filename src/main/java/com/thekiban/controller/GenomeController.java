@@ -25,6 +25,14 @@ public class GenomeController {
     return mv;
   }
 
+  @GetMapping(value = "intro_resource")
+  public ModelAndView getIntroResourceList(ModelAndView mv) {
+
+    mv.setViewName("genome/intro_resource");
+
+    return mv;
+  }
+
   @GetMapping(value = "test_harvest")
   public ModelAndView getTestHarvestList(ModelAndView mv) {
 
