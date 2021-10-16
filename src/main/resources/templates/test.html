@@ -57,9 +57,10 @@
                                             <option>이름</option>
                                         </select>
                                     </form>
-                                    <button class="btn btn-lg btn-primary">
-                                        <span data-feather="upload"></span>엑셀
-                                    </button>
+                                    <form th:action="@{/test/read}" method="POST" enctype="multipart/form-data">
+                                        <input type="file" th:name="file">
+                                        <input th:type="submit" value="done" />
+                                    </form>
                                     <button class="btn btn-lg btn-primary"><span data-feather="download"></span>CSV</button>
                                 </div>
                             </div>
@@ -70,145 +71,16 @@
                                     <table class="table">
                                         <thead class="text-center">
                                         <tr>
-                                            <th></th>
-                                            <th>첨부파일</th>
-                                            <th>ID</th>
-                                            <th>품종명</th>
-                                            <th>특성상태</th>
-                                            <th>모계 계통명</th>
-                                            <th>부계 계통명</th>
-                                            <th>생산판매(신고번호)</th>
-                                            <th>생산판매(신고일자)</th>
+                                            <th scope="col">#</th>
+                                            <th scope="col">name</th>
+                                            <th scope="col">email</th>
                                         </tr>
                                         </thead>
                                         <tbody class="text-center">
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td>
-                                                <button class="btn btn-light btn-default btn-squared btn-transparent-light"
-                                                        data-toggle="modal" data-target="#gen-attach"><span data-feather="file-plus"></span></button>
-                                            </td>
-                                            <td><span>19PC4155</span></td>
-                                            <td><span>에이스</span></td>
-                                            <td><span>Empty</span></td>
-                                            <td><span>CGMS-1234A</span></td>
-                                            <td><span>A42-1</span></td>
-                                            <td><span>02-0205-2019-111</span></td>
-                                            <td><span>2017-11-11</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td>
-                                                <button class="btn btn-light btn-default btn-squared btn-transparent-light"
-                                                        data-toggle="modal" data-target="#gen-attach"><span data-feather="file-plus"></span></button>
-                                            </td>
-                                            <td><span>19PC4155</span></td>
-                                            <td><span>KI_1</span></td>
-                                            <td><span>Progress</span></td>
-                                            <td><span>PaP001</span></td>
-                                            <td><span>RRFS</span></td>
-                                            <td><span>02-0205-2020-888</span></td>
-                                            <td><span>2017-11-11</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td><span><i></i></span></td>
-                                            <td><span>19PC4155</span></td>
-                                            <td><span>KI_1</span></td>
-                                            <td><span>Progress</span></td>
-                                            <td><span>CGMS-1234A</span></td>
-                                            <td><span>-</span></td>
-                                            <td><span>-</span></td>
-                                            <td><span>-</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td>
-                                                <button class="btn btn-light btn-default btn-squared btn-transparent-light"
-                                                        data-toggle="modal" data-target="#gen-attach"><span data-feather="file-plus"></span></button>
-                                            </td>
-                                            <td><span>19PC4155</span></td>
-                                            <td><span>-</span></td>
-                                            <td><span>Progress</span></td>
-                                            <td><span>FDEF-2155</span></td>
-                                            <td><span>-</span></td>
-                                            <td><span>-</span></td>
-                                            <td><span>-</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td>
-                                                <button class="btn btn-light btn-default btn-squared btn-transparent-light"
-                                                        data-toggle="modal" data-target="#gen-attach"><span data-feather="file-plus"></span></button>
-                                            </td>
-                                            <td><span>19PC4155</span></td>
-                                            <td><span>KI_1</span></td>
-                                            <td><span>Empty</span></td>
-                                            <td><span>-</span></td>
-                                            <td><span>-</span></td>
-                                            <td><span>-</span></td>
-                                            <td><span>-</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td>
-                                                <button class="btn btn-light btn-default btn-squared btn-transparent-light"
-                                                        data-toggle="modal" data-target="#gen-attach"><span data-feather="file-plus"></span></button>
-                                            </td>
-                                            <td><span>19PC4155</span></td>
-                                            <td><span>KI_1</span></td>
-                                            <td><span>Empty</span></td>
-                                            <td><span>GTGG-7474A</span></td>
-                                            <td><span>DWDW</span></td>
-                                            <td><span>02-0205-2019-111</span></td>
-                                            <td><span>2018-05-16</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td><span><i></i></span></td>
-                                            <td><span>19PC4155</span></td>
-                                            <td><span>-</span></td>
-                                            <td><span>Progress</span></td>
-                                            <td><span>-</span></td>
-                                            <td><span>DWDW</span></td>
-                                            <td><span>02-0205-2020-888</span></td>
-                                            <td><span>-</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td><span><i></i></span></td>
-                                            <td><span>19PC4155</span></td>
-                                            <td><span>KI_1</span></td>
-                                            <td><span>Progress</span></td>
-                                            <td><span>CGMS-1234A</span></td>
-                                            <td><span>A42-1</span></td>
-                                            <td><span>-</span></td>
-                                            <td><span>2016-05-21</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td><span><i></i></span></td>
-                                            <td><span>19PC4155</span></td>
-                                            <td><span>KI_1</span></td>
-                                            <td><span>Progress</span></td>
-                                            <td><span>PaP001</span></td>
-                                            <td><span>RRFS</span></td>
-                                            <td><span>-</span></td>
-                                            <td><span>-</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td>
-                                                <button class="btn btn-light btn-default btn-squared btn-transparent-light"
-                                                        data-toggle="modal" data-target="#gen-attach"><span data-feather="file-plus"></span></button>
-                                            </td>
-                                            <td><span>19PC4155</span></td>
-                                            <td><span>-</span></td>
-                                            <td><span>Empty</span></td>
-                                            <td><span>CGMS-1234A</span></td>
-                                            <td><span>-</span></td>
-                                            <td><span>-</span></td>
-                                            <td><span>-</span></td>
+                                        <tr th:each="data : ${datas}">
+                                            <td scope="row" th:text="${data.num}"></td>
+                                            <td th:text="${data.name}"></td>
+                                            <td th:text="${data.email}"></td>
                                         </tr>
                                         </tbody>
                                     </table>

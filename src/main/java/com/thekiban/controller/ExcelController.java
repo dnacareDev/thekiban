@@ -21,12 +21,12 @@ import java.util.List;
 @Controller
 public class ExcelController {
 
-  @GetMapping("/excel")
+  @GetMapping("/inputtest")
   public String main() {
-    return "excel";
+    return "inputtest";
   }
 
-  @PostMapping("/excel/read")
+  @PostMapping("/test")
   public String readExcel(@RequestParam("file")MultipartFile file, Model model) throws IOException {
 
     List<ExcelData> dataList = new ArrayList<>();
@@ -55,8 +55,12 @@ public class ExcelController {
       data.setNum((int) row.getCell(0).getNumericCellValue());
       data.setName(row.getCell(1).getStringCellValue());
       data.setEmail(row.getCell(2).getStringCellValue());
+
+      dataList.add(data);
     }
 
-    return "excelList";
+    model.addAttribute("datas", dataList);
+
+    return "test";
   }
 }
