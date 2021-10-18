@@ -107,7 +107,7 @@
                                             </td>
                                             <td><span>19PC4155</span></td>
                                             <td><span>에이스</span></td>
-                                            <td><span>Empty</span></td>
+                                            <td><span style="color: #dc3545">Empty</span></td>
                                             <td><span>CGMS-1234A</span></td>
                                             <td><span>A42-1</span></td>
                                             <td><span>02-0205-2019-111</span></td>
@@ -121,7 +121,8 @@
                                             </td>
                                             <td><span>19PC4155</span></td>
                                             <td><span>KI_1</span></td>
-                                            <td><span>Progress</span></td>
+                                            <td><span style="color: #007bff"><a type="button" data-toggle="modal" data-target="#grid">Progress
+                                                </a></span></td>
                                             <td><span>PaP001</span></td>
                                             <td><span>RRFS</span></td>
                                             <td><span>02-0205-2020-888</span></td>
@@ -132,7 +133,7 @@
                                             <td><span><i></i></span></td>
                                             <td><span>19PC4155</span></td>
                                             <td><span>KI_1</span></td>
-                                            <td><span>Progress</span></td>
+                                            <td><span style="color: #007bff">Progress</span></td>
                                             <td><span>CGMS-1234A</span></td>
                                             <td><span>-</span></td>
                                             <td><span>-</span></td>
@@ -146,7 +147,7 @@
                                             </td>
                                             <td><span>19PC4155</span></td>
                                             <td><span>-</span></td>
-                                            <td><span>Progress</span></td>
+                                            <td><span style="color: #007bff">Progress</span></td>
                                             <td><span>FDEF-2155</span></td>
                                             <td><span>-</span></td>
                                             <td><span>-</span></td>
@@ -160,7 +161,7 @@
                                             </td>
                                             <td><span>19PC4155</span></td>
                                             <td><span>KI_1</span></td>
-                                            <td><span>Empty</span></td>
+                                            <td><span style="color: #dc3545">Empty</span></td>
                                             <td><span>-</span></td>
                                             <td><span>-</span></td>
                                             <td><span>-</span></td>
@@ -174,7 +175,7 @@
                                             </td>
                                             <td><span>19PC4155</span></td>
                                             <td><span>KI_1</span></td>
-                                            <td><span>Empty</span></td>
+                                            <td><span style="color: #dc3545">Empty</span></td>
                                             <td><span>GTGG-7474A</span></td>
                                             <td><span>DWDW</span></td>
                                             <td><span>02-0205-2019-111</span></td>
@@ -185,7 +186,7 @@
                                             <td><span><i></i></span></td>
                                             <td><span>19PC4155</span></td>
                                             <td><span>-</span></td>
-                                            <td><span>Progress</span></td>
+                                            <td><span style="color: #007bff">Progress</span></td>
                                             <td><span>-</span></td>
                                             <td><span>DWDW</span></td>
                                             <td><span>02-0205-2020-888</span></td>
@@ -196,7 +197,7 @@
                                             <td><span><i></i></span></td>
                                             <td><span>19PC4155</span></td>
                                             <td><span>KI_1</span></td>
-                                            <td><span>Progress</span></td>
+                                            <td><span style="color: #007bff">Progress</span></td>
                                             <td><span>CGMS-1234A</span></td>
                                             <td><span>A42-1</span></td>
                                             <td><span>-</span></td>
@@ -207,7 +208,7 @@
                                             <td><span><i></i></span></td>
                                             <td><span>19PC4155</span></td>
                                             <td><span>KI_1</span></td>
-                                            <td><span>Progress</span></td>
+                                            <td><span style="color: #007bff">Progress</span></td>
                                             <td><span>PaP001</span></td>
                                             <td><span>RRFS</span></td>
                                             <td><span>-</span></td>
@@ -221,26 +222,24 @@
                                             </td>
                                             <td><span>19PC4155</span></td>
                                             <td><span>-</span></td>
-                                            <td><span>Empty</span></td>
+                                            <td><span style="color: #dc3545">Empty</span></td>
                                             <td><span>CGMS-1234A</span></td>
                                             <td><span>-</span></td>
                                             <td><span>-</span></td>
                                             <td><span>-</span></td>
                                         </tr>
+                                        <p></p>
                                         </tbody>
                                     </table>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-4">
-                                        <button class="btn btn-icon btn-light btn-circle" data-toggle="modal" data-target="#grid">
-                                            <span data-feather="plus">temp</span>
-                                        </button>
                                         <button class="btn btn-icon btn-light btn-circle" data-toggle="modal" data-target="#gen-insert">
                                             <span data-feather="plus"></span>
                                         </button>
 
-                                        <input type="button" class="btn btn-icon btn-light btn-circle" onclick="delRow()"/>
+                                        <input type="button" class="btn btn-icon btn-light btn-circle" data-feather="trash" onclick="delRow()"/>
                                     </div>
                                     <div class="col-4">
                                         <div class="d-flex justify-content-center mt-30">
@@ -264,7 +263,6 @@
                                             </nav>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -406,37 +404,37 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group mb-0">
-                        <span>Title</span>
-                        <input type="text" class="form-control form-control-lg">
+                        <span>ID</span>
+                        <input type="text" id="row_id" class="form-control form-control-lg">
                     </div>
                     <div class="form-group mb-0">
                         <span>품종명</span>
-                        <input type="text" class="form-control form-control-lg">
+                        <input type="text" id="row_name" class="form-control form-control-lg">
                     </div>
                     <div class="form-group mb-0">
                         <span>특성상태</span>
-                        <input type="text" class="form-control form-control-lg">
+                        <input type="text" id="row_state" class="form-control form-control-lg">
                     </div>
                     <div class="form-group mb-0">
                         <span>모계 계통명</span>
-                        <input type="text" class="form-control form-control-lg">
+                        <input type="text" id="row_mother" class="form-control form-control-lg">
                     </div>
                     <div class="form-group mb-0">
                         <span>부계 계통명</span>
-                        <input type="text" class="form-control form-control-lg">
+                        <input type="text" id="row_father" class="form-control form-control-lg">
                     </div>
                     <div class="form-group mb-0">
                         <span>생산판매(신고번호)</span>
-                        <input type="text" class="form-control form-control-lg">
+                        <input type="text" id="row_num" class="form-control form-control-lg">
                     </div>
                     <div class="form-group mb-0">
                         <span>생산판매(신고일자)</span>
-                        <input type="text" class="form-control form-control-lg">
+                        <input type="text" id="row_date" class="form-control form-control-lg">
                     </div>
                 </div>
                 <div class="modal-footer" style="border: none">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-primary btn-sm">저장</button>
+                    <input type="button" class="btn btn-primary btn-sm" value="저장" onclick="add_row()"/>
                 </div>
             </div>
         </div>
@@ -507,6 +505,75 @@
         for (var i = checkRows.length - 1; i > -1; i--) {
             checkRows.eq(i).closest('tr').remove();
         }
+    }
+
+    /* row 추가 스크립트 */
+    function add_row() {
+        var material0 = document.getElementById('row_id').value;
+        var material_ans0 = '';
+
+        if (material0 == '') {
+            material_ans0 = '-';
+        } else {
+            material_ans0 += '<span>' + material0 + '</span>';
+        }
+
+        var material1 = document.getElementById('row_name').value
+        var material_ans1 = '';
+
+        if (material1 == '') {
+            material_ans1 = '-';
+        } else {
+            material_ans1 += '<span>' + material1 + '</span>';
+        }
+
+        var material2 = document.getElementById('row_state').value
+        var material_ans2 = '';
+
+        if (material2 == '') {
+            material_ans2 = '-';
+        } else {
+            material_ans2 += '<span>' + material2 + '</span>';
+        }
+
+        var material3 = document.getElementById('row_mother').value
+        var material_ans3 = '';
+
+        if (material3 == '') {
+            material_ans3 = '-';
+        } else {
+            material_ans3 += '<span>' + material3 + '</span>';
+        }
+
+        var material4 = document.getElementById('row_father').value
+        var material_ans4 = '';
+
+        if (material4 == '') {
+            material_ans4 = '-';
+        } else {
+            material_ans4 += '<span>' + material4 + '</span>';
+        }
+
+        var material5 = document.getElementById('row_num').value
+        var material_ans5 = '';
+
+        if (material5 == '') {
+            material_ans5 = '-';
+        } else {
+            material_ans5 += '<span>' + material5 + '</span>';
+        }
+
+        var material6 = document.getElementById('row_date').value
+        var material_ans6 = '';
+
+        if (material6 == '') {
+            material_ans6 = '-';
+        } else {
+            material_ans6 += '<span>' + material6 + '</span>';
+        }
+
+        $("#table1>tbody").append('<tr><td><input type="checkbox" name="chkBox"></td>' +
+            '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><span data-feather="file-plus"></span></button></td>'+ '<td>' + material_ans0 + '</td>' + '<td>' + material_ans1 + '</td><td>' + material_ans2 + '</td><td>' + material_ans3 + '</td><td>' + material_ans4 + '</td><td>' + material_ans5 + '</td><td>' + material_ans6 + '</td></tr>');
     }
 </script>
 
