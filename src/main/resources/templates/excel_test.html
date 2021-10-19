@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <!-- 공통 헤더 -->
+    <th:block th:include="@{/fragments/header.html}"></th:block>
+
+    <style>
+        table {
+            border-top: 1px solid grey;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border-bottom: 2px solid #E5E9F2;
+            padding: 10px;
+            text-align: center;
+            font-weight: initial;
+        }
+
+        th, tbody tr {
+            background-color: white;
+        }
+
+    </style>
+
+</head>
+
+<body class="layout-light top-menu overlayScroll">
+<div class="mobile-search"></div>
+
+<div class="mobile-author-actions"></div>
+
+<!-- 공통 topbar -->
+<th:block th:include="@{/fragments/topbar.html}"></th:block>
+
+<main class="main-content" style="background-color: #FCFCFC;">
+
+    <div class="contents" style="background-color: #FFFFFF;">
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 mb-30">
+                    <div class="card">
+                        <div class="card-extra mt-20 mr-20">
+                            <div class="breadcrumb-main" style="float: left;">
+                                <h4 class="text-capitalize breadcrumb-title">품종 관리</h4>
+                            </div>
+                            <!-- 버튼 등록하는 곳 -->
+                            <div class="action-btn d-flex justify-content-end">
+                                <div class="atbd-button-list d-flex flex-wrap">
+                                    <form action="" name="searchForm" class="d-flex align-items-center add-contact__form my-sm-0 my-2">
+                                        <!-- 작물 선택 -->
+                                        <select class="form-control form-control-lg mt-10 mb-10 mr-10" style="width: 250px;">
+                                            <option value="none">작물 선택</option>
+                                            <option value="pepper">고추</option>
+                                            <option value="green_onion">대파</option>
+                                            <option value="melon">멜론</option>
+                                            <option value="radish">무</option>
+                                            <option value="napa_cabbage">배추</option>
+                                            <option value="water_melon">수박</option>
+                                            <option value="cabbage">양배추</option>
+                                            <option value="onion">양파</option>
+                                            <option value="korean_melon">참외</option>
+                                            <option value="tomato">토마토</option>
+                                        </select>
+                                    </form>
+                                    <!-- 엑셀 업로드 버튼 -->
+                                    <form action="uploadExcel" id="excelForm" method="POST" enctype="multipart/form-data">
+                                        <tr>
+                                            <th>엑셀 파일 업로드</th>
+                                            <td>
+                                                <input type="file" id="excelFile" name="file">
+                                                <button type="button" class="btn btn-sm btn-primary" onclick="FileBtn();" style="float: right;">업로드
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    </form>
+                                    <!-- CSV 생성 버튼 -->
+                                    <button class="btn btn-lg btn-primary"><span data-feather="download"></span>CSV</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="bg-white">
+                                <div class="table-responsive" id="displayExcelHtml">
+                                    <table class="table" id="table1">
+                                        <thead class="text-center">
+                                        <tr>
+                                            <th></th>
+                                            <th>첨부파일</th>
+                                            <th>ID</th>
+                                            <th>품종명</th>
+                                            <th>특성상태</th>
+                                            <th>모계 계통명</th>
+                                            <th>부계 계통명</th>
+                                            <th>생산판매(신고번호)</th>
+                                            <th>생산판매(신고일자)</th>
+                                            <th>보호출원(출원번호)</th>
+                                            <th>보호출원(출원일자)</th>
+                                            <th>보호등록(등록번호)</th>
+                                            <th>보호등록(등록일자)</th>
+                                            <th>미등록(현지상업화)</th>
+                                            <th>목표 시장</th>
+                                            <th>형태 구분1</th>
+                                            <th>형태 구분2</th>
+                                            <th>작물 타입1</th>
+                                            <th>작물 타입2</th>
+                                            <th>비고</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="items_list">
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-4">
+                                        <button class="btn btn-icon btn-light btn-circle" data-toggle="modal" data-target="#gen-insert">
+                                            <span data-feather="plus"></span>
+                                        </button>
+
+                                        <input type="button" class="btn btn-icon btn-light btn-circle" data-feather="trash" onclick="delRow()"/>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="d-flex justify-content-center mt-30">
+                                            <nav class="atbd-page">
+                                                <ul class="atbd-pagination d-flex">
+                                                    <li class="atbd-pagination__item">
+                                                        <a href="#" class="atbd-pagination__link pagination-control"><span
+                                                            class="la la-angle-left"></span></a>
+                                                        <a href="#" class="atbd-pagination__link"><span class="page-number">1</span></a>
+                                                        <a href="#" class="atbd-pagination__link active"><span class="page-number">2</span></a>
+                                                        <a href="#" class="atbd-pagination__link"><span class="page-number">3</span></a>
+                                                        <a href="#" class="atbd-pagination__link pagination-control"><span
+                                                            class="page-number">...</span></a>
+                                                        <a href="#" class="atbd-pagination__link"><span class="page-number">12</span></a>
+                                                        <a href="#" class="atbd-pagination__link pagination-control"><span
+                                                            class="la la-angle-right"></span></a>
+                                                        <a href="#" class="atbd-pagination__option">
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</main>
+
+<!-- 공통 하단 -->
+<th:block th:include="@{/fragments/footer.html}"></th:block>
+<!-- 공통 js -->
+<th:block th:include="@{/fragments/commonjs.html}"></th:block>
+
+<script type="text/javascript">
+
+    /* 엑셀 읽어오는 스크립트 */
+    function FileBtn() {
+        var file = $("#excelFile").val();
+
+        if (file == "") {
+            alert("파일을 업로드해주세요.");
+        } else {
+            $("#excelForm").submit();
+        }
+
+        console.log("success")
+    }
+
+    /* row 삭제 스크립트 */
+    function delRow() {
+        var checkRows = $("[name = 'chkBox']:checked");
+
+        for (var i = checkRows.length - 1; i > -1; i--) {
+            checkRows.eq(i).closest('tr').remove();
+        }
+    }
+
+    /* row 추가 스크립트 */
+    function add_row() {
+        var material0 = document.getElementById('row_id').value;
+        var material_ans0 = '';
+
+        if (material0 == '') {
+            material_ans0 = '-';
+        } else {
+            material_ans0 += '<span>' + material0 + '</span>';
+        }
+
+        var material1 = document.getElementById('row_name').value
+        var material_ans1 = '';
+
+        if (material1 == '') {
+            material_ans1 = '-';
+        } else {
+            material_ans1 += '<span>' + material1 + '</span>';
+        }
+
+        var material2 = document.getElementById('row_state').value
+        var material_ans2 = '';
+
+        if (material2 == '') {
+            material_ans2 = '-';
+        } else {
+            material_ans2 += '<span>' + material2 + '</span>';
+        }
+
+        var material3 = document.getElementById('row_mother').value
+        var material_ans3 = '';
+
+        if (material3 == '') {
+            material_ans3 = '-';
+        } else {
+            material_ans3 += '<span>' + material3 + '</span>';
+        }
+
+        var material4 = document.getElementById('row_father').value
+        var material_ans4 = '';
+
+        if (material4 == '') {
+            material_ans4 = '-';
+        } else {
+            material_ans4 += '<span>' + material4 + '</span>';
+        }
+
+        var material5 = document.getElementById('row_num').value
+        var material_ans5 = '';
+
+        if (material5 == '') {
+            material_ans5 = '-';
+        } else {
+            material_ans5 += '<span>' + material5 + '</span>';
+        }
+
+        var material6 = document.getElementById('row_date').value
+        var material_ans6 = '';
+
+        if (material6 == '') {
+            material_ans6 = '-';
+        } else {
+            material_ans6 += '<span>' + material6 + '</span>';
+        }
+
+        $("#table1>tbody").append('<tr><td><input type="checkbox" name="chkBox"></td>' +
+            '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><span data-feather="file-plus"></span></button></td>' + '<td>' + material_ans0 + '</td>' + '<td>' + material_ans1 + '</td><td>' + material_ans2 + '</td><td>' + material_ans3 + '</td><td>' + material_ans4 + '</td><td>' + material_ans5 + '</td><td>' + material_ans6 + '</td></tr>');
+    }
+</script>
+
+</body>
+
+</html>
