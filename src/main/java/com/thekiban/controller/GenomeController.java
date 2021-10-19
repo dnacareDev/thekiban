@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping(value = "/genome")
 public class GenomeController {
 
+  // 품종 관리 페이지
   @GetMapping(value = "genetic")
   public ModelAndView getGeneticList(ModelAndView mv) {
 
@@ -17,6 +18,7 @@ public class GenomeController {
     return mv;
   }
 
+  // 원종 관리 페이지
   @GetMapping(value = "origin")
   public ModelAndView getOriginList(ModelAndView mv) {
 
@@ -25,6 +27,7 @@ public class GenomeController {
     return mv;
   }
 
+  //도입자원 관리 페이지
   @GetMapping(value = "intro_resource")
   public ModelAndView getIntroResourceList(ModelAndView mv) {
 
@@ -33,6 +36,7 @@ public class GenomeController {
     return mv;
   }
 
+  //시교자원 관리 페이지
   @GetMapping(value = "test_harvest")
   public ModelAndView getTestHarvestList(ModelAndView mv) {
 
