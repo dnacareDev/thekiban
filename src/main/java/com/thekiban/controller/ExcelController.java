@@ -9,32 +9,38 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class GenomeController {
+public class ExcelController {
 
-  // 품종 관리 페이지
-  @GetMapping(value = "/genetic")
-  public ModelAndView getGeneticList(ModelAndView mv) {
-
-    mv.setViewName("genome/genetic");
-
-    return mv;
+  // 뷰 리턴
+  @GetMapping("excel")
+  public String main() {
+    return "excelList";
   }
 
   // 엑셀 읽기
-  @PostMapping("/genetic")
-  public String readExcel(@RequestParam("file") MultipartFile file, Model model) throws IOException {
+  @PostMapping("/excel/test")
+  public String readExcel(@RequestParam("file")MultipartFile file, Model model) throws IOException {
+
+    // tika mime 타입 얻어내기
+//    Tika tika = new Tika();
+//    String detect = tika.detect(file.getBytes());
 
     List<ExcelData> dataList = new ArrayList<>();
     String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+
+//    if(!isExcel(detect, extension)) {
+//      throw new IOException("give me excel file!");
+//    }
 
     if (!extension.equals("xlsx") && !extension.equals("xls")) {
       throw new IOException("give me excel!");
@@ -80,33 +86,7 @@ public class GenomeController {
 
     model.addAttribute("datas", dataList);
 
-    return "genome/genetic";
+    return "excelList";
   }
 
-  // 원종 관리 페이지
-  @GetMapping(value = "origin")
-  public ModelAndView getOriginList(ModelAndView mv) {
-
-    mv.setViewName("genome/origin");
-
-    return mv;
-  }
-
-  //도입자원 관리 페이지
-  @GetMapping(value = "intro_resource")
-  public ModelAndView getIntroResourceList(ModelAndView mv) {
-
-    mv.setViewName("genome/intro_resource");
-
-    return mv;
-  }
-
-  //시교자원 관리 페이지
-  @GetMapping(value = "test_harvest")
-  public ModelAndView getTestHarvestList(ModelAndView mv) {
-
-    mv.setViewName("genome/test_harvest");
-
-    return mv;
-  }
 }
