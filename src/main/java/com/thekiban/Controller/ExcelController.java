@@ -1,4 +1,4 @@
-package com.thekiban.controller;
+package com.thekiban.Controller;
 
 import com.thekiban.Entity.ExcelData;
 import org.apache.commons.io.FilenameUtils;

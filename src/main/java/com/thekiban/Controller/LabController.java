@@ -1,4 +1,4 @@
-package com.thekiban.controller;
+package com.thekiban.Controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,14 +7,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping(value = "/lab")
-public class LabController {
+public class LabController
+{
+	@GetMapping(value = "data_manage")
+	public ModelAndView getDataManage(ModelAndView mv)
+	{
+		mv.setViewName("lab/data_manage");
 
-  @GetMapping(value = "data_manage")
-  public ModelAndView getDataManage(ModelAndView mv) {
-
-    mv.setViewName("lab/data_manage");
-
-    return mv;
-  }
-
+		return mv;
+	}
 }
