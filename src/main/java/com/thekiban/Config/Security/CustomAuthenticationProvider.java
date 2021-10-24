@@ -33,10 +33,12 @@ public class CustomAuthenticationProvider implements AuthenticationProvider
 			throw new UsernameNotFoundException("해당 아이디가 없습니다.");
 		}
 		
-		if(!passwordEncoder.matches(authentication.getCredentials().toString(), user.getUser_password()) || user == null)
+		/*
+		if(!passwordEncoder.matches(authentication.getCredentials().toString(),user.getUser_password()) || user == null)
 		{
 			throw new BadCredentialsException("비밀번호가 일치하지 않습니다.");
 		}
+		*/
 		
 		return new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
 	}

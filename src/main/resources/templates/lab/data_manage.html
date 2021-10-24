@@ -22,7 +22,57 @@
         th, tbody tr {
             background-color: white;
         }
-
+		.top-menu .main-content{
+			background-color:#FCFCFC;
+		}
+		.top-menu .main-content .contents{
+			background-color:#FCFCFC;
+		}
+		.atbd-box{
+			display: inherit;
+		    width: 100%;
+		    justify-content: center;
+		}
+		.atbd-upload{
+			flex: 0 0 50%;
+		}
+		.atbd-box a {
+			width:100%;
+		}
+		.atbd-box button{
+			background-color:#217566;
+			border: 1px solid #217566;
+			margin-left: 10px;
+		}
+		.top-menu .main-content .card{
+			padding-bottom: 100px;
+		}
+		.top-menu .main-content .btn-primary{
+			background-color:#EDF6F1;
+			color:#217566;
+		}
+		.top-menu .main-content .btn-primary img{
+			margin-right: 10px;
+		}
+		.top-menu .main-content .align-items-center{
+			justify-content: center;
+		}
+		select{
+			margin-left: 25px;
+		}
+		.top-menu .main-content .form-group{
+			margin-left: 30px;
+   		    padding-bottom: 0;
+		}
+		.main-content .form-group input[type=text]{
+			margin-left: 25px;
+		}
+		@media (min-width: 576px){
+			.top-menu .main-content .modal-dialog {
+			    max-width: 850px;
+			    margin: 1.75rem auto;
+			}
+		}
     </style>
 
 </head>
@@ -35,9 +85,9 @@
 <!-- 공통 topbar -->
 <th:block th:include="@{/fragments/topbar.html}"></th:block>
 
-<main class="main-content" style="background-color: #fafef5;">
+<main class="main-content">
 
-    <div class="contents" style="background-color: #fafef5;">
+    <div class="contents">
 
         <div class="container-fluid">
             <div class="row">
@@ -48,15 +98,17 @@
                                 <h4 class="text-capitalize breadcrumb-title">DATA 관리</h4>
                             </div>
                         </div>
-                        <div class="atbd-upload">
-                            <div class="atbd-upload__button">
-                                <a href="javascript:void(0)" class="btn btn-lg btn-outline-lighten btn-upload"
-                                   onclick="$('#upload').click()"> <span data-feather="upload"></span>Click to Upload</a>
-                                <input type="file" name="upload-3" class="upload-one" id="upload">
-                            </div>
+                        <div class="atbd-box">
+	                        <div class="atbd-upload">
+	                            <div class="atbd-upload__button">
+	                                <a href="javascript:void(0)" class="btn btn-lg btn-outline-lighten btn-upload"
+	                                   onclick="$('#upload').click()"> <span data-feather="upload"></span>Click to Upload</a>
+	                                <input type="file" name="upload-3" class="upload-one" id="upload">
+	                            </div>
+	                        </div>
+	                        <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#analysis">분석 실행</button>
+	                        <button type="button" class="btn btn-primary btn-sm"><img src="../assets/vendor_assets/img/arrow_bottom.png">Example data download</button>
                         </div>
-                        <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#analysis">분석 실행</button>
-                        <button type="button" class="btn btn-primary btn-sm">Example data download</button>
                     </div>
                 </div>
             </div>
@@ -76,18 +128,19 @@
                             <option>null</option>
                             <option>null</option>
                         </select>
+                        <div class="form-group mb-0">
+	                        <span>회복율 필터</span>
+	                        <input type="text" class="form-control form-control-lg" value="%" style="text-align: right">
+                   		</div>
                     </form>
-                    <div class="form-group mb-0">
-                        <span>회복율 필터</span>
-                        <input type="text" class="form-control form-control-lg" value="%" style="text-align: right">
-                    </div>
+                    
                     <div>
-                        <img class="" width="100px" height="100px" alt="img"/>
+                        <img class="" src="../assets/vendor_assets/img/map1.png" width="100%" height="100%" alt="img"/>
                     </div>
                 </div>
                 <div class="modal-footer" style="border: none">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-primary btn-sm">
+                    <button type="button" class="btn btn-primary btn-sm" style="background-color:#217566; color:#fff">
                         <span data-feather="download"></span>download
                     </button>
                 </div>

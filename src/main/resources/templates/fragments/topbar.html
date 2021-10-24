@@ -1,15 +1,30 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
-
+<style>
+	input[type="text"]:focus{
+		border:1px solid #222;
+	}
+	.main-content .form-group{
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		padding-bottom:10px;
+		align-items: center;
+  	}
+  	.main-content .form-group span {
+  		flex: 0 0 30%;
+  		color: #222222;
+  	}
+  	.main-content .form-group input[type=text]{
+  		flex: 0 0 70%;
+  	}
+</style>
 	<header class="header-top">
         <nav class="navbar navbar-light">
             <div class="navbar-left">
                 <!-- <a href="" class="sidebar-toggle">
                     <img class="svg" src="/img/svg/bars.svg" alt="img"></a> -->
-                <a class="navbar-brand" href="/home">더기반
-                	<!-- 로고 확인하여 수정 필요 -->
-                	<!-- <img class="svg dark" src="/img/svg/logo_dark.svg" alt="svg">
-                	<img class="light" src="/img/logo_white.png" alt="img"> -->
+                <a class="navbar-brand" href="/home"><img src="../assets/vendor_assets/img/logo.png" alt="logo">
                 </a>
                 <form action="/" class="search-form">
                     <span data-feather="search"></span>
@@ -39,7 +54,7 @@
                                 </a>
                                 <ul class="subMenu">
                                     <li>
-                                        <a href="/genetic">품종 관리</a>
+                                        <a href="/genome/genetic">품종 관리</a>
                                     </li>
                                     <li>
                                         <a href="/genome/origin">원종 관리</a>
