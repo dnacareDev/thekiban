@@ -1124,7 +1124,6 @@
         filesBtn.dispatchEvent(eventList);
     }
 
-
     /* 엑셀 코드 */
     function handleExcelDataAll(sheet) {
         handleExcelDataHtml(sheet); // html 형태
@@ -1229,7 +1228,7 @@
                     jQuery.each(arr, function() {
                         obj[this.name] = this.value;
                     });
-                }//if ( arr ) {
+                }
             }
         } catch (e) {
             alert(e.message);
