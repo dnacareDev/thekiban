@@ -80,12 +80,12 @@
         }
 
         .content_1 .input_text input[type="text"] {
-            width: 100%;
+            width: 180%;
         }
 
         .content_1 li {
             display: inline-block;
-            width: 100%;
+            width: 80%;
             color: #222222;
             font-size: 16px;
         }
@@ -204,8 +204,9 @@
                                             <option value="tomato">토마토</option>
                                         </select>
                                     </form>
-                                    <input type="file" id="excelFile" onchange="excelExport(event)">
-                                    <button class="btn btn-lg btn-primary data_btn1"><img src="../assets/vendor_assets/img/icon1.svg" alt=""></button>
+                                    <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none">
+                                    <button class="btn btn-lg btn-primary data_btn1" onclick="filesFunction()"><img
+                                        src="../assets/vendor_assets/img/icon1.svg" alt=""></button>
                                     <button class="btn btn-lg btn-primary data_btn2"><img src="../assets/vendor_assets/img/icon2.png" alt=""></button>
                                     <button class="btn btn-lg btn-primary data_btn2"><img src="../assets/vendor_assets/img/icon3.png" alt=""></button>
                                 </div>
@@ -214,7 +215,8 @@
                         <div class="card-body">
                             <div class="bg-white">
                                 <div class="table-responsive">
-                                    <table class="table" id="table1">
+                                    <div id="display"></div>
+                                    <!--<table class="table" id="table1">
                                         <thead class="text-center">
                                         <tr>
                                             <th></th>
@@ -226,26 +228,26 @@
                                             <th><span class="title">특성상태</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
                                                                                            alt="특성상태"></th>
                                             <th><span class="title">원소재 계통번호</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                             alt="원소재 계통번호"></th>
+                                                                                               alt="원소재 계통번호"></th>
                                             <th><span class="title">원종 계통번호</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                             alt="원종 계통번호"></th>
+                                                                                              alt="원종 계통번호"></th>
                                             <th><span class="title">B.N. 기준년도</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                                 alt="B.N. 기준년도"></th>
+                                                                                                alt="B.N. 기준년도"></th>
                                             <th><span class="title">B.N. (교배번호)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                                 alt="B.N. (교배번호)"></th>
+                                                                                                  alt="B.N. (교배번호)"></th>
                                             <th><span class="title">종자번호(ID)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                                  alt="종자번호(ID)"></th>
+                                                                                               alt="종자번호(ID)"></th>
                                             <th><span class="title">현 종자량(g)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                                  alt="현 종자량(g)"></th>
+                                                                                               alt="현 종자량(g)"></th>
                                             <th><span class="title">천립중(g)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                                  alt="천립중(g)"></th>
+                                                                                             alt="천립중(g)"></th>
                                             <th><span class="title">계통번호 부여일(g)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                             alt="계통번호 부여일(g)"></th>
+                                                                                                  alt="계통번호 부여일(g)"></th>
                                             <th><span class="title">비고</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                             alt="비고"></th>
+                                                                                         alt="비고"></th>
                                         </tr>
                                         </thead>
-                                        <!--<tbody class="text-center">
+                                        <tbody class="text-center">
                                         <tr>
                                             <td><input type="checkbox"></td>
                                             <td>
@@ -260,21 +262,16 @@
                                             <td><span>02-0205-2019-111</span></td>
                                             <td><span>2017-11-11</span></td>
                                         </tr>
-                                        </tbody>-->
-                                    </table>
-                                    <div id="displayExcelHtml"></div>
+                                        </tbody>
+                                    </table>-->
                                 </div>
 
 
                                 <div class="row">
                                     <div class="col-4">
                                         <button class="btn btn-icon btn-light btn-circle" data-toggle="modal" data-target="#grid">
-                                            <span data-feather="plus">temp</span>
-                                        </button>
-                                        <button class="btn btn-icon btn-light btn-circle" data-toggle="modal" data-target="#gen-insert">
                                             <span data-feather="plus"></span>
                                         </button>
-
                                         <button class="btn btn-icon btn-light btn-circle">
                                             <span data-feather="trash-2"></span>
                                         </button>
@@ -357,7 +354,7 @@
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white ">
                 <div class="modal-header" style="border: none">
-                    <h6 class="modal-title">품종관리 > 원예형질[종자원 기준]</h6>
+                    <h6 class="modal-title">품종관리 > 기본 정보</h6>
                     시교명 ID : <span></span>
                 </div>
                 <div class="modal-body">
@@ -367,9 +364,14 @@
                                 <div class="top_box">
                                     <ul class="nav nav-tabs vertical-tabs" role="tablist">
                                         <li class="nav-item">
+                                            <a class="nav-link active" id="tab-horizontal-0-tab" data-toggle="tab"
+                                               href="#tab-horizontal-0" role="tab" aria-controls="tab-horizontal-0"
+                                               aria-selected="true">기본 정보</a>
+                                        </li>
+                                        <li class="nav-item">
                                             <a class="nav-link active" id="tab-horizontal-1-tab" data-toggle="tab"
                                                href="#tab-horizontal-1" role="tab" aria-controls="tab-horizontal-1"
-                                               aria-selected="true">원예형질[종자원 기준]</a>
+                                               aria-selected="false">원예형질[종자원 기준]</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" id="tab-horizontal-2-tab" data-toggle="tab"
@@ -401,7 +403,64 @@
                                     <span class="next"></span>
                                 </div>
                                 <div class="tab-content">
-                                    <div class="tab-pane fade show active" id="tab-horizontal-1" role="tabpanel"
+                                    <div class="tab-pane fade show active" id="tab-horizontal-0" role="tabpanel"
+                                         aria-labelledby="tab-horizontal-0-tab">
+                                        <div class="content_title clearfix">
+                                            <ul>
+                                                <li>형질</li>
+                                                <li>조사값</li>
+                                            </ul>
+                                        </div>
+                                        <div class="content_1 clearfix">
+                                            <ul>
+                                                <li>
+                                                    <div class="title">작물</div>
+                                                    <div class="input_text"><input type="text"></div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">계통명(ID)</div>
+                                                    <div class="input_text"><input type="text"></div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">원소재 계통번호</div>
+                                                    <div class="input_text"><input type="text"></div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">원종 계통번호</div>
+                                                    <div class="input_text"><input type="text"></div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">B.N. 기준 년도</div>
+                                                    <div class="input_text"><input type="text"></div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">B.N. (교배번호)</div>
+                                                    <div class="input_text"><input type="text"></div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">종자번호(ID)</div>
+                                                    <div class="input_text"><input type="text"></div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">현 종자량(g)</div>
+                                                    <div class="input_text"><input type="text"></div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">천립중(g)</div>
+                                                    <div class="input_text"><input type="text"></div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">계통번호 부여일</div>
+                                                    <div class="input_text"><input type="text"></div>
+                                                </li>
+                                                <li>
+                                                    <div class="title">비고</div>
+                                                    <div class="input_text"><input type="text"></div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="tab-horizontal-1" role="tabpanel"
                                          aria-labelledby="tab-horizontal-1-tab">
                                         <div class="content_title clearfix">
                                             <ul>
@@ -929,6 +988,7 @@
             </div>
         </div>
     </div>
+    <!--
     <div class="modal-basic modal fade show pop3" id="gen-insert" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white ">
@@ -971,7 +1031,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
     <!-- 확인버튼 마크업입니다 display는 테이블이오니 display:block이 아닌 table로 해주셔야 자동 높이를 가집니다 -->
     <!-- <div class="modal-basic modal fade show pop4" id="gen-messege" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
@@ -992,6 +1052,7 @@
 <th:block th:include="@{/fragments/footer.html}"></th:block>
 <!-- 공통 js -->
 <th:block th:include="@{/fragments/commonjs.html}"></th:block>
+
 <script type="text/javascript">
     let topBox = document.getElementsByClassName("top_box")[0];
     let [nav, prev, next] = topBox.children;
@@ -1052,38 +1113,85 @@
         contentLi[f].classList.add("show");
     }
 
-    /* 동작하는 코드 */
-    function handleExcelDataAll(sheet){
+    function filesFunction() {
+        let filesBtn = document.getElementById("excelFile");
+        var eventList = document.createEvent("MouseEvent");
+
+        eventList.initEvent("click");
+        filesBtn.dispatchEvent(eventList);
+    }
+
+
+    /* 엑셀 코드 */
+    function handleExcelDataAll(sheet) {
         handleExcelDataHtml(sheet); // html 형태
     }
 
     /* Html 형태로 출력 */
-    function handleExcelDataHtml(sheet){
-        $("#displayExcelHtml").html(XLSX.utils.sheet_to_html (sheet));
+    function handleExcelDataHtml(sheet) {
+        $("#displayExcelHtml").html(XLSX.utils.sheet_to_html(sheet));
     }
 
-    function excelExport(event){
+    function excelExport(event) {
         excelExportCommon(event, handleExcelDataAll);
     }
 
-    function excelExportCommon(event, callback){
+    function excelExportCommon(event, callback) {
         var input = event.target;
         var reader = new FileReader();
 
-        reader.onload = function(){
+        reader.onload = function () {
             var fileData = reader.result;
-            var wb = XLSX.read(fileData, {type : 'binary'});
+            var wb = XLSX.read(fileData, {type: 'binary'});
             var sheetNameList = wb.SheetNames; // 시트 이름 목록 가져오기
             var secondSheetName = sheetNameList[1]; // 두번째 시트명
             var secondSheet = wb.Sheets[secondSheetName]; // 첫번째 시트
             callback(secondSheet);
 
             var rowdata = XLSX.utils.sheet_to_json(wb.Sheets[secondSheetName]);
-            console.log(JSON.stringify(rowdata));
+            console.log(rowdata.length);
+
+            var html = "<table class='table'>";
+
+
+            for (var i = 1; i < rowdata.length; i++) {
+                if (i === 1) {
+                    html += "<thead class='text-center'>";
+                    html += "<tr>";
+                    html += "<th></th>";
+                    html += "<th><span className='title'>첨부파일</span><i></i><img src='../assets/vendor_assets/img/title_icon.png' alt='첨부파일'></th>";
+
+                    $.each(rowdata[1], function (idx, value) {
+                        html += "<th><span class='title'>" + value + "</span><i></i><img src='../assets/vendor_assets/img/title_icon.png' alt='ID'></th>";
+                    })
+
+                    html += "</tr>";
+                    html += "</thead>";
+                } else if(i !== 1) {
+                    html += "<tbody class='text-center'>";
+                    html += "<tr>";
+                    html += "<td><input type='checkbox'></td>";
+                    html += "<td><button class='btn btn-light btn-default btn-squared btn-transparent-light' data-toggle='modal' data-target='#gen-attach'><span data-feather='file-plus'></span></button></td>"
+
+                    $.each(rowdata[i], function (idx, value) {
+                        html += "<td><span>" + value + "</span></td>";
+                    })
+
+                    html += "</tr>";
+                    html += "</tbody>";
+                }
+            }
+
+            html += "</table>";
+
+            $("#display").empty(html);
+            $("#display").append(html);
         };
 
         reader.readAsBinaryString(input.files[0]);
     }
+
+
 </script>
 </body>
 
