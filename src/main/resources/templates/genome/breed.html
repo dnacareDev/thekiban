@@ -210,48 +210,55 @@
                         <div class="card-body">
                             <div class="bg-white">
                                 <div class="table-responsive">
-                                    <div id="display"></div>
-                                    <!--<table class="table">
-                                        <thead class="text-center">
+                                    <!--<div id="display"></div>-->
+                                    <table class="table" id="display">
+                                        <thead class='text-center'>
                                         <tr>
                                             <th></th>
-                                            <th><span class="title">첨부파일</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="첨부파일">
-                                            </th>
-                                            <th><span class="title">작물</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                         alt="작물"></th>
-                                            <th><span class="title">시교명(ID)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                         alt="시교명(ID)"></th>
-                                            <th><span class="title">품종명</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                          alt="종자 보유량"></th>
-                                            <th><span class="title">특성상태</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="입고량">
-                                            </th>
-                                            <th><span class="title">모계 계통명</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                             alt="출고량"></th>
-                                            <th><span class="title">부계 계통명</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                             alt="재고량"></th>
-                                            <th><span class="title">생산판매(신고번호)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                                 alt="당담자"></th>
-                                            <th><span class="title">생산판매(신고일자)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                                 alt="인수자"></th>
+                                            <th><span className='title'>첨부파일</span><i></i><img src='../assets/vendor_assets/img/title_icon.png'
+                                                                                               alt='첨부파일'></th>
                                         </tr>
                                         </thead>
-                                        <tbody class="text-center">
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td>
-                                                <button class="btn btn-light btn-default btn-squared btn-transparent-light"
-                                                        data-toggle="modal" data-target="#gen-attach"><span data-feather="file-plus"></span></button>
-                                            </td>
-                                            <td><span>19PC4155</span></td>
-                                            <td><span>에이스</span></td>
-                                            <td><span>Empty</span></td>
-                                            <td><span>CGMS-1234A</span></td>
-                                            <td><span>A42-1</span></td>
-                                            <td><span>02-0205-2019-111</span></td>
-                                            <td><span>2017-11-11</span></td>
-                                        </tr>
-                                        </tbody>
-                                    </table>-->
+                                            <!--<thead class="text-center">
+                                            <tr>
+                                                <th></th>
+                                                <th><span class="title">첨부파일</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="첨부파일">
+                                                </th>
+                                                <th><span class="title">작물</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
+                                                                                             alt="작물"></th>
+                                                <th><span class="title">시교명(ID)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
+                                                                                             alt="시교명(ID)"></th>
+                                                <th><span class="title">품종명</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
+                                                                                              alt="종자 보유량"></th>
+                                                <th><span class="title">특성상태</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="입고량">
+                                                </th>
+                                                <th><span class="title">모계 계통명</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
+                                                                                                 alt="출고량"></th>
+                                                <th><span class="title">부계 계통명</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
+                                                                                                 alt="재고량"></th>
+                                                <th><span class="title">생산판매(신고번호)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
+                                                                                                     alt="당담자"></th>
+                                                <th><span class="title">생산판매(신고일자)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
+                                                                                                     alt="인수자"></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody class="text-center">
+                                            <tr>
+                                                <td><input type="checkbox"></td>
+                                                <td>
+                                                    <button class="btn btn-light btn-default btn-squared btn-transparent-light"
+                                                            data-toggle="modal" data-target="#gen-attach"><span data-feather="file-plus"></span></button>
+                                                </td>
+                                                <td><span>19PC4155</span></td>
+                                                <td><span>에이스</span></td>
+                                                <td><span>Empty</span></td>
+                                                <td><span>CGMS-1234A</span></td>
+                                                <td><span>A42-1</span></td>
+                                                <td><span>02-0205-2019-111</span></td>
+                                                <td><span>2017-11-11</span></td>
+                                            </tr>
+                                            </tbody>-->
+                                    </table>
                                 </div>
 
                                 <div class="row">
@@ -1058,6 +1065,7 @@
         contentLi[f].classList.add("show");
     }
 
+    /* 엑셀 업로드 버튼 */
     function filesFunction() {
         let filesBtn = document.getElementById("excelFile");
         var eventList = document.createEvent("MouseEvent");
@@ -1094,21 +1102,24 @@
 
             var rowdata = XLSX.utils.sheet_to_json(wb.Sheets[firstSheetName]);
 
-            var html = "<table class='table'>";
+            // var html = "<table class='table'>";
+            var html = "";
 
             for (var i = 1; i < rowdata.length; i++) {
                 if (i === 1) {
-                    html += "<thead class='text-center'>";
-                    html += "<tr>";
-                    html += "<th></th>";
-                    html += "<th><span className='title'>첨부파일</span><i></i><img src='../assets/vendor_assets/img/title_icon.png' alt='첨부파일'></th>";
+                    // html += "<thead class='text-center'>";
+                    // html += "<tr>";
+                    // html += "<th></th>";
+                    // html += "<th><span className='title'>첨부파일</span><i></i><img src='../assets/vendor_assets/img/title_icon.png' alt='첨부파일'></th>";
 
                     $.each(rowdata[1], function (idx, value) {
                         html += "<th><span class='title'>" + value + "</span><i></i><img src='../assets/vendor_assets/img/title_icon.png'></th>";
                     })
 
-                    html += "</tr>";
-                    html += "</thead>";
+                    // html += "</tr>";
+                    // html += "</thead>";
+
+                    $("#display>thead>tr").append(html);
                 } else if (i !== 1) {
                     html += "<tbody class='text-center'>";
                     html += "<tr>";
@@ -1124,9 +1135,9 @@
                 }
             }
 
-            html += "</table>";
+            // html += "</table>";
 
-            $("#display").empty(html);
+            // $("#display").empty(html);
             $("#display").append(html);
         };
 
@@ -1144,7 +1155,7 @@
         html += "<td><button class='btn btn-light btn-default btn-squared btn-transparent-light' data-toggle='modal' data-target='#gen-attach'><span data-feather='file-plus'></span></button></td>";
 
         $.each(gibon, function (idx, value) {
-            if(value === '') {
+            if (value === '') {
                 html += "<td><span>-</span></td>";
             } else {
                 html += "<td><span>" + value + "</span></td>";
@@ -1158,14 +1169,14 @@
     }
 
     /* form data to json */
-    jQuery.fn.serializeObject = function() {
+    jQuery.fn.serializeObject = function () {
         var obj = null;
         try {
             if (this[0].tagName && this[0].tagName.toUpperCase() == "FORM") {
                 var arr = this.serializeArray();
                 if (arr) {
                     obj = {};
-                    jQuery.each(arr, function() {
+                    jQuery.each(arr, function () {
                         obj[this.name] = this.value;
                     });
                 }
@@ -1178,6 +1189,7 @@
         return obj;
     };
 
+    /* row 삭제 */
     function delRow() {
         var checkRows = $("[name = 'chkBox']:checked");
 
