@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:with="user = ${#authentication.principal}">
 <style>
 	input[type="text"]:focus{
 		border:1px solid #222;
@@ -22,25 +22,14 @@
 	<header class="header-top">
         <nav class="navbar navbar-light">
             <div class="navbar-left">
-                <!-- <a href="" class="sidebar-toggle">
-                    <img class="svg" src="/img/svg/bars.svg" alt="img"></a> -->
-                <a class="navbar-brand" href="/home"><img src="../assets/vendor_assets/img/logo.png" alt="logo">
-                </a>
+                <a class="navbar-brand" href="/home"><img src="../assets/vendor_assets/img/logo.png" alt="logo"></a>
                 <form action="/" class="search-form">
                     <span data-feather="search"></span>
                     <input class="form-control mr-sm-2 box-shadow-none" type="search" placeholder="Search..." aria-label="Search">
                 </form>
                 <div class="top-menu">
-
                     <div class="strikingDash-top-menu position-relative">
                         <ul>
-                        	<!-- 로그인 기능 추가되면 권한에 따라 홈 바뀌게 하기 -->
-                            <!-- <li>
-                                <a href="/home" class="active">
-                                	<span data-feather="home" class="nav-icon"></span>
-		                            <span class="menu-text">홈</span>
-                                </a>
-                            </li> -->
                             <li>
                                 <a href="/home" id="home">
                                 	<span data-feather="home" class="nav-icon"></span>
@@ -120,8 +109,6 @@
                     </div>
                 </div>
             </div>
-            <!-- ends: navbar-left -->
-
             <div class="navbar-right">
                 <ul class="navbar-right__menu">
                     <li class="nav-search d-none">
@@ -225,53 +212,44 @@
                                         <img src="/img/author-nav.jpg" alt="" class="rounded-circle">
                                     </div>
                                     <div>
-                                        <h6>Abdullah Bin Talha</h6>
+                                        <h6 th:text="${user.user_name}"></h6>
                                         <span>UI Designer</span>
                                     </div>
                                 </div>
                                 <div class="nav-author__options">
                                     <ul>
                                         <li>
-                                            <a href="">
-                                                <span data-feather="user"></span> Profile</a>
+                                            <a href=""><span data-feather="user"></span> Profile</a>
                                         </li>
                                         <li>
-                                            <a href="">
-                                                <span data-feather="settings"></span> Settings</a>
+                                            <a href=""><span data-feather="settings"></span> Settings</a>
                                         </li>
                                         <li>
-                                            <a href="">
-                                                <span data-feather="key"></span> Billing</a>
+                                            <a href=""><span data-feather="key"></span> Billing</a>
                                         </li>
                                         <li>
-                                            <a href="">
-                                                <span data-feather="users"></span> Activity</a>
+                                            <a href=""><span data-feather="users"></span> Activity</a>
                                         </li>
                                         <li>
-                                            <a href="">
-                                                <span data-feather="bell"></span> Help</a>
+                                            <a href=""><span data-feather="bell"></span> Help</a>
                                         </li>
                                     </ul>
-                                    <a href="" class="nav-author__signout">
-                                        <span data-feather="log-out"></span> Sign Out</a>
+                                    <a href="/logout" class="nav-author__signout"><span data-feather="log-out"></span> Sign Out</a>
                                 </div>
                             </div>
-                            <!-- ends: .dropdown-wrapper -->
                         </div>
                     </li>
-                    <!-- ends: .nav-author -->
                 </ul>
-                <!-- ends: .navbar-right__menu -->
                 <div class="navbar-right__mobileAction d-md-none">
                     <a href="#" class="btn-search">
-                        <span data-feather="search"></span>
-                        <span data-feather="x"></span></a>
+                    	<span data-feather="search"></span>
+                    	<span data-feather="x"></span>
+                    </a>
                     <a href="#" class="btn-author-action">
-                        <span data-feather="more-vertical"></span></a>
+                    	<span data-feather="more-vertical"></span>
+                    </a>
                 </div>
             </div>
-            <!-- ends: .navbar-right -->
         </nav>
     </header>
-
 </html>
