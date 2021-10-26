@@ -1143,10 +1143,6 @@
 
             var rowdata = XLSX.utils.sheet_to_json(firstSheet);
 
-            console.log(rowdata);
-
-            console.log(rowdata.hasOwnProperty('__EMPTY_16'));
-
             var html = "";
 
             for (var i = 1; i < rowdata.length; i++) {
@@ -1170,23 +1166,43 @@
                     html += "<td><button class='btn btn-light btn-default btn-squared btn-transparent-light' data-toggle='modal' data-target='#gen-attach'><span data-feather='file-plus'></span></button></td>";
                     html += "<td><span></span></td>";
 
-                    // $.each(rowdata[i], function (idx, value) {
-                    //     console.log(idx.length);
-                    //
-                    //     if (idx.length === 9) {
-                    //         if (idx.charAt(8) )
-                    //     }
-                    //
-                    //
-                    // })
+                    var tmp = Object.keys(rowdata[1]);
+                    var j = 0;
 
-                    for (var j = 0; j < rowdata[i].length; j++) {
-                        html += "<td><span>" + rowdata[i]. + "</span></td>";
-                    }
+                    $.each(rowdata[i], function (idx, value) {
 
-                    html += "</tr>";
-                    html += "</tbody>";
+                        console.log(idx)
+                        console.log(tmp[j])
+
+                        if(idx == tmp[j]) {
+                            html += "<td><span>" + value + "</span></td>";
+                            j++;
+                        } else {
+                            var idx_str = idx.replace(/[^0-9]/g,'');
+                            var tmp_str = tmp[j].replace(/[^0-9]/g,'');
+
+                            var gap = idx_str - tmp_str;
+
+                            console.log(gap);
+
+                            while(gap > 0) {
+                                gap--;
+                                html += "<td><span></span></td>";
+                            }
+                            html += "<td><span>" + value + "</span></td>";
+
+                            console.log(j);
+
+                            j = idx_str;
+                            j++;
+                            j++;
+                            console.log(j);
+                        }
+                    })
                 }
+
+                html += "</tr>";
+                html += "</tbody>";
             }
 
             $("#display").empty(html);
@@ -1209,7 +1225,7 @@
 
         $.each(gibon, function (idx, value) {
             if (value === '') {
-                html += "<td><span>-</span></td>";
+                html += "<td><span></span></td>";
             } else {
                 html += "<td><span>" + value + "</span></td>";
             }

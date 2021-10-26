@@ -1218,8 +1218,38 @@
                     html += "<td><button class='btn btn-light btn-default btn-squared btn-transparent-light' data-toggle='modal' data-target='#gen-attach'><span data-feather='file-plus'></span></button></td>";
                     html += "<td><span></span></td>";
 
+                    var tmp = Object.keys(rowdata[1]);
+                    var j = 0;
+
                     $.each(rowdata[i], function (idx, value) {
-                        html += "<td><span>" + value + "</span></td>";
+
+                        console.log(idx)
+                        console.log(tmp[j])
+
+                        if(idx == tmp[j]) {
+                            html += "<td><span>" + value + "</span></td>";
+                            j++;
+                        } else {
+                            var idx_str = idx.replace(/[^0-9]/g,'');
+                            var tmp_str = tmp[j].replace(/[^0-9]/g,'');
+
+                            var gap = idx_str - tmp_str;
+
+                            console.log(gap);
+
+                            while(gap > 0) {
+                                gap--;
+                                html += "<td><span></span></td>";
+                            }
+                            html += "<td><span>" + value + "</span></td>";
+
+                            console.log(j);
+
+                            j = idx_str;
+                            j++;
+                            j++;
+                            console.log(j);
+                        }
                     })
 
                     html += "</tr>";
@@ -1247,7 +1277,7 @@
 
         $.each(gibon, function (idx, value) {
             if (value === '') {
-                html += "<td><span>-</span></td>";
+                html += "<td><span></span></td>";
             } else {
                 html += "<td><span>" + value + "</span></td>";
             }
