@@ -36,12 +36,12 @@ public class GenomeController {
     return mv;
   }
 
-  //시교자원 관리 페이지
+/*  //시교자원 관리 페이지
   @GetMapping(value = "/sample")
   public ModelAndView getTestHarvestList(ModelAndView mv) {
 
     mv.setViewName("genome/sample");
 
     return mv;
-  }
+  }*/
 }

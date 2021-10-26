@@ -215,18 +215,18 @@
                         <div class="card-body">
                             <div class="bg-white">
                                 <div class="table-responsive">
-                                    <div id="display"></div>
-                                    <!--<table class="table" id="table1">
+                                    <table class="table" id="table1">
                                         <thead class="text-center">
                                         <tr>
                                             <th></th>
                                             <th><span class="title">첨부파일</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
                                                                                            alt="첨부파일"></th>
-                                            <th><span class="title">계통명(ID)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                              alt="ID">
-                                            </th>
                                             <th><span class="title">특성상태</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
                                                                                            alt="특성상태"></th>
+                                            <th><span class="title">작물</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
+                                                                                         alt="작물"></th>
+                                            <th><span class="title">계통명(ID)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
+                                                                                              alt="ID"></th>
                                             <th><span class="title">원소재 계통번호</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
                                                                                                alt="원소재 계통번호"></th>
                                             <th><span class="title">원종 계통번호</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
@@ -236,18 +236,18 @@
                                             <th><span class="title">B.N. (교배번호)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
                                                                                                   alt="B.N. (교배번호)"></th>
                                             <th><span class="title">종자번호(ID)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                               alt="종자번호(ID)"></th>
+                                                                                               alt="종자번호"></th>
                                             <th><span class="title">현 종자량(g)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                               alt="현 종자량(g)"></th>
+                                                                                               alt="현 종자량"></th>
                                             <th><span class="title">천립중(g)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                             alt="천립중(g)"></th>
+                                                                                             alt="천립중"></th>
                                             <th><span class="title">계통번호 부여일(g)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                                  alt="계통번호 부여일(g)"></th>
+                                                                                                  alt="계통번호 부여일"></th>
                                             <th><span class="title">비고</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
                                                                                          alt="비고"></th>
                                         </tr>
                                         </thead>
-                                        <tbody class="text-center">
+                                        <!--<tbody class="text-center">
                                         <tr>
                                             <td><input type="checkbox"></td>
                                             <td>
@@ -262,8 +262,50 @@
                                             <td><span>02-0205-2019-111</span></td>
                                             <td><span>2017-11-11</span></td>
                                         </tr>
+                                        </tbody>-->
+                                    </table>
+                                    <table class="table" id="table2">
+                                        <thead class="text-center">
+                                        <tr>
+                                            <th>종자번호</th>
+                                            <th>종자 보유량</th>
+                                            <th>입고량</th>
+                                            <th>출고량</th>
+                                            <th>재고량</th>
+                                            <th>담당자</th>
+                                            <th>일자</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="text-center">
+                                        <tr>
+                                            <td><span>PC17C0123</span></td>
+                                            <td><span>60</span></td>
+                                            <td><span>0</span></td>
+                                            <td><span>20</span></td>
+                                            <td><span>40</span></td>
+                                            <td><span>백향구</span></td>
+                                            <td><span>2020-01-05</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span>PC17C0123</span></td>
+                                            <td><span>60</span></td>
+                                            <td><span>0</span></td>
+                                            <td><span>0</span></td>
+                                            <td><span>60</span></td>
+                                            <td><span>백향구</span></td>
+                                            <td><span>2020-01-02</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><span>Pl98dd7s</span></td>
+                                            <td><span>0</span></td>
+                                            <td><span>60</span></td>
+                                            <td><span>0</span></td>
+                                            <td><span>60</span></td>
+                                            <td><span>백향구</span></td>
+                                            <td><span>2020-01-02</span></td>
+                                        </tr>
                                         </tbody>
-                                    </table>-->
+                                    </table>
                                 </div>
 
 
@@ -1146,14 +1188,14 @@
             var wb = XLSX.read(fileData, {type: 'binary'});
             var sheetNameList = wb.SheetNames; // 시트 이름 목록 가져오기
             var secondSheetName = sheetNameList[1]; // 두번째 시트명
-            var secondSheet = wb.Sheets[secondSheetName]; // 첫번째 시트
+            var secondSheet = wb.Sheets[secondSheetName]; // 두번째 시트
             callback(secondSheet);
 
             var rowdata = XLSX.utils.sheet_to_json(wb.Sheets[secondSheetName]);
             console.log(rowdata.length);
             console.log(rowdata[1]);
 
-            var html = "<table class='table'>";
+            var html = "";
 
             for (var i = 1; i < rowdata.length; i++) {
                 if (i === 1) {
@@ -1161,6 +1203,7 @@
                     html += "<tr>";
                     html += "<th></th>";
                     html += "<th><span className='title'>첨부파일</span><i></i><img src='../assets/vendor_assets/img/title_icon.png' alt='첨부파일'></th>";
+                    html += "<th><span className='title'>특성상태</span><i></i><img src='../assets/vendor_assets/img/title_icon.png' alt='특성상태'>";
 
                     $.each(rowdata[1], function (idx, value) {
                         html += "<th><span class='title'>" + value + "</span><i></i><img src='../assets/vendor_assets/img/title_icon.png'></th>";
@@ -1173,6 +1216,7 @@
                     html += "<tr>";
                     html += "<td><input type='checkbox' name='chkBox'></td>";
                     html += "<td><button class='btn btn-light btn-default btn-squared btn-transparent-light' data-toggle='modal' data-target='#gen-attach'><span data-feather='file-plus'></span></button></td>";
+                    html += "<td><span></span></td>";
 
                     $.each(rowdata[i], function (idx, value) {
                         html += "<td><span>" + value + "</span></td>";
@@ -1183,10 +1227,8 @@
                 }
             }
 
-            html += "</table>";
-
-            $("#display").empty(html);
-            $("#display").append(html);
+            $("#table1").empty(html);
+            $("#table1").append(html);
         };
 
         reader.readAsBinaryString(input.files[0]);
@@ -1201,6 +1243,7 @@
         html += "<tr>";
         html += "<td><input type='checkbox' name='chkBox'></td>";
         html += "<td><button class='btn btn-light btn-default btn-squared btn-transparent-light' data-toggle='modal' data-target='#gen-attach'><span data-feather='file-plus'></span></button></td>";
+        html += "<td><span></span></td>";
 
         $.each(gibon, function (idx, value) {
             if (value === '') {
