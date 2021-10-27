@@ -1,5 +1,6 @@
 package com.thekiban.Controller;
 
+import com.thekiban.Entity.Basic;
 import com.thekiban.Entity.Income;
 import com.thekiban.Service.IncomeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ public class IncomeController {
   private IncomeService service;
 
   //도입자원 관리 페이지
-  @GetMapping(value = "income")
+  @RequestMapping(value = "income")
   public ModelAndView getIntroResourceList(ModelAndView mv) {
 
     mv.setViewName("genome/income");
@@ -37,6 +38,32 @@ public class IncomeController {
     return mv;
   }
 
+  // 도입자원 검색
+  @ResponseBody
+  @RequestMapping("searchIncome")
+  public Map<String, Object> SearchIncome(@RequestParam("page_num") int page_num)
+  {
+    Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+    int count = service.SelectIncomeCount();
+
+    int limit = 10;
+    int offset = (page_num - 1) * limit;
+    int end_page = (count + limit - 1) / limit;
+
+    List<Income> income = service.SearchIncome(offset, limit);
+
+    result.put("income", income);
+    result.put("page_num", page_num);
+    result.put("end_page", end_page);
+    result.put("offset", offset);
+
+    System.out.println(result);
+
+    return result;
+  }
+
+/*
   @ResponseBody
   @RequestMapping("income/incomeList")
   public Map<String, Object> incomeList(@RequestParam("income_type") String income_type) {
@@ -50,5 +77,5 @@ public class IncomeController {
     System.out.println(income);
 
     return result;
-  }
+  }*/
 }

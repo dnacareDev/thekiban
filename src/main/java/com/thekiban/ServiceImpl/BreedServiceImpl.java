@@ -38,4 +38,18 @@ public class BreedServiceImpl implements BreedService {
     return mapper.InsertStandard(standard);
   }
 
+  // 원종 갯수 조회
+  @Override
+  public int SelectBreedCount()
+  {
+    return mapper.SelectBreedCount();
+  }
+
+  // 원종 검색
+  @Override
+  public List<Breed> SearchBreed(int offset, int limit)
+  {
+    return mapper.SearchBreed(offset, limit);
+  }
+
 }

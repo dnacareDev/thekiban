@@ -58,7 +58,9 @@ public class BasicController
 		result.put("page_num", page_num);
 		result.put("end_page", end_page);
 		result.put("offset", offset);
-		
+
+		System.out.println(result);
+
 		return result;
 	}
 	
@@ -84,8 +86,8 @@ public class BasicController
    			if(value != "")
    			{
    				item.setBasic_id(basic.getBasic_id());
-   				item.setDetail_id(Integer.parseInt(detail_id));;
-   				item.setStandard((String)obj.get("value"));
+   				item.setDetail_id(Integer.parseInt(detail_id));
+					item.setStandard((String)obj.get("value"));
    				
    				standard.add(item);
    			}

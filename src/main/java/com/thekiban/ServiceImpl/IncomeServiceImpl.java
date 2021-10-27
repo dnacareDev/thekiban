@@ -1,5 +1,6 @@
 package com.thekiban.ServiceImpl;
 
+import com.thekiban.Entity.Basic;
 import com.thekiban.Entity.Income;
 import com.thekiban.Mapper.IncomeMapper;
 import com.thekiban.Service.IncomeService;
@@ -20,15 +21,18 @@ public class IncomeServiceImpl implements IncomeService {
     return mapper.InsertIncome(income);
   }
 
-  // 목록 개수
+  // 원종 갯수 조회
   @Override
-  public int SelectIncomeListCount(String income_type) {
-    return mapper.SelectIncomeListCount(income_type);
+  public int SelectIncomeCount()
+  {
+    return mapper.SelectIncomeCount();
   }
 
-  // 도입자원 목록 읽어오기
+  // 원종 검색
   @Override
-  public List<Income> SearchIncomeList(String income_type) {
-    return mapper.SearchIncomeList(income_type);
+  public List<Income> SearchIncome(int offset, int limit)
+  {
+    return mapper.SearchIncome(offset, limit);
   }
+
 }

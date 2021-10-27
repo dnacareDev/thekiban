@@ -257,7 +257,7 @@
                                                                                          alt="비고"></th>
                                         </tr>
                                         </thead>
-                                        <!--<tbody class="text-center">
+                                        <tbody class="text-center" id="breed_list">
                                         <tr>
                                             <td><input type="checkbox"></td>
                                             <td>
@@ -272,7 +272,7 @@
                                             <td><span>02-0205-2019-111</span></td>
                                             <td><span>2017-11-11</span></td>
                                         </tr>
-                                        </tbody>-->
+                                        </tbody>
                                     </table>
                                 </div>
 
@@ -285,7 +285,7 @@
                                             <span data-feather="trash-2"></span>
                                         </button>
                                     </div>
-                                    <div class="col-4">
+                                    <!--<div class="col-4">
                                         <div class="d-flex justify-content-center mt-30">
                                             <nav class="atbd-page">
                                                 <ul class="atbd-pagination d-flex">
@@ -305,6 +305,11 @@
                                                     </li>
                                                 </ul>
                                             </nav>
+                                        </div>
+                                    </div>-->
+                                    <div class="col-4">
+                                        <div class="row" style="justify-content: center;">
+                                            <div id="pageNum" style="text-align:center; margin: 2% 0 0 0;"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -911,7 +916,7 @@
     }
 
     function insertBtn() {
-        var data = new Array();
+        var data = [];
         $("input[name=detail]").each(function(index, item)
         {
             const key = $(this).attr('id');
@@ -925,6 +930,96 @@
         $("#detail_list").val(JSON.stringify(data));
 
         $("#insertForm").submit();
+    }
+
+    $(document).ready(function()
+    {
+        SearchBreed(1);
+    });
+
+    function SearchBreed(e)
+    {
+        var data = {"page_num" : e};
+
+        $.ajax(
+            {
+                url : 'searchBreed',
+                method : 'POST',
+                dataType : 'json',
+                data : data,
+                success : function(result)
+                {
+                    console.log(result);
+                    var breed_list = $("#breed_list");
+                    var add_list = "";
+
+                    var pageNum = $("#pageNum");
+                    var page_add = "";
+
+                    for(var i = 0; i < result.breed.length; i++)
+                    {
+                        add_list += '<tr>';
+                        add_list += '<td><input type="checkbox"></td>';
+                        add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><span data-feather="file-plus"></span></button></td>';
+                        add_list += '<td>' + result.breed[i].breed_name + '</td>';
+                        add_list += '<td>EMPTY</td>';
+                        add_list += '<td>' + result.breed[i].breed_code + '</td>';
+                        add_list += '<td>' + result.breed[i].breed_kind + '</td>';
+                        add_list += '<td>' + result.breed[i].breed_mom + '</td>';
+                        add_list += '<td>' + result.breed[i].breed_dad + '</td>';
+                        add_list += '<td>' + result.breed[i].breed_sale_num + '</td>';
+                        add_list += '<td>' + result.breed[i].breed_sale_date + '</td>';
+                        add_list += '<td>' + result.breed[i].breed_apply_num + '</td>';
+                        add_list += '<td>' + result.breed[i].breed_apply_date + '</td>';
+                        add_list += '<td>' + result.breed[i].breed_enroll_num + '</td>';
+                        add_list += '<td>' + result.breed[i].breed_enroll_date + '</td>';
+                        add_list += '<td>' + result.breed[i].breed_local + '</td>';
+                        add_list += '<td>' + result.breed[i].breed_purpose + '</td>';
+                        add_list += '<td>' + result.breed[i].breed_first_form + '</td>';
+                        add_list += '<td>' + result.breed[i].breed_second_form + '</td>';
+                        add_list += '<td>' + result.breed[i].breed_first_crop + '</td>';
+                        add_list += '<td>' + result.breed[i].breed_second_crop + '</td>';
+                        add_list += '<td>' + result.breed[i].breed_comment + '</td>';
+                        add_list += '</tr>';
+                    }
+
+                    if(result.page_num == 1)
+                    {
+                        page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></button>';
+                    }
+                    else
+                    {
+                        page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchReport(' + (result.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
+                    }
+
+                    for(var i = 0; i < result.end_page; i++)
+                    {
+                        if(result.page_num == (i + 1))
+                        {
+                            page_add += '<button class="atbd-pagination__link active" onclick="SearchReport(' + (i + 1) + ')">' + (i + 1) + '</button>';
+                        }
+                        else
+                        {
+                            page_add += '<button class="atbd-pagination__link" onclick="SearchReport(' + (i + 1) + ')">' + (i + 1) + '</button>';
+                        }
+                    }
+
+                    if(result.page_num == result.end_page)
+                    {
+                        page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-right"></span></button>';
+                    }
+                    else
+                    {
+                        page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchReport(' + (result.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
+                    }
+
+                    breed_list.empty();
+                    breed_list.append(add_list);
+
+                    pageNum.empty();
+                    pageNum.append(page_add);
+                }
+            });
     }
 </script>
 

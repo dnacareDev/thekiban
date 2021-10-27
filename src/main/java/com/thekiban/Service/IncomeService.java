@@ -9,10 +9,10 @@ public interface IncomeService {
   // 도입자원 등록
   int InsertIncome(Income income);
 
-  // 목록 개수
-  int SelectIncomeListCount(String income_type);
+  // 원종 갯수 조회
+  int SelectIncomeCount();
 
-  // 도입자원 목록 읽어오기
-  List<Income> SearchIncomeList(String income_type);
+  // 원종 검색
+  List<Income> SearchIncome(int offset, int limit);
 
 }

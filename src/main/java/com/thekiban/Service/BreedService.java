@@ -17,4 +17,10 @@ public interface BreedService {
 
   // 품정 상세 정보 등록
   int InsertStandard(List<Standard> standard);
+
+  // 원종 갯수 조회
+  int SelectBreedCount();
+
+  // 원종 검색
+  List<Breed> SearchBreed(int offset, int limit);
 }

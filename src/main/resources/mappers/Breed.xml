@@ -32,4 +32,15 @@
         </foreach>
     </insert>
 
+    <!-- 원종 갯수 조회 -->
+    <select id="SelectBreedCount" resultType="int">
+        SELECT COUNT(*) FROM breed
+    </select>
+
+    <!-- 원종 검색 -->
+    <select id="SearchBreed" resultType="Breed">
+        SELECT * FROM breed
+            LIMIT #{offset}, #{limit}
+    </select>
+
 </mapper>

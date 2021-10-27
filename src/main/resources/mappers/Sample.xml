@@ -13,4 +13,12 @@
                 #{sample_comment}, NOW(), NOW())
     </insert>
 
+    <select id="SelectSampleCount" resultType="int">
+        SELECT COUNT(*) FROM sample
+    </select>
+
+    <select id="SearchSample" resultType="Sample">
+        SELECT * FROM sample
+            LIMIT #{offset}, #{limit}
+    </select>
 </mapper>

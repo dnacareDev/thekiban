@@ -286,35 +286,22 @@
                                                                                           alt="비고"></th>
                                         </tr>
                                         </thead>
-                                        <tbody>
-                                        <!--<tr th:each="data : ${datas}">
-                                            <td><input type='checkbox' name='chkBox'></td>
-                                            <td>
-                                                <button class='btn btn-light btn-default btn-squared btn-transparent-light' data-toggle='modal'
-                                                        data-target='#gen-attach'><span data-feather='file-plus'></span></button>
-                                            </td>
-                                            <td><span></span></td>
-                                            <td scope="row" th:text="${data[0]}"></td>
-                                            <td th:text="${data[1]}"></td>
-                                            <td th:text="${data[2]}"></td>
-                                        </tr>-->
+                                        <tbody class="text-center" id="sample_list">
+                                        <tr>
+                                            <td><input type="checkbox"></td>
+                                            <td><span>19PC4155</span></td>
+                                            <td><span>P20C0080</span></td>
+                                            <td><span>0</span></td>
+                                            <td><span>40</span></td>
+                                            <td><span>0</span></td>
+                                            <td><span>40</span></td>
+                                            <td><span>백향구</span></td>
+                                            <td><span>이호석</span></td>
+                                            <td><span>2019-11-11</span></td>
+                                        </tr>
                                         </tbody>
-                                        <!--<tbody class="text-center">-->
-                                        <!--&lt;!&ndash;<tr>-->
-                                        <!--    &lt;!&ndash;<td><input type="checkbox"></td>-->
-                                        <!--    <td><span>19PC4155</span></td>-->
-                                        <!--    <td><span>P20C0080</span></td>-->
-                                        <!--    <td><span>0</span></td>-->
-                                        <!--    <td><span>40</span></td>-->
-                                        <!--    <td><span>0</span></td>-->
-                                        <!--    <td><span>40</span></td>-->
-                                        <!--    <td><span>백향구</span></td>-->
-                                        <!--    <td><span>이호석</span></td>-->
-                                        <!--    <td><span>2019-11-11</span></td>&ndash;&gt;-->
-                                        <!--</tr>&ndash;&gt;-->
-                                        <!--</tbody>-->
                                     </table>
-                                    <table class="table" id="table2">
+                                    <!--<table class="table" id="table2">
                                         <thead class="text-center">
                                         <tr>
                                             <th></th>
@@ -347,7 +334,7 @@
                                             <td><span>해외</span></td>
                                         </tr>
                                         </tbody>
-                                    </table>
+                                    </table>-->
                                 </div>
 
                                 <div class="row">
@@ -760,7 +747,7 @@
     }
 
     function insertBtn() {
-        var data = new Array();
+        var data = [];
         $("input[name=detail]").each(function(index, item)
         {
             const key = $(this).attr('id');
@@ -774,6 +761,87 @@
         $("#origin_list").val(JSON.stringify(data));
 
         $("#insertForm").submit();
+    }
+
+    $(document).ready(function()
+    {
+        SearchSample(1);
+    });
+
+    function SearchSample(e)
+    {
+        var data = {"page_num" : e};
+
+        $.ajax(
+            {
+                url : 'searchSample',
+                method : 'POST',
+                dataType : 'json',
+                data : data,
+                success : function(result)
+                {
+                    console.log(result);
+                    var sample_list = $("#sample_list");
+                    var add_list = "";
+
+                    var pageNum = $("#pageNum");
+                    var page_add = "";
+
+                    for(var i = 0; i < result.sample.length; i++)
+                    {
+                        add_list += '<tr>';
+                        add_list += '<td><input type="checkbox"></td>';
+                        add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><span data-feather="file-plus"></span></button></td>';
+                        add_list += '<td>' + result.sample[i].sample_name + '</td>';
+                        add_list += '<td>EMPTY</td>';
+                        add_list += '<td>' + result.sample[i].sample_code + '</td>';
+                        add_list += '<td>' + result.sample[i].sample_country + '</td>';
+                        add_list += '<td>' + result.sample[i].sample_type + '</td>';
+                        add_list += '<td>' + result.sample[i].sample_seed + '</td>';
+                        add_list += '<td>' + result.sample[i].sample_amount + '</td>';
+                        add_list += '<td>' + result.sample[i].sample_sprout + '</td>';
+                        add_list += '<td>' + result.sample[i].sample_purity + '</td>';
+                        add_list += '<td>' + result.sample[i].sample_comment + '</td>';
+                        add_list += '</tr>';
+                    }
+
+                    if(result.page_num == 1)
+                    {
+                        page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></button>';
+                    }
+                    else
+                    {
+                        page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchReport(' + (result.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
+                    }
+
+                    for(var i = 0; i < result.end_page; i++)
+                    {
+                        if(result.page_num == (i + 1))
+                        {
+                            page_add += '<button class="atbd-pagination__link active" onclick="SearchReport(' + (i + 1) + ')">' + (i + 1) + '</button>';
+                        }
+                        else
+                        {
+                            page_add += '<button class="atbd-pagination__link" onclick="SearchReport(' + (i + 1) + ')">' + (i + 1) + '</button>';
+                        }
+                    }
+
+                    if(result.page_num == result.end_page)
+                    {
+                        page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-right"></span></button>';
+                    }
+                    else
+                    {
+                        page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchReport(' + (result.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
+                    }
+
+                    sample_list.empty();
+                    sample_list.append(add_list);
+
+                    pageNum.empty();
+                    pageNum.append(page_add);
+                }
+            });
     }
 
     // 구글 맵 관련 
