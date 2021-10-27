@@ -194,7 +194,7 @@
                                         <button type="button" class="btn btn-xs btn-outline-light" onclick="view(2)">도입자원재고관리</button>
                                     </div>
                                     <form action="" name="searchForm" class="d-flex align-items-center add-contact__form my-sm-0 my-2">
-                                        <select class="form-control form-control-lg mt-10 mb-10 mr-10" style="width: 250px;">
+                                        <select class="form-control form-control-lg mt-10 mb-10 mr-10" id="income_type" style="width: 250px;">
                                             <option value="none">작물 선택</option>
                                             <option value="pepper">고추</option>
                                             <option value="green_onion">대파</option>
@@ -253,8 +253,8 @@
                                                                                          alt="비고"></th>
                                         </tr>
                                         </thead>
-                                        <!--<tbody class="text-center">
-                                        <tr>
+                                        <tbody class="text-center" id="income_list">
+                                        <!--<tr>
                                             <td><input type="checkbox"></td>
                                             <td>
                                                 <button class="btn btn-light btn-default btn-squared btn-transparent-light"
@@ -267,27 +267,33 @@
                                             <td><span>중국</span></td>
                                             <td><span>-</span></td>
                                             <td><span>2016-11-21</span></td>
-                                        </tr>
-                                        </tbody>-->
+                                        </tr>-->
+                                        </tbody>
                                     </table>
 
                                     <table class="table" id="table2">
                                         <thead class="text-center">
                                         <tr>
                                             <th><span class="title">순번</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                              alt="첨부파일"></th></th>
+                                                                                         alt="첨부파일"></th>
+                                            </th>
                                             <th><span class="title">종자 보유량</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                  alt="첨부파일"></th>
+                                                                                             alt="첨부파일"></th>
                                             <th><span class="title">입고량</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                               alt="첨부파일"></th></th>
+                                                                                          alt="첨부파일"></th>
+                                            </th>
                                             <th><span class="title">출고량</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                               alt="첨부파일"></th></th>
+                                                                                          alt="첨부파일"></th>
+                                            </th>
                                             <th><span class="title">재고량</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                               alt="첨부파일"></th></th>
+                                                                                          alt="첨부파일"></th>
+                                            </th>
                                             <th><span class="title">담당자</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                               alt="첨부파일"></th></th>
+                                                                                          alt="첨부파일"></th>
+                                            </th>
                                             <th><span class="title">일자</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                              alt="첨부파일"></th></th>
+                                                                                         alt="첨부파일"></th>
+                                            </th>
                                         </tr>
                                         </thead>
                                         <tbody class="text-center">
@@ -339,7 +345,9 @@
                                                         <a href="#" class="atbd-pagination__link pagination-control"><span
                                                             class="la la-angle-left"></span></a>
                                                         <a href="#" class="atbd-pagination__link"><span class="page-number">1</span></a>
-                                                        <a href="#" class="atbd-pagination__link active"><span class="page-number">2</span></a>
+                                                        <div id="pageNum">
+                                                            <a href="#" class="atbd-pagination__link active"><span class="page-number">2</span></a>
+                                                        </div>
                                                         <a href="#" class="atbd-pagination__link"><span class="page-number">3</span></a>
                                                         <a href="#" class="atbd-pagination__link pagination-control"><span
                                                             class="page-number">...</span></a>
@@ -499,6 +507,7 @@
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
                     <button type="button" class="btn btn-primary btn-sm" onclick="insertBtn()" data-dismiss="modal">저장</button>
                 </div>
+                <!--<input type="hidden" id="income_input" name="income">-->
             </div>
         </div>
     </div>
@@ -740,12 +749,12 @@
 
     function insertBtn() {
         var data = new Array();
-        $("input[name=detail]").each(function(index, item)
-        {
+
+        $("input[name=detail]").each(function (index, item) {
             const key = $(this).attr('id');
             var value = $(this).val();
 
-            var arr = {key : key, value : value};
+            var arr = {key: key, value: value};
 
             data.push(arr);
         });
@@ -753,6 +762,53 @@
         $("#origin_list").val(JSON.stringify(data));
 
         $("#insertForm").submit();
+    }
+
+    // 도입자원 목록 읽어오기
+    $(document).ready(function () {
+        SearchIncome(1);
+    });
+
+    function SearchIncome(e) {
+        var search_type = $("#Income_type").val();
+
+        var data = {"search_type": search_type, "page_num": e};
+        console.log(data);
+
+        $.ajax(
+            {
+                url: 'incomeList',
+                method: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function (result) {
+                    var income_list = $("#income_list");
+                    var add_list = "";
+
+                    for (var i = 0; i < result.income.length; i++) {
+                        console.log(result.income)
+                        add_list += '<tr>';
+                        add_list += '<td><input type="checkbox"></td>';
+                        add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><span data-feather="file-plus"></span></button></td>';
+                        add_list += '<td><span>' + result.income[i].income_name + '</span></td>';
+                        add_list += '<td><span>' + result.income[i].income_code + '</span></td>';
+                        add_list += '<td><span>' + result.income[i].income_kind + '</span></td>';
+                        add_list += '<td><span>' + result.income[i].income_division + '</span></td>';
+                        add_list += '<td><span>' + result.income[i].income_place + '</span></td>';
+                        add_list += '<td><span>' + result.income[i].income_country + '</span></td>';
+                        add_list += '<td><span>' + result.income[i].income_person + '</span></td>';
+                        add_list += '<td><span>' + result.income[i].income_date + '</span></td>';
+                        add_list += '<td><span>' + result.income[i].income_num + '</span></td>';
+                        add_list += '<td><span>' + result.income[i].income_type + '</span></td>';
+                        add_list += '<td><span>' + result.income[i].income_trait + '</span></td>';
+                        add_list += '<td><span>' + result.income[i].income_comment + '</span></td>';
+                        add_list += '</tr>';
+                    }
+
+                    income_list.empty();
+                    income_list.append(add_list);
+                }
+            });
     }
 </script>
 

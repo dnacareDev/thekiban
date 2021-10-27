@@ -13,5 +13,20 @@
                 #{income_date}, #{income_num}, #{income_type}, #{income_trait},
                 #{income_comment}, NOW(), NOW())
     </insert>
+<!--
+    &lt;!&ndash; 도입자원 갯수 조회 &ndash;&gt;
+    <select id="SelectIncomeListCount" resultType="int">
+        SELECT COUNT(*) FROM income r
+        <choose>
+            <when test="search_type != 'all'">
+                WHERE #{search_type} LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+        </choose>
+    </select>-->
+
+    <!-- 도입자원 목록 가져오기 -->
+    <select id="SearchInsertList" parameterType="String" resultType="Income">
+        SELECT * FROM income
+    </select>
 
 </mapper>
