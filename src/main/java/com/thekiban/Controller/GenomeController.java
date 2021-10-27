@@ -18,15 +18,6 @@ public class GenomeController {
     return mv;
   }
 
-  // 원종 관리 페이지
-  @GetMapping(value = "/basic")
-  public ModelAndView getOriginList(ModelAndView mv) {
-
-    mv.setViewName("genome/basic");
-
-    return mv;
-  }
-
   //도입자원 관리 페이지
   @GetMapping(value = "/income")
   public ModelAndView getIntroResourceList(ModelAndView mv) {

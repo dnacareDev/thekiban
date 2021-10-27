@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thekiban.Mapper.BasicMapper">
+	<!-- 세부정보 조회 -->
+	<select id="SelectDetail" resultType="Detail">
+		SELECT * FROM detail
+		WHERE detail_type = 1
+	</select>
+</mapper>
