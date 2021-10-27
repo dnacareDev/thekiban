@@ -200,8 +200,9 @@
                                         </select>
                                     </form>
                                     <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none">
-                                    <button class="btn btn-lg btn-primary data_btn1" onclick="filesFunction()"><img
+                                    <button type="button" class="btn btn-lg btn-primary data_btn1" onclick="filesFunction()"><img
                                         src="../assets/vendor_assets/img/icon1.svg" alt=""></button>
+                                    <input type="hidden" id="excel">
                                     <button class="btn btn-lg btn-primary data_btn2"><img src="../assets/vendor_assets/img/icon2.png" alt=""></button>
                                     <button class="btn btn-lg btn-primary data_btn2"><img src="../assets/vendor_assets/img/icon3.png" alt=""></button>
                                 </div>
@@ -1143,6 +1144,7 @@
 
             var rowdata = XLSX.utils.sheet_to_json(firstSheet);
 
+            // table 생성
             var html = "";
 
             for (var i = 1; i < rowdata.length; i++) {
@@ -1174,20 +1176,21 @@
                         console.log(idx)
                         console.log(tmp[j])
 
-                        if(idx == tmp[j]) {
+                        // 공백처리
+                        if (idx == tmp[j]) {
                             html += "<td><span>" + value + "</span></td>";
                             j++;
                         } else {
-                            var idx_str = idx.replace(/[^0-9]/g,'');
-                            var tmp_str = tmp[j].replace(/[^0-9]/g,'');
+                            var idx_str = idx.replace(/[^0-9]/g, '');
+                            var tmp_str = tmp[j].replace(/[^0-9]/g, '');
 
                             var gap = idx_str - tmp_str;
 
                             console.log(gap);
 
-                            while(gap > 0) {
+                            while (gap > 0) {
                                 gap--;
-                                html += "<td><span></span></td>";
+                                html += "<td><span> </span></td>";
                             }
                             html += "<td><span>" + value + "</span></td>";
 
@@ -1207,6 +1210,69 @@
 
             $("#display").empty(html);
             $("#display").append(html);
+
+            var table = $('#display').tableToJSON();
+
+            var excel = $("#excel");
+
+            excel.val(JSON.stringify(table));
+            /*$("#insertForm").submit();*/
+
+            if (excel.val() != "") {
+                var data = JSON.parse(excel.val());
+
+                var report = new Array(excel.length);
+
+                for (var i = 0; i < data.length; i++) {
+                    report[i] = {
+                        "breed_name": data[i].작물,
+                        "breed_code": data[i]["시교명 (ID)"],
+                        "breed_kind": data[i].품종명,
+                        "breed_mom": data[i]["모계 계통명 (ID)"],
+                        "breed_dad": data[i]["부계 계통명 (ID)"],
+                        "breed_sale_num": data[i]["생산판매 (신고번호)"],
+                        "breed_sale_date": data[i]["생산판매 (신고일자)"],
+                        "breed_apply_num": data[i]["보호출원 (출원번호)"],
+                        "breed_apply_date": data[i]["보호출원 (출원일자)"],
+                        "breed_enroll_num": data[i]["보호등록 (등록번호)"],
+                        "breed_enroll_date": data[i]["보호등록 (등록일자)"],
+                        "breed_local": data[i]["미등록 (현지 상업화)"],
+                        "breed_purpose": data[i]["목표 시장"],
+                        "breed_first_form": data[i]["형태 구분1"],
+                        "breed_second_form": data[i]["형태 구분2"],
+                        "breed_first_crop": data[i]["작물 타입1"],
+                        "breed_second_crop": data[i]["작물 타입2"],
+                        "breed_comment": data[i].비고
+                    };
+                }
+
+                excel.val(JSON.stringify(report));
+
+                $("#insertForm").submit();
+            }
+
+            if (confirm("등록하시겠습니까?") == true) {
+                console.log(excel.val());
+
+                var data = {"excel": excel.val()};
+                $.ajax(
+                    {
+                        url: 'test',
+                        method: 'POST',
+                        dataType: 'json',
+                        data: data,
+                        success: function (result) {
+                            if (result == 0) {
+                                alert("삭제에 실패하였습니다.");
+                            } else {
+                                location.reload();
+                            }
+                        }
+                    });
+            } else {
+                return;
+            }
+
         };
 
         reader.readAsBinaryString(input.files[0]);
@@ -1215,7 +1281,6 @@
     /* row 생성 */
     function makeArray() {
         var gibon = $("#gibon").serializeObject();
-        console.log(gibon);
 
         var html = "<tbody class='text-center'>";
         html += "<tr>";
@@ -1235,6 +1300,19 @@
         html += "</tbody>";
 
         $("#display").append(html);
+
+        $.ajax({
+            url         : 'breed/insertBreed',
+            data        : gibon,
+            dataType    : "JSON",
+            cache       : false,
+            async       : true,
+            type        : "POST",
+            success     : {
+            },
+            error       : function (xhr, status, error) {}
+        });
+
     }
 
     /* form data to json */
@@ -1258,6 +1336,7 @@
         return obj;
     };
 
+
     /* row 삭제 */
     function delRow() {
         var checkRows = $("[name = 'chkBox']:checked");
@@ -1265,15 +1344,6 @@
         for (var i = checkRows.length - 1; i > -1; i--) {
             checkRows.eq(i).closest('tr').remove();
         }
-    }
-
-    /* 엑셀 출력 */
-    function makeExcel() {
-        var wb = XLSX.utils.table_to_book(document.getElementById('table1'), {sheet: "품종관리", raw: true});
-
-        XLSX.writeFile(wb, ('분석관리.xlsx'));
-
-        console.log(1);
     }
 </script>
 

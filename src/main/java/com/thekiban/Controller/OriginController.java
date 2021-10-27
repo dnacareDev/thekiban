@@ -5,22 +5,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-// 시교자원
 @Controller
 @RequestMapping(value = "/genome")
-public class SampleController {
+public class OriginController {
 
-  // 시교자원 관리 페이지
-  @GetMapping(value = "/sample")
-  public ModelAndView Sample(ModelAndView mv) {
-    mv.setViewName("genome/sample");
+  // 원종 관리 페이지
+  @GetMapping(value = "/basic")
+  public ModelAndView getOriginList(ModelAndView mv) {
+
+    mv.setViewName("genome/basic");
 
     return mv;
   }
-
-  // 특성 추가
-
-
-  //
 
 }

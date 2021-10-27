@@ -1197,6 +1197,7 @@
 
             var html = "";
 
+            // table 생성
             for (var i = 1; i < rowdata.length; i++) {
                 if (i === 1) {
                     html += "<thead class='text-center'>";
@@ -1226,6 +1227,7 @@
                         console.log(idx)
                         console.log(tmp[j])
 
+                        // 공백처리
                         if(idx == tmp[j]) {
                             html += "<td><span>" + value + "</span></td>";
                             j++;
