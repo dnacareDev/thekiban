@@ -20,8 +20,10 @@ public class Basic
 	private int basic_bn_year;
 	private String basic_bn_num;
 	private String basic_seed;
-	private int basic_amount;
-	private int basic_weight;
+	private String basic_amount;
+	private String basic_weight;
 	private String basic_date;
 	private String basic_comment;
+	private String create_date;
+	private String modify_date;
 }

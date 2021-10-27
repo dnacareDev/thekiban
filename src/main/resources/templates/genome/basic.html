@@ -206,18 +206,18 @@
                         <div class="card-body">
                             <div class="bg-white">
                                 <div class="table-responsive">
-                                    <table class="table" id="table1">
+                                    <div id="display"></div>
+                                    <!--<table class="table" id="table1">
                                         <thead class="text-center">
                                         <tr>
                                             <th></th>
                                             <th><span class="title">첨부파일</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
                                                                                            alt="첨부파일"></th>
+                                            <th><span class="title">계통명(ID)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
+                                                                                              alt="ID">
+                                            </th>
                                             <th><span class="title">특성상태</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
                                                                                            alt="특성상태"></th>
-                                            <th><span class="title">작물</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                         alt="작물"></th>
-                                            <th><span class="title">계통명(ID)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                              alt="ID"></th>
                                             <th><span class="title">원소재 계통번호</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
                                                                                                alt="원소재 계통번호"></th>
                                             <th><span class="title">원종 계통번호</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
@@ -227,18 +227,18 @@
                                             <th><span class="title">B.N. (교배번호)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
                                                                                                   alt="B.N. (교배번호)"></th>
                                             <th><span class="title">종자번호(ID)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                               alt="종자번호"></th>
+                                                                                               alt="종자번호(ID)"></th>
                                             <th><span class="title">현 종자량(g)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                               alt="현 종자량"></th>
+                                                                                               alt="현 종자량(g)"></th>
                                             <th><span class="title">천립중(g)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                             alt="천립중"></th>
+                                                                                             alt="천립중(g)"></th>
                                             <th><span class="title">계통번호 부여일(g)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                                  alt="계통번호 부여일"></th>
+                                                                                                  alt="계통번호 부여일(g)"></th>
                                             <th><span class="title">비고</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
                                                                                          alt="비고"></th>
                                         </tr>
                                         </thead>
-                                        <!--<tbody class="text-center">
+                                        <tbody class="text-center">
                                         <tr>
                                             <td><input type="checkbox"></td>
                                             <td>
@@ -253,50 +253,8 @@
                                             <td><span>02-0205-2019-111</span></td>
                                             <td><span>2017-11-11</span></td>
                                         </tr>
-                                        </tbody>-->
-                                    </table>
-                                    <table class="table" id="table2">
-                                        <thead class="text-center">
-                                        <tr>
-                                            <th>종자번호</th>
-                                            <th>종자 보유량</th>
-                                            <th>입고량</th>
-                                            <th>출고량</th>
-                                            <th>재고량</th>
-                                            <th>담당자</th>
-                                            <th>일자</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody class="text-center">
-                                        <tr>
-                                            <td><span>PC17C0123</span></td>
-                                            <td><span>60</span></td>
-                                            <td><span>0</span></td>
-                                            <td><span>20</span></td>
-                                            <td><span>40</span></td>
-                                            <td><span>백향구</span></td>
-                                            <td><span>2020-01-05</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td><span>PC17C0123</span></td>
-                                            <td><span>60</span></td>
-                                            <td><span>0</span></td>
-                                            <td><span>0</span></td>
-                                            <td><span>60</span></td>
-                                            <td><span>백향구</span></td>
-                                            <td><span>2020-01-02</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td><span>Pl98dd7s</span></td>
-                                            <td><span>0</span></td>
-                                            <td><span>60</span></td>
-                                            <td><span>0</span></td>
-                                            <td><span>60</span></td>
-                                            <td><span>백향구</span></td>
-                                            <td><span>2020-01-02</span></td>
-                                        </tr>
                                         </tbody>
-                                    </table>
+                                    </table>-->
                                 </div>
                                 <div class="row">
                                     <div class="col-4">
@@ -433,9 +391,9 @@
                                 </div>
 
                                 <form action="insertBasic" id="insertForm" method="POST" enctype="multipart/form-data">
+                                	<input type="hidden" id="detail_list" name="detail_list">
                                     <div class="tab-content">
-                                        <div class="tab-pane fade show active" id="tab-horizontal-0" role="tabpanel"
-                                             aria-labelledby="tab-horizontal-0-tab">
+                                        <div class="tab-pane fade show active" id="tab-horizontal-0" role="tabpanel" aria-labelledby="tab-horizontal-0-tab">
                                             <div class="content_title clearfix">
                                                 <ul>
                                                     <li>형질</li>
@@ -462,7 +420,7 @@
                                                     </li>
                                                     <li>
                                                         <div class="title">B.N.기준 년도</div>
-                                                        <div class="input_text"><input type="text" name="basic_bn_year"></div>
+                                                        <div class="input_text"><input type="number" name="basic_bn_year" value="0"></div>
                                                     </li>
                                                     <li>
                                                         <div class="title">B.N.(교배번호)</div>
@@ -482,7 +440,7 @@
                                                     </li>
                                                     <li>
                                                         <div class="title">계통번호 부여일</div>
-                                                        <div class="input_text"><input type="text" name="basic_date"></div>
+                                                        <div class="input_text"><input type="date" name="basic_date"></div>
                                                     </li>
                                                     <li>
                                                         <div class="title">비고</div>
@@ -500,11 +458,11 @@
                                             </div>
                                             <div class="content_1 clearfix">
                                                 <ul>
-                                                    <th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '원예형질(종자원 기준)'">
-                                                        <li>
-                                                            <div class="title" th:text="${detail.detail_title}"></div>
-                                                            <div class="input_text"><input type="text" name="content_1_1"></div>
-                                                        </li>
+                                                	<th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '원예형질(종자원 기준)'">
+	                                                    <li>
+	                                                        <div class="title" th:text="${detail.detail_title}"></div>
+	                                                        <div class="input_text"><input type="text" th:id="${detail.detail_id}" name="detail"></div>
+	                                                    </li>
                                                     </th:block>
                                                 </ul>
                                             </div>
@@ -519,11 +477,11 @@
                                             </div>
                                             <div class="content_1 clearfix">
                                                 <ul>
-                                                    <th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '원예형질(사내 기준)'">
-                                                        <li>
-                                                            <div class="title" th:text="${detail.detail_title}"></div>
-                                                            <div class="input_text"><input type="text" name="content_1_1"></div>
-                                                        </li>
+                                                	<th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '원예형질(사내 기준)'">
+	                                                    <li>
+	                                                        <div class="title" th:text="${detail.detail_title}"></div>
+	                                                        <div class="input_text"><input type="text" th:id="${detail.detail_id}" name="detail"></div>
+	                                                    </li>
                                                     </th:block>
                                                 </ul>
                                             </div>
@@ -538,11 +496,11 @@
                                             </div>
                                             <div class="content_1 clearfix">
                                                 <ul>
-                                                    <th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '병저항성(국립종자원 기준)'">
-                                                        <li>
-                                                            <div class="title" th:text="${detail.detail_title}"></div>
-                                                            <div class="input_text"><input type="text" name="content_1_1"></div>
-                                                        </li>
+                                                	<th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '병저항성(국립종자원 기준)'">
+	                                                    <li>
+	                                                        <div class="title" th:text="${detail.detail_title}"></div>
+	                                                        <div class="input_text"><input type="text" th:id="${detail.detail_id}" name="detail"></div>
+	                                                    </li>
                                                     </th:block>
                                                 </ul>
                                             </div>
@@ -557,11 +515,11 @@
                                             </div>
                                             <div class="content_1 clearfix">
                                                 <ul>
-                                                    <th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '병저항성(사내 기준)'">
-                                                        <li>
-                                                            <div class="title" th:text="${detail.detail_title}"></div>
-                                                            <div class="input_text"><input type="text" name="content_1_1"></div>
-                                                        </li>
+                                                	<th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '병저항성(사내 기준)'">
+	                                                    <li>
+	                                                        <div class="title" th:text="${detail.detail_title}"></div>
+	                                                        <div class="input_text"><input type="text" th:id="${detail.detail_id}" name="detail"></div>
+	                                                    </li>
                                                     </th:block>
                                                 </ul>
                                             </div>
@@ -576,11 +534,11 @@
                                             </div>
                                             <div class="content_1 clearfix">
                                                 <ul>
-                                                    <th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '성분정보(국립종자원 기준)'">
-                                                        <li>
-                                                            <div class="title" th:text="${detail.detail_title}"></div>
-                                                            <div class="input_text"><input type="text" name="content_1_1"></div>
-                                                        </li>
+                                                	<th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '성분정보(국립종자원 기준)'">
+	                                                    <li>
+	                                                        <div class="title" th:text="${detail.detail_title}"></div>
+	                                                        <div class="input_text"><input type="text" th:id="${detail.detail_id}" name="detail"></div>
+	                                                    </li>
                                                     </th:block>
                                                 </ul>
                                             </div>
@@ -595,11 +553,11 @@
                                             </div>
                                             <div class="content_1 clearfix">
                                                 <ul>
-                                                    <th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '마커정보'">
-                                                        <li>
-                                                            <div class="title" th:text="${detail.detail_title}"></div>
-                                                            <div class="input_text"><input type="text" name="content_1_1"></div>
-                                                        </li>
+                                                	<th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '마커정보'">
+	                                                    <li>
+	                                                        <div class="title" th:text="${detail.detail_title}"></div>
+	                                                        <div class="input_text"><input type="text" th:id="${detail.detail_id}" name="detail"></div>
+	                                                    </li>
                                                     </th:block>
                                                 </ul>
                                             </div>
@@ -772,23 +730,21 @@
             var wb = XLSX.read(fileData, {type: 'binary'});
             var sheetNameList = wb.SheetNames; // 시트 이름 목록 가져오기
             var secondSheetName = sheetNameList[1]; // 두번째 시트명
-            var secondSheet = wb.Sheets[secondSheetName]; // 두번째 시트
+            var secondSheet = wb.Sheets[secondSheetName]; // 첫번째 시트
             callback(secondSheet);
 
             var rowdata = XLSX.utils.sheet_to_json(wb.Sheets[secondSheetName]);
             console.log(rowdata.length);
             console.log(rowdata[1]);
 
-            var html = "";
+            var html = "<table class='table'>";
 
-            // table 생성
             for (var i = 1; i < rowdata.length; i++) {
                 if (i === 1) {
                     html += "<thead class='text-center'>";
                     html += "<tr>";
                     html += "<th></th>";
                     html += "<th><span className='title'>첨부파일</span><i></i><img src='../assets/vendor_assets/img/title_icon.png' alt='첨부파일'></th>";
-                    html += "<th><span className='title'>특성상태</span><i></i><img src='../assets/vendor_assets/img/title_icon.png' alt='특성상태'>";
 
                     $.each(rowdata[1], function (idx, value) {
                         html += "<th><span class='title'>" + value + "</span><i></i><img src='../assets/vendor_assets/img/title_icon.png'></th>";
@@ -801,41 +757,9 @@
                     html += "<tr>";
                     html += "<td><input type='checkbox' name='chkBox'></td>";
                     html += "<td><button class='btn btn-light btn-default btn-squared btn-transparent-light' data-toggle='modal' data-target='#gen-attach'><span data-feather='file-plus'></span></button></td>";
-                    html += "<td><span></span></td>";
-
-                    var tmp = Object.keys(rowdata[1]);
-                    var j = 0;
 
                     $.each(rowdata[i], function (idx, value) {
-
-                        console.log(idx)
-                        console.log(tmp[j])
-
-                        // 공백처리
-                        if (idx == tmp[j]) {
-                            html += "<td><span>" + value + "</span></td>";
-                            j++;
-                        } else {
-                            var idx_str = idx.replace(/[^0-9]/g, '');
-                            var tmp_str = tmp[j].replace(/[^0-9]/g, '');
-
-                            var gap = idx_str - tmp_str;
-
-                            console.log(gap);
-
-                            while (gap > 0) {
-                                gap--;
-                                html += "<td><span></span></td>";
-                            }
-                            html += "<td><span>" + value + "</span></td>";
-
-                            console.log(j);
-
-                            j = idx_str;
-                            j++;
-                            j++;
-                            console.log(j);
-                        }
+                        html += "<td><span>" + value + "</span></td>";
                     })
 
                     html += "</tr>";
@@ -843,8 +767,10 @@
                 }
             }
 
-            $("#table1").empty(html);
-            $("#table1").append(html);
+            html += "</table>";
+
+            $("#display").empty(html);
+            $("#display").append(html);
         };
 
         reader.readAsBinaryString(input.files[0]);
@@ -861,11 +787,10 @@
         html += "<tr>";
         html += "<td><input type='checkbox' name='chkBox'></td>";
         html += "<td><button class='btn btn-light btn-default btn-squared btn-transparent-light' data-toggle='modal' data-target='#gen-attach'><span data-feather='file-plus'></span></button></td>";
-        html += "<td><span></span></td>";
 
         $.each(gibon, function (idx, value) {
             if (value === '') {
-                html += "<td><span></span></td>";
+                html += "<td><span>-</span></td>";
             } else {
                 html += "<td><span>" + value + "</span></td>";
             }
@@ -894,7 +819,6 @@
         } catch (e) {
             alert(e.message);
         } finally {
-
         }
 
         return obj;
@@ -908,8 +832,22 @@
         }
     }
 
-    function insertBtn() {
-        $("#insertForm").submit();
+    function insertBtn()
+    {
+    	var data = new Array();
+    	$("input[name=detail]").each(function(index, item)
+    	{
+    		const key = $(this).attr('id');
+    		var value = $(this).val();
+    		
+    		var arr = {key : key, value : value};
+    		
+    		data.push(arr);
+    	});
+    	
+    	$("#detail_list").val(JSON.stringify(data));
+    	
+    	$("#insertForm").submit();
     }
 </script>
 </body>
