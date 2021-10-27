@@ -5,7 +5,6 @@
 
     <!-- 공통 헤더 -->
     <th:block th:include="@{/fragments/header.html}"></th:block>
-    <script src="../assets/vendor_assets/js/script.js"></script> <!-- 왼쪽상단에 버튼 클릭시 class 추가 스크립트 -->
     <style>
         table {
             border-top: 1px solid grey;
@@ -276,24 +275,18 @@
                                         <tr>
                                             <th><span class="title">순번</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
                                                                                          alt="첨부파일"></th>
-                                            </th>
                                             <th><span class="title">종자 보유량</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
                                                                                              alt="첨부파일"></th>
                                             <th><span class="title">입고량</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
                                                                                           alt="첨부파일"></th>
-                                            </th>
                                             <th><span class="title">출고량</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
                                                                                           alt="첨부파일"></th>
-                                            </th>
                                             <th><span class="title">재고량</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
                                                                                           alt="첨부파일"></th>
-                                            </th>
                                             <th><span class="title">담당자</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
                                                                                           alt="첨부파일"></th>
-                                            </th>
                                             <th><span class="title">일자</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
                                                                                          alt="첨부파일"></th>
-                                            </th>
                                         </tr>
                                         </thead>
                                         <tbody class="text-center">
@@ -507,7 +500,7 @@
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
                     <button type="button" class="btn btn-primary btn-sm" onclick="insertBtn()" data-dismiss="modal">저장</button>
                 </div>
-                <!--<input type="hidden" id="income_input" name="income">-->
+                <input type="hidden" id="income_input" name="income">
             </div>
         </div>
     </div>
@@ -531,6 +524,8 @@
 <th:block th:include="@{/fragments/footer.html}"></th:block>
 <!-- 공통 js -->
 <th:block th:include="@{/fragments/commonjs.html}"></th:block>
+
+<script src="../assets/vendor_assets/js/script.js"></script> <!-- 왼쪽상단에 버튼 클릭시 class 추가 스크립트 -->
 
 <script type="text/javascript">
     let topBox = document.getElementsByClassName("top_box")[0];
@@ -777,7 +772,7 @@
 
         $.ajax(
             {
-                url: 'incomeList',
+                url: 'income/incomeList',
                 method: 'POST',
                 dataType: 'json',
                 data: data,

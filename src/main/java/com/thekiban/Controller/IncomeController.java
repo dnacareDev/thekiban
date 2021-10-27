@@ -38,7 +38,7 @@ public class IncomeController {
   }
 
   @ResponseBody
-  @RequestMapping("incomeList")
+  @RequestMapping("income/incomeList")
   public Map<String, Object> incomeList(@RequestParam("income_type") String income_type) {
     System.out.println(123);
     Map<String, Object> result = new LinkedHashMap<String, Object>();
