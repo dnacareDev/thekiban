@@ -79,32 +79,43 @@ public class BreedController {
 
   }
 
-  // zhsthfxptmxm cnffur
-  @ResponseBody
-  @RequestMapping("test")
-  public int Test(@RequestParam("excel") String excel) {
-//    System.out.println(excel);
-    JSONArray arr = new JSONArray(excel);
 
-    for (int i = 0; i < arr.length(); i++) {
-      JSONObject obj = arr.getJSONObject(i);
-//      System.out.println("obj : " + obj);
+  @ResponseBody
+  @PostMapping("breed/insertBreed")
+  public ModelAndView InsertBreed(ModelAndView mv, @ModelAttribute Breed breed, @RequestParam("excel") String report) throws IOException {
+
+    int result = inputData(report);
+
+    if(result == 0) {
+      mv.setViewName("redirect:/genome/breed");
+    } else {
+      mv.setViewName("redirect:/genome/breed");
     }
 
-    return 0;
+    return mv;
   }
-  
-  // DB 등록
-  @PostMapping("breed/insertBreed")
-  public int InsertBreed(@RequestParam("excel") String excel) {
 
-    JSONArray arr = new JSONArray(excel);
+  public int inputData(String report) throws IOException {
+    int result = 0;
+
+    JSONArray arr = new JSONArray(report);
+
+    List<Breed> breeds = new ArrayList<>();
 
     for(int i = 0; i < arr.length(); i++) {
+      Breed item = new Breed();
+
       JSONObject obj = arr.getJSONObject(i);
-      System.out.println("obj : " + obj);
+
+      item.setBreed_code((String)obj.get("breed_code"));
+      item.setBreed_name((String)obj.get("breed_name"));
+      item.setBreed_kind((String)obj.get("breed_kind"));
+
+      breeds.add(item);
     }
 
-    return 0;
+    result = service.InsertBreed(breeds);
+
+    return result;
   }
 }

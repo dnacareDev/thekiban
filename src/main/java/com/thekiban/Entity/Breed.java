@@ -21,7 +21,7 @@ public class Breed {
   private String breed_apply_date;    // 보호출원 일자
   private String breed_enroll_num;    // 보호등록 번호
   private String breed_enroll_date;   // 보호등록 일자
-  private int breed_local;            // 미등록(현지상업화)
+  private String breed_local;            // 미등록(현지상업화)
   private String breed_purpose;       // 목표시장
   private String breed_first_form;    // 형태구분 1
   private String breed_second_form;   // 형태구분 2

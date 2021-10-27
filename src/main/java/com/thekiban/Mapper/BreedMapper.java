@@ -11,6 +11,6 @@ public interface BreedMapper {
   int InsertExcel(List<Breed> excels);
 
   // DB 등록
-  int InsertBreed(Breed breed);
+  int InsertBreed(List<Breed> breed);
 
 }

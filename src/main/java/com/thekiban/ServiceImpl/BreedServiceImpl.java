@@ -20,7 +20,7 @@ public class BreedServiceImpl implements BreedService {
   }
 
   @Override
-  public int InsertBreed(Breed breed) {
+  public int InsertBreed(List<Breed> breed) {
     return mapper.InsertBreed(breed);
   }
 }
