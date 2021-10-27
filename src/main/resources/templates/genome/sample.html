@@ -5,8 +5,7 @@
 
     <!-- 공통 헤더 -->
     <th:block th:include="@{/fragments/header.html}"></th:block>
-    <script src="../assets/vendor_assets/js/script.js"></script> <!-- 왼쪽상단에 버튼 클릭시 class 추가 스크립트 -->
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBn0n_LEGxgJuCfTU8aKvuwrcmw0iZjfmY&callback=initMap&region=kr"></script>
+    <script src="../assets/vendor_assets/js/script.js"></script> <!-- 왼쪽상단에 버튼 클릭시 class 추가 스크립트 -->    
     <style>
         table {
             border-top: 1px solid grey;
@@ -1112,6 +1111,8 @@
 <th:block th:include="@{/fragments/footer.html}"></th:block>
 <!-- 공통 js -->
 <th:block th:include="@{/fragments/commonjs.html}"></th:block>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBn0n_LEGxgJuCfTU8aKvuwrcmw0iZjfmY&callback=initMap&region=kr"></script>
 <script type="text/javascript">
     let topBox = document.getElementsByClassName("top_box")[0];
     let [nav, prev, next] = topBox.children;
@@ -1304,12 +1305,12 @@
         }
     }
 
-    // 구글 맵 관련
+    // 구글 맵 관련 
     const mapContainer = document.querySelector('#google_map1');
     const mapContainer2 = document.querySelector('#google_map2');
-    const myOptions = {
-        zoom: 1,
-        center: { lat: 37.5642135 ,lng: 127.0016985 },
+    const koreaOptions = {
+        zoom: 6,
+        center: { lat: 36.613766432253634 ,lng: 127.84942123102657 },        
         panControl: false,
         zoomControl: false,
         scaleControl: false,
@@ -1318,17 +1319,31 @@
         fullscreenControl: false
         // mapTypeId: google.maps.MapTypeId.ROADMAP
     }
-    const map = new google.maps.Map(mapContainer,myOptions); 
-    const map2 = new google.maps.Map(mapContainer2,myOptions);
 
-    const dummyCityDatas = [
+    const globalOptions = {
+        ...koreaOptions,
+        zoom: 0,
+        center: { lat: 37.5642135 ,lng: 127.0016985 }
+    }
+
+    const map = new google.maps.Map(mapContainer,koreaOptions); 
+    const map2 = new google.maps.Map(mapContainer2,globalOptions);
+    //국내는 부산, 청주, 익산, 남해, 밀양, 전주, 제주, 강릉, 함양, 부여, 성주
+    // 해외는 인도, 중국, 영국, 미국, 파키스탄, 일본, 네덜란드
+    const globalCityDatas = [        
+        { lat: 22.22267143294292, lng: 79.13524723236651},
+        { lat: 33.25173879082619, lng: 103.92501603483987},
+        { lat: 38.8498311865453, lng: -102.37095928101904},
+        { lat: 29.48237176159851, lng: 69.69045458640039},
+        { lat: 36.332952986760326, lng: 138.65686172199221},
+        { lat: 52.529665164041596, lng: 4.8670640984935165},
+    ];
+
+    const koreaCityDatas = [
         { lat: 35.206238513124546, lng: 129.08038118015855 },
         { lat: 36.6424341, lng: 127.4890319 },
         { lat: 35.9482858, lng: 126.9575991 },
         { lat: 36.6424341, lng: 127.4890319 },
-        { lat: 20.593684, lng: 78.96288, },
-        { lat: 39.904211, lng: 116.407395 },
-        {lat: 54.60249287925691, lng: -2.6153899488891232 },
         {lat: 35.832732140930425, lng: 127.12353144605112 },
         {lat: 35.492278267228684, lng: 128.74756762815156 },
         {lat: 37.7626809049733, lng: 128.89751079481087 },
@@ -1336,9 +1351,8 @@
         {lat: 35.62315997859795, lng: 127.64287731141832 },
         {lat: 36.28673472687304, lng: 126.75708382107744 },
         {lat: 35.932930167597355, lng: 128.26808927858545 },
-        {lat: 35.906974893937814, lng: 137.73401019446183 },
-        {lat: 52.045810039833206, lng: 4.762693985260911 }        ,
-    ];
+        // {lat: 35.906974893937814, lng: 137.73401019446183 }, 
+    ]
     
     const image = {
         url: "http://maps.google.com/mapfiles/ms/micons/msmarker.shadow.png",
@@ -1349,14 +1363,17 @@
         // The anchor for this image is the base of the flagpole at (0, 32).
         anchor: new google.maps.Point(0, 32),
     };
-    dummyCityDatas.forEach((value, i) => {
+    koreaCityDatas.forEach((value, i) => {
         console.log(value)
         new google.maps.Marker({
             position: value,
             map: map,
             // icon: image,
             label: ""
-        })
+        })        
+    })
+    globalCityDatas.forEach((value, i) => {
+        console.log(value)
         new google.maps.Marker({
             position: value,
             map: map2,
