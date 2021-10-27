@@ -11,6 +11,12 @@ public interface BasicService
 	// 세부 정보 조회
 	List<Detail> SelectDetail();
 
+	// 원종 갯수 조회
+	int SelectBasicCount();
+	
+	// 원종 검색
+	List<Basic> SearchBasic(int offset, int limit);
+
 	// 원종 등록
 	int InsertBasic(Basic basic);
 

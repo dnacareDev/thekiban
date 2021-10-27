@@ -24,6 +24,20 @@ public class BasicServiceImpl implements BasicService
 		return mapper.SelectDetail();
 	}
 
+	// 원종 갯수 조회
+	@Override
+	public int SelectBasicCount()
+	{
+		return mapper.SelectBasicCount();
+	}
+
+	// 원종 검색
+	@Override
+	public List<Basic> SearchBasic(int offset, int limit)
+	{
+		return mapper.SearchBasic(offset, limit);
+	}
+
 	// 원종 등록
 	@Override
 	public int InsertBasic(Basic basic)

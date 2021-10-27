@@ -7,6 +7,17 @@
 		WHERE detail_type = 1
 	</select>
 	
+	<!-- 원종 갯수 조회 -->
+	<select id="SelectBasicCount" resultType="int">
+		SELECT COUNT(*) FROM basic
+	</select>
+	
+	<!-- 원종 검색 -->
+	<select id="SearchBasic" resultType="Basic">
+		SELECT * FROM basic
+		LIMIT #{offset}, #{limit}
+	</select>
+	
 	<!-- 원종 등록 -->
 	<insert id="InsertBasic" parameterType="Basic">
 		INSERT INTO basic
