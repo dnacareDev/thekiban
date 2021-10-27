@@ -20,5 +20,7 @@ public class Sample {
   private int sample_sprout;      // 발아율
   private int sample_purity;      // 순도율
   private String sample_comment;  // 비고
+  private String create_date;
+  private String modify_date;
 
 }

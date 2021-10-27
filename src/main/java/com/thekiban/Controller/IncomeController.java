@@ -26,10 +26,10 @@ public class IncomeController {
   }
 
   @RequestMapping("insertIncome")
-  public ModelAndView InsertIncome(ModelAndView mv, @ModelAttribute Income income, @RequestParam("origin_list") String origin_list)
+  public ModelAndView InsertIncome(ModelAndView mv, @ModelAttribute Income income)
   {
-    int insert_income = service.InsertIncome(income);
-    System.out.println(income);
+
+    service.InsertIncome(income);
 
     mv.setViewName("redirect:/income");
 
