@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thekiban.Mapper.IncomeMapper">
+
+    <!-- 도입자원 등록 -->
+    <insert id="InsertIncome" parameterType="Income">
+        INSERT INTO income
+        (income_id, income_code, income_name, income_kind, income_division,
+         income_place, income_country, income_person, income_date, income_num, income_type, income_trait,
+         income_comment, create_date, modify_date)
+        VALUES (#{income_id}, #{income_code}, #{income_name}, #{income_kind}, #{income_division}, #{income_place}, #{income_country},
+                #{income_person},
+                #{income_date}, #{income_num}, #{income_type}, #{income_trait},
+                #{income_comment}, NOW(), NOW())
+    </insert>
+<!--
+    &lt;!&ndash; 도입자원 갯수 조회 &ndash;&gt;
+    <select id="SelectIncomeListCount" resultType="int">
+        SELECT COUNT(*) FROM income r
+        <choose>
+            <when test="search_type != 'all'">
+                WHERE #{search_type} LIKE CONCAT('%', #{keyword}, '%')
+            </when>
+        </choose>
+    </select>-->
+
+    <!-- 도입자원 목록 가져오기 -->
+    <select id="SearchInsertList" parameterType="String" resultType="Income">
+        SELECT * FROM income
+    </select>
+
+</mapper>
