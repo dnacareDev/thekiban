@@ -287,7 +287,7 @@
                                         </tr>
                                         </thead>
                                         <tbody class="text-center" id="sample_list">
-                                        <tr>
+                                        <!--<tr>
                                             <td><input type="checkbox"></td>
                                             <td><span>19PC4155</span></td>
                                             <td><span>P20C0080</span></td>
@@ -298,10 +298,10 @@
                                             <td><span>백향구</span></td>
                                             <td><span>이호석</span></td>
                                             <td><span>2019-11-11</span></td>
-                                        </tr>
+                                        </tr>-->
                                         </tbody>
                                     </table>
-                                    <!--<table class="table" id="table2">
+                                    <table class="table" id="table2">
                                         <thead class="text-center">
                                         <tr>
                                             <th></th>
@@ -334,7 +334,7 @@
                                             <td><span>해외</span></td>
                                         </tr>
                                         </tbody>
-                                    </table>-->
+                                    </table>
                                 </div>
 
                                 <div class="row">
@@ -577,7 +577,7 @@
 
     }
 
-    let list = navLi.length;
+/*    let list = navLi.length;
     next.addEventListener("click", function (e) {
         (navN < list - 1) ? navN += 1 : navN = list - 1;
         moveFunction(navN);
@@ -586,7 +586,7 @@
     prev.addEventListener("click", function (e) {
         (navN > 0) ? navN -= 1 : navN = 0;
         moveFunction(navN);
-    });
+    });*/
 
     function moveFunction(f) {
 
@@ -792,8 +792,8 @@
                         add_list += '<tr>';
                         add_list += '<td><input type="checkbox"></td>';
                         add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><span data-feather="file-plus"></span></button></td>';
-                        add_list += '<td>' + result.sample[i].sample_name + '</td>';
                         add_list += '<td>EMPTY</td>';
+                        add_list += '<td>' + result.sample[i].sample_name + '</td>';
                         add_list += '<td>' + result.sample[i].sample_code + '</td>';
                         add_list += '<td>' + result.sample[i].sample_country + '</td>';
                         add_list += '<td>' + result.sample[i].sample_type + '</td>';

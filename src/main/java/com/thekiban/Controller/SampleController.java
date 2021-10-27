@@ -1,7 +1,9 @@
 package com.thekiban.Controller;
 
 import com.thekiban.Entity.Sample;
+import com.thekiban.Entity.Standard;
 import com.thekiban.Service.SampleService;
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -31,7 +33,7 @@ public class SampleController {
   }
 
   @RequestMapping("insertSample")
-  public ModelAndView InsertSample(ModelAndView mv, @ModelAttribute Sample sample, @RequestParam("detail_list") String detail_list)
+  public ModelAndView InsertSample(ModelAndView mv, @ModelAttribute Sample sample)
   {
     service.InsertSample(sample);
 
