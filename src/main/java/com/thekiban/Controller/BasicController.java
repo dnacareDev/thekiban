@@ -1,7 +1,9 @@
 package com.thekiban.Controller;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -10,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.thekiban.Entity.Basic;
@@ -34,6 +37,29 @@ public class BasicController
 		mv.setViewName("genome/basic");
 		
 		return mv;
+	}
+	
+	// 원종 검색
+	@ResponseBody
+	@RequestMapping("searchBasic")
+	public Map<String, Object> SearchBasic(@RequestParam("page_num") int page_num)
+	{
+		Map<String, Object> result = new LinkedHashMap<String, Object>();
+		
+		int count = service.SelectBasicCount();
+		
+		int limit = 10;
+		int offset = (page_num - 1) * limit;
+		int end_page = (count + limit - 1) / limit;
+		
+		List<Basic> basic = service.SearchBasic(offset, limit);
+		
+		result.put("basic", basic);
+		result.put("page_num", page_num);
+		result.put("end_page", end_page);
+		result.put("offset", offset);
+		
+		return result;
 	}
 	
 	// 원종 등록
