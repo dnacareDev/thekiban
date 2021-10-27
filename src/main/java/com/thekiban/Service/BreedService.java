@@ -1,14 +1,12 @@
 package com.thekiban.Service;
 
-import com.thekiban.Entity.Breed;
+import com.thekiban.Entity.Detail;
 
 import java.util.List;
 
 public interface BreedService {
 
-  int InsertExcel(List<Breed> excels);
-
-  // DB 등록
-  int InsertBreed(List<Breed> breed);
+  // 세부 정보 조회
+  List<Detail> SelectDetail();
 
 }

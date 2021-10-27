@@ -26,7 +26,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException
 	{
-		User user = (User)service.loadUserByUsername(authentication.getName());
+		User user = service.loadUserByUsername(authentication.getName());
 		
 		if(user == null)
 		{

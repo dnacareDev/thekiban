@@ -434,7 +434,8 @@
 
                                 <form action="insertBasic" id="insertForm" method="POST" enctype="multipart/form-data">
                                     <div class="tab-content">
-                                        <div class="tab-pane fade show active" id="tab-horizontal-0" role="tabpanel" aria-labelledby="tab-horizontal-0-tab">
+                                        <div class="tab-pane fade show active" id="tab-horizontal-0" role="tabpanel"
+                                             aria-labelledby="tab-horizontal-0-tab">
                                             <div class="content_title clearfix">
                                                 <ul>
                                                     <li>형질</li>
@@ -499,11 +500,11 @@
                                             </div>
                                             <div class="content_1 clearfix">
                                                 <ul>
-                                                	<th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '원예형질(종자원 기준)'">
-	                                                    <li>
-	                                                        <div class="title" th:text="${detail.detail_title}"></div>
-	                                                        <div class="input_text"><input type="text" name="content_1_1"></div>
-	                                                    </li>
+                                                    <th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '원예형질(종자원 기준)'">
+                                                        <li>
+                                                            <div class="title" th:text="${detail.detail_title}"></div>
+                                                            <div class="input_text"><input type="text" name="content_1_1"></div>
+                                                        </li>
                                                     </th:block>
                                                 </ul>
                                             </div>
@@ -518,11 +519,11 @@
                                             </div>
                                             <div class="content_1 clearfix">
                                                 <ul>
-                                                	<th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '원예형질(사내 기준)'">
-	                                                    <li>
-	                                                        <div class="title" th:text="${detail.detail_title}"></div>
-	                                                        <div class="input_text"><input type="text" name="content_1_1"></div>
-	                                                    </li>
+                                                    <th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '원예형질(사내 기준)'">
+                                                        <li>
+                                                            <div class="title" th:text="${detail.detail_title}"></div>
+                                                            <div class="input_text"><input type="text" name="content_1_1"></div>
+                                                        </li>
                                                     </th:block>
                                                 </ul>
                                             </div>
@@ -537,11 +538,11 @@
                                             </div>
                                             <div class="content_1 clearfix">
                                                 <ul>
-                                                	<th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '병저항성(국립종자원 기준)'">
-	                                                    <li>
-	                                                        <div class="title" th:text="${detail.detail_title}"></div>
-	                                                        <div class="input_text"><input type="text" name="content_1_1"></div>
-	                                                    </li>
+                                                    <th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '병저항성(국립종자원 기준)'">
+                                                        <li>
+                                                            <div class="title" th:text="${detail.detail_title}"></div>
+                                                            <div class="input_text"><input type="text" name="content_1_1"></div>
+                                                        </li>
                                                     </th:block>
                                                 </ul>
                                             </div>
@@ -556,11 +557,11 @@
                                             </div>
                                             <div class="content_1 clearfix">
                                                 <ul>
-                                                	<th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '병저항성(사내 기준)'">
-	                                                    <li>
-	                                                        <div class="title" th:text="${detail.detail_title}"></div>
-	                                                        <div class="input_text"><input type="text" name="content_1_1"></div>
-	                                                    </li>
+                                                    <th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '병저항성(사내 기준)'">
+                                                        <li>
+                                                            <div class="title" th:text="${detail.detail_title}"></div>
+                                                            <div class="input_text"><input type="text" name="content_1_1"></div>
+                                                        </li>
                                                     </th:block>
                                                 </ul>
                                             </div>
@@ -575,11 +576,11 @@
                                             </div>
                                             <div class="content_1 clearfix">
                                                 <ul>
-                                                	<th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '성분정보(국립종자원 기준)'">
-	                                                    <li>
-	                                                        <div class="title" th:text="${detail.detail_title}"></div>
-	                                                        <div class="input_text"><input type="text" name="content_1_1"></div>
-	                                                    </li>
+                                                    <th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '성분정보(국립종자원 기준)'">
+                                                        <li>
+                                                            <div class="title" th:text="${detail.detail_title}"></div>
+                                                            <div class="input_text"><input type="text" name="content_1_1"></div>
+                                                        </li>
                                                     </th:block>
                                                 </ul>
                                             </div>
@@ -594,11 +595,11 @@
                                             </div>
                                             <div class="content_1 clearfix">
                                                 <ul>
-                                                	<th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '마커정보'">
-	                                                    <li>
-	                                                        <div class="title" th:text="${detail.detail_title}"></div>
-	                                                        <div class="input_text"><input type="text" name="content_1_1"></div>
-	                                                    </li>
+                                                    <th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '마커정보'">
+                                                        <li>
+                                                            <div class="title" th:text="${detail.detail_title}"></div>
+                                                            <div class="input_text"><input type="text" name="content_1_1"></div>
+                                                        </li>
                                                     </th:block>
                                                 </ul>
                                             </div>
@@ -811,18 +812,18 @@
                         console.log(tmp[j])
 
                         // 공백처리
-                        if(idx == tmp[j]) {
+                        if (idx == tmp[j]) {
                             html += "<td><span>" + value + "</span></td>";
                             j++;
                         } else {
-                            var idx_str = idx.replace(/[^0-9]/g,'');
-                            var tmp_str = tmp[j].replace(/[^0-9]/g,'');
+                            var idx_str = idx.replace(/[^0-9]/g, '');
+                            var tmp_str = tmp[j].replace(/[^0-9]/g, '');
 
                             var gap = idx_str - tmp_str;
 
                             console.log(gap);
 
-                            while(gap > 0) {
+                            while (gap > 0) {
                                 gap--;
                                 html += "<td><span></span></td>";
                             }
@@ -893,6 +894,7 @@
         } catch (e) {
             alert(e.message);
         } finally {
+
         }
 
         return obj;
@@ -906,9 +908,8 @@
         }
     }
 
-    function insertBtn()
-    {
-    	$("#insertForm").submit();
+    function insertBtn() {
+        $("#insertForm").submit();
     }
 </script>
 </body>

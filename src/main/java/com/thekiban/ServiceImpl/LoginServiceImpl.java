@@ -19,14 +19,7 @@ public class LoginServiceImpl implements LoginService
 	public User loadUserByUsername(String user_username) throws UsernameNotFoundException
 	{
 		User user = mapper.LoginUserInfo(user_username);
-		
-		if(user == null)
-		{
-			return null;
-		}
-		else
-		{
-			return user;
-		}
+
+    return user;
 	}
 }

@@ -5,7 +5,7 @@
 
     <!-- 공통 헤더 -->
     <th:block th:include="@{/fragments/header.html}"></th:block>
-    <script src="../assets/vendor_assets/js/script.js"></script> <!-- 왼쪽상단에 버튼 클릭시 class 추가 스크립트 -->    
+    <script src="../assets/vendor_assets/js/script.js"></script> <!-- 왼쪽상단에 버튼 클릭시 class 추가 스크립트 -->
     <style>
         table {
             border-top: 1px solid grey;
@@ -455,41 +455,9 @@
                                                href="#tab-horizontal-0" role="tab" aria-controls="tab-horizontal-0"
                                                aria-selected="true">기본 정보</a>
                                         </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link active" id="tab-horizontal-1-tab" data-toggle="tab"
-                                               href="#tab-horizontal-1" role="tab" aria-controls="tab-horizontal-1"
-                                               aria-selected="false">원예형질[종자원 기준]</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="tab-horizontal-2-tab" data-toggle="tab"
-                                               href="#tab-horizontal-2" role="tab" aria-controls="tab-horizontal-2"
-                                               aria-selected="false">원예형질[사내 기준]</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="tab-horizontal-3-tab" data-toggle="tab"
-                                               href="#tab-horizontal-3" role="tab" aria-controls="tab-horizontal-3"
-                                               aria-selected="false">병저항성[종자원 기준]</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="tab-horizontal-4-tab" data-toggle="tab"
-                                               href="#tab-horizontal-4" role="tab" aria-controls="tab-horizontal-4"
-                                               aria-selected="false">병저항성[사내 기준]</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="tab-horizontal-5-tab" data-toggle="tab"
-                                               href="#tab-horizontal-5" role="tab" aria-controls="tab-horizontal-5"
-                                               aria-selected="false">성분정보[종자원 기준]</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="tab-horizontal-6-tab" data-toggle="tab"
-                                               href="#tab-horizontal-6" role="tab" aria-controls="tab-horizontal-6"
-                                               aria-selected="false">마커정보</a>
-                                        </li>
                                     </ul>
-                                    <span class="prev"></span>
-                                    <span class="next"></span>
                                 </div>
-                                <form id="gibon">
+                                <form action="insertSample" id="insertForm" method="POST" enctype="multipart/form-data">
                                     <div class="tab-content">
                                         <div class="tab-pane fade show active" id="tab-horizontal-0" role="tabpanel"
                                              aria-labelledby="tab-horizontal-0-tab">
@@ -544,531 +512,16 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                        <div class="tab-pane fade" id="tab-horizontal-1" role="tabpanel"
-                                             aria-labelledby="tab-horizontal-1-tab">
-                                            <div class="content_title clearfix">
-                                                <ul>
-                                                    <li>형질</li>
-                                                    <li>조사값</li>
-                                                </ul>
-                                            </div>
-                                            <div class="content_1 clearfix">
-                                                <ul>
-                                                    <li>
-                                                        <div class="title">1.모: 하배축의 안토시아닌 착색(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">2.식물체: 생장습성 (계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">3-1.식물체: 주간의 길이</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">3-2.식물체: 주간의 길이(cm)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">4.식물체: 단축절간(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">5.식물체:제1번화와 단축절간 사이의 절간 (개수)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">6-1.식물체: 절간의 길이(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">6-2.식물체: 절간의 길이(cm)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">7.식물체: 마디부위의 안토시아닌 착색(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">1.모: 하배축의 안토시아닌 착색(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">2.식물체: 생장습성 (계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">3-1.식물체: 주간의 길이</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">3-2.식물체: 주간의 길이(cm)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">4.식물체: 단축절간(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">5.식물체:제1번화와 단축절간 사이의 절간 (개수)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">6-1.식물체: 절간의 길이(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">6-2.식물체: 절간의 길이(cm)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">7.식물체: 마디부위의 안토시아닌 착색(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="tab-horizontal-2" role="tabpanel"
-                                             aria-labelledby="tab-horizontal-2-tab">
-                                            <div class="content_title clearfix">
-                                                <ul>
-                                                    <li>형질</li>
-                                                    <li>조사값</li>
-                                                </ul>
-                                            </div>
-                                            <div class="content_1 clearfix">
-                                                <ul>
-                                                    <li>
-                                                        <div class="title">10.모: 하배축의 안토시아닌 착색(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">2.식물체: 생장습성 (계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">3-1.식물체: 주간의 길이</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">3-2.식물체: 주간의 길이(cm)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">4.식물체: 단축절간(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">5.식물체:제1번화와 단축절간 사이의 절간 (개수)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">6-1.식물체: 절간의 길이(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">6-2.식물체: 절간의 길이(cm)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">7.식물체: 마디부위의 안토시아닌 착색(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">1.모: 하배축의 안토시아닌 착색(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">2.식물체: 생장습성 (계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">3-1.식물체: 주간의 길이</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">3-2.식물체: 주간의 길이(cm)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">4.식물체: 단축절간(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">5.식물체:제1번화와 단축절간 사이의 절간 (개수)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">6-1.식물체: 절간의 길이(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">6-2.식물체: 절간의 길이(cm)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">7.식물체: 마디부위의 안토시아닌 착색(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="tab-horizontal-3" role="tabpanel"
-                                             aria-labelledby="tab-horizontal-3-tab">
-                                            <div class="content_title clearfix">
-                                                <ul>
-                                                    <li>형질</li>
-                                                    <li>조사값</li>
-                                                </ul>
-                                            </div>
-                                            <div class="content_1 clearfix">
-                                                <ul>
-                                                    <li>
-                                                        <div class="title">100.모: 하배축의 안토시아닌 착색(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">2.식물체: 생장습성 (계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">3-1.식물체: 주간의 길이</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">3-2.식물체: 주간의 길이(cm)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">4.식물체: 단축절간(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">5.식물체:제1번화와 단축절간 사이의 절간 (개수)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">6-1.식물체: 절간의 길이(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">6-2.식물체: 절간의 길이(cm)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">7.식물체: 마디부위의 안토시아닌 착색(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">1.모: 하배축의 안토시아닌 착색(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">2.식물체: 생장습성 (계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">3-1.식물체: 주간의 길이</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">3-2.식물체: 주간의 길이(cm)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">4.식물체: 단축절간(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">5.식물체:제1번화와 단축절간 사이의 절간 (개수)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">6-1.식물체: 절간의 길이(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">6-2.식물체: 절간의 길이(cm)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">7.식물체: 마디부위의 안토시아닌 착색(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="tab-horizontal-4" role="tabpanel"
-                                             aria-labelledby="tab-horizontal-4-tab">
-                                            <div class="content_title clearfix">
-                                                <ul>
-                                                    <li>형질</li>
-                                                    <li>조사값</li>
-                                                </ul>
-                                            </div>
-                                            <div class="content_1 clearfix">
-                                                <ul>
-                                                    <li>
-                                                        <div class="title">1000.모: 하배축의 안토시아닌 착색(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">2.식물체: 생장습성 (계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">3-1.식물체: 주간의 길이</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">3-2.식물체: 주간의 길이(cm)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">4.식물체: 단축절간(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">5.식물체:제1번화와 단축절간 사이의 절간 (개수)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">6-1.식물체: 절간의 길이(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">6-2.식물체: 절간의 길이(cm)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">7.식물체: 마디부위의 안토시아닌 착색(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">1.모: 하배축의 안토시아닌 착색(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">2.식물체: 생장습성 (계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">3-1.식물체: 주간의 길이</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">3-2.식물체: 주간의 길이(cm)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">4.식물체: 단축절간(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">5.식물체:제1번화와 단축절간 사이의 절간 (개수)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">6-1.식물체: 절간의 길이(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">6-2.식물체: 절간의 길이(cm)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">7.식물체: 마디부위의 안토시아닌 착색(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="tab-horizontal-5" role="tabpanel"
-                                             aria-labelledby="tab-horizontal-5-tab">
-                                            <div class="content_title clearfix">
-                                                <ul>
-                                                    <li>형질</li>
-                                                    <li>조사값</li>
-                                                </ul>
-                                            </div>
-                                            <div class="content_1 clearfix">
-                                                <ul>
-                                                    <li>
-                                                        <div class="title">1.모: 하배축의 안토시아닌 착색(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">2.식물체: 생장습성 (계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">3-1.식물체: 주간의 길이</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">3-2.식물체: 주간의 길이(cm)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">4.식물체: 단축절간(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">5.식물체:제1번화와 단축절간 사이의 절간 (개수)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">6-1.식물체: 절간의 길이(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">6-2.식물체: 절간의 길이(cm)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">7.식물체: 마디부위의 안토시아닌 착색(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">1.모: 하배축의 안토시아닌 착색(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">2.식물체: 생장습성 (계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">3-1.식물체: 주간의 길이</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">3-2.식물체: 주간의 길이(cm)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">4.식물체: 단축절간(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">5.식물체:제1번화와 단축절간 사이의 절간 (개수)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">6-1.식물체: 절간의 길이(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">6-2.식물체: 절간의 길이(cm)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">7.식물체: 마디부위의 안토시아닌 착색(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="tab-horizontal-6" role="tabpanel"
-                                             aria-labelledby="tab-horizontal-6-tab">
-                                            <div class="content_title clearfix">
-                                                <ul>
-                                                    <li>형질</li>
-                                                    <li>조사값</li>
-                                                </ul>
-                                            </div>
-                                            <div class="content_1 clearfix">
-                                                <ul>
-                                                    <li>
-                                                        <div class="title">1.모: 하배축의 안토시아닌 착색(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">2.식물체: 생장습성 (계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">3-1.식물체: 주간의 길이</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">3-2.식물체: 주간의 길이(cm)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">4.식물체: 단축절간(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">5.식물체:제1번화와 단축절간 사이의 절간 (개수)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">6-1.식물체: 절간의 길이(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">6-2.식물체: 절간의 길이(cm)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">7.식물체: 마디부위의 안토시아닌 착색(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">1.모: 하배축의 안토시아닌 착색(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">2.식물체: 생장습성 (계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">3-1.식물체: 주간의 길이</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">3-2.식물체: 주간의 길이(cm)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">4.식물체: 단축절간(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">5.식물체:제1번화와 단축절간 사이의 절간 (개수)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">6-1.식물체: 절간의 길이(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">6-2.식물체: 절간의 길이(cm)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">7.식물체: 마디부위의 안토시아닌 착색(계급)</div>
-                                                        <div class="input_text"><input type="text"></div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
                                     </div>
                                 </form>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer" style="border: none">
-                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
-                <button type="button" class="btn btn-primary btn-sm" onclick="makeArray()" data-dismiss="modal">저장</button>
+                <div class="modal-footer" style="border: none">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="insertBtn()" data-dismiss="modal">저장</button>
+                </div>
             </div>
         </div>
     </div>
@@ -1305,12 +758,16 @@
         }
     }
 
+    function insertBtn() {
+        $("#insertForm").submit();
+    }
+
     // 구글 맵 관련 
     const mapContainer = document.querySelector('#google_map1');
     const mapContainer2 = document.querySelector('#google_map2');
     const koreaOptions = {
         zoom: 6,
-        center: { lat: 36.613766432253634 ,lng: 127.84942123102657 },        
+        center: {lat: 36.613766432253634, lng: 127.84942123102657},
         panControl: false,
         zoomControl: false,
         scaleControl: false,
@@ -1323,37 +780,37 @@
     const globalOptions = {
         ...koreaOptions,
         zoom: 0,
-        center: { lat: 37.5642135 ,lng: 127.0016985 }
+        center: {lat: 37.5642135, lng: 127.0016985}
     }
 
-    const map = new google.maps.Map(mapContainer,koreaOptions); 
-    const map2 = new google.maps.Map(mapContainer2,globalOptions);
+    const map = new google.maps.Map(mapContainer, koreaOptions);
+    const map2 = new google.maps.Map(mapContainer2, globalOptions);
     //국내는 부산, 청주, 익산, 남해, 밀양, 전주, 제주, 강릉, 함양, 부여, 성주
     // 해외는 인도, 중국, 영국, 미국, 파키스탄, 일본, 네덜란드
-    const globalCityDatas = [        
-        { lat: 22.22267143294292, lng: 79.13524723236651},
-        { lat: 33.25173879082619, lng: 103.92501603483987},
-        { lat: 38.8498311865453, lng: -102.37095928101904},
-        { lat: 29.48237176159851, lng: 69.69045458640039},
-        { lat: 36.332952986760326, lng: 138.65686172199221},
-        { lat: 52.529665164041596, lng: 4.8670640984935165},
+    const globalCityDatas = [
+        {lat: 22.22267143294292, lng: 79.13524723236651},
+        {lat: 33.25173879082619, lng: 103.92501603483987},
+        {lat: 38.8498311865453, lng: -102.37095928101904},
+        {lat: 29.48237176159851, lng: 69.69045458640039},
+        {lat: 36.332952986760326, lng: 138.65686172199221},
+        {lat: 52.529665164041596, lng: 4.8670640984935165},
     ];
 
     const koreaCityDatas = [
-        { lat: 35.206238513124546, lng: 129.08038118015855 },
-        { lat: 36.6424341, lng: 127.4890319 },
-        { lat: 35.9482858, lng: 126.9575991 },
-        { lat: 36.6424341, lng: 127.4890319 },
-        {lat: 35.832732140930425, lng: 127.12353144605112 },
-        {lat: 35.492278267228684, lng: 128.74756762815156 },
-        {lat: 37.7626809049733, lng: 128.89751079481087 },
-        {lat: 33.46962794437109, lng: 126.53995587901136 },
-        {lat: 35.62315997859795, lng: 127.64287731141832 },
-        {lat: 36.28673472687304, lng: 126.75708382107744 },
-        {lat: 35.932930167597355, lng: 128.26808927858545 },
+        {lat: 35.206238513124546, lng: 129.08038118015855},
+        {lat: 36.6424341, lng: 127.4890319},
+        {lat: 35.9482858, lng: 126.9575991},
+        {lat: 36.6424341, lng: 127.4890319},
+        {lat: 35.832732140930425, lng: 127.12353144605112},
+        {lat: 35.492278267228684, lng: 128.74756762815156},
+        {lat: 37.7626809049733, lng: 128.89751079481087},
+        {lat: 33.46962794437109, lng: 126.53995587901136},
+        {lat: 35.62315997859795, lng: 127.64287731141832},
+        {lat: 36.28673472687304, lng: 126.75708382107744},
+        {lat: 35.932930167597355, lng: 128.26808927858545},
         // {lat: 35.906974893937814, lng: 137.73401019446183 }, 
     ]
-    
+
     const image = {
         url: "http://maps.google.com/mapfiles/ms/micons/msmarker.shadow.png",
         // This marker is 20 pixels wide by 32 pixels high.
@@ -1370,7 +827,7 @@
             map: map,
             // icon: image,
             label: ""
-        })        
+        })
     })
     globalCityDatas.forEach((value, i) => {
         console.log(value)
@@ -1379,10 +836,9 @@
             map: map2,
             // icon: image,
             label: ""
-        })        
+        })
     })
 
-    
 
 </script>
 </body>

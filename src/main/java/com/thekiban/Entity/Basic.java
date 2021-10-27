@@ -12,7 +12,7 @@ import lombok.ToString;
 @Alias("Basic")
 public class Basic
 {
-	private int basic_id;
+	private int basic_id;						// 원종관리 코드
 	private String basic_code;
 	private String basic_name;
 	private String basic_num;

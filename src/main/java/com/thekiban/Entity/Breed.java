@@ -3,10 +3,12 @@ package com.thekiban.Entity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.apache.ibatis.type.Alias;
 
 @Getter
 @Setter
 @ToString
+@Alias("Breed")
 public class Breed {
 
   private int breed_id;               // 품종관리 고유번호

@@ -6,4 +6,5 @@
 		SELECT * FROM detail
 		WHERE detail_type = 1
 	</select>
+
 </mapper>

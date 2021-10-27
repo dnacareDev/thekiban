@@ -1,4 +1,8 @@
 package com.thekiban.ServiceImpl;
 
-public class SampleServiceImpl {
+import com.thekiban.Service.SampleService;
+import org.springframework.stereotype.Service;
+
+@Service
+public class SampleServiceImpl implements SampleService {
 }

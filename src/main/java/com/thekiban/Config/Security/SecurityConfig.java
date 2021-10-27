@@ -35,8 +35,8 @@ public class SecurityConfig
 	@Order(1)
 	public static class AdminSecurityConfig extends WebSecurityConfigurerAdapter
 	{
-		private AuthenticationSuccessHandler successHandler;
-		private AuthenticationProvider provider;
+		private final AuthenticationSuccessHandler successHandler;
+		private final AuthenticationProvider provider;
 		
 		@Autowired
 		public AdminSecurityConfig(CustomAuthenticationProvider authenticationProvider, CustomAuthenticationSuccessHandler authenticationSuccessHandler)
@@ -86,8 +86,8 @@ public class SecurityConfig
 	@Order(2)
 	public static class RestSecurityConfig extends WebSecurityConfigurerAdapter
 	{
-		private AuthenticationSuccessHandler successHandler;
-		private AuthenticationProvider provider;
+		private final AuthenticationSuccessHandler successHandler;
+		private final AuthenticationProvider provider;
 		
 		@Autowired
 		public RestSecurityConfig(CustomAuthenticationProvider authenticationProvider, CustomAuthenticationSuccessHandler authenticationSuccessHandler)

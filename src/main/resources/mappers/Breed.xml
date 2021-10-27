@@ -2,13 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.thekiban.Mapper.BreedMapper">
 
-    <!-- 셀렉트 박스 -->
-    <select id="getCropList" parameterType="String" resultType="Breed">
-        select *
-        from
-    </select>
-
-
     <!-- DB 등록 -->
     <insert id="InsertBreed" parameterType="Breed">
         INSERT INTO breed
@@ -19,4 +12,11 @@
                 #{breed_apply_num}, #{breed_apply_date}, #{breed_enroll_num}, #{breed_enroll_date}, #{breed_local}, #{breed_purpose}, #{breed_first_form},
                 #{breed_second_form}, #{breed_first_crop}, #{breed_second_crop}, #{breed_comment})
     </insert>
+
+    <!-- 세부정보 조회 -->
+    <select id="SelectDetail" resultType="Detail">
+        SELECT * FROM detail
+        WHERE detail_type = 0
+    </select>
+
 </mapper>

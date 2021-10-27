@@ -13,7 +13,7 @@ public class FileController {
 
     Date date = new Date();
 
-    fileName = Long.toString(date.getTime()) +"." + extension;
+    fileName = date.getTime() +"." + extension;
 
     return fileName;
   }

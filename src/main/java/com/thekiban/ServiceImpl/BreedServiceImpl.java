@@ -1,6 +1,6 @@
 package com.thekiban.ServiceImpl;
 
-import com.thekiban.Entity.Breed;
+import com.thekiban.Entity.Detail;
 import com.thekiban.Mapper.BreedMapper;
 import com.thekiban.Service.BreedService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +14,11 @@ public class BreedServiceImpl implements BreedService {
   @Autowired
   private BreedMapper mapper;
 
+  // 세부정보 조회
   @Override
-  public int InsertExcel(List<Breed> excels) {
-    return mapper.InsertExcel(excels);
+  public List<Detail> SelectDetail()
+  {
+    return mapper.SelectDetail();
   }
 
-  @Override
-  public int InsertBreed(List<Breed> breed) {
-    return mapper.InsertBreed(breed);
-  }
 }
