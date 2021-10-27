@@ -458,6 +458,7 @@
                                     </ul>
                                 </div>
                                 <form action="insertSample" id="insertForm" method="POST" enctype="multipart/form-data">
+                                    <input type="hidden" id="origin_list" name="origin_list">
                                     <div class="tab-content">
                                         <div class="tab-pane fade show active" id="tab-horizontal-0" role="tabpanel"
                                              aria-labelledby="tab-horizontal-0-tab">
@@ -759,6 +760,19 @@
     }
 
     function insertBtn() {
+        var data = new Array();
+        $("input[name=detail]").each(function(index, item)
+        {
+            const key = $(this).attr('id');
+            var value = $(this).val();
+
+            var arr = {key : key, value : value};
+
+            data.push(arr);
+        });
+
+        $("#origin_list").val(JSON.stringify(data));
+
         $("#insertForm").submit();
     }
 

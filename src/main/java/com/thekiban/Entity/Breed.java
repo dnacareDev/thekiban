@@ -30,5 +30,7 @@ public class Breed {
   private String breed_first_crop;    // 작물타입 1
   private String breed_second_crop;   // 작물타입 2
   private String breed_comment;       // 비고
+  private String create_date;         // 등록일
+  private String modify_date;         // 수정일
 
 }
