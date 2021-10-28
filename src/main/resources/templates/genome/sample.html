@@ -569,7 +569,7 @@
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white ">
                 <div class="modal-header" style="border: none">
-                    <h6 class="modal-title">시교 진행 현황</h6>
+                    <h6 class="modal-title" id="test_click">시교 진행 현황</h6>
                 </div>
                 <div class="modal-body">
                     <ul id="google_container">
@@ -889,8 +889,8 @@
         center: {lat: 37.5642135, lng: 127.0016985}
     }
 
-    const map = new google.maps.Map(mapContainer, koreaOptions);
-    const map2 = new google.maps.Map(mapContainer2, globalOptions);
+    let map = new google.maps.Map(mapContainer, koreaOptions);
+    let map2 = new google.maps.Map(mapContainer2, globalOptions);
     //국내는 부산, 청주, 익산, 남해, 밀양, 전주, 제주, 강릉, 함양, 부여, 성주
     // 해외는 인도, 중국, 영국, 미국, 파키스탄, 일본, 네덜란드
     const globalCityDatas = [
@@ -925,26 +925,63 @@
         origin: new google.maps.Point(0, 0),
         // The anchor for this image is the base of the flagpole at (0, 32).
         anchor: new google.maps.Point(0, 32),
-    };
-    koreaCityDatas.forEach((value, i) => {
-        console.log(value)
-        new google.maps.Marker({
+    };   
+
+    const markers = [];
+    koreaCityDatas.forEach((value, i) => {        
+        const marker = new google.maps.Marker({
             position: value,
             map: map,
             // icon: image,
             label: ""
+        })        
+        markers.push(marker)              
+    })    
+    
+    markers.forEach((el, i) => {
+        el.addListener('click', () => {
+            map = el.getMap();
+            map.panTo({ lat: el.getPosition().lat(), lng: el.getPosition().lng() })
+            smoothZoom(map, 12, map.getZoom())
+            console.log(1)
         })
     })
-    globalCityDatas.forEach((value, i) => {
-        console.log(value)
-        new google.maps.Marker({
+
+    const gMarkers = [];
+    globalCityDatas.forEach((value, i) => {        
+        const marker = new google.maps.Marker({
             position: value,
             map: map2,
             // icon: image,
             label: ""
         })
+        gMarkers.push(marker)
     })
 
+    gMarkers.forEach((el, i) => {
+        el.addListener('click', () => {
+            map = el.getMap();
+            map.panTo({ lat: el.getPosition().lat(), lng: el.getPosition().lng() })
+            smoothZoom(map2, 12, map2.getZoom())
+            console.log(1)
+        })
+    })
+    
+
+    function smoothZoom (map, max, cnt) {
+        if (cnt >= max) {
+            return;
+        }
+        else {
+            z = google.maps.event.addListener(map, 'zoom_changed', function(event){
+                google.maps.event.removeListener(z);
+                smoothZoom(map, max, cnt + 1);
+            });
+            setTimeout(function(){map.setZoom(cnt)}, 40); 
+        }
+    }  
+
+    
 
 </script>
 </body>
