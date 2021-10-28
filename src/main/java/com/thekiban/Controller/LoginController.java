@@ -14,9 +14,17 @@ public class LoginController
 	private LoginService service;
 	
 	@GetMapping("/login")
-	public ModelAndView login(ModelAndView mv)
+	public ModelAndView Login(ModelAndView mv)
 	{
 		mv.setViewName("login/login");
+		
+		return mv;
+	}
+	
+	@GetMapping("/login_success")
+	public ModelAndView LoginSuccess(ModelAndView mv)
+	{
+		mv.setViewName("login/login_success");
 		
 		return mv;
 	}

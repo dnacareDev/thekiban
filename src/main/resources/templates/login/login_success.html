@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:with="user = ${#authentication.principal}">
+<head>
+    <!-- 공통 헤더 -->
+    <th:block th:include="@{/fragments/header.html}"></th:block>
+    <link rel="stylesheet" href="../assets/vendor_assets/css/bootstrap/bootstrap.css">
+<style>
+.main-content{
+  	padding: 0;
+}
+.main-content .contents .container-fluid{
+  	max-width: 100%;
+	margin: 0 auto;
+	padding-top: 0;
+}
+.justify-content-center {
+	align-items: center; /* 2021-10-18 AlpaDesign 추가 */
+}
+.edit-profile__title{
+	width: 100%;
+	text-align:center;
+	line-height:2;
+}
+.profile_pic{
+	width:165px;
+	height: 165px;
+	background-color:#F7F7F7;
+	border-radius: 50%;
+	margin: 0 auto;
+	overflow:hidden;
+	background: url("../assets/vendor_assets/img/map1.png") no-repeat center center;
+	background-size: cover;
+	margin-bottom: 20px;
+}
+.signUp-admin-right .card .card-header h6{
+	display:block;
+}
+.profile_pic .title_sub{
+	color:#9D9D9D;
+}
+.box_content{
+	display:block;
+	width: 100%;
+}
+.box_content li{
+	width: 100%;
+	border: 1px solid #217566;
+	border-radius: 5px;
+	padding: 5px 0;
+	margin-top: 10px;
+}
+.box_content li a{
+	display:block;
+	color:#217566;
+	font-size : 18px;
+	text-decoration: none;
+	text-align:center;
+	font-weight: 700;
+}
+.logout{
+	text-align:center;
+}
+.logout a{
+	margin: 0 auto;
+	text-decoration: underline;
+	color: #9D9D9D;
+	font-size: 15px;
+}
+</style>
+</head>
+<body class="layout-light top-menu overlayScroll">
+<main class="main-content">
+	<div class="contents" style="background-color: #FFFFFF;">
+		<div class="container-fluid" style="background-color: #FFFFFF;">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="signUP-admin">
+						<div class="container-fluid">
+							<div class="row justify-content-center">
+								<div class="col-xl-4 col-lg-5 col-md-5 p-0">
+									<div class="signUP-admin-left signIn-admin-left position-relative">
+										<div class="signUP-admin-left__content">
+											<h1 style="width:182px;"><a href=""><img src="../assets/vendor_assets/img/logo.png" alt="logo" style="width:100%"></a></h1>
+										</div>
+									</div>
+								</div>
+								<div class="col-xl-8 col-lg-7 col-md-7 col-sm-8">
+									<div class="signUp-admin-right signIn-admin-right  p-md-40 p-10">
+										<div class="row justify-content-center">
+											<div class="col-xl-7 col-lg-8 col-md-12">
+												<div class="edit-profile mt-md-25 mt-0">
+													<div class="card border-0">
+														<div class="card-header border-0  pb-md-15 pb-10 pt-md-20 pt-10 ">
+															<div class="edit-profile__title">
+																<div class="profile_pic"></div>
+																<h6>반갑습니다<span class="color-primary" th:text="${user.user_name}"></span>님,</h6>
+																<!-- <span class="title_sub">ahnnabanana@pref.com</span> -->
+															</div>
+														</div>
+														<div class="card-body">
+															<div class="edit-profile__body">
+																<div class="form-group mb-20">
+																	<div class="box_content">
+																		<ul>
+																			<li><a href="home">유전 자원 관리</a></li>
+																			<li><a href="home">Digital Lab</a></li>
+																			<li><a href="home">Digital Field</a></li>
+																		</ul>
+																		<div class="logout"><a href="/logout">로그아웃</a></div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</main>
+<!-- 공통 js -->
+<th:block th:include="@{/fragments/commonjs.html}"></th:block>
+<script type="text/javascript">
+
+</script>
+</body>
+</html>
