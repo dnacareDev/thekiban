@@ -6,6 +6,7 @@
     <!-- 공통 헤더 -->
     <th:block th:include="@{/fragments/header.html}"></th:block>
     <script src="../assets/vendor_assets/js/script.js"></script> <!-- 왼쪽상단에 버튼 클릭시 class 추가 스크립트 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"> <!-- 2021-20-28 alpaDesign 수정 -->
     <style>
         table {
             border-top: 1px solid grey;
@@ -174,7 +175,18 @@
             flex: 1;
             height: 100%;
         }
-
+		.btn.btn-light.btn-transparent-light{
+			display:block;
+			width:100%;
+			background-color: transparent;
+		}
+		.main-content .contents .container-fluid{
+			max-width:100%;
+			padding: 50px;
+		}
+		.bg-white > .row{
+			padding-top: 50px;
+		}
         @media (min-width: 576px) {
             .modal-dialog {
                 max-width: 1014px;
@@ -672,7 +684,7 @@
                     html += "<tbody class='text-center'>";
                     html += "<tr>";
                     html += "<td><input type='checkbox' name='chkBox'></td>";
-                    html += "<td><button class='btn btn-light btn-default btn-squared btn-transparent-light' data-toggle='modal' data-target='#gen-attach'><span data-feather='file-plus'></span></button></td>";
+                    html += "<td><button class='btn btn-light btn-default btn-squared btn-transparent-light' data-toggle='modal' data-target='#gen-attach'><i class='bi bi-file-earmark-arrow-down'></i></button></td>";// 2021-20-28 alpaDesign 수정
                     html += "<td><span></span></td>";
 
                     $.each(rowdata[i], function (idx, value) {
@@ -699,7 +711,7 @@
         var html = "<tbody class='text-center'>";
         html += "<tr>";
         html += "<td><input type='checkbox' name='chkBox'></td>";
-        html += "<td><button class='btn btn-light btn-default btn-squared btn-transparent-light' data-toggle='modal' data-target='#gen-attach'><span data-feather='file-plus'></span></button></td>";
+        html += "<td><button class='btn btn-light btn-default btn-squared btn-transparent-light' data-toggle='modal' data-target='#gen-attach'><i class='bi bi-file-earmark-arrow-down'></i></button></td>"; // 2021-20-28 alpaDesign 수정
         html += "<td><span></span></td>";
 
         $.each(gibon, function (idx, value) {
@@ -791,7 +803,7 @@
                     {
                         add_list += '<tr>';
                         add_list += '<td><input type="checkbox"></td>';
-                        add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><span data-feather="file-plus"></span></button></td>';
+                        add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';// 2021-20-28 alpaDesign 수정
                         add_list += '<td>EMPTY</td>';
                         add_list += '<td>' + result.sample[i].sample_name + '</td>';
                         add_list += '<td>' + result.sample[i].sample_code + '</td>';
