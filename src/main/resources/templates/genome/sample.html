@@ -202,6 +202,22 @@
                 margin: 0 auto;
             }
         }
+
+        .btn.btn-light.btn-transparent-light{
+            display:block;
+            width:100%;
+            background-color: rgba(244, 245, 247, 1);
+        }
+
+        .main-content .contents .container-fluid{
+            max-width:100%;
+            padding: 50px;
+        }
+
+        .bg-white > .row{
+            padding-top: 50px;
+        }
+
     </style>
 </head>
 
@@ -317,17 +333,39 @@
                                         <thead class="text-center">
                                         <tr>
                                             <th></th>
-                                            <th>시교명</th>
-                                            <th>종자번호(ID)</th>
-                                            <th>종자 보유량</th>
-                                            <th>입고량</th>
-                                            <th>출고량</th>
-                                            <th>재고량</th>
-                                            <th>담당자</th>
-                                            <th>인수자</th>
-                                            <th>날짜</th>
-                                            <th>시교종료일자</th>
-                                            <th>지역구분</th>
+                                            <th><span class="title">시교명</span><i></i><img
+                                                src="../assets/vendor_assets/img/title_icon.png"
+                                                alt="시교명"></th>
+                                            <th><span class="title">종자번호(ID)</span><i></i><img
+                                                src="../assets/vendor_assets/img/title_icon.png"
+                                                alt="종자번호(ID)"></th>
+                                            <th><span class="title">종자 보유량</span><i></i><img
+                                                src="../assets/vendor_assets/img/title_icon.png"
+                                                alt="종자 보유량"></th>
+                                            <th><span class="title">입고량</span><i></i><img
+                                                src="../assets/vendor_assets/img/title_icon.png"
+                                                alt="입고량"></th>
+                                            <th><span class="title">출고량</span><i></i><img
+                                                src="../assets/vendor_assets/img/title_icon.png"
+                                                alt="출고량"></th>
+                                            <th><span class="title">재고량</span><i></i><img
+                                                src="../assets/vendor_assets/img/title_icon.png"
+                                                alt="재고량"></th>
+                                            <th><span class="title">담당자</span><i></i><img
+                                                src="../assets/vendor_assets/img/title_icon.png"
+                                                alt="담당자"></th>
+                                            <th><span class="title">인수자</span><i></i><img
+                                                src="../assets/vendor_assets/img/title_icon.png"
+                                                alt="인수자"></th>
+                                            <th><span class="title">날짜</span><i></i><img
+                                                src="../assets/vendor_assets/img/title_icon.png"
+                                                alt="날짜"></th>
+                                            <th><span class="title">시교종료일자</span><i></i><img
+                                                src="../assets/vendor_assets/img/title_icon.png"
+                                                alt="시교종료일자"></th>
+                                            <th><span class="title">지역구분</span><i></i><img
+                                                src="../assets/vendor_assets/img/title_icon.png"
+                                                alt="지역구분"></th>
                                         </tr>
                                         </thead>
                                         <tbody class="text-center">
@@ -589,16 +627,16 @@
 
     }
 
-/*    let list = navLi.length;
-    next.addEventListener("click", function (e) {
-        (navN < list - 1) ? navN += 1 : navN = list - 1;
-        moveFunction(navN);
-    });
+    /*    let list = navLi.length;
+        next.addEventListener("click", function (e) {
+            (navN < list - 1) ? navN += 1 : navN = list - 1;
+            moveFunction(navN);
+        });
 
-    prev.addEventListener("click", function (e) {
-        (navN > 0) ? navN -= 1 : navN = 0;
-        moveFunction(navN);
-    });*/
+        prev.addEventListener("click", function (e) {
+            (navN > 0) ? navN -= 1 : navN = 0;
+            moveFunction(navN);
+        });*/
 
     function moveFunction(f) {
 
@@ -760,12 +798,11 @@
 
     function insertBtn() {
         var data = [];
-        $("input[name=detail]").each(function(index, item)
-        {
+        $("input[name=detail]").each(function (index, item) {
             const key = $(this).attr('id');
             var value = $(this).val();
 
-            var arr = {key : key, value : value};
+            var arr = {key: key, value: value};
 
             data.push(arr);
         });
@@ -775,23 +812,20 @@
         $("#insertForm").submit();
     }
 
-    $(document).ready(function()
-    {
+    $(document).ready(function () {
         SearchSample(1);
     });
 
-    function SearchSample(e)
-    {
-        var data = {"page_num" : e};
+    function SearchSample(e) {
+        var data = {"page_num": e};
 
         $.ajax(
             {
-                url : 'searchSample',
-                method : 'POST',
-                dataType : 'json',
-                data : data,
-                success : function(result)
-                {
+                url: 'searchSample',
+                method: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function (result) {
                     console.log(result);
                     var sample_list = $("#sample_list");
                     var add_list = "";
@@ -799,8 +833,7 @@
                     var pageNum = $("#pageNum");
                     var page_add = "";
 
-                    for(var i = 0; i < result.sample.length; i++)
-                    {
+                    for (var i = 0; i < result.sample.length; i++) {
                         add_list += '<tr>';
                         add_list += '<td><input type="checkbox"></td>';
                         add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';// 2021-20-28 alpaDesign 수정
@@ -809,6 +842,7 @@
                         add_list += '<td>' + result.sample[i].sample_code + '</td>';
                         add_list += '<td>' + result.sample[i].sample_country + '</td>';
                         add_list += '<td>' + result.sample[i].sample_type + '</td>';
+                        add_list += '<td>' + result.sample[i].sample_mate + '</td>';
                         add_list += '<td>' + result.sample[i].sample_seed + '</td>';
                         add_list += '<td>' + result.sample[i].sample_amount + '</td>';
                         add_list += '<td>' + result.sample[i].sample_sprout + '</td>';
@@ -817,33 +851,23 @@
                         add_list += '</tr>';
                     }
 
-                    if(result.page_num == 1)
-                    {
+                    if (result.page_num == 1) {
                         page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></button>';
-                    }
-                    else
-                    {
+                    } else {
                         page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchReport(' + (result.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
                     }
 
-                    for(var i = 0; i < result.end_page; i++)
-                    {
-                        if(result.page_num == (i + 1))
-                        {
+                    for (var i = 0; i < result.end_page; i++) {
+                        if (result.page_num == (i + 1)) {
                             page_add += '<button class="atbd-pagination__link active" onclick="SearchReport(' + (i + 1) + ')">' + (i + 1) + '</button>';
-                        }
-                        else
-                        {
+                        } else {
                             page_add += '<button class="atbd-pagination__link" onclick="SearchReport(' + (i + 1) + ')">' + (i + 1) + '</button>';
                         }
                     }
 
-                    if(result.page_num == result.end_page)
-                    {
+                    if (result.page_num == result.end_page) {
                         page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-right"></span></button>';
-                    }
-                    else
-                    {
+                    } else {
                         page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchReport(' + (result.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
                     }
 
