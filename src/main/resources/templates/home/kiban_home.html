@@ -14,9 +14,6 @@
             height: 400px;
             justify-content: space-evenly;
         }
-        .main-content .contents .row{ /* 2021-10-19 AlpaDesign 추가 */
-			padding-top:100px;
-		}
 		.main-content .contents .row .card{ /* 2021-10-19 AlpaDesign 추가 */
 			border-radius: 10px;
 			box-shadow: 0 0 3px 3px rgb(0 0 0/ 3%);
@@ -93,7 +90,10 @@
             flex: 1;
             height: 100%;
         }
-    	
+    	.main-content .contents .container-fluid{
+    		max-width: 100%;
+    		
+    	}
 		@media only screen and (min-width: 992px){ /* 2021-10-19 AlpaDesign 추가 */
 			.main-content .contents .row .col-lg-12{
 				padding:0 50px 0 50px;
@@ -377,7 +377,8 @@
                     fontColor: "black",
                     usePointStyle: true,
                 }
-            }
+            },
+        	cutoutPercentage: 80,
         }
     });
     
@@ -411,7 +412,8 @@
                     fontColor: "black",
                     usePointStyle: true,
                 }
-            }
+            },
+            cutoutPercentage: 80,
         }
     });
 
@@ -445,7 +447,8 @@
                     fontColor: "black",
                     usePointStyle: true,
                 }
-            }
+            },
+            cutoutPercentage: 80,
         }
     });
 
@@ -479,7 +482,8 @@
                     fontColor: "black",
                     usePointStyle: true,
                 }
-            }
+            },
+            cutoutPercentage: 80,
         }
     });
 
