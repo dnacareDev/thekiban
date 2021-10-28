@@ -34,4 +34,9 @@ public class SampleServiceImpl implements SampleService {
   {
     return mapper.SearchSample(offset, limit);
   }
+
+  @Override
+  public String Delete(String no) {
+    mapper.Delete(no);
+  }
 }

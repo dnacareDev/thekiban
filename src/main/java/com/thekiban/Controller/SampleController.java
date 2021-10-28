@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,4 +66,14 @@ public class SampleController {
 
     return result;
   }
+
+  // 선택삭제
+  @RequestMapping("delete")
+  public String boardDelete(@RequestParam("num") int num) throws Exception {
+
+    SampleService.Delete(num);
+
+    return "redirect:list";
+  }
+
 }

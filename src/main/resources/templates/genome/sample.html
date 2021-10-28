@@ -152,7 +152,7 @@
             width: calc((100% - 50px) / 2);
             margin-left: 40px;
             overflow: hidden;
-            text-align:center;
+            text-align: center;
         }
 
         .main-content .modal-body ul li:first-child {
@@ -205,6 +205,10 @@
 
         .bg-white > .row {
             padding-top: 50px;
+        }
+
+        .table th, .table td {
+            vertical-align: middle;
         }
 
     </style>
@@ -271,36 +275,39 @@
                                             <th></th>
                                             <th><span class="title">첨부파일</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
                                                                                            alt="첨부파일"></th>
-                                            <th><span class="title">특성상태</span><i></i><img
+                                            <th style="cursor: pointer;"><span class="title">특성상태</span><i></i><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="특성상태"></th>
-                                            <th><span class="title">작물</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                         alt="작물"></th>
-                                            <th><span class="title">시교명(ID)</span><i></i><img
+                                            <th style="cursor: pointer;"><span class="title">작물</span><i></i><img
+                                                src="../assets/vendor_assets/img/title_icon.png"
+                                                alt="작물"></th>
+                                            <th style="cursor: pointer;"><span class="title">시교명(ID)</span><i></i><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="시교명"></th>
-                                            <th><span class="title">목표 지역</span><i></i><img
+                                            <th style="cursor: pointer;"><span class="title">목표 지역</span><i></i><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="목표 지역"></th>
-                                            <th><span class="title">구분</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                         alt="구분"></th>
-                                            <th><span class="title">교배번호</span><i></i><img
+                                            <th style="cursor: pointer;"><span class="title">구분</span><i></i><img
+                                                src="../assets/vendor_assets/img/title_icon.png"
+                                                alt="구분"></th>
+                                            <th style="cursor: pointer;"><span class="title">교배번호</span><i></i><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="교배번호"></th>
-                                            <th><span class="title">종자번호(ID)</span><i></i><img
+                                            <th style="cursor: pointer;"><span class="title">종자번호(ID)</span><i></i><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="종자번호"></th>
-                                            <th><span class="title">현 종자량(g)</span><i></i><img
+                                            <th style="cursor: pointer;"><span class="title">현 종자량(g)</span><i></i><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="현 종자량"></th>
-                                            <th><span class="title">기내 발아율(%)</span><i></i><img
+                                            <th style="cursor: pointer;"><span class="title">기내 발아율(%)</span><i></i><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="기내 발아율"></th>
-                                            <th><span class="title">기내 순도율(%)</span><i></i><img
+                                            <th style="cursor: pointer;"><span class="title">기내 순도율(%)</span><i></i><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="기내 순도율"></th>
-                                            <th><span class=" title">비고</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                          alt="비고"></th>
+                                            <th style="cursor: pointer;"><span class=" title">비고</span><i></i><img
+                                                src="../assets/vendor_assets/img/title_icon.png"
+                                                alt="비고"></th>
                                         </tr>
                                         </thead>
                                         <tbody class="text-center" id="sample_list">
@@ -331,13 +338,13 @@
                                             <th><span class="title">종자 보유량</span><i></i><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="종자 보유량"></th>
-                                            <th><span class="title">입고량</span><i></i><img
+                                            <th onclick="sortTable(3)"><span class="title">입고량</span><i></i><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="입고량"></th>
-                                            <th><span class="title">출고량</span><i></i><img
+                                            <th onclick="sortTable(4)"><span class="title">출고량</span><i></i><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="출고량"></th>
-                                            <th><span class="title">재고량</span><i></i><img
+                                            <th onclick="sortTable(5)"><span class="title">재고량</span><i></i><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="재고량"></th>
                                             <th><span class="title">담당자</span><i></i><img
@@ -381,11 +388,11 @@
                                         <button class="btn btn-icon btn-light btn-circle" data-toggle="modal" data-target="#grid">
                                             <span data-feather="plus"></span>
                                         </button>
-                                        <button class="btn btn-icon btn-light btn-circle" onclick="delRow()">
+                                        <button class="btn btn-icon btn-light btn-circle" onclick="deleteValue()">
                                             <span data-feather="trash-2"></span>
                                         </button>
                                     </div>
-                                    <div class="col-4">
+                                    <!--<div class="col-4">
                                         <div class="d-flex justify-content-center mt-30">
                                             <nav class="atbd-page">
                                                 <ul class="atbd-pagination d-flex">
@@ -405,6 +412,11 @@
                                                     </li>
                                                 </ul>
                                             </nav>
+                                        </div>
+                                    </div>-->
+                                    <div class="col-4">
+                                        <div class="row" style="justify-content: center;">
+                                            <div id="pageNum" style="text-align:center; margin: 2% 0 0 0;"></div>
                                         </div>
                                     </div>
                                     <div class="col-4">
@@ -615,16 +627,16 @@
 
     }
 
-        /*let list = navLi.length;
-        next.addEventListener("click", function (e) {
-            (navN < list - 1) ? navN += 1 : navN = list - 1;
-            moveFunction(navN);
-        });
+    /*let list = navLi.length;
+    next.addEventListener("click", function (e) {
+        (navN < list - 1) ? navN += 1 : navN = list - 1;
+        moveFunction(navN);
+    });
 
-        prev.addEventListener("click", function (e) {
-            (navN > 0) ? navN -= 1 : navN = 0;
-            moveFunction(navN);
-        });*/
+    prev.addEventListener("click", function (e) {
+        (navN > 0) ? navN -= 1 : navN = 0;
+        moveFunction(navN);
+    });*/
 
     function moveFunction(f) {
 
@@ -823,7 +835,7 @@
 
                     for (var i = 0; i < result.sample.length; i++) {
                         add_list += '<tr>';
-                        add_list += '<td><input type="checkbox"></td>';
+                        add_list += '<td><input type="checkbox" name="RowCheck"></td>';
                         add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
                         add_list += '<td>EMPTY</td>';
                         add_list += '<td>' + result.sample[i].sample_name + '</td>';
@@ -868,7 +880,126 @@
             });
     }
 
-    // 구글 맵 관련 
+    function deleteValue() {
+        var url = "delete"
+        var valueArr = new Array();
+        var list = $("input[name='RowCheck']");
+
+        for(var i = 0; i < list.length; i++) {
+            if(list[i].checked) {
+                valueArr.push(list[i].value);
+            }
+        }
+
+        if(valueArr.length == 0) {
+            alert("plz select");
+        } else {
+            var chk = confirm("Want it?");
+
+            $.ajax({
+                url: url,
+                type: 'POST',
+                traditional: true,
+                data : {
+                    valueArr : valueArr
+                },
+                success: function(jdata) {
+                    if(jdata = 1) {
+                        alert("success!");
+                        location.replace("list")
+                    } else {
+                        alert("fail!");
+                    }
+                }
+            });
+        }
+    }
+
+    // 정렬하는데 쓰는 코드들
+
+    /* function sortTable(n) {
+         var table, rows, switching, o, x, y, shouldSwitch, dir, switchCount = 0;
+
+         table = document.getElementById("table1");
+
+         switching = true;
+
+         dir = "asc";
+
+         while (switching) {
+             switching = false;
+             rows = table.getElementsByTagName("TR");
+         }
+
+         for(o = 1; o < (rows.length - 1); o++) {
+             shouldSwitch = false;
+             x = rows[o].getElementsByTagName("TD")[n];
+             y = rows[o + 1].getElementsByTagName("TD")[n];
+
+             if(dir == "asc") {
+                 if(x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                     shouldSwitch = true;
+                     break;
+                 }
+             } else if(dir == "desc") {
+                 if(x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                     shouldSwitch = true;
+                     break;
+                 }
+             }
+         }
+
+         if(shouldSwitch) {
+             rows[o].parentNode.insertBefore(rows[o + 1], rows[o]);
+             switching = true;
+             switchCount++;
+         } else {
+             if(switchCount == 0 && dir == "asc") {
+                 dir = "desc";
+                 switching = true;
+             }
+         }
+     }*/
+
+    $(document).ready(function () {
+        $('#table1 th').each(function (column) {
+            $(this).click(function () {
+                if ($(this).is('.asc')) {
+                    $(this).removeClass('asc');
+                    $(this).addClass('desc');
+                    sortdir = -1;
+                } else {
+                    $(this).addClass('asc');
+                    $(this).removeClass('desc');
+                    sortdir = 1;
+                }
+                $(this).siblings().removeClass('asc');
+                $(this).siblings().removeClass('desc');
+
+                var rec = $('#table1').find('tbody>tr').get();
+
+                rec.sort(function (a, b) {
+                    var val1 = +($(a).children('td').eq(column).text());
+                    var val2 = +($(b).children('td').eq(column).text());
+
+                    if(isNaN(val1) && isNaN(val2)) {
+                        val1 = $(a).children('td').eq(column).text();
+                        val2 = $(b).children('td').eq(column).text();
+
+                        return (val1 < val2) ? -sortdir : (val1 > val2) ? sortdir : 0;
+                    } else {
+                        return (val1 < val2) ? -sortdir : (val1 > val2) ? sortdir : 0;
+                    }
+                });
+
+                $.each(rec, function (index, row) {
+                    $('#table1 tbody').append(row);
+                });
+            });
+        });
+    });
+
+    // 구글 맵 관련
     const mapContainer = document.querySelector('#google_map1');
     const mapContainer2 = document.querySelector('#google_map2');
     const koreaOptions = {

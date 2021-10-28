@@ -16,4 +16,6 @@ public interface SampleService {
   // 원종 검색
   List<Sample> SearchSample(int offset, int limit);
 
+  String Delete(String no);
+
 }

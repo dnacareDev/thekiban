@@ -19,4 +19,6 @@ public interface SampleMapper {
   // 원종 검색
   List<Sample> SearchSample(@Param("offset") int offset, @Param("limit") int limit);
 
+  String Delete(String no);
+
 }

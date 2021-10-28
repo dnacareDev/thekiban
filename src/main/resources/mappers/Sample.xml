@@ -21,4 +21,9 @@
         SELECT * FROM sample
             LIMIT #{offset}, #{limit}
     </select>
+
+    <select id="delete" resultType="Sample">
+        delete from sample
+        where sample_id = #{no}
+    </select>
 </mapper>
