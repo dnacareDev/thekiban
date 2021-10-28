@@ -730,7 +730,7 @@
     }
 
     /* row 생성 */
-    function makeArray() {
+/*    function makeArray() {
         var gibon = $("#gibon").serializeObject();
         console.log(gibon);
 
@@ -752,7 +752,7 @@
         html += "</tbody>";
 
         $("#table1").append(html);
-    }
+    }*/
 
     /* form data to json */
     jQuery.fn.serializeObject = function () {
@@ -824,7 +824,7 @@
                     for (var i = 0; i < result.sample.length; i++) {
                         add_list += '<tr>';
                         add_list += '<td><input type="checkbox"></td>';
-                        add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><span data-feather="file-plus"></span></button></td>';
+                        add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
                         add_list += '<td>EMPTY</td>';
                         add_list += '<td>' + result.sample[i].sample_name + '</td>';
                         add_list += '<td>' + result.sample[i].sample_code + '</td>';
