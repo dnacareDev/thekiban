@@ -57,11 +57,11 @@
             padding: 10px 0;
         }
 
-        .content_title li {
+        /*.content_title li { alpaDesign 수정
             float: left;
             width: 50%;
             text-align: center;
-        }
+        }*/
 
         .content_1 {
             padding: 20px;
@@ -76,16 +76,16 @@
 
         .content_1 .input_text {
             float: right;
-            width: 30%;
+            width: 50%;
         }
 
         .content_1 .input_text input[type="text"] {
-            width: 180%;
+            width: 100%;
         }
 
         .content_1 li {
             display: inline-block;
-            width: 80%;
+            width: 100%;
             color: #222222;
             font-size: 16px;
         }
@@ -147,11 +147,12 @@
             width: 100%;
         }
 
-        .main-content .modal-body ul li {
+        .main-content .modal-body .content_title ul li {
             display: inline-block;
             width: calc((100% - 50px) / 2);
             margin-left: 40px;
             overflow: hidden;
+            text-align:center;
         }
 
         .main-content .modal-body ul li:first-child {
@@ -191,10 +192,17 @@
             }
         }
 
+<<<<<<< HEAD
+        .btn.btn-light.btn-transparent-light{
+            display:block;
+            width:100%;
+            background-color: transparent;
+=======
         .btn.btn-light.btn-transparent-light {
             display: block;
             width: 100%;
             background-color: rgba(244, 245, 247, 0);
+>>>>>>> a7d9bfb50185ecb968337c84be87de9c76d6a19b
         }
 
         .main-content .contents .container-fluid {
@@ -598,7 +606,6 @@
     let navLi = nav.children; // pop top list
     let navN = 0; //선택된 변수
     let navMove = 0;
-
     let content = document.getElementsByClassName("tab-content")[0];
     let contentLi = content.children;
 
@@ -615,7 +622,7 @@
 
     }
 
-    /*    let list = navLi.length;
+        /*let list = navLi.length;
         next.addEventListener("click", function (e) {
             (navN < list - 1) ? navN += 1 : navN = list - 1;
             moveFunction(navN);
