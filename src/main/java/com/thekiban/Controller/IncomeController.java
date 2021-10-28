@@ -30,7 +30,6 @@ public class IncomeController {
   @RequestMapping("insertIncome")
   public ModelAndView InsertIncome(ModelAndView mv, @ModelAttribute Income income)
   {
-
     service.InsertIncome(income);
 
     mv.setViewName("redirect:/income");
