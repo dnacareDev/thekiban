@@ -162,6 +162,21 @@
             padding: 50px;
         }
 
+        .btn.btn-light.btn-transparent-light {
+            display: block;
+            width: 100%;
+            background-color: rgba(244, 245, 247, 0);
+        }
+
+        .main-content .contents .container-fluid {
+            max-width: 100%;
+            padding: 50px;
+        }
+
+        .bg-white > .row {
+            padding-top: 50px;
+        }
+
     </style>
 </head>
 <body class="layout-light top-menu overlayScroll">
@@ -802,7 +817,7 @@
                     html += "<tbody class='text-center'>";
                     html += "<tr>";
                     html += "<td><input type='checkbox' name='chkBox'></td>";
-                    html += "<td><button class='btn btn-light btn-default btn-squared btn-transparent-light' data-toggle='modal' data-target='#gen-attach'><span data-feather='file-plus'></span></button></td>";
+                    html += "<td><button class=\"btn btn-light btn-default btn-squared btn-transparent-light\" data-toggle=\"modal\" data-target=\"#gen-attach\"><i class=\"bi bi-file-earmark-arrow-down\"></i></button></td>";
 
                     $.each(rowdata[i], function (idx, value) {
                         html += "<td><span>" + value + "</span></td>";
@@ -924,7 +939,7 @@
 				{
 					add_list += '<tr>';
 					add_list += '<td><input type="checkbox"></td>';
-					add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><span data-feather="file-plus"></span></button></td>';
+					add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
 					add_list += '<td>' + result.basic[i].basic_name + '</td>';
 					add_list += '<td>EMPTY</td>';
 					add_list += '<td>' + result.basic[i].basic_raw_num + '</td>';
