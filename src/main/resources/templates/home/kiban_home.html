@@ -99,10 +99,6 @@
 				padding:0 50px 0 50px;
 			}
 		}
-
-        .main-content .contents .container-fluid{
-            max-width: 100%;
-        }
     </style>
 </head>
 
@@ -328,21 +324,13 @@
     };
     koreaCityDatas.forEach((value, i) => {
         console.log(value)
-        const marker = new google.maps.Marker({
+        new google.maps.Marker({
             position: value,
             map: map,
             // icon: image,
             label: ""
         })        
-
-        google.maps.event.addListener(marker, 'click', function(event){
-            console.log("됏니?")
-            map = marker.getMap();    
-            // map.setCenter(overlay.getPosition()); // set map center to marker position
-            smoothZoom(map, 12, map.getZoom()); // call smoothZoom, parameters map, final zoomLevel, and starting zoom level
-        });
     })
-    
     globalCityDatas.forEach((value, i) => {
         console.log(value)
         new google.maps.Marker({
@@ -357,10 +345,22 @@
     const test = document.querySelector('#test_click');
     const testCoord = { lat: 36.613766432253634 ,lng: 127.84942123102657 };
 
+    test.addEventListener('click', () => {
+        map.panTo(testCoord);
+        map.setZoom(10);
+    })
+
+    google.maps.event.addListener(test, 'dblclick', function(event){
+        map = marker.getMap();    
+        // map.setCenter(overlay.getPosition()); // set map center to marker position
+        smoothZoom(map, 12, map.getZoom()); // call smoothZoom, parameters map, final zoomLevel, and starting zoom level
+    });
+
+
     // the smooth zoom function
     function smoothZoom (map, max, cnt) {
         if (cnt >= max) {
-
+            return;
         }
         else {
             z = google.maps.event.addListener(map, 'zoom_changed', function(event){
