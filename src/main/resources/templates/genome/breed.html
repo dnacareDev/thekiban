@@ -316,8 +316,6 @@
 		font-size: 16px;
 		font-weight: 200;
 	}
-=======
->>>>>>> b18a8ed59083be292f0400a2b65e653a0508e9c9
     </style>
 </head>
 <body class="layout-light top-menu overlayScroll">
@@ -354,16 +352,10 @@
                                         </select>
                                     </form>
                                     <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none">
-<<<<<<< HEAD
                                     <button type="button" class="btn btn-lg btn-primary data_btn1" onclick="filesFunction('excelFile')"><img
                                         src="../assets/vendor_assets/img/icon1.svg" alt=""></button>
-                                    <input type="hidden" id="excel">
                                     <button class="btn btn-lg btn-primary data_btn2"  data-toggle="modal" data-target="#data_upload2"><img src="../assets/vendor_assets/img/icon2.png" alt=""></button>
-=======
-                                    <button type="button" class="btn btn-lg btn-primary data_btn1" onclick="filesFunction()"><img src="../assets/vendor_assets/img/icon1.svg" alt=""></button>
-                                    <input type="hidden" id="excel">
-                                    <button class="btn btn-lg btn-primary data_btn2"><img src="../assets/vendor_assets/img/icon2.png" alt=""></button>
->>>>>>> b18a8ed59083be292f0400a2b65e653a0508e9c9
+                                    
                                     <button class="btn btn-lg btn-primary data_btn2" data-toggle="modal" data-target="#grid2"><img src="../assets/vendor_assets/img/icon3.png" alt=""></button>
                                 </div>
                             </div>
@@ -1614,7 +1606,6 @@
 <th:block th:include="@{/fragments/commonjs.html}"></th:block>
 
 <script type="text/javascript">
-<<<<<<< HEAD
 	function dataToggle(one, two){ //modal toggole 2021-10-29 alpadesign 수정
 		$(one).modal("hide");
 		setTimeout(function(){
@@ -1640,7 +1631,8 @@
 				}
 			})
 		});
-	});
+		
+	})
 	
     let topBox = document.getElementsByClassName("top_box");
     let navN = 0; //선택된 변수
@@ -1698,127 +1690,40 @@
 	        contentLi[f].classList.add("show");
 	        
 	    }
-	    
-	    
-=======
-	$(document).ready(function()
-	{
+    }
+	$(document).ready(function(){
 	    SearchBreed(1);
 	});
-
-    let topBox = document.getElementsByClassName("top_box")[0];
-    let [nav, prev, next] = topBox.children;
-    let navLi = nav.children; // pop top list
-    let navN = 0; //선택된 변수
-    let navMove = 0;
-
-    let content = document.getElementsByClassName("tab-content")[0];
-    let contentLi = content.children;
-
-    navLi[navN].classList.add("active");
-
-    for(let i = 0; i < navLi.length; i++)
-    {
-        navLi[i].idx = i;
-
-        navLi[i].addEventListener("click", function(e)
-        {
-            navN = e.currentTarget.idx;
-
-            moveFunction(navN);
-        });
-    }
-
-    let list = navLi.length;
-    
-    next.addEventListener("click", function(e)
-    {
-        (navN < list - 1) ? navN += 1 : navN = list - 1;
-        moveFunction(navN);
-    });
-
-    prev.addEventListener("click", function(e)
-    {
-        (navN > 0) ? navN -= 1 : navN = 0;
-        moveFunction(navN);
-    });
-    
-    function moveFunction(f)
-    {
-        for (let k = 0; k < navLi.length; k++)
-        {
-            navLi[k].classList.remove("active");
-            contentLi[k].classList.remove("active");
-        }
-        
-        let navW = navLi[f].offsetWidth;
-        navMove = navW * f;
-
-        let a = topBox.offsetWidth;
-        let b = nav.offsetWidth;
-        let c = b - a;
-        let d = c + 40 + "px";
-
-        if(navMove > c)
-        {
-            nav.style.marginLeft = "-" + d;
-        }
-        else
-        {
-            nav.style.marginLeft = "-" + navMove + "px";
-        }
-
-        navLi[f].classList.add("active");
-        contentLi[f].classList.add("active");
-        contentLi[f].classList.add("show");
->>>>>>> b18a8ed59083be292f0400a2b65e653a0508e9c9
-    }
-    
     
 
     /* 엑셀 업로드 버튼 */
-<<<<<<< HEAD
     function filesFunction(filename) { //filename = input type='file' id 명을 적으세요 ex) onclick="filesFUnction('태그 아이디')"
         let filesBtn = document.getElementById(filename);
         var eventList = document.createEvent("MouseEvent");
 
         eventList.initEvent("click");
         filesBtn.dispatchEvent(eventList);
-=======
-    function filesFunction()
-    {
-    	let filesBtn = document.getElementById("excelFile");
-    	var eventList = document.createEvent("MouseEvent");
-        
-    	eventList.initEvent("click");
-    	filesBtn.dispatchEvent(eventList);
->>>>>>> b18a8ed59083be292f0400a2b65e653a0508e9c9
     }
 
     /* 엑셀 코드 */
-    function handleExcelDataAll(sheet)
-    {
+    function handleExcelDataAll(sheet){
     	handleExcelDataHtml(sheet); // html 형태
     }
 
     /* Html 형태로 출력 */
-    function handleExcelDataHtml(sheet)
-    {
+    function handleExcelDataHtml(sheet){
         $("#displayExcelHtml").html(XLSX.utils.sheet_to_html(sheet));
     }
 
-    function excelExport(event)
-    {
+    function excelExport(event){
         excelExportCommon(event, handleExcelDataAll);
     }
 
-    function excelExportCommon(event, callback)
-    {
+    function excelExportCommon(event, callback){
         var input = event.target;
         var reader = new FileReader();
 
-        reader.onload = function()
-        {
+        reader.onload = function(){
             var fileData = reader.result;
             var wb = XLSX.read(fileData, {type: 'binary'});
 
@@ -1832,26 +1737,22 @@
             // table 생성
             var html = "";
 
-            for(var i = 1; i < rowdata.length; i++)
-            {
-            	if (i === 1)
-            	{
+            for(var i = 1; i < rowdata.length; i++){
+            	if (i === 1){
                     html += "<thead class='text-center'>";
                     html += "<tr>";
                     html += "<th></th>";
                     html += "<th><span className='title'>첨부파일</span><i></i><img src='../assets/vendor_assets/img/title_icon.png' alt='첨부파일'></th>";
                     html += "<th><span className='title'>특성상태</span><i></i><img src='../assets/vendor_assets/img/title_icon.png' alt='특성상태'>";
 
-                    $.each(rowdata[1], function (idx, value)
-                    {
+                    $.each(rowdata[1], function (idx, value){
                         html += "<th><span class='title'>" + value + "</span><i></i><img src='../assets/vendor_assets/img/title_icon.png'></th>";
-                    })
+                    });
 
                     html += "</tr>";
                     html += "</thead>";
                 }
-            	else if(i !== 1)
-            	{
+            	else if(i !== 1){
                     html += "<tbody class='text-center'>";
                     html += "<tr>";
                     html += "<td><input type='checkbox' name='chkBox'></td>";
@@ -1861,16 +1762,13 @@
                     var tmp = Object.keys(rowdata[1]);
                     var j = 0;
 
-                    $.each(rowdata[i], function (idx, value)
-                    {
+                    $.each(rowdata[i], function (idx, value){
                         // 공백처리
-                        if (idx == tmp[j])
-                        {
+                        if (idx == tmp[j]){
                             html += "<td><span>" + value + "</span></td>";
                             j++;
                         }
-                        else
-                        {
+                        else{
                             var idx_str = idx.replace(/[^0-9]/g, '');
                             var tmp_str = tmp[j].replace(/[^0-9]/g, '');
 
@@ -1886,9 +1784,8 @@
 
                             j = idx_str;
                             j++;
-                            j++;
                         }
-                    })
+                    });
                 }
 
                 html += "</tr>";
@@ -1899,12 +1796,8 @@
             $("#display").append(html);
 
             var data = $("#display").tableToJSON();
-<<<<<<< HEAD
 
             console.log(data);
-
-=======
->>>>>>> b18a8ed59083be292f0400a2b65e653a0508e9c9
         };
 
         reader.readAsBinaryString(input.files[0]);
@@ -1921,33 +1814,6 @@
 			$("#grid3 input[type='text']").each(function(f, e){
 				input_N += $(e).length;
 			});
-			
-			/*if (result.page_num == 1) {
-                page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></button>';
-            } else {
-                page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchReport(' + (result.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
-            }
-
-            for (var i = 0; i < result.end_page; i++) {
-                if (result.page_num == (i + 1)) {
-                    page_add += '<button class="atbd-pagination__link active" onclick="SearchReport(' + (i + 1) + ')">' + (i + 1) + '</button>';
-                } else {
-                    page_add += '<button class="atbd-pagination__link" onclick="SearchReport(' + (i + 1) + ')">' + (i + 1) + '</button>';
-                }
-            }
-
-<<<<<<< HEAD
-            if (result.page_num == result.end_page) {
-                page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-right"></span></button>';
-            } else {
-                page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchReport(' + (result.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
-            }
-
-            breed_list.empty();
-            breed_list.append(add_list);
-
-            pageNum.empty();
-            pageNum.append(page_add);*/
 		
 	}
     /* row 생성 */
@@ -2015,56 +1881,43 @@
         }
     }
     */
-
-=======
->>>>>>> b18a8ed59083be292f0400a2b65e653a0508e9c9
     /* form data to json */
-    jQuery.fn.serializeObject = function()
-    {
+    jQuery.fn.serializeObject = function(){
     	var obj = null;
         
-    	try
-        {
-            if(this[0].tagName && this[0].tagName.toUpperCase() == "FORM")
-            {
+    	try{
+            if(this[0].tagName && this[0].tagName.toUpperCase() == "FORM"){
                 var arr = this.serializeArray();
                 
-                if(arr)
-                {
+                if(arr){
                     obj = {};
                     
-                    jQuery.each(arr, function()
-                    {
+                    jQuery.each(arr, function(){
                         obj[this.name] = this.value;
                     });
                 }
             }
         }
-    	catch(e)
-    	{
+    	catch(e){
             alert(e.message);
         }
-    	finally
-    	{
+    	finally{
         }
 
         return obj;
     };
     
-    function InsertChk(e)
-    {
+    function InsertChk(e){
     	console.log(123);
     	return false;
     	e.preventDefault();
     }
 
     // 등록 버튼
-    function InsertBtn()
-    {
+    function InsertBtn(){
         var data = [];
         
-        $("input[name=detail]").each(function (index, item)
-        {
+        $("input[name=detail]").each(function (index, item){
             const key = $(this).attr('id');
             var value = $(this).val();
 
@@ -2078,24 +1931,15 @@
         $("#insertForm").submit();
     }
 
-    function SearchBreed(e)
-    {
+    function SearchBreed(e){
         var data = {"page_num": e};
 
-        $.ajax(
-        {
+        $.ajax({
 			url: 'searchBreed',
 			method: 'POST',
 			dataType: 'json',
             data: data,
-            success: function (result)
-            {
-<<<<<<< HEAD
-                url: 'searchBreed',
-                method: 'POST',
-                dataType: 'json',
-                data: data,
-                success: function (result) { //2021-10-29 alpadesign 수정
+            success: function (result){
                     console.log(result);
                     var breed_list = $("#breed_list");
                     var add_list = "";
@@ -2158,89 +2002,16 @@
                     pageNum.append(page_add);
                 }
             });
-=======
-            	var breed_list = $("#breed_list");
-            	var add_list = "";
-
-            	var pageNum = $("#pageNum");
-            	var page_add = "";
-
-            	for(var i = 0; i < result.breed.length; i++)
-            	{
-            		add_list += '<tr>';
-            		add_list += '<td><input type="checkbox"></td>';
-            		add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><span data-feather="file-plus"></span></button></td>';
-            		add_list += '<td>EMPTY</td>';
-            		add_list += '<td>' + result.breed[i].breed_name + '</td>';
-            		add_list += '<td>' + result.breed[i].breed_code + '</td>';
-            		add_list += '<td>' + result.breed[i].breed_kind + '</td>';
-            		add_list += '<td>' + result.breed[i].breed_mom + '</td>';
-            		add_list += '<td>' + result.breed[i].breed_dad + '</td>';
-            		add_list += '<td>' + result.breed[i].breed_sale_num + '</td>';
-            		add_list += '<td>' + result.breed[i].breed_sale_date + '</td>';
-            		add_list += '<td>' + result.breed[i].breed_apply_num + '</td>';
-            		add_list += '<td>' + result.breed[i].breed_apply_date + '</td>';
-            		add_list += '<td>' + result.breed[i].breed_enroll_num + '</td>';
-            		add_list += '<td>' + result.breed[i].breed_enroll_date + '</td>';
-            		add_list += '<td>' + result.breed[i].breed_local + '</td>';
-            		add_list += '<td>' + result.breed[i].breed_purpose + '</td>';
-            		add_list += '<td>' + result.breed[i].breed_first_form + '</td>';
-            		add_list += '<td>' + result.breed[i].breed_second_form + '</td>';
-            		add_list += '<td>' + result.breed[i].breed_first_crop + '</td>';
-            		add_list += '<td>' + result.breed[i].breed_second_crop + '</td>';
-            		add_list += '<td>' + result.breed[i].breed_comment + '</td>';
-            		add_list += '</tr>';
-            	}
-                
-            	if (result.page_num == 1)
-            	{
-            		page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></button>';
-            	}
-            	else
-            	{
-            		page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchReport(' + (result.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
-            	}
-            	
-            	for(var i = 0; i < result.end_page; i++)
-            	{
-            		if (result.page_num == (i + 1))
-            		{
-            			page_add += '<button class="atbd-pagination__link active" onclick="SearchReport(' + (i + 1) + ')">' + (i + 1) + '</button>';
-            		}
-            		else
-            		{
-            			page_add += '<button class="atbd-pagination__link" onclick="SearchReport(' + (i + 1) + ')">' + (i + 1) + '</button>';
-            		}
-            	}
-                
-            	if(result.page_num == result.end_page)
-            	{
-            		page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-right"></span></button>';
-            	}
-            	else
-            	{
-            		page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchReport(' + (result.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
-            	}
-                
-            	breed_list.empty();
-            	breed_list.append(add_list);
-                
-            	pageNum.empty();
-            	pageNum.append(page_add);
-            }
-        });
->>>>>>> b18a8ed59083be292f0400a2b65e653a0508e9c9
     }
-    function PlusResearch() 
-	{ //2021-10-29 alpadesign 수정
+            	
+    function PlusResearch(){ //2021-10-29 alpadesign 수정
 		var step_container = $("#step-container");
 		var length = $("#step-container").children().length;
 		
 		var add_list = "";
 		
 		
-		$(document).find("input:checkbox[name=chk_research]:checked").each(function()
-		{
+		$(document).find("input:checkbox[name=chk_research]:checked").each(function(){
 			var research_id = $(this).val();
 			var research_title = $(this).next().text();
 			
@@ -2259,8 +2030,8 @@
 			
 			add_list += '<div class="mb-1 col-2" style="position:relative">';
 			add_list += '<input type="checkbox" class="checkbox mr-2" name="mis_research">';
-			add_list += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows-move" viewBox="0 0 16 16" style="position:absolute; bottom: 0; left: 18px; cursor: all-scroll">'
-			add_list +=	'<path fill-rule="evenodd" d="M7.646.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 1.707V5.5a.5.5 0 0 1-1 0V1.707L6.354 2.854a.5.5 0 1 1-.708-.708l2-2zM8 10a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 14.293V10.5A.5.5 0 0 1 8 10zM.146 8.354a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L1.707 7.5H5.5a.5.5 0 0 1 0 1H1.707l1.147 1.146a.5.5 0 0 1-.708.708l-2-2zM10 8a.5.5 0 0 1 .5-.5h3.793l-1.147-1.146a.5.5 0 0 1 .708-.708l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L14.293 8.5H10.5A.5.5 0 0 1 10 8z"/>'
+			add_list += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows-move" viewBox="0 0 16 16" style="position:absolute; bottom: 0; left: 18px; cursor: all-scroll">';
+			add_list +=	'<path fill-rule="evenodd" d="M7.646.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 1.707V5.5a.5.5 0 0 1-1 0V1.707L6.354 2.854a.5.5 0 1 1-.708-.708l2-2zM8 10a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 14.293V10.5A.5.5 0 0 1 8 10zM.146 8.354a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L1.707 7.5H5.5a.5.5 0 0 1 0 1H1.707l1.147 1.146a.5.5 0 0 1-.708.708l-2-2zM10 8a.5.5 0 0 1 .5-.5h3.793l-1.147-1.146a.5.5 0 0 1 .708-.708l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L14.293 8.5H10.5A.5.5 0 0 1 10 8z"/>';
 			add_list +=	'</svg>';
 			add_list += '<span class="step-text">step ' + length + '</span>';
 			add_list += '</div>';
