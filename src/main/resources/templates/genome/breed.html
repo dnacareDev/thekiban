@@ -1680,20 +1680,7 @@
             </div>
         </div>
     </div>
-    <!-- 확인버튼 마크업입니다 display는 테이블이오니 display:block이 아닌 table로 해주셔야 자동 높이를 가집니다 -->
-    <!-- <div class="modal-basic modal fade show pop4" id="gen-messege" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-md" role="document">
-            <div class="modal-content modal-bg-white ">
-                <div class="messege">
-                	<span>최소 1개 이상의 품종이 선택되어야 합니다.</span>
-                </div>
-                <div class="messege_button">
-                	<button class="messege_ok btn-primary btn-sm">확인</button>
-                </div>
-            </div>
-        </div>
-    </div> -->
-    <!-- modal end -->
+
 </main>
 
 <!-- 공통 하단 -->
@@ -1942,30 +1929,6 @@
             $("input[name=breed_name]").val($("#CropSelect option:selected").text());
         }
     });
-
-    /* form data to json */
-    jQuery.fn.serializeObject = function () {
-        var obj = null;
-
-        try {
-            if (this[0].tagName && this[0].tagName.toUpperCase() == "FORM") {
-                var arr = this.serializeArray();
-
-                if (arr) {
-                    obj = {};
-
-                    jQuery.each(arr, function () {
-                        obj[this.name] = this.value;
-                    });
-                }
-            }
-        } catch (e) {
-            alert(e.message);
-        } finally {
-        }
-
-        return obj;
-    };
 
     // 품종 추가
     function InsertBtn() {
