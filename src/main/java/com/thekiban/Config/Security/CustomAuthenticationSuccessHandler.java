@@ -26,7 +26,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 		switch (authroAuthority.getAuthority())
 		{
 			case "USER":
-			defaultUrl = "/home";
+			defaultUrl = "/login_success";
 			break;
 			case "EXPERT":
 			break;

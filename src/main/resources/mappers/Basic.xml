@@ -38,4 +38,12 @@
 			(#{item.detail_id}, #{item.basic_id}, #{item.standard})
 		</foreach>
 	</insert>
+
+	<select id="DeleteBasic" parameterType="java.util.ArrayList">
+		DELETE FROM basic
+		WHERE
+		<foreach collection="array" item="item" open="(" close=")" separator="OR">
+			basic_id = #{item}
+		</foreach>
+	</select>
 </mapper>

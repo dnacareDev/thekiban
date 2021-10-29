@@ -35,4 +35,8 @@ public class IncomeServiceImpl implements IncomeService {
     return mapper.SearchIncome(offset, limit);
   }
 
+  @Override
+  public int[] DeleteIncome(int[] income_id) {
+    return mapper.DeleteIncome(income_id);
+  }
 }

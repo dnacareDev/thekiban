@@ -1,6 +1,5 @@
 package com.thekiban.Mapper;
 
-import com.thekiban.Entity.Basic;
 import com.thekiban.Entity.Sample;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -19,4 +18,5 @@ public interface SampleMapper {
   // 원종 검색
   List<Sample> SearchSample(@Param("offset") int offset, @Param("limit") int limit);
 
+  int[] DeleteSample(int[] sample_id);
 }

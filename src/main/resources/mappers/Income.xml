@@ -25,4 +25,12 @@
             LIMIT #{offset}, #{limit}
     </select>
 
+    <select id="DeleteIncome" parameterType="java.util.ArrayList">
+        DELETE FROM income
+        WHERE
+        <foreach collection="array" item="item" open="(" close=")" separator="OR">
+            income_id = #{item}
+        </foreach>
+    </select>
+
 </mapper>

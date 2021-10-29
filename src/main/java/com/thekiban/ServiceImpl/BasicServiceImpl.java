@@ -51,4 +51,9 @@ public class BasicServiceImpl implements BasicService
 	{
 		return mapper.InsertStandard(standard);
 	}
+
+	@Override
+	public int[] DeleteBasic(int[] basic_id) {
+		return mapper.DeleteBasic(basic_id);
+	}
 }

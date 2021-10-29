@@ -14,11 +14,20 @@
     </insert>
 
     <select id="SelectSampleCount" resultType="int">
-        SELECT COUNT(*) FROM sample
+        SELECT COUNT(*)
+        FROM sample
     </select>
 
     <select id="SearchSample" resultType="Sample">
-        SELECT * FROM sample
-            LIMIT #{offset}, #{limit}
+        SELECT *
+        FROM sample LIMIT #{offset}, #{limit}
+    </select>
+
+    <select id="DeleteSample" parameterType="java.util.ArrayList">
+        DELETE FROM sample
+        WHERE
+        <foreach collection="array" item="item" open="(" close=")" separator="OR">
+            sample_id = #{item}
+        </foreach>
     </select>
 </mapper>

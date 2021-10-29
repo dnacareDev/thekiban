@@ -1,9 +1,7 @@
 package com.thekiban.Controller;
 
 import com.thekiban.Entity.Sample;
-import com.thekiban.Entity.Standard;
 import com.thekiban.Service.SampleService;
-import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -33,8 +31,7 @@ public class SampleController {
   }
 
   @RequestMapping("insertSample")
-  public ModelAndView InsertSample(ModelAndView mv, @ModelAttribute Sample sample)
-  {
+  public ModelAndView InsertSample(ModelAndView mv, @ModelAttribute Sample sample) {
     service.InsertSample(sample);
 
     mv.setViewName("redirect:/sample");
@@ -44,8 +41,7 @@ public class SampleController {
 
   @ResponseBody
   @RequestMapping("searchSample")
-  public Map<String, Object> SearchSample(@RequestParam("page_num") int page_num)
-  {
+  public Map<String, Object> SearchSample(@RequestParam("page_num") int page_num) {
     Map<String, Object> result = new LinkedHashMap<String, Object>();
 
     int count = service.SelectSampleCount();
@@ -61,8 +57,16 @@ public class SampleController {
     result.put("end_page", end_page);
     result.put("offset", offset);
 
-    System.out.println(result);
-
     return result;
+  }
+
+  // 선택삭제
+  @ResponseBody
+  @RequestMapping("deleteSample")
+  public int DeleteSample(@RequestParam("sample_id[]") int[] sample_id)
+  {
+    service.DeleteSample(sample_id);
+
+    return 1;
   }
 }

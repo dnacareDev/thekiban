@@ -1,8 +1,6 @@
 <!doctype html>
 <html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
-
 <head>
-
     <!-- 공통 헤더 -->
     <th:block th:include="@{/fragments/header.html}"></th:block>
     <style>
@@ -174,6 +172,7 @@
         .bg-white > .row {
             padding-top: 50px;
         }
+<<<<<<< HEAD
 		@media (min-width: 576px){
 		.col-sm-10 {
 		    -webkit-box-flex: 0;
@@ -317,22 +316,17 @@
 		font-size: 16px;
 		font-weight: 200;
 	}
+=======
+>>>>>>> b18a8ed59083be292f0400a2b65e653a0508e9c9
     </style>
-
 </head>
-
 <body class="layout-light top-menu overlayScroll">
 <div class="mobile-search"></div>
-
 <div class="mobile-author-actions"></div>
-
 <!-- 공통 topbar -->
 <th:block th:include="@{/fragments/topbar.html}"></th:block>
-
 <main class="main-content" style="background-color: #FCFCFC;">
-
     <div class="contents" style="background-color: #FFFFFF;">
-
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12 mb-30">
@@ -346,24 +340,30 @@
                                 <div class="atbd-button-list d-flex flex-wrap">
                                     <form action="" name="searchForm" class="d-flex align-items-center add-contact__form my-sm-0 my-2">
                                         <select class="form-control form-control-lg mt-10 mb-10 mr-10" style="width: 250px;">
-                                            <option value="none">작물 선택</option>
-                                            <option value="pepper">고추</option>
-                                            <option value="green_onion">대파</option>
-                                            <option value="melon">멜론</option>
-                                            <option value="radish">무</option>
-                                            <option value="napa_cabbage">배추</option>
-                                            <option value="water_melon">수박</option>
-                                            <option value="cabbage">양배추</option>
-                                            <option value="onion">양파</option>
-                                            <option value="korean_melon">참외</option>
-                                            <option value="tomato">토마토</option>
+                                            <option value="">작물 선택</option>
+                                            <option value="고추">고추</option>
+                                            <option value="대파">대파</option>
+                                            <option value="멜론">멜론</option>
+                                            <option value="무">무</option>
+                                            <option value="배추">배추</option>
+                                            <option value="수박">수박</option>
+                                            <option value="양배추">양배추</option>
+                                            <option value="양파">양파</option>
+                                            <option value="참외">참외</option>
+                                            <option value="토마토">토마토</option>
                                         </select>
                                     </form>
                                     <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none">
+<<<<<<< HEAD
                                     <button type="button" class="btn btn-lg btn-primary data_btn1" onclick="filesFunction('excelFile')"><img
                                         src="../assets/vendor_assets/img/icon1.svg" alt=""></button>
                                     <input type="hidden" id="excel">
                                     <button class="btn btn-lg btn-primary data_btn2"  data-toggle="modal" data-target="#data_upload2"><img src="../assets/vendor_assets/img/icon2.png" alt=""></button>
+=======
+                                    <button type="button" class="btn btn-lg btn-primary data_btn1" onclick="filesFunction()"><img src="../assets/vendor_assets/img/icon1.svg" alt=""></button>
+                                    <input type="hidden" id="excel">
+                                    <button class="btn btn-lg btn-primary data_btn2"><img src="../assets/vendor_assets/img/icon2.png" alt=""></button>
+>>>>>>> b18a8ed59083be292f0400a2b65e653a0508e9c9
                                     <button class="btn btn-lg btn-primary data_btn2" data-toggle="modal" data-target="#grid2"><img src="../assets/vendor_assets/img/icon3.png" alt=""></button>
                                 </div>
                             </div>
@@ -374,66 +374,31 @@
                                     <form action="excelBreed" id="excelForm" method="POST" enctype="multipart/form-data">
                                         <table class="table" id="display">
                                             <thead class="text-center">
-                                            <tr>
-                                                <th></th>
-                                                <th><span class="title">첨부파일</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                               alt="첨부파일"></th>
-                                                <th><span class="title">특성상태</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                               alt="특성상태"></th>
-                                                <th><span class="title">작물</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                             alt="작물"></th>
-                                                <th><span class="title">시교명(ID)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                                  alt="시교명(ID)"></th>
-                                                <th><span class="title">품종명</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                              alt="품종명"></th>
-                                                <th><span class="title">모계 계통명</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                                 alt="모계 계통명"></th>
-                                                <th><span class="title">부계 계통명</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                                 alt="부계 계통명"></th>
-                                                <th><span class="title">생산판매(신고번호)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                                     alt="생산판매(신고번호)"></th>
-                                                <th><span class="title">생산판매(신고일자)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                                     alt="생산판매(신고일자)"></th>
-                                                <th><span class="title">보호출원(출원번호)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                                     alt="보호출원(출원번호)"></th>
-                                                <th><span class="title">보호출원(출원일자)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                                     alt="보호출원(출원일자)"></th>
-                                                <th><span class="title">보호등록(등록번호)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                                     alt="보호등록(등록번호)"></th>
-                                                <th><span class="title">보호등록(등록일자)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                                     alt="보호등록(등록일자)"></th>
-                                                <th><span class="title">미등록(현지상업화)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                                     alt="미등록(현지상업화)"></th>
-                                                <th><span class="title">목표 시장</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                                alt="목표 시장"></th>
-                                                <th><span class="title">형태 구분1</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                                 alt="형태 구분1"></th>
-                                                <th><span class="title">형태 구분2</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                                 alt="형태 구분2"></th>
-                                                <th><span class="title">작물 타입1</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                                 alt="작물 타입1"></th>
-                                                <th><span class="title">작물 타입2</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                                 alt="작물 타입2"></th>
-                                                <th><span class="title">비고</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                             alt="비고"></th>
-                                            </tr>
+	                                           <tr>
+	                                               <th></th>
+	                                               <th><span class="title">첨부파일</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="첨부파일"></th>
+	                                               <th><span class="title">특성상태</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="특성상태"></th>
+	                                               <th><span class="title">작물</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="작물"></th>
+	                                               <th><span class="title">시교명(ID)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="시교명(ID)"></th>
+	                                               <th><span class="title">품종명</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="품종명"></th>
+	                                               <th><span class="title">모계 계통명</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="모계 계통명"></th>
+	                                               <th><span class="title">부계 계통명</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="부계 계통명"></th>
+	                                               <th><span class="title">생산판매(신고번호)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="생산판매(신고번호)"></th>
+	                                               <th><span class="title">생산판매(신고일자)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="생산판매(신고일자)"></th>
+	                                               <th><span class="title">보호출원(출원번호)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="보호출원(출원번호)"></th>
+	                                               <th><span class="title">보호출원(출원일자)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="보호출원(출원일자)"></th>
+	                                               <th><span class="title">보호등록(등록번호)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="보호등록(등록번호)"></th>
+	                                               <th><span class="title">보호등록(등록일자)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="보호등록(등록일자)"></th>
+	                                               <th><span class="title">미등록(현지상업화)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="미등록(현지상업화)"></th>
+	                                               <th><span class="title">목표 시장</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="목표 시장"></th>
+	                                               <th><span class="title">형태 구분1</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="형태 구분1"></th>
+	                                               <th><span class="title">형태 구분2</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="형태 구분2"></th>
+	                                               <th><span class="title">작물 타입1</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="작물 타입1"></th>
+	                                               <th><span class="title">작물 타입2</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="작물 타입2"></th>
+	                                               <th><span class="title">비고</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="비고"></th>
+	                                           </tr>
                                             </thead>
                                             <tbody class="text-center" id="breed_list">
-                                            <tr>
-                                                <td><input type="checkbox"></td>
-                                                <td>
-                                                    <button class="btn btn-light btn-default btn-squared btn-transparent-light"
-                                                            data-toggle="modal" data-target="#gen-attach"><span data-feather="file-plus"></span>
-                                                    </button>
-                                                </td>
-                                                <td><span>19PC4155</span></td>
-                                                <td><span>에이스</span></td>
-                                                <td><span>Empty</span></td>
-                                                <td><span>CGMS-1234A</span></td>
-                                                <td><span>A42-1</span></td>
-                                                <td><span>02-0205-2019-111</span></td>
-                                                <td><span>2017-11-11</span></td>
-                                            </tr>
                                             </tbody>
                                         </table>
                                     </form>
@@ -441,35 +406,13 @@
 
                                 <div class="row">
                                     <div class="col-4">
-                                        <button class="btn btn-icon btn-light btn-circle" data-toggle="modal" data-target="#grid">
+                                        <button class="btn btn-icon btn-light btn-circle" data-toggle="modal" data-target="#grid" onclick="InsertChk(event);">
                                             <span data-feather="plus"></span>
                                         </button>
                                         <button class="btn btn-icon btn-light btn-circle" onclick="delRow()">
                                             <span data-feather="trash-2"></span>
                                         </button>
                                     </div>
-                                    <!--<div class="col-4">
-                                        <div class="d-flex justify-content-center mt-30">
-                                            <nav class="atbd-page">
-                                                <ul class="atbd-pagination d-flex">
-                                                    <li class="atbd-pagination__item">
-                                                        <a href="#" class="atbd-pagination__link pagination-control"><span
-                                                            class="la la-angle-left"></span></a>
-                                                        <a href="#" class="atbd-pagination__link"><span class="page-number">1</span></a>
-                                                        <a href="#" class="atbd-pagination__link active"><span class="page-number">2</span></a>
-                                                        <a href="#" class="atbd-pagination__link"><span class="page-number">3</span></a>
-                                                        <a href="#" class="atbd-pagination__link pagination-control"><span
-                                                            class="page-number">...</span></a>
-                                                        <a href="#" class="atbd-pagination__link"><span class="page-number">12</span></a>
-                                                        <a href="#" class="atbd-pagination__link pagination-control"><span
-                                                            class="la la-angle-right"></span></a>
-                                                        <a href="#" class="atbd-pagination__option">
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </nav>
-                                        </div>
-                                    </div>-->
                                     <div class="col-4">
                                         <div class="row" style="justify-content: center;">
                                             <div id="pageNum" style="text-align:center; margin: 2% 0 0 0;"></div>
@@ -482,7 +425,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
     <!-- modal code -->
@@ -526,6 +468,7 @@
             </div>
         </div>
     </div>
+    
     <div class="modal-basic modal fade show pop2" id="grid" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white ">
@@ -540,39 +483,25 @@
                                 <div class="top_box">
                                     <ul class="nav nav-tabs vertical-tabs" role="tablist">
                                         <li class="nav-item">
-                                            <a class="nav-link active" id="tab-horizontal-0-tab" data-toggle="tab"
-                                               href="#tab-horizontal-0" role="tab" aria-controls="tab-horizontal-0"
-                                               aria-selected="true">기본 정보</a>
+                                            <a class="nav-link active" id="tab-horizontal-0-tab" data-toggle="tab" href="#tab-horizontal-0" role="tab" aria-controls="tab-horizontal-0" aria-selected="true">기본 정보</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link active" id="tab-horizontal-1-tab" data-toggle="tab"
-                                               href="#tab-horizontal-1" role="tab" aria-controls="tab-horizontal-1"
-                                               aria-selected="false">원예형질[종자원 기준]</a>
+                                            <a class="nav-link active" id="tab-horizontal-1-tab" data-toggle="tab" href="#tab-horizontal-1" role="tab" aria-controls="tab-horizontal-1" aria-selected="false">원예형질[종자원 기준]</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" id="tab-horizontal-2-tab" data-toggle="tab"
-                                               href="#tab-horizontal-2" role="tab" aria-controls="tab-horizontal-2"
-                                               aria-selected="false">원예형질[사내 기준]</a>
+                                            <a class="nav-link" id="tab-horizontal-2-tab" data-toggle="tab" href="#tab-horizontal-2" role="tab" aria-controls="tab-horizontal-2" aria-selected="false">원예형질[사내 기준]</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" id="tab-horizontal-3-tab" data-toggle="tab"
-                                               href="#tab-horizontal-3" role="tab" aria-controls="tab-horizontal-3"
-                                               aria-selected="false">병저항성[종자원 기준]</a>
+                                            <a class="nav-link" id="tab-horizontal-3-tab" data-toggle="tab" href="#tab-horizontal-3" role="tab" aria-controls="tab-horizontal-3" aria-selected="false">병저항성[종자원 기준]</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" id="tab-horizontal-4-tab" data-toggle="tab"
-                                               href="#tab-horizontal-4" role="tab" aria-controls="tab-horizontal-4"
-                                               aria-selected="false">병저항성[사내 기준]</a>
+                                            <a class="nav-link" id="tab-horizontal-4-tab" data-toggle="tab" href="#tab-horizontal-4" role="tab" aria-controls="tab-horizontal-4" aria-selected="false">병저항성[사내 기준]</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" id="tab-horizontal-5-tab" data-toggle="tab"
-                                               href="#tab-horizontal-5" role="tab" aria-controls="tab-horizontal-5"
-                                               aria-selected="false">성분정보[종자원 기준]</a>
+                                            <a class="nav-link" id="tab-horizontal-5-tab" data-toggle="tab" href="#tab-horizontal-5" role="tab" aria-controls="tab-horizontal-5" aria-selected="false">성분정보[종자원 기준]</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" id="tab-horizontal-6-tab" data-toggle="tab"
-                                               href="#tab-horizontal-6" role="tab" aria-controls="tab-horizontal-6"
-                                               aria-selected="false">마커정보</a>
+                                            <a class="nav-link" id="tab-horizontal-6-tab" data-toggle="tab" href="#tab-horizontal-6" role="tab" aria-controls="tab-horizontal-6" aria-selected="false">마커정보</a>
                                         </li>
                                     </ul>
                                     <span class="prev"></span>
@@ -581,8 +510,7 @@
                                 <form action="insertBreed" id="insertForm" method="POST" enctype="multipart/form-data">
                                     <input type="hidden" id="detail_list" name="detail_list">
                                     <div class="tab-content">
-                                        <div class="tab-pane fade show active" id="tab-horizontal-0" role="tabpanel"
-                                             aria-labelledby="tab-horizontal-0-tab">
+                                        <div class="tab-pane fade show active" id="tab-horizontal-0" role="tabpanel" aria-labelledby="tab-horizontal-0-tab">
                                             <div class="content_title clearfix">
                                                 <ul>
                                                     <li>형질</li>
@@ -1659,7 +1587,7 @@
                 </div>
                 <div class="modal-footer" style="border: none">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-primary btn-sm" onclick="insertBtn()" data-dismiss="modal">저장</button>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="InsertBtn()" data-dismiss="modal">저장</button>
                 </div>
             </div>
         </div>
@@ -1686,6 +1614,7 @@
 <th:block th:include="@{/fragments/commonjs.html}"></th:block>
 
 <script type="text/javascript">
+<<<<<<< HEAD
 	function dataToggle(one, two){ //modal toggole 2021-10-29 alpadesign 수정
 		$(one).modal("hide");
 		setTimeout(function(){
@@ -1771,38 +1700,125 @@
 	    }
 	    
 	    
+=======
+	$(document).ready(function()
+	{
+	    SearchBreed(1);
+	});
+
+    let topBox = document.getElementsByClassName("top_box")[0];
+    let [nav, prev, next] = topBox.children;
+    let navLi = nav.children; // pop top list
+    let navN = 0; //선택된 변수
+    let navMove = 0;
+
+    let content = document.getElementsByClassName("tab-content")[0];
+    let contentLi = content.children;
+
+    navLi[navN].classList.add("active");
+
+    for(let i = 0; i < navLi.length; i++)
+    {
+        navLi[i].idx = i;
+
+        navLi[i].addEventListener("click", function(e)
+        {
+            navN = e.currentTarget.idx;
+
+            moveFunction(navN);
+        });
+    }
+
+    let list = navLi.length;
+    
+    next.addEventListener("click", function(e)
+    {
+        (navN < list - 1) ? navN += 1 : navN = list - 1;
+        moveFunction(navN);
+    });
+
+    prev.addEventListener("click", function(e)
+    {
+        (navN > 0) ? navN -= 1 : navN = 0;
+        moveFunction(navN);
+    });
+    
+    function moveFunction(f)
+    {
+        for (let k = 0; k < navLi.length; k++)
+        {
+            navLi[k].classList.remove("active");
+            contentLi[k].classList.remove("active");
+        }
+        
+        let navW = navLi[f].offsetWidth;
+        navMove = navW * f;
+
+        let a = topBox.offsetWidth;
+        let b = nav.offsetWidth;
+        let c = b - a;
+        let d = c + 40 + "px";
+
+        if(navMove > c)
+        {
+            nav.style.marginLeft = "-" + d;
+        }
+        else
+        {
+            nav.style.marginLeft = "-" + navMove + "px";
+        }
+
+        navLi[f].classList.add("active");
+        contentLi[f].classList.add("active");
+        contentLi[f].classList.add("show");
+>>>>>>> b18a8ed59083be292f0400a2b65e653a0508e9c9
     }
     
     
 
     /* 엑셀 업로드 버튼 */
+<<<<<<< HEAD
     function filesFunction(filename) { //filename = input type='file' id 명을 적으세요 ex) onclick="filesFUnction('태그 아이디')"
         let filesBtn = document.getElementById(filename);
         var eventList = document.createEvent("MouseEvent");
 
         eventList.initEvent("click");
         filesBtn.dispatchEvent(eventList);
+=======
+    function filesFunction()
+    {
+    	let filesBtn = document.getElementById("excelFile");
+    	var eventList = document.createEvent("MouseEvent");
+        
+    	eventList.initEvent("click");
+    	filesBtn.dispatchEvent(eventList);
+>>>>>>> b18a8ed59083be292f0400a2b65e653a0508e9c9
     }
 
     /* 엑셀 코드 */
-    function handleExcelDataAll(sheet) {
-        handleExcelDataHtml(sheet); // html 형태
+    function handleExcelDataAll(sheet)
+    {
+    	handleExcelDataHtml(sheet); // html 형태
     }
 
     /* Html 형태로 출력 */
-    function handleExcelDataHtml(sheet) {
+    function handleExcelDataHtml(sheet)
+    {
         $("#displayExcelHtml").html(XLSX.utils.sheet_to_html(sheet));
     }
 
-    function excelExport(event) {
+    function excelExport(event)
+    {
         excelExportCommon(event, handleExcelDataAll);
     }
 
-    function excelExportCommon(event, callback) {
+    function excelExportCommon(event, callback)
+    {
         var input = event.target;
         var reader = new FileReader();
 
-        reader.onload = function () {
+        reader.onload = function()
+        {
             var fileData = reader.result;
             var wb = XLSX.read(fileData, {type: 'binary'});
 
@@ -1816,21 +1832,26 @@
             // table 생성
             var html = "";
 
-            for (var i = 1; i < rowdata.length; i++) {
-                if (i === 1) {
+            for(var i = 1; i < rowdata.length; i++)
+            {
+            	if (i === 1)
+            	{
                     html += "<thead class='text-center'>";
                     html += "<tr>";
                     html += "<th></th>";
                     html += "<th><span className='title'>첨부파일</span><i></i><img src='../assets/vendor_assets/img/title_icon.png' alt='첨부파일'></th>";
                     html += "<th><span className='title'>특성상태</span><i></i><img src='../assets/vendor_assets/img/title_icon.png' alt='특성상태'>";
 
-                    $.each(rowdata[1], function (idx, value) {
+                    $.each(rowdata[1], function (idx, value)
+                    {
                         html += "<th><span class='title'>" + value + "</span><i></i><img src='../assets/vendor_assets/img/title_icon.png'></th>";
                     })
 
                     html += "</tr>";
                     html += "</thead>";
-                } else if (i !== 1) {
+                }
+            	else if(i !== 1)
+            	{
                     html += "<tbody class='text-center'>";
                     html += "<tr>";
                     html += "<td><input type='checkbox' name='chkBox'></td>";
@@ -1840,22 +1861,27 @@
                     var tmp = Object.keys(rowdata[1]);
                     var j = 0;
 
-                    $.each(rowdata[i], function (idx, value) {
-
+                    $.each(rowdata[i], function (idx, value)
+                    {
                         // 공백처리
-                        if (idx == tmp[j]) {
+                        if (idx == tmp[j])
+                        {
                             html += "<td><span>" + value + "</span></td>";
                             j++;
-                        } else {
+                        }
+                        else
+                        {
                             var idx_str = idx.replace(/[^0-9]/g, '');
                             var tmp_str = tmp[j].replace(/[^0-9]/g, '');
 
                             var gap = idx_str - tmp_str;
 
-                            while (gap > 0) {
+                            while (gap > 0)
+                            {
                                 gap--;
                                 html += "<td><span> </span></td>";
                             }
+                            
                             html += "<td><span>" + value + "</span></td>";
 
                             j = idx_str;
@@ -1873,11 +1899,13 @@
             $("#display").append(html);
 
             var data = $("#display").tableToJSON();
+<<<<<<< HEAD
 
             console.log(data);
 
+=======
+>>>>>>> b18a8ed59083be292f0400a2b65e653a0508e9c9
         };
-
 
         reader.readAsBinaryString(input.files[0]);
     }
@@ -1908,6 +1936,7 @@
                 }
             }
 
+<<<<<<< HEAD
             if (result.page_num == result.end_page) {
                 page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-right"></span></button>';
             } else {
@@ -1987,39 +2016,55 @@
     }
     */
 
+=======
+>>>>>>> b18a8ed59083be292f0400a2b65e653a0508e9c9
     /* form data to json */
-    jQuery.fn.serializeObject = function () {
-        var obj = null;
-        try {
-            if (this[0].tagName && this[0].tagName.toUpperCase() == "FORM") {
+    jQuery.fn.serializeObject = function()
+    {
+    	var obj = null;
+        
+    	try
+        {
+            if(this[0].tagName && this[0].tagName.toUpperCase() == "FORM")
+            {
                 var arr = this.serializeArray();
-                if (arr) {
+                
+                if(arr)
+                {
                     obj = {};
-                    jQuery.each(arr, function () {
+                    
+                    jQuery.each(arr, function()
+                    {
                         obj[this.name] = this.value;
                     });
                 }
             }
-        } catch (e) {
+        }
+    	catch(e)
+    	{
             alert(e.message);
-        } finally {
+        }
+    	finally
+    	{
         }
 
         return obj;
     };
-
-    /* row 삭제 */
-    function delRow() {
-        var checkRows = $("[name = 'chkBox']:checked");
-
-        for (var i = checkRows.length - 1; i > -1; i--) {
-            checkRows.eq(i).closest('tr').remove();
-        }
+    
+    function InsertChk(e)
+    {
+    	console.log(123);
+    	return false;
+    	e.preventDefault();
     }
 
-    function insertBtn() {
+    // 등록 버튼
+    function InsertBtn()
+    {
         var data = [];
-        $("input[name=detail]").each(function (index, item) {
+        
+        $("input[name=detail]").each(function (index, item)
+        {
             const key = $(this).attr('id');
             var value = $(this).val();
 
@@ -2033,15 +2078,19 @@
         $("#insertForm").submit();
     }
 
-    $(document).ready(function () {
-        SearchBreed(1);
-    });
-
-    function SearchBreed(e) {
+    function SearchBreed(e)
+    {
         var data = {"page_num": e};
 
         $.ajax(
+        {
+			url: 'searchBreed',
+			method: 'POST',
+			dataType: 'json',
+            data: data,
+            success: function (result)
             {
+<<<<<<< HEAD
                 url: 'searchBreed',
                 method: 'POST',
                 dataType: 'json',
@@ -2109,6 +2158,78 @@
                     pageNum.append(page_add);
                 }
             });
+=======
+            	var breed_list = $("#breed_list");
+            	var add_list = "";
+
+            	var pageNum = $("#pageNum");
+            	var page_add = "";
+
+            	for(var i = 0; i < result.breed.length; i++)
+            	{
+            		add_list += '<tr>';
+            		add_list += '<td><input type="checkbox"></td>';
+            		add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><span data-feather="file-plus"></span></button></td>';
+            		add_list += '<td>EMPTY</td>';
+            		add_list += '<td>' + result.breed[i].breed_name + '</td>';
+            		add_list += '<td>' + result.breed[i].breed_code + '</td>';
+            		add_list += '<td>' + result.breed[i].breed_kind + '</td>';
+            		add_list += '<td>' + result.breed[i].breed_mom + '</td>';
+            		add_list += '<td>' + result.breed[i].breed_dad + '</td>';
+            		add_list += '<td>' + result.breed[i].breed_sale_num + '</td>';
+            		add_list += '<td>' + result.breed[i].breed_sale_date + '</td>';
+            		add_list += '<td>' + result.breed[i].breed_apply_num + '</td>';
+            		add_list += '<td>' + result.breed[i].breed_apply_date + '</td>';
+            		add_list += '<td>' + result.breed[i].breed_enroll_num + '</td>';
+            		add_list += '<td>' + result.breed[i].breed_enroll_date + '</td>';
+            		add_list += '<td>' + result.breed[i].breed_local + '</td>';
+            		add_list += '<td>' + result.breed[i].breed_purpose + '</td>';
+            		add_list += '<td>' + result.breed[i].breed_first_form + '</td>';
+            		add_list += '<td>' + result.breed[i].breed_second_form + '</td>';
+            		add_list += '<td>' + result.breed[i].breed_first_crop + '</td>';
+            		add_list += '<td>' + result.breed[i].breed_second_crop + '</td>';
+            		add_list += '<td>' + result.breed[i].breed_comment + '</td>';
+            		add_list += '</tr>';
+            	}
+                
+            	if (result.page_num == 1)
+            	{
+            		page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></button>';
+            	}
+            	else
+            	{
+            		page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchReport(' + (result.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
+            	}
+            	
+            	for(var i = 0; i < result.end_page; i++)
+            	{
+            		if (result.page_num == (i + 1))
+            		{
+            			page_add += '<button class="atbd-pagination__link active" onclick="SearchReport(' + (i + 1) + ')">' + (i + 1) + '</button>';
+            		}
+            		else
+            		{
+            			page_add += '<button class="atbd-pagination__link" onclick="SearchReport(' + (i + 1) + ')">' + (i + 1) + '</button>';
+            		}
+            	}
+                
+            	if(result.page_num == result.end_page)
+            	{
+            		page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-right"></span></button>';
+            	}
+            	else
+            	{
+            		page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchReport(' + (result.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
+            	}
+                
+            	breed_list.empty();
+            	breed_list.append(add_list);
+                
+            	pageNum.empty();
+            	pageNum.append(page_add);
+            }
+        });
+>>>>>>> b18a8ed59083be292f0400a2b65e653a0508e9c9
     }
     function PlusResearch() 
 	{ //2021-10-29 alpadesign 수정
@@ -2163,7 +2284,5 @@
 		inputProtocol();
 	}//end 조사방법 체크박스 추가
 </script>
-
 </body>
-
 </html>

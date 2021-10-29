@@ -26,4 +26,6 @@ public interface BasicMapper
 
 	// 원정 상세 정보 등록
 	int InsertStandard(List<Standard> standard);
+
+	int[] DeleteBasic(int[] basic_id);
 }
