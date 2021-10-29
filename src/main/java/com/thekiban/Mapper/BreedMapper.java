@@ -6,6 +6,7 @@ import com.thekiban.Entity.Detail;
 import com.thekiban.Entity.Standard;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.security.core.parameters.P;
 
 import java.util.List;
 
@@ -21,8 +22,12 @@ public interface BreedMapper {
   int InsertStandard(List<Standard> standard);
 
   // 품종 갯수 조회
-  int SelectBreedCount();
+  int SelectBreedCount(String breed_name);
 
   // 품종 검색
-  List<Breed> SearchBreed(@Param("offset") int offset, @Param("limit") int limit);
+  List<Breed> SearchBreed(@Param("breed_name") String breed_name, @Param("offset") int offset, @Param("limit") int limit);
+
+  // 품종 삭제
+  int[] DeleteBreed(int[] breed_id);
+
 }

@@ -571,19 +571,8 @@
             </div>
         </div>
     </div>
-    <!-- 확인버튼 마크업입니다 display는 테이블이오니 display:block이 아닌 table로 해주셔야 자동 높이를 가집니다 -->
-    <!-- <div class="modal-basic modal fade show pop4" id="gen-messege" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-md" role="document">
-            <div class="modal-content modal-bg-white ">
-                <div class="messege">
-                	<span>최소 1개 이상의 품종이 선택되어야 합니다.</span>
-                </div>
-                <div class="messege_button">
-                	<button class="messege_ok btn-primary btn-sm">확인</button>
-                </div>
-            </div>
-        </div>
-    </div> -->
+
+
     <div class="modal-basic modal fade show" id="recent" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white ">
@@ -733,8 +722,27 @@
                     html += "<td><span>EMPTY</span></td>";
 
                     $.each(rowdata[i], function (idx, value) {
-                        html += "<td><span>" + value + "</span></td>";
-                    })
+                        // 공백처리
+                        if (idx == tmp[j]) {
+                            html += "<td><span>" + value + "</span></td>";
+                            j++;
+                        } else {
+                            var idx_str = idx.replace(/[^0-9]/g, '');
+                            var tmp_str = tmp[j].replace(/[^0-9]/g, '');
+
+                            var gap = idx_str - tmp_str;
+
+                            while (gap > 0) {
+                                gap--;
+                                html += "<td><span> </span></td>";
+                            }
+
+                            html += "<td><span>" + value + "</span></td>";
+
+                            j = idx_str;
+                            j++;
+                        }
+                    });
 
                     html += "</tr>";
                     html += "</tbody>";
@@ -768,15 +776,6 @@
 
         return obj;
     };
-
-    /* row 삭제 */
-    function delRow() {
-        var checkRows = $("[name = 'chkBox']:checked");
-
-        for (var i = checkRows.length - 1; i > -1; i--) {
-            checkRows.eq(i).closest('tr').remove();
-        }
-    }
 
     // 작물 선택 후 목록 입력
     var searchSelectBox = document.querySelector('#CropSelect');

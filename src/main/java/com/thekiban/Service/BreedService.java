@@ -19,8 +19,10 @@ public interface BreedService {
   int InsertStandard(List<Standard> standard);
 
   // 원종 갯수 조회
-  int SelectBreedCount();
+  int SelectBreedCount(String breed_name);
 
   // 원종 검색
-  List<Breed> SearchBreed(int offset, int limit);
+  List<Breed> SearchBreed(String breed_name, int offset, int limit);
+
+  int[] DeleteBreed(int[] breed_id);
 }

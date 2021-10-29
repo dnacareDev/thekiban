@@ -42,16 +42,16 @@ public class BreedController
 	// 원종 검색
 	@ResponseBody
 	@RequestMapping("searchBreed")
-	public Map<String, Object> SearchBreed(@RequestParam("page_num") int page_num)
+	public Map<String, Object> SearchBreed(@RequestParam("breed_name") String breed_name, @RequestParam("page_num") int page_num)
 	{
 		Map<String, Object> result = new LinkedHashMap<String, Object>();
     
-		int count = service.SelectBreedCount();
+		int count = service.SelectBreedCount(breed_name);
 		int limit = 10;
 		int offset = (page_num - 1) * limit;
 		int end_page = (count + limit - 1) / limit;
     
-		List<Breed> breed = service.SearchBreed(offset, limit);
+		List<Breed> breed = service.SearchBreed(breed_name, offset, limit);
     
 		result.put("breed", breed);
 		result.put("page_num", page_num);
@@ -99,5 +99,15 @@ public class BreedController
 		mv.setViewName("redirect:/breed");
 
 		return mv;
+	}
+
+	// 선택삭제
+	@ResponseBody
+	@RequestMapping("deleteBreed")
+	public int DeleteBreed(@RequestParam("breed_id[]") int[] breed_id)
+	{
+		service.DeleteBreed(breed_id);
+
+		return 1;
 	}
 }

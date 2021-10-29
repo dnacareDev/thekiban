@@ -375,8 +375,8 @@
                             <div class="action-btn d-flex justify-content-end">
                                 <div class="atbd-button-list d-flex flex-wrap">
                                     <form action="" name="searchForm" class="d-flex align-items-center add-contact__form my-sm-0 my-2">
-                                        <select class="form-control form-control-lg mt-10 mb-10 mr-10" style="width: 250px;">
-                                            <option value="">작물 선택</option>
+                                        <select class="form-control form-control-lg mt-10 mb-10 mr-10" style="width: 250px;" id="CropSelect">
+                                            <option value="none">작물 선택</option>
                                             <option value="고추">고추</option>
                                             <option value="대파">대파</option>
                                             <option value="멜론">멜론</option>
@@ -403,45 +403,60 @@
                         <div class="card-body">
                             <div class="bg-white">
                                 <div class="table-responsive">
-                                    <form action="excelBreed" id="excelForm" method="POST" enctype="multipart/form-data">
-                                        <table class="table" id="display">
-                                            <thead class="text-center">
-                                            <tr>
-                                                <th></th>
-                                                <th><span class="title">첨부파일</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="첨부파일"></th>
-                                                <th><span class="title">특성상태</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="특성상태"></th>
-                                                <th><span class="title">작물</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="작물"></th>
-                                                <th><span class="title">시교명(ID)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="시교명(ID)"></th>
-                                                <th><span class="title">품종명</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="품종명"></th>
-                                                <th><span class="title">모계 계통명</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="모계 계통명"></th>
-                                                <th><span class="title">부계 계통명</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="부계 계통명"></th>
-                                                <th><span class="title">생산판매(신고번호)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="생산판매(신고번호)"></th>
-                                                <th><span class="title">생산판매(신고일자)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="생산판매(신고일자)"></th>
-                                                <th><span class="title">보호출원(출원번호)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="보호출원(출원번호)"></th>
-                                                <th><span class="title">보호출원(출원일자)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="보호출원(출원일자)"></th>
-                                                <th><span class="title">보호등록(등록번호)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="보호등록(등록번호)"></th>
-                                                <th><span class="title">보호등록(등록일자)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="보호등록(등록일자)"></th>
-                                                <th><span class="title">미등록(현지상업화)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="미등록(현지상업화)"></th>
-                                                <th><span class="title">목표 시장</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="목표 시장"></th>
-                                                <th><span class="title">형태 구분1</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="형태 구분1"></th>
-                                                <th><span class="title">형태 구분2</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="형태 구분2"></th>
-                                                <th><span class="title">작물 타입1</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="작물 타입1"></th>
-                                                <th><span class="title">작물 타입2</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="작물 타입2"></th>
-                                                <th><span class="title">비고</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="비고"></th>
-                                            </tr>
-                                            </thead>
-                                            <tbody class="text-center" id="breed_list">
-                                            </tbody>
-                                        </table>
-                                    </form>
+                                    <table class="table" id="display">
+                                        <thead class="text-center">
+                                        <tr>
+                                            <th></th>
+                                            <th style="cursor: pointer;"><span class="title">첨부파일</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="첨부파일">
+                                            </th>
+                                            <th style="cursor: pointer;"><span class="title">특성상태</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="특성상태">
+                                            </th>
+                                            <th style="cursor: pointer;"><span class="title">작물</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="작물"></th>
+                                            <th style="cursor: pointer;"><span class="title">시교명(ID)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
+                                                                                                                       alt="시교명(ID)"></th>
+                                            <th style="cursor: pointer;"><span class="title">품종명</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="품종명"></th>
+                                            <th style="cursor: pointer;"><span class="title">모계 계통명</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="모계 계통명">
+                                            </th>
+                                            <th style="cursor: pointer;"><span class="title">부계 계통명</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="부계 계통명">
+                                            </th>
+                                            <th style="cursor: pointer;"><span class="title">생산판매(신고번호)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
+                                                                                                                          alt="생산판매(신고번호)"></th>
+                                            <th style="cursor: pointer;"><span class="title">생산판매(신고일자)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
+                                                                                                                          alt="생산판매(신고일자)"></th>
+                                            <th style="cursor: pointer;"><span class="title">보호출원(출원번호)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
+                                                                                                                          alt="보호출원(출원번호)"></th>
+                                            <th style="cursor: pointer;"><span class="title">보호출원(출원일자)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
+                                                                                                                          alt="보호출원(출원일자)"></th>
+                                            <th style="cursor: pointer;"><span class="title">보호등록(등록번호)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
+                                                                                                                          alt="보호등록(등록번호)"></th>
+                                            <th style="cursor: pointer;"><span class="title">보호등록(등록일자)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
+                                                                                                                          alt="보호등록(등록일자)"></th>
+                                            <th style="cursor: pointer;"><span class="title">미등록(현지상업화)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
+                                                                                                                          alt="미등록(현지상업화)"></th>
+                                            <th style="cursor: pointer;"><span class="title">목표 시장</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="목표 시장">
+                                            </th>
+                                            <th style="cursor: pointer;"><span class="title">형태 구분1</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="형태 구분1">
+                                            </th>
+                                            <th style="cursor: pointer;"><span class="title">형태 구분2</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="형태 구분2">
+                                            </th>
+                                            <th style="cursor: pointer;"><span class="title">작물 타입1</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="작물 타입1">
+                                            </th>
+                                            <th style="cursor: pointer;"><span class="title">작물 타입2</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="작물 타입2">
+                                            </th>
+                                            <th style="cursor: pointer;"><span class="title">비고</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="비고"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="text-center" id="breed_list">
+                                        </tbody>
+                                    </table>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-4">
-                                        <button class="btn btn-icon btn-light btn-circle" data-toggle="modal" data-target="#grid">
+                                        <button class="btn btn-icon btn-light btn-circle" data-toggle="modal" data-target="#grid" id="modal_open">
                                             <span data-feather="plus"></span>
                                         </button>
-                                        <button class="btn btn-icon btn-light btn-circle" onclick="delRow()">
+                                        <button class="btn btn-icon btn-light btn-circle" onclick="DeleteBreed()">
                                             <span data-feather="trash-2"></span>
                                         </button>
                                     </div>
@@ -459,7 +474,7 @@
         </div>
     </div>
 
-    <!-- modal code -->
+    <!-- 첨부파일 모달창 -->
     <div class="modal-basic modal fade show pop1" id="gen-attach" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white ">
@@ -501,6 +516,7 @@
         </div>
     </div>
 
+    <!-- 일반데이터 등록 모달창 -->
     <div class="modal-basic modal fade show pop2" id="grid" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white ">
@@ -758,7 +774,8 @@
             </div>
         </div>
     </div>
-    <!-- modal3 -->
+
+    <!-- 출력 헤더 선택 모달창 -->
     <div class="modal-basic modal fade show pop2" id="grid2" tabindex="-1" role="dialog" aria-hidden="true"><!-- 2021-10-29 alpadesign 수정 -->
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white ">
@@ -1298,6 +1315,8 @@
             </div>
         </div>
     </div>
+
+    <!-- 데이터 등록 모달창 -->
     <div class="modal-basic modal fade show pop5" id="data_upload" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white ">
@@ -1394,6 +1413,8 @@
             </div>
         </div>
     </div>
+
+    <!-- 등록정보 수정 모달창 -->
     <div class="modal-basic modal fade show pop6" id="grid3" tabindex="-1" role="dialog" aria-hidden="true"> <!-- 2021-10-29 alpadesign 수정 -->
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white ">
@@ -1820,10 +1841,10 @@
                     html += "<tr>";
                     html += "<th></th>";
                     html += "<th><span className='title'>첨부파일</span><i></i><img src='../assets/vendor_assets/img/title_icon.png' alt='첨부파일'></th>";
-                    html += "<th><span className='title'>특성상태</span><i></i><img src='../assets/vendor_assets/img/title_icon.png' alt='특성상태'>";
+                    html += "<th style='cursor: pointer;'><span className='title'>특성상태</span><i></i><img src='../assets/vendor_assets/img/title_icon.png' alt='특성상태'>";
 
                     $.each(rowdata[1], function (idx, value) {
-                        html += "<th><span class='title'>" + value + "</span><i></i><img src='../assets/vendor_assets/img/title_icon.png'></th>";
+                        html += "<th style='cursor: pointer;'><span class='title'>" + value + "</span><i></i><img src='../assets/vendor_assets/img/title_icon.png'></th>";
                     });
 
                     html += "</tr>";
@@ -1832,8 +1853,8 @@
                     html += "<tbody class='text-center'>";
                     html += "<tr>";
                     html += "<td><input type='checkbox' name='chkBox'></td>";
-                    html += "<td><button class='btn btn-light btn-default btn-squared btn-transparent-light' data-toggle='modal' data-target='#gen-attach'><span data-feather='file-plus'></span></button></td>";
-                    html += "<td><span></span></td>";
+                    html += "<td><button class='btn btn-light btn-default btn-squared btn-transparent-light' data-toggle='modal' data-target='#gen-attach'><i class='bi bi-file-earmark-arrow-down'></i></button></td>";
+                    html += "<td><span>EMPTY</span></td>";
 
                     var tmp = Object.keys(rowdata[1]);
                     var j = 0;
@@ -1866,7 +1887,7 @@
                 html += "</tbody>";
             }
 
-            $("#display").empty(html);
+            $("#display>thead").empty(html);
             $("#display").append(html);
 
         };
@@ -1893,6 +1914,35 @@
 
     }
 
+    // 작물 선택 후 목록 입력
+    var searchSelectBox = document.querySelector('#CropSelect');
+
+    const thisBtn = document.querySelector('#modal_open');
+    thisBtn.dataset.target = '';
+
+    function onChangeSelect() {
+        var thisBtn = document.querySelector('#modal_open');
+        var value = searchSelectBox.value;
+        if (value === 'none') {
+            thisBtn.dataset.target = '';
+        } else {
+            thisBtn.dataset.target = '#grid';
+        }
+    }
+
+    // onChangeSelect();
+    searchSelectBox.addEventListener('change', onChangeSelect);
+    $("#modal_open").click(function () {
+        console.log($("#CropSelect option:selected").val());
+
+        if ($("#CropSelect option:selected").val() === 'none') {
+            alert("작물을 선택해주세요")
+            $(this).data('dismiss');
+        } else {
+            $("input[name=breed_name]").val($("#CropSelect option:selected").text());
+        }
+    });
+
     /* form data to json */
     jQuery.fn.serializeObject = function () {
         var obj = null;
@@ -1917,7 +1967,7 @@
         return obj;
     };
 
-    // 등록 버튼
+    // 품종 추가
     function InsertBtn() {
         var data = [];
 
@@ -1935,8 +1985,20 @@
         $("#insertForm").submit();
     }
 
+    // DB에 저장된 데이터 출력
+    $(document).ready(function () {
+        SearchSample(1);
+    });
+
+    $("#CropSelect").change(function(){
+        SearchSample(1);
+    })
+
+    // 품종 검색
     function SearchBreed(e) {
-        var data = {"page_num": e};
+
+        var breed_name = $("#CropSelect").val();
+        var data = {"breed_name" : breed_name, "page_num": e};
 
         $.ajax({
             url: 'searchBreed',
@@ -1945,18 +2007,18 @@
             data: data,
             success: function (result) {
                 console.log(result);
+
                 var breed_list = $("#breed_list");
                 var add_list = "";
 
                 var pageNum = $("#pageNum");
                 var page_add = "";
-                var input_txt = $(".input_text input[type='text']");
 
                 for (var i = 0; i < result.breed.length; i++) {
                     add_list += '<tr>';
-                    add_list += '<td><input type="checkbox"></td>';
-                    add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><span data-feather="file-plus"></span></button></td>';
-                    add_list += '<td onclick="emptyFunction(this);" style="cursor:pointer">EMPTY</td>';
+                    add_list += '<td><input type="checkbox" name="RowCheck" value="' + result.breed[i].breed_id + '"></td>';
+                    add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
+                    add_list += '<td onclick="emptyFunction(this);">EMPTY</td>';
                     add_list += '<td>' + result.breed[i].breed_name + '</td>';
                     add_list += '<td>' + result.breed[i].breed_code + '</td>';
                     add_list += '<td>' + result.breed[i].breed_kind + '</td>';
@@ -1981,21 +2043,21 @@
                 if (result.page_num == 1) {
                     page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></button>';
                 } else {
-                    page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchReport(' + (result.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
+                    page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchBreed(' + (result.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
                 }
 
                 for (var i = 0; i < result.end_page; i++) {
                     if (result.page_num == (i + 1)) {
-                        page_add += '<button class="atbd-pagination__link active" onclick="SearchReport(' + (i + 1) + ')">' + (i + 1) + '</button>';
+                        page_add += '<button class="atbd-pagination__link active" onclick="SearchBreed(' + (i + 1) + ')">' + (i + 1) + '</button>';
                     } else {
-                        page_add += '<button class="atbd-pagination__link" onclick="SearchReport(' + (i + 1) + ')">' + (i + 1) + '</button>';
+                        page_add += '<button class="atbd-pagination__link" onclick="SearchBreed(' + (i + 1) + ')">' + (i + 1) + '</button>';
                     }
                 }
 
                 if (result.page_num == result.end_page) {
                     page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-right"></span></button>';
                 } else {
-                    page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchReport(' + (result.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
+                    page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchBreed(' + (result.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
                 }
 
                 breed_list.empty();
@@ -2007,6 +2069,82 @@
         });
     }
 
+    // 품종 삭제
+    function DeleteBreed() {
+        var total_id = [];
+
+        $("input:checkbox[name=RowCheck]:checked").each(function () {
+            var breed_id = $(this).val();
+
+            total_id.push(breed_id);
+        });
+
+        var data = {'breed_id': total_id};
+
+        if (confirm("삭제하시겠습니까?") == true) {
+            $.ajax(
+                {
+                    url: 'deleteBreed',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: data,
+                    success: function (result) {
+
+                        console.log(result)
+
+                        if (result == 0) {
+                            alert("삭제에 실패하였습니다.");
+                            location.reload();
+                        } else {
+                            location.reload();
+                        }
+                    }
+                });
+        } else {
+
+        }
+    }
+
+    // 정렬
+    $(document).ready(function () {
+        $('#table1 th').each(function (column) {
+            $(this).click(function () {
+                if ($(this).is('.asc')) {
+                    $(this).removeClass('asc');
+                    $(this).addClass('desc');
+                    sortdir = -1;
+                } else {
+                    $(this).addClass('asc');
+                    $(this).removeClass('desc');
+                    sortdir = 1;
+                }
+                $(this).siblings().removeClass('asc');
+                $(this).siblings().removeClass('desc');
+
+                var rec = $('#table1').find('tbody>tr').get();
+
+                rec.sort(function (a, b) {
+                    var val1 = +($(a).children('td').eq(column).text());
+                    var val2 = +($(b).children('td').eq(column).text());
+
+                    if (isNaN(val1) && isNaN(val2)) {
+                        val1 = $(a).children('td').eq(column).text();
+                        val2 = $(b).children('td').eq(column).text();
+
+                        return (val1 < val2) ? -sortdir : (val1 > val2) ? sortdir : 0;
+                    } else {
+                        return (val1 < val2) ? -sortdir : (val1 > val2) ? sortdir : 0;
+                    }
+                });
+
+                $.each(rec, function (index, row) {
+                    $('#table1 tbody').append(row);
+                });
+            });
+        });
+    });
+
+    /* 헤더 선택 */
     function PlusResearch() { //2021-10-29 alpadesign 수정
         var step_container = $("#step-container");
         var length = $("#step-container").children().length;
