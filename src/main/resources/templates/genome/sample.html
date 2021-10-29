@@ -211,6 +211,10 @@
             vertical-align: middle;
         }
 
+        td .btn i.bi-file-earmark-arrow-down{
+            color: #000;
+        }
+
     </style>
 </head>
 
@@ -709,11 +713,11 @@
                     html += "<thead class='text-center'>";
                     html += "<tr>";
                     html += "<th></th>";
-                    html += "<th><span className='title'>첨부파일</span><i></i><img src='../assets/vendor_assets/img/title_icon.png' alt='첨부파일'></th>";
-                    html += "<th><span className='title'>특성상태</span><i></i><img src='../assets/vendor_assets/img/title_icon.png' alt='특성상태'>";
+                    html += '<th><span class="title">첨부파일</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="첨부파일"></th>';
+                    html += '<th style="cursor: pointer;"><span class="title">특성상태</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="특성상태"></th>';
 
                     $.each(rowdata[1], function (idx, value) {
-                        html += "<th><span class='title'>" + value + "</span><i></i><img src='../assets/vendor_assets/img/title_icon.png'></th>";
+                        html += "<th style='cursor: pointer;'><span class='title'>" + value + "</span><i></i><img src='../assets/vendor_assets/img/title_icon.png'></th>";
                     })
 
                     html += "</tr>";
@@ -723,7 +727,7 @@
                     html += "<tr>";
                     html += "<td><input type='checkbox' name='chkBox'></td>";
                     html += "<td><button class='btn btn-light btn-default btn-squared btn-transparent-light' data-toggle='modal' data-target='#gen-attach'><i class='bi bi-file-earmark-arrow-down'></i></button></td>";
-                    html += "<td><span></span></td>";
+                    html += "<td><span>EMPTY</span></td>";
 
                     $.each(rowdata[i], function (idx, value) {
                         html += "<td><span>" + value + "</span></td>";
@@ -734,36 +738,11 @@
                 }
             }
 
-            $("#table1").empty(html);
-            $("#table1").append(html);
+            $("#table1>thead").empty();
+            $("#table1").prepend(html);
         };
 
         reader.readAsBinaryString(input.files[0]);
-    }
-
-    /* row 생성 */
-    function makeArray() {
-        var gibon = $("#gibon").serializeObject();
-        console.log(gibon);
-
-        var html = "<tbody class='text-center'>";
-        html += "<tr>";
-        html += "<td><input type='checkbox' name='chkBox'></td>";
-        html += "<td><button class='btn btn-light btn-default btn-squared btn-transparent-light' data-toggle='modal' data-target='#gen-attach'><i class='bi bi-file-earmark-arrow-down'></i></button></td>";
-        html += "<td><span></span></td>";
-
-        $.each(gibon, function (idx, value) {
-            if (value === '') {
-                html += "<td><span>-</span></td>";
-            } else {
-                html += "<td><span>" + value + "</span></td>";
-            }
-        })
-
-        html += "</tr>";
-        html += "</tbody>";
-
-        $("#table1").append(html);
     }
 
     /* form data to json */
@@ -796,6 +775,7 @@
         }
     }
 
+    // 시교 자원 추가
     function insertBtn() {
         var data = [];
         $("input[name=detail]").each(function (index, item) {
@@ -812,6 +792,7 @@
         $("#insertForm").submit();
     }
 
+    // DB에 저장된 데이터 출력
     $(document).ready(function () {
         SearchSample(1);
     });
@@ -833,7 +814,7 @@
                     var pageNum = $("#pageNum");
                     var page_add = "";
 
-                    for (var i = 0; i < result.sample.length; i++) {
+                    for (var i = result.sample.length - 1; i >= 0; i--) {
                         add_list += '<tr>';
                         add_list += '<td><input type="checkbox" name="RowCheck" value="' + result.sample[i].sample_id + '"></td>';
                         add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
@@ -880,6 +861,7 @@
             });
     }
 
+    // 데이터 삭제
     function DeleteSample() {
         var total_id = [];
 
@@ -1011,30 +993,30 @@
         origin: new google.maps.Point(0, 0),
         // The anchor for this image is the base of the flagpole at (0, 32).
         anchor: new google.maps.Point(0, 32),
-    };   
+    };
 
     const markers = [];
-    koreaCityDatas.forEach((value, i) => {        
+    koreaCityDatas.forEach((value, i) => {
         const marker = new google.maps.Marker({
             position: value,
             map: map,
             // icon: image,
             label: ""
-        })        
-        markers.push(marker)              
-    })    
-    
+        })
+        markers.push(marker)
+    })
+
     markers.forEach((el, i) => {
         el.addListener('click', () => {
             map = el.getMap();
-            map.panTo({ lat: el.getPosition().lat(), lng: el.getPosition().lng() })
+            map.panTo({lat: el.getPosition().lat(), lng: el.getPosition().lng()})
             smoothZoom(map, 12, map.getZoom())
             console.log(1)
         })
     })
 
     const gMarkers = [];
-    globalCityDatas.forEach((value, i) => {        
+    globalCityDatas.forEach((value, i) => {
         const marker = new google.maps.Marker({
             position: value,
             map: map2,
@@ -1047,27 +1029,27 @@
     gMarkers.forEach((el, i) => {
         el.addListener('click', () => {
             map = el.getMap();
-            map.panTo({ lat: el.getPosition().lat(), lng: el.getPosition().lng() })
+            map.panTo({lat: el.getPosition().lat(), lng: el.getPosition().lng()})
             smoothZoom(map2, 12, map2.getZoom())
             console.log(1)
         })
     })
-    
 
-    function smoothZoom (map, max, cnt) {
+
+    function smoothZoom(map, max, cnt) {
         if (cnt >= max) {
             return;
-        }
-        else {
-            z = google.maps.event.addListener(map, 'zoom_changed', function(event){
+        } else {
+            z = google.maps.event.addListener(map, 'zoom_changed', function (event) {
                 google.maps.event.removeListener(z);
                 smoothZoom(map, max, cnt + 1);
             });
-            setTimeout(function(){map.setZoom(cnt)}, 40); 
+            setTimeout(function () {
+                map.setZoom(cnt)
+            }, 40);
         }
-    }  
+    }
 
-    
 
 </script>
 </body>
