@@ -22,4 +22,6 @@ public interface BasicService
 
 	// 원종 상세 정보 등록
 	int InsertStandard(List<Standard> standard);
+
+	int[] DeleteBasic(int[] basic_id);
 }

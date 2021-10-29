@@ -237,37 +237,37 @@
 	                                            <th>
 	                                            	<span class="title">첨부파일</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="첨부파일">
 	                                            </th>
-	                                            <th>
+                                                <th style="cursor: pointer;">
+                                                    <span class="title">특성상태</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="특성상태">
+                                                </th>
+	                                            <th style="cursor: pointer;">
 	                                            	<span class="title">계통명(ID)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="ID">
 	                                            </th>
-	                                            <th>
-	                                            	<span class="title">특성상태</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="특성상태">
-	                                            </th>
-	                                            <th>
+	                                            <th style="cursor: pointer;">
 	                                            	<span class="title">원소재 계통번호</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="원소재 계통번호">
 	                                            </th>
-	                                            <th>
+	                                            <th style="cursor: pointer;">
 	                                            	<span class="title">원종 계통번호</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="원종 계통번호">
 	                                            </th>
-	                                            <th>
+	                                            <th style="cursor: pointer;">
 	                                            	<span class="title">B.N.기준년도</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="B.N.기준년도">
 	                                            </th>
-	                                            <th>
+	                                            <th style="cursor: pointer;">
 	                                            	<span class="title">B.N.(교배번호)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="B.N.(교배번호)">
 	                                            </th>
-	                                            <th>
+	                                            <th style="cursor: pointer;">
 	                                            	<span class="title">종자번호(ID)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="종자번호(ID)">
 	                                            </th>
-	                                            <th>
+	                                            <th style="cursor: pointer;">
 	                                            	<span class="title">현 종자량(g)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="현 종자량(g)">
 	                                            </th>
-	                                            <th>
+	                                            <th style="cursor: pointer;">
 	                                            	<span class="title">천립중(g)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="천립중(g)">
 	                                            </th>
-	                                            <th>
+	                                            <th style="cursor: pointer;">
 	                                            	<span class="title">계통번호 부여일(g)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="계통번호 부여일(g)">
 	                                            </th>
-	                                            <th>
+	                                            <th style="cursor: pointer;">
 	                                            	<span class="title">비고</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"alt="비고">
 	                                            </th>
 	                                        </tr>
@@ -336,7 +336,7 @@
                                         <button class="btn btn-icon btn-light btn-circle" data-toggle="modal" data-target="#grid">
                                             <span data-feather="plus"></span>
                                         </button>
-                                        <button class="btn btn-icon btn-light btn-circle" onclick="delRow()">
+                                        <button class="btn btn-icon btn-light btn-circle" onclick="DeleteBasic()">
                                             <span data-feather="trash-2"></span>
                                         </button>
                                     </div>
@@ -941,10 +941,10 @@
 				for(var i = 0; i < result.basic.length; i++)
 				{
 					add_list += '<tr>';
-					add_list += '<td><input type="checkbox"></td>';
+					add_list += '<td><input type="checkbox" name="RowCheck" value="' + result.basic[i].basic_id + '"></td>';
 					add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
-					add_list += '<td>' + result.basic[i].basic_name + '</td>';
-					add_list += '<td>EMPTY</td>';
+                    add_list += '<td>EMPTY</td>';
+                    add_list += '<td>' + result.basic[i].basic_name + '</td>';
 					add_list += '<td>' + result.basic[i].basic_raw_num + '</td>';
 					add_list += '<td>' + result.basic[i].basic_num + '</td>';
 					add_list += '<td>' + result.basic[i].basic_bn_year + '</td>';
@@ -995,6 +995,80 @@
 			}
 		});
     }
+
+    function DeleteBasic() {
+        var total_id = [];
+
+        $("input:checkbox[name=RowCheck]:checked").each(function () {
+            var basic_id = $(this).val();
+
+            total_id.push(basic_id);
+        });
+
+        var data = {'basic_id': total_id};
+
+        if (confirm("삭제하시겠습니까?") == true) {
+            $.ajax(
+                {
+                    url: 'deleteBasic',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: data,
+                    success: function (result) {
+
+                        console.log(result)
+
+                        if (result == 0) {
+                            alert("삭제에 실패하였습니다.");
+                            location.reload();
+                        } else {
+                            location.reload();
+                        }
+                    }
+                });
+        } else {
+
+        }
+    }
+
+    // 정렬
+    $(document).ready(function () {
+        $('#table1 th').each(function (column) {
+            $(this).click(function () {
+                if ($(this).is('.asc')) {
+                    $(this).removeClass('asc');
+                    $(this).addClass('desc');
+                    sortdir = -1;
+                } else {
+                    $(this).addClass('asc');
+                    $(this).removeClass('desc');
+                    sortdir = 1;
+                }
+                $(this).siblings().removeClass('asc');
+                $(this).siblings().removeClass('desc');
+
+                var rec = $('#table1').find('tbody>tr').get();
+
+                rec.sort(function (a, b) {
+                    var val1 = +($(a).children('td').eq(column).text());
+                    var val2 = +($(b).children('td').eq(column).text());
+
+                    if (isNaN(val1) && isNaN(val2)) {
+                        val1 = $(a).children('td').eq(column).text();
+                        val2 = $(b).children('td').eq(column).text();
+
+                        return (val1 < val2) ? -sortdir : (val1 > val2) ? sortdir : 0;
+                    } else {
+                        return (val1 < val2) ? -sortdir : (val1 > val2) ? sortdir : 0;
+                    }
+                });
+
+                $.each(rec, function (index, row) {
+                    $('#table1 tbody').append(row);
+                });
+            });
+        });
+    });
 </script>
 </body>
 

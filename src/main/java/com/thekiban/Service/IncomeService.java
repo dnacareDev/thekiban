@@ -15,4 +15,6 @@ public interface IncomeService {
   // 원종 검색
   List<Income> SearchIncome(int offset, int limit);
 
+  int[] DeleteIncome(int[] income_id);
+
 }

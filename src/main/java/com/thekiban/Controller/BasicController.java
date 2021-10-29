@@ -59,8 +59,6 @@ public class BasicController
 		result.put("end_page", end_page);
 		result.put("offset", offset);
 
-		System.out.println(result);
-
 		return result;
 	}
 	
@@ -101,5 +99,15 @@ public class BasicController
 		mv.setViewName("redirect:/basic");
 		
 		return mv;
+	}
+
+	// 선택삭제
+	@ResponseBody
+	@RequestMapping("deleteBasic")
+	public int DeleteBasic(@RequestParam("basic_id[]") int[] basic_id)
+	{
+		service.DeleteBasic(basic_id);
+
+		return 1;
 	}
 }

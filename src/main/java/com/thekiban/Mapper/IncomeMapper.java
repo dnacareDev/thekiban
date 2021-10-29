@@ -19,5 +19,6 @@ public interface IncomeMapper {
   // 원종 검색
   List<Income> SearchIncome(@Param("offset") int offset, @Param("limit") int limit);
 
+  int[] DeleteIncome(int[] income_id);
 
 }

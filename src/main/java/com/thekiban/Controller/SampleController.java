@@ -65,12 +65,7 @@ public class SampleController {
   @RequestMapping("deleteSample")
   public int DeleteSample(@RequestParam("sample_id[]") int[] sample_id)
   {
-    int[] result = service.DeleteSample(sample_id);
-
-    for(int i = 0; i < result.length; i++)
-    {
-      System.out.println(result[i]);
-    }
+    service.DeleteSample(sample_id);
 
     return 1;
   }

@@ -57,24 +57,15 @@ public class IncomeController {
     result.put("end_page", end_page);
     result.put("offset", offset);
 
-    System.out.println(result);
-
     return result;
   }
 
-/*
   @ResponseBody
-  @RequestMapping("income/incomeList")
-  public Map<String, Object> incomeList(@RequestParam("income_type") String income_type) {
-    System.out.println(123);
-    Map<String, Object> result = new LinkedHashMap<String, Object>();
+  @RequestMapping("deleteIncome")
+  public int DeleteIncome(@RequestParam("income_id[]") int[] income_id) {
+    service.DeleteIncome(income_id);
 
-    List<Income> income = service.SearchIncomeList(income_type);
+    return 1;
+  }
 
-    result.put("income", income);
-
-    System.out.println(income);
-
-    return result;
-  }*/
 }
