@@ -15,14 +15,24 @@
     </insert>
 
     <!-- 도입자원 갯수 조회 -->
-    <select id="SelectIncomeCount" resultType="int">
+    <select id="SelectIncomeCount" parameterType="String" resultType="int">
         SELECT COUNT(*) FROM income
+        <choose>
+            <when test="income_name != 'none'">
+                WHERE income_name = #{income_name}
+            </when>
+        </choose>
     </select>
 
     <!-- 도입자원 검색 -->
     <select id="SearchIncome" resultType="Income">
         SELECT * FROM income
-            LIMIT #{offset}, #{limit}
+        <choose>
+            <when test="income_name != 'none'">
+                WHERE income_name = #{income_name}
+            </when>
+        </choose>
+        LIMIT #{offset}, #{limit}
     </select>
 
     <select id="DeleteIncome" parameterType="java.util.ArrayList">

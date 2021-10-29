@@ -12,13 +12,13 @@ public interface IncomeMapper {
   // 도입자원 등록
   int InsertIncome(Income income);
 
+  // 도입자원 갯수 조회
+  int SelectIncomeCount(String income_name);
 
-  // 원종 갯수 조회
-  int SelectIncomeCount();
+  // 도입자원 검색
+  List<Income> SearchIncome(@Param("income_name") String income_name, @Param("offset") int offset, @Param("limit") int limit);
 
-  // 원종 검색
-  List<Income> SearchIncome(@Param("offset") int offset, @Param("limit") int limit);
-
+  // 도입자원 삭제
   int[] DeleteIncome(int[] income_id);
 
 }

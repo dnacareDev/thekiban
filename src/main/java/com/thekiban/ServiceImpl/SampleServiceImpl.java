@@ -19,11 +19,6 @@ public class SampleServiceImpl implements SampleService {
     return mapper.SelectSampleList();
   }
 
-  @Override
-  public List<Sample> SelectSampleListDis() {
-    return mapper.SelectSampleListDis();
-  }
-
   // 시교자원 등록
   @Override
   public int InsertSample(Sample sample) {
@@ -42,6 +37,7 @@ public class SampleServiceImpl implements SampleService {
     return mapper.SearchSample(sample_name, offset, limit);
   }
 
+  // 시교자원 삭제
   @Override
   public int[] DeleteSample(int[] sample_id) { return mapper.DeleteSample(sample_id); }
 }

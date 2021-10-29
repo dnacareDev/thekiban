@@ -34,6 +34,7 @@ public class SampleController {
     return mv;
   }
 
+  // 시교자원 입력
   @RequestMapping("insertSample")
   public ModelAndView InsertSample(ModelAndView mv, @ModelAttribute Sample sample) {
     service.InsertSample(sample);
@@ -43,6 +44,7 @@ public class SampleController {
     return mv;
   }
 
+  // 시교자원 검색
   @ResponseBody
   @RequestMapping("searchSample")
   public Map<String, Object> SearchSample(@RequestParam("sample_name") String sample_name, @RequestParam("page_num") int page_num) {

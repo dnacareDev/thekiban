@@ -40,17 +40,17 @@ public class IncomeController {
   // 도입자원 검색
   @ResponseBody
   @RequestMapping("searchIncome")
-  public Map<String, Object> SearchIncome(@RequestParam("page_num") int page_num)
+  public Map<String, Object> SearchIncome(@RequestParam("income_name") String income_name, @RequestParam("page_num") int page_num)
   {
     Map<String, Object> result = new LinkedHashMap<String, Object>();
 
-    int count = service.SelectIncomeCount();
+    int count = service.SelectIncomeCount(income_name);
 
     int limit = 10;
     int offset = (page_num - 1) * limit;
     int end_page = (count + limit - 1) / limit;
 
-    List<Income> income = service.SearchIncome(offset, limit);
+    List<Income> income = service.SearchIncome(income_name, offset, limit);
 
     result.put("income", income);
     result.put("page_num", page_num);

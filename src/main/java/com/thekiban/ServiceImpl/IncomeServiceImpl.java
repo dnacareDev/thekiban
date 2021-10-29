@@ -23,16 +23,16 @@ public class IncomeServiceImpl implements IncomeService {
 
   // 원종 갯수 조회
   @Override
-  public int SelectIncomeCount()
+  public int SelectIncomeCount(String income_name)
   {
-    return mapper.SelectIncomeCount();
+    return mapper.SelectIncomeCount(income_name);
   }
 
   // 원종 검색
   @Override
-  public List<Income> SearchIncome(int offset, int limit)
+  public List<Income> SearchIncome(String income_name, int offset, int limit)
   {
-    return mapper.SearchIncome(offset, limit);
+    return mapper.SearchIncome(income_name, offset, limit);
   }
 
   @Override

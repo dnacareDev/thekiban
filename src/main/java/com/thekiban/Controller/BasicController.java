@@ -42,17 +42,17 @@ public class BasicController
 	// 원종 검색
 	@ResponseBody
 	@RequestMapping("searchBasic")
-	public Map<String, Object> SearchBasic(@RequestParam("page_num") int page_num)
+	public Map<String, Object> SearchBasic(@RequestParam("basic_name") String basic_name, @RequestParam("page_num") int page_num)
 	{
 		Map<String, Object> result = new LinkedHashMap<String, Object>();
 		
-		int count = service.SelectBasicCount();
+		int count = service.SelectBasicCount(basic_name);
 		
 		int limit = 10;
 		int offset = (page_num - 1) * limit;
 		int end_page = (count + limit - 1) / limit;
 		
-		List<Basic> basic = service.SearchBasic(offset, limit);
+		List<Basic> basic = service.SearchBasic(basic_name, offset, limit);
 		
 		result.put("basic", basic);
 		result.put("page_num", page_num);

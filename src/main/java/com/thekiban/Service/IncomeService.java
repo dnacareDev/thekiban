@@ -10,10 +10,10 @@ public interface IncomeService {
   int InsertIncome(Income income);
 
   // 원종 갯수 조회
-  int SelectIncomeCount();
+  int SelectIncomeCount(String income_name);
 
   // 원종 검색
-  List<Income> SearchIncome(int offset, int limit);
+  List<Income> SearchIncome(String income_name, int offset, int limit);
 
   int[] DeleteIncome(int[] income_id);
 

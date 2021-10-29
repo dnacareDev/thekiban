@@ -12,10 +12,10 @@ public interface BasicService
 	List<Detail> SelectDetail();
 
 	// 원종 갯수 조회
-	int SelectBasicCount();
+	int SelectBasicCount(String basic_name);
 	
 	// 원종 검색
-	List<Basic> SearchBasic(int offset, int limit);
+	List<Basic> SearchBasic(String basic_name, int offset, int limit);
 
 	// 원종 등록
 	int InsertBasic(Basic basic);

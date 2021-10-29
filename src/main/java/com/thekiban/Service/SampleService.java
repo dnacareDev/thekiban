@@ -9,9 +9,6 @@ public interface SampleService {
   // 시교자원 목록
   List<Sample> SelectSampleList();
   
-  // 중복 제거 목록
-  List<Sample> SelectSampleListDis();
-  
   // 시교자원 등록
   int InsertSample(Sample sample);
 

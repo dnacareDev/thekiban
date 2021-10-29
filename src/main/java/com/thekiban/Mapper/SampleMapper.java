@@ -11,9 +11,6 @@ public interface SampleMapper {
 
   // 시교자원 목록 조회
   List<Sample> SelectSampleList();
-  
-  // 중복 제거 목록
-  List<Sample> SelectSampleListDis();
 
   // 시교자원 등록
   int InsertSample(Sample sample);
@@ -24,5 +21,6 @@ public interface SampleMapper {
   // 시교자원 검색
   List<Sample> SearchSample(@Param("sample_name") String sample_name, @Param("offset") int offset, @Param("limit") int limit);
 
+  // 시교자원 삭제
   int[] DeleteSample(int[] sample_id);
 }

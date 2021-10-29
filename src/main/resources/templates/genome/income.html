@@ -216,18 +216,18 @@
                                         <button type="button" class="btn btn-xs btn-outline-light" onclick="view(2)">도입자원재고관리</button>
                                     </div>
                                     <form action="" name="searchForm" class="d-flex align-items-center add-contact__form my-sm-0 my-2">
-                                        <select class="form-control form-control-lg mt-10 mb-10 mr-10" id="income_type" style="width: 250px;">
+                                        <select class="form-control form-control-lg mt-10 mb-10 mr-10" style="width: 250px;" id="CropSelect">
                                             <option value="none">작물 선택</option>
-                                            <option value="pepper">고추</option>
-                                            <option value="green_onion">대파</option>
-                                            <option value="melon">멜론</option>
-                                            <option value="radish">무</option>
-                                            <option value="napa_cabbage">배추</option>
-                                            <option value="water_melon">수박</option>
-                                            <option value="cabbage">양배추</option>
-                                            <option value="onion">양파</option>
-                                            <option value="korean_melon">참외</option>
-                                            <option value="tomato">토마토</option>
+                                            <option value="고추">고추</option>
+                                            <option value="대파">대파</option>
+                                            <option value="멜론">멜론</option>
+                                            <option value="무">무</option>
+                                            <option value="배추">배추</option>
+                                            <option value="수박">수박</option>
+                                            <option value="양배추">양배추</option>
+                                            <option value="양파">양파</option>
+                                            <option value="참외">참외</option>
+                                            <option value="토마토">토마토</option>
                                         </select>
                                     </form>
                                     <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none">
@@ -346,7 +346,7 @@
 
                                 <div class="row">
                                     <div class="col-4">
-                                        <button class="btn btn-icon btn-light btn-circle" data-toggle="modal" data-target="#grid">
+                                        <button class="btn btn-icon btn-light btn-circle" data-toggle="modal" data-target="#grid" id="modal_open">
                                             <span data-feather="plus"></span>
                                         </button>
                                         <button class="btn btn-icon btn-light btn-circle" onclick="DeleteIncome()">
@@ -768,6 +768,36 @@
         }
     }
 
+    // 작물 선택 후 목록 입력
+    var searchSelectBox = document.querySelector('#CropSelect');
+
+    const thisBtn = document.querySelector('#modal_open');
+    thisBtn.dataset.target = '';
+
+    function onChangeSelect() {
+        var thisBtn = document.querySelector('#modal_open');
+        var value = searchSelectBox.value;
+        if (value === 'none') {
+            thisBtn.dataset.target = '';
+        } else {
+            thisBtn.dataset.target = '#grid';
+        }
+    }
+
+    // onChangeSelect();
+    searchSelectBox.addEventListener('change', onChangeSelect);
+    $("#modal_open").click(function () {
+        console.log($("#CropSelect option:selected").val());
+
+        if ($("#CropSelect option:selected").val() === 'none') {
+            alert("작물을 선택해주세요")
+            $(this).data('dismiss');
+        } else {
+            $("input[name=income_name]").val($("#CropSelect option:selected").text());
+        }
+    });
+
+    // 도입 자원 추가
     function insertBtn() {
         var data = [];
 
@@ -785,15 +815,20 @@
         $("#insertForm").submit();
     }
 
-
+    // DB 데이터 출력
     $(document).ready(function()
     {
         SearchIncome(1);
     });
 
+    $("#CropSelect").change(function(){
+        SearchIncome(1);
+    })
+
     function SearchIncome(e)
     {
-        var data = {"page_num" : e};
+        var income_name = $("#CropSelect").val();
+        var data = {"income_name" : income_name, "page_num": e};
 
         $.ajax(
             {
@@ -837,18 +872,18 @@
                     }
                     else
                     {
-                        page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchReport(' + (result.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
+                        page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchIncome(' + (result.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
                     }
 
                     for(var i = 0; i < result.end_page; i++)
                     {
                         if(result.page_num == (i + 1))
                         {
-                            page_add += '<button class="atbd-pagination__link active" onclick="SearchReport(' + (i + 1) + ')">' + (i + 1) + '</button>';
+                            page_add += '<button class="atbd-pagination__link active" onclick="SearchIncome(' + (i + 1) + ')">' + (i + 1) + '</button>';
                         }
                         else
                         {
-                            page_add += '<button class="atbd-pagination__link" onclick="SearchReport(' + (i + 1) + ')">' + (i + 1) + '</button>';
+                            page_add += '<button class="atbd-pagination__link" onclick="SearchIncome(' + (i + 1) + ')">' + (i + 1) + '</button>';
                         }
                     }
 
@@ -858,7 +893,7 @@
                     }
                     else
                     {
-                        page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchReport(' + (result.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
+                        page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchIncome(' + (result.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
                     }
 
                     income_list.empty();

@@ -16,10 +16,10 @@ public interface BasicMapper
 	List<Detail> SelectDetail();
 
 	// 원종 갯수 조회
-	int SelectBasicCount();
+	int SelectBasicCount(String basic_name);
 	
 	// 원종 검색
-	List<Basic> SearchBasic(@Param("offset") int offset, @Param("limit") int limit);
+	List<Basic> SearchBasic(@Param("basic_name") String basic_name, @Param("offset") int offset, @Param("limit") int limit);
 
 	// 원종 등록
 	int InsertBasic(Basic basic);

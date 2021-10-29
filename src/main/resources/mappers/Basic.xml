@@ -10,11 +10,21 @@
 	<!-- 원종 갯수 조회 -->
 	<select id="SelectBasicCount" resultType="int">
 		SELECT COUNT(*) FROM basic
+		<choose>
+			<when test="basic_name != 'none'">
+				WHERE basic_name = #{basic_name}
+			</when>
+		</choose>
 	</select>
 	
 	<!-- 원종 검색 -->
 	<select id="SearchBasic" resultType="Basic">
 		SELECT * FROM basic
+		<choose>
+			<when test="basic_name != 'none'">
+				WHERE basic_name = #{basic_name}
+			</when>
+		</choose>
 		LIMIT #{offset}, #{limit}
 	</select>
 	
@@ -39,6 +49,7 @@
 		</foreach>
 	</insert>
 
+	<!-- 원종 삭제 -->
 	<select id="DeleteBasic" parameterType="java.util.ArrayList">
 		DELETE FROM basic
 		WHERE

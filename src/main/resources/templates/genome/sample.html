@@ -839,7 +839,6 @@
 
         var sample_name = $("#CropSelect").val();
         var data = {"sample_name" : sample_name, "page_num": e};
-        console.log(data);
 
         $.ajax(
             {
@@ -903,7 +902,7 @@
             });
     }
 
-    // 데이터 삭제
+    // 시교자원 삭제
     function DeleteSample() {
         var total_id = [];
 
