@@ -61,11 +61,13 @@
         }
 
         .content_1 {
-            padding: 20px;
             max-height: 500px;
             overflow: auto;
             line-height: 2;
         }
+        #grid .content_1, #grid3 .content_1{
+        	padding-top: 50px;
+        } 
 
         .content_1 .title {
             float: left;
@@ -80,7 +82,7 @@
             width: 180%;
         }
 
-        .content_1 li {
+        #grid .content_1 li, #grid3 .content_1 li {
             display: inline-block;
             width: 80%;
             color: #222222;
@@ -170,6 +172,152 @@
         .bg-white > .row {
             padding-top: 50px;
         }
+<<<<<<< HEAD
+		@media (min-width: 576px){
+		.col-sm-10 {
+		    -webkit-box-flex: 0;
+		    -ms-flex: 0 0 80%;
+		    flex: 0 0 80%;
+		    max-width: 80%;
+		}
+		.col-sm-2 {
+		    -webkit-box-flex: 0;
+		    -ms-flex: 0 0 20%;
+		    flex: 0 0 20%;
+		    max-width: 20%;
+		}
+	}
+	.top-menu .type_1{
+		background-color: #768BF5;
+		border-left: none;
+		border-radius: 0 5px 5px 0;
+	}
+	#searchResearch{
+		float: left;
+	    width: 60%;
+	   	border-radius: 5px 0 0 0;
+	   	border-right: none;
+	   	height: 42px;
+	}
+	#addResearchBtn{
+		float:left;
+		border-left:none;
+		border-radius: 0 5px 0 0;
+		height: 42px;
+		margin-top: 0 !important;
+		width: 40%;
+	}
+	.box_content{
+	    -webkit-box-flex: 0;
+	    -ms-flex: 0 0 66.66667%;
+	    flex: 0 0 5%;
+	    max-width: 5%;
+	    display: flex;
+	    justify-content: center;
+	}
+	.box_center li{
+		margin-bottom: 20px;
+	}
+	.box_center li button{
+		border-radius: 50%;
+    	border: 2px solid #788DEE;
+    	background-color: transparent;
+    	height: 38px;
+    	color: #788DEE;
+	}
+	.card-body .mt-4{
+		margin-top: 10px !important;
+	}
+	@media (min-width: 992px){
+		.card .col-lg-8 {
+		    -webkit-box-flex: 0;
+		    -ms-flex: 0 0 66.66667%;
+		    flex: 0 0 70%;
+		    max-width: 70%;
+		}
+		.card .col-lg-3 {
+		    -webkit-box-flex: 0;
+		    -ms-flex: 0 0 25%;
+		    flex: 0 0 25%;
+		    max-width: 25%;
+		}
+	}   
+	#grid2 .contents .row{
+		align-items:center;
+	}
+	#grid2 .content_1 .row.mt-20{
+		margin-top: 0 !important;
+	}
+	#grid2 .content_1 li{
+		cursor:pointer;
+	}
+	#grid2 .content_1 li div.title{
+		display:inline-block;
+		float:none;
+	}
+	#grid2 .content_1 li input[type="checkbox"]{
+		margin: 0 10px;
+    	display: inline-block;
+	}
+	#grid2 .content_1 .list-group {
+		min-width:max-content;
+	}
+	#data_upload .modal-body .form-group{
+		justify-content: flex-start;
+	}
+	#data_upload .form-group button, #data_upload2 .form-group button{
+	    height: 45px;
+	    padding: 0 20px;
+	    background-color: #217566;
+	    color: #fff;
+	    border: none;
+	    border-radius: 5px;
+	    margin-left: 10px;
+	}
+	#data_upload2 .form-group button{
+		margin-left: 0;
+	}
+	#data_upload .form-group input[type=text], #data_upload2 .form-group input[type=text]{
+		flex: 0 0 30%;
+		cursor: pointer;
+	}
+	#data_upload .form-group input[type=text]::-webkit-input-placeholder{
+		background: url("../assets/vendor_assets/img/upload.png") no-repeat 0 3px;
+    	background-size: 15px;
+    	color: #B2B2B2;
+	}
+	#data_upload .atbd-upload, #data_upload2 .atbd-upload{
+		width:100%;
+		height: 300px;
+		overflow: auto;
+	}
+	#data_upload .atbd-upload table{
+		min-width: max-content;
+		border: none;
+	}
+	#data_upload2 .atbd-upload table{
+		width: 100%;
+	}
+	#data_upload table thead tr, #data_upload2 table thead tr{
+		border-top:none;
+		border-bottom: 2px solid #E8EEF2;
+	}
+	#data_upload table tbody tr, #data_upload2 table tbody tr{
+		border-bottom: 1px solid #E8EEF2;
+	}
+	#data_upload .atbd-upload table thead th, #data_upload2 .atbd-upload table thead th{
+		background-color:#F7F7F8;
+		color:#222222;
+		font-size: 16px;
+	}
+	#data_upload .atbd-upload table tbody td, #data_upload2 .atbd-upload table tbody td{
+		background-color:#fff;
+		color:#666666;
+		font-size: 16px;
+		font-weight: 200;
+	}
+=======
+>>>>>>> b18a8ed59083be292f0400a2b65e653a0508e9c9
     </style>
 </head>
 <body class="layout-light top-menu overlayScroll">
@@ -206,9 +354,16 @@
                                         </select>
                                     </form>
                                     <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none">
+<<<<<<< HEAD
+                                    <button type="button" class="btn btn-lg btn-primary data_btn1" onclick="filesFunction('excelFile')"><img
+                                        src="../assets/vendor_assets/img/icon1.svg" alt=""></button>
+                                    <input type="hidden" id="excel">
+                                    <button class="btn btn-lg btn-primary data_btn2"  data-toggle="modal" data-target="#data_upload2"><img src="../assets/vendor_assets/img/icon2.png" alt=""></button>
+=======
                                     <button type="button" class="btn btn-lg btn-primary data_btn1" onclick="filesFunction()"><img src="../assets/vendor_assets/img/icon1.svg" alt=""></button>
                                     <input type="hidden" id="excel">
                                     <button class="btn btn-lg btn-primary data_btn2"><img src="../assets/vendor_assets/img/icon2.png" alt=""></button>
+>>>>>>> b18a8ed59083be292f0400a2b65e653a0508e9c9
                                     <button class="btn btn-lg btn-primary data_btn2" data-toggle="modal" data-target="#grid2"><img src="../assets/vendor_assets/img/icon3.png" alt=""></button>
                                 </div>
                             </div>
@@ -445,16 +600,887 @@
                                                     <li>조사값</li>
                                                 </ul>
                                             </div>
+                                            <div class="content_1 clearfix" id="content_type1">
+                                                <ul>
+                                                    <th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '원예형질(종자원 기준)'">
+                                                        <li>
+                                                            <div class="title" th:text="${detail.detail_title}"></div>
+                                                            <div class="input_text"><input type="text" name="detail"></div>
+                                                        </li>
+                                                    </th:block>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="tab-horizontal-2" role="tabpanel"
+                                             aria-labelledby="tab-horizontal-2-tab">
+                                            <div class="content_title clearfix">
+                                                <ul>
+                                                    <li>형질</li>
+                                                    <li>조사값</li>
+                                                </ul>
+                                            </div>
                                             <div class="content_1 clearfix">
                                                 <ul>
-                                                    <ul>
-                                                        <th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '원예형질(종자원 기준)'">
-                                                            <li>
-                                                                <div class="title" th:text="${detail.detail_title}"></div>
-                                                                <div class="input_text"><input type="text" name="detail"></div>
-                                                            </li>
-                                                        </th:block>
-                                                    </ul>
+                                                    <th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '원예형질(사내 기준)'">
+                                                        <li>
+                                                            <div class="title" th:text="${detail.detail_title}"></div>
+                                                            <div class="input_text"><input type="text" name="detail"></div>
+                                                        </li>
+                                                    </th:block>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="tab-horizontal-3" role="tabpanel"
+                                             aria-labelledby="tab-horizontal-3-tab">
+                                            <div class="content_title clearfix">
+                                                <ul>
+                                                    <li>형질</li>
+                                                    <li>조사값</li>
+                                                </ul>
+                                            </div>
+                                            <div class="content_1 clearfix">
+                                                <ul>
+                                                    <th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '병저항성(국립종자원 기준)'">
+                                                        <li>
+                                                            <div class="title" th:text="${detail.detail_title}"></div>
+                                                            <div class="input_text"><input type="text" name="detail"></div>
+                                                        </li>
+                                                    </th:block>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="tab-horizontal-4" role="tabpanel"
+                                             aria-labelledby="tab-horizontal-4-tab">
+                                            <div class="content_title clearfix">
+                                                <ul>
+                                                    <li>형질</li>
+                                                    <li>조사값</li>
+                                                </ul>
+                                            </div>
+                                            <div class="content_1 clearfix">
+                                                <ul>
+                                                    <th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '병저항성(사내 기준)'">
+                                                        <li>
+                                                            <div class="title" th:text="${detail.detail_title}"></div>
+                                                            <div class="input_text"><input type="text" name="detail"></div>
+                                                        </li>
+                                                    </th:block>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="tab-horizontal-5" role="tabpanel"
+                                             aria-labelledby="tab-horizontal-5-tab">
+                                            <div class="content_title clearfix">
+                                                <ul>
+                                                    <li>형질</li>
+                                                    <li>조사값</li>
+                                                </ul>
+                                            </div>
+                                            <div class="content_1 clearfix">
+                                                <ul>
+                                                    <th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '성분정보(국립종자원 기준)'">
+                                                        <li>
+                                                            <div class="title" th:text="${detail.detail_title}"></div>
+                                                            <div class="input_text"><input type="text" name="detail"></div>
+                                                        </li>
+                                                    </th:block>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="tab-horizontal-6" role="tabpanel"
+                                             aria-labelledby="tab-horizontal-6-tab">
+                                            <div class="content_title clearfix">
+                                                <ul>
+                                                    <li>형질</li>
+                                                    <li>조사값</li>
+                                                </ul>
+                                            </div>
+                                            <div class="content_1 clearfix">
+                                                <ul>
+                                                    <th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '마커정보'">
+                                                        <li>
+                                                            <div class="title" th:text="${detail.detail_title}"></div>
+                                                            <div class="input_text"><input type="text" name="detail"></div>
+                                                        </li>
+                                                    </th:block>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border: none">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="insertBtn()" data-dismiss="modal">저장</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- modal3 -->
+    <div class="modal-basic modal fade show pop2" id="grid2" tabindex="-1" role="dialog" aria-hidden="true"><!-- 2021-10-29 alpadesign 수정 -->
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content modal-bg-white ">
+                <div class="modal-header" style="border: none">
+                    <h6 class="modal-title">품종관리 > <span></span></h6>
+                    시교명 ID : <span></span>
+                </div>
+                <div class="modal-body">
+                    <div class="tab-pane fade show active" id="control1" role="tabpanel" aria-labelledby="control1-tab">
+                        <div class="tab-slide-content">
+                            <div class="atbd-tab tab-horizontal">
+                                <div class="top_box">
+                                    <ul class="nav nav-tabs vertical-tabs" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="tab-horizontal-0-tab" data-toggle="tab"
+                                               href="#tab-horizontal-0" role="tab" aria-controls="tab-horizontal-0"
+                                               aria-selected="true">기본 정보</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="tab-horizontal-1-tab" data-toggle="tab"
+                                               href="#tab-horizontal-1" role="tab" aria-controls="tab-horizontal-1"
+                                               aria-selected="false">원예형질[종자원 기준]</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="tab-horizontal-2-tab" data-toggle="tab"
+                                               href="#tab-horizontal-2" role="tab" aria-controls="tab-horizontal-2"
+                                               aria-selected="false">원예형질[사내 기준]</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="tab-horizontal-3-tab" data-toggle="tab"
+                                               href="#tab-horizontal-3" role="tab" aria-controls="tab-horizontal-3"
+                                               aria-selected="false">병저항성[종자원 기준]</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="tab-horizontal-4-tab" data-toggle="tab"
+                                               href="#tab-horizontal-4" role="tab" aria-controls="tab-horizontal-4"
+                                               aria-selected="false">병저항성[사내 기준]</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="tab-horizontal-5-tab" data-toggle="tab"
+                                               href="#tab-horizontal-5" role="tab" aria-controls="tab-horizontal-5"
+                                               aria-selected="false">성분정보[종자원 기준]</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="tab-horizontal-6-tab" data-toggle="tab"
+                                               href="#tab-horizontal-6" role="tab" aria-controls="tab-horizontal-6"
+                                               aria-selected="false">마커정보</a>
+                                        </li>
+                                    </ul>
+                                    <span class="prev"></span>
+                                    <span class="next"></span>
+                                </div>
+                                <form action="insertBreed" id="insertForm1" method="POST" enctype="multipart/form-data">
+                                    <input type="hidden" id="detail_list1" name="detail_list">
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade show active" id="tab-horizontal-1" role="tabpanel"
+                                             aria-labelledby="tab-horizontal-0-tab">
+                                            <div class="content_title clearfix">
+                                                <ul>
+                                                    <li>형질</li>
+                                                    <li>조사값</li>
+                                                </ul>
+                                            </div>
+                                            <div class="content_1 clearfix">
+                                                <div class="row mt-20">
+													<div class="col-lg-12">
+														<div class="card">
+															<div class="card-body"> 
+																<div class="row">
+																	<div class="col-lg-12">
+																		<span class="color-dark align-center" style="font-size: 20px;">표시항목 설정</span>
+																	</div>
+																</div>
+																<div class="row mt-4" style="justify-content: center;align-items: center;">
+																	<div class="col-lg-3">
+																		<div class="row" style="overflow:auto; min-height: 500px; border: 1px solid #D9D9D9;">
+																			<div class="list-group mt-2" style="max-height: 500px; orverfolw-y: auto;">
+																				<ul>
+								                                                    <li>
+								                                                    	<input type="checkbox" class="check_box" name="chk_research">
+								                                                        <div class="title">작물</div>
+								                                                    </li>
+								                                                    <li>
+								                                                    	<input type="checkbox" class="check_box" name="chk_research">
+								                                                        <div class="title">시교명(ID)</div>
+								                                                    </li>
+								                                                    <li>
+								                                                    	<input type="checkbox" class="check_box" name="chk_research">
+								                                                        <div class="title">품종명</div>
+								                                                    </li>
+								                                                    <li>
+								                                                    	<input type="checkbox" class="check_box" name="chk_research">
+								                                                        <div class="title">모계 계통명</div>
+								                                                    </li>
+								                                                    <li>
+								                                                    	<input type="checkbox" class="check_box" name="chk_research">
+								                                                        <div class="title">부계 계통명</div>
+								                                                    </li>
+								                                                    <li>
+								                                                    	<input type="checkbox" class="check_box" name="chk_research">
+								                                                        <div class="title">생산판매(신고번호)</div>
+								                                                    </li>
+								                                                    <li>
+								                                                    	<input type="checkbox" class="check_box" name="chk_research">
+								                                                        <div class="title">생산판매(신고일자)</div>
+								                                                    </li>
+								                                                    <li>
+								                                                    	<input type="checkbox" class="check_box" name="chk_research">
+								                                                        <div class="title">보호출원(출원번호)</div>
+								                                                    </li>
+								                                                    <li>
+								                                                    	<input type="checkbox" class="check_box" name="chk_research">
+								                                                        <div class="title">보호출원(출원일자)</div>
+								                                                    </li>
+								                                                    <li>
+								                                                    	<input type="checkbox" class="check_box" name="chk_research">
+								                                                        <div class="title">보호등록(등록번호)</div>
+								                                                    </li>
+								                                                    <li>
+								                                                    	<input type="checkbox" class="check_box" name="chk_research">
+								                                                        <div class="title">보호등록(등록일자)</div>
+								                                                    </li>
+								                                                    <li>
+								                                                    	<input type="checkbox" class="check_box" name="chk_research">
+								                                                        <div class="title">미등록(현지상업화)</div>
+								                                                    </li>
+								                                                    <li>
+								                                                    	<input type="checkbox" class="check_box" name="chk_research">
+								                                                        <div class="title">목표 시장</div>
+								                                                    </li>
+								                                                    <li>
+								                                                    	<input type="checkbox" class="check_box" name="chk_research">
+								                                                        <div class="title">형태 구분1</div>
+								                                                    </li>
+								                                                    <li>
+								                                                    	<input type="checkbox" class="check_box" name="chk_research">
+								                                                        <div class="title">형태 구분2</div>
+								                                                    </li>
+								                                                    <li>
+								                                                    	<input type="checkbox" class="check_box" name="chk_research">
+								                                                        <div class="title">작물 타입1</div>
+								                                                    </li>
+								                                                    <li>
+								                                                    	<input type="checkbox" class="check_box" name="chk_research">
+								                                                        <div class="title">작물 타입2</div>
+								                                                    <li>
+								                                                    	<input type="checkbox" class="check_box" name="chk_research">
+								                                                        <div class="title">비고</div>
+								                                                    </li>
+								                                                </ul>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="box_content">
+																		<div class="box_center">
+																			<ul>
+																				<li><button onclick="PlusResearch();"><span data-feather="plus"></span></button></li>
+																				<li><button onclick="MinusResearch();"><span data-feather="minus"></span></button></li>
+																			</ul>
+																		</div>
+																	</div>
+																	<div class="col-lg-8" style="padding:0;">
+																		<ul class="list-group" id="step-container" style="min-height: 500px; max-height: 500px;
+																			overflow-y: auto; background-color: rgb(243, 243, 243) ">
+																			
+																		</ul>
+																	</div>
+																</div>
+											        		</div>
+											        	</div>
+											        </div>
+										        </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade show" id="tab-horizontal-2" role="tabpanel"
+                                             aria-labelledby="tab-horizontal-0-tab">
+                                            <div class="content_title clearfix">
+                                                <ul>
+                                                    <li>형질</li>
+                                                    <li>조사값</li>
+                                                </ul>
+                                            </div>
+                                            <div class="content_1 clearfix">
+                                                <div class="row mt-20">
+													<div class="col-lg-12">
+														<div class="card">
+															<div class="card-body"> 
+																<div class="row">
+																	<div class="col-lg-12">
+																		<span class="color-dark align-center" style="font-size: 20px;">표시항목 설정</span>
+																	</div>
+																</div>
+																<div class="row mt-4" style="justify-content: center;align-items: center;">
+																	<div class="col-lg-3">
+																		<div class="row" style="overflow:auto; min-height: 500px; border: 1px solid #D9D9D9;">
+																			<div class="list-group mt-2" style="max-height: 500px; orverfolw-y: auto;">
+																				<ul>
+																					<th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '원예형질(종자원 기준)'">
+							                                                            <li>
+							                                                            	<input type="checkbox" class="check_box" name="chk_research">
+							                                                                <div class="title" th:text="${detail.detail_title}"></div>
+							                                                            </li>
+							                                                        </th:block>
+																				</ul>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="box_content">
+																		<div class="box_center">
+																			<ul>
+																				<li><button onclick="PlusResearch();"><span data-feather="plus"></span></button></li>
+																				<li><button onclick="MinusResearch();"><span data-feather="minus"></span></button></li>
+																			</ul>
+																		</div>
+																	</div>
+																	<div class="col-lg-8" style="padding:0;">
+																		<ul class="list-group" id="step-container" style="min-height: 500px; max-height: 500px;
+																			overflow-y: auto; background-color: rgb(243, 243, 243) ">
+																			
+																		</ul>
+																	</div>
+																</div>
+											        		</div>
+											        	</div>
+											        </div>
+										        </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade show" id="tab-horizontal-3" role="tabpanel"
+                                             aria-labelledby="tab-horizontal-0-tab">
+                                            <div class="content_title clearfix">
+                                                <ul>
+                                                    <li>형질</li>
+                                                    <li>조사값</li>
+                                                </ul>
+                                            </div>
+                                            <div class="content_1 clearfix">
+                                                <div class="row mt-20">
+													<div class="col-lg-12">
+														<div class="card">
+															<div class="card-body"> 
+																<div class="row">
+																	<div class="col-lg-12">
+																		<span class="color-dark align-center" style="font-size: 20px;">표시항목 설정</span>
+																	</div>
+																</div>
+																<div class="row mt-4" style="justify-content: center;align-items: center;">
+																	<div class="col-lg-3">
+																		<div class="row" style="overflow:auto; min-height: 500px; border: 1px solid #D9D9D9;">
+																			<div class="list-group mt-2" style="max-height: 500px; overflow-y: auto;">
+																				<ul>
+																					<th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '원예형질(사내 기준)'">
+								                                                        <li>
+								                                                        	<input type="checkbox" class="check_box" name="chk_research">
+								                                                            <div class="title" th:text="${detail.detail_title}"></div>
+								                                                        </li>
+								                                                    </th:block>
+																				</ul>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="box_content">
+																		<div class="box_center">
+																			<ul>
+																				<li><button onclick="PlusResearch();"><span data-feather="plus"></span></button></li>
+																				<li><button onclick="MinusResearch();"><span data-feather="minus"></span></button></li>
+																			</ul>
+																		</div>
+																	</div>
+																	<div class="col-lg-8" style="padding:0;">
+																		<ul class="list-group" id="step-container" style="min-height: 500px; max-height: 500px;
+																			overflow-y: auto; background-color: rgb(243, 243, 243) ">
+																			
+																		</ul>
+																	</div>
+																</div>
+											        		</div>
+											        	</div>
+											        </div>
+										        </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade show" id="tab-horizontal-4" role="tabpanel"
+                                             aria-labelledby="tab-horizontal-0-tab">
+                                            <div class="content_title clearfix">
+                                                <ul>
+                                                    <li>형질</li>
+                                                    <li>조사값</li>
+                                                </ul>
+                                            </div>
+                                            <div class="content_1 clearfix">
+                                                <div class="row mt-20">
+													<div class="col-lg-12">
+														<div class="card">
+															<div class="card-body"> 
+																<div class="row">
+																	<div class="col-lg-12">
+																		<span class="color-dark align-center" style="font-size: 20px;">표시항목 설정</span>
+																	</div>
+																</div>
+																<div class="row mt-4" style="justify-content: center;align-items: center;">
+																	<div class="col-lg-3">
+																		<div class="row" style="overflow:auto; min-height: 500px; border: 1px solid #D9D9D9;">
+																			<div class="list-group mt-2" style="max-height: 500px; orverfolw-y: auto;">
+																				<ul>
+																					<th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '병저항성(국립종자원 기준)'">
+							                                                            <li>
+							                                                            	<input type="checkbox" class="check_box" name="chk_research">
+							                                                                <div class="title" th:text="${detail.detail_title}"></div>
+							                                                            </li>
+							                                                        </th:block>
+																				</ul>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="box_content">
+																		<div class="box_center">
+																			<ul>
+																				<li><button onclick="PlusResearch();"><span data-feather="plus"></span></button></li>
+																				<li><button onclick="MinusResearch();"><span data-feather="minus"></span></button></li>
+																			</ul>
+																		</div>
+																	</div>
+																	<div class="col-lg-8" style="padding:0;">
+																		<ul class="list-group" id="step-container" style="min-height: 500px; max-height: 500px;
+																			overflow-y: auto; background-color: rgb(243, 243, 243) ">
+																			
+																		</ul>
+																	</div>
+																</div>
+											        		</div>
+											        	</div>
+											        </div>
+										        </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade show" id="tab-horizontal-5" role="tabpanel"
+                                             aria-labelledby="tab-horizontal-0-tab">
+                                            <div class="content_title clearfix">
+                                                <ul>
+                                                    <li>형질</li>
+                                                    <li>조사값</li>
+                                                </ul>
+                                            </div>
+                                            <div class="content_1 clearfix">
+                                                <div class="row mt-20">
+													<div class="col-lg-12">
+														<div class="card">
+															<div class="card-body"> 
+																<div class="row">
+																	<div class="col-lg-12">
+																		<span class="color-dark align-center" style="font-size: 20px;">표시항목 설정</span>
+																	</div>
+																</div>
+																<div class="row mt-4" style="justify-content: center;align-items: center;">
+																	<div class="col-lg-3">
+																		<div class="row" style="overflow:auto; min-height: 500px; border: 1px solid #D9D9D9;">
+																			<div class="list-group mt-2" style="max-height: 500px; orverfolw-y: auto;">
+																				<ul>
+																					<th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '병저항성(사내 기준)'">
+							                                                            <li>
+							                                                            	<input type="checkbox" class="check_box" name="chk_research">
+							                                                                <div class="title" th:text="${detail.detail_title}"></div>
+							                                                            </li>
+							                                                        </th:block>
+																				</ul>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="box_content">
+																		<div class="box_center">
+																			<ul>
+																				<li><button onclick="PlusResearch();"><span data-feather="plus"></span></button></li>
+																				<li><button onclick="MinusResearch();"><span data-feather="minus"></span></button></li>
+																			</ul>
+																		</div>
+																	</div>
+																	<div class="col-lg-8" style="padding:0;">
+																		<ul class="list-group" id="step-container" style="min-height: 500px; max-height: 500px;
+																			overflow-y: auto; background-color: rgb(243, 243, 243) ">
+																			
+																		</ul>
+																	</div>
+																</div>
+											        		</div>
+											        	</div>
+											        </div>
+										        </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade show" id="tab-horizontal-6" role="tabpanel"
+                                             aria-labelledby="tab-horizontal-0-tab">
+                                            <div class="content_title clearfix">
+                                                <ul>
+                                                    <li>형질</li>
+                                                    <li>조사값</li>
+                                                </ul>
+                                            </div>
+                                            <div class="content_1 clearfix">
+                                                <div class="row mt-20">
+													<div class="col-lg-12">
+														<div class="card">
+															<div class="card-body"> 
+																<div class="row">
+																	<div class="col-lg-12">
+																		<span class="color-dark align-center" style="font-size: 20px;">표시항목 설정</span>
+																	</div>
+																</div>
+																<div class="row mt-4" style="justify-content: center;align-items: center;">
+																	<div class="col-lg-3">
+																		<div class="row" style="overflow:auto; min-height: 500px; border: 1px solid #D9D9D9;">
+																			<div class="list-group mt-2" style="max-height: 500px; orverfolw-y: auto;">
+																				<ul>
+																					<th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '성분정보(국립종자원 기준)'">
+							                                                            <li>
+							                                                            	<input type="checkbox" class="check_box" name="chk_research">
+							                                                                <div class="title" th:text="${detail.detail_title}"></div>
+							                                                            </li>
+							                                                        </th:block>
+																				</ul>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="box_content">
+																		<div class="box_center">
+																			<ul>
+																				<li><button onclick="PlusResearch();"><span data-feather="plus"></span></button></li>
+																				<li><button onclick="MinusResearch();"><span data-feather="minus"></span></button></li>
+																			</ul>
+																		</div>
+																	</div>
+																	<div class="col-lg-8" style="padding:0;">
+																		<ul class="list-group" id="step-container" style="min-height: 500px; max-height: 500px;
+																			overflow-y: auto; background-color: rgb(243, 243, 243) ">
+																			
+																		</ul>
+																	</div>
+																</div>
+											        		</div>
+											        	</div>
+											        </div>
+										        </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade show" id="tab-horizontal-7" role="tabpanel"
+                                             aria-labelledby="tab-horizontal-0-tab">
+                                            <div class="content_title clearfix">
+                                                <ul>
+                                                    <li>형질</li>
+                                                    <li>조사값</li>
+                                                </ul>
+                                            </div>
+                                            <div class="content_1 clearfix">
+                                                <div class="row mt-20">
+													<div class="col-lg-12">
+														<div class="card">
+															<div class="card-body"> 
+																<div class="row">
+																	<div class="col-lg-12">
+																		<span class="color-dark align-center" style="font-size: 20px;">표시항목 설정</span>
+																	</div>
+																</div>
+																<div class="row mt-4" style="justify-content: center;align-items: center;">
+																	<div class="col-lg-3">
+																		<div class="row" style="overflow:auto; min-height: 500px; border: 1px solid #D9D9D9;">
+																			<div class="list-group mt-2" style="max-height: 500px; orverfolw-y: auto;">
+																				<ul>
+																					<th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '마커정보'">
+							                                                            <li>
+							                                                            	<input type="checkbox" class="check_box" name="chk_research">
+							                                                                <div class="title" th:text="${detail.detail_title}"></div>
+							                                                            </li>
+							                                                        </th:block>
+																				</ul>
+																			</div>
+																		</div>
+																	</div>
+																	<div class="box_content">
+																		<div class="box_center">
+																			<ul>
+																				<li><button onclick="PlusResearch();"><span data-feather="plus"></span></button></li>
+																				<li><button onclick="MinusResearch();"><span data-feather="minus"></span></button></li>
+																			</ul>
+																		</div>
+																	</div>
+																	<div class="col-lg-8" style="padding:0;">
+																		<ul class="list-group" id="step-container" style="min-height: 500px; max-height: 500px;
+																			overflow-y: auto; background-color: rgb(243, 243, 243) ">
+																			
+																		</ul>
+																	</div>
+																</div>
+											        		</div>
+											        	</div>
+											        </div>
+										        </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border: none">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="insertBtn()" data-dismiss="modal">저장</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-basic modal fade show pop5" id="data_upload" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content modal-bg-white ">
+                <div class="modal-header" style="border: none">
+                    <h6 class="modal-title">품종관리 > 데이터 등록</h6>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group mb-0">
+                        <input type="text" class="form-control form-control-lg" placeholder="     Click to Upload">
+                        <button onclick="filesFunction('file_data_upload')">불러오기</button>
+                        
+                        <input type="file" name="" id="file_data_upload" style="display: none;">
+                    </div>
+                    <div>
+                        <div class="atbd-upload">
+                            <table>
+                            	<thead>
+                            		<tr>
+                            			<th>시교명 (ID)</th>
+                            			<th>품종명</th>
+                            			<th>모계 계통명 (ID)</th>
+                            			<th>부계 계통명 (ID)</th>
+                            			<th>생산판매 (신고번호)</th>
+                            			<th>생산판매 (신고일자)</th>
+                            			<th>보호출원 (출원번호)</th>
+                            		</tr>
+                            	</thead>
+                            	<tbody>
+                            		<tr>
+                            			<td>asdasd</td>
+                            			<td>asdasd</td>
+                            			<td>asdasd</td>
+                            			<td>asdasd</td>
+                            			<td>asdasd</td>
+                            			<td>asdasd</td>
+                            			<td>asdasd</td>
+                            		</tr>
+                            	</tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border: none">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" onclick="dataToggle('#data_upload', '#data_upload2');">취소</button>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="dataToggle('#data_upload', '#data_upload2');">등록</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-basic modal fade show pop7" id="data_upload2" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content modal-bg-white ">
+                <div class="modal-header" style="border: none">
+                    <h6 class="modal-title">품종관리 > 데이터 등록</h6>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group mb-0">
+                        <button onclick="dataToggle('#data_upload2', '#data_upload');">데이터 등록</button>
+                        <button>등록서식 다운로드</button>
+                    </div>
+                    <div>
+                        <div class="atbd-upload">
+                            <table>
+                            	<thead>
+                            		<tr>
+                            			<th>순번</th>
+                            			<th>등록일</th>
+                            			<th>데이터수</th>
+                            		</tr>
+                            	</thead>
+                            	<tbody>
+                            		<tr>
+                            			<td>2</td>
+                            			<td>2021-08-15</td>
+                            			<td>185</td>
+                            		</tr>
+                            		<tr>
+                            			<td>2</td>
+                            			<td>2021-08-15</td>
+                            			<td>185</td>
+                            		</tr>
+                            	</tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border: none">
+                    <div class="col-4">
+                        <div class="row" style="justify-content: center;">
+                            <div id="pageNum1" style="text-align:center; margin: 2% 0 0 0;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-basic modal fade show pop6" id="grid3" tabindex="-1" role="dialog" aria-hidden="true"> <!-- 2021-10-29 alpadesign 수정 -->
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content modal-bg-white ">
+                <div class="modal-header" style="border: none">
+                    <h6 class="modal-title">품종관리 > <span></span></h6>
+                    시교명 ID : <span></span>
+                </div>
+                <div class="modal-body">
+                    <div class="tab-pane fade show active" id="control1" role="tabpanel" aria-labelledby="control1-tab">
+                        <div class="tab-slide-content">
+                            <div class="atbd-tab tab-horizontal">
+                                <div class="top_box">
+                                    <ul class="nav nav-tabs vertical-tabs" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="tab-horizontal-0-tab" data-toggle="tab"
+                                               href="#tab-horizontal-0" role="tab" aria-controls="tab-horizontal-0"
+                                               aria-selected="true">기본 정보</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="tab-horizontal-1-tab" data-toggle="tab"
+                                               href="#tab-horizontal-1" role="tab" aria-controls="tab-horizontal-1"
+                                               aria-selected="false">원예형질[종자원 기준]</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="tab-horizontal-2-tab" data-toggle="tab"
+                                               href="#tab-horizontal-2" role="tab" aria-controls="tab-horizontal-2"
+                                               aria-selected="false">원예형질[사내 기준]</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="tab-horizontal-3-tab" data-toggle="tab"
+                                               href="#tab-horizontal-3" role="tab" aria-controls="tab-horizontal-3"
+                                               aria-selected="false">병저항성[종자원 기준]</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="tab-horizontal-4-tab" data-toggle="tab"
+                                               href="#tab-horizontal-4" role="tab" aria-controls="tab-horizontal-4"
+                                               aria-selected="false">병저항성[사내 기준]</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="tab-horizontal-5-tab" data-toggle="tab"
+                                               href="#tab-horizontal-5" role="tab" aria-controls="tab-horizontal-5"
+                                               aria-selected="false">성분정보[종자원 기준]</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="tab-horizontal-6-tab" data-toggle="tab"
+                                               href="#tab-horizontal-6" role="tab" aria-controls="tab-horizontal-6"
+                                               aria-selected="false">마커정보</a>
+                                        </li>
+                                    </ul>
+                                    <span class="prev"></span>
+                                    <span class="next"></span>
+                                </div>
+                                <form action="insertBreed" id="insertForm" method="POST" enctype="multipart/form-data">
+                                    <input type="hidden" id="detail_list" name="detail_list">
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade show active" id="tab-horizontal-0" role="tabpanel"
+                                             aria-labelledby="tab-horizontal-0-tab">
+                                            <div class="content_title clearfix">
+                                                <ul>
+                                                    <li>형질</li>
+                                                    <li>조사값</li>
+                                                </ul>
+                                            </div>
+                                            <div class="content_1 clearfix">
+                                                <ul>
+                                                    <li>
+                                                        <div class="title">작물</div>
+                                                        <div class="input_text"><input type="text" name="breed_name"></div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">시교명(ID)</div>
+                                                        <div class="input_text"><input type="text" name="breed_code"></div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">품종명</div>
+                                                        <div class="input_text"><input type="text" name="breed_kind"></div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">모계 계통명</div>
+                                                        <div class="input_text"><input type="text" name="breed_mom"></div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">부계 계통명</div>
+                                                        <div class="input_text"><input type="text" name="breed_dad"></div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">생산판매(신고번호)</div>
+                                                        <div class="input_text"><input type="text" name="breed_sale_num"></div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">생산판매(신고일자)</div>
+                                                        <div class="input_text"><input type="text" name="breed_sale_date"></div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">보호출원(출원번호)</div>
+                                                        <div class="input_text"><input type="text" name="breed_apply_num"></div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">보호출원(출원일자)</div>
+                                                        <div class="input_text"><input type="text" name="breed_apply_date"></div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">보호등록(등록번호)</div>
+                                                        <div class="input_text"><input type="text" name="breed_enroll_num"></div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">보호등록(등록일자)</div>
+                                                        <div class="input_text"><input type="text" name="breed_enroll_date"></div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">미등록(현지상업화)</div>
+                                                        <div class="input_text"><input type="text" name="breed_local"></div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">목표 시장</div>
+                                                        <div class="input_text"><input type="text" name="breed_purpose"></div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">형태 구분1</div>
+                                                        <div class="input_text"><input type="text" name="breed_first_form"></div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">형태 구분2</div>
+                                                        <div class="input_text"><input type="text" name="breed_second_form"></div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">작물 타입1</div>
+                                                        <div class="input_text"><input type="text" name="breed_first_crop"></div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">작물 타입2</div>
+                                                        <div class="input_text"><input type="text" name="breed_second_crop"></div>
+                                                    <li>
+                                                        <div class="title">비고</div>
+                                                        <div class="input_text"><input type="text" name="breed_comment"></div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="tab-horizontal-1" role="tabpanel" aria-labelledby="tab-horizontal-1-tab">
+                                            <div class="content_title clearfix">
+                                                <ul>
+                                                    <li>형질</li>
+                                                    <li>조사값</li>
+                                                </ul>
+                                            </div>
+                                            <div class="content_1 clearfix" id="content_type1">
+                                                <ul>
+                                                    <th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '원예형질(종자원 기준)'">
+                                                        <li>
+                                                            <div class="title" th:text="${detail.detail_title}"></div>
+                                                            <div class="input_text"><input type="text" name="detail"></div>
+                                                        </li>
+                                                    </th:block>
                                                 </ul>
                                             </div>
                                         </div>
@@ -588,6 +1614,93 @@
 <th:block th:include="@{/fragments/commonjs.html}"></th:block>
 
 <script type="text/javascript">
+<<<<<<< HEAD
+	function dataToggle(one, two){ //modal toggole 2021-10-29 alpadesign 수정
+		$(one).modal("hide");
+		setTimeout(function(){
+			$(two).modal("show");
+		}, 5);
+	}
+	$(function(){
+		
+		$("#grid2 .content_1 li").click(function(e){ //checkbox 2021-10-29 alpadesign 수정
+			$(this).toggleClass("checked");
+			if($(this).hasClass("checked") == true){
+				$(this).children().eq(0).prop("checked", true);
+			} else {
+				$(this).children().eq(0).prop("checked", false);
+			}
+		});
+		
+		$("#grid2 .top_box li").click(function(){ // check된것을 해제합니다. 2021-10-29 alpadesign 수정
+			$("#grid2 .content_1 li").each(function(i, e){
+				if($(e).children().eq(0).is(":checked") == true){
+					$(e).removeClass("checked");
+					$(e).children().eq(0).prop("checked", false);
+				}
+			})
+		});
+	});
+	
+    let topBox = document.getElementsByClassName("top_box");
+    let navN = 0; //선택된 변수
+    for(let k=0; k<topBox.length; k++){
+	    let [nav, prev, next] = topBox[k].children;
+	    let navLi = nav.children; // pop top list
+	    let navMove = 0;
+	
+	    let content = document.getElementsByClassName("tab-content")[k];
+	    let contentLi = content.children;
+	
+	    navLi[navN].classList.add("active");
+	
+	    for (let i = 0; i < navLi.length; i++) {
+	        navLi[i].idx = i;
+	        //console.log(navLi[i]);
+	        navLi[i].addEventListener("click", function (e) {
+	            navN = e.currentTarget.idx;
+	            moveFunction(navN);
+	        });
+	
+	    }
+	    let list = navLi.length;
+	    next.addEventListener("click", function (e) {
+	        (navN < list - 1) ? navN += 1 : navN = list - 1;
+	        moveFunction(navN);
+	    });
+	
+	    prev.addEventListener("click", function (e) {
+	        (navN > 0) ? navN -= 1 : navN = 0;
+	        moveFunction(navN);
+	    });
+	    function moveFunction(f) {
+	        for (let h = 0; h < navLi.length; h++) {
+	            navLi[h].classList.remove("active");
+	            contentLi[h].classList.remove("active");
+	        }
+	        
+	        let navW = navLi[f].offsetWidth;
+	        navMove = navW * f;
+
+	        let a = topBox[k].offsetWidth;
+	        let b = nav.offsetWidth;
+	        let c = b - a;
+	        let d = c + 40 + "px";
+
+	        if (navMove > c) {
+	            nav.style.marginLeft = "-" + d;
+	        } else {
+	            nav.style.marginLeft = "-" + navMove + "px";
+	        }
+
+	        navLi[f].classList.add("active");
+	        contentLi[f].classList.add("active");
+	        contentLi[f].classList.add("show");
+	        
+	    }
+	    
+	    
+=======
 	$(document).ready(function()
 	{
 	    SearchBreed(1);
@@ -658,9 +1771,20 @@
         navLi[f].classList.add("active");
         contentLi[f].classList.add("active");
         contentLi[f].classList.add("show");
+>>>>>>> b18a8ed59083be292f0400a2b65e653a0508e9c9
     }
+    
+    
 
     /* 엑셀 업로드 버튼 */
+<<<<<<< HEAD
+    function filesFunction(filename) { //filename = input type='file' id 명을 적으세요 ex) onclick="filesFUnction('태그 아이디')"
+        let filesBtn = document.getElementById(filename);
+        var eventList = document.createEvent("MouseEvent");
+
+        eventList.initEvent("click");
+        filesBtn.dispatchEvent(eventList);
+=======
     function filesFunction()
     {
     	let filesBtn = document.getElementById("excelFile");
@@ -668,6 +1792,7 @@
         
     	eventList.initEvent("click");
     	filesBtn.dispatchEvent(eventList);
+>>>>>>> b18a8ed59083be292f0400a2b65e653a0508e9c9
     }
 
     /* 엑셀 코드 */
@@ -774,11 +1899,125 @@
             $("#display").append(html);
 
             var data = $("#display").tableToJSON();
+<<<<<<< HEAD
+
+            console.log(data);
+
+=======
+>>>>>>> b18a8ed59083be292f0400a2b65e653a0508e9c9
         };
 
         reader.readAsBinaryString(input.files[0]);
     }
+	function emptyFunction(e){ // table 내용 모달로 가져오기 2021-10-29 alpadesign 수정
+		let values = $(e).parent().children();
+		$("#grid3").modal("show");
+			var input_N =0;
+			
+			for(let i=3; i<values.length; i++){
+				var inner_text = values.eq(i).text();
+				$("#grid3 input[type='text']").eq(i - 3).val(inner_text);
+			}
+			$("#grid3 input[type='text']").each(function(f, e){
+				input_N += $(e).length;
+			});
+			
+			/*if (result.page_num == 1) {
+                page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></button>';
+            } else {
+                page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchReport(' + (result.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
+            }
 
+            for (var i = 0; i < result.end_page; i++) {
+                if (result.page_num == (i + 1)) {
+                    page_add += '<button class="atbd-pagination__link active" onclick="SearchReport(' + (i + 1) + ')">' + (i + 1) + '</button>';
+                } else {
+                    page_add += '<button class="atbd-pagination__link" onclick="SearchReport(' + (i + 1) + ')">' + (i + 1) + '</button>';
+                }
+            }
+
+<<<<<<< HEAD
+            if (result.page_num == result.end_page) {
+                page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-right"></span></button>';
+            } else {
+                page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchReport(' + (result.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
+            }
+
+            breed_list.empty();
+            breed_list.append(add_list);
+
+            pageNum.empty();
+            pageNum.append(page_add);*/
+		
+	}
+    /* row 생성 */
+    /*
+    function makeArray() {
+        var gibon = $("#gibon").serializeObject();
+
+        var html = "<tbody class='text-center'>";
+        html += "<tr>";
+        html += "<td><input type='checkbox' name='chkBox'></td>";
+        html += "<td><button class='btn btn-light btn-default btn-squared btn-transparent-light' data-toggle='modal' data-target='#gen-attach'><span data-feather='file-plus'></span></button></td>";
+        html += "<td><span></span></td>";
+
+        $.each(gibon, function (idx, value) {
+            if (value === '') {
+                html += "<td><span></span></td>";
+            } else {
+                html += "<td><span>" + value + "</span></td>";
+            }
+        })
+
+        html += "</tr>";
+        html += "</tbody>";
+
+        $("#display").append(html);
+
+        var table = $('#display').tableToJSON();
+
+        var excel = $("#inputexcel");
+        excel.val(JSON.stringify(table));
+        var data = JSON.parse(excel.val());
+
+        var report = new Array(excel.length);
+
+        for (var i = 0; i < data.length; i++) {
+            report[i] = {
+                "breed_name": data[i].작물,
+                "breed_code": data[i]["시교명(ID)"],
+                "breed_kind": data[i].품종명,
+                "breed_mom": data[i]["모계 계통명"],
+                "breed_dad": data[i]["부계 계통명"],
+                "breed_sale_num": data[i]["생산판매(신고번호)"],
+                "breed_sale_date": data[i]["생산판매(신고일자)"],
+                "breed_apply_num": data[i]["보호출원(출원번호)"],
+                "breed_apply_date": data[i]["보호출원(출원일자)"],
+                "breed_enroll_num": data[i]["보호등록(등록번호)"],
+                "breed_enroll_date": data[i]["보호등록(등록일자)"],
+                "breed_local": data[i]["미등록(현지상업화)"],
+                "breed_purpose": data[i]["목표시장"],
+                "breed_first_form": data[i]["형태 구분1"],
+                "breed_second_form": data[i]["형태 구분2"],
+                "breed_first_crop": data[i]["작물 타입1"],
+                "breed_second_crop": data[i]["작물 타입2"],
+                "breed_comment": data[i].비고
+            };
+        }
+
+        if (confirm("등록하시겠습니까?") == true) {
+            excel.val(JSON.stringify(report));
+
+            $("#gibon").submit();
+
+        } else {
+
+        }
+    }
+    */
+
+=======
+>>>>>>> b18a8ed59083be292f0400a2b65e653a0508e9c9
     /* form data to json */
     jQuery.fn.serializeObject = function()
     {
@@ -851,6 +2090,75 @@
             data: data,
             success: function (result)
             {
+<<<<<<< HEAD
+                url: 'searchBreed',
+                method: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function (result) { //2021-10-29 alpadesign 수정
+                    console.log(result);
+                    var breed_list = $("#breed_list");
+                    var add_list = "";
+
+                    var pageNum = $("#pageNum");
+                    var page_add = "";
+                    var input_txt = $(".input_text input[type='text']");
+                    
+
+                    for (var i = 0; i < result.breed.length; i++) {
+                        add_list += '<tr>';
+                        add_list += '<td><input type="checkbox"></td>';
+                        add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><span data-feather="file-plus"></span></button></td>';
+                        add_list += '<td onclick="emptyFunction(this);" style="cursor:pointer">EMPTY</td>';
+                        add_list += '<td>' + result.breed[i].breed_name + '</td>';
+                        add_list += '<td>' + result.breed[i].breed_code + '</td>';
+                        add_list += '<td>' + result.breed[i].breed_kind + '</td>';
+                        add_list += '<td>' + result.breed[i].breed_mom + '</td>';
+                        add_list += '<td>' + result.breed[i].breed_dad + '</td>';
+                        add_list += '<td>' + result.breed[i].breed_sale_num + '</td>';
+                        add_list += '<td>' + result.breed[i].breed_sale_date + '</td>';
+                        add_list += '<td>' + result.breed[i].breed_apply_num + '</td>';
+                        add_list += '<td>' + result.breed[i].breed_apply_date + '</td>';
+                        add_list += '<td>' + result.breed[i].breed_enroll_num + '</td>';
+                        add_list += '<td>' + result.breed[i].breed_enroll_date + '</td>';
+                        add_list += '<td>' + result.breed[i].breed_local + '</td>';
+                        add_list += '<td>' + result.breed[i].breed_purpose + '</td>';
+                        add_list += '<td>' + result.breed[i].breed_first_form + '</td>';
+                        add_list += '<td>' + result.breed[i].breed_second_form + '</td>';
+                        add_list += '<td>' + result.breed[i].breed_first_crop + '</td>';
+                        add_list += '<td>' + result.breed[i].breed_second_crop + '</td>';
+                        add_list += '<td>' + result.breed[i].breed_comment + '</td>';
+                        add_list += '</tr>';
+                    }
+					
+                    if (result.page_num == 1) {
+                        page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></button>';
+                    } else {
+                        page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchReport(' + (result.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
+                    }
+
+                    for (var i = 0; i < result.end_page; i++) {
+                        if (result.page_num == (i + 1)) {
+                            page_add += '<button class="atbd-pagination__link active" onclick="SearchReport(' + (i + 1) + ')">' + (i + 1) + '</button>';
+                        } else {
+                            page_add += '<button class="atbd-pagination__link" onclick="SearchReport(' + (i + 1) + ')">' + (i + 1) + '</button>';
+                        }
+                    }
+
+                    if (result.page_num == result.end_page) {
+                        page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-right"></span></button>';
+                    } else {
+                        page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchReport(' + (result.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
+                    }
+
+                    breed_list.empty();
+                    breed_list.append(add_list);
+
+                    pageNum.empty();
+                    pageNum.append(page_add);
+                }
+            });
+=======
             	var breed_list = $("#breed_list");
             	var add_list = "";
 
@@ -921,7 +2229,60 @@
             	pageNum.append(page_add);
             }
         });
+>>>>>>> b18a8ed59083be292f0400a2b65e653a0508e9c9
     }
+    function PlusResearch() 
+	{ //2021-10-29 alpadesign 수정
+		var step_container = $("#step-container");
+		var length = $("#step-container").children().length;
+		
+		var add_list = "";
+		
+		
+		$(document).find("input:checkbox[name=chk_research]:checked").each(function()
+		{
+			var research_id = $(this).val();
+			var research_title = $(this).next().text();
+			
+			if(length == 0){
+				length = 1;
+			}else {
+				length++;
+			}
+			
+			/* console.log(research_id);
+			console.log(research_title); */
+			
+			add_list += '<div th:data-id='+research_id+' class="list-group step">';
+			add_list += '<li class="list-group-item-sm list-group-item">';
+			add_list += '<div class="row">';
+			
+			add_list += '<div class="mb-1 col-2" style="position:relative">';
+			add_list += '<input type="checkbox" class="checkbox mr-2" name="mis_research">';
+			add_list += '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrows-move" viewBox="0 0 16 16" style="position:absolute; bottom: 0; left: 18px; cursor: all-scroll">'
+			add_list +=	'<path fill-rule="evenodd" d="M7.646.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 1.707V5.5a.5.5 0 0 1-1 0V1.707L6.354 2.854a.5.5 0 1 1-.708-.708l2-2zM8 10a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 14.293V10.5A.5.5 0 0 1 8 10zM.146 8.354a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L1.707 7.5H5.5a.5.5 0 0 1 0 1H1.707l1.147 1.146a.5.5 0 0 1-.708.708l-2-2zM10 8a.5.5 0 0 1 .5-.5h3.793l-1.147-1.146a.5.5 0 0 1 .708-.708l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L14.293 8.5H10.5A.5.5 0 0 1 10 8z"/>'
+			add_list +=	'</svg>';
+			add_list += '<span class="step-text">step ' + length + '</span>';
+			add_list += '</div>';
+			
+			add_list += '<div class="mb-1 col-6">';
+			add_list += '<span class="research-title">'+research_title+'</span>';
+			add_list += '</div>';
+			
+			add_list += '<div class="mb-1 col-4">';
+			add_list += '<textarea rows="2" class="form-control step_comment" placeholder="comment">';
+			add_list += '</textarea>';
+			add_list += '</div>';
+				
+			add_list += '</div>';
+			add_list += '</li>';
+			add_list += '</div>';
+			
+		});
+		
+		step_container.append(add_list);
+		inputProtocol();
+	}//end 조사방법 체크박스 추가
 </script>
 </body>
 </html>

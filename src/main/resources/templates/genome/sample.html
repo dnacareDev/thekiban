@@ -250,19 +250,19 @@
                                     <form action="" name="searchForm" class="d-flex align-items-center add-contact__form my-sm-0 my-2">
                                         <select class="form-control form-control-lg mt-10 mb-10 mr-10" style="width: 250px;" id="CropSelect">
                                             <option value="none">작물 선택</option>
-                                            <!--<option value="pepper">고추</option>
-                                            <option value="green_onion">대파</option>
-                                            <option value="melon">멜론</option>
-                                            <option value="radish">무</option>
-                                            <option value="napa_cabbage">배추</option>
-                                            <option value="water_melon">수박</option>
-                                            <option value="cabbage">양배추</option>
-                                            <option value="onion">양파</option>
-                                            <option value="korean_melon">참외</option>
-                                            <option value="tomato">토마토</option>-->
-                                            <th:block th:each="sample : ${sampleDis}">
+                                            <option value="고추">고추</option>
+                                            <option value="대파">대파</option>
+                                            <option value="멜론">멜론</option>
+                                            <option value="무">무</option>
+                                            <option value="배추">배추</option>
+                                            <option value="수박">수박</option>
+                                            <option value="양배추">양배추</option>
+                                            <option value="양파">양파</option>
+                                            <option value="참외">참외</option>
+                                            <option value="토마토">토마토</option>
+                                            <!--<th:block th:each="sample : ${sampleDis}">
                                                 <option th:text="${sample.sample_name}" th:value="${sample.sample_id}"></option>
-                                            </th:block>
+                                            </th:block>-->
                                         </select>
                                     </form>
                                     <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none">
@@ -778,17 +778,18 @@
         }
     }
 
+    // 작물 선택 후 목록 입력
     var searchSelectBox = document.querySelector('#CropSelect');
 
     const thisBtn = document.querySelector('#modal_open');
     thisBtn.dataset.target = '';
 
-    function onChangeSelect(){
+    function onChangeSelect() {
         var thisBtn = document.querySelector('#modal_open');
         var value = searchSelectBox.value;
-        if(value === 'none'){
+        if (value === 'none') {
             thisBtn.dataset.target = '';
-        }else{
+        } else {
             thisBtn.dataset.target = '#grid';
         }
     }
@@ -798,7 +799,7 @@
     $("#modal_open").click(function () {
         console.log($("#CropSelect option:selected").val());
 
-        if($("#CropSelect option:selected").val() === 'none') {
+        if ($("#CropSelect option:selected").val() === 'none') {
             alert("작물을 선택해주세요")
             $(this).data('dismiss');
         } else {
@@ -830,14 +831,15 @@
         SearchSample(1);
     });
 
-    $("#CropSelect").change(function () {
+    $("#CropSelect").change(function(){
         SearchSample(1);
-    });
+    })
 
     function SearchSample(e) {
-        var crop = $('#CropSelect').val();
 
-        var data = {"page_num": e, "crop": crop};
+        var sample_name = $("#CropSelect").val();
+        var data = {"sample_name" : sample_name, "page_num": e};
+        console.log(data);
 
         $.ajax(
             {
@@ -847,13 +849,14 @@
                 data: data,
                 success: function (result) {
                     console.log(result);
+
                     var sample_list = $("#sample_list");
                     var add_list = "";
 
                     var pageNum = $("#pageNum");
                     var page_add = "";
 
-                    for (var i = result.sample.length - 1; i >= 0; i--) {
+                    for (var i = 0; i < result.sample.length; i++) {
                         add_list += '<tr>';
                         add_list += '<td><input type="checkbox" name="RowCheck" value="' + result.sample[i].sample_id + '"></td>';
                         add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
@@ -874,21 +877,21 @@
                     if (result.page_num == 1) {
                         page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></button>';
                     } else {
-                        page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchReport(' + (result.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
+                        page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchSample(' + (result.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
                     }
 
                     for (var i = 0; i < result.end_page; i++) {
                         if (result.page_num == (i + 1)) {
-                            page_add += '<button class="atbd-pagination__link active" onclick="SearchReport(' + (i + 1) + ')">' + (i + 1) + '</button>';
+                            page_add += '<button class="atbd-pagination__link active" onclick="SearchSample(' + (i + 1) + ')">' + (i + 1) + '</button>';
                         } else {
-                            page_add += '<button class="atbd-pagination__link" onclick="SearchReport(' + (i + 1) + ')">' + (i + 1) + '</button>';
+                            page_add += '<button class="atbd-pagination__link" onclick="SearchSample(' + (i + 1) + ')">' + (i + 1) + '</button>';
                         }
                     }
 
                     if (result.page_num == result.end_page) {
                         page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-right"></span></button>';
                     } else {
-                        page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchReport(' + (result.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
+                        page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchSample(' + (result.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
                     }
 
                     sample_list.empty();
@@ -1021,7 +1024,7 @@
         {lat: 35.62315997859795, lng: 127.64287731141832},
         {lat: 36.28673472687304, lng: 126.75708382107744},
         {lat: 35.932930167597355, lng: 128.26808927858545},
-        // {lat: 35.906974893937814, lng: 137.73401019446183 }, 
+        // {lat: 35.906974893937814, lng: 137.73401019446183 },
     ]
 
     const image = {

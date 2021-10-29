@@ -16,10 +16,10 @@ public interface SampleService {
   int InsertSample(Sample sample);
 
   // 시교자원 갯수 조회
-  int SelectSampleCount();
+  int SelectSampleCount(String sample_name);
 
   // 시교자원 검색
-  List<Sample> SearchSample(int offset, int limit);
+  List<Sample> SearchSample(String sample_name, int offset, int limit);
 
   // 삭제
   int[] DeleteSample(int[] sample_id);

@@ -26,10 +26,8 @@ public class SampleController {
   public ModelAndView SampleList(ModelAndView mv) {
 
     List<Sample> sample = service.SelectSampleList();
-    List<Sample> sampleDis = service.SelectSampleListDis();
 
     mv.addObject("sample", sample);
-    mv.addObject("sampleDis", sampleDis);
 
     mv.setViewName("genome/sample");
 
@@ -47,16 +45,16 @@ public class SampleController {
 
   @ResponseBody
   @RequestMapping("searchSample")
-  public Map<String, Object> SearchSample(@RequestParam("page_num") int page_num, @RequestParam("crop") String crop) {
+  public Map<String, Object> SearchSample(@RequestParam("sample_name") String sample_name, @RequestParam("page_num") int page_num) {
     Map<String, Object> result = new LinkedHashMap<String, Object>();
 
-    int count = service.SelectSampleCount();
+    int count = service.SelectSampleCount(sample_name);
 
     int limit = 10;
     int offset = (page_num - 1) * limit;
     int end_page = (count + limit - 1) / limit;
 
-    List<Sample> Sample = service.SearchSample(offset, limit);
+    List<Sample> Sample = service.SearchSample(sample_name, offset, limit);
 
     result.put("sample", Sample);
     result.put("page_num", page_num);

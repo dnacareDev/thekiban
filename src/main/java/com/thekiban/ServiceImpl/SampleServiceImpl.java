@@ -32,14 +32,14 @@ public class SampleServiceImpl implements SampleService {
 
   // 시교자원 갯수 조회
   @Override
-  public int SelectSampleCount() {
-    return mapper.SelectSampleCount();
+  public int SelectSampleCount(String sample_name) {
+    return mapper.SelectSampleCount(sample_name);
   }
 
   // 시교자원 검색
   @Override
-  public List<Sample> SearchSample(int offset, int limit) {
-    return mapper.SearchSample(offset, limit);
+  public List<Sample> SearchSample(String sample_name, int offset, int limit) {
+    return mapper.SearchSample(sample_name, offset, limit);
   }
 
   @Override

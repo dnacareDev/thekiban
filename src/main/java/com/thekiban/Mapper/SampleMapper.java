@@ -19,10 +19,10 @@ public interface SampleMapper {
   int InsertSample(Sample sample);
 
   // 시교자원 갯수 조회
-  int SelectSampleCount();
+  int SelectSampleCount(String sample_name);
 
   // 시교자원 검색
-  List<Sample> SearchSample(@Param("offset") int offset, @Param("limit") int limit);
+  List<Sample> SearchSample(@Param("sample_name") String sample_name, @Param("offset") int offset, @Param("limit") int limit);
 
   int[] DeleteSample(int[] sample_id);
 }
