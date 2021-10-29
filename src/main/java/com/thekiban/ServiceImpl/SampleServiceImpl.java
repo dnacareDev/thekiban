@@ -1,6 +1,5 @@
 package com.thekiban.ServiceImpl;
 
-import com.thekiban.Entity.Basic;
 import com.thekiban.Entity.Sample;
 import com.thekiban.Mapper.SampleMapper;
 import com.thekiban.Service.SampleService;
@@ -23,20 +22,16 @@ public class SampleServiceImpl implements SampleService {
 
   // 시교자원 갯수 조회
   @Override
-  public int SelectSampleCount()
-  {
+  public int SelectSampleCount() {
     return mapper.SelectSampleCount();
   }
 
   // 시교자원 검색
   @Override
-  public List<Sample> SearchSample(int offset, int limit)
-  {
+  public List<Sample> SearchSample(int offset, int limit) {
     return mapper.SearchSample(offset, limit);
   }
 
   @Override
-  public String Delete(String no) {
-    mapper.Delete(no);
-  }
+  public int[] DeleteSample(int[] sample_id) { return mapper.DeleteSample(sample_id); }
 }

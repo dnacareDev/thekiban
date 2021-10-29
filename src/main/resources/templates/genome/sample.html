@@ -388,7 +388,7 @@
                                         <button class="btn btn-icon btn-light btn-circle" data-toggle="modal" data-target="#grid">
                                             <span data-feather="plus"></span>
                                         </button>
-                                        <button class="btn btn-icon btn-light btn-circle" onclick="deleteValue()">
+                                        <button class="btn btn-icon btn-light btn-circle" onclick="DeleteSample()">
                                             <span data-feather="trash-2"></span>
                                         </button>
                                     </div>
@@ -835,7 +835,7 @@
 
                     for (var i = 0; i < result.sample.length; i++) {
                         add_list += '<tr>';
-                        add_list += '<td><input type="checkbox" name="RowCheck"></td>';
+                        add_list += '<td><input type="checkbox" name="RowCheck" value="' + result.sample[i].sample_id + '"></td>';
                         add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
                         add_list += '<td>EMPTY</td>';
                         add_list += '<td>' + result.sample[i].sample_name + '</td>';
@@ -880,38 +880,38 @@
             });
     }
 
-    function deleteValue() {
-        var url = "delete"
-        var valueArr = new Array();
-        var list = $("input[name='RowCheck']");
+    function DeleteSample() {
+        var total_id = [];
 
-        for(var i = 0; i < list.length; i++) {
-            if(list[i].checked) {
-                valueArr.push(list[i].value);
-            }
-        }
+        $("input:checkbox[name=RowCheck]:checked").each(function () {
+            var sample_id = $(this).val();
 
-        if(valueArr.length == 0) {
-            alert("plz select");
-        } else {
-            var chk = confirm("Want it?");
+            total_id.push(sample_id);
+        });
 
-            $.ajax({
-                url: url,
-                type: 'POST',
-                traditional: true,
-                data : {
-                    valueArr : valueArr
-                },
-                success: function(jdata) {
-                    if(jdata = 1) {
-                        alert("success!");
-                        location.replace("list")
-                    } else {
-                        alert("fail!");
+        var data = {'sample_id': total_id};
+
+        if (confirm("삭제하시겠습니까?") == true) {
+            $.ajax(
+                {
+                    url: 'deleteSample',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: data,
+                    success: function (result) {
+
+                        console.log(result)
+
+                        if (result == 0) {
+                            alert("삭제에 실패하였습니다.");
+                            location.reload();
+                        } else {
+                            location.reload();
+                        }
                     }
-                }
-            });
+                });
+        } else {
+
         }
     }
 
@@ -982,7 +982,7 @@
                     var val1 = +($(a).children('td').eq(column).text());
                     var val2 = +($(b).children('td').eq(column).text());
 
-                    if(isNaN(val1) && isNaN(val2)) {
+                    if (isNaN(val1) && isNaN(val2)) {
                         val1 = $(a).children('td').eq(column).text();
                         val2 = $(b).children('td').eq(column).text();
 

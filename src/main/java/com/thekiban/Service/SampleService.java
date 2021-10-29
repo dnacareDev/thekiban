@@ -1,6 +1,5 @@
 package com.thekiban.Service;
 
-import com.thekiban.Entity.Basic;
 import com.thekiban.Entity.Sample;
 
 import java.util.List;
@@ -16,6 +15,5 @@ public interface SampleService {
   // 원종 검색
   List<Sample> SearchSample(int offset, int limit);
 
-  String Delete(String no);
-
+  int[] DeleteSample(int[] sample_id);
 }
