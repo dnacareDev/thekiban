@@ -14,6 +14,16 @@ public class SampleServiceImpl implements SampleService {
   @Autowired
   private SampleMapper mapper;
 
+  @Override
+  public List<Sample> SelectSampleList() {
+    return mapper.SelectSampleList();
+  }
+
+  @Override
+  public List<Sample> SelectSampleListDis() {
+    return mapper.SelectSampleListDis();
+  }
+
   // 시교자원 등록
   @Override
   public int InsertSample(Sample sample) {

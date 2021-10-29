@@ -25,6 +25,12 @@ public class SampleController {
   @RequestMapping("sample")
   public ModelAndView SampleList(ModelAndView mv) {
 
+    List<Sample> sample = service.SelectSampleList();
+    List<Sample> sampleDis = service.SelectSampleListDis();
+
+    mv.addObject("sample", sample);
+    mv.addObject("sampleDis", sampleDis);
+
     mv.setViewName("genome/sample");
 
     return mv;
@@ -41,7 +47,7 @@ public class SampleController {
 
   @ResponseBody
   @RequestMapping("searchSample")
-  public Map<String, Object> SearchSample(@RequestParam("page_num") int page_num) {
+  public Map<String, Object> SearchSample(@RequestParam("page_num") int page_num, @RequestParam("crop") String crop) {
     Map<String, Object> result = new LinkedHashMap<String, Object>();
 
     int count = service.SelectSampleCount();

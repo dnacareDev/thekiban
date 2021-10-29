@@ -2,7 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.thekiban.Mapper.SampleMapper">
 
-    <!-- 도입자원 등록 -->
+    <!-- 시교자원 목록 조회 -->
+    <select id="SelectSampleList" resultType="Sample">
+        SELECT * FROM sample
+    </select>
+
+    <select id="SelectSampleListDis" resultType="Sample">
+        SELECT DISTINCT sample_name FROM sample
+    </select>
+
+    <!-- 시교자원 등록 -->
     <insert id="InsertSample" parameterType="Sample">
         INSERT INTO sample
         (sample_id, sample_code, sample_name, sample_country, sample_type,
@@ -13,16 +22,19 @@
                 #{sample_comment}, NOW(), NOW())
     </insert>
 
+    <!-- 시교자원 개수 -->
     <select id="SelectSampleCount" resultType="int">
         SELECT COUNT(*)
         FROM sample
     </select>
 
+    <!-- 시교자원 검색 -->
     <select id="SearchSample" resultType="Sample">
         SELECT *
         FROM sample LIMIT #{offset}, #{limit}
     </select>
 
+    <!-- 시교자원 삭제 -->
     <select id="DeleteSample" parameterType="java.util.ArrayList">
         DELETE FROM sample
         WHERE

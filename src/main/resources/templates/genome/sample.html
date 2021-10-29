@@ -211,7 +211,7 @@
             vertical-align: middle;
         }
 
-        td .btn i.bi-file-earmark-arrow-down{
+        td .btn i.bi-file-earmark-arrow-down {
             color: #000;
         }
 
@@ -248,9 +248,9 @@
                                     </div>
 
                                     <form action="" name="searchForm" class="d-flex align-items-center add-contact__form my-sm-0 my-2">
-                                        <select class="form-control form-control-lg mt-10 mb-10 mr-10" style="width: 250px;">
+                                        <select class="form-control form-control-lg mt-10 mb-10 mr-10" style="width: 250px;" id="CropSelect">
                                             <option value="none">작물 선택</option>
-                                            <option value="pepper">고추</option>
+                                            <!--<option value="pepper">고추</option>
                                             <option value="green_onion">대파</option>
                                             <option value="melon">멜론</option>
                                             <option value="radish">무</option>
@@ -259,7 +259,10 @@
                                             <option value="cabbage">양배추</option>
                                             <option value="onion">양파</option>
                                             <option value="korean_melon">참외</option>
-                                            <option value="tomato">토마토</option>
+                                            <option value="tomato">토마토</option>-->
+                                            <th:block th:each="sample : ${sampleDis}">
+                                                <option th:text="${sample.sample_name}" th:value="${sample.sample_id}"></option>
+                                            </th:block>
                                         </select>
                                     </form>
                                     <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none">
@@ -389,7 +392,7 @@
 
                                 <div class="row">
                                     <div class="col-4">
-                                        <button class="btn btn-icon btn-light btn-circle" data-toggle="modal" data-target="#grid">
+                                        <button class="btn btn-icon btn-light btn-circle" data-toggle="modal" data-target="#grid" id="modal_open">
                                             <span data-feather="plus"></span>
                                         </button>
                                         <button class="btn btn-icon btn-light btn-circle" onclick="DeleteSample()">
@@ -514,7 +517,7 @@
                                                 <ul>
                                                     <li>
                                                         <div class="title">작물</div>
-                                                        <div class="input_text"><input type="text" name="sample_name"></div>
+                                                        <div class="input_text"><input type="text" name="sample_name" readonly></div>
                                                     </li>
                                                     <li>
                                                         <div class="title">시교명(ID)</div>
@@ -775,9 +778,38 @@
         }
     }
 
+    var searchSelectBox = document.querySelector('#CropSelect');
+
+    const thisBtn = document.querySelector('#modal_open');
+    thisBtn.dataset.target = '';
+
+    function onChangeSelect(){
+        var thisBtn = document.querySelector('#modal_open');
+        var value = searchSelectBox.value;
+        if(value === 'none'){
+            thisBtn.dataset.target = '';
+        }else{
+            thisBtn.dataset.target = '#grid';
+        }
+    }
+
+    // onChangeSelect();
+    searchSelectBox.addEventListener('change', onChangeSelect);
+    $("#modal_open").click(function () {
+        console.log($("#CropSelect option:selected").val());
+
+        if($("#CropSelect option:selected").val() === 'none') {
+            alert("작물을 선택해주세요")
+            $(this).data('dismiss');
+        } else {
+            $("input[name=sample_name]").val($("#CropSelect option:selected").text());
+        }
+    });
+
     // 시교 자원 추가
     function insertBtn() {
         var data = [];
+
         $("input[name=detail]").each(function (index, item) {
             const key = $(this).attr('id');
             var value = $(this).val();
@@ -790,6 +822,7 @@
         $("#origin_list").val(JSON.stringify(data));
 
         $("#insertForm").submit();
+
     }
 
     // DB에 저장된 데이터 출력
@@ -797,8 +830,14 @@
         SearchSample(1);
     });
 
+    $("#CropSelect").change(function () {
+        SearchSample(1);
+    });
+
     function SearchSample(e) {
-        var data = {"page_num": e};
+        var crop = $('#CropSelect').val();
+
+        var data = {"page_num": e, "crop": crop};
 
         $.ajax(
             {
