@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.thekiban.Mapper.BreedMapper">
-
     <!-- 세부정보 조회 -->
     <select id="SelectDetail" resultType="Detail">
-        SELECT *
-        FROM detail
+        SELECT * FROM detail
         WHERE detail_type = 0
     </select>
 
@@ -29,16 +27,28 @@
         </choose>
         LIMIT #{offset}, #{limit}
     </select>
+    
+    <!-- 품종별 세부 정보 조회 -->
+    <select id="SearchBreedDetail" parameterType="String" resultType="Detail">
+    	SELECT * FROM detail
+    	WHERE detail_name = #{breed_name}
+    </select>
+    
+    <!-- 품종별 정보값 조회 -->
+    <select id="SearchBreedStandard" parameterType="java.util.ArrayList" resultType="Standard">
+    	SELECT * FROM standard
+    	WHERE 
+    	<foreach collection="list" item="item" open="(" close=")" separator="OR">
+            detail_id = #{item.detail_id}
+        </foreach>
+    </select>
 
     <!-- 품종 등록 -->
     <insert id="InsertBreed" parameterType="Breed">
         INSERT INTO breed
-        (breed_id, breed_code, breed_name, breed_kind, breed_mom, breed_dad, breed_sale_num, breed_sale_date, breed_apply_num, breed_apply_date,
-        breed_enroll_num, breed_enroll_date, breed_local, breed_purpose, breed_first_form, breed_second_form, breed_first_crop, breed_second_crop,
-        breed_comment, create_date, modify_date)
-        VALUES (#{breed_id}, #{breed_code}, #{breed_name}, #{breed_kind}, #{breed_mom}, #{breed_dad}, #{breed_sale_num}, #{breed_sale_date},
-        #{breed_apply_num}, #{breed_apply_date}, #{breed_enroll_num}, #{breed_enroll_date}, #{breed_local}, #{breed_purpose}, #{breed_first_form},
-        #{breed_second_form}, #{breed_first_crop}, #{breed_second_crop}, #{breed_comment}, NOW(), NOW())
+        (breed_id, breed_code, breed_name, breed_kind, breed_mom, breed_dad, breed_sale_num, breed_sale_date, breed_apply_num, breed_apply_date, breed_enroll_num, breed_enroll_date, breed_local, breed_purpose, breed_first_form, breed_second_form, breed_first_crop, breed_second_crop, breed_comment, create_date, modify_date)
+        VALUES
+        (#{breed_id}, #{breed_code}, #{breed_name}, #{breed_kind}, #{breed_mom}, #{breed_dad}, #{breed_sale_num}, #{breed_sale_date}, #{breed_apply_num}, #{breed_apply_date}, #{breed_enroll_num}, #{breed_enroll_date}, #{breed_local}, #{breed_purpose}, #{breed_first_form}, #{breed_second_form}, #{breed_first_crop}, #{breed_second_crop}, #{breed_comment}, NOW(), NOW())
         <selectKey resultType="int" keyProperty="breed_id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
@@ -62,5 +72,4 @@
             breed_id = #{item}
         </foreach>
     </select>
-
 </mapper>

@@ -45,7 +45,7 @@ public class BreedController
 	public Map<String, Object> SearchBreed(@RequestParam("breed_name") String breed_name, @RequestParam("page_num") int page_num)
 	{
 		Map<String, Object> result = new LinkedHashMap<String, Object>();
-    
+		
 		int count = service.SelectBreedCount(breed_name);
 
 		int limit = 10;
@@ -53,8 +53,23 @@ public class BreedController
 		int end_page = (count + limit - 1) / limit;
     
 		List<Breed> breed = service.SearchBreed(breed_name, offset, limit);
-    
+		
+		List<Detail> detail = new ArrayList<Detail>();
+		List<Standard> standard = new ArrayList<Standard>();
+		
+		if(!breed_name.equals("none"))
+		{
+			detail = service.SearchBreedDetail(breed_name);
+			
+			if(!detail.isEmpty())
+			{
+				standard = service.SearchBreedStandard(detail);
+			}
+		}
+		
 		result.put("breed", breed);
+		result.put("detail", detail);
+		result.put("standard", standard);
 		result.put("page_num", page_num);
 		result.put("end_page", end_page);
 		result.put("offset", offset);
@@ -66,6 +81,19 @@ public class BreedController
 	@RequestMapping("insertBreed")
 	public ModelAndView InsertBreed(ModelAndView mv, @ModelAttribute Breed breed, @RequestParam("detail_list") String detail_list)
 	{
+		if(breed.getBreed_sale_date().equals(""))
+		{
+			breed.setBreed_sale_date(null);
+		}
+		if(breed.getBreed_apply_date().equals(""))
+		{
+			breed.setBreed_apply_date(null);
+		}
+		if(breed.getBreed_enroll_date().equals(""))
+		{
+			breed.setBreed_enroll_date(null);
+		}
+		
 		int insert_breed = service.InsertBreed(breed);
  
 		JSONArray arr = new JSONArray(detail_list);
