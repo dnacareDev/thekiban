@@ -23,4 +23,8 @@ public interface SampleMapper {
 
   // 시교자원 삭제
   int[] DeleteSample(int[] sample_id);
+
+  // 시교자원 수정
+  int UpdateSample(Sample sample);
+
 }

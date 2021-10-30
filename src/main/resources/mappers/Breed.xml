@@ -9,6 +9,27 @@
         WHERE detail_type = 0
     </select>
 
+    <!-- 품종 갯수 조회 -->
+    <select id="SelectBreedCount" resultType="int">
+        SELECT COUNT(*) FROM breed
+        <choose>
+            <when test="breed_name != 'none'">
+                WHERE breed_name = #{breed_name}
+            </when>
+        </choose>
+    </select>
+
+    <!-- 품종 검색 -->
+    <select id="SearchBreed" resultType="Breed">
+        SELECT * FROM breed
+        <choose>
+            <when test="breed_name != 'none'">
+                WHERE breed_name = #{breed_name}
+            </when>
+        </choose>
+        LIMIT #{offset}, #{limit}
+    </select>
+
     <!-- 품종 등록 -->
     <insert id="InsertBreed" parameterType="Breed">
         INSERT INTO breed
@@ -32,27 +53,6 @@
             (#{item.detail_id}, #{item.breed_id}, #{item.standard})
         </foreach>
     </insert>
-
-    <!-- 품종 갯수 조회 -->
-    <select id="SelectBreedCount" resultType="int">
-        SELECT COUNT(*) FROM breed
-        <choose>
-            <when test="breed_name != 'none'">
-                WHERE breed_name = #{breed_name}
-            </when>
-        </choose>
-    </select>
-
-    <!-- 품종 검색 -->
-    <select id="SearchBreed" resultType="Breed">
-        SELECT * FROM breed
-        <choose>
-            <when test="breed_name != 'none'">
-                WHERE breed_name = #{breed_name}
-            </when>
-        </choose>
-        LIMIT #{offset}, #{limit}
-    </select>
 
     <!-- 품종 삭제 -->
     <select id="DeleteBreed" parameterType="java.util.ArrayList">

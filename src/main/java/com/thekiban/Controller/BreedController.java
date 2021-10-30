@@ -47,6 +47,7 @@ public class BreedController
 		Map<String, Object> result = new LinkedHashMap<String, Object>();
     
 		int count = service.SelectBreedCount(breed_name);
+
 		int limit = 10;
 		int offset = (page_num - 1) * limit;
 		int end_page = (count + limit - 1) / limit;
@@ -76,7 +77,7 @@ public class BreedController
 			Standard item = new Standard();
  
 			JSONObject obj = arr.getJSONObject(i);
- 
+
 			String detail_id = (String)obj.get("key");
 			String value = (String)obj.get("value");
   
@@ -86,7 +87,6 @@ public class BreedController
 				item.setDetail_id(Integer.parseInt(detail_id));
 				item.setStandard((String) obj.get("value"));
 
- 
 				standard.add(item);
 			}
 		}

@@ -75,4 +75,16 @@ public class SampleController {
 
     return 1;
   }
+
+  // 제품 수정
+  @RequestMapping("updateSample")
+  public ModelAndView UpdateSample(ModelAndView mv, @ModelAttribute Sample sample) {
+    service.UpdateSample(sample);
+
+    System.out.println(service.UpdateSample(sample));
+
+    mv.setViewName("redirect:/sample");
+
+    return mv;
+  }
 }

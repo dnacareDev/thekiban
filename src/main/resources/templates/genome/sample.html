@@ -399,28 +399,6 @@
                                             <span data-feather="trash-2"></span>
                                         </button>
                                     </div>
-                                    <!--<div class="col-4">
-                                        <div class="d-flex justify-content-center mt-30">
-                                            <nav class="atbd-page">
-                                                <ul class="atbd-pagination d-flex">
-                                                    <li class="atbd-pagination__item">
-                                                        <a href="#" class="atbd-pagination__link pagination-control"><span
-                                                            class="la la-angle-left"></span></a>
-                                                        <a href="#" class="atbd-pagination__link"><span class="page-number">1</span></a>
-                                                        <a href="#" class="atbd-pagination__link active"><span class="page-number">2</span></a>
-                                                        <a href="#" class="atbd-pagination__link"><span class="page-number">3</span></a>
-                                                        <a href="#" class="atbd-pagination__link pagination-control"><span
-                                                            class="page-number">...</span></a>
-                                                        <a href="#" class="atbd-pagination__link"><span class="page-number">12</span></a>
-                                                        <a href="#" class="atbd-pagination__link pagination-control"><span
-                                                            class="la la-angle-right"></span></a>
-                                                        <a href="#" class="atbd-pagination__option">
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </nav>
-                                        </div>
-                                    </div>-->
                                     <div class="col-4">
                                         <div class="row" style="justify-content: center;">
                                             <div id="pageNum" style="text-align:center; margin: 2% 0 0 0;"></div>
@@ -442,6 +420,7 @@
     </div>
 
     <!-- modal code -->
+    <!-- 첨부파일 -->
     <div class="modal-basic modal fade show pop1" id="gen-attach" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white ">
@@ -482,6 +461,8 @@
             </div>
         </div>
     </div>
+
+    <!-- 일반데이터 등록 -->
     <div class="modal-basic modal fade show pop2" id="grid" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white ">
@@ -572,7 +553,98 @@
         </div>
     </div>
 
+    <!-- 일반 데이터 수정 -->
+    <div class="modal-basic modal fade show pop2" id="update-grid" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content modal-bg-white ">
+                <div class="modal-header" style="border: none">
+                    <h6 class="modal-title">시교자원관리 > 기본 정보</h6>
+                    시교명 ID : <span></span>
+                </div>
+                <div class="modal-body">
+                    <div class="tab-pane fade show active" id="control2" role="tabpanel" aria-labelledby="control2-tab">
+                        <div class="tab-slide-content">
+                            <div class="atbd-tab tab-horizontal">
+                                <div class="top_box">
+                                    <ul class="nav nav-tabs vertical-tabs" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="tab-horizontal-1-tab" data-toggle="tab"
+                                               href="#tab-horizontal-1" role="tab" aria-controls="tab-horizontal-1"
+                                               aria-selected="true">기본 정보</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <form action="updateSample" id="updateForm" method="POST" enctype="multipart/form-data">
+                                    <input type="hidden" id="update_list" name="update_list">
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade show active" id="tab-horizontal-1" role="tabpanel"
+                                             aria-labelledby="tab-horizontal-1-tab">
+                                            <div class="content_title clearfix">
+                                                <ul>
+                                                    <li>형질</li>
+                                                    <li>조사값</li>
+                                                </ul>
+                                            </div>
+                                            <div class="content_1 clearfix">
+                                                <ul>
+                                                    <li>
+                                                        <div class="title">작물</div>
+                                                        <div class="input_text"><input type="text" name="sample_name" readonly></div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">시교명(ID)</div>
+                                                        <div class="input_text"><input type="text" name="sample_code"></div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">목표 지역</div>
+                                                        <div class="input_text"><input type="text" name="sample_country"></div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">구분</div>
+                                                        <div class="input_text"><input type="text" name="sample_type"></div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">교배번호</div>
+                                                        <div class="input_text"><input type="text" name="sample_mate"></div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">종자번호(ID)</div>
+                                                        <div class="input_text"><input type="text" name="sample_seed"></div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">현 종자량(g)</div>
+                                                        <div class="input_text"><input type="text" name="sample_amount"></div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">기내 발아율(%)</div>
+                                                        <div class="input_text"><input type="text" name="sample_sprout"></div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">기내 순도율(%)</div>
+                                                        <div class="input_text"><input type="text" name="sample_purity"></div>
+                                                    </li>
+                                                    <li>
+                                                        <div class="title">비고</div>
+                                                        <div class="input_text"><input type="text" name="sample_comment"></div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border: none">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="updateBtn()" data-dismiss="modal" >저장</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <!-- 지도 -->
     <div class="modal-basic modal fade show" id="recent" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white ">
@@ -802,7 +874,7 @@
             alert("작물을 선택해주세요")
             $(this).data('dismiss');
         } else {
-            $("input[name=sample_name]").val($("#CropSelect option:selected").text());
+            $("input[name=sample_name]").val($("#CropSelect option:selected").val());
         }
     });
 
@@ -830,14 +902,14 @@
         SearchSample(1);
     });
 
-    $("#CropSelect").change(function(){
+    $("#CropSelect").change(function () {
         SearchSample(1);
     })
 
     function SearchSample(e) {
 
         var sample_name = $("#CropSelect").val();
-        var data = {"sample_name" : sample_name, "page_num": e};
+        var data = {"sample_name": sample_name, "page_num": e};
 
         $.ajax(
             {
@@ -846,8 +918,6 @@
                 dataType: 'json',
                 data: data,
                 success: function (result) {
-                    console.log(result);
-
                     var sample_list = $("#sample_list");
                     var add_list = "";
 
@@ -858,7 +928,7 @@
                         add_list += '<tr>';
                         add_list += '<td><input type="checkbox" name="RowCheck" value="' + result.sample[i].sample_id + '"></td>';
                         add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
-                        add_list += '<td>EMPTY</td>';
+                        add_list += '<td style="cursor: pointer;" data-toggle="modal" data-target="#update-grid">EMPTY</td>';
                         add_list += '<td>' + result.sample[i].sample_name + '</td>';
                         add_list += '<td>' + result.sample[i].sample_code + '</td>';
                         add_list += '<td>' + result.sample[i].sample_country + '</td>';
@@ -975,6 +1045,29 @@
             });
         });
     });
+
+    function updateBtn() {
+        var total_id = [];
+
+        $("input:checkbox[name=RowCheck]:checked").each(function () {
+            var sample_id = $(this).val();
+
+            total_id.push(sample_id);
+        });
+
+        var data = {'sample_id': total_id};
+
+        $.ajax(
+            {
+                url: 'updateSample',
+                method: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function (result) {
+                    console.log(result);
+                }
+            });
+    }
 
     // 구글 맵 관련
     const mapContainer = document.querySelector('#google_map1');

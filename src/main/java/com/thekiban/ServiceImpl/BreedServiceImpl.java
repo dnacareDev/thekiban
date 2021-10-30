@@ -1,6 +1,5 @@
 package com.thekiban.ServiceImpl;
 
-import com.thekiban.Entity.Basic;
 import com.thekiban.Entity.Breed;
 import com.thekiban.Entity.Detail;
 import com.thekiban.Entity.Standard;
@@ -24,20 +23,6 @@ public class BreedServiceImpl implements BreedService {
     return mapper.SelectDetail();
   }
 
-  // 품종 등록
-  @Override
-  public int InsertBreed(Breed breed)
-  {
-    return mapper.InsertBreed(breed);
-  }
-
-  // 품종 상세 정보 등록
-  @Override
-  public int InsertStandard(List<Standard> standard)
-  {
-    return mapper.InsertStandard(standard);
-  }
-
   // 원종 갯수 조회
   @Override
   public int SelectBreedCount(String breed_name)
@@ -52,6 +37,21 @@ public class BreedServiceImpl implements BreedService {
     return mapper.SearchBreed(breed_name, offset, limit);
   }
 
+  // 품종 등록
+  @Override
+  public int InsertBreed(Breed breed)
+  {
+    return mapper.InsertBreed(breed);
+  }
+
+  // 품종 상세 정보 등록
+  @Override
+  public int InsertStandard(List<Standard> standard)
+  {
+    return mapper.InsertStandard(standard);
+  }
+  
+  // 품종 삭제
   @Override
   public int[] DeleteBreed(int[] breed_id) {
     return mapper.DeleteBreed(breed_id);

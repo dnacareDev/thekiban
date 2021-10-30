@@ -48,4 +48,21 @@
             sample_id = #{item}
         </foreach>
     </select>
+
+    <!-- 시교자원 수정 -->
+    <update id="UpdateSample" parameterType="Sample">
+        UPDATE sample
+        SET sample_code    = #{sample_code},
+            sample_name    = #{sample_name},
+            sample_country = #{sample_country},
+            sample_type    = #{sample_type},
+            sample_mate    = #{sample_mate},
+            sample_seed    = #{sample_seed},
+            sample_amount  = #{sample_amount},
+            sample_sprout  = #{sample_sprout},
+            sample_purity  = #{sample_purity},
+            sample_comment = #{sample_comment},
+            modify_date    = NOW()
+        WHERE sample_id = #{sample_id}
+    </update>
 </mapper>
