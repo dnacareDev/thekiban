@@ -73,14 +73,28 @@ public class SampleController {
   }
 
   // 제품 수정
-  @ResponseBody
+/*  @ResponseBody
   @RequestMapping("updateSample")
-  public int UpdateSample(@RequestParam(value = "sample_id") int sample_id)
+  public int UpdateSample(@RequestParam("sample_id") int sample_id)
   {
+
+
     int result = service.UpdateSample(sample_id);
 
     System.out.println(result);
 
     return result;
+  }*/
+
+  // 시교자원 입력
+  @RequestMapping("updateSample")
+  public ModelAndView UpdateSample(ModelAndView mv, @ModelAttribute Sample sample) {
+    service.UpdateSample(sample);
+
+    System.out.println(sample);
+
+    mv.setViewName("redirect:/sample");
+
+    return mv;
   }
 }
