@@ -42,7 +42,7 @@ public class SampleServiceImpl implements SampleService {
   public int[] DeleteSample(int[] sample_id) { return mapper.DeleteSample(sample_id); }
 
   @Override
-  public int UpdateSample(Sample sample) {
-    return mapper.UpdateSample(sample);
+  public int UpdateSample(int sample_id) {
+    return mapper.UpdateSample(sample_id);
   }
 }

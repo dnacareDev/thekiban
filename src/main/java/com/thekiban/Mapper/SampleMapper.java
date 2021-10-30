@@ -25,6 +25,6 @@ public interface SampleMapper {
   int[] DeleteSample(int[] sample_id);
 
   // 시교자원 수정
-  int UpdateSample(Sample sample);
+  int UpdateSample(@Param("sample_id") int sample_id);
 
 }
