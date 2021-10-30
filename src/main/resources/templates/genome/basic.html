@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- 공통 헤더 -->
-    <th:block th:include="@{/fragments/header.html}"></th:block>
+    <th:block th:include="/../fragments/header.html"></th:block>
     <script src="../assets/vendor_assets/js/script.js"></script> <!-- 왼쪽상단에 버튼 클릭시 class 추가 스크립트 -->
     <style>
         table {
@@ -191,7 +191,7 @@
 <div class="mobile-search"></div>
 <div class="mobile-author-actions"></div>
 <!-- 공통 topbar -->
-<th:block th:include="@{/fragments/topbar.html}"></th:block>
+<th:block th:include="/../fragments/topbar.html"></th:block>
 <main class="main-content" style="background-color: #FCFCFC;">
     <div class="contents" style="background-color: #FFFFFF;">
         <div class="container-fluid">
@@ -639,9 +639,9 @@
 </main>
 
 <!-- 공통 하단 -->
-<th:block th:include="@{/fragments/footer.html}"></th:block>
+<th:block th:include="/../fragments/footer.html"></th:block>
 <!-- 공통 js -->
-<th:block th:include="@{/fragments/commonjs.html}"></th:block>
+<th:block th:include="/../fragments/commonjs.html"></th:block>
 <script type="text/javascript">
     let topBox = document.getElementsByClassName("top_box")[0];
     let [nav, prev, next] = topBox.children;

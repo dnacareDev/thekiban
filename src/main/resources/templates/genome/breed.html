@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- 공통 헤더 -->
-    <th:block th:include="@{/fragments/header.html}"></th:block>
+    <th:block th:include="/../fragments/header.html"></th:block>
     <style>
         table {
             border-top: 1px solid grey;
@@ -335,7 +335,7 @@
 <div class="mobile-search"></div>
 <div class="mobile-author-actions"></div>
 <!-- 공통 topbar -->
-<th:block th:include="@{/fragments/topbar.html}"></th:block>
+<th:block th:include="/../fragments/topbar.html"></th:block>
 <main class="main-content" style="background-color: #FCFCFC;">
     <div class="contents" style="background-color: #FFFFFF;">
         <div class="container-fluid">
@@ -382,15 +382,8 @@
                                         <thead class="text-center">
                                         <tr>
                                             <th></th>
-<<<<<<< HEAD
                                             <th><span class="title">첨부파일</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="첨부파일"></th>
                                             <th style="cursor: pointer;"><span class="title">특성상태</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="특성상태"></th>
-=======
-                                            <th style="cursor: pointer;"><span class="title">첨부파일</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="첨부파일">
-                                            </th>
-                                            <th style="cursor: pointer;"><span class="title">특성상태</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="특성상태">
-                                            </th>
->>>>>>> 4baa27e28fc35d5789e7041514259bdd4ae220b7
                                             <th style="cursor: pointer;"><span class="title">작물</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="작물"></th>
                                             <th style="cursor: pointer;"><span class="title">시교명(ID)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="시교명(ID)"></th>
                                             <th style="cursor: pointer;"><span class="title">품종명</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="품종명"></th>
@@ -1607,9 +1600,9 @@
 </main>
 
 <!-- 공통 하단 -->
-<th:block th:include="@{/fragments/footer.html}"></th:block>
+<th:block th:include="/../fragments/footer.html"></th:block>
 <!-- 공통 js -->
-<th:block th:include="@{/fragments/commonjs.html}"></th:block>
+<th:block th:include="/../fragments/commonjs.html"></th:block>
 
 <script type="text/javascript">
     function dataToggle(one, two)

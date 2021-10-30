@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:with="user = ${#authentication.principal}">
 <head>
     <!-- 공통 헤더 -->
-    <th:block th:include="@{/fragments/header.html}"></th:block>
+    <th:block th:include="/../fragments/header.html"></th:block>
     <link rel="stylesheet" href="../assets/vendor_assets/css/bootstrap/bootstrap.css">
 <style>
 .main-content{
@@ -126,7 +126,7 @@
 	</div>
 </main>
 <!-- 공통 js -->
-<th:block th:include="@{/fragments/commonjs.html}"></th:block>
+<th:block th:include="/../fragments/commonjs.html"></th:block>
 <script type="text/javascript">
 
 </script>
