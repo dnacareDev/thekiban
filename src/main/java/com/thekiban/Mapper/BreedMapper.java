@@ -26,7 +26,7 @@ public interface BreedMapper
 	List<Detail> SearchBreedDetail(String breed_name);
 
 	// 품종별 정보값 조회
-	List<Standard> SearchBreedStandard(List<Detail> detail);
+	List<Standard> SearchBreedStandard(@Param("detail") List<Detail> detail, @Param("breed_id") int breed_id);
 
 	// 품종 등록
 	int InsertBreed(Breed breed);

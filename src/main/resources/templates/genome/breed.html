@@ -380,7 +380,7 @@
                                 <div class="table-responsive">
                                     <table class="table" id="display">
                                         <thead class="text-center">
-                                        <tr>
+                                        <tr id="header_list">
                                             <th></th>
                                             <th><span class="title">첨부파일</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="첨부파일"></th>
                                             <th style="cursor: pointer;"><span class="title">특성상태</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="특성상태"></th>
@@ -550,7 +550,7 @@
                                                     </li>
                                                     <li>
                                                         <div class="title">생산판매(신고일자)</div>
-                                                        <div class="input_text"><input type="text" name="breed_sale_date"></div>
+                                                        <div class="input_text"><input type="date" name="breed_sale_date"></div>
                                                     </li>
                                                     <li>
                                                         <div class="title">보호출원(출원번호)</div>
@@ -558,7 +558,7 @@
                                                     </li>
                                                     <li>
                                                         <div class="title">보호출원(출원일자)</div>
-                                                        <div class="input_text"><input type="text" name="breed_apply_date"></div>
+                                                        <div class="input_text"><input type="date" name="breed_apply_date"></div>
                                                     </li>
                                                     <li>
                                                         <div class="title">보호등록(등록번호)</div>
@@ -566,7 +566,7 @@
                                                     </li>
                                                     <li>
                                                         <div class="title">보호등록(등록일자)</div>
-                                                        <div class="input_text"><input type="text" name="breed_enroll_date"></div>
+                                                        <div class="input_text"><input type="date" name="breed_enroll_date"></div>
                                                     </li>
                                                     <li>
                                                         <div class="title">미등록(현지상업화)</div>
@@ -719,7 +719,7 @@
                 </div>
                 <div class="modal-footer" style="border: none">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-primary btn-sm" onclick="InsertBtn()" data-dismiss="modal">저장</button>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="InsertBtn()" data-dismiss="modal">등록</button>
                 </div>
             </div>
         </div>
@@ -1227,7 +1227,7 @@
                 </div>
                 <div class="modal-footer" style="border: none">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-primary btn-sm" onclick="UpdateBtn()" data-dismiss="modal">저장</button>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="" data-dismiss="modal">확인</button>
                 </div>
             </div>
         </div>
@@ -1422,7 +1422,7 @@
                                                     </li>
                                                     <li>
                                                         <div class="title">생산판매(신고일자)</div>
-                                                        <div class="input_text"><input type="text" name="breed_sale_date"></div>
+                                                        <div class="input_text"><input type="date" name="breed_sale_date"></div>
                                                     </li>
                                                     <li>
                                                         <div class="title">보호출원(출원번호)</div>
@@ -1430,7 +1430,7 @@
                                                     </li>
                                                     <li>
                                                         <div class="title">보호출원(출원일자)</div>
-                                                        <div class="input_text"><input type="text" name="breed_apply_date"></div>
+                                                        <div class="input_text"><input type="date" name="breed_apply_date"></div>
                                                     </li>
                                                     <li>
                                                         <div class="title">보호등록(등록번호)</div>
@@ -1438,7 +1438,7 @@
                                                     </li>
                                                     <li>
                                                         <div class="title">보호등록(등록일자)</div>
-                                                        <div class="input_text"><input type="text" name="breed_enroll_date"></div>
+                                                        <div class="input_text"><input type="date" name="breed_enroll_date"></div>
                                                     </li>
                                                     <li>
                                                         <div class="title">미등록(현지상업화)</div>
@@ -1591,7 +1591,7 @@
                 </div>
                 <div class="modal-footer" style="border: none">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-primary btn-sm" onclick="InsertBtn()" data-dismiss="modal">저장</button>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="UpdateBreed()" data-dismiss="modal">저장</button>
                 </div>
             </div>
         </div>
@@ -1898,9 +1898,13 @@
             const key = $(this).attr('id');
             var value = $(this).val();
 
-            var arr = {key: key, value: value};
+            if(value != "")
+            {
+	            var arr = {key: key, value: value};
+	            
+	            data.push(arr);
+            }
 
-            data.push(arr);
         });
 
         $("#detail_list").val(JSON.stringify(data));
@@ -1934,18 +1938,39 @@
             data: data,
             success: function (result)
             {
+            	var header_list = $("#header_list");
+            	var header_add = "";
+            	
                 var breed_list = $("#breed_list");
                 var add_list = "";
 
                 var pageNum = $("#pageNum");
                 var page_add = "";
+                
+                if(breed_name != 'none')
+                {
+	                for(var i = 0; i < result.detail.length; i++)
+	                {
+	                	header_add += '<th style="cursor: pointer;"><span class="title">' + result.detail[i].detail_title + '</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="보호출원(출원일자)"></th>'
+	                }
+                }
 
-                for (var i = 0; i < result.breed.length; i++)
+                for(var i = 0; i < result.breed.length; i++)
                 {
                 	add_list += '<tr>';
                     add_list += '<td><input type="checkbox" name="RowCheck" value="' + result.breed[i].breed_id + '"></td>';
                     add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
-                    add_list += '<td onclick="emptyFunction(this);">EMPTY</td>';
+                    console.log(result.breed[i]);
+                    
+                    if(result.breed[i].standard_count == 0)
+                    {
+	                    add_list += '<td onclick="emptyFunction(this);" style="color : blue;">EMPTY</td>';
+                    }
+                    else
+                    {
+	                    add_list += '<td onclick="emptyFunction(this);" style="color : green;">PROGRESS</td>';
+                    }
+                    
                     add_list += '<td>' + result.breed[i].breed_name + '</td>';
                     add_list += '<td>' + result.breed[i].breed_code + '</td>';
                     add_list += '<td>' + result.breed[i].breed_kind + '</td>';
@@ -1964,6 +1989,30 @@
                     add_list += '<td>' + result.breed[i].breed_first_crop + '</td>';
                     add_list += '<td>' + result.breed[i].breed_second_crop + '</td>';
                     add_list += '<td>' + result.breed[i].breed_comment + '</td>';
+                    
+                    if(result.detail.length != 0)
+                    {
+                    	for(var j = 0; j < result.detail.length; j++)
+                    	{
+	                    	var check = true;
+	                    	
+		                    for(var k = 0; k < result.breed[i].breed_standard.length; k++)
+		                    {
+		                    	if(result.detail[j].detail_id == result.breed[i].breed_standard[k].detail_id)
+		                    	{
+				                    add_list += '<td>' + result.breed[i].breed_standard[k].standard + '</td>';
+				                    check = false;
+				                    break;
+		                    	}
+		                    }
+		                    
+		                    if(check)
+		                    {
+			                    add_list += '<td></td>';
+		                    }
+                    	}
+                    }
+                    
                     add_list += '</tr>';
                 }
 
@@ -1996,6 +2045,8 @@
                 {
                     page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchBreed(' + (result.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
                 }
+                
+                header_list.append(header_add);
 
                 breed_list.empty();
                 breed_list.append(add_list);

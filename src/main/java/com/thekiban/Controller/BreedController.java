@@ -53,23 +53,25 @@ public class BreedController
 		int end_page = (count + limit - 1) / limit;
     
 		List<Breed> breed = service.SearchBreed(breed_name, offset, limit);
-		
-		List<Detail> detail = new ArrayList<Detail>();
+		List<Detail> detail = service.SearchBreedDetail(breed_name);
 		List<Standard> standard = new ArrayList<Standard>();
 		
-		if(!breed_name.equals("none"))
+		if(detail.isEmpty())
 		{
-			detail = service.SearchBreedDetail(breed_name);
 			
-			if(!detail.isEmpty())
+		}
+		else
+		{
+			for(int i = 0; i < breed.size(); i++)
 			{
-				standard = service.SearchBreedStandard(detail);
+				standard = service.SearchBreedStandard(detail, breed.get(i).getBreed_id());
+				
+				breed.get(i).setBreed_standard(standard);
 			}
 		}
 		
 		result.put("breed", breed);
 		result.put("detail", detail);
-		result.put("standard", standard);
 		result.put("page_num", page_num);
 		result.put("end_page", end_page);
 		result.put("offset", offset);
@@ -96,32 +98,35 @@ public class BreedController
 		
 		int insert_breed = service.InsertBreed(breed);
  
-		JSONArray arr = new JSONArray(detail_list);
-		
-		List<Standard> standard = new ArrayList<Standard>();
- 
-		for(int i = 0; i < arr.length(); i++)
+		if(!detail_list.equals("[]"))
 		{
-			Standard item = new Standard();
- 
-			JSONObject obj = arr.getJSONObject(i);
-
-			String detail_id = (String)obj.get("key");
-			String value = (String)obj.get("value");
-  
-			if(value != "")
+			JSONArray arr = new JSONArray(detail_list);
+			
+			List<Standard> standard = new ArrayList<Standard>();
+			
+			for(int i = 0; i < arr.length(); i++)
 			{
-				item.setBreed_id(breed.getBreed_id());
-				item.setDetail_id(Integer.parseInt(detail_id));
-				item.setStandard((String) obj.get("value"));
-
-				standard.add(item);
+				Standard item = new Standard();
+				
+				JSONObject obj = arr.getJSONObject(i);
+				
+				String detail_id = (String)obj.get("key");
+				String value = (String)obj.get("value");
+				
+				if(value != "")
+				{
+					item.setBreed_id(breed.getBreed_id());
+					item.setDetail_id(Integer.parseInt(detail_id));
+					item.setStandard((String) obj.get("value"));
+					
+					standard.add(item);
+				}
 			}
-		}
- 
-		if(insert_breed != 0) 
-		{
-			int insert_standard = service.InsertStandard(standard);
+			
+			if(insert_breed != 0) 
+			{
+				int insert_standard = service.InsertStandard(standard);
+			}
 		}
  
 		mv.setViewName("redirect:/breed");
