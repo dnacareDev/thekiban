@@ -25,10 +25,6 @@ public class SampleController {
   @RequestMapping("sample")
   public ModelAndView SampleList(ModelAndView mv) {
 
-    List<Sample> sample = service.SelectSampleList();
-
-    mv.addObject("sample", sample);
-
     mv.setViewName("genome/sample");
 
     return mv;
@@ -77,14 +73,14 @@ public class SampleController {
   }
 
   // 제품 수정
+  @ResponseBody
   @RequestMapping("updateSample")
-  public ModelAndView UpdateSample(ModelAndView mv, @ModelAttribute Sample sample) {
-    service.UpdateSample(sample);
+  public int UpdateSample(@RequestParam(value = "sample_id") int sample_id)
+  {
+    int result = service.UpdateSample(sample_id);
 
-    System.out.println(service.UpdateSample(sample));
+    System.out.println(result);
 
-    mv.setViewName("redirect:/sample");
-
-    return mv;
+    return result;
   }
 }

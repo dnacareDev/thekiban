@@ -589,43 +589,43 @@
                                                 <ul>
                                                     <li>
                                                         <div class="title">작물</div>
-                                                        <div class="input_text"><input type="text" name="sample_name" readonly></div>
+                                                        <div class="input_text"><input type="text" class="test" name="sample_name" readonly></div>
                                                     </li>
                                                     <li>
                                                         <div class="title">시교명(ID)</div>
-                                                        <div class="input_text"><input type="text" name="sample_code"></div>
+                                                        <div class="input_text"><input type="text" class="test" name="sample_code"></div>
                                                     </li>
                                                     <li>
                                                         <div class="title">목표 지역</div>
-                                                        <div class="input_text"><input type="text" name="sample_country"></div>
+                                                        <div class="input_text"><input type="text" class="test" name="sample_country"></div>
                                                     </li>
                                                     <li>
                                                         <div class="title">구분</div>
-                                                        <div class="input_text"><input type="text" name="sample_type"></div>
+                                                        <div class="input_text"><input type="text" class="test" name="sample_type"></div>
                                                     </li>
                                                     <li>
                                                         <div class="title">교배번호</div>
-                                                        <div class="input_text"><input type="text" name="sample_mate"></div>
+                                                        <div class="input_text"><input type="text" class="test" name="sample_mate"></div>
                                                     </li>
                                                     <li>
                                                         <div class="title">종자번호(ID)</div>
-                                                        <div class="input_text"><input type="text" name="sample_seed"></div>
+                                                        <div class="input_text"><input type="text" class="test" name="sample_seed"></div>
                                                     </li>
                                                     <li>
                                                         <div class="title">현 종자량(g)</div>
-                                                        <div class="input_text"><input type="text" name="sample_amount"></div>
+                                                        <div class="input_text"><input type="text" class="test" name="sample_amount"></div>
                                                     </li>
                                                     <li>
                                                         <div class="title">기내 발아율(%)</div>
-                                                        <div class="input_text"><input type="text" name="sample_sprout"></div>
+                                                        <div class="input_text"><input type="text" class="test" name="sample_sprout"></div>
                                                     </li>
                                                     <li>
                                                         <div class="title">기내 순도율(%)</div>
-                                                        <div class="input_text"><input type="text" name="sample_purity"></div>
+                                                        <div class="input_text"><input type="text" class="test" name="sample_purity"></div>
                                                     </li>
                                                     <li>
                                                         <div class="title">비고</div>
-                                                        <div class="input_text"><input type="text" name="sample_comment"></div>
+                                                        <div class="input_text"><input type="text" class="test" name="sample_comment"></div>
                                                     </li>
                                                 </ul>
                                             </div>
@@ -638,6 +638,7 @@
                 </div>
                 <div class="modal-footer" style="border: none">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
+                    <!--<input type="hidden" id="sample_id" th:value="${sample.sample_id}">-->
                     <button type="button" class="btn btn-primary btn-sm" onclick="updateBtn()" data-dismiss="modal" >저장</button>
                 </div>
             </div>
@@ -906,6 +907,8 @@
         SearchSample(1);
     })
 
+    var emptyEls;
+    var resultData = [];
     function SearchSample(e) {
 
         var sample_name = $("#CropSelect").val();
@@ -920,7 +923,8 @@
                 success: function (result) {
                     var sample_list = $("#sample_list");
                     var add_list = "";
-
+                    console.log(result);
+                    resultData = result.sample;
                     var pageNum = $("#pageNum");
                     var page_add = "";
 
@@ -928,7 +932,7 @@
                         add_list += '<tr>';
                         add_list += '<td><input type="checkbox" name="RowCheck" value="' + result.sample[i].sample_id + '"></td>';
                         add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
-                        add_list += '<td style="cursor: pointer;" data-toggle="modal" data-target="#update-grid">EMPTY</td>';
+                        add_list += '<td class="status" style="cursor: pointer;" onclick="emptyFunction(this);">EMPTY</td>';
                         add_list += '<td>' + result.sample[i].sample_name + '</td>';
                         add_list += '<td>' + result.sample[i].sample_code + '</td>';
                         add_list += '<td>' + result.sample[i].sample_country + '</td>';
@@ -967,6 +971,9 @@
 
                     pageNum.empty();
                     pageNum.append(page_add);
+
+                    emptyEls = document.querySelectorAll('#sample_list tr .status');
+                    emptyEls = Array.prototype.slice.call(emptyEls);
                 }
             });
     }
@@ -1046,16 +1053,43 @@
         });
     });
 
-    function updateBtn() {
-        var total_id = [];
+    var emptyElsIndex = 0;
+    function emptyFunction(e) { // table 내용 모달로 가져오기 2021-10-29 alpadesign 수정
+        let target = e;
 
-        $("input:checkbox[name=RowCheck]:checked").each(function () {
-            var sample_id = $(this).val();
+        let index = emptyEls.indexOf(target);
 
-            total_id.push(sample_id);
+        emptyElsIndex = index;
+
+        let values = $(e).parent().children();
+
+        $("#update-grid").modal("show");
+
+        var input_N = 0;
+
+        for (let i = 3; i < values.length; i++) {
+            var inner_text = values.eq(i).text();
+
+            $("#update-grid input[type='text']").eq(i - 3).val(inner_text);
+        }
+
+        $("#update-grid input[type='text']").each(function (f, e) {
+            input_N += $(e).length;
         });
 
-        var data = {'sample_id': total_id};
+    }
+
+    // 일반 데이터 수정
+    function updateBtn() {
+        var sample_id = resultData[emptyElsIndex].sample_id;
+
+        $("input[class=test]").each({
+
+        })
+
+        var data = {'sample_id' : sample_id};
+
+        console.log(data);
 
         $.ajax(
             {
@@ -1065,6 +1099,7 @@
                 data: data,
                 success: function (result) {
                     console.log(result);
+                    location.reload();
                 }
             });
     }

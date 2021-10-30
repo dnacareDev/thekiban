@@ -21,5 +21,5 @@ public interface SampleService {
   // 삭제
   int[] DeleteSample(int[] sample_id);
 
-  int UpdateSample(Sample sample);
+  int UpdateSample(int sample_id);
 }
