@@ -330,8 +330,8 @@
                                             </th:block>-->
                                         </select>
                                     </form>
-                                    <button class="btn btn-lg btn-primary data_btn1" onclick="filesFunction()"><img
-                                        src="../assets/vendor_assets/img/icon1.svg" alt=""></button>
+                                    <!--<button class="btn btn-lg btn-primary data_btn1" onclick="filesFunction()"><img
+                                        src="../assets/vendor_assets/img/icon1.svg" alt=""></button>-->
                                     <button class="btn btn-lg btn-primary data_btn2" data-toggle="modal" data-target="#data_upload2"><img
                                         src="../assets/vendor_assets/img/icon2.png" alt=""></button>
                                     <button class="btn btn-lg btn-primary data_btn2"><img src="../assets/vendor_assets/img/icon3.png" alt=""></button>
@@ -724,37 +724,32 @@
                         <input type="file" name="" id="file_data_upload" style="display: none;">
                     </div>
                     <div>
-                        <div class="atbd-upload">
-                            <table  id="excel_data">
-                                <thead>
-                                <tr>
-                                    <th>시교명 (ID)</th>
-                                    <th>품종명</th>
-                                    <th>모계 계통명 (ID)</th>
-                                    <th>부계 계통명 (ID)</th>
-                                    <th>생산판매 (신고번호)</th>
-                                    <th>생산판매 (신고일자)</th>
-                                    <th>보호출원 (출원번호)</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>asdasd</td>
-                                    <td>asdasd</td>
-                                    <td>asdasd</td>
-                                    <td>asdasd</td>
-                                    <td>asdasd</td>
-                                    <td>asdasd</td>
-                                    <td>asdasd</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                        <form action="excelSample" id="excelForm" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" id="excel_list" name="excel_list">
+                            <div class="atbd-upload">
+                                <table id="excel_data">
+                                    <thead>
+                                    <th><span class="title">작물</span></th>
+                                    <th><span class="title">시교명(ID)</span></th>
+                                    <th><span class="title">목표 지역</span></th>
+                                    <th><span class="title">구분</span></th>
+                                    <th><span class="title">교배번호</span></th>
+                                    <th><span class="title">종자번호(ID)</span></th>
+                                    <th><span class="title">현 종자량(g)</span></th>
+                                    <th><span class="title">기내 발아율(%)</span></th>
+                                    <th><span class="title">기내 순도율(%)</span></th>
+                                    <th><span class="title">비고</span></th>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
                     </div>
                 </div>
                 <div class="modal-footer" style="border: none">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" onclick="dataToggle('#data_upload', '#data_upload2');">취소</button>
-                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">등록</button>
+                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" id="" onclick="InsertExcel()">등록</button>
                 </div>
             </div>
         </div>
@@ -839,12 +834,10 @@
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBn0n_LEGxgJuCfTU8aKvuwrcmw0iZjfmY&callback=initMap&region=kr"></script>
 <script type="text/javascript">
-    function dataToggle(one, two)
-    {
+    function dataToggle(one, two) {
         $(one).modal("hide");
 
-        setTimeout(function()
-        {
+        setTimeout(function () {
             $(two).modal("show");
         }, 5);
     }
@@ -948,24 +941,20 @@
             delete fourthSheet.A1;
             delete fourthSheet.A2;
             var rowdata = XLSX.utils.sheet_to_json(fourthSheet);
-            console.log(rowdata);
 
             var keys = Object.values(rowdata[0]);
 
             var excel = [];
 
-            for(var k = 1; k < rowdata.length; k++) {
+            for (var k = 1; k < rowdata.length; k++) {
                 var chk = Object.values(rowdata[k]);
 
-                console.log(chk);
-                for(var n = 0; n < keys.length; n++) {
-                   excel[n] = {key: keys[n], value: chk[n]};
+                for (var n = 0; n < keys.length; n++) {
+                    excel[n] = {key: keys[n], value: chk[n]};
                 }
                 const obj = {...excel};
 
                 rowdata[k] = obj;
-
-                console.log(rowdata[k]);
             }
 
             var html = "";
@@ -982,6 +971,7 @@
                     html += "</thead>";
                 } else if (i !== 0) {
                     html += "<tbody class='text-center'>";
+                    html += "<tr>";
 
                     var tmp = Object.keys(rowdata[0]);
                     var j = 0;
@@ -989,7 +979,7 @@
                     $.each(rowdata[i], function (idx, value) {
                         // 공백처리
                         // if (idx == tmp[j]) {
-                            html += "<td><span>" + value + "</span></td>";
+                        html += "<td class='excel'><span>" + value + "</span></td>";
                         //     j++;
                         // } else {
                         //     var idx_str = idx.replace(/[^0-9]/g, '');
@@ -1016,9 +1006,26 @@
 
             $("#excel_data").empty();
             $("#excel_data").append(html);
+
+            $("#excel_list").val(JSON.stringify(rowdata));
         };
 
         reader.readAsBinaryString(input.files[0]);
+    }
+
+    function InsertExcel() {
+        var data = [];
+
+        $("#excel_data").each(function (index, item) {
+            const key = $(this).attr('id');
+            var value = $(this).val();
+
+            var arr = {key: key, value: value};
+
+            data.push(arr);
+        });
+
+        $("#excelForm").submit();
     }
 
     /* form data to json */
@@ -1293,9 +1300,7 @@
             data.push(arr);
         });
 
-
         $("#update_list").val(JSON.stringify(data));
-
 
         $("#updateForm").submit();
     }

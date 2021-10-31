@@ -14,9 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 // 시교자원
 @Controller
@@ -69,8 +67,7 @@ public class SampleController {
   // 선택삭제
   @ResponseBody
   @RequestMapping("deleteSample")
-  public int DeleteSample(@RequestParam("sample_id[]") int[] sample_id)
-  {
+  public int DeleteSample(@RequestParam("sample_id[]") int[] sample_id) {
     service.DeleteSample(sample_id);
 
     return 1;
@@ -78,16 +75,50 @@ public class SampleController {
 
   // 시교자원 수정
   @RequestMapping("updateSample")
-  public ModelAndView UpdateSample(ModelAndView mv, @ModelAttribute Sample sample, @RequestParam("update_list") String update_list)  {
+  public ModelAndView UpdateSample(ModelAndView mv, @ModelAttribute Sample sample, @RequestParam("update_list") String update_list) {
     JSONArray arr = new JSONArray(update_list);
 
     JSONObject obj = arr.getJSONObject(0);
 
-    String value = (String)obj.get("value");
+    String value = (String) obj.get("value");
 
     sample.setSample_id(Integer.parseInt(value));
 
     service.UpdateSample(sample);
+
+    mv.setViewName("redirect:/sample");
+
+    return mv;
+  }
+
+  @RequestMapping("excelSample")
+  public ModelAndView excelUpload(ModelAndView mv, @RequestParam("excel_list") String excel_list) {
+    JSONArray arr = new JSONArray(excel_list);
+
+    for (int i = 1; i < arr.length(); i++) {
+
+      JSONObject obj = arr.getJSONObject(i);
+
+      Iterator<String> keys = obj.keys();
+
+      while(keys.hasNext())
+      {
+        String key = keys.next().toString();
+
+        JSONObject obj2 = new JSONObject(obj.get(key).toString());
+
+        String detail_id = (String) obj2.get("key");
+        String value = String.valueOf(obj2.get("value"));
+      }
+
+
+//      service.InsertSample(sample);
+//      String detail_id = (String) obj.get("key");
+//      String value = (String) obj.get("value");
+//
+//      System.out.println("detail_id : " + detail_id);
+//      System.out.println("value : " + value);
+    }
 
     mv.setViewName("redirect:/sample");
 
