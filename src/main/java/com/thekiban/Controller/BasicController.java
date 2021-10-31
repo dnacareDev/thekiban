@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.thekiban.Entity.Sample;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,5 +110,23 @@ public class BasicController
 		service.DeleteBasic(basic_id);
 
 		return 1;
+	}
+	
+	// 원종 수정
+	@RequestMapping("updateBasic")
+	public ModelAndView UpdateBasic(ModelAndView mv, @ModelAttribute Basic basic, @RequestParam("update_list") String update_list)  {
+		JSONArray arr = new JSONArray(update_list);
+
+		JSONObject obj = arr.getJSONObject(0);
+
+		String value = (String)obj.get("value");
+
+		basic.setBasic_id(Integer.parseInt(value));
+
+		service.UpdateBasic(basic);
+
+		mv.setViewName("redirect:/basic");
+
+		return mv;
 	}
 }

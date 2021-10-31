@@ -1,7 +1,11 @@
 package com.thekiban.Controller;
 
+import com.thekiban.Entity.Breed;
 import com.thekiban.Entity.Sample;
+import com.thekiban.Entity.Standard;
 import com.thekiban.Service.SampleService;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -72,15 +76,21 @@ public class SampleController {
     return 1;
   }
 
-  // 제품 수정
-  @ResponseBody
+  // 시교자원 수정
   @RequestMapping("updateSample")
-  public int UpdateSample(@RequestParam(value = "sample_id") int sample_id)
-  {
-    int result = service.UpdateSample(sample_id);
+  public ModelAndView UpdateSample(ModelAndView mv, @ModelAttribute Sample sample, @RequestParam("update_list") String update_list)  {
+    JSONArray arr = new JSONArray(update_list);
 
-    System.out.println(result);
+    JSONObject obj = arr.getJSONObject(0);
 
-    return result;
+    String value = (String)obj.get("value");
+
+    sample.setSample_id(Integer.parseInt(value));
+
+    service.UpdateSample(sample);
+
+    mv.setViewName("redirect:/sample");
+
+    return mv;
   }
 }

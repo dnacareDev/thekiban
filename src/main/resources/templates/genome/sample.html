@@ -554,7 +554,7 @@
     </div>
 
     <!-- 일반 데이터 수정 -->
-    <div class="modal-basic modal fade show pop2" id="update-grid" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-basic modal fade show pop2" tabindex="-1" role="dialog" aria-hidden="true" id="update-grid">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white ">
                 <div class="modal-header" style="border: none">
@@ -638,8 +638,7 @@
                 </div>
                 <div class="modal-footer" style="border: none">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
-                    <!--<input type="hidden" id="sample_id" th:value="${sample.sample_id}">-->
-                    <button type="button" class="btn btn-primary btn-sm" onclick="updateBtn()" data-dismiss="modal" >저장</button>
+                    <button type="button" class="btn btn-primary btn-sm" id="updateBtn" onclick="UpdateBtn()" data-dismiss="modal">저장</button>
                 </div>
             </div>
         </div>
@@ -909,6 +908,7 @@
 
     var emptyEls;
     var resultData = [];
+
     function SearchSample(e) {
 
         var sample_name = $("#CropSelect").val();
@@ -923,8 +923,9 @@
                 success: function (result) {
                     var sample_list = $("#sample_list");
                     var add_list = "";
-                    console.log(result);
+
                     resultData = result.sample;
+
                     var pageNum = $("#pageNum");
                     var page_add = "";
 
@@ -932,7 +933,7 @@
                         add_list += '<tr>';
                         add_list += '<td><input type="checkbox" name="RowCheck" value="' + result.sample[i].sample_id + '"></td>';
                         add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
-                        add_list += '<td class="status" style="cursor: pointer;" onclick="emptyFunction(this);">EMPTY</td>';
+                        add_list += '<td class="status" style="cursor: pointer;" onclick="emptyFunction(' + result.sample[i].sample_id + ', this);">EMPTY</td>';
                         add_list += '<td>' + result.sample[i].sample_name + '</td>';
                         add_list += '<td>' + result.sample[i].sample_code + '</td>';
                         add_list += '<td>' + result.sample[i].sample_country + '</td>';
@@ -1054,7 +1055,9 @@
     });
 
     var emptyElsIndex = 0;
-    function emptyFunction(e) { // table 내용 모달로 가져오기 2021-10-29 alpadesign 수정
+
+    function emptyFunction(id, e) { // table 내용 모달로 가져오기 2021-10-29 alpadesign 수정
+
         let target = e;
 
         let index = emptyEls.indexOf(target);
@@ -1077,31 +1080,32 @@
             input_N += $(e).length;
         });
 
+        $("#updateBtn").removeAttr("onclick");
+        $("#updateBtn").attr("onclick", "UpdateBtn('id');");
     }
 
     // 일반 데이터 수정
-    function updateBtn() {
-        var sample_id = resultData[emptyElsIndex].sample_id;
+    function UpdateBtn() {
+        const data = [];
 
-        $("input[class=test]").each({
+        const sample_id = {key: 'sample_id', value: "" + resultData[emptyElsIndex].sample_id};
 
-        })
+        data.push(sample_id);
 
-        var data = {'sample_id' : sample_id};
+        $("input[class=test]").each(function (index, item) {
+            const key = $(this).attr('name');
+            var value = $(this).val();
 
-        console.log(data);
+            var arr = {key: key, value: value};
 
-        $.ajax(
-            {
-                url: 'updateSample',
-                method: 'POST',
-                dataType: 'json',
-                data: data,
-                success: function (result) {
-                    console.log(result);
-                    location.reload();
-                }
-            });
+            data.push(arr);
+        });
+
+
+        $("#update_list").val(JSON.stringify(data));
+
+
+        $("#updateForm").submit();
     }
 
     // 구글 맵 관련

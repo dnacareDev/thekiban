@@ -21,22 +21,29 @@ public class IncomeServiceImpl implements IncomeService {
     return mapper.InsertIncome(income);
   }
 
-  // 원종 갯수 조회
+  // 도입자원 갯수 조회
   @Override
   public int SelectIncomeCount(String income_name)
   {
     return mapper.SelectIncomeCount(income_name);
   }
 
-  // 원종 검색
+  // 도입자원 검색
   @Override
   public List<Income> SearchIncome(String income_name, int offset, int limit)
   {
     return mapper.SearchIncome(income_name, offset, limit);
   }
 
+  // 도입자원 삭제
   @Override
   public int[] DeleteIncome(int[] income_id) {
     return mapper.DeleteIncome(income_id);
+  }
+
+  // 도입자원 수정
+  @Override
+  public int UpdateIncome(Income income) {
+    return mapper.UpdateIncome(income);
   }
 }

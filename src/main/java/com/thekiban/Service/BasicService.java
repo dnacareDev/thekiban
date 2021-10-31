@@ -25,4 +25,8 @@ public interface BasicService
 	
 	// 원종 삭제
 	int[] DeleteBasic(int[] basic_id);
+
+	// 원종 수정
+	int UpdateBasic(Basic basic);
+
 }

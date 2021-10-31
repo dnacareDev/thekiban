@@ -35,6 +35,7 @@
         LIMIT #{offset}, #{limit}
     </select>
 
+    <!-- 도입자원 삭제 -->
     <select id="DeleteIncome" parameterType="java.util.ArrayList">
         DELETE FROM income
         WHERE
@@ -42,5 +43,24 @@
             income_id = #{item}
         </foreach>
     </select>
+
+    <!-- 도입자원 수정 -->
+    <update id="UpdateIncome" parameterType="Income">
+        UPDATE income
+        SET income_code     = #{income_code},
+            income_name     = #{income_name},
+            income_kind     = #{income_kind},
+            income_division = #{income_division},
+            income_place    = #{income_place},
+            income_country  = #{income_country},
+            income_person   = #{income_person},
+            income_date     = #{income_date},
+            income_num      = #{income_num},
+            income_type     = #{income_type},
+            income_trait    = #{income_trait},
+            income_comment  = #{income_comment},
+            modify_date     = NOW()
+        WHERE income_id = #{income_id}
+    </update>
 
 </mapper>

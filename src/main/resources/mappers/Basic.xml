@@ -1,60 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.thekiban.Mapper.BasicMapper">
-	<!-- 세부정보 조회 -->
-	<select id="SelectDetail" resultType="Detail">
-		SELECT * FROM detail
-		WHERE detail_type = 1
-	</select>
-	
-	<!-- 원종 갯수 조회 -->
-	<select id="SelectBasicCount" resultType="int">
-		SELECT COUNT(*) FROM basic
-		<choose>
-			<when test="basic_name != 'none'">
-				WHERE basic_name = #{basic_name}
-			</when>
-		</choose>
-	</select>
-	
-	<!-- 원종 검색 -->
-	<select id="SearchBasic" resultType="Basic">
-		SELECT * FROM basic
-		<choose>
-			<when test="basic_name != 'none'">
-				WHERE basic_name = #{basic_name}
-			</when>
-		</choose>
-		LIMIT #{offset}, #{limit}
-	</select>
-	
-	<!-- 원종 등록 -->
-	<insert id="InsertBasic" parameterType="Basic">
-		INSERT INTO basic
-		(basic_code, basic_name, basic_num, basic_raw_num, basic_bn_year, basic_bn_num, basic_seed, basic_amount, basic_weight, basic_date, basic_comment, create_date, modify_date)
-		VALUES
-		(#{basic_code}, #{basic_name}, #{basic_num}, #{basic_raw_num}, #{basic_bn_year}, #{basic_bn_num}, #{basic_seed}, #{basic_amount}, #{basic_weight}, #{basic_date}, #{basic_comment}, NOW(), NOW())
-		<selectKey resultType="int" keyProperty="basic_id" order="AFTER">
-			SELECT LAST_INSERT_ID()
-		</selectKey>
-	</insert>
-	
-	<!-- 원종 상세 정보 등록 -->
-	<insert id="InsertStandard" parameterType="java.util.ArrayList">
-		<foreach collection="list" item="item" separator=";">
-			INSERT INTO standard
-			(detail_id, basic_id, standard)
-			VALUES
-			(#{item.detail_id}, #{item.basic_id}, #{item.standard})
-		</foreach>
-	</insert>
+    <!-- 세부정보 조회 -->
+    <select id="SelectDetail" resultType="Detail">
+        SELECT *
+        FROM detail
+        WHERE detail_type = 1
+    </select>
 
-	<!-- 원종 삭제 -->
-	<select id="DeleteBasic" parameterType="java.util.ArrayList">
-		DELETE FROM basic
-		WHERE
-		<foreach collection="array" item="item" open="(" close=")" separator="OR">
-			basic_id = #{item}
-		</foreach>
-	</select>
+    <!-- 원종 갯수 조회 -->
+    <select id="SelectBasicCount" resultType="int">
+        SELECT COUNT(*) FROM basic
+        <choose>
+            <when test="basic_name != 'none'">
+                WHERE basic_name = #{basic_name}
+            </when>
+        </choose>
+    </select>
+
+    <!-- 원종 검색 -->
+    <select id="SearchBasic" resultType="Basic">
+        SELECT * FROM basic
+        <choose>
+            <when test="basic_name != 'none'">
+                WHERE basic_name = #{basic_name}
+            </when>
+        </choose>
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <!-- 원종 등록 -->
+    <insert id="InsertBasic" parameterType="Basic">
+        INSERT INTO basic
+        (basic_code, basic_name, basic_num, basic_raw_num, basic_bn_year, basic_bn_num, basic_seed, basic_amount, basic_weight, basic_date, basic_comment, create_date, modify_date)
+        VALUES
+        (#{basic_code}, #{basic_name}, #{basic_num}, #{basic_raw_num}, #{basic_bn_year}, #{basic_bn_num}, #{basic_seed}, #{basic_amount}, #{basic_weight}, #{basic_date},
+        #{basic_comment}, NOW(), NOW())
+        <selectKey resultType="int" keyProperty="basic_id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <!-- 원종 상세 정보 등록 -->
+    <insert id="InsertStandard" parameterType="java.util.ArrayList">
+        <foreach collection="list" item="item" separator=";">
+            INSERT INTO standard
+            (detail_id, basic_id, standard)
+            VALUES
+            (#{item.detail_id}, #{item.basic_id}, #{item.standard})
+        </foreach>
+    </insert>
+
+    <!-- 원종 삭제 -->
+    <select id="DeleteBasic" parameterType="java.util.ArrayList">
+        DELETE FROM basic
+        WHERE
+        <foreach collection="array" item="item" open="(" close=")" separator="OR">
+            basic_id = #{item}
+        </foreach>
+    </select>
+
+    <!-- 원종 수정 -->
+    <update id="UpdateBasic" parameterType="Basic">
+        UPDATE basic
+        SET basic_code    = #{basic_code},
+            basic_name    = #{basic_name},
+            basic_num     = #{basic_num},
+            basic_raw_num = #{basic_raw_num},
+            basic_bn_year = #{basic_bn_year},
+            basic_bn_num  = #{basic_bn_num},
+            basic_seed    = #{basic_seed},
+            basic_amount  = #{basic_amount},
+            basic_weight  = #{basic_weight},
+            basic_date    = #{basic_date},
+            basic_comment = #{basic_comment},
+            modify_date   = NOW()
+        WHERE basic_id = #{basic_id}
+    </update>
 </mapper>

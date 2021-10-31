@@ -40,9 +40,11 @@ public class SampleServiceImpl implements SampleService {
   // 시교자원 삭제
   @Override
   public int[] DeleteSample(int[] sample_id) { return mapper.DeleteSample(sample_id); }
-
+  
+  // 시교자원 수정
   @Override
-  public int UpdateSample(int sample_id) {
-    return mapper.UpdateSample(sample_id);
+  public int UpdateSample(Sample sample) {
+    return mapper.UpdateSample(sample);
   }
+
 }

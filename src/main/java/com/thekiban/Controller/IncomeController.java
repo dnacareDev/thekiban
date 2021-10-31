@@ -2,7 +2,10 @@ package com.thekiban.Controller;
 
 import com.thekiban.Entity.Basic;
 import com.thekiban.Entity.Income;
+import com.thekiban.Entity.Sample;
 import com.thekiban.Service.IncomeService;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -60,6 +63,7 @@ public class IncomeController {
     return result;
   }
 
+  // 도입자원 삭제
   @ResponseBody
   @RequestMapping("deleteIncome")
   public int DeleteIncome(@RequestParam("income_id[]") int[] income_id) {
@@ -68,4 +72,20 @@ public class IncomeController {
     return 1;
   }
 
+  @RequestMapping("updateIncome")
+  public ModelAndView UpdateSample(ModelAndView mv, @ModelAttribute Income income, @RequestParam("update_list") String update_list)  {
+    JSONArray arr = new JSONArray(update_list);
+
+    JSONObject obj = arr.getJSONObject(0);
+
+    String value = (String)obj.get("value");
+
+    income.setIncome_id(Integer.parseInt(value));
+
+    service.UpdateIncome(income);
+
+    mv.setViewName("redirect:/income");
+
+    return mv;
+  }
 }
