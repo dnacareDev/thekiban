@@ -19,10 +19,12 @@
 
     <!-- 품종 검색 -->
     <select id="SearchBreed" resultType="Breed">
-        SELECT * FROM breed
+        SELECT *,
+        (SELECT COUNT(*) FROM standard s WHERE s.breed_id = b.breed_id) AS standard_count
+        FROM breed b
         <choose>
             <when test="breed_name != 'none'">
-                WHERE breed_name = #{breed_name}
+                WHERE b.breed_name = #{breed_name}
             </when>
         </choose>
         LIMIT #{offset}, #{limit}
@@ -35,10 +37,10 @@
     </select>
     
     <!-- 품종별 정보값 조회 -->
-    <select id="SearchBreedStandard" parameterType="java.util.ArrayList" resultType="Standard">
+    <select id="SearchBreedStandard" resultType="Standard">
     	SELECT * FROM standard
-    	WHERE 
-    	<foreach collection="list" item="item" open="(" close=")" separator="OR">
+    	WHERE breed_id = #{breed_id} AND
+    	<foreach collection="detail" item="item" open="(" close=")" separator="OR">
             detail_id = #{item.detail_id}
         </foreach>
     </select>

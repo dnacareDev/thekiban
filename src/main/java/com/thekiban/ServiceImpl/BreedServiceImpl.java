@@ -46,9 +46,9 @@ public class BreedServiceImpl implements BreedService
 
 	// 품종별 정보값 조회
 	@Override
-	public List<Standard> SearchBreedStandard(List<Detail> detail)
+	public List<Standard> SearchBreedStandard(List<Detail> detail, int breed_id)
 	{
-		return mapper.SearchBreedStandard(detail);
+		return mapper.SearchBreedStandard(detail, breed_id);
 	}
  
 	// 품종 등록
