@@ -30,10 +30,6 @@ public class BreedController
 	@RequestMapping("breed")
 	public ModelAndView BreedList(ModelAndView mv)
 	{
-		List<Detail> detail = service.SelectDetail();
-    
-		mv.addObject("detail", detail);
-    
 		mv.setViewName("genome/breed");
     
 		return mv;
@@ -142,5 +138,16 @@ public class BreedController
 		service.DeleteBreed(breed_id);
 
 		return 1;
+	}
+	
+	// 표시항목 설정
+	@RequestMapping("insertDisplay")
+	public ModelAndView InsertDisplay(ModelAndView mv, @RequestParam("detail_id") String detail_id)
+	{
+		System.out.println(detail_id);
+		
+		mv.setViewName("redirect:/breed");
+		
+		return mv;
 	}
 }

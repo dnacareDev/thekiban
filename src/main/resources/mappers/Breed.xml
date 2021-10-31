@@ -33,7 +33,7 @@
     <!-- 품종별 세부 정보 조회 -->
     <select id="SearchBreedDetail" parameterType="String" resultType="Detail">
     	SELECT * FROM detail
-    	WHERE detail_name = #{breed_name}
+    	WHERE detail_type = 0 AND detail_name = #{breed_name}
     </select>
     
     <!-- 품종별 정보값 조회 -->
