@@ -638,7 +638,6 @@
                 </div>
                 <div class="modal-footer" style="border: none">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
-                    <!--<input type="hidden" id="sample_id" th:value="${sample.sample_id}">-->
                     <button type="button" class="btn btn-primary btn-sm" id="updateBtn" onclick="UpdateBtn()" data-dismiss="modal">저장</button>
                 </div>
             </div>
@@ -1058,7 +1057,7 @@
     var emptyElsIndex = 0;
 
     function emptyFunction(id, e) { // table 내용 모달로 가져오기 2021-10-29 alpadesign 수정
-        console.log(id);
+
         let target = e;
 
         let index = emptyEls.indexOf(target);
@@ -1067,7 +1066,6 @@
 
         let values = $(e).parent().children();
 
-        // document.getElementById("#update-grid").showModal();
         $("#update-grid").modal("show");
 
         var input_N = 0;
@@ -1088,9 +1086,9 @@
 
     // 일반 데이터 수정
     function UpdateBtn() {
-        var data = [];
+        const data = [];
 
-        var sample_id = {key: 'sample_id', value: resultData[emptyElsIndex].sample_id};
+        const sample_id = {key: 'sample_id', value: "" + resultData[emptyElsIndex].sample_id};
 
         data.push(sample_id);
 
@@ -1103,23 +1101,11 @@
             data.push(arr);
         });
 
-        console.log('data:', data);
 
         $("#update_list").val(JSON.stringify(data));
 
-        $("#updateForm").submit();
 
-/*        $.ajax(
-            {
-                url: 'updateSample',
-                method: 'POST',
-                dataType: 'json',
-                data: data,
-                success: function (result) {
-                    console.log(result);
-                    location.reload();
-                }
-            });*/
+        $("#updateForm").submit();
     }
 
     // 구글 맵 관련

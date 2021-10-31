@@ -46,6 +46,7 @@ public class SampleServiceImpl implements SampleService {
     return mapper.UpdateSample(sample_id);
   }*/
 
+  @Override
   public int UpdateSample(Sample sample) {
     return mapper.UpdateSample(sample);
   }
