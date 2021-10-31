@@ -18,11 +18,10 @@ public interface SampleService {
   // 시교자원 검색
   List<Sample> SearchSample(String sample_name, int offset, int limit);
 
-  // 삭제
+  // 시교자원 삭제
   int[] DeleteSample(int[] sample_id);
 
-//  int UpdateSample(int sample_id);
-
+  // 시교자원 수정
   int UpdateSample(Sample sample);
 
 }

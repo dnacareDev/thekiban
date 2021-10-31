@@ -76,19 +76,7 @@ public class SampleController {
     return 1;
   }
 
-  // 제품 수정
-//  @ResponseBody
-//  @RequestMapping("updateSample")
-//  public int UpdateSample(@RequestParam("sample") Sample sample)
-//  {
-//    int result = service.UpdateSample(sample);
-//
-//    System.out.println(result);
-//
-//    return result;
-//  }
-
-  // 시교자원 입력
+  // 시교자원 수정
   @RequestMapping("updateSample")
   public ModelAndView UpdateSample(ModelAndView mv, @ModelAttribute Sample sample, @RequestParam("update_list") String update_list)  {
     JSONArray arr = new JSONArray(update_list);

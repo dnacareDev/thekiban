@@ -1,6 +1,7 @@
 package com.thekiban.Mapper;
 
 import com.thekiban.Entity.Income;
+import com.thekiban.Entity.Sample;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -20,5 +21,8 @@ public interface IncomeMapper {
 
   // 도입자원 삭제
   int[] DeleteIncome(int[] income_id);
+
+  // 도입자원 수정
+  int UpdateIncome(Income income);
 
 }

@@ -2,6 +2,7 @@ package com.thekiban.Mapper;
 
 import java.util.List;
 
+import com.thekiban.Entity.Sample;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -27,5 +28,10 @@ public interface BasicMapper
 	// 원정 상세 정보 등록
 	int InsertStandard(List<Standard> standard);
 
+	// 원종 삭제
 	int[] DeleteBasic(int[] basic_id);
+	
+	// 원종 수정
+	int UpdateBasic(Basic basic);
+
 }

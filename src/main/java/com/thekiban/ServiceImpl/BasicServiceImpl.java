@@ -56,4 +56,9 @@ public class BasicServiceImpl implements BasicService
 	public int[] DeleteBasic(int[] basic_id) {
 		return mapper.DeleteBasic(basic_id);
 	}
+
+	@Override
+	public int UpdateBasic(Basic basic) {
+		return mapper.UpdateBasic(basic);
+	}
 }
