@@ -334,6 +334,7 @@
 <body class="layout-light top-menu overlayScroll">
 <div class="mobile-search"></div>
 <div class="mobile-author-actions"></div>
+
 <!-- 공통 topbar -->
 <th:block th:include="/../fragments/topbar.html"></th:block>
 <main class="main-content" style="background-color: #FCFCFC;">
@@ -1282,6 +1283,8 @@
             </div>
         </div>
     </div>
+
+    <!-- 데이터 목록 창 -->
     <div class="modal-basic modal fade show pop7" id="data_upload2" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white ">
@@ -2122,7 +2125,7 @@
                 $(this).siblings().removeClass('asc');
                 $(this).siblings().removeClass('desc');
 
-                var rec = $('#table1').find('tbody>tr').get();
+                var rec = $('#display').find('tbody>tr').get();
 
                 rec.sort(function (a, b)
                 {

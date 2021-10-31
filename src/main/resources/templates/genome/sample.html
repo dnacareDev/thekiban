@@ -215,6 +215,71 @@
             color: #000;
         }
 
+        #data_upload .modal-body .form-group {
+            justify-content: flex-start;
+        }
+
+        #data_upload .form-group button, #data_upload2 .form-group button {
+            height: 45px;
+            padding: 0 20px;
+            background-color: #217566;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+
+        #data_upload2 .form-group button {
+            margin-left: 0;
+        }
+
+        #data_upload .form-group input[type=text], #data_upload2 .form-group input[type=text] {
+            flex: 0 0 30%;
+            cursor: pointer;
+        }
+
+        #data_upload .form-group input[type=text]::-webkit-input-placeholder {
+            background: url("../assets/vendor_assets/img/upload.png") no-repeat 0 3px;
+            background-size: 15px;
+            color: #B2B2B2;
+        }
+
+        #data_upload .atbd-upload, #data_upload2 .atbd-upload {
+            width: 100%;
+            height: 300px;
+            overflow: auto;
+        }
+
+        #data_upload .atbd-upload table {
+            min-width: max-content;
+            border: none;
+        }
+
+        #data_upload2 .atbd-upload table {
+            width: 100%;
+        }
+
+        #data_upload table thead tr, #data_upload2 table thead tr {
+            border-top: none;
+            border-bottom: 2px solid #E8EEF2;
+        }
+
+        #data_upload table tbody tr, #data_upload2 table tbody tr {
+            border-bottom: 1px solid #E8EEF2;
+        }
+
+        #data_upload .atbd-upload table thead th, #data_upload2 .atbd-upload table thead th {
+            background-color: #F7F7F8;
+            color: #222222;
+            font-size: 16px;
+        }
+
+        #data_upload .atbd-upload table tbody td, #data_upload2 .atbd-upload table tbody td {
+            background-color: #fff;
+            color: #666666;
+            font-size: 16px;
+            font-weight: 200;
+        }
     </style>
 </head>
 
@@ -265,10 +330,10 @@
                                             </th:block>-->
                                         </select>
                                     </form>
-                                    <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none">
                                     <button class="btn btn-lg btn-primary data_btn1" onclick="filesFunction()"><img
                                         src="../assets/vendor_assets/img/icon1.svg" alt=""></button>
-                                    <button class="btn btn-lg btn-primary data_btn2"><img src="../assets/vendor_assets/img/icon2.png" alt=""></button>
+                                    <button class="btn btn-lg btn-primary data_btn2" data-toggle="modal" data-target="#data_upload2"><img
+                                        src="../assets/vendor_assets/img/icon2.png" alt=""></button>
                                     <button class="btn btn-lg btn-primary data_btn2"><img src="../assets/vendor_assets/img/icon3.png" alt=""></button>
                                 </div>
                             </div>
@@ -644,6 +709,106 @@
         </div>
     </div>
 
+    <!-- 데이터 등록 모달창 -->
+    <div class="modal-basic modal fade show pop5" id="data_upload" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content modal-bg-white ">
+                <div class="modal-header" style="border: none">
+                    <h6 class="modal-title">품종관리 > 데이터 등록</h6>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group mb-0">
+                        <input type="text" class="form-control form-control-lg" placeholder="Click to Upload">
+                        <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none">
+                        <button onclick="filesFunction()">불러오기</button>
+                        <input type="file" name="" id="file_data_upload" style="display: none;">
+                    </div>
+                    <div>
+                        <div class="atbd-upload">
+                            <table  id="excel_data">
+                                <thead>
+                                <tr>
+                                    <th>시교명 (ID)</th>
+                                    <th>품종명</th>
+                                    <th>모계 계통명 (ID)</th>
+                                    <th>부계 계통명 (ID)</th>
+                                    <th>생산판매 (신고번호)</th>
+                                    <th>생산판매 (신고일자)</th>
+                                    <th>보호출원 (출원번호)</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>asdasd</td>
+                                    <td>asdasd</td>
+                                    <td>asdasd</td>
+                                    <td>asdasd</td>
+                                    <td>asdasd</td>
+                                    <td>asdasd</td>
+                                    <td>asdasd</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border: none">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" onclick="dataToggle('#data_upload', '#data_upload2');">취소</button>
+                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">등록</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 데이터 목록 창 -->
+    <div class="modal-basic modal fade show pop7" id="data_upload2" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content modal-bg-white ">
+                <div class="modal-header" style="border: none">
+                    <h6 class="modal-title">품종관리 > 데이터 등록</h6>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group mb-0">
+                        <button onclick="dataToggle('#data_upload2', '#data_upload');">데이터 등록</button>
+                        <button>등록서식 다운로드</button>
+                    </div>
+                    <div>
+                        <div class="atbd-upload">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>순번</th>
+                                    <th>등록일</th>
+                                    <th>데이터수</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>2</td>
+                                    <td>2021-08-15</td>
+                                    <td>185</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>2021-08-15</td>
+                                    <td>185</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border: none">
+                    <div class="col-4">
+                        <div class="row" style="justify-content: center;">
+                            <div id="pageNum1" style="text-align:center; margin: 2% 0 0 0;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- 지도 -->
     <div class="modal-basic modal fade show" id="recent" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
@@ -674,6 +839,16 @@
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBn0n_LEGxgJuCfTU8aKvuwrcmw0iZjfmY&callback=initMap&region=kr"></script>
 <script type="text/javascript">
+    function dataToggle(one, two)
+    {
+        $(one).modal("hide");
+
+        setTimeout(function()
+        {
+            $(two).modal("show");
+        }, 5);
+    }
+
     let topBox = document.getElementsByClassName("top_box")[0];
     let [nav, prev, next] = topBox.children;
     let navLi = nav.children; // pop top list
@@ -767,53 +942,71 @@
             var fourthSheet = wb.Sheets[fourthSheetName]; // 네번째 시트
             callback(fourthSheet);
 
-            var rowdata = XLSX.utils.sheet_to_json(wb.Sheets[fourthSheetName]);
-            console.log(rowdata.length)
+            // var rowdata = XLSX.utils.sheet_to_json(wb.Sheets[fourthSheetName]);
+            // var rowdata = XLSX.utils.sheet_to_json(fourthSheet);
+
+            delete fourthSheet.A1;
+            delete fourthSheet.A2;
+            var rowdata = XLSX.utils.sheet_to_json(fourthSheet);
+            console.log(rowdata);
+
+            var keys = Object.values(rowdata[0]);
+
+            var excel = [];
+
+            for(var k = 1; k < rowdata.length; k++) {
+                var chk = Object.values(rowdata[k]);
+
+                console.log(chk);
+                for(var n = 0; n < keys.length; n++) {
+                   excel[n] = {key: keys[n], value: chk[n]};
+                }
+                const obj = {...excel};
+
+                rowdata[k] = obj;
+
+                console.log(rowdata[k]);
+            }
 
             var html = "";
 
-            for (var i = 1; i < rowdata.length; i++) {
-                if (i === 1) {
+            for (var i = 0; i < rowdata.length; i++) {
+                if (i === 0) {
                     html += "<thead class='text-center'>";
                     html += "<tr>";
-                    html += "<th></th>";
-                    html += '<th><span class="title">첨부파일</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="첨부파일"></th>';
-                    html += '<th style="cursor: pointer;"><span class="title">특성상태</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="특성상태"></th>';
-
-                    $.each(rowdata[1], function (idx, value) {
-                        html += "<th style='cursor: pointer;'><span class='title'>" + value + "</span><i></i><img src='../assets/vendor_assets/img/title_icon.png'></th>";
+                    $.each(rowdata[0], function (idx, value) {
+                        html += "<th><span class='excel-title'>" + value + "</span></th>";
                     })
 
                     html += "</tr>";
                     html += "</thead>";
-                } else if (i !== 1) {
+                } else if (i !== 0) {
                     html += "<tbody class='text-center'>";
-                    html += "<tr>";
-                    html += "<td><input type='checkbox' name='chkBox'></td>";
-                    html += "<td><button class='btn btn-light btn-default btn-squared btn-transparent-light' data-toggle='modal' data-target='#gen-attach'><i class='bi bi-file-earmark-arrow-down'></i></button></td>";
-                    html += "<td><span>EMPTY</span></td>";
+
+                    var tmp = Object.keys(rowdata[0]);
+                    var j = 0;
 
                     $.each(rowdata[i], function (idx, value) {
                         // 공백처리
-                        if (idx == tmp[j]) {
+                        // if (idx == tmp[j]) {
                             html += "<td><span>" + value + "</span></td>";
-                            j++;
-                        } else {
-                            var idx_str = idx.replace(/[^0-9]/g, '');
-                            var tmp_str = tmp[j].replace(/[^0-9]/g, '');
-
-                            var gap = idx_str - tmp_str;
-
-                            while (gap > 0) {
-                                gap--;
-                                html += "<td><span> </span></td>";
-                            }
-
-                            html += "<td><span>" + value + "</span></td>";
-
-                            j = idx_str;
-                            j++;
-                        }
+                        //     j++;
+                        // } else {
+                        //     var idx_str = idx.replace(/[^0-9]/g, '');
+                        //     var tmp_str = tmp[j].replace(/[^0-9]/g, '');
+                        //
+                        //     var gap = idx_str - tmp_str;
+                        //
+                        //     while (gap > 0) {
+                        //         gap--;
+                        //         html += "<td><span> </span></td>";
+                        //     }
+                        //
+                        //     html += "<td><span>" + value + "</span></td>";
+                        //
+                        //     j = idx_str;
+                        //     j++;
+                        // }
                     });
 
                     html += "</tr>";
@@ -821,8 +1014,8 @@
                 }
             }
 
-            $("#table1>thead").empty();
-            $("#table1").prepend(html);
+            $("#excel_data").empty();
+            $("#excel_data").append(html);
         };
 
         reader.readAsBinaryString(input.files[0]);
@@ -1057,7 +1250,6 @@
     var emptyElsIndex = 0;
 
     function emptyFunction(id, e) { // table 내용 모달로 가져오기 2021-10-29 alpadesign 수정
-
         let target = e;
 
         let index = emptyEls.indexOf(target);
