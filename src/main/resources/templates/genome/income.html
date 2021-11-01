@@ -917,8 +917,6 @@
 
             var html = "";
 
-            console.log(rowdata);
-
             // table 생성
             for (var i = 0; i < rowdata.length; i++) {
                 if (i === 0) {
@@ -941,8 +939,13 @@
                     $.each(rowdata[i], function (idx, value) {
                         // 공백처리
                         if (idx == tmp[j]) {
-                            html += "<td class='excel'><span>" + value + "</span></td>";
-                            j++;
+                            if(idx === "__EMPTY_7") {
+                                html += "<td class='excel'><span>" + excelDateToJSDate(value) + "</span></td>";
+                                j++;
+                            } else {
+                                html += "<td class='excel'><span>" + value + "</span></td>";
+                                j++;
+                            }
                         } else {
                             var idx_str = idx.replace(/[^0-9]/g, '');
                             var tmp_str = tmp[j].replace(/[^0-9]/g, '');
@@ -954,7 +957,13 @@
                                 html += "<td><span> </span></td>";
                             }
 
-                            html += "<td><span>" + value + "</span></td>";
+                            if(idx === "__EMPTY_7") {
+                                html += "<td class='excel'><span>" + excelDateToJSDate(value) + "</span></td>";
+                                j++;
+                            } else {
+                                html += "<td class='excel'><span>" + value + "</span></td>";
+                                j++;
+                            }
 
                             j = idx_str;
                             j++;
@@ -972,17 +981,19 @@
                 var chk = Object.values(rowdata[k]);
 
                 for (var n = 0; n < keys.length; n++) {
+
+                    console.log('chk[n] : ', chk[n]);
                     if (chk[n] == undefined) {
                         excel[n] = {key: keys[n], value: " "};
-                    } else if ((typeof chk[n]) === "number"){
-                        excel[n] = {key: keys[n], value: chk[n]};
+                    } else if(keys[n] === "도입연월일") {
+                        excel[n] = {key: keys[n], value: excelDateToJSDate(chk[n])};
                     } else {
                         excel[n] = {key: keys[n], value: "" + chk[n]};
                     }
                 }
                 const obj = {...excel};
 
-                // console.log(obj);
+                console.log(obj);
                 rowdata[k] = obj;
             }
 
@@ -990,8 +1001,6 @@
             $("#excel_data").append(html);
 
             var jsonObj = tableToJson(document.getElementById("excel_data"));
-
-            console.log(jsonObj);
 
             $("#excel_list").val(JSON.stringify(jsonObj));
         };
@@ -1036,6 +1045,13 @@
         }
 
         return data;
+    }
+
+    // date to string
+    function excelDateToJSDate(excelDate) {
+        var date = new Date(Math.round((excelDate - (25567 + 2)) * 86400 * 1000));
+        var converted_date = date.toISOString().split('T')[0];
+        return converted_date;
     }
 
     /* form data to json */

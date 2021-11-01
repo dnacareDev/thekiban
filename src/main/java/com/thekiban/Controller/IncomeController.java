@@ -1,18 +1,23 @@
 package com.thekiban.Controller;
 
-import com.thekiban.Entity.Basic;
 import com.thekiban.Entity.Income;
-import com.thekiban.Entity.Sample;
 import com.thekiban.Service.IncomeService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @Controller
 public class IncomeController {
@@ -99,6 +104,9 @@ public class IncomeController {
       Set<String> key = obj.keySet();
 
       for (String k : key) {
+
+//        System.out.println(obj.getString(k));
+
         if (k.equals("작물")) {
           income.setIncome_name(obj.getString(k));
         } else if (k.equals("도입번호 (ID)")) {
@@ -113,7 +121,7 @@ public class IncomeController {
           income.setIncome_country(obj.getString(k));
         } else if (k.equals("도입자")) {
           income.setIncome_person(obj.getString(k));
-        } else if (k.equals("도입연원일")) {
+        } else if (k.equals("도입연월일")) {
           income.setIncome_date(obj.getString(k));
         } else if (k.equals("현 종자량")) {
           income.setIncome_num(Integer.parseInt(obj.getString(k)));
@@ -126,7 +134,9 @@ public class IncomeController {
         }
       }
 
-       service.InsertIncome(income);
+      System.out.println(income);
+
+      service.InsertIncome(income);
     }
 
     mv.setViewName("redirect:/income");

@@ -5,13 +5,9 @@
     <!-- 도입자원 등록 -->
     <insert id="InsertIncome" parameterType="Income">
         INSERT INTO income
-        (income_id, income_code, income_name, income_kind, income_division,
-         income_place, income_country, income_person, income_date, income_num, income_type, income_trait,
-         income_comment, create_date, modify_date)
-        VALUES (#{income_id}, #{income_code}, #{income_name}, #{income_kind}, #{income_division}, #{income_place}, #{income_country},
-                #{income_person},
-                #{income_date}, #{income_num}, #{income_type}, #{income_trait},
-                #{income_comment}, NOW(), NOW())
+        (income_id, income_code, income_name, income_kind, income_division, income_place, income_country, income_person, income_date, income_num, income_type, income_trait, income_comment, create_date, modify_date)
+        VALUES
+        (#{income_id}, #{income_code}, #{income_name}, #{income_kind}, #{income_division}, #{income_place}, #{income_country}, #{income_person}, #{income_date}, #{income_num}, #{income_type}, #{income_trait}, #{income_comment}, NOW(), NOW())
     </insert>
 
     <!-- 도입자원 갯수 조회 -->

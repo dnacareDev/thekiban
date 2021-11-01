@@ -17,7 +17,8 @@ public class IncomeServiceImpl implements IncomeService {
 
   // 도입자원 등록
   @Override
-  public int InsertIncome(Income income) {
+  public int InsertIncome(Income income)
+  {
     return mapper.InsertIncome(income);
   }
 
