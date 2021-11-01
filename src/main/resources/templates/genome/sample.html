@@ -950,7 +950,7 @@
                 var chk = Object.values(rowdata[k]);
 
                 for (var n = 0; n < keys.length; n++) {
-                    excel[n] = {key: keys[n], value: chk[n]};
+                    excel[n] = {key: keys[n], value: "" + chk[n]};
                 }
                 const obj = {...excel};
 

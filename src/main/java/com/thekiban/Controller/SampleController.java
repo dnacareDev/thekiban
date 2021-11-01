@@ -1,5 +1,6 @@
 package com.thekiban.Controller;
 
+import com.google.gson.Gson;
 import com.thekiban.Entity.Breed;
 import com.thekiban.Entity.Sample;
 import com.thekiban.Entity.Standard;
@@ -92,7 +93,7 @@ public class SampleController {
   }
 
   @RequestMapping("excelSample")
-  public ModelAndView excelUpload(ModelAndView mv, @RequestParam("excel_list") String excel_list) {
+  public ModelAndView excelUpload(ModelAndView mv, @ModelAttribute Sample sample, @RequestParam("excel_list") String excel_list) {
     JSONArray arr = new JSONArray(excel_list);
 
     for (int i = 1; i < arr.length(); i++) {
@@ -108,16 +109,32 @@ public class SampleController {
         JSONObject obj2 = new JSONObject(obj.get(key).toString());
 
         String detail_id = (String) obj2.get("key");
-        String value = String.valueOf(obj2.get("value"));
+        String value = (String) obj2.get("value");
+
+        if(detail_id.equals("작물")) {
+          sample.setSample_name(value);
+        } else if (detail_id.equals("시교명 (ID)")) {
+          sample.setSample_code(value);
+        } else if (detail_id.equals("목표 지역")) {
+          sample.setSample_country(value);
+        } else if (detail_id.equals("구분")) {
+          sample.setSample_type(value);
+        } else if (detail_id.equals("교배번호")) {
+          sample.setSample_mate(value);
+        } else if (detail_id.equals("종자번호 (ID)")) {
+          sample.setSample_seed(value);
+        } else if (detail_id.equals("현 종자량(g)")) {
+          sample.setSample_amount(Double.parseDouble(value));
+        } else if (detail_id.equals("기내 발아율(%)")) {
+          sample.setSample_sprout(Integer.parseInt(value));
+        } else if (detail_id.equals("기내 순도율 (%)")) {
+          sample.setSample_purity(Integer.parseInt(value));
+        } else if (detail_id.equals("비고")) {
+          sample.setSample_comment(value);
+        }
       }
 
-
-//      service.InsertSample(sample);
-//      String detail_id = (String) obj.get("key");
-//      String value = (String) obj.get("value");
-//
-//      System.out.println("detail_id : " + detail_id);
-//      System.out.println("value : " + value);
+      service.InsertSample(sample);
     }
 
     mv.setViewName("redirect:/sample");
