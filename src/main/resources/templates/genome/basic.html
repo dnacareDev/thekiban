@@ -184,7 +184,15 @@
         td .btn i.bi-file-earmark-arrow-down {
             color: #000;
         }
-
+        
+        /* 2021 - 11 - 01 수정 */
+        .table td {padding: 3px 12px;}
+        #table2 td {padding: 12px 12px;}
+        
+        .popup_wrap {display: none}
+		 .popup_wrap.on {position: fixed; left: 0; top: 0; right: 0; bottom:0; z-index: 999; background-color: rgba(0, 0, 0, 0.1);}
+        .popup_wrap.on .popup {position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 400px; height: 150px; background-color: #fff; border-radius: 8px; padding: 30px; text-align: center; padding-top: 40px}
+        .popup_wrap.on .close {position: absolute; left: 50%; transform: translateX(-50%); bottom: 20px; font-size: 14px; background-color: #397939; display: block; height: 35px; width: 90px; color: #fff;  font-weight: 400; border-radius: 6px}
     </style>
 </head>
 <body class="layout-light top-menu overlayScroll">
@@ -873,7 +881,12 @@
 
     <!-- modal end -->
 </main>
-
+<div class="popup_wrap">
+	<div class="popup">
+		<p class="popup_text">작물을 선택해주세요.</p>
+		<button class="close">닫기</button>
+	</div>
+</div>
 <!-- 공통 하단 -->
 <th:block th:include="/../fragments/footer.html"></th:block>
 <!-- 공통 js -->
