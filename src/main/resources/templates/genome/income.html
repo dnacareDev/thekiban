@@ -184,18 +184,27 @@
         td .btn i.bi-file-earmark-arrow-down{
             color: #000;
         }
-<<<<<<< HEAD
         
         
         /* 2021 - 11 - 01 수정 */
-        .table td {padding: 3px 12px;}
-        #table2 td {padding: 12px 12px;}
+        .table td {padding: 0px 12px; vertical-align: middle; font-size: 14px}
+        .table th {font-size: 16px}
+        #table2 td {padding: 12px 12px; font-size: 14px}
+        #table2 th {font-size: 16px}
         
-        .popup_wrap {display: none}
-         .popup_wrap.on {position: fixed; left: 0; top: 0; right: 0; bottom:0; z-index: 999; background-color: rgba(0, 0, 0, 0.1);}
+        .main-content .table thead th span.title:before,
+        .main-content .table thead th span.title:after,
+        .main-content .table thead th i {display: none;}
+        
+        .main-content .table thead th > img {margin: 6px 0 0 12px;}
+        
+         .popup_wrap {display: none}
+        .popup_wrap.on {display: block; position: fixed; left: 0; top: 0; right: 0; bottom:0; z-index: 999; background-color: rgba(0, 0, 0, 0.1);}
         .popup_wrap.on .popup {position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 400px; height: 150px; background-color: #fff; border-radius: 8px; padding: 30px; text-align: center; padding-top: 40px}
-        .popup_wrap.on .close {position: absolute; left: 50%; transform: translateX(-50%); bottom: 20px; font-size: 14px; background-color: #397939; display: block; height: 35px; width: 90px; color: #fff;  font-weight: 400; border-radius: 6px}
-=======
+        .popup_wrap.on .close {opacity: 1; position: absolute; left: 50%; transform: translateX(-50%); bottom: 20px; font-size: 14px; background-color: #1e695c; display: block; height: 35px; width: 90px; color: #fff;  font-weight: 400; border-radius: 6px}
+
+
+
 
         #data_upload .modal-body .form-group {
             justify-content: flex-start;
@@ -219,7 +228,7 @@
             flex: 0 0 30%;
             cursor: pointer;
         }
-
+        
         #data_upload .form-group input[type=text]::-webkit-input-placeholder {
             background: url("../assets/vendor_assets/img/upload.png") no-repeat 0 3px;
             background-size: 15px;
@@ -262,7 +271,6 @@
             font-size: 16px;
             font-weight: 200;
         }
->>>>>>> 20115edf1ef21bca7e1df72d7cca223a5dd67d74
     </style>
 
 </head>
@@ -309,7 +317,7 @@
                                             <option value="토마토">토마토</option>
                                         </select>
                                     </form>
-                                    <button class="btn btn-lg btn-primary data_btn2" data-toggle="modal" data-target="#data_upload2"><img
+                                    <button class="btn btn-lg btn-primary data_btn2" title="데이터 등록" data-toggle="modal" data-target="#data_upload2"><img
                                         src="../assets/vendor_assets/img/icon2.png" alt=""></button>
                                     <button class="btn btn-lg btn-primary data_btn2"><img src="../assets/vendor_assets/img/icon3.png" alt=""></button>
                                 </div>
@@ -1287,6 +1295,21 @@
 
         $("#updateForm").submit();
     }
+    
+    
+ // popup 창
+    const popupBtn = document.querySelectorAll('.btn-circle');
+    const popup = document.querySelector('.popup_wrap');
+    const popupClose = document.querySelector('.close');
+    console.log(popupBtn[0]);
+    
+    popupBtn[0].addEventListener('click', () => {
+    	popup.classList.add('on');
+    });
+    
+    popupClose.addEventListener('click', () => {
+    	popup.classList.remove('on');
+    }); 
 </script>
 
 </body>

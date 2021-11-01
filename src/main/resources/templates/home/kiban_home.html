@@ -80,8 +80,8 @@
     	}
 		.data_number{
     		position: absolute;
-   		    left: 31%;
-   			top: 47%;
+   		    left: 25%;
+   		    top: 46%;
     	}
 
         #google_container {
@@ -103,13 +103,17 @@
     	
     	
     	/* 2021 - 11 - 01 수정 */
-    	.main-content .contents .row .card .card-body #doughnut.slick-slider {width: 100%; display: flex;}
+    	.main-content .contents .row .card .card-body #doughnut.slick-slider {width: 100%; display: flex; justify-content: center;}
+    	.container-fluid .col-lg-12 .card .card-body {padding: 10px 1.56rem 10px;}
     	
-    	.col-lg-12 .card .card-body .slick-slider__single .color-primary {margin: 10px 0px 0 0 !important;}
-    	.col-lg-12 .card .card-body .slick-slider__single .data_percent {margin-right: 100px;}
-    	
+    	.main-content .contents .container-fluid {padding-top: 15px}
+    	.col-lg-12 .card .card-body .slick-slider__single {width:50%}
+    	.col-lg-12 .card .card-body .slick-slider__single .color-primary {margin: 10px -60px 0 0 !important;}
+    	.col-lg-12 .card .card-body .slick-slider__single .data_percent {margin-right: 58px;}
+    	.col-lg-12 .card .card-body .slick-slider__single:last-child .data_percent:last-child {margin-right: 0px;}
+    	.container-fluid:last-child .col-lg-12 .card .card-body {padding-bottom: 40px}
     	/* 두변쨰 카드 */
-    	.container-fluid .col-lg-12 .card .color-primary {margin-top: 2.5rem !important; margin-bottom: 0 !important; margin-left: 2rem !important;}
+    	.container-fluid .col-lg-12 .card .color-primary {margin-top: 2rem !important; margin-bottom: 0 !important; margin-left: 2rem !important; font-size: 18px;}
     	.col-lg-12 .card .card-body #google_container {height: 400px}
     	
     	
@@ -137,13 +141,13 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="card">
-                        <div class="card-body" style="height: 320px;">
+                        <div class="card-body" style="height: 280px;">
                             <div id="doughnut" class="slick-slider slick-dots-bottom" data-dots-slick='true'>
                                 <div class="slick-slider__single d-flex">
                                     <p class="color-primary fa-lg mb-3 mt-5 ml-3" style="color: black">총 품종 수</p>
                                     <div class="data_relative">
                                     	<div class="doughnut_cover"> <!-- 2021-10-19 AlpaDesign 자동으로 가운데로 오기위해 추가했습니다 (vertical-align=middle) -->
-                                        	<canvas id="doughnut1" height="230px"></canvas>
+                                        	<canvas id="doughnut1" style="height:210px; width:200px"></canvas>
                                         </div>
                                         <div class="data_number">
                                     		<span class="data">174건</span>
@@ -166,7 +170,7 @@
                                     <p class="color-primary fa-lg mb-3 mt-5 ml-3" style="color: black">생산 판매 신고</p>
                                     <div class="data_relative">
                                    		<div class="doughnut_cover"> <!-- 2021-10-19 AlpaDesign 자동으로 가운데로 오기위해 추가했습니다 (vertical-align=middle) -->
-                                        	<canvas id="doughnut2" height="230px"></canvas>
+                                        	<canvas id="doughnut2" style="height:210px; width:200px"></canvas>
                                         </div>
                                         <div class="data_number">
                                     		<span class="data">174건</span>
@@ -191,7 +195,7 @@
                                     <p class="color-primary fa-lg mb-3 mt-5 ml-3" style="color: black">품종 보호 출원</p>
                                     <div class="data_relative">
                                     	<div class="doughnut_cover"> <!-- 2021-10-19 AlpaDesign 자동으로 가운데로 오기위해 추가했습니다 (vertical-align=middle) -->
-                                        	<canvas id="doughnut3" height="230px"></canvas>
+                                        	<canvas id="doughnut3" style="height:210px; width:200px"></canvas>
                                         </div>
                                         <div class="data_number">
                                     		<span class="data">174건</span>
@@ -214,7 +218,7 @@
                                     <p class="color-primary fa-lg mb-3 mt-5 ml-3" style="color: black">품종 보호 등록</p>
                                     <div class="data_relative">
                                     	<div class="doughnut_cover"> <!-- 2021-10-19 AlpaDesign 자동으로 가운데로 오기위해 추가했습니다 (vertical-align=middle) -->
-                                        	<canvas id="doughnut4" height="230px"></canvas>
+                                        	<canvas id="doughnut4" style="height:210px; width:200px"></canvas>
                                         </div>
                                         <div class="data_number">
                                     		<span class="data">174건</span>
@@ -249,7 +253,7 @@
                         <p class="color-primary fa-lg mb-3 mt-5 ml-3">작물별 품종 수</p>
                         <div class="card-body">
                             <div>
-                                <canvas id="bar1" height="40px"></canvas>
+                                <canvas id="bar1" height="25px"></canvas>
                             </div>
                         </div>
                     </div>
@@ -413,12 +417,16 @@
             }]
         },
         options: {
-            responsive: true,
+        	responsive: false,
             legend: {
                 position: "right",
                 labels: {
                     fontColor: "black",
                     usePointStyle: true,
+                    fontSize: 10,
+                    font: {
+                        lineHeight: 1,
+                    },
                 }
             },
         	cutoutPercentage: 80,
@@ -448,12 +456,16 @@
             }]
         },
         options: {
-            responsive: true,
+        	responsive: false,
             legend: {
                 position: 'right',
                 labels: {
                     fontColor: "black",
                     usePointStyle: true,
+                    fontSize: 10,
+                    font: {
+                        lineHeight: 1,
+                    },
                 }
             },
             cutoutPercentage: 80,
@@ -483,12 +495,16 @@
             }]
         },
         options: {
-            responsive: true,
+        	responsive: false,
             legend: {
                 position: 'right',
                 labels: {
                     fontColor: "black",
                     usePointStyle: true,
+                    fontSize: 10,
+                    font: {
+                        lineHeight: 1,
+                    },
                 }
             },
             cutoutPercentage: 80,
@@ -518,12 +534,16 @@
             }]
         },
         options: {
-            responsive: true,
+        	responsive: false,
             legend: {
                 position: 'right',
                 labels: {
                     fontColor: "black",
                     usePointStyle: true,
+                    fontSize: 10,
+                    font: {
+                    lineHeight: 1,
+                    },
                 }
             },
             cutoutPercentage: 80,
