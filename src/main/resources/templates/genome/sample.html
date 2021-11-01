@@ -714,7 +714,7 @@
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white ">
                 <div class="modal-header" style="border: none">
-                    <h6 class="modal-title">품종관리 > 데이터 등록</h6>
+                    <h6 class="modal-title">시교자원관리 > 데이터 등록</h6>
                 </div>
                 <div class="modal-body">
                     <div class="form-group mb-0">
@@ -760,7 +760,7 @@
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white ">
                 <div class="modal-header" style="border: none">
-                    <h6 class="modal-title">품종관리 > 데이터 등록</h6>
+                    <h6 class="modal-title">시교자원관리 > 데이터 등록</h6>
                 </div>
                 <div class="modal-body">
                     <div class="form-group mb-0">
@@ -935,9 +935,6 @@
             var fourthSheet = wb.Sheets[fourthSheetName]; // 네번째 시트
             callback(fourthSheet);
 
-            // var rowdata = XLSX.utils.sheet_to_json(wb.Sheets[fourthSheetName]);
-            // var rowdata = XLSX.utils.sheet_to_json(fourthSheet);
-
             delete fourthSheet.A1;
             delete fourthSheet.A2;
             var rowdata = XLSX.utils.sheet_to_json(fourthSheet);
@@ -963,6 +960,7 @@
                 if (i === 0) {
                     html += "<thead class='text-center'>";
                     html += "<tr>";
+
                     $.each(rowdata[0], function (idx, value) {
                         html += "<th><span class='excel-title'>" + value + "</span></th>";
                     })

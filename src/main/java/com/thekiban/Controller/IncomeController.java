@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,6 +73,7 @@ public class IncomeController {
     return 1;
   }
 
+  // 도입자원 수정
   @RequestMapping("updateIncome")
   public ModelAndView UpdateSample(ModelAndView mv, @ModelAttribute Income income, @RequestParam("update_list") String update_list)  {
     JSONArray arr = new JSONArray(update_list);
@@ -83,6 +85,59 @@ public class IncomeController {
     income.setIncome_id(Integer.parseInt(value));
 
     service.UpdateIncome(income);
+
+    mv.setViewName("redirect:/income");
+
+    return mv;
+  }
+
+  // 엑셀 등록
+  @RequestMapping("excelIncome")
+  public ModelAndView excelUpload(ModelAndView mv, @ModelAttribute Income income, @RequestParam("excel_list") String excel_list) {
+    JSONArray arr = new JSONArray(excel_list);
+
+    for (int i = 1; i < arr.length(); i++) {
+
+      JSONObject obj = arr.getJSONObject(i);
+
+      Iterator<String> keys = obj.keys();
+
+      while(keys.hasNext())
+      {
+        String key = keys.next().toString();
+
+        JSONObject obj2 = new JSONObject(obj.get(key).toString());
+
+        String detail_id = (String) obj2.get("key");
+        String value = (String) obj2.get("value");
+
+        System.out.println(detail_id);
+
+//        if(detail_id.equals("작물")) {
+//          income.setSample_name(value);
+//        } else if (detail_id.equals("시교명 (ID)")) {
+//          income.setSample_code(value);
+//        } else if (detail_id.equals("목표 지역")) {
+//          income.setSample_country(value);
+//        } else if (detail_id.equals("구분")) {
+//          income.setSample_type(value);
+//        } else if (detail_id.equals("교배번호")) {
+//          income.setSample_mate(value);
+//        } else if (detail_id.equals("종자번호 (ID)")) {
+//          income.setSample_seed(value);
+//        } else if (detail_id.equals("현 종자량(g)")) {
+//          income.setSample_amount(Double.parseDouble(value));
+//        } else if (detail_id.equals("기내 발아율(%)")) {
+//          income.setSample_sprout(Integer.parseInt(value));
+//        } else if (detail_id.equals("기내 순도율 (%)")) {
+//          income.setSample_purity(Integer.parseInt(value));
+//        } else if (detail_id.equals("비고")) {
+//          income.setSample_comment(value);
+//        }
+      }
+
+//      service.InsertIncome(income);
+    }
 
     mv.setViewName("redirect:/income");
 

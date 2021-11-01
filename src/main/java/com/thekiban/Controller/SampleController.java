@@ -1,9 +1,6 @@
 package com.thekiban.Controller;
 
-import com.google.gson.Gson;
-import com.thekiban.Entity.Breed;
 import com.thekiban.Entity.Sample;
-import com.thekiban.Entity.Standard;
 import com.thekiban.Service.SampleService;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -15,7 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 // 시교자원
 @Controller
@@ -91,7 +91,8 @@ public class SampleController {
 
     return mv;
   }
-
+  
+  // 엑셀 등록
   @RequestMapping("excelSample")
   public ModelAndView excelUpload(ModelAndView mv, @ModelAttribute Sample sample, @RequestParam("excel_list") String excel_list) {
     JSONArray arr = new JSONArray(excel_list);
