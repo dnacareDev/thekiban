@@ -1,8 +1,6 @@
 package com.thekiban.Controller;
 
-import com.thekiban.Entity.Breed;
 import com.thekiban.Entity.Sample;
-import com.thekiban.Entity.Standard;
 import com.thekiban.Service.SampleService;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -14,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,8 +68,7 @@ public class SampleController {
   // 선택삭제
   @ResponseBody
   @RequestMapping("deleteSample")
-  public int DeleteSample(@RequestParam("sample_id[]") int[] sample_id)
-  {
+  public int DeleteSample(@RequestParam("sample_id[]") int[] sample_id) {
     service.DeleteSample(sample_id);
 
     return 1;
@@ -78,16 +76,67 @@ public class SampleController {
 
   // 시교자원 수정
   @RequestMapping("updateSample")
-  public ModelAndView UpdateSample(ModelAndView mv, @ModelAttribute Sample sample, @RequestParam("update_list") String update_list)  {
+  public ModelAndView UpdateSample(ModelAndView mv, @ModelAttribute Sample sample, @RequestParam("update_list") String update_list) {
     JSONArray arr = new JSONArray(update_list);
 
     JSONObject obj = arr.getJSONObject(0);
 
-    String value = (String)obj.get("value");
+    String value = (String) obj.get("value");
 
     sample.setSample_id(Integer.parseInt(value));
 
     service.UpdateSample(sample);
+
+    mv.setViewName("redirect:/sample");
+
+    return mv;
+  }
+  
+  // 엑셀 등록
+  @RequestMapping("excelSample")
+  public ModelAndView excelUpload(ModelAndView mv, @ModelAttribute Sample sample, @RequestParam("excel_list") String excel_list) {
+    JSONArray arr = new JSONArray(excel_list);
+
+    for (int i = 1; i < arr.length(); i++) {
+
+      JSONObject obj = arr.getJSONObject(i);
+
+      Iterator<String> keys = obj.keys();
+
+      while(keys.hasNext())
+      {
+        String key = keys.next().toString();
+
+        JSONObject obj2 = new JSONObject(obj.get(key).toString());
+
+        String detail_id = (String) obj2.get("key");
+        String value = (String) obj2.get("value");
+
+        if(detail_id.equals("작물")) {
+          sample.setSample_name(value);
+        } else if (detail_id.equals("시교명 (ID)")) {
+          sample.setSample_code(value);
+        } else if (detail_id.equals("목표 지역")) {
+          sample.setSample_country(value);
+        } else if (detail_id.equals("구분")) {
+          sample.setSample_type(value);
+        } else if (detail_id.equals("교배번호")) {
+          sample.setSample_mate(value);
+        } else if (detail_id.equals("종자번호 (ID)")) {
+          sample.setSample_seed(value);
+        } else if (detail_id.equals("현 종자량(g)")) {
+          sample.setSample_amount(Double.parseDouble(value));
+        } else if (detail_id.equals("기내 발아율(%)")) {
+          sample.setSample_sprout(Integer.parseInt(value));
+        } else if (detail_id.equals("기내 순도율 (%)")) {
+          sample.setSample_purity(Integer.parseInt(value));
+        } else if (detail_id.equals("비고")) {
+          sample.setSample_comment(value);
+        }
+      }
+
+      service.InsertSample(sample);
+    }
 
     mv.setViewName("redirect:/sample");
 
