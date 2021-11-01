@@ -134,8 +134,6 @@ public class IncomeController {
         }
       }
 
-      System.out.println(income);
-
       service.InsertIncome(income);
     }
 
