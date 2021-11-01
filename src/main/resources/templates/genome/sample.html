@@ -941,19 +941,6 @@
 
             var keys = Object.values(rowdata[0]);
 
-            var excel = [];
-
-            for (var k = 1; k < rowdata.length; k++) {
-                var chk = Object.values(rowdata[k]);
-
-                for (var n = 0; n < keys.length; n++) {
-                    excel[n] = {key: keys[n], value: "" + chk[n]};
-                }
-                const obj = {...excel};
-
-                rowdata[k] = obj;
-            }
-
             var html = "";
 
             for (var i = 0; i < rowdata.length; i++) {
@@ -976,25 +963,25 @@
 
                     $.each(rowdata[i], function (idx, value) {
                         // 공백처리
-                        // if (idx == tmp[j]) {
-                        html += "<td class='excel'><span>" + value + "</span></td>";
-                        //     j++;
-                        // } else {
-                        //     var idx_str = idx.replace(/[^0-9]/g, '');
-                        //     var tmp_str = tmp[j].replace(/[^0-9]/g, '');
-                        //
-                        //     var gap = idx_str - tmp_str;
-                        //
-                        //     while (gap > 0) {
-                        //         gap--;
-                        //         html += "<td><span> </span></td>";
-                        //     }
-                        //
-                        //     html += "<td><span>" + value + "</span></td>";
-                        //
-                        //     j = idx_str;
-                        //     j++;
-                        // }
+                        if (idx == tmp[j]) {
+                            html += "<td class='excel'><span>" + value + "</span></td>";
+                            j++;
+                        } else {
+                            var idx_str = idx.replace(/[^0-9]/g, '');
+                            var tmp_str = tmp[j].replace(/[^0-9]/g, '');
+
+                            var gap = idx_str - tmp_str;
+
+                            while (gap > 0) {
+                                gap--;
+                                html += "<td><span> </span></td>";
+                            }
+
+                            html += "<td><span>" + value + "</span></td>";
+
+                            j = idx_str;
+                            j++;
+                        }
                     });
 
                     html += "</tr>";
@@ -1002,10 +989,34 @@
                 }
             }
 
+            var excel = [];
+
+            for (var k = 1; k < rowdata.length; k++) {
+                var chk = Object.values(rowdata[k]);
+
+                for (var n = 0; n < keys.length; n++) {
+                    if (chk[n] == undefined) {
+                        excel[n] = {key: keys[n], value: " "};
+                    } else if ((typeof chk[n]) === "number"){
+                        excel[n] = {key: keys[n], value: chk[n]};
+                    } else {
+                        excel[n] = {key: keys[n], value: "" + chk[n]};
+                    }
+                }
+                const obj = {...excel};
+
+                // console.log(obj);
+                rowdata[k] = obj;
+            }
+
             $("#excel_data").empty();
             $("#excel_data").append(html);
 
-            $("#excel_list").val(JSON.stringify(rowdata));
+            var jsonObj = tableToJson(document.getElementById("excel_data"));
+
+            console.log(jsonObj);
+
+            $("#excel_list").val(JSON.stringify(jsonObj));
         };
 
         reader.readAsBinaryString(input.files[0]);
@@ -1024,6 +1035,30 @@
         });
 
         $("#excelForm").submit();
+    }
+
+    // table to json
+    function tableToJson(table) {
+        var data = [];
+
+        var headers = [];
+        for (var i = 0; i < table.rows[0].cells.length; i++) {
+            headers[i] = table.rows[0].cells[i].innerText;
+        }
+
+        for (var i = 1; i < table.rows.length; i++) {
+            var tableRow = table.rows[i];
+
+            var rowData = {};
+
+            for (var j = 0; j < tableRow.cells.length; j++) {
+                rowData[headers[j]] = tableRow.cells[j].innerText;
+            }
+
+            data.push(rowData);
+        }
+
+        return data;
     }
 
     /* form data to json */

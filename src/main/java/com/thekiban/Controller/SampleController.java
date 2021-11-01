@@ -12,10 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 // 시교자원
 @Controller
@@ -91,7 +88,7 @@ public class SampleController {
 
     return mv;
   }
-  
+
   // 엑셀 등록
   @RequestMapping("excelSample")
   public ModelAndView excelUpload(ModelAndView mv, @ModelAttribute Sample sample, @RequestParam("excel_list") String excel_list) {
@@ -101,37 +98,29 @@ public class SampleController {
 
       JSONObject obj = arr.getJSONObject(i);
 
-      Iterator<String> keys = obj.keys();
+      Set<String> key = obj.keySet();
 
-      while(keys.hasNext())
-      {
-        String key = keys.next().toString();
-
-        JSONObject obj2 = new JSONObject(obj.get(key).toString());
-
-        String detail_id = (String) obj2.get("key");
-        String value = (String) obj2.get("value");
-
-        if(detail_id.equals("작물")) {
-          sample.setSample_name(value);
-        } else if (detail_id.equals("시교명 (ID)")) {
-          sample.setSample_code(value);
-        } else if (detail_id.equals("목표 지역")) {
-          sample.setSample_country(value);
-        } else if (detail_id.equals("구분")) {
-          sample.setSample_type(value);
-        } else if (detail_id.equals("교배번호")) {
-          sample.setSample_mate(value);
-        } else if (detail_id.equals("종자번호 (ID)")) {
-          sample.setSample_seed(value);
-        } else if (detail_id.equals("현 종자량(g)")) {
-          sample.setSample_amount(Double.parseDouble(value));
-        } else if (detail_id.equals("기내 발아율(%)")) {
-          sample.setSample_sprout(Integer.parseInt(value));
-        } else if (detail_id.equals("기내 순도율 (%)")) {
-          sample.setSample_purity(Integer.parseInt(value));
-        } else if (detail_id.equals("비고")) {
-          sample.setSample_comment(value);
+      for (String k : key) {
+        if (k.equals("작물")) {
+          sample.setSample_name(obj.getString(k));
+        } else if (k.equals("시교명 (ID)")) {
+          sample.setSample_code(obj.getString(k));
+        } else if (k.equals("목표 지역")) {
+          sample.setSample_country(obj.getString(k));
+        } else if (k.equals("구분")) {
+          sample.setSample_type(obj.getString(k));
+        } else if (k.equals("교배번호")) {
+          sample.setSample_mate(obj.getString(k));
+        } else if (k.equals("종자번호 (ID)")) {
+          sample.setSample_seed(obj.getString(k));
+        } else if (k.equals("현 종자량(g)")) {
+          sample.setSample_amount(Double.parseDouble(obj.getString(k)));
+        } else if (k.equals("기내 발아율(%)")) {
+          sample.setSample_sprout(Integer.parseInt(obj.getString(k)));
+        } else if (k.equals("기내 순도율 (%)")) {
+          sample.setSample_purity(Integer.parseInt(obj.getString(k)));
+        } else if (k.equals("비고")) {
+          sample.setSample_comment(obj.getString(k));
         }
       }
 
