@@ -3,6 +3,7 @@ package com.thekiban.Mapper;
 import com.thekiban.Entity.Basic;
 import com.thekiban.Entity.Breed;
 import com.thekiban.Entity.Detail;
+import com.thekiban.Entity.Display;
 import com.thekiban.Entity.Standard;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -25,6 +26,9 @@ public interface BreedMapper
 	// 품종별 세부 정보 조회
 	List<Detail> SearchBreedDetail(String breed_name);
 
+	// 표시항목 조회
+	List<Display> SelectDisplay(@Param("user_id") int user_id, @Param("breed_name") String breed_name);
+
 	// 품종별 정보값 조회
 	List<Standard> SearchBreedStandard(@Param("detail") List<Detail> detail, @Param("breed_id") int breed_id);
 
@@ -36,4 +40,10 @@ public interface BreedMapper
 
 	// 품종 삭제
 	int[] DeleteBreed(int[] breed_id);
+	
+	// 표시항목 삭제
+	int DeleteDisplay(int user_id);
+
+	// 표시항목 등록
+	int InsertDisplay(@Param("user_id") int user_id, @Param("breed_name") String breed_name, @Param("detail_list") String[] detail_list);
 }

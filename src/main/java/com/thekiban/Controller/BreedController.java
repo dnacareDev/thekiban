@@ -1,13 +1,14 @@
 package com.thekiban.Controller;
 
-import com.thekiban.Entity.Basic;
-import com.thekiban.Entity.Breed;
-import com.thekiban.Entity.Detail;
-import com.thekiban.Entity.Standard;
-import com.thekiban.Service.BreedService;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import com.thekiban.Entity.Breed;
+import com.thekiban.Entity.Detail;
+import com.thekiban.Entity.Display;
+import com.thekiban.Entity.Standard;
+import com.thekiban.Entity.User;
+import com.thekiban.Service.BreedService;
 
 @Controller
 public class BreedController
@@ -38,9 +41,11 @@ public class BreedController
 	// 원종 검색
 	@ResponseBody
 	@RequestMapping("searchBreed")
-	public Map<String, Object> SearchBreed(@RequestParam("breed_name") String breed_name, @RequestParam("page_num") int page_num)
+	public Map<String, Object> SearchBreed(Authentication auth, @RequestParam("breed_name") String breed_name, @RequestParam("page_num") int page_num)
 	{
 		Map<String, Object> result = new LinkedHashMap<String, Object>();
+		
+		User user = (User)auth.getPrincipal();
 		
 		int count = service.SelectBreedCount(breed_name);
 
@@ -50,6 +55,8 @@ public class BreedController
     
 		List<Breed> breed = service.SearchBreed(breed_name, offset, limit);
 		List<Detail> detail = service.SearchBreedDetail(breed_name);
+		List<Display> display = service.SelectDisplay(user.getUser_id(), breed_name);
+		
 		List<Standard> standard = new ArrayList<Standard>();
 		
 		if(detail.isEmpty())
@@ -68,6 +75,7 @@ public class BreedController
 		
 		result.put("breed", breed);
 		result.put("detail", detail);
+		result.put("display", display);
 		result.put("page_num", page_num);
 		result.put("end_page", end_page);
 		result.put("offset", offset);
@@ -142,9 +150,12 @@ public class BreedController
 	
 	// 표시항목 설정
 	@RequestMapping("insertDisplay")
-	public ModelAndView InsertDisplay(ModelAndView mv, @RequestParam("detail_id") String detail_id)
+	public ModelAndView InsertDisplay(ModelAndView mv, Authentication auth, @RequestParam("breed_name") String breed_name, @RequestParam(required = false, value = "detail_title") String[] detail_title)
 	{
-		System.out.println(detail_id);
+		User user = (User)auth.getPrincipal();
+		
+		int delete = service.DeleteDisplay(user.getUser_id());
+		int insert = service.InsertDisplay(user.getUser_id(), breed_name, detail_title);
 		
 		mv.setViewName("redirect:/breed");
 		
