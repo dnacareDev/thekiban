@@ -26,7 +26,7 @@ public interface BreedService
 	List<Display> SelectDisplay(int user_id, String breed_name);
 
 	// 품종별 정보값 조회
-	List<Standard> SearchBreedStandard(List<Detail> detail, int breed_id);
+	List<Standard> SearchBreedStandard(List<Detail> detail, int user_id, int breed_id);
 
 	// 품종 등록
 	int InsertBreed(Breed breed);
@@ -37,9 +37,12 @@ public interface BreedService
 	// 품종 삭제
 	int[] DeleteBreed(int[] breed_id);
 
+	// 품종 값 삭제
+	int[] DeleteStandard(int[] breed_id);
+
 	// 표시항목 삭제
 	int DeleteDisplay(int user_id);
 
 	// 표시항목 등록
-	int InsertDisplay(int user_id, String breed_name, String[] detail_list);
+	int InsertDisplay(int user_id, String breed_name, int[] detail_list);
 }

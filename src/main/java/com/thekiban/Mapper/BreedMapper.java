@@ -30,7 +30,7 @@ public interface BreedMapper
 	List<Display> SelectDisplay(@Param("user_id") int user_id, @Param("breed_name") String breed_name);
 
 	// 품종별 정보값 조회
-	List<Standard> SearchBreedStandard(@Param("detail") List<Detail> detail, @Param("breed_id") int breed_id);
+	List<Standard> SearchBreedStandard(@Param("detail") List<Detail> detail, @Param("user_id") int user_id, @Param("breed_id") int breed_id);
 
 	// 품종 등록
 	int InsertBreed(Breed breed);
@@ -40,10 +40,13 @@ public interface BreedMapper
 
 	// 품종 삭제
 	int[] DeleteBreed(int[] breed_id);
+
+	// 품종 값 삭제
+	int[] DeleteStandard(int[] breed_id);
 	
 	// 표시항목 삭제
 	int DeleteDisplay(int user_id);
 
 	// 표시항목 등록
-	int InsertDisplay(@Param("user_id") int user_id, @Param("breed_name") String breed_name, @Param("detail_list") String[] detail_list);
+	int InsertDisplay(@Param("user_id") int user_id, @Param("breed_name") String breed_name, @Param("detail_list") int[] detail_list);
 }

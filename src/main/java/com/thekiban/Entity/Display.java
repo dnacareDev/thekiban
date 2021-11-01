@@ -13,6 +13,10 @@ import lombok.Setter;
 public class Display
 {
 	private int display_id;
-	private String breed_name;
+	private int user_id;
+	private String breed_name;					// 작목명					
+	private int detail_id;						// 세부정보 고유번호
+	
+	private String detail_spec;
 	private String detail_title;
 }

@@ -54,9 +54,9 @@ public class BreedServiceImpl implements BreedService
 
 	// 품종별 정보값 조회
 	@Override
-	public List<Standard> SearchBreedStandard(List<Detail> detail, int breed_id)
+	public List<Standard> SearchBreedStandard(List<Detail> detail, int user_id, int breed_id)
 	{
-		return mapper.SearchBreedStandard(detail, breed_id);
+		return mapper.SearchBreedStandard(detail, user_id, breed_id);
 	}
  
 	// 품종 등록
@@ -80,6 +80,13 @@ public class BreedServiceImpl implements BreedService
 		return mapper.DeleteBreed(breed_id);
 	}
 
+	// 품종 값 삭제
+	@Override
+	public int[] DeleteStandard(int[] breed_id)
+	{
+		return mapper.DeleteStandard(breed_id);
+	}
+
 	// 표시항목 삭제
 	@Override
 	public int DeleteDisplay(int user_id)
@@ -89,7 +96,7 @@ public class BreedServiceImpl implements BreedService
 
 	// 표시항목 등록
 	@Override
-	public int InsertDisplay(int user_id, String breed_name, String[] detail_list)
+	public int InsertDisplay(int user_id, String breed_name, int[] detail_list)
 	{
 		return mapper.InsertDisplay(user_id, breed_name, detail_list);
 	}

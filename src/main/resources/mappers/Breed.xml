@@ -38,17 +38,19 @@
     
     <!-- 표시항목 조회 -->
     <select id="SelectDisplay" resultType="Display">
-    	SELECT * FROM display
-    	WHERE user_id = #{user_id} AND breed_name = #{breed_name}
+    	SELECT * FROM display dp
+		LEFT JOIN detail dt ON dp.detail_id = dt.detail_id
+    	WHERE dp.user_id = #{user_id} AND dp.breed_name = #{breed_name}
     </select>
     
     <!-- 품종별 정보값 조회 -->
     <select id="SearchBreedStandard" resultType="Standard">
     	SELECT * FROM standard s
-    	LEFT JOIN detail d ON s.detail_id = d.detail_id
-    	WHERE s.breed_id = #{breed_id} AND
-    	<foreach collection="detail" item="item" open="(" close=")" separator="OR">
-            s.detail_id = #{item.detail_id}
+		LEFT JOIN detail d ON s.detail_id = d.detail_id
+		LEFT JOIN display dp ON d.detail_id = dp.detail_id
+    	WHERE s.breed_id = #{breed_id} AND dp.user_id = #{user_id}
+    	<foreach collection="detail" item="item" open="AND (" close=")" separator="OR">
+            dp.detail_id = #{item.detail_id}
         </foreach>
     </select>
 
@@ -82,6 +84,15 @@
         </foreach>
     </select>
     
+    <!-- 품종 값 삭제 -->
+    <select id="DeleteStandard" parameterType="java.util.ArrayList">
+        DELETE FROM standard
+        WHERE
+        <foreach collection="array" item="item" open="(" close=")" separator="OR">
+            breed_id = #{item}
+        </foreach>
+    </select>
+    
     <!-- 표시항목 삭제 -->
     <delete id="DeleteDisplay" parameterType="int">
     	DELETE FROM display
@@ -92,7 +103,7 @@
     <insert id="InsertDisplay">
     	<foreach collection="detail_list" item="item" separator=";">
 	    	INSERT INTO display
-	    	(user_id, breed_name, detail_title)
+	    	(user_id, breed_name, detail_id)
 	    	VALUES
 	    	(#{user_id}, #{breed_name}, #{item})
         </foreach>

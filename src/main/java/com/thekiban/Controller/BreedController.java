@@ -59,15 +59,11 @@ public class BreedController
 		
 		List<Standard> standard = new ArrayList<Standard>();
 		
-		if(detail.isEmpty())
-		{
-			
-		}
-		else
+		if(!detail.isEmpty())
 		{
 			for(int i = 0; i < breed.size(); i++)
 			{
-				standard = service.SearchBreedStandard(detail, breed.get(i).getBreed_id());
+				standard = service.SearchBreedStandard(detail, user.getUser_id(), breed.get(i).getBreed_id());
 				
 				breed.get(i).setBreed_standard(standard);
 			}
@@ -87,19 +83,6 @@ public class BreedController
 	@RequestMapping("insertBreed")
 	public ModelAndView InsertBreed(ModelAndView mv, @ModelAttribute Breed breed, @RequestParam("detail_list") String detail_list)
 	{
-		if(breed.getBreed_sale_date().equals(""))
-		{
-			breed.setBreed_sale_date(null);
-		}
-		if(breed.getBreed_apply_date().equals(""))
-		{
-			breed.setBreed_apply_date(null);
-		}
-		if(breed.getBreed_enroll_date().equals(""))
-		{
-			breed.setBreed_enroll_date(null);
-		}
-		
 		int insert_breed = service.InsertBreed(breed);
  
 		if(!detail_list.equals("[]"))
@@ -143,19 +126,20 @@ public class BreedController
 	@RequestMapping("deleteBreed")
 	public int DeleteBreed(@RequestParam("breed_id[]") int[] breed_id)
 	{
-		service.DeleteBreed(breed_id);
+		int[] delete_breed = service.DeleteBreed(breed_id);
+		int[] delete_standard = service.DeleteStandard(breed_id); 
 
 		return 1;
 	}
 	
 	// 표시항목 설정
 	@RequestMapping("insertDisplay")
-	public ModelAndView InsertDisplay(ModelAndView mv, Authentication auth, @RequestParam("breed_name") String breed_name, @RequestParam(required = false, value = "detail_title") String[] detail_title)
+	public ModelAndView InsertDisplay(ModelAndView mv, Authentication auth, @RequestParam("breed_name") String breed_name, @RequestParam(required = false, value = "detail_id") int[] detail_id)
 	{
 		User user = (User)auth.getPrincipal();
 		
 		int delete = service.DeleteDisplay(user.getUser_id());
-		int insert = service.InsertDisplay(user.getUser_id(), breed_name, detail_title);
+		int insert = service.InsertDisplay(user.getUser_id(), breed_name, detail_id);
 		
 		mv.setViewName("redirect:/breed");
 		
