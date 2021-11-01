@@ -36,12 +36,19 @@
     	WHERE detail_type = 0 AND detail_name = #{breed_name}
     </select>
     
+    <!-- 표시항목 조회 -->
+    <select id="SelectDisplay" resultType="Display">
+    	SELECT * FROM display
+    	WHERE user_id = #{user_id} AND breed_name = #{breed_name}
+    </select>
+    
     <!-- 품종별 정보값 조회 -->
     <select id="SearchBreedStandard" resultType="Standard">
-    	SELECT * FROM standard
-    	WHERE breed_id = #{breed_id} AND
+    	SELECT * FROM standard s
+    	LEFT JOIN detail d ON s.detail_id = d.detail_id
+    	WHERE s.breed_id = #{breed_id} AND
     	<foreach collection="detail" item="item" open="(" close=")" separator="OR">
-            detail_id = #{item.detail_id}
+            s.detail_id = #{item.detail_id}
         </foreach>
     </select>
 
@@ -74,4 +81,20 @@
             breed_id = #{item}
         </foreach>
     </select>
+    
+    <!-- 표시항목 삭제 -->
+    <delete id="DeleteDisplay" parameterType="int">
+    	DELETE FROM display
+    	WHERE user_id = #{user_id}
+    </delete>
+    
+    <!-- 표시항목 등록 -->
+    <insert id="InsertDisplay">
+    	<foreach collection="detail_list" item="item" separator=";">
+	    	INSERT INTO display
+	    	(user_id, breed_name, detail_title)
+	    	VALUES
+	    	(#{user_id}, #{breed_name}, #{item})
+        </foreach>
+    </insert>
 </mapper>

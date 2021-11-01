@@ -2,6 +2,7 @@ package com.thekiban.ServiceImpl;
 
 import com.thekiban.Entity.Breed;
 import com.thekiban.Entity.Detail;
+import com.thekiban.Entity.Display;
 import com.thekiban.Entity.Standard;
 import com.thekiban.Mapper.BreedMapper;
 import com.thekiban.Service.BreedService;
@@ -44,6 +45,13 @@ public class BreedServiceImpl implements BreedService
 		return mapper.SearchBreedDetail(breed_name);
 	}
 
+	// 표시항목 조회
+	@Override
+	public List<Display> SelectDisplay(int user_id, String breed_name)
+	{
+		return mapper.SelectDisplay(user_id, breed_name);
+	}
+
 	// 품종별 정보값 조회
 	@Override
 	public List<Standard> SearchBreedStandard(List<Detail> detail, int breed_id)
@@ -70,5 +78,19 @@ public class BreedServiceImpl implements BreedService
 	public int[] DeleteBreed(int[] breed_id)
 	{
 		return mapper.DeleteBreed(breed_id);
+	}
+
+	// 표시항목 삭제
+	@Override
+	public int DeleteDisplay(int user_id)
+	{
+		return mapper.DeleteDisplay(user_id);
+	}
+
+	// 표시항목 등록
+	@Override
+	public int InsertDisplay(int user_id, String breed_name, String[] detail_list)
+	{
+		return mapper.InsertDisplay(user_id, breed_name, detail_list);
 	}
 }

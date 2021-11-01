@@ -86,7 +86,7 @@ public class BasicController
    			{
    				item.setBasic_id(basic.getBasic_id());
    				item.setDetail_id(Integer.parseInt(detail_id));
-				item.setStandard((String)obj.get("value"));
+					item.setStandard((String)obj.get("value"));
    				
    				standard.add(item);
    			}
