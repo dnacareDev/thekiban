@@ -5,6 +5,10 @@
     <th:block th:include="/../fragments/header.html"></th:block>
     <script src="../assets/vendor_assets/js/script.js"></script> <!-- 왼쪽상단에 버튼 클릭시 class 추가 스크립트 -->
     <style>
+    	.card {
+    		box-shadow: 0 3px 20px 3px rgb(0 0 0 / 7%); /* 2021-11-02 수정 */
+    	}
+    
         table {
             border-top: 1px solid grey;
             border-collapse: collapse;
@@ -186,15 +190,9 @@
         }
 
         /* 2021 - 11 - 01 수정 */
-        .table td {
-            padding: 0px 12px;
-            vertical-align: middle;
-            font-size: 14px
-        }
-
-        .table th {
-            font-size: 16px
-        }
+        .table td {padding: 0px 12px; vertical-align: middle; font-size: 14px; border-bottom: 2px solid #d9d9d9;}  /* 2021 - 11 - 02 수정 */
+        .table th {font-size: 16px; border-top: 1px solid #d9d9d9;}  /* 2021 - 11 - 02 수정 */
+        .table thead th {border-bottom: 2px solid #adadad;}  /* 2021 - 11 - 02 수정 */
 
         #table2 td {
             padding: 12px 12px;
@@ -283,6 +281,9 @@
 			margin: 5px 3px;
 		}
 		
+		/* 푸터 배경색 */
+		.footer-wrapper {background-color: #FCFCFC;}
+		
     </style>
 </head>
 <body class="layout-light top-menu overlayScroll">
@@ -321,8 +322,8 @@
                                             <option value="토마토">토마토</option>
                                         </select>
                                     </form>
-                                    <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none">
-                                    <button class="btn btn-lg btn-primary data_btn1" onclick="filesFunction()"><img
+                                    <input type="file" id="excelFile" onchange="excelExport(event)" title="파일 선택" style="display: none">
+                                    <button class="btn btn-lg btn-primary data_btn1" title="파일 선택" onclick="filesFunction()"><img
                                         src="../assets/vendor_assets/img/icon1.svg" alt=""></button>
                                     <button class="btn btn-lg btn-primary data_btn2"><img src="../assets/vendor_assets/img/icon2.png" alt=""></button>
                                     <button class="btn btn-lg btn-primary data_btn2"><img src="../assets/vendor_assets/img/icon3.png" alt=""></button>
