@@ -168,7 +168,7 @@
             justify-content: space-between;
             align-items: center;
             gap: 15px;
-            height: 400px;
+            height: 500px;
         }
 
         #google_container li {
@@ -177,10 +177,15 @@
         }
 
         @media (min-width: 576px) {
-            .modal-dialog {
+        	.modal-dialog {
                 max-width: 1014px;
                 margin: 1.75rem auto;
             }
+        
+            #recent .modal-dialog {
+                max-width: 1300px;
+                margin: 1.75rem auto;
+            }  /* 2021 - 11 - 02 수정 */
 
             .pop1 .modal-dialog {
                 max-width: 750px;
@@ -228,12 +233,17 @@
         
         .main-content .table thead th > img {margin: 6px 0 0 12px;}
         
-        #recent .modal-content {}
+        #data_upload .form-group input[type=text]::placeholder {
+            text-align: left;
+            text-indent: 20px
+        }
         
 		 .popup_wrap {display: none}
         .popup_wrap.on {display: block; position: fixed; left: 0; top: 0; right: 0; bottom:0; z-index: 999; background-color: rgba(0, 0, 0, 0.1);}
         .popup_wrap.on .popup {position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 400px; height: 150px; background-color: #fff; border-radius: 8px; padding: 30px; text-align: center; padding-top: 40px}
         .popup_wrap.on .close {opacity: 1; position: absolute; left: 50%; transform: translateX(-50%); bottom: 20px; font-size: 14px; background-color: #1e695c; display: block; height: 35px; width: 90px; color: #fff;  font-weight: 400; border-radius: 6px}
+
+
 
         #data_upload .modal-body .form-group {
             justify-content: flex-start;
@@ -300,7 +310,72 @@
             font-size: 16px;
             font-weight: 200;
         }
->>>>>>> 20115edf1ef21bca7e1df72d7cca223a5dd67d74
+		
+		 /* 2021 - 11 - 02 수정 */
+		#data_upload .form-group button {
+			line-height: 2rem;
+			font-size: 13px;
+			height: 34px;
+			margin-left: 5px;
+		}
+		
+		#data_upload .form-group input[type=text] {
+			height: 34px;
+		}
+		
+		 #data_upload .form-group input[type=text]::placeholder {
+            text-align: left;
+            text-indent: 20px;
+            font-size: 14px;
+        }
+		
+		.contents .container-fluid {
+			background-color: #FCFCFC;
+		}
+		
+		#excel_data {
+			width: 100%;
+		}
+		
+		.modal-content .modal-footer {
+			padding-bottom: 28px;
+			padding-right: 24px;
+		}
+		
+		.btn-primary {
+			border: none;
+		}
+		
+		.main-content .card-extra .justify-content-end .atbd-button-list .data_btn1,
+		.main-content .card-extra .justify-content-end .atbd-button-list .data_btn2,
+		.main-content .card-extra .justify-content-end .atbd-button-list .form-control {
+			height: 36px;	
+		}
+		
+		.main-content .card-extra .justify-content-end .atbd-button-list .data_btn1,
+		.main-content .card-extra .justify-content-end .atbd-button-list .data_btn2 {
+			width: 31px;
+			margin-top: 12px;
+			padding: 0px 19px;
+		}
+		
+		
+		.atbd-button-list button {
+			margin: 5px 3px;
+		}
+		
+		#data_upload2 .form-group button {
+       		height: 34px;
+       		line-height: 2rem;
+			font-size: 13px;
+       }
+       
+       .col-4 .bottom_btn > span {
+       		height: 34px;
+       		line-height: 2rem;
+			font-size: 13px;
+       }
+		
     </style>
 </head>
 
@@ -1376,7 +1451,7 @@
 
     const globalOptions = {
         ...koreaOptions,
-        zoom: 1,
+        zoom: 2,
         center: {lat: 37.5642135, lng: 127.0016985}
     }
 
