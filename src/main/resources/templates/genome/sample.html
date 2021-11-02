@@ -1053,50 +1053,55 @@
                     html += "</thead>";
                 } else if (i !== 0) {
                     html += "<tbody class='text-center'>";
+                    // html += "<tr>";
+
+                    // var tmp = Object.keys(rowdata[0]);
+                    // var j = 0;
+
+                    var columnLength = Object.keys(rowdata[0]).length; // 10
+                    // var rowLength = rowdata.length - 1;
+
+                    /*table td*/
                     html += "<tr>";
 
-                    var tmp = Object.keys(rowdata[0]);
-                    var j = 0;
-                    // console.log(rowdata);
-                    //
-                    // var tableColumnLength = Object.keys(rowdata[0]).length;
-                    // console.log(tableColumnLength, rowdata.length);
-                    //
-                    // for(var t = 0; t < 3; t++){ // 10
-                    //     html += "<tr>";
-                    //     for(var q = 0; q < tableColumnLength; q++){ // 10
-                    //
-                    //         html += "<td><span>" + "ddd" + "</span></td>";
-                    //         console.log('test',q);
-                    //
-                    //     }
-                    //     html += "</tr>";
-                    // }
+                    for(var q = 0; q < columnLength; q++){ // 10
+                        var valueT = "";
 
-                    $.each(rowdata[i], function (idx, value) {
-                        // 공백처리
-                        if (idx == tmp[j]) {
-                            html += "<td><span>" + value + "</span></td>";
-                            j++;
+                        if(Object.entries(rowdata[i])[q] !== undefined){
+                            valueT = Object.entries(rowdata[i])[q][1];
                         } else {
-                            var idx_str = idx.replace(/[^0-9]/g, '');
-                            var tmp_str = tmp[j].replace(/[^0-9]/g, '');
-
-                            var gap = idx_str - tmp_str;
-
-                            while (gap > 0) {
-                                gap--;
-                                html += "<td><span> </span></td>";
-                            }
-
-                            html += "<td><span>" + value + "</span></td>";
-
-                            j = idx_str;
-                            j++;
+                            valueT = "";
                         }
-                    });
+
+                        html += "<td><span>" + valueT + "</span></td>";
+                    }
 
                     html += "</tr>";
+
+                    // $.each(rowdata[i], function (idx, value) {
+                    //     // 공백처리
+                    //     if (idx == tmp[j]) {
+                    //         html += "<td><span>" + value + "</span></td>";
+                    //         j++;
+                    //     } else {
+                    //         var idx_str = idx.replace(/[^0-9]/g, '');
+                    //         var tmp_str = tmp[j].replace(/[^0-9]/g, '');
+                    //
+                    //         var gap = idx_str - tmp_str;
+                    //
+                    //         while (gap > 0) {
+                    //             gap--;
+                    //             html += "<td><span> </span></td>";
+                    //         }
+                    //
+                    //         html += "<td><span>" + value + "</span></td>";
+                    //
+                    //         j = idx_str;
+                    //         j++;
+                    //     }
+                    // });
+                    //
+                    // html += "</tr>";
                     html += "</tbody>";
                 }
             }
@@ -1117,7 +1122,7 @@
                 }
                 const obj = {...excel};
 
-                rowdata[k] = obj;
+                // rowdata[k] = obj;
             }
 
             $("#excel_data").empty();
@@ -1203,24 +1208,22 @@
     var searchSelectBox = document.querySelector('#CropSelect');
 
     const thisBtn = document.querySelector('#modal_open');
-    thisBtn.dataset.target = '';
+    // thisBtn.dataset.target = '';
 
     function onChangeSelect() {
         var thisBtn = document.querySelector('#modal_open');
         var value = searchSelectBox.value;
-        if (value === 'none') {
-            thisBtn.dataset.target = '';
-        } else {
+        // if (value === '고추') {
+        //     thisBtn.dataset.target = '';
+        // } else {
             thisBtn.dataset.target = '#grid';
-        }
+        // }
     }
 
     // onChangeSelect();
     searchSelectBox.addEventListener('change', onChangeSelect);
     $("#modal_open").click(function () {
-
         $("input[name=sample_name]").val($("#CropSelect option:selected").val());
-
     });
 
     // 시교 자원 추가

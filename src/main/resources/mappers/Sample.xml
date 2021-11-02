@@ -35,6 +35,7 @@
         <choose>
             <when test="sample_name != 'none'">
                 WHERE sample_name = #{sample_name}
+                ORDER BY sample_id DESC
             </when>
         </choose>
         LIMIT #{offset}, #{limit}
