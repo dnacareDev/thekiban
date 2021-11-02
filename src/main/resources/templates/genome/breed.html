@@ -4,6 +4,10 @@
     <!-- 공통 헤더 -->
     <th:block th:include="/../fragments/header.html"></th:block>
     <style>
+    	.card {
+    		box-shadow: 0 3px 20px 3px rgb(0 0 0 / 7%); /* 2021-11-02 수정 */
+    	}
+    
         table {
             border-top: 1px solid grey;
             border-collapse: collapse;
@@ -340,7 +344,10 @@
         #breed_list th {
             font-size: 16px
         }
-
+		
+		.table td {padding: 0px 12px; vertical-align: middle; font-size: 14px; border-bottom: 2px solid #d9d9d9;}  /* 2021 - 11 - 02 수정 */
+        .table th {font-size: 16px; border-top: 1px solid #d9d9d9;}  /* 2021 - 11 - 02 수정 */
+        .table thead th {border-bottom: 2px solid #adadad;}  /* 2021 - 11 - 02 수정 */
 
        
 
@@ -471,6 +478,9 @@
        		line-height: 2rem;
 			font-size: 13px;
        }
+       
+       /* 푸터 배경색 */
+		.footer-wrapper {background-color: #FCFCFC;}
         
     </style>
 </head>
@@ -504,9 +514,9 @@
 										<option value="참외">참외</option>
 										<option value="토마토">토마토</option>
 									</select>
-									<input type="file" id="excelFile" onchange="excelExport(event)" style="display: none">
-									<button type="button" class="btn btn-lg btn-primary data_btn1" title="엑셀파일 선택" onclick="filesFunction('excelFile')"><img src="../assets/vendor_assets/img/icon1.svg" title="데이터 등록" alt=""></button>
-									<button class="btn btn-lg btn-primary data_btn2" data-toggle="modal" data-target="#data_upload2"><img src="../assets/vendor_assets/img/icon2.png" alt=""></button>
+									<input type="file" id="excelFile" onchange="excelExport(event)" title="파일 선택" style="display: none">
+									<button type="button" class="btn btn-lg btn-primary data_btn1" title="파일 선택" onclick="filesFunction('excelFile')"><img src="../assets/vendor_assets/img/icon1.svg" title="데이터 등록" alt=""></button>
+									<button class="btn btn-lg btn-primary data_btn2" data-toggle="modal" title="데이터 등록" data-target="#data_upload2"><img src="../assets/vendor_assets/img/icon2.png" alt=""></button>
 									<!-- <button class="btn btn-lg btn-primary data_btn2" title="표시항목 선택" data-toggle="modal" data-target="#grid2"><img src="../assets/vendor_assets/img/icon3.png" alt=""></button> -->
 									<button class="btn btn-lg btn-primary data_btn2" title="표시항목 선택" onclick="DisplayBtn();"><img src="../assets/vendor_assets/img/icon3.png" alt=""></button>
 								</div>
