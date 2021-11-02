@@ -31,8 +31,10 @@ public class SampleController {
   }
 
   // 시교자원 입력
+  @ResponseBody
   @RequestMapping("insertSample")
-  public ModelAndView InsertSample(ModelAndView mv, @ModelAttribute Sample sample) {
+  public ModelAndView InsertSample(ModelAndView mv, @ModelAttribute Sample sample)
+  {
     service.InsertSample(sample);
 
     mv.setViewName("redirect:/sample");
