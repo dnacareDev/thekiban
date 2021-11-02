@@ -863,12 +863,7 @@
 
     <!-- modal end -->
 </main>
-<div class="popup_wrap">
-	<div class="popup">
-		<p class="popup_text">작물을 선택해주세요.</p>
-		<button class="close">닫기</button>
-	</div>
-</div>
+
 <!-- 공통 하단 -->
 <th:block th:include="/../fragments/footer.html"></th:block>
 <!-- 공통 js -->
@@ -1051,8 +1046,6 @@
                 var chk = Object.values(rowdata[k]);
 
                 for (var n = 0; n < keys.length; n++) {
-
-                    console.log('chk[n] : ', chk[n]);
                     if (chk[n] == undefined) {
                         excel[n] = {key: keys[n], value: " "};
                     } else if(keys[n] === "도입연월일") {
@@ -1063,7 +1056,7 @@
                 }
                 const obj = {...excel};
 
-                console.log(obj);
+                // console.log(obj);
                 rowdata[k] = obj;
             }
 
@@ -1164,14 +1157,9 @@
     // onChangeSelect();
     searchSelectBox.addEventListener('change', onChangeSelect);
     $("#modal_open").click(function () {
-        console.log($("#CropSelect option:selected").val());
 
-        if ($("#CropSelect option:selected").val() === 'none') {
-            alert("작물을 선택해주세요")
-            $(this).data('dismiss');
-        } else {
             $("input[name=income_name]").val($("#CropSelect option:selected").text());
-        }
+
     });
 
     // 도입 자원 추가

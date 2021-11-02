@@ -104,9 +104,6 @@ public class IncomeController {
       Set<String> key = obj.keySet();
 
       for (String k : key) {
-
-//        System.out.println(obj.getString(k));
-
         if (k.equals("작물")) {
           income.setIncome_name(obj.getString(k));
         } else if (k.equals("도입번호 (ID)")) {
