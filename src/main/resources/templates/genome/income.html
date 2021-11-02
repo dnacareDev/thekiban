@@ -980,8 +980,6 @@
                 var chk = Object.values(rowdata[k]);
 
                 for (var n = 0; n < keys.length; n++) {
-
-                    console.log('chk[n] : ', chk[n]);
                     if (chk[n] == undefined) {
                         excel[n] = {key: keys[n], value: " "};
                     } else if(keys[n] === "도입연월일") {
@@ -992,7 +990,7 @@
                 }
                 const obj = {...excel};
 
-                console.log(obj);
+                // console.log(obj);
                 rowdata[k] = obj;
             }
 

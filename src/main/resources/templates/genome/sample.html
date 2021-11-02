@@ -968,6 +968,8 @@
 
             var html = "";
 
+            // console.log(rowdata[1]);
+
             for (var i = 0; i < rowdata.length; i++) {
                 if (i === 0) {
                     html += "<thead class='text-center'>";
@@ -985,11 +987,26 @@
 
                     var tmp = Object.keys(rowdata[0]);
                     var j = 0;
+                    // console.log(rowdata);
+                    //
+                    // var tableColumnLength = Object.keys(rowdata[0]).length;
+                    // console.log(tableColumnLength, rowdata.length);
+                    //
+                    // for(var t = 0; t < 3; t++){ // 10
+                    //     html += "<tr>";
+                    //     for(var q = 0; q < tableColumnLength; q++){ // 10
+                    //
+                    //         html += "<td><span>" + "ddd" + "</span></td>";
+                    //         console.log('test',q);
+                    //
+                    //     }
+                    //     html += "</tr>";
+                    // }
 
                     $.each(rowdata[i], function (idx, value) {
                         // 공백처리
                         if (idx == tmp[j]) {
-                            html += "<td class='excel'><span>" + value + "</span></td>";
+                            html += "<td><span>" + value + "</span></td>";
                             j++;
                         } else {
                             var idx_str = idx.replace(/[^0-9]/g, '');
@@ -1030,7 +1047,6 @@
                 }
                 const obj = {...excel};
 
-                // console.log(obj);
                 rowdata[k] = obj;
             }
 
@@ -1039,7 +1055,7 @@
 
             var jsonObj = tableToJson(document.getElementById("excel_data"));
 
-            console.log(jsonObj);
+            // console.log('jsonObj : ', jsonObj)
 
             $("#excel_list").val(JSON.stringify(jsonObj));
         };
@@ -1069,10 +1085,14 @@
         var headers = [];
         for (var i = 0; i < table.rows[0].cells.length; i++) {
             headers[i] = table.rows[0].cells[i].innerText;
+
+            console.log('headers : ', headers[i]);
         }
 
         for (var i = 1; i < table.rows.length; i++) {
             var tableRow = table.rows[i];
+
+            console.log('tableRow : ', tableRow);
 
             var rowData = {};
 
@@ -1082,6 +1102,8 @@
 
             data.push(rowData);
         }
+
+        // console.log('data : ', data);
 
         return data;
     }
