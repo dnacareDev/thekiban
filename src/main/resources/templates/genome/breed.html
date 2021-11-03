@@ -1489,17 +1489,17 @@
     var searchSelectBox = document.querySelector('#CropSelect');
 
     const thisBtn = document.querySelector('#modal_open');
-    thisBtn.dataset.target = '';
+    // thisBtn.dataset.target = '';
 
     function onChangeSelect() {
         var thisBtn = document.querySelector('#modal_open');
         var value = searchSelectBox.value;
 
-        if (value === 'none') {
-            thisBtn.dataset.target = '';
-        } else {
+        // if (value === 'none') {
+        //     thisBtn.dataset.target = '';
+        // } else {
             thisBtn.dataset.target = '#grid';
-        }
+        // }
     }
 
 	// onChangeSelect();

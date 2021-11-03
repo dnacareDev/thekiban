@@ -24,6 +24,7 @@
         <choose>
             <when test="basic_name != 'none'">
                 WHERE basic_name = #{basic_name}
+                ORDER BY basic_id DESC
             </when>
         </choose>
         LIMIT #{offset}, #{limit}

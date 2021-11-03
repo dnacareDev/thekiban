@@ -26,6 +26,7 @@
         <choose>
             <when test="income_name != 'none'">
                 WHERE income_name = #{income_name}
+                ORDER BY income_id DESC
             </when>
         </choose>
         LIMIT #{offset}, #{limit}

@@ -7,10 +7,10 @@
     <th:block th:include="/../fragments/header.html"></th:block>
     <script src="../assets/vendor_assets/js/script.js"></script> <!-- 왼쪽상단에 버튼 클릭시 class 추가 스크립트 -->
     <style>
-    	.card {
-    		box-shadow: 0 3px 20px 3px rgb(0 0 0 / 7%); /* 2021-11-02 수정 */
-    	}
-    
+        .card {
+            box-shadow: 0 3px 20px 3px rgb(0 0 0 / 7%); /* 2021-11-02 수정 */
+        }
+
         table {
             border-top: 1px solid grey;
             border-collapse: collapse;
@@ -181,16 +181,17 @@
         }
 
         @media (min-width: 576px) {
-        	.modal-dialog {
+            .modal-dialog {
                 max-width: 1014px;
                 margin: 1.75rem auto;
             }
-        
+
             #recent .modal-dialog {
                 max-width: 1300px;
                 margin: 1.75rem auto;
-            }  /* 2021 - 11 - 02 수정 */
+            }
 
+            /* 2021 - 11 - 02 수정 */
             .pop1 .modal-dialog {
                 max-width: 750px;
             }
@@ -223,32 +224,97 @@
         td .btn i.bi-file-earmark-arrow-down {
             color: #000;
         }
-        
-        
+
+
         /* 2021 - 11 - 01 수정 */
-        .table td {padding: 0px 12px; vertical-align: middle; font-size: 14px; border-bottom: 2px solid #d9d9d9;}  /* 2021 - 11 - 02 수정 */
-        .table th {font-size: 16px; border-top: 1px solid #d9d9d9;}  /* 2021 - 11 - 02 수정 */
-        .table thead th {border-bottom: 2px solid #adadad;}  /* 2021 - 11 - 02 수정 */
-        
-        #table2 td {padding: 12px 12px; font-size: 14px}
-        #table2 th {font-size: 16px}
-        
+        .table td {
+            padding: 0px 12px;
+            vertical-align: middle;
+            font-size: 14px;
+            border-bottom: 2px solid #d9d9d9;
+        }
+
+        /* 2021 - 11 - 02 수정 */
+        .table th {
+            font-size: 16px;
+            border-top: 1px solid #d9d9d9;
+        }
+
+        /* 2021 - 11 - 02 수정 */
+        .table thead th {
+            border-bottom: 2px solid #adadad;
+        }
+
+        /* 2021 - 11 - 02 수정 */
+
+        #table2 td {
+            padding: 12px 12px;
+            font-size: 14px
+        }
+
+        #table2 th {
+            font-size: 16px
+        }
+
         .main-content .table thead th span.title:before,
         .main-content .table thead th span.title:after,
-        .main-content .table thead th i {display: none;}
-        
-        .main-content .table thead th > img {margin: 6px 0 0 12px;}
-        
+        .main-content .table thead th i {
+            display: none;
+        }
+
+        .main-content .table thead th > img {
+            margin: 6px 0 0 12px;
+        }
+
         #data_upload .form-group input[type=text]::placeholder {
             text-align: left;
             text-indent: 20px
         }
-        
-		 .popup_wrap {display: none}
-        .popup_wrap.on {display: block; position: fixed; left: 0; top: 0; right: 0; bottom:0; z-index: 999; background-color: rgba(0, 0, 0, 0.1);}
-        .popup_wrap.on .popup {position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 400px; height: 150px; background-color: #fff; border-radius: 8px; padding: 30px; text-align: center; padding-top: 40px}
-        .popup_wrap.on .close {opacity: 1; position: absolute; left: 50%; transform: translateX(-50%); bottom: 20px; font-size: 14px; background-color: #1e695c; display: block; height: 35px; width: 90px; color: #fff;  font-weight: 400; border-radius: 6px}
 
+        .popup_wrap {
+            display: none
+        }
+
+        .popup_wrap.on {
+            display: block;
+            position: fixed;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 999;
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .popup_wrap.on .popup {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            height: 150px;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            padding-top: 40px
+        }
+
+        .popup_wrap.on .close {
+            opacity: 1;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 20px;
+            font-size: 14px;
+            background-color: #1e695c;
+            display: block;
+            height: 35px;
+            width: 90px;
+            color: #fff;
+            font-weight: 400;
+            border-radius: 6px
+        }
 
 
         #data_upload .modal-body .form-group {
@@ -316,79 +382,113 @@
             font-size: 16px;
             font-weight: 200;
         }
-		
-		 /* 2021 - 11 - 02 수정 */
-		#data_upload .form-group button {
-			line-height: 2rem;
-			font-size: 13px;
-			height: 34px;
-			margin-left: 5px;
-		}
-		
-		#data_upload .form-group input[type=text] {
-			height: 34px;
-		}
-		
-		 #data_upload .form-group input[type=text]::placeholder {
+
+        /* 2021 - 11 - 02 수정 */
+        #data_upload .form-group button {
+            line-height: 2rem;
+            font-size: 13px;
+            height: 34px;
+            margin-left: 5px;
+        }
+
+        #data_upload .form-group input[type=text] {
+            height: 34px;
+        }
+
+        #data_upload .form-group input[type=text]::placeholder {
             text-align: left;
             text-indent: 20px;
             font-size: 14px;
         }
-		
-		.contents .container-fluid {
-			background-color: #FCFCFC;
-		}
-		
-		#excel_data {
-			width: 100%;
-		}
-		
-		.modal-content .modal-footer {
-			padding-bottom: 28px;
-			padding-right: 24px;
-		}
-		
-		.btn-primary {
-			border: none;
-		}
-		
-		.main-content .card-extra .justify-content-end .atbd-button-list .data_btn1,
-		.main-content .card-extra .justify-content-end .atbd-button-list .data_btn2,
-		.main-content .card-extra .justify-content-end .atbd-button-list .form-control {
-			height: 36px;	
-		}
-		
-		.main-content .card-extra .justify-content-end .atbd-button-list .data_btn1,
-		.main-content .card-extra .justify-content-end .atbd-button-list .data_btn2 {
-			width: 31px;
-			margin-top: 12px;
-			padding: 0px 19px;
-		}
-		
-		
-		.atbd-button-list button {
-			margin: 5px 3px;
-		}
-		
-		#data_upload2 .form-group button {
-       		height: 34px;
-       		line-height: 2rem;
-			font-size: 13px;
-       }
-       
-       .col-4 .bottom_btn > span {
-       		height: 34px;
-       		line-height: 2rem;
-			font-size: 13px;
-       }
-       
-       /* 푸터 배경색 */
-		.footer-wrapper {background-color: #FCFCFC;}
-		
+
+        .contents .container-fluid {
+            background-color: #FCFCFC;
+        }
+
+        #excel_data {
+            width: 100%;
+        }
+
+        .modal-content .modal-footer {
+            padding-bottom: 28px;
+            padding-right: 24px;
+        }
+
+        .btn-primary {
+            border: none;
+        }
+
+        .main-content .card-extra .justify-content-end .atbd-button-list .data_btn1,
+        .main-content .card-extra .justify-content-end .atbd-button-list .data_btn2,
+        .main-content .card-extra .justify-content-end .atbd-button-list .form-control {
+            height: 36px;
+        }
+
+        .main-content .card-extra .justify-content-end .atbd-button-list .data_btn1,
+        .main-content .card-extra .justify-content-end .atbd-button-list .data_btn2 {
+            width: 31px;
+            margin-top: 12px;
+            padding: 0px 19px;
+        }
+
+
+        .atbd-button-list button {
+            margin: 5px 3px;
+        }
+
+        #data_upload2 .form-group button {
+            height: 34px;
+            line-height: 2rem;
+            font-size: 13px;
+        }
+
+        .col-4 .bottom_btn > span {
+            height: 34px;
+            line-height: 2rem;
+            font-size: 13px;
+        }
+
+        /* 푸터 배경색 */
+        .footer-wrapper {
+            background-color: #FCFCFC;
+        }
+
+        /* contextmenu */
+        .contextmenu {
+            position: absolute;
+            display: none;
+        }
+
+        .contextmenu li {
+            border-left: 3px solid transparent;
+            transition: ease .2s;
+        }
+
+        .contextmenu li a {
+            display: block;
+            padding: 10px;
+            color: #B0BEC5;
+            background: #FFFFFF;
+            text-decoration: none;
+            transition: ease .2s;
+        }
+
+        .contextmenu li:hover {
+            border-left: 3px solid #9C27B0;
+        }
+
+        .contextmenu li:hover a {
+            color: #FFFFFF;
+        }
+
+        /* input 크기 */
+        .rowInput {
+            width: 115px;
+        }
     </style>
 </head>
 
-<body class="layout-light top-menu overlayScroll">
+<body class="layout-light top-menu overlayScroll" oncontextmenu='return false'>
 <div class="mobile-search"></div>
 
 <div class="mobile-author-actions"></div>
@@ -929,6 +1029,14 @@
     </div>
 
     <!-- modal end -->
+
+    <!-- context menu -->
+    <ul class="contextmenu">
+        <li><a href="#" onclick="addRow()">Insert Row</a></li>
+        <li><a href="#">Delete Row</a></li>
+        <li><a href="#">Export to Excel</a></li>
+        <li><a href="#">통합 분석</a></li>
+    </ul>
 </main>
 
 <!-- 공통 하단 -->
@@ -1047,7 +1155,41 @@
 
             var html = "";
 
-            // console.log(rowdata[1]);
+            var excel = [];
+
+            for (var k = 1; k < rowdata.length; k++) {
+                var chk = Object.values(rowdata[k]);
+                var kkk = Object.keys(rowdata[k]);
+                var j = 0;
+
+                console.log(keys.length);
+
+                while(j < 9) {
+                    for (var n = 0; n < keys.length; n++) {
+                        console.log('kkk', kkk);
+
+                        var keyStr = kkk[j].replace(/[^0-9]/g, '');
+
+                        console.log('keyStr', keyStr);
+                        console.log('n', n);
+
+                        if (keyStr != n) {
+                            excel[n] = {key: keys[n], value: " "}
+                        } else {
+                            if ((typeof chk[n]) === "number") {
+                                excel[n] = {key: keys[n], value: chk[n]};
+                            } else {
+                                excel[n] = {key: keys[n], value: "" + chk[n]};
+                            }
+                            j++;
+                        }
+                    }
+                }
+
+                const obj = {...excel};
+
+                rowdata[k] = obj;
+            }
 
             for (var i = 0; i < rowdata.length; i++) {
                 if (i === 0) {
@@ -1064,77 +1206,24 @@
                     html += "<tbody class='text-center'>";
                     html += "<tr>";
 
-                    var tmp = Object.keys(rowdata[0]);
-                    var j = 0;
-                    // console.log(rowdata);
-                    //
-                    // var tableColumnLength = Object.keys(rowdata[0]).length;
-                    // console.log(tableColumnLength, rowdata.length);
-                    //
-                    // for(var t = 0; t < 3; t++){ // 10
-                    //     html += "<tr>";
-                    //     for(var q = 0; q < tableColumnLength; q++){ // 10
-                    //
-                    //         html += "<td><span>" + "ddd" + "</span></td>";
-                    //         console.log('test',q);
-                    //
-                    //     }
-                    //     html += "</tr>";
-                    // }
+                    var columnLength = Object.keys(rowdata[0]).length;
 
-                    $.each(rowdata[i], function (idx, value) {
-                        // 공백처리
-                        if (idx == tmp[j]) {
-                            html += "<td><span>" + value + "</span></td>";
-                            j++;
-                        } else {
-                            var idx_str = idx.replace(/[^0-9]/g, '');
-                            var tmp_str = tmp[j].replace(/[^0-9]/g, '');
+                    /*table td*/
+                    for (var q = 0; q < columnLength; q++) { // 10
+                        var valueT = Object.entries(rowdata[i])[q][1].value;
 
-                            var gap = idx_str - tmp_str;
-
-                            while (gap > 0) {
-                                gap--;
-                                html += "<td><span> </span></td>";
-                            }
-
-                            html += "<td><span>" + value + "</span></td>";
-
-                            j = idx_str;
-                            j++;
-                        }
-                    });
+                        html += "<td><span>" + valueT + "</span></td>";
+                    }
 
                     html += "</tr>";
                     html += "</tbody>";
                 }
             }
 
-            var excel = [];
-
-            for (var k = 1; k < rowdata.length; k++) {
-                var chk = Object.values(rowdata[k]);
-
-                for (var n = 0; n < keys.length; n++) {
-                    if (chk[n] == undefined) {
-                        excel[n] = {key: keys[n], value: " "};
-                    } else if ((typeof chk[n]) === "number"){
-                        excel[n] = {key: keys[n], value: chk[n]};
-                    } else {
-                        excel[n] = {key: keys[n], value: "" + chk[n]};
-                    }
-                }
-                const obj = {...excel};
-
-                rowdata[k] = obj;
-            }
-
             $("#excel_data").empty();
             $("#excel_data").append(html);
 
             var jsonObj = tableToJson(document.getElementById("excel_data"));
-
-            // console.log('jsonObj : ', jsonObj)
 
             $("#excel_list").val(JSON.stringify(jsonObj));
         };
@@ -1165,7 +1254,7 @@
         for (var i = 0; i < table.rows[0].cells.length; i++) {
             headers[i] = table.rows[0].cells[i].innerText;
 
-            console.log('headers : ', headers[i]);
+            // console.log('headers : ', headers[i]);
         }
 
         for (var i = 1; i < table.rows.length; i++) {
@@ -1212,24 +1301,23 @@
     var searchSelectBox = document.querySelector('#CropSelect');
 
     const thisBtn = document.querySelector('#modal_open');
-    thisBtn.dataset.target = '';
+
+    // thisBtn.dataset.target = '';
 
     function onChangeSelect() {
         var thisBtn = document.querySelector('#modal_open');
         var value = searchSelectBox.value;
-        if (value === 'none') {
-            thisBtn.dataset.target = '';
-        } else {
-            thisBtn.dataset.target = '#grid';
-        }
+        // if (value === '고추') {
+        //     thisBtn.dataset.target = '';
+        // } else {
+        thisBtn.dataset.target = '#grid';
+        // }
     }
 
     // onChangeSelect();
     searchSelectBox.addEventListener('change', onChangeSelect);
     $("#modal_open").click(function () {
-
-        $("input[name=sample_name]").val($("#CropSelect option:selected").val());
-
+        $("input[name=income_name]").val($("#CropSelect option:selected").text());
     });
 
     // 시교 자원 추가
@@ -1573,19 +1661,124 @@
         }
     }
 
- // popup 창
-    const popupBtn = document.querySelectorAll('.btn-circle');
-    const popup = document.querySelector('.popup_wrap');
-    const popupClose = document.querySelector('.close');
-    console.log(popupBtn[0]);
-    
-    popupBtn[0].addEventListener('click', () => {
-    	popup.classList.add('on');
+    document.addEventListener('mousedown', function () {
+        if ((event.button == 2) || (event.which == 3)) {
+
+        }
     });
-    
-    popupClose.addEventListener('click', () => {
-    	popup.classList.remove('on');
-    }); 
+
+    // 우클릭 메뉴
+    $(document).ready(function(){
+        //Show contextmenu:
+        $(".card-body").contextmenu(function(e){
+            //Get window size:
+            var winWidth = $(document).width();
+            var winHeight = $(document).height();
+            //Get pointer position:
+            var posX = e.pageX;
+            var posY = e.pageY;
+            //Get contextmenu size:
+            var menuWidth = $(".contextmenu").width();
+            var menuHeight = $(".contextmenu").height();
+            //Security margin:
+            var secMargin = 10;
+            //Prevent page overflow:
+            if(posX + menuWidth + secMargin >= winWidth
+                && posY + menuHeight + secMargin >= winHeight){
+                //Case 1: right-bottom overflow:
+                posLeft = posX - menuWidth - secMargin + "px";
+                posTop = posY - menuHeight - secMargin + "px";
+            }
+            else if(posX + menuWidth + secMargin >= winWidth){
+                //Case 2: right overflow:
+                posLeft = posX - menuWidth - secMargin + "px";
+                posTop = posY + secMargin + "px";
+            }
+            else if(posY + menuHeight + secMargin >= winHeight){
+                //Case 3: bottom overflow:
+                posLeft = posX + secMargin + "px";
+                posTop = posY - menuHeight - secMargin + "px";
+            }
+            else {
+                //Case 4: default values:
+                posLeft = posX + secMargin + "px";
+                posTop = posY + secMargin + "px";
+            };
+            //Display contextmenu:
+            $(".contextmenu").css({
+                "left": posLeft,
+                "top": posTop
+            }).show();
+            //Prevent browser default contextmenu.
+            return false;
+        });
+        //Hide contextmenu:
+        $(document).click(function(){
+            $(".contextmenu").hide();
+        });
+    });
+
+    // row 추가
+    function addRow()
+    {
+        var row_list = "";
+        row_list += '<tr id="row_data">';
+
+        row_list += '<form action="insertSample" id="rowForm" method="POST" enctype="multipart/form-data">';
+        row_list += '<input type="hidden" id="rowSample" name="rowSample">'
+        row_list += '<td><input type="checkbox" name="RowCheck"></td>';
+        row_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
+        row_list += '<td class="status" style="cursor: pointer;" onclick="emptyFunction(this);">EMPTY</td>';
+        row_list += '<td><input type="text" class="rowInput" name="sample_name"></td>';
+        row_list += '<td><input type="text" class="rowInput" name="sample_code"></td>';
+        row_list += '<td><input type="text" class="rowInput" name="sample_country"></td>';
+        row_list += '<td><input type="text" class="rowInput" name="sample_type"></td>';
+        row_list += '<td><input type="text" class="rowInput" name="sample_mate"></td>';
+        row_list += '<td><input type="text" class="rowInput" name="sample_seed"></td>';
+        row_list += '<td><input type="text" class="rowInput" name="sample_amount"></td>';
+        row_list += '<td><input type="text" class="rowInput" name="sample_sprout"></td>';
+        row_list += '<td><input type="text" class="rowInput" name="sample_purity"></td>';
+        row_list += '<td><input type="text" class="rowInput" name="sample_comment"></td>';
+        row_list += '<td><button type="submit" onclick="RowBtn();">test</button></td>';
+        row_list += '</form>';
+        row_list += '</tr>';
+
+        $("#sample_list").append(row_list);
+
+    }
+
+    function RowBtn()
+    {
+        var data = [];
+
+        $("input[class=rowInput]").each(function (index, item) {
+            const key = $(this).attr('name');
+            var value = $(this).val();
+
+            var arr = {key: key, value: value};
+
+            data.push(arr);
+        });
+
+        $.ajax(
+            {
+                url: 'insertSample',
+                method: 'POST',
+                dataType: 'json',
+                data: {
+                    "data" : JSON.stringify(data)
+                },
+                success: function (result) {
+                    if (result == 0) {
+                        location.reload();
+                    } else {
+                        location.reload();
+                    }
+                }
+            });
+
+    }
+
 </script>
 </body>
 

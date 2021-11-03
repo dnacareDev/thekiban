@@ -97,7 +97,7 @@ public class IncomeController {
   public ModelAndView excelUpload(ModelAndView mv, @ModelAttribute Income income, @RequestParam("excel_list") String excel_list) {
     JSONArray arr = new JSONArray(excel_list);
 
-    for (int i = 0; i < arr.length(); i++) {
+    for (int i = arr.length() - 1; i > -1; i--) {
 
       JSONObject obj = arr.getJSONObject(i);
 

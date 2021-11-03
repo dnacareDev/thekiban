@@ -31,8 +31,10 @@ public class SampleController {
   }
 
   // 시교자원 입력
+  @ResponseBody
   @RequestMapping("insertSample")
-  public ModelAndView InsertSample(ModelAndView mv, @ModelAttribute Sample sample) {
+  public ModelAndView InsertSample(ModelAndView mv, @ModelAttribute Sample sample)
+  {
     service.InsertSample(sample);
 
     mv.setViewName("redirect:/sample");
@@ -94,7 +96,7 @@ public class SampleController {
   public ModelAndView excelUpload(ModelAndView mv, @ModelAttribute Sample sample, @RequestParam("excel_list") String excel_list) {
     JSONArray arr = new JSONArray(excel_list);
 
-    for (int i = 0; i < arr.length(); i++) {
+    for (int i = arr.length() - 1; i > -1; i--) {
 
       JSONObject obj = arr.getJSONObject(i);
 
