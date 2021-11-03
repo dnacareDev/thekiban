@@ -52,7 +52,18 @@
     <script th:src="@{/dist/xlsx.min.js}"></script>
     <script th:src="@{/dist/jquery.tabletojson.js}"></script>
     <!-- endinject-->
-    
+<div class="popAlert" id="alert" style="display:none;"> <!-- alert 호출방법은 스크립트로 alert('내용')과 같이 messege('내용')으로 하시면 됩니다 -->
+	<div class="alert_table">
+		<div class="alert_inner">
+			<div class="alert_cover">
+				<div class="title_text"></div>
+				<button type="button">확인</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="dim" style="display:none;"></div>
 <script type="text/javascript">
 
 	//해당 페이지 탭 active css 주기
@@ -61,6 +72,16 @@
 	$("#"+pathArray[1]).addClass("active");
 	if(pathArray[2] != null){
 		$("."+pathArray[2]).addClass("active");
+	}
+	
+	function messege(text){ //popup
+		$("#alert").show(300);
+		$(".dim").show();
+		$("#alert .title_text").text(text);
+		
+		$("#alert button").click(function(){
+			$("#alert, .dim").hide();
+		});
 	}
 		
 </script>

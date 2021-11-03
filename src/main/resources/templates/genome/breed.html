@@ -1427,10 +1427,10 @@
                 navLi[h].classList.remove("active");
                 contentLi[h].classList.remove("active");
             }
-
+            
+			
             let navW = navLi[f].offsetWidth;
-            navMove = navW * f;
-
+            navMove = navW * (f - 1);
             let a = topBox[k].offsetWidth;
             let b = nav.offsetWidth;
             let c = b - a;
@@ -1843,7 +1843,7 @@
     const popup = document.querySelector('.popup_wrap');
     const popupClose = document.querySelector('.close');
 
-    /*popupBtn[0].addEventListener('click', () => {
+   /* popupBtn[0].addEventListener('click', () => {
         popup.classList.add('on');
     });
 
