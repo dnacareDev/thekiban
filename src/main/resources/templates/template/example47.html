@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="en" dir="ltr"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <!-- 공통 헤더 -->
+    <th:block th:include="/../fragments/header.html"></th:block>
+    <!-- css -->
+    <link rel="stylesheet" href="css/index.css">
+    <!-- js -->
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<style>
+* {
+	box-sizing: border-box;
+}
+body, h1, h2, h3, h4, h5, h6, p, ul, ol {
+	margin: 0;
+	padding: 0;
+}
+ul, ol {
+	list-style: none;
+}
+a {
+	text-decoration: none;
+	color: #000;
+}
+img {
+	vertical-align: top;
+	border: 0;
+}
+/*
+body {
+	overflow-y: hidden;
+}*/
+.clearfix::before{
+	content: "";
+	display: block;
+}
+.clearfix::after{
+	content: "";
+	display: block;
+	clear: both;
+}
+.contents{
+    margin:0 auto;
+    width:100%;
+}
+.box{
+    width: 40%;
+    float: left;
+}
+h6.title{
+	display:block;
+	font-size: 20px;
+	padding: 20px 0;
+}
+input[type="text"] {
+    width: 100%;
+    height: 50px;
+    font-size: 11px;
+    border:1px solid #ddd;
+    border-radius: 10px;
+    padding: 0 10px;
+    color:#B2B2B2;
+}
+.text_box{
+	width: 100%;
+	border:1px solid #ddd;
+    border-radius: 10px;
+	overflow:auto;
+	background-color: #fff;
+	min-height: 300px;
+	max-height: 300px;
+}
+.text_box.text_box3{
+	max-height: 300px;
+}
+.text_box li{
+	display: block;
+	width:100%;
+	cursor: pointer;
+	line-height: 2;
+	border-bottom: 1px solid #E2E3E5;
+	color:#666666;
+}
+.text_box li:hover{
+	background-color: #EDF6F1;
+}
+.text_box li.clicked{
+	background-color: #217566;
+	color: #fff;
+}
+.text_box li span{
+	width:100%;
+	text-align:left;
+	padding: 0 10px;
+}
+li span.bg{
+	background-color:
+}
+.button {
+	width:20%;
+	float:left;
+	padding-top:50px;
+	display:table;
+}
+.button ul{
+	display:table-cell;
+	vertical-align: middle;
+}
+.button li{
+	width:100%;
+	text-align:center;
+	padding-top:20px;
+}
+.button li button{
+	width:32px;
+	height:32px;
+	border: 2px solid #217566;
+	background-color: transparent;
+	border-radius: 50%;
+}
+.button li button span{
+	position:relative;
+}
+.button li button span::after{
+	content:"";
+	display:block;
+	position:absolute;
+	top:-7px;
+	left:0;
+	width:2px;
+	height: 10px;
+	background-color: #217566;
+	transform: rotate(-45deg);
+}
+.button li button span::before{
+	content:"";
+	display:block;
+	position:absolute;
+	top:-1px;
+	left:0;
+	width:2px;
+	height: 10px;
+	background-color: #217566;
+	transform: rotate(45deg);
+}
+.button li button span.left_btn::after{
+	left:-2px;
+	transform: rotate(45deg);
+}
+.button li button span.left_btn::before{
+	left:-2px;
+	transform: rotate(-45deg);
+}
+input[type="checkbox"]{
+	display:none;
+}
+/*button{
+    width:100px;
+    height: 20px;
+    text-align: center;
+    border-radius: 5px;
+    float:right;
+    margin-top:5px;
+}*/
+.top-menu .main-content .contents{
+	padding-top: 30px;
+	padding-left:0;
+	background-color: #fff;
+}
+.submit_btn {
+	padding: 20px 0;
+	float: right;
+}
+.main-content{
+	/*padding: 10px 0 0 0;*/
+}
+
+/* alert 팝업 */
+.dim{
+	position:fixed;
+	left:0;
+	top:0;
+	width:100%;
+	height:100vh;
+	background-color:rgba(0,0,0,0.3);
+	z-index: 9;
+}
+#alert{
+	width:100%;
+	position:fixed;
+	left:0;
+	top:0;
+	width:100%;
+	height:100vh;
+	z-index: 9999999999999999999999999;
+}
+#alert .alert_table{
+	display: table;
+	width:100%;
+	height: 100%;
+	
+}
+#alert .alert_table .alert_inner{
+	display:table-cell;
+	vertical-align:middle;
+}
+#alert .alert_table .alert_inner .alert_cover{
+	max-width:550px;
+	margin:0 auto;
+	padding: 50px;
+	text-align:center;
+	background-color: #fff;
+	border-radius: 10px;
+}
+#alert .alert_table .alert_inner .alert_cover .title_text{
+	color: #222222;
+	font-size: 20px;
+	font-weight: 500;
+}
+#alert .alert_table .alert_inner .alert_cover button[type="button"]{
+	padding: 10px 30px;
+	color: #fff;
+	background-color:#217566;
+	border-radius: 5px;
+	margin-top:30px;
+	border: none;
+}
+</style>
+</head>
+
+<body class="layout-light top-menu overlayScroll">
+<div class="mobile-search"></div>
+
+<div class="mobile-author-actions"></div>
+
+<!-- 공통 topbar -->
+<th:block th:include="/../fragments/topbar.html"></th:block>
+
+<main class="main-content">
+<div class="contents" style="background-color: #FFFFFF;">
+	<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-12 mb-30">
+					<div class="card">
+    <div class="container clearfix">
+    <form action="" method="post">
+        <div class="contents clearfix">
+            <h6 class="title">분석대상선택</h1>
+            
+            <div class="box box1">
+            	<input type="text" value="품종-시교명ID, 원종-계통명ID 검색">
+            	<div class="text_box text_box1">
+	            	<ul>
+	            		<li><input type="checkbox"><span>19PC0233</span></li> 
+	            		<li><input type="checkbox"><span>29PC0233</span></li>
+	            		<li><input type="checkbox"><span>39PC0233</span></li>
+	            		<li><input type="checkbox"><span>49PC0233</span></li>
+	            		<li><input type="checkbox"><span>59PC0233</span></li>
+	            		<li><input type="checkbox"><span>69PC0233</span></li>
+	            		<li><input type="checkbox"><span>79PC0233</span></li>
+	            		<li><input type="checkbox"><span>89PC0233</span></li>
+	            		<li><input type="checkbox"><span>99PC0233</span></li>
+	            		<li><input type="checkbox"><span>19PC0233</span></li>
+	            	</ul>
+            	</div>
+            </div>    
+            <div class="button clearfix">
+            	<ul>
+            		<li><button type="button" class="right_plus" onclick="plusFunction(this, array1)"><span class="right_btn"></span></button></li>
+            		<li><button type="button" onclick="plusFunction(this, array2)"><span class="left_btn"></span></button></li>
+            	</ul>
+            </div>
+            <div class="box box2">
+            	<input type="text" value="품종-시교명ID, 원종-계통명ID 검색">
+            	<div class="text_box text_box2">
+	            	<ul>
+	            		
+	            	</ul>
+            	</div>
+            </div>   
+        </div>
+        <div class="contents clearfix">
+            <h6 class="title">분석방법</h1>
+            
+            <div class="box box1">
+            	<input type="text" value="품종-시교명ID, 원종-계통명ID 검색">
+            	<div class="text_box text_box3">
+	            	<ul>
+	            		<li><input type="checkbox"><span>19PC0233</span></li> 
+	            		<li><input type="checkbox"><span>29PC0233</span></li>
+	            		
+	            	</ul>
+            	</div>
+            </div>    
+            <div class="button clearfix">
+            	<ul>
+            		<li><button type="button" class="right_plus" onclick="plusFunction(this, array1)"><span class="right_btn"></span></button></li>
+            		<li><button type="button" onclick="plusFunction(this, array2)"><span class="left_btn"></span></button></li>
+            	</ul>
+            </div>
+            <div class="box box2" id="box2_height">
+            	<input type="text" value="품종-시교명ID, 원종-계통명ID 검색">
+            	<div class="text_box text_box4">
+	            	<ul>
+	            		
+	            	</ul>
+            	</div>
+            </div>   
+        </div>
+        <div class="contents clearfix">
+            <h6 class="title">분석대상선택</h1>
+            
+            <div class="box box1">
+            	<input type="text" value="품종-시교명ID, 원종-계통명ID 검색">
+            	<div class="text_box text_box5">
+	            	<ul>
+	            		<li><input type="checkbox"><span>19PC0233</span></li> 
+	            		<li><input type="checkbox"><span>29PC0233</span></li>
+	            		<li><input type="checkbox"><span>39PC0233</span></li>
+	            		<li><input type="checkbox"><span>49PC0233</span></li>
+	            		<li><input type="checkbox"><span>59PC0233</span></li>
+	            		<li><input type="checkbox"><span>69PC0233</span></li>
+	            		<li><input type="checkbox"><span>79PC0233</span></li>
+	            		<li><input type="checkbox"><span>89PC0233</span></li>
+	            		<li><input type="checkbox"><span>99PC0233</span></li>
+	            		<li><input type="checkbox"><span>19PC0233</span></li>
+	            	</ul>
+            	</div>
+            </div>    
+            <div class="button clearfix">
+            	<ul>
+            		<li><button type="button" class="right_plus" onclick="plusFunction(this, array1)"><span class="right_btn"></span></button></li>
+            		<li><button type="button" onclick="plusFunction(this, array2)"><span class="left_btn"></span></button></li>
+            	</ul>
+            </div>
+            <div class="box box2">
+            	<input type="text" value="품종-시교명ID, 원종-계통명ID 검색">
+            	<div class="text_box text_box6">
+	            	<ul>
+	            		
+	            	</ul>
+            	</div>
+            </div>   
+        </div>
+        <div class="submit_btn">
+        	<input type="submit" class="btn btn-primary btn-sm" value="분석실행">
+        </div>
+        </form>
+	</div>
+	</div>
+      </div>
+      </div>
+      </div>
+      </div>
+</main>
+
+
+<!-- 공통 하단 -->
+<th:block th:include="/../fragments/footer.html"></th:block>
+<!-- 공통 js -->
+ <th:block th:include="/../fragments/commonjs.html"></th:block>
+<script>
+
+
+let inner_html= "";
+let text_box;
+let array1 = [];
+let array2 = [];
+let textLi;
+function plusFunction(e, Arrays){
+	Arrays = [];
+	if($(e).hasClass("right_plus") == true){
+		textLi = $(e).parent().parent().parent().prev().children().eq(1).children().children();
+		text_box = $(e).parent().parent().parent().next().children().eq(1).children();
+	} else {
+		textLi = $(e).parent().parent().parent().next().children().eq(1).children().children();
+		text_box = $(e).parent().parent().parent().prev().children().eq(1).children();
+	}
+	textLi.each(function(idx, elem){
+		if($(elem).children().eq(0).is(":checked") == true){
+			Arrays.push($(elem).children().eq(1).text());
+			$(elem).remove();
+		}
+		
+	});
+	
+	for(let i=0; i< Arrays.length; i++){
+		inner_html += "<li><input type='checkbox'><span>"+ Arrays[i]+"</span></li>";
+		
+	}
+	text_box.append(inner_html);
+	inner_html = "";
+	
+	checkFunction();
+}
+
+checkFunction();
+function checkFunction(){// 박스안 리스트 클릭시 체크박스 체크\
+	$('.text_box li').off('click').on('click', function(e){ 
+		e.preventDefault();
+		
+ 		$(this).toggleClass("clicked");
+ 		if($(this).hasClass("clicked") == true){
+ 			$(this).children().eq(0).prop("checked", true);
+ 		} else {
+ 			$(this).children().eq(0).prop("checked", false);
+ 		}
+	});
+	$('.text_box3 li').off('click').on('click', function(e){ 
+		e.preventDefault();
+		
+		$('.text_box3 li').removeClass("clicked");
+ 		$(this).addClass("clicked");
+ 		$('.text_box3 li').children().eq(0).prop("checked", false);
+ 		
+ 		if($(this).hasClass("clicked") == true){
+ 			$(this).children().eq(0).prop("checked", true);
+ 		} else {
+ 			$(this).children().eq(0).prop("checked", false);
+ 			
+ 			
+ 		}
+ 		if($(".text_box4 li").length > 0){
+ 			
+ 			return messege('분석방법은 하나만 선택할수있습니다'); // alert 호줄
+ 			window.history.back();
+ 			
+			$('.text_box3 li').removeClass("clicked");
+ 			$('.text_box3 li').children().eq(0).prop("checked", false);
+ 		}
+ 		
+	});
+};
+
+function autoHeight(){ /* 높이 조절 */
+	$(".box1 .text_box").each(function(idx, elem){
+		let box_height = $(elem).height();
+		$(elem).parent().next().css({"height" : $(elem).parent().height(), "padding-top": 0});
+	});
+}
+let box2_h = $(".text_box3 ul").height();
+$(".text_box3").css({"min-height": box2_h});
+$(".text_box4").css({"height": box2_h, "min-height":box2_h});
+autoHeight();
+
+
+</script>
+</body>
+
+</html>

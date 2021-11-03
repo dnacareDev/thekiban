@@ -529,16 +529,14 @@
                                             <option value="양파">양파</option>
                                             <option value="참외">참외</option>
                                             <option value="토마토">토마토</option>
-                                            <!--<th:block th:each="sample : ${sampleDis}">
-                                                <option th:text="${sample.sample_name}" th:value="${sample.sample_id}"></option>
-                                            </th:block>-->
                                         </select>
                                     </form>
-                                    <!--<button class="btn btn-lg btn-primary data_btn1" onclick="filesFunction()"><img
-                                        src="../assets/vendor_assets/img/icon1.svg" alt=""></button>-->
-                                    <button class="btn btn-lg btn-primary data_btn2" title="데이터 관리" data-toggle="modal" data-target="#data_upload2"><img
-                                        src="../assets/vendor_assets/img/icon2.png" alt=""></button>
-                                    <button class="btn btn-lg btn-primary data_btn2"><img src="../assets/vendor_assets/img/icon3.png" alt=""></button>
+                                    <button class="btn btn-lg btn-primary data_btn2" data-toggle="modal" title="데이터 등록" data-target="#data_upload2">
+                                        <img src="../assets/vendor_assets/img/icon1.png" alt=""></button>
+                                    <button type="button" class="btn btn-lg btn-primary data_btn1" title="엑셀 export">
+                                        <img src="../assets/vendor_assets/img/icon2.png" title="데이터 등록" alt=""></button>
+                                    <button class="btn btn-lg btn-primary data_btn2" title="표시항목 선택" onclick="DisplayBtn();">
+                                        <img src="../assets/vendor_assets/img/icon3.png" alt=""></button>
                                 </div>
                             </div>
                         </div>
@@ -551,9 +549,6 @@
                                             <th></th>
                                             <th><span class="title">첨부파일</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
                                                                                            alt="첨부파일"></th>
-                                            <th style="cursor: pointer;"><span class="title">특성상태</span><i></i><img
-                                                src="../assets/vendor_assets/img/title_icon.png"
-                                                alt="특성상태"></th>
                                             <th style="cursor: pointer;"><span class="title">작물</span><i></i><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="작물"></th>
@@ -586,7 +581,7 @@
                                                 alt="비고"></th>
                                         </tr>
                                         </thead>
-                                        <tbody class="text-center" id="sample_list">
+                                        <tbody class="text-center sample-list" id="sample_list">
                                         <!--<tr>
                                             <td><input type="checkbox"></td>
                                             <td><span>19PC4155</span></td>
@@ -640,32 +635,35 @@
                                                 alt="지역구분"></th>
                                         </tr>
                                         </thead>
-                                        <tbody class="text-center">
-                                        <tr>
-                                            <td><input type="checkbox" name="chkBox"></td>
-                                            <td><span>19PC0233</span></td>
-                                            <td><span>P20C0080</span></td>
-                                            <td><span>0</span></td>
-                                            <td><span>40</span></td>
-                                            <td><span>0</span></td>
-                                            <td><span>40</span></td>
-                                            <td><span>백향구</span></td>
-                                            <td><span>이호석</span></td>
-                                            <td><span>2019-01-01</span></td>
-                                            <td><span>-</span></td>
-                                            <td><span>해외</span></td>
-                                        </tr>
+                                        <tbody class="text-center sample-list">
+                                        <!--<tr>-->
+                                        <!--    <td><input type="checkbox" name="chkBox"></td>-->
+                                        <!--    <td><span>19PC0233</span></td>-->
+                                        <!--    <td><span>P20C0080</span></td>-->
+                                        <!--    <td><span>0</span></td>-->
+                                        <!--    <td><span>40</span></td>-->
+                                        <!--    <td><span>0</span></td>-->
+                                        <!--    <td><span>40</span></td>-->
+                                        <!--    <td><span>백향구</span></td>-->
+                                        <!--    <td><span>이호석</span></td>-->
+                                        <!--    <td><span>2019-01-01</span></td>-->
+                                        <!--    <td><span>-</span></td>-->
+                                        <!--    <td><span>해외</span></td>-->
+                                        <!--</tr>-->
                                         </tbody>
                                     </table>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-4">
-                                        <button class="btn btn-icon btn-light btn-circle" data-toggle="modal" data-target="#grid" id="modal_open">
+                                        <button class="btn btn-icon btn-light btn-circle" id="addRow" onclick="addRow()">
                                             <span data-feather="plus"></span>
                                         </button>
                                         <button class="btn btn-icon btn-light btn-circle" onclick="DeleteSample()">
                                             <span data-feather="trash-2"></span>
+                                        </button>
+                                        <button class="btn btn-icon btn-light btn-circle" id="data_check_submit" style="width:44.03px; height:42px;">
+                                            <img src="../assets/vendor_assets/img/check_tab.png" alt="check" style="width: 17px;margin-left: 4px;">
                                         </button>
                                     </div>
                                     <div class="col-4">
@@ -732,7 +730,7 @@
     </div>
 
     <!-- 일반데이터 등록 -->
-    <div class="modal-basic modal fade show pop2" id="grid" tabindex="-1" role="dialog" aria-hidden="true">
+    <!--<div class="modal-basic modal fade show pop2" id="grid" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white ">
                 <div class="modal-header" style="border: none">
@@ -821,7 +819,7 @@
             </div>
         </div>
     </div>
-
+-->
     <!-- 일반 데이터 수정 -->
     <div class="modal-basic modal fade show pop2" tabindex="-1" role="dialog" aria-hidden="true" id="update-grid">
         <div class="modal-dialog modal-md" role="document">
@@ -981,9 +979,9 @@
                                     <th>데이터수</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="uploadDate">
                                 <tr>
-                                    <td>2</td>
+                                    <td></td>
                                     <td>2021-08-15</td>
                                     <td>185</td>
                                 </tr>
@@ -1044,7 +1042,6 @@
 <!-- 공통 js -->
 <th:block th:include="/../fragments/commonjs.html"></th:block>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBn0n_LEGxgJuCfTU8aKvuwrcmw0iZjfmY&callback=initMap&region=kr"></script>
 <script type="text/javascript">
     function dataToggle(one, two) {
         $(one).modal("hide");
@@ -1155,43 +1152,7 @@
 
             var html = "";
 
-            var excel = [];
-
-            for (var k = 1; k < rowdata.length; k++) {
-                var chk = Object.values(rowdata[k]);
-                var kkk = Object.keys(rowdata[k]);
-                var j = 0;
-
-                console.log(keys.length);
-
-                while(j < 9) {
-                    for (var n = 0; n < keys.length; n++) {
-                        console.log('kkk', kkk);
-
-                        var keyStr = kkk[j].replace(/[^0-9]/g, '');
-
-                        console.log('keyStr', keyStr);
-                        console.log('n', n);
-
-                        if (keyStr != n) {
-                            excel[n] = {key: keys[n], value: " "}
-                        } else {
-                            if ((typeof chk[n]) === "number") {
-                                excel[n] = {key: keys[n], value: chk[n]};
-                            } else {
-                                excel[n] = {key: keys[n], value: "" + chk[n]};
-                            }
-                            j++;
-                        }
-                    }
-                }
-
-                const obj = {...excel};
-
-                rowdata[k] = obj;
-            }
-
-            for (var i = 0; i < rowdata.length; i++) {
+            /*for (var i = 0; i < rowdata.length; i++) {
                 if (i === 0) {
                     html += "<thead class='text-center'>";
                     html += "<tr>";
@@ -1208,7 +1169,7 @@
 
                     var columnLength = Object.keys(rowdata[0]).length;
 
-                    /*table td*/
+                    /!*table td*!/
                     for (var q = 0; q < columnLength; q++) { // 10
                         var valueT = Object.entries(rowdata[i])[q][1].value;
 
@@ -1218,8 +1179,101 @@
                     html += "</tr>";
                     html += "</tbody>";
                 }
+            }*/
+
+            for (var i = 0; i < rowdata.length; i++) {
+                if (i === 0) {
+                    html += "<thead class='text-center'>";
+                    html += "<tr>";
+
+                    $.each(rowdata[0], function (idx, value) {
+                        html += "<th><span class='excel-title'>" + value + "</span></th>";
+                    })
+
+                    html += "</tr>";
+                    html += "</thead>";
+                } else if (i !== 0) {
+                    html += "<tbody class='text-center'>";
+                    html += "<tr>";
+
+                    var tmp = Object.keys(rowdata[0]);
+                    var j = 0;
+
+                    $.each(rowdata[i], function (idx, value) {
+                        // 공백처리
+                        if (idx == tmp[j]) {
+
+                            html += "<td class='excel'><span>" + value + "</span></td>";
+                            j++;
+
+                        } else {
+                            var idx_str = idx.replace(/[^0-9]/g, '');
+                            var tmp_str = tmp[j].replace(/[^0-9]/g, '');
+
+                            var gap = idx_str - tmp_str;
+
+                            while (gap > 0) {
+                                gap--;
+                                html += "<td><span> </span></td>";
+                            }
+
+                            html += "<td class='excel'><span>" + value + "</span></td>";
+                            j++;
+
+                            j = idx_str;
+                            j++;
+                        }
+                    });
+
+                    html += "</tr>";
+                    html += "</tbody>";
+                }
             }
 
+            /*var excel = [];
+
+            for (var k = 1; k < rowdata.length; k++) {
+                var chk = Object.values(rowdata[k]);
+                var kkk = Object.keys(rowdata[k]);
+                var j = 0;
+
+                while (j < 9) {
+                    for (var n = 0; n < keys.length; n++) {
+
+                        var keyStr = kkk[j].replace(/[^0-9]/g, '');
+
+                        if (keyStr != n) {
+                            excel[n] = {key: keys[n], value: " "}
+                        } else {
+                            if ((typeof chk[n]) === "number") {
+                                excel[n] = {key: keys[n], value: chk[n]};
+                            } else {
+                                excel[n] = {key: keys[n], value: "" + chk[n]};
+                            }
+                            j++;
+                        }
+                    }
+                }*/
+
+            var excel = [];
+
+            for (var k = 1; k < rowdata.length; k++) {
+                var chk = Object.values(rowdata[k]);
+
+                for (var n = 0; n < keys.length; n++) {
+                    if (chk[n] == undefined) {
+                        excel[n] = {key: keys[n], value: " "};
+                    } else if (keys[n] === "도입연월일") {
+                        excel[n] = {key: keys[n], value: excelDateToJSDate(chk[n])};
+                    } else {
+                        excel[n] = {key: keys[n], value: "" + chk[n]};
+                    }
+                }
+                const obj = {...excel};
+
+                // console.log(obj);
+                rowdata[k] = obj;
+            }
             $("#excel_data").empty();
             $("#excel_data").append(html);
 
@@ -1244,6 +1298,16 @@
         });
 
         $("#excelForm").submit();
+
+        var uploadHtml = "";
+
+        uploadHtml += '<tr>';
+        uploadHtml += '<td>chk</td>';
+        uploadHtml += '<td>chk</td>';
+        uploadHtml += '<td>chk</td>';
+        uploadHtml += '</tr>';
+
+        $('#uploadDate').prepend(uploadHtml);
     }
 
     // table to json
@@ -1314,11 +1378,6 @@
         // }
     }
 
-    // onChangeSelect();
-    searchSelectBox.addEventListener('change', onChangeSelect);
-    $("#modal_open").click(function () {
-        $("input[name=income_name]").val($("#CropSelect option:selected").text());
-    });
 
     // 시교 자원 추가
     function insertBtn() {
@@ -1351,6 +1410,8 @@
     var emptyEls;
     var resultData = [];
 
+    var btnindex = 0;
+
     function SearchSample(e) {
 
         var sample_name = $("#CropSelect").val();
@@ -1363,7 +1424,8 @@
                 dataType: 'json',
                 data: data,
                 success: function (result) {
-                    var sample_list = $("#sample_list");
+                    var sample_list = $(".sample-list");
+                    sample_list.eq(btnindex);
                     var add_list = "";
 
                     resultData = result.sample;
@@ -1375,9 +1437,8 @@
                         add_list += '<tr>';
                         add_list += '<td><input type="checkbox" name="RowCheck" value="' + result.sample[i].sample_id + '"></td>';
                         add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
-                        add_list += '<td class="status" style="cursor: pointer;" onclick="emptyFunction(' + result.sample[i].sample_id + ', this);">EMPTY</td>';
                         add_list += '<td>' + result.sample[i].sample_name + '</td>';
-                        add_list += '<td>' + result.sample[i].sample_code + '</td>';
+                        add_list += '<td ondblclick="myFunction()">' + result.sample[i].sample_code + '</td>';
                         add_list += '<td>' + result.sample[i].sample_country + '</td>';
                         add_list += '<td>' + result.sample[i].sample_type + '</td>';
                         add_list += '<td>' + result.sample[i].sample_mate + '</td>';
@@ -1421,6 +1482,10 @@
             });
     }
 
+    function myFunction() {
+
+    }
+
     // 시교자원 삭제
     function DeleteSample() {
         var total_id = [];
@@ -1441,14 +1506,9 @@
                     dataType: 'json',
                     data: data,
                     success: function (result) {
-
-                        console.log(result)
-
                         if (result == 0) {
-                            alert("삭제에 실패하였습니다.");
-                            location.reload();
                         } else {
-                            location.reload();
+                            location.reload()
                         }
                     }
                 });
@@ -1646,7 +1706,6 @@
         })
     })
 
-
     function smoothZoom(map, max, cnt) {
         if (cnt >= max) {
             return;
@@ -1667,10 +1726,10 @@
         }
     });
 
-    // 우클릭 메뉴
-    $(document).ready(function(){
+    /*// 우클릭 메뉴
+    $(document).ready(function () {
         //Show contextmenu:
-        $(".card-body").contextmenu(function(e){
+        $(".card-body").contextmenu(function (e) {
             //Get window size:
             var winWidth = $(document).width();
             var winHeight = $(document).height();
@@ -1683,27 +1742,25 @@
             //Security margin:
             var secMargin = 10;
             //Prevent page overflow:
-            if(posX + menuWidth + secMargin >= winWidth
-                && posY + menuHeight + secMargin >= winHeight){
+            if (posX + menuWidth + secMargin >= winWidth
+                && posY + menuHeight + secMargin >= winHeight) {
                 //Case 1: right-bottom overflow:
                 posLeft = posX - menuWidth - secMargin + "px";
                 posTop = posY - menuHeight - secMargin + "px";
-            }
-            else if(posX + menuWidth + secMargin >= winWidth){
+            } else if (posX + menuWidth + secMargin >= winWidth) {
                 //Case 2: right overflow:
                 posLeft = posX - menuWidth - secMargin + "px";
                 posTop = posY + secMargin + "px";
-            }
-            else if(posY + menuHeight + secMargin >= winHeight){
+            } else if (posY + menuHeight + secMargin >= winHeight) {
                 //Case 3: bottom overflow:
                 posLeft = posX + secMargin + "px";
                 posTop = posY - menuHeight - secMargin + "px";
-            }
-            else {
+            } else {
                 //Case 4: default values:
                 posLeft = posX + secMargin + "px";
                 posTop = posY + secMargin + "px";
-            };
+            }
+            ;
             //Display contextmenu:
             $(".contextmenu").css({
                 "left": posLeft,
@@ -1713,14 +1770,21 @@
             return false;
         });
         //Hide contextmenu:
-        $(document).click(function(){
+        $(document).click(function () {
             $(".contextmenu").hide();
         });
     });
+*/
+    var tableAllEls = document.querySelectorAll('.card-body .table-responsive .table');
+    tableAllEls = Array.prototype.slice.call(tableAllEls);
+    // onChangeSelect();
+    searchSelectBox.addEventListener('change', onChangeSelect);
+    // $("#addRow").click(function () {
+    //     $("input[name=sample_name]").val($("#CropSelect option:selected").text());
+    // });
 
     // row 추가
-    function addRow()
-    {
+    function addRow() {
         var row_list = "";
         row_list += '<tr id="row_data">';
 
@@ -1728,8 +1792,7 @@
         row_list += '<input type="hidden" id="rowSample" name="rowSample">'
         row_list += '<td><input type="checkbox" name="RowCheck"></td>';
         row_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
-        row_list += '<td class="status" style="cursor: pointer;" onclick="emptyFunction(this);">EMPTY</td>';
-        row_list += '<td><input type="text" class="rowInput" name="sample_name"></td>';
+        row_list += '<td><input type="text" class="rowInput" name="sample_name" value="' + $("#CropSelect option:selected").text() + '"></td>';
         row_list += '<td><input type="text" class="rowInput" name="sample_code"></td>';
         row_list += '<td><input type="text" class="rowInput" name="sample_country"></td>';
         row_list += '<td><input type="text" class="rowInput" name="sample_type"></td>';
@@ -1739,26 +1802,18 @@
         row_list += '<td><input type="text" class="rowInput" name="sample_sprout"></td>';
         row_list += '<td><input type="text" class="rowInput" name="sample_purity"></td>';
         row_list += '<td><input type="text" class="rowInput" name="sample_comment"></td>';
-        row_list += '<td><button type="submit" onclick="RowBtn();">test</button></td>';
         row_list += '</form>';
         row_list += '</tr>';
 
         $("#sample_list").append(row_list);
 
-    }
+        var input_data = [];
 
-    function RowBtn()
-    {
-        var data = [];
+        var input_value = $("#CropSelect option:selected").text();
 
-        $("input[class=rowInput]").each(function (index, item) {
-            const key = $(this).attr('name');
-            var value = $(this).val();
+        var input_name = {key: "sample_name", value: input_value};
 
-            var arr = {key: key, value: value};
-
-            data.push(arr);
-        });
+        input_data.push(input_name);
 
         $.ajax(
             {
@@ -1766,20 +1821,64 @@
                 method: 'POST',
                 dataType: 'json',
                 data: {
-                    "data" : JSON.stringify(data)
+                    "input_data": JSON.stringify(input_data)
                 },
                 success: function (result) {
-                    if (result == 0) {
-                        location.reload();
-                    } else {
-                        location.reload();
+                    if (result != null) {
+                        $(".rowInput").focusout(function () {
+                            var data = [];
+
+                            var data_in = {key: "sample_id", value: result.sample_id}
+
+                            data.push(data_in);
+
+                            $("input[class=rowInput]").each(function (index, item) {
+                                const key = $(this).attr('name');
+                                var value = $(this).val();
+
+                                var arr = {key: key, value: value};
+
+                                data.push(arr);
+                            });
+
+                            $.ajax(
+                                {
+                                    url: 'updateSample',
+                                    method: 'POST',
+                                    dataType: 'json',
+                                    data: {
+                                        "data": JSON.stringify(data)
+                                    },
+                                    success: function (result) {
+
+                                    }
+                                });
+                        })
                     }
                 }
             });
 
     }
 
+    //
+    // function RowBtn()
+    // {
+    //     var data = [];
+    //
+    //     $("input[class=rowInput]").each(function (index, item) {
+    //         const key = $(this).attr('name');
+    //         var value = $(this).val();
+    //
+    //         var arr = {key: key, value: value};
+    //
+    //         data.push(arr);
+    //     });
+    //
+    //
+    // }
+
 </script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBn0n_LEGxgJuCfTU8aKvuwrcmw0iZjfmY&callback=initMap&region=kr"></script>
 </body>
 
 </html>

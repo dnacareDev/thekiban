@@ -342,6 +342,11 @@
 		
 		/* 푸터 배경색 */
 		.footer-wrapper {background-color: #FCFCFC;}
+
+        /* input 크기 */
+        .rowInput {
+            width: 115px;
+        }
     </style>
 
 </head>
@@ -387,9 +392,12 @@
                                             <option value="토마토">토마토</option>
                                         </select>
                                     </form>
-                                    <button class="btn btn-lg btn-primary data_btn2" title="데이터 등록" data-toggle="modal" data-target="#data_upload2"><img
-                                        src="../assets/vendor_assets/img/icon2.png" alt=""></button>
-                                    <button class="btn btn-lg btn-primary data_btn2"><img src="../assets/vendor_assets/img/icon3.png" alt=""></button>
+                                    <button class="btn btn-lg btn-primary data_btn2" data-toggle="modal" title="데이터 등록" data-target="#data_upload2">
+                                        <img src="../assets/vendor_assets/img/icon1.png" alt=""></button>
+                                    <button type="button" class="btn btn-lg btn-primary data_btn1" title="엑셀 export">
+                                        <img src="../assets/vendor_assets/img/icon2.png" title="데이터 등록" alt=""></button>
+                                    <button class="btn btn-lg btn-primary data_btn2" title="표시항목 선택" onclick="DisplayBtn();">
+                                        <img src="../assets/vendor_assets/img/icon3.png" alt=""></button>
                                 </div>
                             </div>
                         </div>
@@ -402,8 +410,6 @@
                                             <th></th>
                                             <th><span class="title">첨부파일</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
                                                                                            alt="첨부파일"></th>
-                                            <th style="cursor: pointer;"><span class="title">특성상태</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                                                    alt="특성상태"></th>
                                             <th style="cursor: pointer;"><span class="title">작물</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
                                                                                                                   alt="작물"></th>
                                             <th style="cursor: pointer;"><span class="title">도입번호 (ID)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
@@ -501,11 +507,14 @@
 
                                 <div class="row">
                                     <div class="col-4">
-                                        <button class="btn btn-icon btn-light btn-circle" data-toggle="modal" data-target="#grid" id="modal_open">
+                                        <button class="btn btn-icon btn-light btn-circle" id="addRow" onclick="addRow()">
                                             <span data-feather="plus"></span>
                                         </button>
                                         <button class="btn btn-icon btn-light btn-circle" onclick="DeleteIncome()">
                                             <span data-feather="trash-2"></span>
+                                        </button>
+                                        <button class="btn btn-icon btn-light btn-circle" id="data_check_submit" style="width:44.03px; height:42px;">
+                                            <img src="../assets/vendor_assets/img/check_tab.png" alt="check" style="width: 17px;margin-left: 4px;">
                                         </button>
                                     </div>
                                     <div class="col-4">
@@ -567,7 +576,7 @@
     </div>
 
     <!-- 일반 데이터 등록 -->
-    <div class="modal-basic modal fade show pop2" id="grid" tabindex="-1" role="dialog" aria-hidden="true">
+    <!--<div class="modal-basic modal fade show pop2" id="grid" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white ">
                 <div class="modal-header" style="border: none">
@@ -663,7 +672,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>-->
 
     <!-- 일반 데이터 수정 -->
     <div class="modal-basic modal fade show pop2" id="update-grid" tabindex="-1" role="dialog" aria-hidden="true">
@@ -1156,9 +1165,9 @@
 
     // onChangeSelect();
     searchSelectBox.addEventListener('change', onChangeSelect);
-    $("#modal_open").click(function () {
+    /*$("#modal_open").click(function () {
         $("input[name=income_name]").val($("#CropSelect option:selected").text());
-    });
+    });*/
 
     // 도입 자원 추가
     function insertBtn() {
@@ -1213,7 +1222,6 @@
                         add_list += '<tr>';
                         add_list += '<td><input type="checkbox" name="RowCheck" value="' + result.income[i].income_id + '"></td>';
                         add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
-                        add_list += '<td class="status" style="cursor: pointer;" onclick="emptyFunction(' + result.income[i].income_id + ', this);">EMPTY</td>';
                         add_list += '<td>' + result.income[i].income_name + '</td>';
                         add_list += '<td>' + result.income[i].income_code + '</td>';
                         add_list += '<td>' + result.income[i].income_kind + '</td>';
@@ -1389,21 +1397,84 @@
 
         $("#updateForm").submit();
     }
-    
-    
- // popup 창
-    const popupBtn = document.querySelectorAll('.btn-circle');
-    const popup = document.querySelector('.popup_wrap');
-    const popupClose = document.querySelector('.close');
-    console.log(popupBtn[0]);
-    
-    popupBtn[0].addEventListener('click', () => {
-    	popup.classList.add('on');
-    });
-    
-    popupClose.addEventListener('click', () => {
-    	popup.classList.remove('on');
-    }); 
+
+    function addRow() {
+        var row_list = "";
+        row_list += '<tr id="row_data">';
+
+        row_list += '<form action="insertIncome" id="rowForm" method="POST" enctype="multipart/form-data">';
+        row_list += '<input type="hidden" id="rowIncome" name="rowIncome">';
+        row_list += '<td><input type="checkbox" name="RowCheck"></td>';
+        row_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
+        row_list += '<td><input type="text" class="rowInput" name="income_name" value="' + $("#CropSelect option:selected").text() + '"></td>';
+        row_list += '<td><input type="text" class="rowInput" name="income_code"></td>';
+        row_list += '<td><input type="text" class="rowInput" name="income_kind"></td>';
+        row_list += '<td><input type="text" class="rowInput" name="income_division"></td>';
+        row_list += '<td><input type="text" class="rowInput" name="income_place"></td>';
+        row_list += '<td><input type="text" class="rowInput" name="income_country"></td>';
+        row_list += '<td><input type="text" class="rowInput" name="income_person"></td>';
+        row_list += '<td><input type="text" class="rowInput" name="income_date"></td>';
+        row_list += '<td><input type="text" class="rowInput" name="income_num"></td>';
+        row_list += '<td><input type="text" class="rowInput" name="income_type"></td>';
+        row_list += '<td><input type="text" class="rowInput" name="income_trait"></td>';
+        row_list += '<td><input type="text" class="rowInput" name="income_comment"></td>';
+        row_list += '</form>';
+        row_list += '</tr>';
+
+        $("#income_list").append(row_list);
+
+        var input_data = [];
+
+        var input_value = $("#CropSelect option:selected").text();
+
+        var input_name = {key: "income_name", value: input_value};
+
+        input_data.push(input_name);
+
+        $.ajax(
+            {
+                url: 'insertIncome',
+                method: 'POST',
+                dataType: 'json',
+                data: {
+                    "input_data": JSON.stringify(input_data)
+                },
+                success: function (result) {
+                    if (result != null) {
+                        $(".rowInput").focusout(function () {
+                            var data = [];
+
+                            var data_in = {key: "income_id", value: result.income_id}
+
+                            data.push(data_in);
+
+                            $("input[class=rowInput]").each(function (index, item) {
+                                const key = $(this).attr('name');
+                                var value = $(this).val();
+
+                                var arr = {key: key, value: value};
+
+                                data.push(arr);
+                            });
+
+                            $.ajax(
+                                {
+                                    url: 'updateIncome',
+                                    method: 'POST',
+                                    dataType: 'json',
+                                    data: {
+                                        "data": JSON.stringify(data)
+                                    },
+                                    success: function (result) {
+
+                                    }
+                                });
+                        })
+                    }
+                }
+            });
+
+    }
 </script>
 
 </body>

@@ -6,6 +6,9 @@ import java.util.List;
 
 public interface IncomeService {
 
+  // 도입자원 목록
+  List<Income> SelectIncomeList();
+
   // 도입자원 등록
   int InsertIncome(Income income);
 
