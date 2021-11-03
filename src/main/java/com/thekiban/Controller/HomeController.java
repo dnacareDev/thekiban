@@ -16,4 +16,12 @@ public class HomeController
 
 		return mv;
 	}
+	
+	@RequestMapping("/test1")
+	public ModelAndView test1(ModelAndView mv)
+	{
+		mv.setViewName("template/example47");
+		
+		return mv;
+	}
 }

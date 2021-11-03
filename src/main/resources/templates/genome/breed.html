@@ -515,8 +515,9 @@
 										<option value="토마토">토마토</option>
 									</select>
 									<input type="file" id="excelFile" onchange="excelExport(event)" title="파일 선택" style="display: none">
-									<button type="button" class="btn btn-lg btn-primary data_btn1" title="파일 선택" onclick="filesFunction('excelFile')"><img src="../assets/vendor_assets/img/icon1.svg" title="데이터 등록" alt=""></button>
-									<button class="btn btn-lg btn-primary data_btn2" data-toggle="modal" title="데이터 등록" data-target="#data_upload2"><img src="../assets/vendor_assets/img/icon2.png" alt=""></button>
+									
+									<button class="btn btn-lg btn-primary data_btn2" data-toggle="modal" title="데이터 등록" data-target="#data_upload2"><img src="../assets/vendor_assets/img/icon1.png" alt=""></button>
+									<button type="button" class="btn btn-lg btn-primary data_btn1" title="파일 선택" onclick="filesFunction('excelFile')"><img src="../assets/vendor_assets/img/icon2.png" title="데이터 등록" alt=""></button>
 									<!-- <button class="btn btn-lg btn-primary data_btn2" title="표시항목 선택" data-toggle="modal" data-target="#grid2"><img src="../assets/vendor_assets/img/icon3.png" alt=""></button> -->
 									<button class="btn btn-lg btn-primary data_btn2" title="표시항목 선택" onclick="DisplayBtn();"><img src="../assets/vendor_assets/img/icon3.png" alt=""></button>
 								</div>
@@ -539,6 +540,9 @@
                                         </button>
                                         <button class="btn btn-icon btn-light btn-circle" onclick="DeleteBreed()">
                                             <span data-feather="trash-2"></span>
+                                        </button>
+                                        <button class="btn btn-icon btn-light btn-circle" id="data_check_submit" style="width:44.03px; height:42px;"> <!-- 추가 2021-11-03 -->
+                                            <img src="../assets/vendor_assets/img/check_tab.png" alt="check" style="width: 17px;margin-left: 4px;">
                                         </button>
                                     </div>
                                     <div class="col-4">
@@ -1839,13 +1843,20 @@
     const popup = document.querySelector('.popup_wrap');
     const popupClose = document.querySelector('.close');
 
-    popupBtn[0].addEventListener('click', () => {
+    /*popupBtn[0].addEventListener('click', () => {
         popup.classList.add('on');
     });
 
     popupClose.addEventListener('click', () => {
         popup.classList.remove('on');
+    });*/
+   	$("#data_check_submit").mouseover(function(){
+   		$("#data_check_submit img").attr("src", "../assets/vendor_assets/img/check_tab_green.png");
     });
+    $("#data_check_submit").mouseout(function(){
+   		$("#data_check_submit img").attr("src", "../assets/vendor_assets/img/check_tab.png");
+    });
+    
 </script>
 </body>
 </html>
