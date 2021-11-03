@@ -17,4 +17,5 @@ public class Detail
 	private String detail_name;
 	private String detail_spec;
 	private String detail_title;
+	private int detail_origin;
 }

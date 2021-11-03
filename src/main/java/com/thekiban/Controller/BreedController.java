@@ -80,45 +80,97 @@ public class BreedController
 	}
 
 	// 품종 등록
+	@ResponseBody
 	@RequestMapping("insertBreed")
-	public ModelAndView InsertBreed(ModelAndView mv, @ModelAttribute Breed breed, @RequestParam("detail_list") String detail_list)
+	public Map<String, Object> InsertBreed(ModelAndView mv, @RequestParam("breed_name") String breed_name, @RequestParam("offset") int offset)
 	{
+		Map<String, Object> result = new LinkedHashMap<String, Object>();
+		
+		Breed breed = new Breed();
+		breed.setBreed_name(breed_name);
+		
+		List<Detail> detail = service.SearchBreedDetail(breed_name);
+		
 		int insert_breed = service.InsertBreed(breed);
- 
-		if(!detail_list.equals("[]"))
+		int insert_standard = service.InsertStandard(breed.getBreed_id(), breed_name, detail);
+		
+		List<Breed> breed_list = service.SelectBreedAll(breed_name, offset);
+		
+		List<Standard> standard = new ArrayList<Standard>();
+		
+		if(!breed_list.isEmpty())
 		{
-			JSONArray arr = new JSONArray(detail_list);
-			
-			List<Standard> standard = new ArrayList<Standard>();
-			
-			for(int i = 0; i < arr.length(); i++)
+			for(int i = 0; i < breed_list.size(); i++)
 			{
-				Standard item = new Standard();
+				standard = service.SelectBreedStandard(breed_list.get(i).getBreed_id());
 				
-				JSONObject obj = arr.getJSONObject(i);
-				
-				String detail_id = (String)obj.get("key");
-				String value = (String)obj.get("value");
-				
-				if(value != "")
-				{
-					item.setBreed_id(breed.getBreed_id());
-					item.setDetail_id(Integer.parseInt(detail_id));
-					item.setStandard((String) obj.get("value"));
-					
-					standard.add(item);
-				}
-			}
-			
-			if(insert_breed != 0) 
-			{
-				int insert_standard = service.InsertStandard(standard);
+				breed_list.get(i).setBreed_standard(standard);
 			}
 		}
- 
+		
+		result.put("breed", breed_list);
+		result.put("new_breed", breed);
+		result.put("detail", detail);
+		
+		return result;
+	}
+	
+	// 품종 수정
+	@ResponseBody
+	@RequestMapping("updateBreed")
+	public int UpdateBreed(@RequestParam("breed_id") int breed_id, @RequestParam("detail_id") int detail_id, @RequestParam("standard") String standard)
+	{
+		int result = service.UpdateBreed(breed_id, detail_id, standard);
+		
+		return result;
+	}
+	
+	// 품종 수정
+	@RequestMapping("updateAllBreed")
+	public ModelAndView UpdateAllBreed(ModelAndView mv, @RequestParam("breed_id") int breed_id, @RequestParam("detail_id") int[] detail_id, @RequestParam("standard") String[] standard)
+	{
+		int result = 0;
+		
+		List<Standard> list = new ArrayList<Standard>();
+		
+		Standard item = new Standard();
+		
+		for(int i = 0; i < detail_id.length; i++)
+		{
+			item = new Standard();
+			
+			if(standard[i].equals(""))
+			{
+				item.setBreed_id(breed_id);
+				item.setDetail_id(detail_id[i]);
+				item.setStandard(null);
+				
+				list.add(item);
+			}
+			else
+			{
+				item.setBreed_id(breed_id);
+				item.setDetail_id(detail_id[i]);
+				item.setStandard(standard[i]);
+				
+				list.add(item);
+			}
+		}
+		
+		result = service.UpdateAllBreed(list);
+		
 		mv.setViewName("redirect:/breed");
-
+		
 		return mv;
+	}
+	
+	@ResponseBody
+	@RequestMapping("selectStandard")
+	public List<Standard> SelectStandard(@RequestParam("breed_id") int breed_id)
+	{
+		List<Standard> result = service.SelectBreedStandard(breed_id);
+		
+		return result;
 	}
 
 	// 선택삭제

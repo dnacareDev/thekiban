@@ -30,9 +30,21 @@ public interface BreedService
 
 	// 품종 등록
 	int InsertBreed(Breed breed);
-
+	
 	// 품정 상세 정보 등록
-	int InsertStandard(List<Standard> standard);
+	int InsertStandard(int breed_id, String breed_name, List<Detail> detail);
+
+	// 품종 전체 조회
+	List<Breed> SelectBreedAll(String breed_name, int offset);
+	
+	// 품종별 정보 전체 조회
+	List<Standard> SelectBreedStandard(int breed_id);
+
+	// 품종 수정
+	int UpdateBreed(int breed_id, int detail_id, String standard);
+
+	// 품목 전체 수정
+	int UpdateAllBreed(List<Standard> list);
 
 	// 품종 삭제
 	int[] DeleteBreed(int[] breed_id);

@@ -36,7 +36,19 @@ public interface BreedMapper
 	int InsertBreed(Breed breed);
 
 	// 품정 상세 정보 등록
-	int InsertStandard(List<Standard> standard);
+	int InsertStandard(@Param("breed_id") int breed_id, @Param("breed_name") String breed_name, @Param("detail") List<Detail> detail);
+	
+	// 품종별 전체 조회
+	List<Breed> SelectBreedAll(@Param("breed_name") String breed_name, @Param("offset") int offset);
+	
+	// 품종별 정보 전체 조회
+	List<Standard> SelectBreedStandard(int breed_id);
+
+	// 품종 수정
+	int UpdateBreed(@Param("breed_id") int breed_id, @Param("detail_id") int detail_id, @Param("standard") String standard);
+
+	// 품목 전체 수정
+	int UpdateAllBreed(List<Standard> list);
 
 	// 품종 삭제
 	int[] DeleteBreed(int[] breed_id);
