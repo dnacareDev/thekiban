@@ -47,4 +47,8 @@ public class SampleServiceImpl implements SampleService {
     return mapper.UpdateSample(sample);
   }
 
+  @Override
+  public int InsertExcel(Sample sample) {
+    return mapper.InsertExcel(sample);
+  }
 }

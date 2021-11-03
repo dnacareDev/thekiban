@@ -24,4 +24,6 @@ public interface SampleService {
   // 시교자원 수정
   int UpdateSample(Sample sample);
 
+  int InsertExcel(Sample sample);
+
 }

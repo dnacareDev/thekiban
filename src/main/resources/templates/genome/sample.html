@@ -529,16 +529,14 @@
                                             <option value="양파">양파</option>
                                             <option value="참외">참외</option>
                                             <option value="토마토">토마토</option>
-                                            <!--<th:block th:each="sample : ${sampleDis}">
-                                                <option th:text="${sample.sample_name}" th:value="${sample.sample_id}"></option>
-                                            </th:block>-->
                                         </select>
                                     </form>
-                                    <button class="btn btn-lg btn-primary data_btn1" title="데이터 관리" data-toggle="modal" data-target="#data_upload2">
-                                        <img src="../assets/vendor_assets/img/icon1.svg" alt=""></button>
-                                    <button class="btn btn-lg btn-primary data_btn2" title="엑셀 export"><img
-                                        src="../assets/vendor_assets/img/icon2.png" alt=""></button>
-                                    <button class="btn btn-lg btn-primary data_btn2"><img src="../assets/vendor_assets/img/icon3.png" alt=""></button>
+                                    <button class="btn btn-lg btn-primary data_btn2" data-toggle="modal" title="데이터 등록" data-target="#data_upload2">
+                                        <img src="../assets/vendor_assets/img/icon1.png" alt=""></button>
+                                    <button type="button" class="btn btn-lg btn-primary data_btn1" title="엑셀 export">
+                                        <img src="../assets/vendor_assets/img/icon2.png" title="데이터 등록" alt=""></button>
+                                    <button class="btn btn-lg btn-primary data_btn2" title="표시항목 선택" onclick="DisplayBtn();">
+                                        <img src="../assets/vendor_assets/img/icon3.png" alt=""></button>
                                 </div>
                             </div>
                         </div>
@@ -583,7 +581,7 @@
                                                 alt="비고"></th>
                                         </tr>
                                         </thead>
-                                        <tbody class="text-center" id="sample_list">
+                                        <tbody class="text-center sample-list" id="sample_list">
                                         <!--<tr>
                                             <td><input type="checkbox"></td>
                                             <td><span>19PC4155</span></td>
@@ -637,21 +635,21 @@
                                                 alt="지역구분"></th>
                                         </tr>
                                         </thead>
-                                        <tbody class="text-center">
-                                        <tr>
-                                            <td><input type="checkbox" name="chkBox"></td>
-                                            <td><span>19PC0233</span></td>
-                                            <td><span>P20C0080</span></td>
-                                            <td><span>0</span></td>
-                                            <td><span>40</span></td>
-                                            <td><span>0</span></td>
-                                            <td><span>40</span></td>
-                                            <td><span>백향구</span></td>
-                                            <td><span>이호석</span></td>
-                                            <td><span>2019-01-01</span></td>
-                                            <td><span>-</span></td>
-                                            <td><span>해외</span></td>
-                                        </tr>
+                                        <tbody class="text-center sample-list">
+                                        <!--<tr>-->
+                                        <!--    <td><input type="checkbox" name="chkBox"></td>-->
+                                        <!--    <td><span>19PC0233</span></td>-->
+                                        <!--    <td><span>P20C0080</span></td>-->
+                                        <!--    <td><span>0</span></td>-->
+                                        <!--    <td><span>40</span></td>-->
+                                        <!--    <td><span>0</span></td>-->
+                                        <!--    <td><span>40</span></td>-->
+                                        <!--    <td><span>백향구</span></td>-->
+                                        <!--    <td><span>이호석</span></td>-->
+                                        <!--    <td><span>2019-01-01</span></td>-->
+                                        <!--    <td><span>-</span></td>-->
+                                        <!--    <td><span>해외</span></td>-->
+                                        <!--</tr>-->
                                         </tbody>
                                     </table>
                                 </div>
@@ -661,11 +659,11 @@
                                         <button class="btn btn-icon btn-light btn-circle" id="addRow" onclick="addRow()">
                                             <span data-feather="plus"></span>
                                         </button>
-                                        <!--<button class="btn btn-icon btn-light btn-circle" data-toggle="modal" data-target="#grid" id="modal_open">
-                                            <span data-feather="plus"></span>
-                                        </button>-->
                                         <button class="btn btn-icon btn-light btn-circle" onclick="DeleteSample()">
                                             <span data-feather="trash-2"></span>
+                                        </button>
+                                        <button class="btn btn-icon btn-light btn-circle" id="data_check_submit" style="width:44.03px; height:42px;">
+                                            <img src="../assets/vendor_assets/img/check_tab.png" alt="check" style="width: 17px;margin-left: 4px;">
                                         </button>
                                     </div>
                                     <div class="col-4">
@@ -1301,14 +1299,15 @@
 
         $("#excelForm").submit();
 
-        var upload_list = $('#uploadDate');
         var uploadHtml = "";
 
         uploadHtml += '<tr>';
         uploadHtml += '<td>chk</td>';
+        uploadHtml += '<td>chk</td>';
+        uploadHtml += '<td>chk</td>';
         uploadHtml += '</tr>';
 
-        upload_list.prepend(uploadHtml);
+        $('#uploadDate').prepend(uploadHtml);
     }
 
     // table to json
@@ -1411,6 +1410,8 @@
     var emptyEls;
     var resultData = [];
 
+    var btnindex = 0;
+
     function SearchSample(e) {
 
         var sample_name = $("#CropSelect").val();
@@ -1423,7 +1424,8 @@
                 dataType: 'json',
                 data: data,
                 success: function (result) {
-                    var sample_list = $("#sample_list");
+                    var sample_list = $(".sample-list");
+                    sample_list.eq(btnindex);
                     var add_list = "";
 
                     resultData = result.sample;
@@ -1436,7 +1438,7 @@
                         add_list += '<td><input type="checkbox" name="RowCheck" value="' + result.sample[i].sample_id + '"></td>';
                         add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
                         add_list += '<td>' + result.sample[i].sample_name + '</td>';
-                        add_list += '<td>' + result.sample[i].sample_code + '</td>';
+                        add_list += '<td ondblclick="myFunction()">' + result.sample[i].sample_code + '</td>';
                         add_list += '<td>' + result.sample[i].sample_country + '</td>';
                         add_list += '<td>' + result.sample[i].sample_type + '</td>';
                         add_list += '<td>' + result.sample[i].sample_mate + '</td>';
@@ -1478,6 +1480,10 @@
                     emptyEls = Array.prototype.slice.call(emptyEls);
                 }
             });
+    }
+
+    function myFunction() {
+
     }
 
     // 시교자원 삭제
@@ -1700,7 +1706,6 @@
         })
     })
 
-
     function smoothZoom(map, max, cnt) {
         if (cnt >= max) {
             return;
@@ -1721,7 +1726,7 @@
         }
     });
 
-    // 우클릭 메뉴
+    /*// 우클릭 메뉴
     $(document).ready(function () {
         //Show contextmenu:
         $(".card-body").contextmenu(function (e) {
@@ -1769,7 +1774,9 @@
             $(".contextmenu").hide();
         });
     });
-
+*/
+    var tableAllEls = document.querySelectorAll('.card-body .table-responsive .table');
+    tableAllEls = Array.prototype.slice.call(tableAllEls);
     // onChangeSelect();
     searchSelectBox.addEventListener('change', onChangeSelect);
     // $("#addRow").click(function () {

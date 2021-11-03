@@ -202,7 +202,7 @@ public class SampleController {
         }
       }
 
-      service.InsertSample(sample);
+      service.InsertExcel(sample);
     }
 
     mv.setViewName("redirect:/sample");

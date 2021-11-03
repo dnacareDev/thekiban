@@ -69,4 +69,14 @@
             modify_date    = NOW()
         WHERE sample_id = #{sample_id}
     </update>
+
+    <insert id="InsertExcel" parameterType="Sample">
+        INSERT INTO sample
+        (sample_id, sample_code, sample_name, sample_country, sample_type,
+        sample_mate, sample_seed, sample_amount, sample_sprout, sample_purity,
+        sample_comment, create_date, modify_date)
+        VALUES (#{sample_id}, #{sample_code}, #{sample_name}, #{sample_country}, #{sample_type},
+        #{sample_mate}, #{sample_seed}, #{sample_amount}, #{sample_sprout}, #{sample_purity},
+        #{sample_comment}, NOW(), NOW())
+    </insert>
 </mapper>
