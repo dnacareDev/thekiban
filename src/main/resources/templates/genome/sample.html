@@ -981,9 +981,9 @@
                                     <th>데이터수</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="uploadDate">
                                 <tr>
-                                    <td>2</td>
+                                    <td></td>
                                     <td>2021-08-15</td>
                                     <td>185</td>
                                 </tr>
@@ -1044,7 +1044,6 @@
 <!-- 공통 js -->
 <th:block th:include="/../fragments/commonjs.html"></th:block>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBn0n_LEGxgJuCfTU8aKvuwrcmw0iZjfmY&callback=initMap&region=kr"></script>
 <script type="text/javascript">
     function dataToggle(one, two) {
         $(one).modal("hide");
@@ -1155,43 +1154,7 @@
 
             var html = "";
 
-            var excel = [];
-
-            for (var k = 1; k < rowdata.length; k++) {
-                var chk = Object.values(rowdata[k]);
-                var kkk = Object.keys(rowdata[k]);
-                var j = 0;
-
-                console.log(keys.length);
-
-                while (j < 9) {
-                    for (var n = 0; n < keys.length; n++) {
-                        console.log('kkk', kkk);
-
-                        var keyStr = kkk[j].replace(/[^0-9]/g, '');
-
-                        console.log('keyStr', keyStr);
-                        console.log('n', n);
-
-                        if (keyStr != n) {
-                            excel[n] = {key: keys[n], value: " "}
-                        } else {
-                            if ((typeof chk[n]) === "number") {
-                                excel[n] = {key: keys[n], value: chk[n]};
-                            } else {
-                                excel[n] = {key: keys[n], value: "" + chk[n]};
-                            }
-                            j++;
-                        }
-                    }
-                }
-
-                const obj = {...excel};
-
-                rowdata[k] = obj;
-            }
-
-            for (var i = 0; i < rowdata.length; i++) {
+            /*for (var i = 0; i < rowdata.length; i++) {
                 if (i === 0) {
                     html += "<thead class='text-center'>";
                     html += "<tr>";
@@ -1208,7 +1171,7 @@
 
                     var columnLength = Object.keys(rowdata[0]).length;
 
-                    /*table td*/
+                    /!*table td*!/
                     for (var q = 0; q < columnLength; q++) { // 10
                         var valueT = Object.entries(rowdata[i])[q][1].value;
 
@@ -1218,8 +1181,101 @@
                     html += "</tr>";
                     html += "</tbody>";
                 }
+            }*/
+
+            for (var i = 0; i < rowdata.length; i++) {
+                if (i === 0) {
+                    html += "<thead class='text-center'>";
+                    html += "<tr>";
+
+                    $.each(rowdata[0], function (idx, value) {
+                        html += "<th><span class='excel-title'>" + value + "</span></th>";
+                    })
+
+                    html += "</tr>";
+                    html += "</thead>";
+                } else if (i !== 0) {
+                    html += "<tbody class='text-center'>";
+                    html += "<tr>";
+
+                    var tmp = Object.keys(rowdata[0]);
+                    var j = 0;
+
+                    $.each(rowdata[i], function (idx, value) {
+                        // 공백처리
+                        if (idx == tmp[j]) {
+
+                            html += "<td class='excel'><span>" + value + "</span></td>";
+                            j++;
+
+                        } else {
+                            var idx_str = idx.replace(/[^0-9]/g, '');
+                            var tmp_str = tmp[j].replace(/[^0-9]/g, '');
+
+                            var gap = idx_str - tmp_str;
+
+                            while (gap > 0) {
+                                gap--;
+                                html += "<td><span> </span></td>";
+                            }
+
+                            html += "<td class='excel'><span>" + value + "</span></td>";
+                            j++;
+
+                            j = idx_str;
+                            j++;
+                        }
+                    });
+
+                    html += "</tr>";
+                    html += "</tbody>";
+                }
             }
 
+            /*var excel = [];
+
+            for (var k = 1; k < rowdata.length; k++) {
+                var chk = Object.values(rowdata[k]);
+                var kkk = Object.keys(rowdata[k]);
+                var j = 0;
+
+                while (j < 9) {
+                    for (var n = 0; n < keys.length; n++) {
+
+                        var keyStr = kkk[j].replace(/[^0-9]/g, '');
+
+                        if (keyStr != n) {
+                            excel[n] = {key: keys[n], value: " "}
+                        } else {
+                            if ((typeof chk[n]) === "number") {
+                                excel[n] = {key: keys[n], value: chk[n]};
+                            } else {
+                                excel[n] = {key: keys[n], value: "" + chk[n]};
+                            }
+                            j++;
+                        }
+                    }
+                }*/
+
+            var excel = [];
+
+            for (var k = 1; k < rowdata.length; k++) {
+                var chk = Object.values(rowdata[k]);
+
+                for (var n = 0; n < keys.length; n++) {
+                    if (chk[n] == undefined) {
+                        excel[n] = {key: keys[n], value: " "};
+                    } else if (keys[n] === "도입연월일") {
+                        excel[n] = {key: keys[n], value: excelDateToJSDate(chk[n])};
+                    } else {
+                        excel[n] = {key: keys[n], value: "" + chk[n]};
+                    }
+                }
+                const obj = {...excel};
+
+                // console.log(obj);
+                rowdata[k] = obj;
+            }
             $("#excel_data").empty();
             $("#excel_data").append(html);
 
@@ -1244,6 +1300,15 @@
         });
 
         $("#excelForm").submit();
+
+        var upload_list = $('#uploadDate');
+        var uploadHtml = "";
+
+        uploadHtml += '<tr>';
+        uploadHtml += '<td>chk</td>';
+        uploadHtml += '</tr>';
+
+        upload_list.prepend(uploadHtml);
     }
 
     // table to json
@@ -1806,6 +1871,7 @@
     // }
 
 </script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBn0n_LEGxgJuCfTU8aKvuwrcmw0iZjfmY&callback=initMap&region=kr"></script>
 </body>
 
 </html>

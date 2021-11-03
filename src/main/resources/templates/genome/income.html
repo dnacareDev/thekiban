@@ -392,11 +392,14 @@
                                             <option value="토마토">토마토</option>
                                         </select>
                                     </form>
-                                    <button class="btn btn-lg btn-primary data_btn1" title="데이터 관리" data-toggle="modal" data-target="#data_upload2">
+                                    <button class="btn btn-lg btn-primary data_btn2" data-toggle="modal" title="데이터 등록" data-target="#data_upload2"><img src="../assets/vendor_assets/img/icon1.png" alt=""></button>
+                                    <button type="button" class="btn btn-lg btn-primary data_btn1" title="엑셀 export"><img src="../assets/vendor_assets/img/icon2.png" title="데이터 등록" alt=""></button>
+                                    <button class="btn btn-lg btn-primary data_btn2" title="표시항목 선택" onclick="DisplayBtn();"><img src="../assets/vendor_assets/img/icon3.png" alt=""></button>
+                                    <!--<button class="btn btn-lg btn-primary data_btn1" title="데이터 관리" data-toggle="modal" data-target="#data_upload2">
                                         <img src="../assets/vendor_assets/img/icon1.svg" alt=""></button>
                                     <button class="btn btn-lg btn-primary data_btn2" title="엑셀 export"><img
                                         src="../assets/vendor_assets/img/icon2.png" alt=""></button>
-                                    <button class="btn btn-lg btn-primary data_btn2"><img src="../assets/vendor_assets/img/icon3.png" alt=""></button>
+                                    <button class="btn btn-lg btn-primary data_btn2"><img src="../assets/vendor_assets/img/icon3.png" alt=""></button>-->
                                 </div>
                             </div>
                         </div>
@@ -514,6 +517,9 @@
                                         </button>-->
                                         <button class="btn btn-icon btn-light btn-circle" onclick="DeleteIncome()">
                                             <span data-feather="trash-2"></span>
+                                        </button>
+                                        <button class="btn btn-icon btn-light btn-circle" id="data_check_submit" style="width:44.03px; height:42px;">
+                                            <img src="../assets/vendor_assets/img/check_tab.png" alt="check" style="width: 17px;margin-left: 4px;">
                                         </button>
                                     </div>
                                     <div class="col-4">
