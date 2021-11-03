@@ -52,7 +52,7 @@
     <script th:src="@{/dist/xlsx.min.js}"></script>
     <script th:src="@{/dist/jquery.tabletojson.js}"></script>
     <!-- endinject-->
-<div class="popAlert" id="alert" style="display:none;"> <!-- alert 호출방법은 스크립트로 alert('내용')과 같이 messege('내용')으로 하시면 됩니다 -->
+<div class="popAlert" id="alert" style="display:none;"> <!-- alert 호출방법은 return messege('내용')으로 하시면 됩니다 !! return 필수-->
 	<div class="alert_table">
 		<div class="alert_inner">
 			<div class="alert_cover">
@@ -75,13 +75,16 @@
 	}
 	
 	function messege(text){ //popup
+		
 		$("#alert").show(300);
 		$(".dim").show();
 		$("#alert .title_text").text(text);
 		
 		$("#alert button").click(function(){
 			$("#alert, .dim").hide();
+			return false;
 		});
+		return false;
 	}
 		
 </script>
