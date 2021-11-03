@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,13 +32,20 @@ public class IncomeController {
     return mv;
   }
 
+  @ResponseBody
   @RequestMapping("insertIncome")
-  public ModelAndView InsertIncome(ModelAndView mv, @ModelAttribute Income income) {
+  public Income InsertIncome(@ModelAttribute Income income, @RequestParam("input_data") String input_data) {
+    JSONArray arr = new JSONArray(input_data);
+
+    JSONObject obj = arr.getJSONObject(0);
+
+    String value = (String) obj.get("value");
+
+    income.setIncome_name(value);
+
     service.InsertIncome(income);
 
-    mv.setViewName("redirect:/income");
-
-    return mv;
+    return income;
   }
 
   // 도입자원 검색
@@ -76,15 +81,83 @@ public class IncomeController {
 
   // 도입자원 수정
   @RequestMapping("updateIncome")
-  public ModelAndView UpdateSample(ModelAndView mv, @ModelAttribute Income income, @RequestParam("update_list") String update_list) {
-    JSONArray arr = new JSONArray(update_list);
+  public ModelAndView UpdateSample(ModelAndView mv, @ModelAttribute Income income, @RequestParam(value = "update_list", required = false) String update_list, @RequestParam("data") String data) {
+    /*JSONArray arr = new JSONArray(update_list);
 
     JSONObject obj = arr.getJSONObject(0);
 
     String value = (String) obj.get("value");
 
-    income.setIncome_id(Integer.parseInt(value));
+    income.setIncome_id(Integer.parseInt(value));*/
 
+    JSONArray arr = new JSONArray(data);
+
+    JSONObject input_id = arr.getJSONObject(0);
+
+    int value_id = (Integer) input_id.get("value");
+
+    income.setIncome_id(value_id);
+
+    for (int i = 1; i < arr.length(); i++) {
+      JSONObject obj = arr.getJSONObject(i);
+
+      String key_id = (String) obj.get("key");
+      String value = (String) obj.get("value");
+
+      if (!value.equals("")) {
+        if (key_id.equals("income_name")) {
+          income.setIncome_name(value);
+        } else if (key_id.equals("income_code")) {
+          income.setIncome_code(value);
+        } else if (key_id.equals("income_kind")) {
+          income.setIncome_kind(value);
+        } else if (key_id.equals("income_division")) {
+          income.setIncome_division(value);
+        } else if (key_id.equals("income_place")) {
+          income.setIncome_place(value);
+        } else if (key_id.equals("income_country")) {
+          income.setIncome_country(value);
+        } else if (key_id.equals("income_person")) {
+          income.setIncome_person(value);
+        } else if (key_id.equals("income_date")) {
+          income.setIncome_date(value);
+        } else if (key_id.equals("income_num")) {
+          income.setIncome_num(Integer.parseInt(value));
+        } else if (key_id.equals("income_type")) {
+          income.setIncome_type(value);
+        }else if (key_id.equals("income_trait")) {
+          income.setIncome_trait(value);
+        } else if (key_id.equals("income_comment")) {
+          income.setIncome_comment(value);
+        }
+      } else {
+        if (key_id.equals("income_name")) {
+          income.setIncome_name("");
+        } else if (key_id.equals("income_code")) {
+          income.setIncome_code("");
+        } else if (key_id.equals("income_kind")) {
+          income.setIncome_kind("");
+        } else if (key_id.equals("income_division")) {
+          income.setIncome_division("");
+        } else if (key_id.equals("income_place")) {
+          income.setIncome_place("");
+        } else if (key_id.equals("income_country")) {
+          income.setIncome_country("");
+        } else if (key_id.equals("income_person")) {
+          income.setIncome_person("");
+        } else if (key_id.equals("income_date")) {
+          income.setIncome_date(null);
+        } else if (key_id.equals("income_num")) {
+          income.setIncome_num(0);
+        } else if (key_id.equals("income_type")) {
+          income.setIncome_type("");
+        }else if (key_id.equals("income_trait")) {
+          income.setIncome_trait("");
+        } else if (key_id.equals("income_comment")) {
+          income.setIncome_comment("");
+        }
+      }
+    }
     service.UpdateIncome(income);
 
     mv.setViewName("redirect:/income");

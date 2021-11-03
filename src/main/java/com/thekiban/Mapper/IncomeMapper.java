@@ -10,6 +10,9 @@ import java.util.List;
 @Mapper
 public interface IncomeMapper {
 
+  // 도입자원 목록 조회
+  List<Income> SelectIncomeList();
+  
   // 도입자원 등록
   int InsertIncome(Income income);
 

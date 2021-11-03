@@ -534,9 +534,9 @@
                                             </th:block>-->
                                         </select>
                                     </form>
-                                    <!--<button class="btn btn-lg btn-primary data_btn1" onclick="filesFunction()"><img
-                                        src="../assets/vendor_assets/img/icon1.svg" alt=""></button>-->
-                                    <button class="btn btn-lg btn-primary data_btn2" title="데이터 관리" data-toggle="modal" data-target="#data_upload2"><img
+                                    <button class="btn btn-lg btn-primary data_btn1" title="데이터 관리" data-toggle="modal" data-target="#data_upload2">
+                                        <img src="../assets/vendor_assets/img/icon1.svg" alt=""></button>
+                                    <button class="btn btn-lg btn-primary data_btn2" title="엑셀 export"><img
                                         src="../assets/vendor_assets/img/icon2.png" alt=""></button>
                                     <button class="btn btn-lg btn-primary data_btn2"><img src="../assets/vendor_assets/img/icon3.png" alt=""></button>
                                 </div>
@@ -551,9 +551,6 @@
                                             <th></th>
                                             <th><span class="title">첨부파일</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
                                                                                            alt="첨부파일"></th>
-                                            <th style="cursor: pointer;"><span class="title">특성상태</span><i></i><img
-                                                src="../assets/vendor_assets/img/title_icon.png"
-                                                alt="특성상태"></th>
                                             <th style="cursor: pointer;"><span class="title">작물</span><i></i><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="작물"></th>
@@ -661,9 +658,12 @@
 
                                 <div class="row">
                                     <div class="col-4">
-                                        <button class="btn btn-icon btn-light btn-circle" data-toggle="modal" data-target="#grid" id="modal_open">
+                                        <button class="btn btn-icon btn-light btn-circle" id="addRow" onclick="addRow()">
                                             <span data-feather="plus"></span>
                                         </button>
+                                        <!--<button class="btn btn-icon btn-light btn-circle" data-toggle="modal" data-target="#grid" id="modal_open">
+                                            <span data-feather="plus"></span>
+                                        </button>-->
                                         <button class="btn btn-icon btn-light btn-circle" onclick="DeleteSample()">
                                             <span data-feather="trash-2"></span>
                                         </button>
@@ -732,7 +732,7 @@
     </div>
 
     <!-- 일반데이터 등록 -->
-    <div class="modal-basic modal fade show pop2" id="grid" tabindex="-1" role="dialog" aria-hidden="true">
+    <!--<div class="modal-basic modal fade show pop2" id="grid" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white ">
                 <div class="modal-header" style="border: none">
@@ -821,7 +821,7 @@
             </div>
         </div>
     </div>
-
+-->
     <!-- 일반 데이터 수정 -->
     <div class="modal-basic modal fade show pop2" tabindex="-1" role="dialog" aria-hidden="true" id="update-grid">
         <div class="modal-dialog modal-md" role="document">
@@ -1164,7 +1164,7 @@
 
                 console.log(keys.length);
 
-                while(j < 9) {
+                while (j < 9) {
                     for (var n = 0; n < keys.length; n++) {
                         console.log('kkk', kkk);
 
@@ -1314,11 +1314,6 @@
         // }
     }
 
-    // onChangeSelect();
-    searchSelectBox.addEventListener('change', onChangeSelect);
-    $("#modal_open").click(function () {
-        $("input[name=income_name]").val($("#CropSelect option:selected").text());
-    });
 
     // 시교 자원 추가
     function insertBtn() {
@@ -1375,7 +1370,6 @@
                         add_list += '<tr>';
                         add_list += '<td><input type="checkbox" name="RowCheck" value="' + result.sample[i].sample_id + '"></td>';
                         add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
-                        add_list += '<td class="status" style="cursor: pointer;" onclick="emptyFunction(' + result.sample[i].sample_id + ', this);">EMPTY</td>';
                         add_list += '<td>' + result.sample[i].sample_name + '</td>';
                         add_list += '<td>' + result.sample[i].sample_code + '</td>';
                         add_list += '<td>' + result.sample[i].sample_country + '</td>';
@@ -1441,14 +1435,9 @@
                     dataType: 'json',
                     data: data,
                     success: function (result) {
-
-                        console.log(result)
-
                         if (result == 0) {
-                            alert("삭제에 실패하였습니다.");
-                            location.reload();
                         } else {
-                            location.reload();
+                            location.reload()
                         }
                     }
                 });
@@ -1668,9 +1657,9 @@
     });
 
     // 우클릭 메뉴
-    $(document).ready(function(){
+    $(document).ready(function () {
         //Show contextmenu:
-        $(".card-body").contextmenu(function(e){
+        $(".card-body").contextmenu(function (e) {
             //Get window size:
             var winWidth = $(document).width();
             var winHeight = $(document).height();
@@ -1683,27 +1672,25 @@
             //Security margin:
             var secMargin = 10;
             //Prevent page overflow:
-            if(posX + menuWidth + secMargin >= winWidth
-                && posY + menuHeight + secMargin >= winHeight){
+            if (posX + menuWidth + secMargin >= winWidth
+                && posY + menuHeight + secMargin >= winHeight) {
                 //Case 1: right-bottom overflow:
                 posLeft = posX - menuWidth - secMargin + "px";
                 posTop = posY - menuHeight - secMargin + "px";
-            }
-            else if(posX + menuWidth + secMargin >= winWidth){
+            } else if (posX + menuWidth + secMargin >= winWidth) {
                 //Case 2: right overflow:
                 posLeft = posX - menuWidth - secMargin + "px";
                 posTop = posY + secMargin + "px";
-            }
-            else if(posY + menuHeight + secMargin >= winHeight){
+            } else if (posY + menuHeight + secMargin >= winHeight) {
                 //Case 3: bottom overflow:
                 posLeft = posX + secMargin + "px";
                 posTop = posY - menuHeight - secMargin + "px";
-            }
-            else {
+            } else {
                 //Case 4: default values:
                 posLeft = posX + secMargin + "px";
                 posTop = posY + secMargin + "px";
-            };
+            }
+            ;
             //Display contextmenu:
             $(".contextmenu").css({
                 "left": posLeft,
@@ -1713,14 +1700,19 @@
             return false;
         });
         //Hide contextmenu:
-        $(document).click(function(){
+        $(document).click(function () {
             $(".contextmenu").hide();
         });
     });
 
+    // onChangeSelect();
+    searchSelectBox.addEventListener('change', onChangeSelect);
+    // $("#addRow").click(function () {
+    //     $("input[name=sample_name]").val($("#CropSelect option:selected").text());
+    // });
+
     // row 추가
-    function addRow()
-    {
+    function addRow() {
         var row_list = "";
         row_list += '<tr id="row_data">';
 
@@ -1728,8 +1720,7 @@
         row_list += '<input type="hidden" id="rowSample" name="rowSample">'
         row_list += '<td><input type="checkbox" name="RowCheck"></td>';
         row_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
-        row_list += '<td class="status" style="cursor: pointer;" onclick="emptyFunction(this);">EMPTY</td>';
-        row_list += '<td><input type="text" class="rowInput" name="sample_name"></td>';
+        row_list += '<td><input type="text" class="rowInput" name="sample_name" value="' + $("#CropSelect option:selected").text() + '"></td>';
         row_list += '<td><input type="text" class="rowInput" name="sample_code"></td>';
         row_list += '<td><input type="text" class="rowInput" name="sample_country"></td>';
         row_list += '<td><input type="text" class="rowInput" name="sample_type"></td>';
@@ -1739,26 +1730,18 @@
         row_list += '<td><input type="text" class="rowInput" name="sample_sprout"></td>';
         row_list += '<td><input type="text" class="rowInput" name="sample_purity"></td>';
         row_list += '<td><input type="text" class="rowInput" name="sample_comment"></td>';
-        row_list += '<td><button type="submit" onclick="RowBtn();">test</button></td>';
         row_list += '</form>';
         row_list += '</tr>';
 
         $("#sample_list").append(row_list);
 
-    }
+        var input_data = [];
 
-    function RowBtn()
-    {
-        var data = [];
+        var input_value = $("#CropSelect option:selected").text();
 
-        $("input[class=rowInput]").each(function (index, item) {
-            const key = $(this).attr('name');
-            var value = $(this).val();
+        var input_name = {key: "sample_name", value: input_value};
 
-            var arr = {key: key, value: value};
-
-            data.push(arr);
-        });
+        input_data.push(input_name);
 
         $.ajax(
             {
@@ -1766,18 +1749,61 @@
                 method: 'POST',
                 dataType: 'json',
                 data: {
-                    "data" : JSON.stringify(data)
+                    "input_data": JSON.stringify(input_data)
                 },
                 success: function (result) {
-                    if (result == 0) {
-                        location.reload();
-                    } else {
-                        location.reload();
+                    if (result != null) {
+                        $(".rowInput").focusout(function () {
+                            var data = [];
+
+                            var data_in = {key: "sample_id", value: result.sample_id}
+
+                            data.push(data_in);
+
+                            $("input[class=rowInput]").each(function (index, item) {
+                                const key = $(this).attr('name');
+                                var value = $(this).val();
+
+                                var arr = {key: key, value: value};
+
+                                data.push(arr);
+                            });
+
+                            $.ajax(
+                                {
+                                    url: 'updateSample',
+                                    method: 'POST',
+                                    dataType: 'json',
+                                    data: {
+                                        "data": JSON.stringify(data)
+                                    },
+                                    success: function (result) {
+
+                                    }
+                                });
+                        })
                     }
                 }
             });
 
     }
+
+    //
+    // function RowBtn()
+    // {
+    //     var data = [];
+    //
+    //     $("input[class=rowInput]").each(function (index, item) {
+    //         const key = $(this).attr('name');
+    //         var value = $(this).val();
+    //
+    //         var arr = {key: key, value: value};
+    //
+    //         data.push(arr);
+    //     });
+    //
+    //
+    // }
 
 </script>
 </body>

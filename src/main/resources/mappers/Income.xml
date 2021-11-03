@@ -2,12 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.thekiban.Mapper.IncomeMapper">
 
+    <!-- 도입자원 목록 조회 -->
+    <select id="SelectIncomeList" resultType="Income">
+        SELECT *
+        FROM income
+    </select>
+
     <!-- 도입자원 등록 -->
     <insert id="InsertIncome" parameterType="Income">
         INSERT INTO income
         (income_id, income_code, income_name, income_kind, income_division, income_place, income_country, income_person, income_date, income_num, income_type, income_trait, income_comment, create_date, modify_date)
         VALUES
         (#{income_id}, #{income_code}, #{income_name}, #{income_kind}, #{income_division}, #{income_place}, #{income_country}, #{income_person}, #{income_date}, #{income_num}, #{income_type}, #{income_trait}, #{income_comment}, NOW(), NOW())
+        <selectKey resultType="int" keyProperty="income_id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
     </insert>
 
     <!-- 도입자원 갯수 조회 -->

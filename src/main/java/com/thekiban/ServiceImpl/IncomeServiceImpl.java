@@ -1,7 +1,7 @@
 package com.thekiban.ServiceImpl;
 
-import com.thekiban.Entity.Basic;
 import com.thekiban.Entity.Income;
+import com.thekiban.Entity.Sample;
 import com.thekiban.Mapper.IncomeMapper;
 import com.thekiban.Service.IncomeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +14,11 @@ public class IncomeServiceImpl implements IncomeService {
 
   @Autowired
   private IncomeMapper mapper;
+
+  @Override
+  public List<Income> SelectIncomeList() {
+    return mapper.SelectIncomeList();
+  }
 
   // 도입자원 등록
   @Override

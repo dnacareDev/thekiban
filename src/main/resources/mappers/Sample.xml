@@ -17,6 +17,9 @@
         VALUES (#{sample_id}, #{sample_code}, #{sample_name}, #{sample_country}, #{sample_type},
                 #{sample_mate}, #{sample_seed}, #{sample_amount}, #{sample_sprout}, #{sample_purity},
                 #{sample_comment}, NOW(), NOW())
+        <selectKey resultType="int" keyProperty="sample_id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
     </insert>
 
     <!-- 시교자원 개수 -->

@@ -31,15 +31,37 @@ public class SampleController {
   }
 
   // 시교자원 입력
-  @ResponseBody
+/*  @ResponseBody
   @RequestMapping("insertSample")
-  public ModelAndView InsertSample(ModelAndView mv, @ModelAttribute Sample sample)
+  public ModelAndView InsertSample(ModelAndView mv, @ModelAttribute Sample sample, @RequestParam("data") String data)
   {
-    service.InsertSample(sample);
+    JSONArray arr = new JSONArray(data);
+
+    System.out.println(sample);
+
+    System.out.println(arr);
+
+//    service.InsertSample(sample);
 
     mv.setViewName("redirect:/sample");
 
     return mv;
+  }*/
+
+  @ResponseBody
+  @RequestMapping("insertSample")
+  public Sample InsertSample(@ModelAttribute Sample sample, @RequestParam("input_data") String input_data) {
+    JSONArray arr = new JSONArray(input_data);
+
+    JSONObject obj = arr.getJSONObject(0);
+
+    String value = (String) obj.get("value");
+
+    sample.setSample_name(value);
+
+    service.InsertSample(sample);
+
+    return sample;
   }
 
   // 시교자원 검색
@@ -75,14 +97,67 @@ public class SampleController {
 
   // 시교자원 수정
   @RequestMapping("updateSample")
-  public ModelAndView UpdateSample(ModelAndView mv, @ModelAttribute Sample sample, @RequestParam("update_list") String update_list) {
-    JSONArray arr = new JSONArray(update_list);
+  public ModelAndView UpdateSample(ModelAndView mv, @ModelAttribute Sample sample, @RequestParam(value = "update_list", required = false) String update_list, @RequestParam("data") String data) {
+    JSONArray arr = new JSONArray(data);
 
-    JSONObject obj = arr.getJSONObject(0);
+    JSONObject input_id = arr.getJSONObject(0);
 
-    String value = (String) obj.get("value");
+    int value_id = (Integer) input_id.get("value");
 
-    sample.setSample_id(Integer.parseInt(value));
+    sample.setSample_id(value_id);
+
+    for (int i = 1; i < arr.length(); i++) {
+      JSONObject obj = arr.getJSONObject(i);
+
+      String key_id = (String) obj.get("key");
+      String value = (String) obj.get("value");
+
+      if (!value.equals("")) {
+        if (key_id.equals("sample_name")) {
+          sample.setSample_name(value);
+        } else if (key_id.equals("sample_code")) {
+          sample.setSample_code(value);
+        } else if (key_id.equals("sample_country")) {
+          sample.setSample_country(value);
+        } else if (key_id.equals("sample_type")) {
+          sample.setSample_type(value);
+        } else if (key_id.equals("sample_mate")) {
+          sample.setSample_mate(value);
+        } else if (key_id.equals("sample_seed")) {
+          sample.setSample_seed(value);
+        } else if (key_id.equals("sample_amount")) {
+          sample.setSample_amount(Double.parseDouble(value));
+        } else if (key_id.equals("sample_sprout")) {
+          sample.setSample_sprout(Integer.parseInt(value));
+        } else if (key_id.equals("sample_purity")) {
+          sample.setSample_purity(Integer.parseInt(value));
+        } else if (key_id.equals("sample_comment")) {
+          sample.setSample_comment(value);
+        }
+      } else {
+        if (key_id.equals("sample_name")) {
+          sample.setSample_name("");
+        } else if (key_id.equals("sample_code")) {
+          sample.setSample_code("");
+        } else if (key_id.equals("sample_country")) {
+          sample.setSample_country("");
+        } else if (key_id.equals("sample_type")) {
+          sample.setSample_type("");
+        } else if (key_id.equals("sample_mate")) {
+          sample.setSample_mate("");
+        } else if (key_id.equals("sample_seed")) {
+          sample.setSample_seed("");
+        } else if (key_id.equals("sample_amount")) {
+          sample.setSample_amount(0);
+        } else if (key_id.equals("sample_sprout")) {
+          sample.setSample_sprout(0);
+        } else if (key_id.equals("sample_purity")) {
+          sample.setSample_purity(0);
+        } else if (key_id.equals("sample_comment")) {
+          sample.setSample_comment("");
+        }
+      }
+    }
 
     service.UpdateSample(sample);
 
