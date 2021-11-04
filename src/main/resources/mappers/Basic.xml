@@ -34,7 +34,7 @@
     <!-- 원종별 세부 정보 조회 -->
     <select id="SearchBasicDetail" parameterType="String" resultType="Detail">
     	SELECT * FROM detail
-    	WHERE detail_type = 0 AND detail_name = #{basic_name}
+    	WHERE detail_type = 1 AND detail_name = #{basic_name}
     </select>
     
     <!-- 표시항목 조회 -->
@@ -139,16 +139,16 @@
     <!-- 표시항목 삭제 -->
     <delete id="DeleteDisplay" parameterType="int">
     	DELETE FROM display
-    	WHERE user_id = #{user_id}
+    	WHERE user_id = #{user_id} AND display_type = 1
     </delete>
     
     <!-- 표시항목 등록 -->
     <insert id="InsertDisplay">
     	<foreach collection="detail_list" item="item" separator=";">
 	    	INSERT INTO display
-	    	(user_id, basic_name, detail_id)
+	    	(user_id, basic_name, detail_id, display_type)
 	    	VALUES
-	    	(#{user_id}, #{basic_name}, #{item})
+	    	(#{user_id}, #{basic_name}, #{item}, 1)
         </foreach>
     </insert>
 </mapper>

@@ -1121,7 +1121,7 @@
 												<ul class="detail_list2" name="기본 정보">
 													<li>
 														<div class="title">작물</div>
-														<div class="input_text"><input type="text" name="breed_name"></div>
+														<div class="input_text"><input type="text" name="basic_name"></div>
 													</li>
 												</ul>
 											</div>
@@ -1352,8 +1352,6 @@
             callback(secondSheet);
 
             var rowdata = XLSX.utils.sheet_to_json(wb.Sheets[secondSheetName]);
-            console.log(rowdata.length);
-            console.log(rowdata[1]);
 
             var html = "<table class='table'>";
 
@@ -1576,6 +1574,7 @@
 
                     add_list += '</tr>';
                 }
+                
                 // detail
                 for(var i = 0; i < detail_list.length; i++)
                 {
@@ -1767,36 +1766,6 @@
         });
     });
 
-    var emptyElsIndex = 0;
-
-    function emptyFunction(id, e) {
-
-        let target = e;
-
-        let index = emptyEls.indexOf(target);
-
-        emptyElsIndex = index;
-
-        let values = $(e).parent().children();
-
-        $("#update-grid").modal("show");
-
-        var input_N = 0;
-
-        for (let i = 3; i < values.length; i++) {
-            var inner_text = values.eq(i).text();
-
-            $("#update-grid input[type='text']").eq(i - 3).val(inner_text);
-        }
-
-        $("#update-grid input[type='text']").each(function (f, e) {
-            input_N += $(e).length;
-        });
-
-        $("#updateBtn").removeAttr("onclick");
-        $("#updateBtn").attr("onclick", "UpdateBtn('id');");
-    }
-    
 	// 품종 수정
 	$(document).on("focusout", ".updateInput", function()
 	{

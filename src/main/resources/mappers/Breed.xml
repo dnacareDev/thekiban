@@ -139,16 +139,16 @@
     <!-- 표시항목 삭제 -->
     <delete id="DeleteDisplay" parameterType="int">
     	DELETE FROM display
-    	WHERE user_id = #{user_id}
+    	WHERE user_id = #{user_id} AND display_type = 0
     </delete>
     
     <!-- 표시항목 등록 -->
     <insert id="InsertDisplay">
     	<foreach collection="detail_list" item="item" separator=";">
 	    	INSERT INTO display
-	    	(user_id, breed_name, detail_id)
+	    	(user_id, breed_name, detail_id, display_type)
 	    	VALUES
-	    	(#{user_id}, #{breed_name}, #{item})
+	    	(#{user_id}, #{breed_name}, #{item}, 0)
         </foreach>
     </insert>
 </mapper>

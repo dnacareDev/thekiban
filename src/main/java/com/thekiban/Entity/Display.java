@@ -17,6 +17,7 @@ public class Display
 	private int detail_id;						// 세부정보 고유번호
 	private String breed_name;					// 품종 작목명
 	private String basic_name;					// 원종 작물명
+	private int display_type;					// 표시항목 유형(0: 품종, 1: 원종)
 	
 	private String detail_spec;
 	private String detail_title;
