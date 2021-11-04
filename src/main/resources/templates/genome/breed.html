@@ -616,10 +616,10 @@
 								<div class="top_box">
 									<ul class="nav nav-tabs vertical-tabs" role="tablist">
 										<li class="nav-item">
-											<a class="nav-link active" id="tab-horizontal-0-tab" data-toggle="tab" href="#tab-horizontal-0" role="tab" aria-controls="tab-horizontal-0" aria-selected="true">기본 정보</a>
+											<a class="nav-link" id="tab-horizontal-0-tab" data-toggle="tab" href="#tab-horizontal-0" role="tab" aria-controls="tab-horizontal-0" aria-selected="true">기본 정보</a>
 										</li>
 										<li class="nav-item">
-											<a class="nav-link active" id="tab-horizontal-1-tab" data-toggle="tab" href="#tab-horizontal-1" role="tab" aria-controls="tab-horizontal-1" aria-selected="false">원예형질[종자원 기준]</a>
+											<a class="nav-link" id="tab-horizontal-1-tab" data-toggle="tab" href="#tab-horizontal-1" role="tab" aria-controls="tab-horizontal-1" aria-selected="false">원예형질[종자원 기준]</a>
 										</li>
 										<li class="nav-item">
 											<a class="nav-link" id="tab-horizontal-2-tab" data-toggle="tab" href="#tab-horizontal-2" role="tab" aria-controls="tab-horizontal-2" aria-selected="false">원예형질[사내 기준]</a>
@@ -1285,8 +1285,7 @@
             })
         });
     })
-
-    /*let topBox = document.getElementsByClassName("top_box");
+    let topBox = document.getElementsByClassName("top_box");
     let navN = 0; //선택된 변수
 
     for(let k = 0; k < topBox.length; k++)
@@ -1354,7 +1353,7 @@
             contentLi[f].classList.add("active");
             contentLi[f].classList.add("show");
         }
-    }*/
+    }
 
     /* 엑셀 업로드 버튼 */
     function filesFunction(filename)
