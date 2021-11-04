@@ -70,10 +70,11 @@ input[type="text"] {
     border-radius: 10px;
 	overflow:auto;
 	background-color: #fff;
+	min-height: 300px;
 	max-height: 300px;
 }
-.box2 .text_box{
-	height: 300px;
+.text_box.text_box3{
+	max-height: 300px;
 }
 .text_box li{
 	display: block;
@@ -167,10 +168,65 @@ input[type="checkbox"]{
 .top-menu .main-content .contents{
 	padding-top: 30px;
 	padding-left:0;
+	background-color: #fff;
 }
 .submit_btn {
 	padding: 20px 0;
 	float: right;
+}
+.main-content{
+	/*padding: 10px 0 0 0;*/
+}
+
+/* alert 팝업 */
+.dim{
+	position:fixed;
+	left:0;
+	top:0;
+	width:100%;
+	height:100vh;
+	background-color:rgba(0,0,0,0.3);
+	z-index: 9;
+}
+#alert{
+	width:100%;
+	position:fixed;
+	left:0;
+	top:0;
+	width:100%;
+	height:100vh;
+	z-index: 9999999999999999999999999;
+}
+#alert .alert_table{
+	display: table;
+	width:100%;
+	height: 100%;
+	
+}
+#alert .alert_table .alert_inner{
+	display:table-cell;
+	vertical-align:middle;
+}
+#alert .alert_table .alert_inner .alert_cover{
+	max-width:550px;
+	margin:0 auto;
+	padding: 50px;
+	text-align:center;
+	background-color: #fff;
+	border-radius: 10px;
+}
+#alert .alert_table .alert_inner .alert_cover .title_text{
+	color: #222222;
+	font-size: 20px;
+	font-weight: 500;
+}
+#alert .alert_table .alert_inner .alert_cover button[type="button"]{
+	padding: 10px 30px;
+	color: #fff;
+	background-color:#217566;
+	border-radius: 5px;
+	margin-top:30px;
+	border: none;
 }
 </style>
 </head>
@@ -184,15 +240,19 @@ input[type="checkbox"]{
 <th:block th:include="/../fragments/topbar.html"></th:block>
 
 <main class="main-content">
-
+<div class="contents" style="background-color: #FFFFFF;">
+	<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-12 mb-30">
+					<div class="card">
     <div class="container clearfix">
     <form action="" method="post">
         <div class="contents clearfix">
-            <h6 class="title">분석대상선택</h1>
+            <h6 class="title" onclick="test();">분석대상선택</h1>
             
             <div class="box box1">
             	<input type="text" value="품종-시교명ID, 원종-계통명ID 검색">
-            	<div class="text_box">
+            	<div class="text_box text_box1">
 	            	<ul>
 	            		<li><input type="checkbox"><span>19PC0233</span></li> 
 	            		<li><input type="checkbox"><span>29PC0233</span></li>
@@ -209,13 +269,13 @@ input[type="checkbox"]{
             </div>    
             <div class="button clearfix">
             	<ul>
-            		<li><button type="button" class="right_plus"><span class="right_btn"></span></button></li>
-            		<li><button type="button"><span class="left_btn"></span></button></li>
+            		<li><button type="button" class="right_plus" onclick="plusFunction(this, array1)"><span class="right_btn"></span></button></li>
+            		<li><button type="button" onclick="plusFunction(this, array2)"><span class="left_btn"></span></button></li>
             	</ul>
             </div>
             <div class="box box2">
             	<input type="text" value="품종-시교명ID, 원종-계통명ID 검색">
-            	<div class="text_box">
+            	<div class="text_box text_box2">
 	            	<ul>
 	            		
 	            	</ul>
@@ -223,11 +283,11 @@ input[type="checkbox"]{
             </div>   
         </div>
         <div class="contents clearfix">
-            <h6 class="title">분석방법</h1>
+            <h6 class="title" onclick="as();">분석방법</h1>
             
             <div class="box box1">
             	<input type="text" value="품종-시교명ID, 원종-계통명ID 검색">
-            	<div class="text_box">
+            	<div class="text_box text_box3">
 	            	<ul>
 	            		<li><input type="checkbox"><span>19PC0233</span></li> 
 	            		<li><input type="checkbox"><span>29PC0233</span></li>
@@ -237,13 +297,13 @@ input[type="checkbox"]{
             </div>    
             <div class="button clearfix">
             	<ul>
-            		<li><button type="button" class="right_plus"><span class="right_btn"></span></button></li>
-            		<li><button type="button"><span class="left_btn"></span></button></li>
+            		<li><button type="button" class="right_plus" onclick="plusFunction(this, array1)"><span class="right_btn"></span></button></li>
+            		<li><button type="button" onclick="plusFunction(this, array2)"><span class="left_btn"></span></button></li>
             	</ul>
             </div>
             <div class="box box2" id="box2_height">
             	<input type="text" value="품종-시교명ID, 원종-계통명ID 검색">
-            	<div class="text_box">
+            	<div class="text_box text_box4">
 	            	<ul>
 	            		
 	            	</ul>
@@ -255,7 +315,7 @@ input[type="checkbox"]{
             
             <div class="box box1">
             	<input type="text" value="품종-시교명ID, 원종-계통명ID 검색">
-            	<div class="text_box">
+            	<div class="text_box text_box5">
 	            	<ul>
 	            		<li><input type="checkbox"><span>19PC0233</span></li> 
 	            		<li><input type="checkbox"><span>29PC0233</span></li>
@@ -272,13 +332,13 @@ input[type="checkbox"]{
             </div>    
             <div class="button clearfix">
             	<ul>
-            		<li><button type="button" class="right_plus"><span class="right_btn"></span></button></li>
-            		<li><button type="button"><span class="left_btn"></span></button></li>
+            		<li><button type="button" class="right_plus" onclick="plusFunction(this, array1)"><span class="right_btn"></span></button></li>
+            		<li><button type="button" onclick="plusFunction(this, array2)"><span class="left_btn"></span></button></li>
             	</ul>
             </div>
             <div class="box box2">
             	<input type="text" value="품종-시교명ID, 원종-계통명ID 검색">
-            	<div class="text_box">
+            	<div class="text_box text_box6">
 	            	<ul>
 	            		
 	            	</ul>
@@ -290,64 +350,105 @@ input[type="checkbox"]{
         </div>
         </form>
 	</div>
-	
-      
+	</div>
+      </div>
+      </div>
+      </div>
+      </div>
 </main>
+
 
 <!-- 공통 하단 -->
 <th:block th:include="/../fragments/footer.html"></th:block>
 <!-- 공통 js -->
  <th:block th:include="/../fragments/commonjs.html"></th:block>
 <script>
-
-
+function test(){
+	if(Confirm("이동") == true){
+		console.log("a");
+		window.history.back();
+	}
+}
 let inner_html= "";
-$(".right_plus").click(function(){
-	
-	let text_array = [];
-	let textLi = $(this).parent().parent().parent().prev().children().eq(1).children().children();
+let text_box;
+let array1 = [];
+let array2 = [];
+let textLi;
+function plusFunction(e, Arrays){
+	Arrays = [];
+	if($(e).hasClass("right_plus") == true){
+		textLi = $(e).parent().parent().parent().prev().children().eq(1).children().children();
+		text_box = $(e).parent().parent().parent().next().children().eq(1).children();
+	} else {
+		textLi = $(e).parent().parent().parent().next().children().eq(1).children().children();
+		text_box = $(e).parent().parent().parent().prev().children().eq(1).children();
+	}
 	textLi.each(function(idx, elem){
 		if($(elem).children().eq(0).is(":checked") == true){
-			text_array.push($(elem).children().eq(1).text());
+			Arrays.push($(elem).children().eq(1).text());
 			$(elem).remove();
 		}
 		
 	});
 	
-	for(let i=0; i< text_array.length; i++){
-		inner_html += "<li><input type='checkbox'><span>"+ text_array[i]+"</span></li>";
+	for(let i=0; i< Arrays.length; i++){
+		inner_html += "<li><input type='checkbox'><span>"+ Arrays[i]+"</span></li>";
+		
 	}
+	text_box.append(inner_html);
+	inner_html = "";
 	
-	checkFunction($(this));
-	autoHeight();
-});
-checkFunction();
-function checkFunction(el){// 박스안 리스트 클릭시 체크박스 체크
-	$(el).parent().parent().parent().next().children().eq(1).children().html(inner_html);
-	$(".text_box li").click(function(e){
-		$(this).toggleClass("clicked");
-		
-		if($(this).hasClass("clicked") == true){
-			$(this).children().eq(0).prop("checked", true);
-			
-		} else{
-			$(this).children().eq(0).prop("checked", false);
-		}
-		
-		
-	});
-	
+	checkFunction();
 }
 
-autoHeight();
-function autoHeight(){
+checkFunction();
+function checkFunction(){// 박스안 리스트 클릭시 체크박스 체크\
+	$('.text_box li').off('click').on('click', function(e){ 
+		e.preventDefault();
+		
+ 		$(this).toggleClass("clicked");
+ 		if($(this).hasClass("clicked") == true){
+ 			$(this).children().eq(0).prop("checked", true);
+ 		} else {
+ 			$(this).children().eq(0).prop("checked", false);
+ 		}
+	});
+	$('.text_box3 li').off('click').on('click', function(e){ 
+		e.preventDefault();
+		
+		$('.text_box3 li').removeClass("clicked");
+ 		$(this).addClass("clicked");
+ 		$('.text_box3 li').children().eq(0).prop("checked", false);
+ 		
+ 		if($(this).hasClass("clicked") == true){
+ 			$(this).children().eq(0).prop("checked", true);
+ 		} else {
+ 			$(this).children().eq(0).prop("checked", false);
+ 			
+ 			
+ 		}
+ 		if($(".text_box4 li").length > 0){
+ 			
+ 			return Alert('분석방법은 하나만 선택할수있습니다'); // alert 호줄
+ 			window.history.back();
+ 			
+			$('.text_box3 li').removeClass("clicked");
+ 			$('.text_box3 li').children().eq(0).prop("checked", false);
+ 		}
+ 		
+	});
+};
+
+function autoHeight(){ /* 높이 조절 */
 	$(".box1 .text_box").each(function(idx, elem){
 		let box_height = $(elem).height();
-		$(elem).parent().next().next().children().eq(1).css({"height" : box_height});
 		$(elem).parent().next().css({"height" : $(elem).parent().height(), "padding-top": 0});
 	});
 }
-
+let box2_h = $(".text_box3 ul").height();
+$(".text_box3").css({"min-height": box2_h});
+$(".text_box4").css({"height": box2_h, "min-height":box2_h});
+autoHeight();
 
 
 </script>

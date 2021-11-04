@@ -68,9 +68,37 @@ public class BreedServiceImpl implements BreedService
 
 	// 품종 상세 정보 등록
 	@Override
-	public int InsertStandard(List<Standard> standard)
+	public int InsertStandard(int breed_id, String breed_name, List<Detail> detail)
 	{
-		return mapper.InsertStandard(standard);
+		return mapper.InsertStandard(breed_id, breed_name, detail);
+	}
+
+	// 품종별 전체 조회
+	@Override
+	public List<Breed> SelectBreedAll(String breed_name, int offset)
+	{
+		return mapper.SelectBreedAll(breed_name, offset);
+	}
+
+	// 품종별 정보 전체 조회
+	@Override
+	public List<Standard> SelectBreedStandard(int breed_id)
+	{
+		return mapper.SelectBreedStandard(breed_id);
+	}
+
+	// 품종 수정
+	@Override
+	public int UpdateBreed(int breed_id, int detail_id, String standard)
+	{
+		return mapper.UpdateBreed(breed_id, detail_id, standard);
+	}
+
+	// 품목 전체 수정
+	@Override
+	public int UpdateAllBreed(List<Standard> list)
+	{
+		return mapper.UpdateAllBreed(list);
 	}
 
 	// 품종 삭제

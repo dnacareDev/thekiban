@@ -20,7 +20,7 @@
     <!-- 품종 검색 -->
     <select id="SearchBreed" resultType="Breed">
         SELECT *,
-        (SELECT COUNT(*) FROM standard s WHERE s.breed_id = b.breed_id) AS standard_count
+        (SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE s.breed_id = b.breed_id AND d.detail_origin = 1 AND s.standard IS NOT NULL) AS standard_count
         FROM breed b
         <choose>
             <when test="breed_name != 'none'">
@@ -57,9 +57,9 @@
     <!-- 품종 등록 -->
     <insert id="InsertBreed" parameterType="Breed">
         INSERT INTO breed
-        (breed_id, breed_code, breed_name, breed_kind, breed_mom, breed_dad, breed_sale_num, breed_sale_date, breed_apply_num, breed_apply_date, breed_enroll_num, breed_enroll_date, breed_local, breed_purpose, breed_first_form, breed_second_form, breed_first_crop, breed_second_crop, breed_comment, create_date, modify_date)
+        (breed_name, create_date, modify_date)
         VALUES
-        (#{breed_id}, #{breed_code}, #{breed_name}, #{breed_kind}, #{breed_mom}, #{breed_dad}, #{breed_sale_num}, #{breed_sale_date}, #{breed_apply_num}, #{breed_apply_date}, #{breed_enroll_num}, #{breed_enroll_date}, #{breed_local}, #{breed_purpose}, #{breed_first_form}, #{breed_second_form}, #{breed_first_crop}, #{breed_second_crop}, #{breed_comment}, NOW(), NOW())
+        (#{breed_name}, NOW(), NOW())
         <selectKey resultType="int" keyProperty="breed_id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
@@ -67,13 +67,54 @@
 
     <!-- 품종 상세 정보 등록 -->
     <insert id="InsertStandard" parameterType="java.util.ArrayList">
-        <foreach collection="list" item="item" separator=";">
-            INSERT INTO standard
-            (detail_id, breed_id, standard)
-            VALUES
-            (#{item.detail_id}, #{item.breed_id}, #{item.standard})
+        <foreach collection="detail" item="item" separator=";">
+        	<choose>
+        		<when test="item.detail_title == '작물'">
+		            INSERT INTO standard
+		            (detail_id, breed_id, standard)
+		            VALUES
+		            (#{item.detail_id}, #{breed_id}, #{breed_name})
+        		</when>
+        		<when test="item.detail_title != '작물'">
+		            INSERT INTO standard
+		            (detail_id, breed_id)
+		            VALUES
+		            (#{item.detail_id}, #{breed_id})
+        		</when>
+        	</choose>
         </foreach>
     </insert>
+    
+    <!-- 품종별 전체 조회 -->
+    <select id="SelectBreedAll" resultType="Breed">
+    	SELECT *,
+    	(SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE s.breed_id = b.breed_id AND d.detail_origin = 1 AND s.standard IS NOT NULL) AS standard_count
+    	FROM breed b
+    	WHERE breed_name = #{breed_name}
+    	LIMIT #{offset}, 10
+    </select>
+    
+    <!-- 품종별 정보 전체 조회 -->
+    <select id="SelectBreedStandard" parameterType="int" resultType="Standard">
+    	SELECT * FROM standard
+    	WHERE breed_id = #{breed_id}
+    </select>
+    
+    <!-- 품종 수정 -->
+    <update id="UpdateBreed">
+    	UPDATE standard
+    	SET standard = #{standard}
+    	WHERE breed_id = #{breed_id} AND detail_id = #{detail_id} 
+    </update>
+    
+    <!-- 품종 전체 수정 -->
+    <update id="UpdateAllBreed" parameterType="java.util.ArrayList">
+        <foreach collection="list" item="item" separator=";">
+	    	UPDATE standard
+	    	SET standard = #{item.standard}
+	    	WHERE breed_id = #{item.breed_id} AND detail_id = #{item.detail_id}
+    	</foreach>
+    </update>
 
     <!-- 품종 삭제 -->
     <select id="DeleteBreed" parameterType="java.util.ArrayList">
