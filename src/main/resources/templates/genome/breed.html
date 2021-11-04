@@ -621,10 +621,10 @@
 								<div class="top_box">
 									<ul class="nav nav-tabs vertical-tabs" role="tablist">
 										<li class="nav-item">
-											<a class="nav-link active" id="tab-horizontal-0-tab" data-toggle="tab" href="#tab-horizontal-0" role="tab" aria-controls="tab-horizontal-0" aria-selected="true">기본 정보</a>
+											<a class="nav-link" id="tab-horizontal-0-tab" data-toggle="tab" href="#tab-horizontal-0" role="tab" aria-controls="tab-horizontal-0" aria-selected="true">기본 정보</a>
 										</li>
 										<li class="nav-item">
-											<a class="nav-link active" id="tab-horizontal-1-tab" data-toggle="tab" href="#tab-horizontal-1" role="tab" aria-controls="tab-horizontal-1" aria-selected="false">원예형질[종자원 기준]</a>
+											<a class="nav-link" id="tab-horizontal-1-tab" data-toggle="tab" href="#tab-horizontal-1" role="tab" aria-controls="tab-horizontal-1" aria-selected="false">원예형질[종자원 기준]</a>
 										</li>
 										<li class="nav-item">
 											<a class="nav-link" id="tab-horizontal-2-tab" data-toggle="tab" href="#tab-horizontal-2" role="tab" aria-controls="tab-horizontal-2" aria-selected="false">원예형질[사내 기준]</a>
@@ -1290,6 +1290,76 @@
             })
         });
     })
+    
+    let topBox = document.getElementsByClassName("top_box");
+    let navN = 0; //선택된 변수
+
+    for(let k = 0; k < topBox.length; k++)
+    {
+        let [nav, prev, next] = topBox[k].children;
+        let navLi = nav.children;
+        let navMove = 0;
+
+        let content = document.getElementsByClassName("tab-content")[k];
+        let contentLi = content.children;
+
+        navLi[navN].classList.add("active");
+
+        for(let i = 0; i < navLi.length; i++)
+        {
+            navLi[i].idx = i;
+
+            navLi[i].addEventListener("click", function(e)
+            {
+                navN = e.currentTarget.idx;
+                moveFunction(navN);
+            });
+        }
+
+        let list = navLi.length;
+
+        next.addEventListener("click", function(e)
+        {
+            (navN < list - 1) ? navN += 1 : navN = list - 1;
+            moveFunction(navN);
+        });
+
+        prev.addEventListener("click", function(e)
+        {
+            (navN > 0) ? navN -= 1 : navN = 0;
+            moveFunction(navN);
+        });
+
+        function moveFunction(f)
+        {
+            for(let h = 0; h < navLi.length; h++)
+            {
+                navLi[h].classList.remove("active");
+                contentLi[h].classList.remove("active");
+            }
+            
+			
+            let navW = navLi[f].offsetWidth;
+            navMove = navW * f;
+            let a = topBox[k].offsetWidth;
+            let b = nav.offsetWidth;
+            let c = b - a;
+            let d = c + 40 + "px";
+
+            if(navMove > c)
+            {
+                nav.style.marginLeft = "-" + d;
+            }
+            else
+            {
+                nav.style.marginLeft = "-" + navMove + "px";
+            }
+
+            navLi[f].classList.add("active");
+            contentLi[f].classList.add("active");
+            contentLi[f].classList.add("show");
+        }
+    }
 
     /* 엑셀 업로드 버튼 */
     function filesFunction(filename)

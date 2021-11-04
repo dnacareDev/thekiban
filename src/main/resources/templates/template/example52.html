@@ -43,7 +43,7 @@
             margin-left: 10px;
             background-color: #217566;
         }
-        #files{
+        #filed{
             display:none;
         }
         .top-menu .contents, .top-menu a{
@@ -73,21 +73,64 @@
         <div class="contents">
         	<form action="" method="">
 	        	<input type="text" class="text">
-	            <button type="button" class="submit" onclick="files('#files');">파일첨부</button>
+	            <button type="button" class="submit" onclick="fileds();">파일첨부</button>
 	            <button type="button" class="submit">분석실행</button>
 	
-	            <input type="file" id="files" >
+	            <input type="file" id="filed">
         	</form>
         </div>
         <a href="#none">Example data download</a>
-        <div class="data_file">
+        <div class="data_file" style="overflow: auto;">
         </div>
     </div>
 </main>
 <script>
-    function files(e){
-        $(e).trigger("click");
-    }
+var sel_files = new Array();
+var sangse_files = new Array();
+$(document).ready(function(){
+	$("#filed").on("change", file_handler);
+});
+function fileds(e){
+    $("#filed").trigger("click");
+}
+
+function file_handler(e){  //이미지 업로드
+
+    var files = e.target.files;
+    var filesArr = Array.prototype.slice.call(files);
+
+    filesArr.forEach(function(file) {
+        if(!file.type.match("image.*"))
+		{
+            return Alert("확장자는 이미지 파일만 가능합니다.");
+            return;
+        }
+
+        var f_reader = new FileReader();
+    	var index = sel_files.length;
+        f_reader.onload = function(e) {
+			var delete_html =  "<li class='imageList' id='Lists"+index+"'>"+
+                                "<div class=\"wrap_div_img\" id=\"img_id_"+index+"\" style=\"display: inline-block\">" +
+								"<button type=\"button\" class=\"close AClass\" style='padding:0;' value='삭제' onclick=\"delete_img("+index+")\"><span><i class=\"fa fa-times-circle-o\" aria-hidden=\"true\">x</i></span></button>"+
+		   						"<img src=\"" + e.target.result + "\" style='' name='img'></a>"+
+								"</div>"+
+                                "</li>";
+            $(".data_file").append(delete_html); 
+        }
+        sel_files.push(file);
+        f_reader.readAsDataURL(file);
+        
+    });
+    
+}
+
+
+function delete_img(index){
+    sel_files.splice(index, 1);
+    $("#Lists"+index).remove();
+}
+    
+    
 </script>
 <!-- 공통 하단 -->
  <th:block th:include="/../fragments/footer.html"></th:block> 
