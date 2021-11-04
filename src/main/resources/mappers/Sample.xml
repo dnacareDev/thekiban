@@ -70,6 +70,7 @@
         WHERE sample_id = #{sample_id}
     </update>
 
+    <!-- 엑셀파일 등록 -->
     <insert id="InsertExcel" parameterType="Sample">
         INSERT INTO sample
         (sample_id, sample_code, sample_name, sample_country, sample_type,
@@ -79,4 +80,9 @@
         #{sample_mate}, #{sample_seed}, #{sample_amount}, #{sample_sprout}, #{sample_purity},
         #{sample_comment}, NOW(), NOW())
     </insert>
+<!--
+    &lt;!&ndash; 첨부파일 목록 &ndash;&gt;
+    <select id="SearchAttachFile" resultType="SampleFile">
+        SELECT * FROM sampleFile
+    </select>-->
 </mapper>

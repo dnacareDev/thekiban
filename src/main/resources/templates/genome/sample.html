@@ -612,13 +612,13 @@
                                             <th><span class="title">종자 보유량</span><i></i><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="종자 보유량"></th>
-                                            <th onclick="sortTable(3)"><span class="title">입고량</span><i></i><img
+                                            <th><span class="title">입고량</span><i></i><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="입고량"></th>
-                                            <th onclick="sortTable(4)"><span class="title">출고량</span><i></i><img
+                                            <th><span class="title">출고량</span><i></i><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="출고량"></th>
-                                            <th onclick="sortTable(5)"><span class="title">재고량</span><i></i><img
+                                            <th><span class="title">재고량</span><i></i><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="재고량"></th>
                                             <th><span class="title">담당자</span><i></i><img
@@ -690,7 +690,50 @@
     </div>
 
     <!-- modal code -->
-    <!-- 첨부파일 -->
+    <!-- 첨부파일 리스트  2021-11-04 -->
+    <div class="modal-basic modal fade show pop7" id="data_upload3" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content modal-bg-white ">
+                <div class="modal-header" style="border: none">
+                    <h6 class="modal-title">시교자원관리 > 첨부파일 등록</h6>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group mb-0">
+                        <button onclick="dataToggle('#data_upload3', '#gen-attach');">데이터 등록</button>
+                    </div>
+                    <div>
+                        <div class="atbd-upload">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>순번</th>
+                                    <th>제목</th>
+                                    <th>등록일</th>
+                                </tr>
+                                </thead>
+                                <tbody id="file_list">
+                                <tr>
+                                    <td>1</td>
+                                    <td>테스트</td>
+                                    <td>2021-11-04</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border: none">
+                    <div class="col-4">
+                        <div class="row" style="justify-content: center;">
+                            <div id="pageNum2" style="text-align:center; margin: 2% 0 0 0;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 첨부파일 등록 -->
     <div class="modal-basic modal fade show pop1" id="gen-attach" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white ">
@@ -699,6 +742,50 @@
                 </div>
                 <form action="" method="post">
                     <input type="hidden" id="input_file" name="input_file">
+                    <div class="modal-body">
+                        <div class="form-group mb-0">
+                            <span>제목</span>
+                            <input type="text" class="form-control form-control-lg" name="title">
+                        </div>
+                        <div class="form-group mb-0">
+                            <textarea style="resize:none;" name="content"></textarea>
+                        </div>
+                        <div>
+                            <div class="atbd-upload">
+                                <div class="atbd-upload__button">
+                                    <a href="javascript:void(0)" class="btn btn-lg btn-outline-lighten btn-upload"
+                                       onclick="$('#upload').click()"> <span data-feather="upload"></span>Click to Upload</a>
+                                    <input type="file" name="upload-3" class="upload-one" id="upload">
+                                </div>
+                                <div class="atbd-upload__file">
+                                    <ul>
+                                        <li>
+                                            <a href="#" class="file-name"><i class="las la-paperclip"></i> <span
+                                                class="name-text">xxx.png<span></span></span></a>
+                                            <a href="#" class="btn-delete"><i class="la la-trash"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer" style="border: none">
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" onclick="dataToggle('#gen-attach', '#data_upload3');">취소</button>
+                        <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">저장</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 등록된 첨부파일 -->
+    <div class="modal-basic modal fade show pop1" id="inAttach" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content modal-bg-white ">
+                <div class="modal-header" style="border: none">
+                    <h6 class="modal-title">시교자원관리 > 첨부파일</h6>
+                </div>
+                <form action="" method="post">
                     <div class="modal-body">
                         <div class="form-group mb-0">
                             <span>제목</span>
@@ -940,56 +1027,6 @@
             </div>
         </div>
     </div>
-
-    <!-- 첨부파일 리스트  2021-11-04 -->
-    <div class="modal-basic modal fade show pop7" id="data_upload3" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-md" role="document">
-            <div class="modal-content modal-bg-white ">
-                <div class="modal-header" style="border: none">
-                    <h6 class="modal-title">시교자원관리 > 첨부파일 등록</h6>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group mb-0">
-                        <button onclick="dataToggle('#data_upload3', '#gen-attach');">데이터 등록</button>
-                        <button>등록서식 다운로드</button>
-                    </div>
-                    <div>
-                        <div class="atbd-upload">
-                            <table>
-                                <thead>
-                                <tr>
-                                    <th>순번</th>
-                                    <th>등록일</th>
-                                    <th>데이터수</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>2</td>
-                                    <td>2021-08-15</td>
-                                    <td>185</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>2021-08-15</td>
-                                    <td>185</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer" style="border: none">
-                    <div class="col-4">
-                        <div class="row" style="justify-content: center;">
-                            <div id="pageNum2" style="text-align:center; margin: 2% 0 0 0;"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- modal end -->
 
     <!-- context menu -->
