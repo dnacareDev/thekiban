@@ -1926,7 +1926,7 @@
         XLSX.utils.book_append_sheet(wb, newWorksheet, excelHandler.getSheetName());
 
         // step 4. 엑셀 파일 만들기
-        var wbout = XLSX.write(wb, {bookType:'xlsx',  type: 'binary'});
+        var wbout = XLSX.write(wb, {bookType:'xlsx', type: 'binary'});
 
         // step 5. 엑셀 파일 내보내기
         saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), excelHandler.getExcelFileName());
@@ -1940,10 +1940,10 @@
 
     var excelHandler = {
         getExcelFileName : function(){
-            return 'table-test.xlsx';
+            return '고추_시교자원관리.xlsx';
         },
         getSheetName : function(){
-            return 'Table Test Sheet';
+            return '시교자원관리';
         },
         getExcelData : function(){
             return document.getElementById('table1');
@@ -1952,6 +1952,7 @@
             return XLSX.utils.table_to_sheet(this.getExcelData());
         }
     }
+
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBn0n_LEGxgJuCfTU8aKvuwrcmw0iZjfmY&callback=initMap&region=kr"></script>
 </body>
