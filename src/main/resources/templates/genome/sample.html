@@ -321,7 +321,7 @@
             justify-content: flex-start;
         }
 
-        #data_upload .form-group button, #data_upload2 .form-group button {
+        #data_upload .form-group button, #data_upload2 .form-group button, #data_upload3 .form-group button {
             height: 45px;
             padding: 0 20px;
             background-color: #217566;
@@ -335,7 +335,7 @@
             margin-left: 0;
         }
 
-        #data_upload .form-group input[type=text], #data_upload2 .form-group input[type=text] {
+        #data_upload .form-group input[type=text], #data_upload2 .form-group input[type=text], #data_upload3 .form-group input[type=text] {
             flex: 0 0 30%;
             cursor: pointer;
         }
@@ -346,7 +346,7 @@
             color: #B2B2B2;
         }
 
-        #data_upload .atbd-upload, #data_upload2 .atbd-upload {
+        #data_upload .atbd-upload, #data_upload2 .atbd-upload, #data_upload3 .atbd-upload {
             width: 100%;
             height: 300px;
             overflow: auto;
@@ -357,26 +357,26 @@
             border: none;
         }
 
-        #data_upload2 .atbd-upload table {
+        #data_upload2 .atbd-upload table, #data_upload3 .atbd-upload table {
             width: 100%;
         }
 
-        #data_upload table thead tr, #data_upload2 table thead tr {
+        #data_upload table thead tr, #data_upload2 table thead tr, #data_upload3 table thead tr {
             border-top: none;
             border-bottom: 2px solid #E8EEF2;
         }
 
-        #data_upload table tbody tr, #data_upload2 table tbody tr {
+        #data_upload table tbody tr, #data_upload2 table tbody tr, #data_upload3 table tbody tr {
             border-bottom: 1px solid #E8EEF2;
         }
 
-        #data_upload .atbd-upload table thead th, #data_upload2 .atbd-upload table thead th {
+        #data_upload .atbd-upload table thead th, #data_upload2 .atbd-upload table thead th, #data_upload3 .atbd-upload table thead th {
             background-color: #F7F7F8;
             color: #222222;
             font-size: 16px;
         }
 
-        #data_upload .atbd-upload table tbody td, #data_upload2 .atbd-upload table tbody td {
+        #data_upload .atbd-upload table tbody td, #data_upload2 .atbd-upload table tbody td, #data_upload3 .atbd-upload table tbody td {
             background-color: #fff;
             color: #666666;
             font-size: 16px;
@@ -436,10 +436,14 @@
             margin: 5px 3px;
         }
 
-        #data_upload2 .form-group button {
+        #data_upload2 .form-group button, #data_upload3 .form-group button {
             height: 34px;
             line-height: 2rem;
             font-size: 13px;
+        }
+
+        #excel_data {
+            width: 100%;
         }
 
         .col-4 .bottom_btn > span {
@@ -533,7 +537,7 @@
                                     </form>
                                     <button class="btn btn-lg btn-primary data_btn2" data-toggle="modal" title="데이터 등록" data-target="#data_upload2">
                                         <img src="../assets/vendor_assets/img/icon1.png" alt=""></button>
-                                    <button type="button" class="btn btn-lg btn-primary data_btn1" title="엑셀 export">
+                                    <button type="button" class="btn btn-lg btn-primary data_btn1" title="엑셀 export" id="excelFileExport">
                                         <img src="../assets/vendor_assets/img/icon2.png" title="데이터 등록" alt=""></button>
                                     <button class="btn btn-lg btn-primary data_btn2" title="표시항목 선택" onclick="DisplayBtn();">
                                         <img src="../assets/vendor_assets/img/icon3.png" alt=""></button>
@@ -547,8 +551,7 @@
                                         <thead class="text-center">
                                         <tr>
                                             <th></th>
-                                            <th><span class="title">첨부파일</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                           alt="첨부파일"></th>
+                                            <th><span class="title">첨부파일</span></th>
                                             <th style="cursor: pointer;"><span class="title">작물</span><i></i><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="작물"></th>
@@ -609,13 +612,13 @@
                                             <th><span class="title">종자 보유량</span><i></i><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="종자 보유량"></th>
-                                            <th onclick="sortTable(3)"><span class="title">입고량</span><i></i><img
+                                            <th><span class="title">입고량</span><i></i><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="입고량"></th>
-                                            <th onclick="sortTable(4)"><span class="title">출고량</span><i></i><img
+                                            <th><span class="title">출고량</span><i></i><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="출고량"></th>
-                                            <th onclick="sortTable(5)"><span class="title">재고량</span><i></i><img
+                                            <th><span class="title">재고량</span><i></i><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="재고량"></th>
                                             <th><span class="title">담당자</span><i></i><img
@@ -687,139 +690,138 @@
     </div>
 
     <!-- modal code -->
-    <!-- 첨부파일 -->
+    <!-- 첨부파일 리스트  2021-11-04 -->
+    <div class="modal-basic modal fade show pop7" id="data_upload3" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content modal-bg-white ">
+                <div class="modal-header" style="border: none">
+                    <h6 class="modal-title">시교자원관리 > 첨부파일 등록</h6>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group mb-0">
+                        <button onclick="dataToggle('#data_upload3', '#gen-attach');">데이터 등록</button>
+                    </div>
+                    <div>
+                        <div class="atbd-upload">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>순번</th>
+                                    <th>제목</th>
+                                    <th>등록일</th>
+                                </tr>
+                                </thead>
+                                <tbody id="file_list">
+                                <tr>
+                                    <td>1</td>
+                                    <td>테스트</td>
+                                    <td>2021-11-04</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border: none">
+                    <div class="col-4">
+                        <div class="row" style="justify-content: center;">
+                            <div id="pageNum2" style="text-align:center; margin: 2% 0 0 0;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 첨부파일 등록 -->
     <div class="modal-basic modal fade show pop1" id="gen-attach" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white ">
                 <div class="modal-header" style="border: none">
                     <h6 class="modal-title">시교자원관리 > 첨부파일</h6>
                 </div>
-                <div class="modal-body">
-                    <div class="form-group mb-0">
-                        <span>제목</span>
-                        <input type="text" class="form-control form-control-lg">
-                    </div>
-                    <div class="form-group mb-0">
-                        <textarea style="resize:none;"></textarea>
-                    </div>
-                    <div>
-                        <div class="atbd-upload">
-                            <div class="atbd-upload__button">
-                                <a href="javascript:void(0)" class="btn btn-lg btn-outline-lighten btn-upload"
-                                   onclick="$('#upload').click()"> <span data-feather="upload"></span>Click to Upload</a>
-                                <input type="file" name="upload-3" class="upload-one" id="upload">
-                            </div>
-                            <div class="atbd-upload__file">
-                                <ul>
-                                    <li>
-                                        <a href="#" class="file-name"><i class="las la-paperclip"></i> <span
-                                            class="name-text">xxx.png<span></span></span></a>
-                                        <a href="#" class="btn-delete"><i class="la la-trash"></i></a>
-                                    </li>
-                                </ul>
+                <form action="" method="post">
+                    <input type="hidden" id="input_file" name="input_file">
+                    <div class="modal-body">
+                        <div class="form-group mb-0">
+                            <span>제목</span>
+                            <input type="text" class="form-control form-control-lg" name="title">
+                        </div>
+                        <div class="form-group mb-0">
+                            <textarea style="resize:none;" name="content"></textarea>
+                        </div>
+                        <div>
+                            <div class="atbd-upload">
+                                <div class="atbd-upload__button">
+                                    <a href="javascript:void(0)" class="btn btn-lg btn-outline-lighten btn-upload"
+                                       onclick="$('#upload').click()"> <span data-feather="upload"></span>Click to Upload</a>
+                                    <input type="file" name="upload-3" class="upload-one" id="upload">
+                                </div>
+                                <div class="atbd-upload__file">
+                                    <ul>
+                                        <li>
+                                            <a href="#" class="file-name"><i class="las la-paperclip"></i> <span
+                                                class="name-text">xxx.png<span></span></span></a>
+                                            <a href="#" class="btn-delete"><i class="la la-trash"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer" style="border: none">
-                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-primary btn-sm">저장</button>
-                </div>
+                    <div class="modal-footer" style="border: none">
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" onclick="dataToggle('#gen-attach', '#data_upload3');">취소</button>
+                        <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">저장</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 
-    <!-- 일반데이터 등록 -->
-    <!--<div class="modal-basic modal fade show pop2" id="grid" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- 등록된 첨부파일 -->
+    <div class="modal-basic modal fade show pop1" id="inAttach" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white ">
                 <div class="modal-header" style="border: none">
-                    <h6 class="modal-title">시교자원관리 > 기본 정보</h6>
-                    시교명 ID : <span></span>
+                    <h6 class="modal-title">시교자원관리 > 첨부파일</h6>
                 </div>
-                <div class="modal-body">
-                    <div class="tab-pane fade show active" id="control1" role="tabpanel" aria-labelledby="control1-tab">
-                        <div class="tab-slide-content">
-                            <div class="atbd-tab tab-horizontal">
-                                <div class="top_box">
-                                    <ul class="nav nav-tabs vertical-tabs" role="tablist">
-                                        <li class="nav-item">
-                                            <a class="nav-link active" id="tab-horizontal-0-tab" data-toggle="tab"
-                                               href="#tab-horizontal-0" role="tab" aria-controls="tab-horizontal-0"
-                                               aria-selected="true">기본 정보</a>
+                <form action="" method="post">
+                    <div class="modal-body">
+                        <div class="form-group mb-0">
+                            <span>제목</span>
+                            <input type="text" class="form-control form-control-lg" name="title">
+                        </div>
+                        <div class="form-group mb-0">
+                            <textarea style="resize:none;" name="content"></textarea>
+                        </div>
+                        <div>
+                            <div class="atbd-upload">
+                                <div class="atbd-upload__button">
+                                    <a href="javascript:void(0)" class="btn btn-lg btn-outline-lighten btn-upload"
+                                       onclick="$('#upload').click()"> <span data-feather="upload"></span>Click to Upload</a>
+                                    <input type="file" name="upload-3" class="upload-one" id="upload">
+                                </div>
+                                <div class="atbd-upload__file">
+                                    <ul>
+                                        <li>
+                                            <a href="#" class="file-name"><i class="las la-paperclip"></i> <span
+                                                class="name-text">xxx.png<span></span></span></a>
+                                            <a href="#" class="btn-delete"><i class="la la-trash"></i></a>
                                         </li>
                                     </ul>
                                 </div>
-                                <form action="insertSample" id="insertForm" method="POST" enctype="multipart/form-data">
-                                    <input type="hidden" id="origin_list" name="origin_list">
-                                    <div class="tab-content">
-                                        <div class="tab-pane fade show active" id="tab-horizontal-0" role="tabpanel"
-                                             aria-labelledby="tab-horizontal-0-tab">
-                                            <div class="content_title clearfix">
-                                                <ul>
-                                                    <li>형질</li>
-                                                    <li>조사값</li>
-                                                </ul>
-                                            </div>
-                                            <div class="content_1 clearfix">
-                                                <ul>
-                                                    <li>
-                                                        <div class="title">작물</div>
-                                                        <div class="input_text"><input type="text" name="sample_name" readonly></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">시교명(ID)</div>
-                                                        <div class="input_text"><input type="text" name="sample_code"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">목표 지역</div>
-                                                        <div class="input_text"><input type="text" name="sample_country"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">구분</div>
-                                                        <div class="input_text"><input type="text" name="sample_type"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">교배번호</div>
-                                                        <div class="input_text"><input type="text" name="sample_mate"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">종자번호(ID)</div>
-                                                        <div class="input_text"><input type="text" name="sample_seed"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">현 종자량(g)</div>
-                                                        <div class="input_text"><input type="text" name="sample_amount"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">기내 발아율(%)</div>
-                                                        <div class="input_text"><input type="text" name="sample_sprout"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">기내 순도율(%)</div>
-                                                        <div class="input_text"><input type="text" name="sample_purity"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">비고</div>
-                                                        <div class="input_text"><input type="text" name="sample_comment"></div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer" style="border: none">
-                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-primary btn-sm" onclick="insertBtn()" data-dismiss="modal">저장</button>
-                </div>
+                    <div class="modal-footer" style="border: none">
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" onclick="dataToggle('#gen-attach', '#data_upload3');">취소</button>
+                        <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal">저장</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
--->
+
     <!-- 일반 데이터 수정 -->
     <div class="modal-basic modal fade show pop2" tabindex="-1" role="dialog" aria-hidden="true" id="update-grid">
         <div class="modal-dialog modal-md" role="document">
@@ -1025,7 +1027,6 @@
             </div>
         </div>
     </div>
-
     <!-- modal end -->
 
     <!-- context menu -->
@@ -1152,36 +1153,7 @@
 
             var html = "";
 
-            /*for (var i = 0; i < rowdata.length; i++) {
-                if (i === 0) {
-                    html += "<thead class='text-center'>";
-                    html += "<tr>";
-
-                    $.each(rowdata[0], function (idx, value) {
-                        html += "<th><span class='excel-title'>" + value + "</span></th>";
-                    })
-
-                    html += "</tr>";
-                    html += "</thead>";
-                } else if (i !== 0) {
-                    html += "<tbody class='text-center'>";
-                    html += "<tr>";
-
-                    var columnLength = Object.keys(rowdata[0]).length;
-
-                    /!*table td*!/
-                    for (var q = 0; q < columnLength; q++) { // 10
-                        var valueT = Object.entries(rowdata[i])[q][1].value;
-
-                        html += "<td><span>" + valueT + "</span></td>";
-                    }
-
-                    html += "</tr>";
-                    html += "</tbody>";
-                }
-            }*/
-
-            for (var i = 0; i < rowdata.length; i++) {
+            for (var i = 1; i < rowdata.length; i++) {
                 if (i === 0) {
                     html += "<thead class='text-center'>";
                     html += "<tr>";
@@ -1230,31 +1202,6 @@
                 }
             }
 
-            /*var excel = [];
-
-            for (var k = 1; k < rowdata.length; k++) {
-                var chk = Object.values(rowdata[k]);
-                var kkk = Object.keys(rowdata[k]);
-                var j = 0;
-
-                while (j < 9) {
-                    for (var n = 0; n < keys.length; n++) {
-
-                        var keyStr = kkk[j].replace(/[^0-9]/g, '');
-
-                        if (keyStr != n) {
-                            excel[n] = {key: keys[n], value: " "}
-                        } else {
-                            if ((typeof chk[n]) === "number") {
-                                excel[n] = {key: keys[n], value: chk[n]};
-                            } else {
-                                excel[n] = {key: keys[n], value: "" + chk[n]};
-                            }
-                            j++;
-                        }
-                    }
-                }*/
-
             var excel = [];
 
             for (var k = 1; k < rowdata.length; k++) {
@@ -1274,7 +1221,7 @@
                 // console.log(obj);
                 rowdata[k] = obj;
             }
-            $("#excel_data").empty();
+            // $("#excel_data").empty();
             $("#excel_data").append(html);
 
             var jsonObj = tableToJson(document.getElementById("excel_data"));
@@ -1285,6 +1232,7 @@
         reader.readAsBinaryString(input.files[0]);
     }
 
+    /* 엑셀 입력 */
     function InsertExcel() {
         var data = [];
 
@@ -1323,8 +1271,6 @@
 
         for (var i = 1; i < table.rows.length; i++) {
             var tableRow = table.rows[i];
-
-            console.log('tableRow : ', tableRow);
 
             var rowData = {};
 
@@ -1365,19 +1311,6 @@
     var searchSelectBox = document.querySelector('#CropSelect');
 
     const thisBtn = document.querySelector('#modal_open');
-
-    // thisBtn.dataset.target = '';
-
-    function onChangeSelect() {
-        var thisBtn = document.querySelector('#modal_open');
-        var value = searchSelectBox.value;
-        // if (value === '고추') {
-        //     thisBtn.dataset.target = '';
-        // } else {
-        thisBtn.dataset.target = '#grid';
-        // }
-    }
-
 
     // 시교 자원 추가
     function insertBtn() {
@@ -1436,7 +1369,7 @@
                     for (var i = 0; i < result.sample.length; i++) {
                         add_list += '<tr>';
                         add_list += '<td><input type="checkbox" name="RowCheck" value="' + result.sample[i].sample_id + '"></td>';
-                        add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
+                        add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#data_upload3"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
                         add_list += '<td>' + result.sample[i].sample_name + '</td>';
                         add_list += '<td ondblclick="myFunction()">' + result.sample[i].sample_code + '</td>';
                         add_list += '<td>' + result.sample[i].sample_country + '</td>';
@@ -1478,6 +1411,7 @@
 
                     emptyEls = document.querySelectorAll('#sample_list tr .status');
                     emptyEls = Array.prototype.slice.call(emptyEls);
+
                 }
             });
     }
@@ -1726,62 +1660,11 @@
         }
     });
 
-    /*// 우클릭 메뉴
-    $(document).ready(function () {
-        //Show contextmenu:
-        $(".card-body").contextmenu(function (e) {
-            //Get window size:
-            var winWidth = $(document).width();
-            var winHeight = $(document).height();
-            //Get pointer position:
-            var posX = e.pageX;
-            var posY = e.pageY;
-            //Get contextmenu size:
-            var menuWidth = $(".contextmenu").width();
-            var menuHeight = $(".contextmenu").height();
-            //Security margin:
-            var secMargin = 10;
-            //Prevent page overflow:
-            if (posX + menuWidth + secMargin >= winWidth
-                && posY + menuHeight + secMargin >= winHeight) {
-                //Case 1: right-bottom overflow:
-                posLeft = posX - menuWidth - secMargin + "px";
-                posTop = posY - menuHeight - secMargin + "px";
-            } else if (posX + menuWidth + secMargin >= winWidth) {
-                //Case 2: right overflow:
-                posLeft = posX - menuWidth - secMargin + "px";
-                posTop = posY + secMargin + "px";
-            } else if (posY + menuHeight + secMargin >= winHeight) {
-                //Case 3: bottom overflow:
-                posLeft = posX + secMargin + "px";
-                posTop = posY - menuHeight - secMargin + "px";
-            } else {
-                //Case 4: default values:
-                posLeft = posX + secMargin + "px";
-                posTop = posY + secMargin + "px";
-            }
-            ;
-            //Display contextmenu:
-            $(".contextmenu").css({
-                "left": posLeft,
-                "top": posTop
-            }).show();
-            //Prevent browser default contextmenu.
-            return false;
-        });
-        //Hide contextmenu:
-        $(document).click(function () {
-            $(".contextmenu").hide();
-        });
-    });
-*/
     var tableAllEls = document.querySelectorAll('.card-body .table-responsive .table');
+
     tableAllEls = Array.prototype.slice.call(tableAllEls);
-    // onChangeSelect();
+
     searchSelectBox.addEventListener('change', onChangeSelect);
-    // $("#addRow").click(function () {
-    //     $("input[name=sample_name]").val($("#CropSelect option:selected").text());
-    // });
 
     // row 추가
     function addRow() {
@@ -1860,22 +1743,51 @@
 
     }
 
-    //
-    // function RowBtn()
-    // {
-    //     var data = [];
-    //
-    //     $("input[class=rowInput]").each(function (index, item) {
-    //         const key = $(this).attr('name');
-    //         var value = $(this).val();
-    //
-    //         var arr = {key: key, value: value};
-    //
-    //         data.push(arr);
-    //     });
-    //
-    //
-    // }
+    /* 엑셀 다운로드 */
+    function s2ab(s) {
+        var buf = new ArrayBuffer(s.length); //convert s to arrayBuffer
+        var view = new Uint8Array(buf);  //create uint8array as viewer
+        for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF; //convert to octet
+        return buf;
+    }
+
+    function exportExcel() {
+        // step 1. workbook 생성
+        var wb = XLSX.utils.book_new();
+
+        // step 2. 시트 만들기
+        var newWorksheet = excelHandler.getWorksheet();
+
+        // step 3. workbook에 새로만든 워크시트에 이름을 주고 붙인다.
+        XLSX.utils.book_append_sheet(wb, newWorksheet, excelHandler.getSheetName());
+
+        // step 4. 엑셀 파일 만들기
+        var wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
+
+        // step 5. 엑셀 파일 내보내기
+        saveAs(new Blob([s2ab(wbout)], {type: "application/octet-stream"}), excelHandler.getExcelFileName());
+    }
+
+    $(document).ready(function () {
+        $("#excelFileExport").click(function () {
+            exportExcel();
+        });
+    });
+
+    var excelHandler = {
+        getExcelFileName: function () {
+            return '고추_시교자원관리.xlsx';
+        },
+        getSheetName: function () {
+            return '시교자원관리';
+        },
+        getExcelData: function () {
+            return document.getElementById('table1');
+        },
+        getWorksheet: function () {
+            return XLSX.utils.table_to_sheet(this.getExcelData());
+        }
+    }
 
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBn0n_LEGxgJuCfTU8aKvuwrcmw0iZjfmY&callback=initMap&region=kr"></script>
