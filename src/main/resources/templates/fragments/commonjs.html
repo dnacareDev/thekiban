@@ -52,7 +52,71 @@
     <script th:src="@{/dist/xlsx.min.js}"></script>
     <script th:src="@{/dist/jquery.tabletojson.js}"></script>
     <!-- endinject-->
-<div class="popAlert" id="alert" style="display:none;"> <!-- alert 호출방법은 return messege('내용')으로 하시면 됩니다 !! return 필수-->
+    
+  <style>
+  	.dim{
+	position:fixed;
+	left:0;
+	top:0;
+	width:100%;
+	height:100vh;
+	background-color:rgba(0,0,0,0.3);
+	z-index: 9;
+	}
+	#alert, #confirm{
+		width:100%;
+		position:fixed;
+		left:0;
+		top:0;
+		width:100%;
+		height:100vh;
+		z-index: 9999999999999999999999999;
+	}
+	#alert .alert_table, #confirm .alert_table{
+		display: table;
+		width:100%;
+		height: 100%;
+		
+	}
+	#alert .alert_table .alert_inner, #confirm .alert_table .alert_inner{
+		display:table-cell;
+		vertical-align:middle;
+	}
+	#alert .alert_table .alert_inner .alert_cover, #confirm .alert_table .alert_inner .alert_cover{
+		max-width:550px;
+		margin:0 auto;
+		padding: 50px;
+		text-align:center;
+		background-color: #fff;
+		border-radius: 10px;
+	}
+	#alert .alert_table .alert_inner .alert_cover .title_text, #confirm .alert_table .alert_inner .alert_cover .title_text{
+		color: #222222;
+		font-size: 20px;
+		font-weight: 500;
+	}
+	#alert .alert_table .alert_inner .alert_cover button[type="button"], #confirm .alert_table .alert_inner .alert_cover button[type="button"]{
+		padding: 10px 30px;
+		color: #fff;
+		background-color:#217566;
+		border-radius: 5px;
+		margin-top:30px;
+		border: none;
+	}
+	#confirm .alert_table .alert_inner .alert_cover button[type="button"]{
+		float:left;
+	}
+	#confirm .alert_table .alert_inner .alert_cover button[type="button"]:last-child{
+		background-color: #ddd;
+		color: #222;
+		margin-left: 10px;
+	}
+	#confirm .alert_table .alert_inner .alert_cover .btn_box{
+		display:inline-block;
+		margin: 0 auto;
+	}
+  </style>  
+<div class="popAlert" id="alert" style="display:none;"> <!-- alert 호출방법은 return Alert('내용')으로 하시면 됩니다 !! return 필수-->
 	<div class="alert_table">
 		<div class="alert_inner">
 			<div class="alert_cover">
@@ -63,7 +127,21 @@
 	</div>
 </div>
 
-<div class="dim" style="display:none;"></div>
+<div class="popAlert" id="confirm" style="display:none;"> <!-- confirm 호출방법은 return Alert('내용')으로 하시면 됩니다 !! return 필수-->
+	<div class="alert_table">
+		<div class="alert_inner">
+			<div class="alert_cover">
+				<div class="title_text"></div>
+				<div class="btn_box">
+					<button type="button" id="ok_button" onclick="return true">확인</button>
+					<button type="button" id="no_button">취소</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="dim" style="display:none"></div>
 <script type="text/javascript">
 
 	//해당 페이지 탭 active css 주기
@@ -74,7 +152,7 @@
 		$("."+pathArray[2]).addClass("active");
 	}
 	
-	function messege(text){ //popup
+	function Alert(text){ //popup
 		
 		$("#alert").show(300);
 		$(".dim").show();
@@ -82,9 +160,27 @@
 		
 		$("#alert button").click(function(){
 			$("#alert, .dim").hide();
-			return false;
+			
+			return true;
 		});
 		return false;
+	}
+	
+	function Confirm(text){
+		$("#confirm").show(300);
+		$(".dim").show();
+		$("#confirm .title_text").text(text);
+		
+		$("#confirm #ok_button").click(function(e){
+			$("#confirm").hide();
+			$(".dim").hide();
+			return true;
+		});
+		$("#confirm #no_button").click(function(e){
+			$("#confirm").hide();
+			$(".dim").hide();
+			return false;
+		});
 	}
 		
 </script>
