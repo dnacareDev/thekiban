@@ -1,5 +1,7 @@
 package com.thekiban.Entity;
 
+import java.util.List;
+
 import org.apache.ibatis.type.Alias;
 
 import lombok.Getter;
@@ -13,17 +15,10 @@ import lombok.ToString;
 public class Basic
 {
 	private int basic_id;						// 원종관리 코드
-	private String basic_code;
-	private String basic_name;
-	private String basic_num;
-	private String basic_raw_num;
-	private int basic_bn_year;
-	private String basic_bn_num;
-	private String basic_seed;
-	private String basic_amount;
-	private String basic_weight;
-	private String basic_date;
-	private String basic_comment;
-	private String create_date;
-	private String modify_date;
+	private String basic_name;					// 작물명
+	private String create_date;					// 등록일
+	private String modify_date;					// 수정일
+	
+	int standard_count;							// 세부정보 수
+	List<Standard> basic_standard;				// 세부정보
 }

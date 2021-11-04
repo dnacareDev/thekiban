@@ -5,10 +5,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.thekiban.Entity.Sample;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,8 +17,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.thekiban.Entity.Basic;
+import com.thekiban.Entity.Breed;
 import com.thekiban.Entity.Detail;
+import com.thekiban.Entity.Display;
 import com.thekiban.Entity.Standard;
+import com.thekiban.Entity.User;
 import com.thekiban.Service.BasicService;
 
 @Controller
@@ -31,10 +34,6 @@ public class BasicController
 	@RequestMapping("basic")
 	public ModelAndView BasicList(ModelAndView mv)
 	{
-		List<Detail> detail = service.SelectDetail();
-		
-		mv.addObject("detail", detail);
-		
 		mv.setViewName("genome/basic");
 		
 		return mv;
@@ -43,9 +42,11 @@ public class BasicController
 	// 원종 검색
 	@ResponseBody
 	@RequestMapping("searchBasic")
-	public Map<String, Object> SearchBasic(@RequestParam("basic_name") String basic_name, @RequestParam("page_num") int page_num)
+	public Map<String, Object> SearchBasic(Authentication auth, @RequestParam("basic_name") String basic_name, @RequestParam("page_num") int page_num)
 	{
 		Map<String, Object> result = new LinkedHashMap<String, Object>();
+		
+		User user = (User)auth.getPrincipal();
 		
 		int count = service.SelectBasicCount(basic_name);
 		
@@ -53,9 +54,25 @@ public class BasicController
 		int offset = (page_num - 1) * limit;
 		int end_page = (count + limit - 1) / limit;
 		
-		List<Basic> basic = service.SearchBasic(basic_name, offset, limit);
+		List<Basic> basic = service.SearchBasic(basic_name, offset, limit);						// 원종 검색
+		List<Detail> detail = service.SearchBasicDetail(basic_name);							// 원종 작물별 컬럼 조회
+		List<Display> display = service.SelectDisplay(user.getUser_id(), basic_name);			// 사용자별 원종 표시항목 조회
+		
+		List<Standard> standard = new ArrayList<Standard>();
+		
+		if(!detail.isEmpty())
+		{
+			for(int i = 0; i < basic.size(); i++)
+			{
+				standard = service.SearchBasicStandard(detail, user.getUser_id(), basic.get(i).getBasic_id());
+				
+				basic.get(i).setBasic_standard(standard);
+			}
+		}
 		
 		result.put("basic", basic);
+		result.put("detail", detail);
+		result.put("display", display);
 		result.put("page_num", page_num);
 		result.put("end_page", end_page);
 		result.put("offset", offset);
@@ -64,42 +81,98 @@ public class BasicController
 	}
 	
 	// 원종 등록
+	@ResponseBody
 	@RequestMapping("insertBasic")
-	public ModelAndView InsertBasic(ModelAndView mv, @ModelAttribute Basic basic, @RequestParam("detail_list") String detail_list)
+	public Map<String, Object> ㅑnsertBasic(ModelAndView mv, @RequestParam("basic_name") String basic_name, @RequestParam("offset") int offset)
 	{
-		int insert_basic = service.InsertBasic(basic);
+		Map<String, Object> result = new LinkedHashMap<String, Object>();
 		
-		JSONArray arr = new JSONArray(detail_list);
+		Basic basic = new Basic();
+		basic.setBasic_name(basic_name);
+		
+		List<Detail> detail = service.SearchBasicDetail(basic_name);
+		
+		int insert_breed = service.InsertBasic(basic);
+		int insert_standard = service.InsertStandard(basic.getBasic_id(), basic_name, detail);
+		
+		List<Basic> basic_list = service.SelectBasicAll(basic_name, offset);
 		
 		List<Standard> standard = new ArrayList<Standard>();
 		
-   		for(int i = 0; i < arr.length(); i++)
-   		{
-   			Standard item = new Standard();
-   			
-   			JSONObject obj = arr.getJSONObject(i);
-   			
-   			String detail_id = (String)obj.get("key");
-   			String value = (String)obj.get("value");
-
-   			if(value != "")
-   			{
-   				item.setBasic_id(basic.getBasic_id());
-   				item.setDetail_id(Integer.parseInt(detail_id));
-					item.setStandard((String)obj.get("value"));
-   				
-   				standard.add(item);
-   			}
-   		}
-   		
-   		if(insert_basic != 0)
-   		{
-   			int insert_standard = service.InsertStandard(standard);
-   		}
+		if(!basic_list.isEmpty())
+		{
+			for(int i = 0; i < basic_list.size(); i++)
+			{
+				standard = service.SelectBasicStandard(basic_list.get(i).getBasic_id());
+				
+				basic_list.get(i).setBasic_standard(standard);
+			}
+		}
+		
+		result.put("basic", basic_list);
+		result.put("new_basic", basic);
+		result.put("detail", detail);
+		
+		return result;
+	}
+	
+	// 원종 수정
+	@ResponseBody
+	@RequestMapping("updateBasic")
+	public int UpdateBasic(@RequestParam("basic_id") int basic_id, @RequestParam("detail_id") int detail_id, @RequestParam("standard") String standard)
+	{
+		int result = service.UpdateBasic(basic_id, detail_id, standard);
+		
+		return result;
+	}
+	
+	// 원종 수정
+	@RequestMapping("updateAllBasic")
+	public ModelAndView UpdateAllBasic(ModelAndView mv, @RequestParam("basic_id") int basic_id, @RequestParam("detail_id") int[] detail_id, @RequestParam("standard") String[] standard)
+	{
+		int result = 0;
+		
+		List<Standard> list = new ArrayList<Standard>();
+		
+		Standard item = new Standard();
+		
+		for(int i = 0; i < detail_id.length; i++)
+		{
+			item = new Standard();
+			
+			if(standard[i].equals(""))
+			{
+				item.setBasic_id(basic_id);
+				item.setDetail_id(detail_id[i]);
+				item.setStandard(null);
+				
+				list.add(item);
+			}
+			else
+			{
+				item.setBasic_id(basic_id);
+				item.setDetail_id(detail_id[i]);
+				item.setStandard(standard[i]);
+				
+				list.add(item);
+			}
+		}
+		
+		result = service.UpdateAllBasic(list);
 		
 		mv.setViewName("redirect:/basic");
 		
 		return mv;
+	}
+	
+	// 표시항목 조회
+	@ResponseBody
+	@RequestMapping("selectBasicStandard")
+	public List<Standard> SelectBasicStandard(@RequestParam("basic_id") int basic_id)
+	{
+		List<Standard> result = service.SelectBasicStandard(basic_id);
+		
+		return result;
 	}
 
 	// 선택삭제
@@ -107,26 +180,23 @@ public class BasicController
 	@RequestMapping("deleteBasic")
 	public int DeleteBasic(@RequestParam("basic_id[]") int[] basic_id)
 	{
-		service.DeleteBasic(basic_id);
+		int[] delete_basic = service.DeleteBasic(basic_id);
+		int[] delete_standard = service.DeleteStandard(basic_id);
 
 		return 1;
 	}
 	
-	// 원종 수정
-	@RequestMapping("updateBasic")
-	public ModelAndView UpdateBasic(ModelAndView mv, @ModelAttribute Basic basic, @RequestParam("update_list") String update_list)  {
-		JSONArray arr = new JSONArray(update_list);
-
-		JSONObject obj = arr.getJSONObject(0);
-
-		String value = (String)obj.get("value");
-
-		basic.setBasic_id(Integer.parseInt(value));
-
-		service.UpdateBasic(basic);
-
+	// 표시항목 설정
+	@RequestMapping("insertBasicDisplay")
+	public ModelAndView InsertBasicDisplay(ModelAndView mv, Authentication auth, @RequestParam("basic_name") String basic_name, @RequestParam(required = false, value = "detail_id") int[] detail_id)
+	{
+		User user = (User)auth.getPrincipal();
+		
+		int delete = service.DeleteDisplay(user.getUser_id());
+		int insert = service.InsertDisplay(user.getUser_id(), basic_name, detail_id);
+		
 		mv.setViewName("redirect:/basic");
-
+		
 		return mv;
 	}
 }

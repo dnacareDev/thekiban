@@ -53,9 +53,9 @@ public class BreedController
 		int offset = (page_num - 1) * limit;
 		int end_page = (count + limit - 1) / limit;
     
-		List<Breed> breed = service.SearchBreed(breed_name, offset, limit);
-		List<Detail> detail = service.SearchBreedDetail(breed_name);
-		List<Display> display = service.SelectDisplay(user.getUser_id(), breed_name);
+		List<Breed> breed = service.SearchBreed(breed_name, offset, limit);								// 품종 검색
+		List<Detail> detail = service.SearchBreedDetail(breed_name);									// 품종 작물별 컬럼 조회
+		List<Display> display = service.SelectDisplay(user.getUser_id(), breed_name);					// 사용자별 품종 표시항목 조회
 		
 		List<Standard> standard = new ArrayList<Standard>();
 		
@@ -164,9 +164,10 @@ public class BreedController
 		return mv;
 	}
 	
+	// 표시항목 조회
 	@ResponseBody
-	@RequestMapping("selectStandard")
-	public List<Standard> SelectStandard(@RequestParam("breed_id") int breed_id)
+	@RequestMapping("selectBreedStandard")
+	public List<Standard> SelectBreedStandard(@RequestParam("breed_id") int breed_id)
 	{
 		List<Standard> result = service.SelectBreedStandard(breed_id);
 		
@@ -185,8 +186,8 @@ public class BreedController
 	}
 	
 	// 표시항목 설정
-	@RequestMapping("insertDisplay")
-	public ModelAndView InsertDisplay(ModelAndView mv, Authentication auth, @RequestParam("breed_name") String breed_name, @RequestParam(required = false, value = "detail_id") int[] detail_id)
+	@RequestMapping("insertBreedDisplay")
+	public ModelAndView InsertBreedDisplay(ModelAndView mv, Authentication auth, @RequestParam("breed_name") String breed_name, @RequestParam(required = false, value = "detail_id") int[] detail_id)
 	{
 		User user = (User)auth.getPrincipal();
 		

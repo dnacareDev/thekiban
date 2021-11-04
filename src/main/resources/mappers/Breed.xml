@@ -27,6 +27,7 @@
                 WHERE b.breed_name = #{breed_name}
             </when>
         </choose>
+        ORDER BY b.breed_id DESC
         LIMIT #{offset}, #{limit}
     </select>
     
@@ -90,7 +91,8 @@
     	SELECT *,
     	(SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE s.breed_id = b.breed_id AND d.detail_origin = 1 AND s.standard IS NOT NULL) AS standard_count
     	FROM breed b
-    	WHERE breed_name = #{breed_name}
+    	WHERE b.breed_name = #{breed_name}
+    	ORDER BY b.breed_id DESC
     	LIMIT #{offset}, 10
     </select>
     

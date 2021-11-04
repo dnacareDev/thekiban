@@ -2,6 +2,7 @@ package com.thekiban.ServiceImpl;
 
 import com.thekiban.Entity.Basic;
 import com.thekiban.Entity.Detail;
+import com.thekiban.Entity.Display;
 import com.thekiban.Entity.Standard;
 import com.thekiban.Mapper.BasicMapper;
 import com.thekiban.Service.BasicService;
@@ -37,6 +38,27 @@ public class BasicServiceImpl implements BasicService
 		return mapper.SearchBasic(basic_name, offset, limit);
 	}
 
+	// 원종별 세부 정보 조회
+	@Override
+	public List<Detail> SearchBasicDetail(String basic_name)
+	{
+		return mapper.SearchBasicDetail(basic_name);
+	}
+	
+	// 표시항목 조회
+	@Override
+	public List<Display> SelectDisplay(int user_id, String basic_name)
+	{
+		return mapper.SelectDisplay(user_id, basic_name);
+	}
+	
+	// 원종별 정보값 조회
+	@Override
+	public List<Standard> SearchBasicStandard(List<Detail> detail, int user_id, int basic_id)
+	{
+		return mapper.SearchBasicStandard(detail, user_id, basic_id);
+	}
+
 	// 원종 등록
 	@Override
 	public int InsertBasic(Basic basic)
@@ -46,19 +68,64 @@ public class BasicServiceImpl implements BasicService
 
 	// 원종 상세 정보 등록
 	@Override
-	public int InsertStandard(List<Standard> standard)
+	public int InsertStandard(int basic_id, String basic_name, List<Detail> detail)
 	{
-		return mapper.InsertStandard(standard);
+		return mapper.InsertStandard(basic_id, basic_name, detail);
+	}
+	
+	// 원종별 전체 조회
+	@Override
+	public List<Basic> SelectBasicAll(String basic_name, int offset)
+	{
+		return mapper.SelectBasicAll(basic_name, offset);
+	}
+	
+	// 원종별 정보 전체 조회
+	@Override
+	public List<Standard> SelectBasicStandard(int basic_id)
+	{
+		return mapper.SelectBasicStandard(basic_id);
+	}
+	
+	// 원종 수정
+	@Override
+	public int UpdateBasic(int basic_id, int detail_id, String standard)
+	{
+		return mapper.UpdateBasic(basic_id, detail_id, standard);
+	}
+	
+	// 원종 전체 수정
+	@Override
+	public int UpdateAllBasic(List<Standard> list)
+	{
+		return mapper.UpdateAllBasic(list);
 	}
 
 	// 원종 삭제
 	@Override
-	public int[] DeleteBasic(int[] basic_id) {
+	public int[] DeleteBasic(int[] basic_id)
+	{
 		return mapper.DeleteBasic(basic_id);
 	}
-
+	
+	// 원종 값 삭제
 	@Override
-	public int UpdateBasic(Basic basic) {
-		return mapper.UpdateBasic(basic);
+	public int[] DeleteStandard(int[] basic_id)
+	{
+		return mapper.DeleteStandard(basic_id);
+	}
+
+	// 표시항목 삭제
+	@Override
+	public int DeleteDisplay(int user_id)
+	{
+		return mapper.DeleteDisplay(user_id);
+	}
+
+	// 표시항목 등록
+	@Override
+	public int InsertDisplay(int user_id, String basic_name, int[] detail_list)
+	{
+		return mapper.InsertDisplay(user_id, basic_name, detail_list);
 	}
 }
