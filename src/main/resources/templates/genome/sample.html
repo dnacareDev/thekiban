@@ -533,7 +533,7 @@
                                     </form>
                                     <button class="btn btn-lg btn-primary data_btn2" data-toggle="modal" title="데이터 등록" data-target="#data_upload2">
                                         <img src="../assets/vendor_assets/img/icon1.png" alt=""></button>
-                                    <button type="button" class="btn btn-lg btn-primary data_btn1" title="엑셀 export">
+                                    <button type="button" class="btn btn-lg btn-primary data_btn1" title="엑셀 export" id="excelFileExport">
                                         <img src="../assets/vendor_assets/img/icon2.png" title="데이터 등록" alt=""></button>
                                     <button class="btn btn-lg btn-primary data_btn2" title="표시항목 선택" onclick="DisplayBtn();">
                                         <img src="../assets/vendor_assets/img/icon3.png" alt=""></button>
@@ -547,8 +547,7 @@
                                         <thead class="text-center">
                                         <tr>
                                             <th></th>
-                                            <th><span class="title">첨부파일</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                           alt="첨부파일"></th>
+                                            <th><span class="title">첨부파일</span></th>
                                             <th style="cursor: pointer;"><span class="title">작물</span><i></i><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="작물"></th>
@@ -1430,6 +1429,8 @@
 
                     resultData = result.sample;
 
+                    var resultExcel = JSON.stringify(resultData);
+
                     var pageNum = $("#pageNum");
                     var page_add = "";
 
@@ -1478,6 +1479,8 @@
 
                     emptyEls = document.querySelectorAll('#sample_list tr .status');
                     emptyEls = Array.prototype.slice.call(emptyEls);
+
+
                 }
             });
     }
@@ -1877,6 +1880,78 @@
     //
     // }
 
+    /* 엑셀 다운로드 */
+    $("#excelDownload").click(function (){
+        /*var wb = XLSX.utils.table_to_book(document.getElementById('table1'), {sheet:"시교자원관리", raw: true})
+        XLSX.writeFile(wb, ('고추_자원_관리.xlsx'));*/
+
+        // ArrayBuffer 만들어주는 함수
+        function s2ab(s) {
+            var buf = new ArrayBuffer(s.length); //convert s to arrayBuffer
+            var view = new Uint8Array(buf);  //create uint8array as viewer
+            for (var i=0; i<s.length; i++) view[i] = s.charCodeAt(i) & 0xFF; //convert to octet
+            return buf;
+        }
+
+        // workbook 생성
+        var wb = XLSX.utils.book_new();
+
+        wb.SheetNames.push("품종관리");
+        wb.SheetNames.push("원종관리");
+        wb.SheetNames.push("도입자원관리");
+        wb.SheetNames.push("시교자원관리");
+
+        wb.Sheets["시교자원관리"] = XLSX.utils.aoa_to_sheet(resultExcel);
+
+        var wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'})
+
+        saveAs(new Blob([s2ab(wbout)], {type: "application/octet-stream"}), '고추_자원관리.xlsx');
+    });
+
+    function s2ab(s) {
+        var buf = new ArrayBuffer(s.length); //convert s to arrayBuffer
+        var view = new Uint8Array(buf);  //create uint8array as viewer
+        for (var i=0; i<s.length; i++) view[i] = s.charCodeAt(i) & 0xFF; //convert to octet
+        return buf;
+    }
+
+    function exportExcel(){
+        // step 1. workbook 생성
+        var wb = XLSX.utils.book_new();
+
+        // step 2. 시트 만들기
+        var newWorksheet = excelHandler.getWorksheet();
+
+        // step 3. workbook에 새로만든 워크시트에 이름을 주고 붙인다.
+        XLSX.utils.book_append_sheet(wb, newWorksheet, excelHandler.getSheetName());
+
+        // step 4. 엑셀 파일 만들기
+        var wbout = XLSX.write(wb, {bookType:'xlsx',  type: 'binary'});
+
+        // step 5. 엑셀 파일 내보내기
+        saveAs(new Blob([s2ab(wbout)],{type:"application/octet-stream"}), excelHandler.getExcelFileName());
+    }
+
+    $(document).ready(function() {
+        $("#excelFileExport").click(function(){
+            exportExcel();
+        });
+    });
+
+    var excelHandler = {
+        getExcelFileName : function(){
+            return 'table-test.xlsx';
+        },
+        getSheetName : function(){
+            return 'Table Test Sheet';
+        },
+        getExcelData : function(){
+            return document.getElementById('table1');
+        },
+        getWorksheet : function(){
+            return XLSX.utils.table_to_sheet(this.getExcelData());
+        }
+    }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBn0n_LEGxgJuCfTU8aKvuwrcmw0iZjfmY&callback=initMap&region=kr"></script>
 </body>
