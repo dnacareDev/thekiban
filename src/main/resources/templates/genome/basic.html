@@ -189,7 +189,6 @@
             color: #000;
         }
 
-        /* 2021 - 11 - 01 수정 */
         .table td {padding: 0px 12px; vertical-align: middle; font-size: 14px; border-bottom: 2px solid #d9d9d9;}  /* 2021 - 11 - 02 수정 */
         .table th {font-size: 16px; border-top: 1px solid #d9d9d9;}  /* 2021 - 11 - 02 수정 */
         .table thead th {border-bottom: 2px solid #adadad;}  /* 2021 - 11 - 02 수정 */
@@ -258,7 +257,6 @@
             border-radius: 6px
         }
 
-        /* 2021 - 11 - 02 수정 */
         .contents .container-fluid {
 			background-color: #FCFCFC;
 		}
@@ -276,14 +274,12 @@
 			padding: 0px 19px;
 		}
 
-
 		.atbd-button-list button {
 			margin: 5px 3px;
 		}
 
 		/* 푸터 배경색 */
 		.footer-wrapper {background-color: #FCFCFC;}
-
     </style>
 </head>
 <body class="layout-light top-menu overlayScroll">
@@ -292,164 +288,91 @@
 <!-- 공통 topbar -->
 <th:block th:include="/../fragments/topbar.html"></th:block>
 <main class="main-content" style="background-color: #FCFCFC;">
-    <div class="contents" style="background-color: #FFFFFF;">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-12 mb-30">
-                    <div class="card">
-                        <div class="card-extra mt-20 mr-20">
-                            <div class="breadcrumb-main" style="float: left;">
-                                <h4 class="text-capitalize breadcrumb-title">원종 관리</h4>
-                            </div>
-                            <!-- 버튼 등록하는 곳 -->
-                            <div class="action-btn d-flex justify-content-end">
-                                <div class="atbd-button-list d-flex flex-wrap">
-                                    <div class="btn-group atbd-button-group btn-group-normal my-2" role="group">
-                                        <button type="button" class="btn btn-xs btn-outline-light">원종관리</button>
-                                        <button type="button" class="btn btn-xs btn-outline-light">원종재고관리</button>
-                                    </div>
-                                    <form action="" name="searchForm" class="d-flex align-items-center add-contact__form my-sm-0 my-2">
-                                        <select class="form-control form-control-lg mt-10 mb-10 mr-10" style="width: 250px;" id="CropSelect">
-                                            <option value="고추">고추</option>
-                                            <option value="대파">대파</option>
-                                            <option value="멜론">멜론</option>
-                                            <option value="무">무</option>
-                                            <option value="배추">배추</option>
-                                            <option value="수박">수박</option>
-                                            <option value="양배추">양배추</option>
-                                            <option value="양파">양파</option>
-                                            <option value="참외">참외</option>
-                                            <option value="토마토">토마토</option>
-                                        </select>
-                                    </form>
-                                    <button class="btn btn-lg btn-primary data_btn2" data-toggle="modal" title="데이터 등록" data-target="#data_upload2">
-                                        <img src="../assets/vendor_assets/img/icon1.png" alt=""></button>
-                                    <button type="button" class="btn btn-lg btn-primary data_btn1" title="엑셀 export">
-                                        <img src="../assets/vendor_assets/img/icon2.png" title="데이터 등록" alt=""></button>
-                                    <button class="btn btn-lg btn-primary data_btn2" title="표시항목 선택" onclick="DisplayBtn();">
-                                        <img src="../assets/vendor_assets/img/icon3.png" alt=""></button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="bg-white">
-                                <div class="table-responsive">
-                                    <table class="table" id="table1">
-                                        <thead class="text-center">
-                                        <tr>
-                                            <th></th>
-                                            <th>
-                                                <span class="title">첨부파일</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="첨부파일">
-                                            </th>
-                                            <th style="cursor: pointer;">
-                                                <span class="title">특성상태</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="특성상태">
-                                            </th>
-                                            <th style="cursor: pointer;"><span class="title">작물</span><i></i><img
-                                                src="../assets/vendor_assets/img/title_icon.png"
-                                                alt="작물"></th>
-                                            <th style="cursor: pointer;">
-                                                <span class="title">계통명(ID)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="ID">
-                                            </th>
-                                            <th style="cursor: pointer;">
-                                                <span class="title">원소재 계통번호</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="원소재 계통번호">
-                                            </th>
-                                            <th style="cursor: pointer;">
-                                                <span class="title">원종 계통번호</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="원종 계통번호">
-                                            </th>
-                                            <th style="cursor: pointer;">
-                                                <span class="title">B.N.기준년도</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="B.N.기준년도">
-                                            </th>
-                                            <th style="cursor: pointer;">
-                                                <span class="title">B.N.(교배번호)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="B.N.(교배번호)">
-                                            </th>
-                                            <th style="cursor: pointer;">
-                                                <span class="title">종자번호(ID)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="종자번호(ID)">
-                                            </th>
-                                            <th style="cursor: pointer;">
-                                                <span class="title">현 종자량(g)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="현 종자량(g)">
-                                            </th>
-                                            <th style="cursor: pointer;">
-                                                <span class="title">천립중(g)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="천립중(g)">
-                                            </th>
-                                            <th style="cursor: pointer;">
-                                                <span class="title">계통번호 부여일(g)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="계통번호 부여일(g)">
-                                            </th>
-                                            <th style="cursor: pointer;">
-                                                <span class="title">비고</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="비고">
-                                            </th>
-                                        </tr>
-                                        </thead>
-                                        <tbody class="text-center" id="basic_list">
-                                        <tr>
-                                            <td><input type="checkbox"></td>
-                                            <td>
-                                                <button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><span
-                                                    data-feather="file-plus"></span></button>
-                                            </td>
-                                            <td><span>19PC4155</span></td>
-                                            <td><span>에이스</span></td>
-                                            <td><span>Empty</span></td>
-                                            <td><span>CGMS-1234A</span></td>
-                                            <td><span>A42-1</span></td>
-                                            <td><span>02-0205-2019-111</span></td>
-                                            <td><span>2017-11-11</span></td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    <table class="table" id="table2">
-                                        <thead class="text-center">
-                                        <tr>
-                                            <th>종자번호</th>
-                                            <th>종자 보유량</th>
-                                            <th>입고량</th>
-                                            <th>출고량</th>
-                                            <th>재고량</th>
-                                            <th>담당자</th>
-                                            <th>일자</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody class="text-center">
-                                        <tr>
-                                            <td><span>P17C0123</span></td>
-                                            <td><span>60</span></td>
-                                            <td><span>0</span></td>
-                                            <td><span>20</span></td>
-                                            <td><span>40</span></td>
-                                            <td><span>백향구</span></td>
-                                            <td><span>2020-01-05</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td><span>P17C0123</span></td>
-                                            <td><span>60</span></td>
-                                            <td><span>0</span></td>
-                                            <td><span>0</span></td>
-                                            <td><span>60</span></td>
-                                            <td><span>백향구</span></td>
-                                            <td><span>2020-01-02</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td><span>Pl98dd7s</span></td>
-                                            <td><span>0</span></td>
-                                            <td><span>60</span></td>
-                                            <td><span>0</span></td>
-                                            <td><span>60</span></td>
-                                            <td><span>백향구</span></td>
-                                            <td><span>2020-01-02</span></td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+	<div class="contents" style="background-color: #FFFFFF;">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-12 mb-30">
+					<div class="card">
+						<div class="card-extra mt-20 mr-20">
+							<div class="breadcrumb-main" style="float: left;">
+								<h4 class="text-capitalize breadcrumb-title">원종 관리</h4>
+							</div>
+							<div class="action-btn d-flex justify-content-end">
+								<div class="atbd-button-list d-flex flex-wrap">
+									<div class="btn-group atbd-button-group btn-group-normal my-2" role="group">
+										<button type="button" class="btn btn-xs btn-outline-light">원종관리</button>
+										<button type="button" class="btn btn-xs btn-outline-light">원종재고관리</button>
+									</div>
+									<select class="form-control form-control-lg mt-10 mb-10 mr-10" style="width: 250px;" id="CropSelect">
+										<option value="고추">고추</option>
+										<option value="대파">대파</option>
+										<option value="멜론">멜론</option>
+										<option value="무">무</option>
+										<option value="배추">배추</option>
+										<option value="수박">수박</option>
+										<option value="양배추">양배추</option>
+										<option value="양파">양파</option>
+										<option value="참외">참외</option>
+										<option value="토마토">토마토</option>
+									</select>
+									<button class="btn btn-lg btn-primary data_btn2" data-toggle="modal" title="데이터 등록" data-target="#data_upload2">
+										<img src="../assets/vendor_assets/img/icon1.png" alt="">
+									</button>
+									<button type="button" class="btn btn-lg btn-primary data_btn1" title="엑셀 export">
+										<img src="../assets/vendor_assets/img/icon2.png" title="데이터 등록" alt="">
+									</button>
+									<button class="btn btn-lg btn-primary data_btn2" title="표시항목 선택" onclick="DisplayBtn();">
+										<img src="../assets/vendor_assets/img/icon3.png" alt="">
+									</button>
+								</div>
+							</div>
+						</div>
+						<div class="card-body">
+							<div class="bg-white">
+								<div class="table-responsive">
+									<table class="table" id="table1">
+										<thead class="text-center" id="header_list">
+										</thead>
+										<tbody class="text-center" id="basic_list">
+										</tbody>
+									</table>
+									<table class="table" id="table2">
+										<thead class="text-center">
+											<tr>
+												<th>종자번호</th>
+												<th>종자 보유량</th>
+												<th>입고량</th>
+												<th>출고량</th>
+												<th>재고량</th>
+												<th>담당자</th>
+												<th>일자</th>
+											</tr>
+										</thead>
+										<tbody class="text-center">
+											<tr>
+												<td><span>P17C0123</span></td>
+												<td><span>60</span></td>
+												<td><span>0</span></td>
+												<td><span>20</span></td>
+												<td><span>40</span></td>
+												<td><span>백향구</span></td>
+												<td><span>2020-01-05</span></td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
                                 <div class="row">
                                     <div class="col-4">
-                                        <button class="btn btn-icon btn-light btn-circle" id="addRow" onclick="addRow()">
+                                        <button class="btn btn-icon btn-light btn-circle" onclick="InsertBtn()">
                                             <span data-feather="plus"></span>
                                         </button>
-                                        <button class="btn btn-icon btn-light btn-circle" onclick="DeleteSample()">
+                                        <button class="btn btn-icon btn-light btn-circle" onclick="DeleteBasic()">
                                             <span data-feather="trash-2"></span>
                                         </button>
                                         <button class="btn btn-icon btn-light btn-circle" id="data_check_submit" style="width:44.03px; height:42px;">
                                             <img src="../assets/vendor_assets/img/check_tab.png" alt="check" style="width: 17px;margin-left: 4px;">
                                         </button>
+                                        <input type="hidden" id="offset">
                                     </div>
                                     <div class="col-4">
                                         <div class="row" style="justify-content: center;">
@@ -465,7 +388,7 @@
         </div>
     </div>
 
-    <!-- modal code -->
+    <!-- 첨부파일 모달창 -->
     <div class="modal-basic modal fade show pop1" id="gen-attach" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white">
@@ -507,113 +430,98 @@
         </div>
     </div>
 
-    <!-- 일반데이터 등록 모달창 -->
-    <div class="modal-basic modal fade show pop2" id="grid" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-md" role="document">
-            <div class="modal-content modal-bg-white ">
-                <div class="modal-header" style="border: none">
-                    <h6 class="modal-title">원종관리 > 기본 정보</h6>
-                    시교명 ID : <span></span>
-                </div>
-                <div class="modal-body">
-                    <div class="tab-pane fade show active" id="control1" role="tabpanel" aria-labelledby="control1-tab">
-                        <div class="tab-slide-content">
-                            <div class="atbd-tab tab-horizontal">
-                                <div class="top_box">
-                                    <ul class="nav nav-tabs vertical-tabs" role="tablist">
-                                        <li class="nav-item">
-                                            <a class="nav-link active" id="tab-horizontal-0-tab" data-toggle="tab" href="#tab-horizontal-0" role="tab"
-                                               aria-controls="tab-horizontal-0" aria-selected="true">기본 정보</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="tab-horizontal-1-tab" data-toggle="tab" href="#tab-horizontal-1" role="tab"
-                                               aria-controls="tab-horizontal-1" aria-selected="false">원예형질[종자원 기준]</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="tab-horizontal-2-tab" data-toggle="tab" href="#tab-horizontal-2" role="tab" aria-controls="tab-horizontal-2"
-                                               aria-selected="false">원예형질[사내 기준]</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="tab-horizontal-3-tab" data-toggle="tab" href="#tab-horizontal-3" role="tab" aria-controls="tab-horizontal-3"
-                                               aria-selected="false">병저항성[종자원 기준]</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="tab-horizontal-4-tab" data-toggle="tab" href="#tab-horizontal-4" role="tab" aria-controls="tab-horizontal-4"
-                                               aria-selected="false">병저항성[사내 기준]</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="tab-horizontal-5-tab" data-toggle="tab" href="#tab-horizontal-5" role="tab" aria-controls="tab-horizontal-5"
-                                               aria-selected="false">성분정보[종자원 기준]</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="tab-horizontal-6-tab" data-toggle="tab" href="#tab-horizontal-6" role="tab" aria-controls="tab-horizontal-6"
-                                               aria-selected="false">마커정보</a>
-                                        </li>
-                                    </ul>
-                                    <span class="prev"></span>
-                                    <span class="next"></span>
-                                </div>
-
-                                <form action="insertBasic" id="insertForm" method="POST" enctype="multipart/form-data">
-                                    <input type="hidden" id="detail_list" name="detail_list">
-                                    <div class="tab-content">
-                                        <div class="tab-pane fade show active" id="tab-horizontal-0" role="tabpanel" aria-labelledby="tab-horizontal-0-tab">
-                                            <div class="content_title clearfix">
-                                                <ul>
-                                                    <li>형질</li>
-                                                    <li>조사값</li>
-                                                </ul>
-                                            </div>
-                                            <div class="content_1 clearfix">
-                                                <ul>
-                                                    <li>
-                                                        <div class="title">작물</div>
-                                                        <div class="input_text"><input type="text" name="basic_name"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">계통명(ID)</div>
-                                                        <div class="input_text"><input type="text" name="basic_code"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">원소재 계통번호</div>
-                                                        <div class="input_text"><input type="text" name="basic_num"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">원종 계통번호</div>
-                                                        <div class="input_text"><input type="text" name="basic_raw_num"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">B.N.기준 년도</div>
-                                                        <div class="input_text"><input type="number" name="basic_bn_year" value="0"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">B.N.(교배번호)</div>
-                                                        <div class="input_text"><input type="text" name="basic_bn_num"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">종자번호(ID)</div>
-                                                        <div class="input_text"><input type="text" name="basic_seed"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">현 종자량(g)</div>
-                                                        <div class="input_text"><input type="text" name="basic_amount"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">천립중(g)</div>
-                                                        <div class="input_text"><input type="text" name="basic_weight"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">계통번호 부여일</div>
-                                                        <div class="input_text"><input type="date" name="basic_date"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">비고</div>
-                                                        <div class="input_text"><input type="text" name="basic_comment"></div>
-                                                    </li>
-                                                </ul>
+	<!-- 출력 헤더 선택 모달창 -->
+	<div class="modal-basic modal fade show pop2" id="grid2" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-md" role="document">
+			<form action="insertDisplay" method="POST" enctype="multipart/form-data">
+			<div class="modal-content modal-bg-white">
+				<div class="modal-header" style="border: none">
+					<h6 class="modal-title" id="display_title"></h6>
+					<input type="hidden" id="display_name" name="basic_name">
+				</div>
+				<div class="modal-body">
+					<div class="tab-pane fade show active" id="control1" role="tabpanel" aria-labelledby="control1-tab">
+						<div class="tab-slide-content">
+							<div class="atbd-tab tab-horizontal">
+								<div class="top_box">
+									<ul class="nav nav-tabs vertical-tabs" role="tablist">
+										<li class="nav-item">
+											<a class="nav-link active" id="tab-horizontal-0-tab" data-toggle="tab" href="#tab-horizontal-0" role="tab" aria-controls="tab-horizontal-0" aria-selected="true">기본 정보</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" id="tab-horizontal-1-tab" data-toggle="tab" href="#tab-horizontal-1" role="tab" aria-controls="tab-horizontal-1" aria-selected="false">원예형질[종자원 기준]</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" id="tab-horizontal-2-tab" data-toggle="tab" href="#tab-horizontal-2" role="tab" aria-controls="tab-horizontal-2" aria-selected="false">원예형질[사내 기준]</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" id="tab-horizontal-3-tab" data-toggle="tab" href="#tab-horizontal-3" role="tab" aria-controls="tab-horizontal-3" aria-selected="false">병저항성[종자원 기준]</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" id="tab-horizontal-4-tab" data-toggle="tab" href="#tab-horizontal-4" role="tab" aria-controls="tab-horizontal-4" aria-selected="false">병저항성[사내 기준]</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" id="tab-horizontal-5-tab" data-toggle="tab" href="#tab-horizontal-5" role="tab" aria-controls="tab-horizontal-5" aria-selected="false">성분정보[종자원 기준]</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" id="tab-horizontal-6-tab" data-toggle="tab" href="#tab-horizontal-6" role="tab" aria-controls="tab-horizontal-6" aria-selected="false">마커정보</a>
+										</li>
+									</ul>
+									<span class="prev"></span>
+									<span class="next"></span>
+								</div>
+									<!-- <input type="hidden" id="detail_list1" name="detail_list"> -->
+									<div class="tab-content">
+										<div class="tab-pane fade show active" id="tab-horizontal-0" role="tabpanel" aria-labelledby="tab-horizontal-0-tab">
+											<div class="content_title clearfix">
+												<ul>
+													<li>형질</li>
+													<li>조사값</li>
+												</ul>
+											</div>
+											<div class="content_1 clearfix">
+												<div class="row mt-20">
+													<div class="col-lg-12">
+														<div class="card">
+															<div class="card-body">
+																<div class="row">
+																	<div class="col-lg-12">
+																		<span class="color-dark align-center" style="font-size: 20px;">표시항목 설정</span>
+																	</div>
+																</div>
+																<div class="row mt-4" style="justify-content: center; align-items: center;">
+																	<div class="col-lg-3">
+																		<div class="row" style="overflow:auto; min-height: 500px; border: 1px solid #D9D9D9;">
+																			<div class="list-group mt-2" style="max-height: 500px; orverfolw-y: auto;">
+																				<ul class="detail_list" id="display_container1" name="기본 정보">
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="box_content">
+                                                                        <div class="box_center">
+                                                                            <ul>
+                                                                                <li>
+                                                                                    <button type="button" onclick="PlusResearch(1);"><span data-feather="plus"></span></button>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <button type="button" onclick="MinusResearch(1);"><span data-feather="minus"></span></button>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-8" style="padding:0;">
+                                                                        <ul class="display_list" id="step_container1" style="min-height: 500px; max-height: 500px; overflow-y: auto; background-color: rgb(243, 243, 243) ">
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="tab-pane fade" id="tab-horizontal-1" role="tabpanel" aria-labelledby="tab-horizontal-1-tab">
+                                        <div class="tab-pane fade show" id="tab-horizontal-1" role="tabpanel" aria-labelledby="tab-horizontal-1-tab">
                                             <div class="content_title clearfix">
                                                 <ul>
                                                     <li>형질</li>
@@ -621,18 +529,48 @@
                                                 </ul>
                                             </div>
                                             <div class="content_1 clearfix">
-                                                <ul>
-                                                    <th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '원예형질(종자원 기준)'">
-                                                        <li>
-                                                            <div class="title" th:text="${detail.detail_title}"></div>
-                                                            <div class="input_text"><input type="text" th:id="${detail.detail_id}" name="detail"></div>
-                                                        </li>
-                                                    </th:block>
-                                                </ul>
+                                                <div class="row mt-20">
+                                                    <div class="col-lg-12">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-lg-12">
+                                                                        <span class="color-dark align-center" style="font-size: 20px;">표시항목 설정</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mt-4" style="justify-content: center;align-items: center;">
+                                                                    <div class="col-lg-3">
+                                                                        <div class="row" style="overflow:auto; min-height: 500px; border: 1px solid #D9D9D9;">
+                                                                            <div class="list-group mt-2" style="max-height: 500px; orverfolw-y: auto;">
+                                                                                <ul class="detail_list" id="display_container2" name="원예형질 (종자원 기준)">
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="box_content">
+                                                                        <div class="box_center">
+                                                                            <ul>
+                                                                                <li>
+                                                                                    <button type="button" onclick="PlusResearch(2);"><span data-feather="plus"></span></button>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <button type="button" onclick="MinusResearch(2);"><span data-feather="minus"></span></button>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-8" style="padding:0;">
+                                                                        <ul class="display_list" id="step_container2" style="min-height: 500px; max-height: 500px; overflow-y: auto; background-color: rgb(243, 243, 243) ">
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="tab-pane fade" id="tab-horizontal-2" role="tabpanel"
-                                             aria-labelledby="tab-horizontal-2-tab">
+                                        <div class="tab-pane fade show" id="tab-horizontal-2" role="tabpanel" aria-labelledby="tab-horizontal-2-tab">
                                             <div class="content_title clearfix">
                                                 <ul>
                                                     <li>형질</li>
@@ -640,18 +578,48 @@
                                                 </ul>
                                             </div>
                                             <div class="content_1 clearfix">
-                                                <ul>
-                                                    <th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '원예형질(사내 기준)'">
-                                                        <li>
-                                                            <div class="title" th:text="${detail.detail_title}"></div>
-                                                            <div class="input_text"><input type="text" th:id="${detail.detail_id}" name="detail"></div>
-                                                        </li>
-                                                    </th:block>
-                                                </ul>
+                                                <div class="row mt-20">
+                                                    <div class="col-lg-12">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-lg-12">
+                                                                        <span class="color-dark align-center" style="font-size: 20px;">표시항목 설정</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mt-4" style="justify-content: center;align-items: center;">
+                                                                    <div class="col-lg-3">
+                                                                        <div class="row" style="overflow:auto; min-height: 500px; border: 1px solid #D9D9D9;">
+                                                                            <div class="list-group mt-2" style="max-height: 500px; overflow-y: auto;">
+                                                                                <ul class="detail_list" id="display_container3" name="원예형질 (사내 기준)">
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="box_content">
+                                                                        <div class="box_center">
+                                                                            <ul>
+                                                                                <li>
+                                                                                    <button type="button" onclick="PlusResearch(3);"><span data-feather="plus"></span></button>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <button type="button" onclick="MinusResearch(3);"><span data-feather="minus"></span></button>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-8" style="padding:0;">
+                                                                        <ul class="display_list" id="step_container3" style="min-height: 500px; max-height: 500px; overflow-y: auto; background-color: rgb(243, 243, 243) ">
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="tab-pane fade" id="tab-horizontal-3" role="tabpanel"
-                                             aria-labelledby="tab-horizontal-3-tab">
+                                        <div class="tab-pane fade show" id="tab-horizontal-3" role="tabpanel" aria-labelledby="tab-horizontal-3-tab">
                                             <div class="content_title clearfix">
                                                 <ul>
                                                     <li>형질</li>
@@ -659,18 +627,48 @@
                                                 </ul>
                                             </div>
                                             <div class="content_1 clearfix">
-                                                <ul>
-                                                    <th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '병저항성(국립종자원 기준)'">
-                                                        <li>
-                                                            <div class="title" th:text="${detail.detail_title}"></div>
-                                                            <div class="input_text"><input type="text" th:id="${detail.detail_id}" name="detail"></div>
-                                                        </li>
-                                                    </th:block>
-                                                </ul>
+                                                <div class="row mt-20">
+                                                    <div class="col-lg-12">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-lg-12">
+                                                                        <span class="color-dark align-center" style="font-size: 20px;">표시항목 설정</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mt-4" style="justify-content: center;align-items: center;">
+                                                                    <div class="col-lg-3">
+                                                                        <div class="row" style="overflow:auto; min-height: 500px; border: 1px solid #D9D9D9;">
+                                                                            <div class="list-group mt-2" style="max-height: 500px; orverfolw-y: auto;">
+                                                                                <ul class="detail_list" id="display_container4" name="병저항성 (국립종자원 기준)">
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="box_content">
+                                                                        <div class="box_center">
+                                                                            <ul>
+                                                                                <li>
+                                                                                    <button type="button" onclick="PlusResearch(4);"><span data-feather="plus"></span></button>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <button type="button" onclick="MinusResearch(4);"><span data-feather="minus"></span></button>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-8" style="padding:0;">
+                                                                        <ul class="display_list" id="step_container4" style="min-height: 500px; max-height: 500px; overflow-y: auto; background-color: rgb(243, 243, 243) ">
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="tab-pane fade" id="tab-horizontal-4" role="tabpanel"
-                                             aria-labelledby="tab-horizontal-4-tab">
+                                        <div class="tab-pane fade show" id="tab-horizontal-4" role="tabpanel" aria-labelledby="tab-horizontal-4-tab">
                                             <div class="content_title clearfix">
                                                 <ul>
                                                     <li>형질</li>
@@ -678,18 +676,48 @@
                                                 </ul>
                                             </div>
                                             <div class="content_1 clearfix">
-                                                <ul>
-                                                    <th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '병저항성(사내 기준)'">
-                                                        <li>
-                                                            <div class="title" th:text="${detail.detail_title}"></div>
-                                                            <div class="input_text"><input type="text" th:id="${detail.detail_id}" name="detail"></div>
-                                                        </li>
-                                                    </th:block>
-                                                </ul>
+                                                <div class="row mt-20">
+                                                    <div class="col-lg-12">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-lg-12">
+                                                                        <span class="color-dark align-center" style="font-size: 20px;">표시항목 설정</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mt-4" style="justify-content: center;align-items: center;">
+                                                                    <div class="col-lg-3">
+                                                                        <div class="row" style="overflow:auto; min-height: 500px; border: 1px solid #D9D9D9;">
+                                                                            <div class="list-group mt-2" style="max-height: 500px; orverfolw-y: auto;">
+                                                                                <ul class="detail_list" id="display_container5" name="병저항성 (사내 기준)">
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="box_content">
+                                                                        <div class="box_center">
+                                                                            <ul>
+                                                                                <li>
+                                                                                    <button type="button" onclick="PlusResearch(5);"><span data-feather="plus"></span></button>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <button type="button" onclick="MinusResearch(5);"><span data-feather="minus"></span></button>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-8" style="padding:0;">
+                                                                        <ul class="display_list" id="step_container5" style="min-height: 500px; max-height: 500px; overflow-y: auto; background-color: rgb(243, 243, 243) ">
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="tab-pane fade" id="tab-horizontal-5" role="tabpanel"
-                                             aria-labelledby="tab-horizontal-5-tab">
+                                        <div class="tab-pane fade show" id="tab-horizontal-5" role="tabpanel" aria-labelledby="tab-horizontal-5-tab">
                                             <div class="content_title clearfix">
                                                 <ul>
                                                     <li>형질</li>
@@ -697,18 +725,48 @@
                                                 </ul>
                                             </div>
                                             <div class="content_1 clearfix">
-                                                <ul>
-                                                    <th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '성분정보(국립종자원 기준)'">
-                                                        <li>
-                                                            <div class="title" th:text="${detail.detail_title}"></div>
-                                                            <div class="input_text"><input type="text" th:id="${detail.detail_id}" name="detail"></div>
-                                                        </li>
-                                                    </th:block>
-                                                </ul>
+                                                <div class="row mt-20">
+                                                    <div class="col-lg-12">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-lg-12">
+                                                                        <span class="color-dark align-center" style="font-size: 20px;">표시항목 설정</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mt-4" style="justify-content: center;align-items: center;">
+                                                                    <div class="col-lg-3">
+                                                                        <div class="row" style="overflow:auto; min-height: 500px; border: 1px solid #D9D9D9;">
+                                                                            <div class="list-group mt-2" style="max-height: 500px; orverfolw-y: auto;">
+                                                                                <ul class="detail_list" id="display_container6" name="성분정보 (국립종자원 기준)">
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="box_content">
+                                                                        <div class="box_center">
+                                                                            <ul>
+                                                                                <li>
+                                                                                    <button type="button" onclick="PlusResearch(6);"><span data-feather="plus"></span></button>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <button type="button" onclick="MinusResearch(6);"><span data-feather="minus"></span></button>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-8" style="padding:0;">
+                                                                        <ul class="display_list" id="step_container6" style="min-height: 500px; max-height: 500px; overflow-y: auto; background-color: rgb(243, 243, 243) ">
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="tab-pane fade" id="tab-horizontal-6" role="tabpanel"
-                                             aria-labelledby="tab-horizontal-6-tab">
+                                        <div class="tab-pane fade show" id="tab-horizontal-6" role="tabpanel" aria-labelledby="tab-horizontal-6-tab">
                                             <div class="content_title clearfix">
                                                 <ul>
                                                     <li>형질</li>
@@ -716,264 +774,204 @@
                                                 </ul>
                                             </div>
                                             <div class="content_1 clearfix">
-                                                <ul>
-                                                    <th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '마커정보'">
-                                                        <li>
-                                                            <div class="title" th:text="${detail.detail_title}"></div>
-                                                            <div class="input_text"><input type="text" th:id="${detail.detail_id}" name="detail"></div>
-                                                        </li>
-                                                    </th:block>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer" style="border: none">
-                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-primary btn-sm" onclick="insertBtn()" data-dismiss="modal">저장</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 일반 데이터 수정 -->
-    <div class="modal-basic modal fade show pop2" id="update-grid" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-md" role="document">
-            <div class="modal-content modal-bg-white ">
-                <div class="modal-header" style="border: none">
-                    <h6 class="modal-title">원종관리 > 기본 정보</h6>
-                    시교명 ID : <span></span>
-                </div>
-                <div class="modal-body">
-                    <div class="tab-pane fade show active" id="control2" role="tabpanel" aria-labelledby="control1-tab">
-                        <div class="tab-slide-content">
-                            <div class="atbd-tab tab-horizontal">
-                                <div class="top_box">
-                                    <ul class="nav nav-tabs vertical-tabs" role="tablist">
-                                        <li class="nav-item">
-                                            <a class="nav-link active" id="tab-horizontal-00-tab" data-toggle="tab" href="#tab-horizontal-0" role="tab"
-                                               aria-controls="tab-horizontal-0" aria-selected="true">기본 정보</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="tab-horizontal-01-tab" data-toggle="tab" href="#tab-horizontal-1" role="tab"
-                                               aria-controls="tab-horizontal-1" aria-selected="false">원예형질[종자원 기준]</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="tab-horizontal-02-tab" data-toggle="tab" href="#tab-horizontal-2" role="tab" aria-controls="tab-horizontal-2"
-                                               aria-selected="false">원예형질[사내 기준]</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="tab-horizontal-03-tab" data-toggle="tab" href="#tab-horizontal-3" role="tab" aria-controls="tab-horizontal-3"
-                                               aria-selected="false">병저항성[종자원 기준]</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="tab-horizontal-04-tab" data-toggle="tab" href="#tab-horizontal-4" role="tab" aria-controls="tab-horizontal-4"
-                                               aria-selected="false">병저항성[사내 기준]</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="tab-horizontal-05-tab" data-toggle="tab" href="#tab-horizontal-5" role="tab" aria-controls="tab-horizontal-5"
-                                               aria-selected="false">성분정보[종자원 기준]</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" id="tab-horizontal-06-tab" data-toggle="tab" href="#tab-horizontal-6" role="tab" aria-controls="tab-horizontal-6"
-                                               aria-selected="false">마커정보</a>
-                                        </li>
-                                    </ul>
-                                    <span class="prev"></span>
-                                    <span class="next"></span>
-                                </div>
-
-                                <form action="updateBasic" id="updateForm" method="POST" enctype="multipart/form-data">
-                                    <input type="hidden" id="update_list" name="update_list">
-                                    <div class="tab-content">
-                                        <div class="tab-pane fade show active" id="tab-horizontal-00" role="tabpanel" aria-labelledby="tab-horizontal-0-tab">
-                                            <div class="content_title clearfix">
-                                                <ul>
-                                                    <li>형질</li>
-                                                    <li>조사값</li>
-                                                </ul>
-                                            </div>
-                                            <div class="content_1 clearfix">
-                                                <ul>
-                                                    <li>
-                                                        <div class="title">작물</div>
-                                                        <div class="input_text"><input type="text" class="test" name="basic_name"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">계통명(ID)</div>
-                                                        <div class="input_text"><input type="text" class="test" name="basic_code"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">원소재 계통번호</div>
-                                                        <div class="input_text"><input type="text" class="test" name="basic_num"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">원종 계통번호</div>
-                                                        <div class="input_text"><input type="text" class="test" name="basic_raw_num"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">B.N.기준 년도</div>
-                                                        <div class="input_text"><input type="text" class="test" name="basic_bn_year" value="0"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">B.N.(교배번호)</div>
-                                                        <div class="input_text"><input type="text" class="test" name="basic_bn_num"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">종자번호(ID)</div>
-                                                        <div class="input_text"><input type="text" class="test" name="basic_seed"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">현 종자량(g)</div>
-                                                        <div class="input_text"><input type="text" class="test" name="basic_amount"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">천립중(g)</div>
-                                                        <div class="input_text"><input type="text" class="test" name="basic_weight"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">계통번호 부여일</div>
-                                                        <div class="input_text"><input type="text" class="test" name="basic_date"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">비고</div>
-                                                        <div class="input_text"><input type="text" class="test" name="basic_comment"></div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="tab-horizontal-01" role="tabpanel" aria-labelledby="tab-horizontal-1-tab">
-                                            <div class="content_title clearfix">
-                                                <ul>
-                                                    <li>형질</li>
-                                                    <li>조사값</li>
-                                                </ul>
-                                            </div>
-                                            <div class="content_1 clearfix">
-                                                <ul>
-                                                    <th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '원예형질(종자원 기준)'">
-                                                        <li>
-                                                            <div class="title" th:text="${detail.detail_title}"></div>
-                                                            <div class="input_text"><input type="text" class="test" th:id="${detail.detail_id}" name="detail"></div>
-                                                        </li>
-                                                    </th:block>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="tab-horizontal-02" role="tabpanel"
-                                             aria-labelledby="tab-horizontal-2-tab">
-                                            <div class="content_title clearfix">
-                                                <ul>
-                                                    <li>형질</li>
-                                                    <li>조사값</li>
-                                                </ul>
-                                            </div>
-                                            <div class="content_1 clearfix">
-                                                <ul>
-                                                    <th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '원예형질(사내 기준)'">
-                                                        <li>
-                                                            <div class="title" th:text="${detail.detail_title}"></div>
-                                                            <div class="input_text"><input type="text" class="test" th:id="${detail.detail_id}" name="detail"></div>
-                                                        </li>
-                                                    </th:block>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="tab-horizontal-03" role="tabpanel"
-                                             aria-labelledby="tab-horizontal-3-tab">
-                                            <div class="content_title clearfix">
-                                                <ul>
-                                                    <li>형질</li>
-                                                    <li>조사값</li>
-                                                </ul>
-                                            </div>
-                                            <div class="content_1 clearfix">
-                                                <ul>
-                                                    <th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '병저항성(국립종자원 기준)'">
-                                                        <li>
-                                                            <div class="title" th:text="${detail.detail_title}"></div>
-                                                            <div class="input_text"><input type="text" class="test" th:id="${detail.detail_id}" name="detail"></div>
-                                                        </li>
-                                                    </th:block>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="tab-horizontal-04" role="tabpanel"
-                                             aria-labelledby="tab-horizontal-4-tab">
-                                            <div class="content_title clearfix">
-                                                <ul>
-                                                    <li>형질</li>
-                                                    <li>조사값</li>
-                                                </ul>
-                                            </div>
-                                            <div class="content_1 clearfix">
-                                                <ul>
-                                                    <th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '병저항성(사내 기준)'">
-                                                        <li>
-                                                            <div class="title" th:text="${detail.detail_title}"></div>
-                                                            <div class="input_text"><input type="text" class="test" th:id="${detail.detail_id}" name="detail"></div>
-                                                        </li>
-                                                    </th:block>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="tab-horizontal-05" role="tabpanel"
-                                             aria-labelledby="tab-horizontal-5-tab">
-                                            <div class="content_title clearfix">
-                                                <ul>
-                                                    <li>형질</li>
-                                                    <li>조사값</li>
-                                                </ul>
-                                            </div>
-                                            <div class="content_1 clearfix">
-                                                <ul>
-                                                    <th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '성분정보(국립종자원 기준)'">
-                                                        <li>
-                                                            <div class="title" th:text="${detail.detail_title}"></div>
-                                                            <div class="input_text"><input type="text" class="test" th:id="${detail.detail_id}" name="detail"></div>
-                                                        </li>
-                                                    </th:block>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade" id="tab-horizontal-06" role="tabpanel"
-                                             aria-labelledby="tab-horizontal-6-tab">
-                                            <div class="content_title clearfix">
-                                                <ul>
-                                                    <li>형질</li>
-                                                    <li>조사값</li>
-                                                </ul>
-                                            </div>
-                                            <div class="content_1 clearfix">
-                                                <ul>
-                                                    <th:block th:each="detail : ${detail}" th:if="${detail.detail_spec} == '마커정보'">
-                                                        <li>
-                                                            <div class="title" th:text="${detail.detail_title}"></div>
-                                                            <div class="input_text"><input type="text" class="test" th:id="${detail.detail_id}" name="detail"></div>
-                                                        </li>
-                                                    </th:block>
-                                                </ul>
+                                                <div class="row mt-20">
+                                                    <div class="col-lg-12">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-lg-12">
+                                                                        <span class="color-dark align-center" style="font-size: 20px;">표시항목 설정</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mt-4" style="justify-content: center;align-items: center;">
+                                                                    <div class="col-lg-3">
+                                                                        <div class="row" style="overflow:auto; min-height: 500px; border: 1px solid #D9D9D9;">
+                                                                            <div class="list-group mt-2" style="max-height: 500px; orverfolw-y: auto;">
+                                                                                <ul class="detail_list" id="display_container7" name="마커 정보">
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="box_content">
+                                                                        <div class="box_center">
+                                                                            <ul>
+                                                                                <li>
+                                                                                    <button type="button" onclick="PlusResearch(7);"><span data-feather="plus"></span></button>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <button type="button" onclick="MinusResearch(7);"><span data-feather="minus"></span></button>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-8" style="padding:0;">
+                                                                        <ul class="display_list" id="step_container7" style="min-height: 500px; max-height: 500px; overflow-y: auto; background-color: rgb(243, 243, 243) ">
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer" style="border: none">
-                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-primary btn-sm" id="updateBtn" onclick="UpdateBtn()" data-dismiss="modal">저장</button>
-                </div>
-            </div>
-        </div>
-    </div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer" style="border: none">
+						<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
+						<button type="submit" class="btn btn-primary btn-sm" onclick="">저장</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
 
-    <!-- modal end -->
+	<!-- 등록정보 수정 모달창 -->
+	<div class="modal-basic modal fade show pop6" id="grid3" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-md" role="document">
+			<form action="updateAllBreed" id="updateAllForm" method="POST" enctype="multipart/form-data">
+				<input type="hidden" id="breed_id" name="breed_id">
+				<div class="modal-content modal-bg-white">
+					<div class="modal-header" style="border: none">
+						<h6 class="modal-title" id="display_title2"></h6>
+					</div>
+					<div class="modal-body">
+						<div class="tab-pane fade show active" id="control1" role="tabpanel" aria-labelledby="control1-tab">
+							<div class="tab-slide-content">
+								<div class="atbd-tab tab-horizontal">
+									<div class="top_box">
+										<ul class="nav nav-tabs vertical-tabs" role="tablist">
+											<li class="nav-item">
+												<a class="nav-link active" id="tab-horizontal-0-tab" data-toggle="tab" href="#tab-horizontal-0" role="tab" aria-controls="tab-horizontal-0" aria-selected="true">기본 정보</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link active" id="tab-horizontal-1-tab" data-toggle="tab" href="#tab-horizontal-1" role="tab" aria-controls="tab-horizontal-1" aria-selected="false">원예형질[종자원 기준]</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" id="tab-horizontal-2-tab" data-toggle="tab" href="#tab-horizontal-2" role="tab" aria-controls="tab-horizontal-2" aria-selected="false">원예형질[사내 기준]</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" id="tab-horizontal-3-tab" data-toggle="tab" href="#tab-horizontal-3" role="tab" aria-controls="tab-horizontal-3" aria-selected="false">병저항성[종자원 기준]</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" id="tab-horizontal-4-tab" data-toggle="tab" href="#tab-horizontal-4" role="tab" aria-controls="tab-horizontal-4" aria-selected="false">병저항성[사내 기준]</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" id="tab-horizontal-5-tab" data-toggle="tab" href="#tab-horizontal-5" role="tab" aria-controls="tab-horizontal-5" aria-selected="false">성분정보[종자원 기준]</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" id="tab-horizontal-6-tab" data-toggle="tab" href="#tab-horizontal-6" role="tab" aria-controls="tab-horizontal-6" aria-selected="false">마커정보</a>
+											</li>
+										</ul>
+										<span class="prev"></span>
+										<span class="next"></span>
+									</div>
+									<input type="hidden" id="detail_list" name="detail_list">
+									<div class="tab-content">
+										<div class="tab-pane fade show active" id="tab-horizontal-0" role="tabpanel" aria-labelledby="tab-horizontal-0-tab">
+											<div class="content_title clearfix">
+												<ul>
+													<li>형질</li>
+													<li>조사값</li>
+												</ul>
+											</div>
+											<div class="content_1 clearfix">
+												<ul class="detail_list2" name="기본 정보">
+													<li>
+														<div class="title">작물</div>
+														<div class="input_text"><input type="text" name="breed_name"></div>
+													</li>
+												</ul>
+											</div>
+										</div>
+										<div class="tab-pane fade" id="tab-horizontal-1" role="tabpanel" aria-labelledby="tab-horizontal-1-tab">
+											<div class="content_title clearfix">
+												<ul>
+													<li>형질</li>
+													<li>조사값</li>
+												</ul>
+											</div>
+											<div class="content_1 clearfix">
+												<ul class="detail_list2" name="원예형질 (종자원 기준)">
+												</ul>
+											</div>
+										</div>
+										<div class="tab-pane fade" id="tab-horizontal-2" role="tabpanel" aria-labelledby="tab-horizontal-2-tab">
+											<div class="content_title clearfix">
+												<ul>
+													<li>형질</li>
+													<li>조사값</li>
+												</ul>
+											</div>
+											<div class="content_1 clearfix">
+												<ul class="detail_list2" name="원예형질 (사내 기준)">
+												</ul>
+											</div>
+										</div>
+										<div class="tab-pane fade" id="tab-horizontal-3" role="tabpanel" aria-labelledby="tab-horizontal-3-tab">
+											<div class="content_title clearfix">
+												<ul>
+													<li>형질</li>
+													<li>조사값</li>
+												</ul>
+											</div>
+											<div class="content_1 clearfix">
+												<ul class="detail_list2" name="병저항성 (종자원 기준)">
+												</ul>
+											</div>
+										</div>
+										<div class="tab-pane fade" id="tab-horizontal-4" role="tabpanel" aria-labelledby="tab-horizontal-4-tab">
+											<div class="content_title clearfix">
+												<ul>
+													<li>형질</li>
+													<li>조사값</li>
+												</ul>
+											</div>
+											<div class="content_1 clearfix">
+												<ul class="detail_list2" name="병저항성 (사내 기준)">
+												</ul>
+											</div>
+										</div>
+										<div class="tab-pane fade" id="tab-horizontal-5" role="tabpanel" aria-labelledby="tab-horizontal-5-tab">
+											<div class="content_title clearfix">
+												<ul>
+													<li>형질</li>
+													<li>조사값</li>
+												</ul>
+											</div>
+											<div class="content_1 clearfix">
+												<ul class="detail_list2" name="성분정보 (국립종자원 기준)">
+												</ul>
+											</div>
+										</div>
+										<div class="tab-pane fade" id="tab-horizontal-6" role="tabpanel" aria-labelledby="tab-horizontal-6-tab">
+											<div class="content_title clearfix">
+												<ul>
+													<li>형질</li>
+													<li>조사값</li>
+												</ul>
+											</div>
+											<div class="content_1 clearfix">
+												<ul class="detail_list2" name="마커정보">
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer" style="border: none">
+						<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
+						<button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" onclick="UpdateAllBtn();">저장</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
 </main>
 <!-- 공통 하단 -->
 <th:block th:include="/../fragments/footer.html"></th:block>
@@ -1388,21 +1386,6 @@
 
         $("#updateForm").submit();
     }
-
-    // popup 창
-    const popupBtn = document.querySelectorAll('.btn-circle');
-    const popup = document.querySelector('.popup_wrap');
-    const popupClose = document.querySelector('.close');
-    console.log(popupBtn[0]);
-
-    popupBtn[0].addEventListener('click', () => {
-        popup.classList.add('on');
-    });
-
-    popupClose.addEventListener('click', () => {
-        popup.classList.remove('on');
-    });
 </script>
 </body>
-
 </html>
