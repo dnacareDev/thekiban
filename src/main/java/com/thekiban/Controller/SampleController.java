@@ -1,6 +1,7 @@
 package com.thekiban.Controller;
 
 import com.thekiban.Entity.Sample;
+import com.thekiban.Entity.SampleFile;
 import com.thekiban.Service.SampleService;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -82,6 +83,18 @@ public class SampleController {
     result.put("page_num", page_num);
     result.put("end_page", end_page);
     result.put("offset", offset);
+
+    return result;
+  }
+
+  @ResponseBody
+  @RequestMapping("searchFileList")
+  public Map<String, Object> SearchFileList(@RequestParam("sample_id") String sample_id) {
+    Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+    List<SampleFile> SampleFile = service.SearchFileList(sample_id);
+
+    result.put("sampleFile", SampleFile);
 
     return result;
   }
@@ -209,15 +222,7 @@ public class SampleController {
 
     return mv;
   }
-/*
-  @ResponseBody
-  @RequestMapping("searchAttachFile")
-  public Map<String, Object> SearchAttachFile() {
-    Map<String, Object> result = new LinkedHashMap<String, Object>();
 
-    result.put();
 
-    return result;
-  }*/
 
 }

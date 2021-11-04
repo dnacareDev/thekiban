@@ -1369,7 +1369,7 @@
                     for (var i = 0; i < result.sample.length; i++) {
                         add_list += '<tr>';
                         add_list += '<td><input type="checkbox" name="RowCheck" value="' + result.sample[i].sample_id + '"></td>';
-                        add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#data_upload3"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
+                        add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" id="attachFileList" onclick="SearchFileList(' + result.sample[i].sample_id + ');"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
                         add_list += '<td>' + result.sample[i].sample_name + '</td>';
                         add_list += '<td ondblclick="myFunction()">' + result.sample[i].sample_code + '</td>';
                         add_list += '<td>' + result.sample[i].sample_country + '</td>';
@@ -1416,8 +1416,35 @@
             });
     }
 
-    function myFunction() {
 
+    function SearchFileList(e) {
+
+        $("#data_upload3").modal();
+
+        var data = {"sample_id": e};
+
+        $.ajax(
+            {
+                url: 'searchFileList',
+                method: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function (result) {
+                    var file_list = $("#file_list");
+                    var add_list = "";
+
+                    for (var i = 0; i < result.sampleFile.length; i++) {
+                        add_list += '<tr>';
+                        add_list += '<td>' + result.sampleFile[i].sample_file_id + '</td>';
+                        add_list += '<td>' + result.sampleFile[i].sample_file_title + '</td>';
+                        add_list += '<td>' + result.sampleFile[i].create_date + '</td>';
+                        add_list += '</tr>';
+                    }
+
+                    file_list.empty();
+                    file_list.append(add_list);
+                }
+            });
     }
 
     // 시교자원 삭제

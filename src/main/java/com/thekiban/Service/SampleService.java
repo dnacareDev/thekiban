@@ -1,6 +1,7 @@
 package com.thekiban.Service;
 
 import com.thekiban.Entity.Sample;
+import com.thekiban.Entity.SampleFile;
 
 import java.util.List;
 
@@ -25,5 +26,7 @@ public interface SampleService {
   int UpdateSample(Sample sample);
 
   int InsertExcel(Sample sample);
+
+  List<SampleFile> SearchFileList(String sample_id);
 
 }

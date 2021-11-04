@@ -1,6 +1,7 @@
 package com.thekiban.Mapper;
 
 import com.thekiban.Entity.Sample;
+import com.thekiban.Entity.SampleFile;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -28,6 +29,8 @@ public interface SampleMapper {
   int UpdateSample(Sample sample);
 
   int InsertExcel(Sample sample);
+
+  List<SampleFile> SearchFileList(@Param("sample_id") String sample_id);
 
 }
 
