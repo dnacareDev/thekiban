@@ -6,8 +6,6 @@
 
     <!-- 공통 헤더 -->
     <th:block th:include="/../fragments/header.html"></th:block>
-    <!-- css -->
-    <link rel="stylesheet" href="css/index.css">
     <!-- js -->
     <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <style>
@@ -74,7 +72,7 @@ input[type="text"] {
 	max-height: 300px;
 }
 .text_box.text_box3{
-	max-height: 300px;
+	height: auto;
 }
 .text_box li{
 	display: block;
@@ -228,6 +226,108 @@ input[type="checkbox"]{
 	margin-top:30px;
 	border: none;
 }
+
+.select {
+	margin-top: 40px;
+}
+.select dl {
+	display: inline-block;
+	position: relative;
+	line-height: 27px;
+	vertical-align: middle;
+	width:100%;
+}
+.select dl dt a {
+	display: block;
+	position: relative;
+	padding-left: 20px;
+	width: 100%;
+	padding: 10px 0;
+	font-size: 0.75em;
+	color: #000;
+	border: 1px solid #dedede;
+	border-radius: 40px;
+	text-align:center;
+}
+.select dl dt a.open{
+	padding-bottom: 50px;
+}
+.select dl dt a span {
+	display: inline-block;
+	position: absolute;
+	right: 10px;
+	top: 50%;
+	margin-top: -3px;
+	width: 10px;
+	height: 6px;
+}
+.select dl dd {
+	display: none;
+	position: absolute;
+	left: 0;
+	top: 40px;
+	z-index: 10;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	background: #fff;
+	border: 1px solid #dedede;
+	border-top: none;
+	padding-top: 30px;
+	max-height: 300px;
+	overflow: auto;
+}
+.select dl dd li {
+	border-top: 1px solid #eaefe3;
+}
+.select dl dd li:first-child {
+	border-top: none;
+}
+.select dl dd li a {
+	display: block;
+	position: relative;
+	padding-left: 31px;
+	line-height: 32px;
+	text-decoration: none;
+	font-size: 0.75em;
+	background-color: #fff;
+	color: #888;
+	transition: background-color 0.3s;
+}
+.select dl dd li a.active {
+	background-color: #f1f1f1;
+}
+.select dl dd li:hover a{
+	background-color: #EDF6F1;
+}
+.select dl dd li a::after {
+	content: "";
+	display: block;
+	position: absolute;
+	left: 5px;
+	top: 6px;
+	width: 21px;
+	height: 21px;
+	background: url(images/spr_btns.png) no-repeat 0 0;
+}
+.select dl dd li .kr::after {
+	background-position: -392px -326px;
+}
+.select dl dd li .eng::after {
+	background-position: -392px -360px;
+}
+.select dl dd li .cn::after,
+.select dl dd ul li .glo:after {
+	background-position: -392px -395px;
+}
+.select select {
+	width:100%;
+	height: 42px;
+	border: 1px solid #dedede;
+	border-radius: 40px;
+	padding: 0 20px;
+	margin: 0;
+}
 </style>
 </head>
 
@@ -248,7 +348,7 @@ input[type="checkbox"]{
     <div class="container clearfix">
     <form action="" method="post">
         <div class="contents clearfix">
-            <h6 class="title" onclick="test();">분석대상선택</h1>
+            <h6 class="title">분석대상선택</h1>
             
             <div class="box box1">
             	<input type="text" value="품종-시교명ID, 원종-계통명ID 검색">
@@ -283,16 +383,28 @@ input[type="checkbox"]{
             </div>   
         </div>
         <div class="contents clearfix">
-            <h6 class="title" onclick="as();">분석방법</h1>
+            <h6 class="title">분석방법</h1>
             
             <div class="box box1">
-            	<input type="text" value="품종-시교명ID, 원종-계통명ID 검색">
-            	<div class="text_box text_box3">
-	            	<ul>
-	            		<li><input type="checkbox"><span>19PC0233</span></li> 
-	            		<li><input type="checkbox"><span>29PC0233</span></li>
-	            		
-	            	</ul>
+            	<div class="text_box text_box3" style="overflow: inherit; border: none;">
+            		<div class="select select1">
+	            		<!-- <dl>
+	            			<dt><a href="#">19PC0233<span></span></a></dt>
+	            			<dd>
+								<ul>
+									<li><a href="">19PC0233</a></li>
+								</ul>
+							</dd>
+	            		</dl>  -->
+	            		<select>
+		            		<option>19PC0233</option>
+		            		<option>29PC0233</option>
+		            		<option>39PC0233</option>
+		            		<option>49PC0233</option>
+		            		<option>59PC0233</option>
+		            		<option>69PC0233</option>
+		            	</select>
+	            	</div>
             	</div>
             </div>    
             <div class="button clearfix">
@@ -302,11 +414,25 @@ input[type="checkbox"]{
             	</ul>
             </div>
             <div class="box box2" id="box2_height">
-            	<input type="text" value="품종-시교명ID, 원종-계통명ID 검색">
-            	<div class="text_box text_box4">
-	            	<ul>
-	            		
-	            	</ul>
+            	<div class="text_box text_box4" style="border:none;">
+	            	<div class="select select1" style="overflow: inherit; border: none;">
+	            		<!-- <dl>
+	            			<dt><a href="#">19PC0233<span></span></a></dt>
+	            			<dd>
+								<ul>
+									<li><a href="">19PC0233</a></li>
+								</ul>
+							</dd>
+	            		</dl>  -->
+	            		<select>
+		            		<option>19PC0233</option>
+		            		<option>29PC0233</option>
+		            		<option>39PC0233</option>
+		            		<option>49PC0233</option>
+		            		<option>59PC0233</option>
+		            		<option>69PC0233</option>
+		            	</select>
+	            	</div>
             	</div>
             </div>   
         </div>
@@ -363,12 +489,28 @@ input[type="checkbox"]{
 <!-- 공통 js -->
  <th:block th:include="/../fragments/commonjs.html"></th:block>
 <script>
-function test(){
-	if(Confirm("이동") == true){
-		console.log("a");
-		window.history.back();
-	}
-}
+/*
+$(".select dt a").click(function(e){
+	e.preventDefault();
+	$(this).toggleClass("open");
+	$(this).parent().next().slideToggle(300);
+	selectFunction()
+});
+
+var txt="";
+var n;
+
+$(".select dd a").click(function(e){
+	e.preventDefault();
+	txt=$(this).text();
+	$(".select dd").slideUp(300);
+	$(".select dt a").html(txt+"<span></span>");
+	$(".select dt a").removeClass("open");
+	n=$(this).parent().index();
+	$(".select select option").eq(n).prop({"selected":true});
+});
+*/
+
 let inner_html= "";
 let text_box;
 let array1 = [];
@@ -413,31 +555,7 @@ function checkFunction(){// 박스안 리스트 클릭시 체크박스 체크\
  			$(this).children().eq(0).prop("checked", false);
  		}
 	});
-	$('.text_box3 li').off('click').on('click', function(e){ 
-		e.preventDefault();
-		
-		$('.text_box3 li').removeClass("clicked");
- 		$(this).addClass("clicked");
- 		$('.text_box3 li').children().eq(0).prop("checked", false);
- 		
- 		if($(this).hasClass("clicked") == true){
- 			$(this).children().eq(0).prop("checked", true);
- 		} else {
- 			$(this).children().eq(0).prop("checked", false);
- 			
- 			
- 		}
- 		if($(".text_box4 li").length > 0){
- 			
- 			return Alert('분석방법은 하나만 선택할수있습니다'); // alert 호줄
- 			window.history.back();
- 			
-			$('.text_box3 li').removeClass("clicked");
- 			$('.text_box3 li').children().eq(0).prop("checked", false);
- 		}
- 		
-	});
-};
+}
 
 function autoHeight(){ /* 높이 조절 */
 	$(".box1 .text_box").each(function(idx, elem){
@@ -445,12 +563,22 @@ function autoHeight(){ /* 높이 조절 */
 		$(elem).parent().next().css({"height" : $(elem).parent().height(), "padding-top": 0});
 	});
 }
-let box2_h = $(".text_box3 ul").height();
-$(".text_box3").css({"min-height": box2_h});
-$(".text_box4").css({"height": box2_h, "min-height":box2_h});
 autoHeight();
+/*
+selectFunction();
+let selectLi = $(".select1 select option");
+let selectLi_in = $(".select1 ul");
+let select_html = "";
 
-
+function selectFunction(){
+	for(let i=0; i< selectLi.length; i++){
+		
+		select_html += "<li><a href='#'>" + selectLi[i].text + "</a></li>";
+		
+		
+	}
+	selectLi_in.html(select_html);
+}*/
 </script>
 </body>
 
