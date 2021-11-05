@@ -1663,9 +1663,9 @@
         contentLi[f].classList.add("show");
     }
 
-    /* 엑셀 업로드 버튼 */
+    /* 엑셀 업로드 목록창 */
     function filesFunction() {
-        if(tablechk === 0) {
+        if (tablechk === 0) {
             let filesBtn = document.getElementById("excelFile");
             var eventList = document.createEvent("MouseEvent");
 
@@ -1678,8 +1678,9 @@
             eventList1.initEvent("click");
             filesBtn.dispatchEvent(eventList1);
         }
-
     }
+
+    /* 엑셀 업로드 목록창 */
 
     /* 엑셀 코드 */
     function handleExcelDataAll(sheet) {
@@ -1696,7 +1697,7 @@
     }
 
     function excelExportCommon(event, callback) {
-        if(tablechk == 0) {
+        if (tablechk == 0) {
             var input = event.target;
             var reader = new FileReader();
 
@@ -1801,13 +1802,20 @@
                 var fileData = reader1.result;
                 var wb = XLSX.read(fileData, {type: 'binary'});
                 var sheetNameList = wb.SheetNames; // 시트 이름 목록 가져오기
-                var fourthSheetName = sheetNameList[3]; // 네번째 시트명
-                var fourthSheet = wb.Sheets[fourthSheetName]; // 네번째 시트
-                callback(fourthSheet);
 
-                delete fourthSheet.A1;
-                delete fourthSheet.A2;
-                var rowdata = XLSX.utils.sheet_to_json(fourthSheet);
+                var sheetName_ten = sheetNameList[10]; // 네번째 시트명
+                var sheetName_ele = sheetNameList[11];
+                var tenSheet = wb.Sheets[sheetName_ten]; // 네번째 시트
+                var eleSheet = wb.Sheets[sheetName_ele];
+                callback(tenSheet);
+                callback(eleSheet);
+
+                delete tenSheet.A1;
+                delete eleSheet.A1;
+                var rowdata = XLSX.utils.sheet_to_json(tenSheet);
+                rowdata.push(...XLSX.utils.sheet_to_json(eleSheet));
+
+                console.log(rowdata);
 
                 var keys = Object.values(rowdata[0]);
 
@@ -1893,17 +1901,20 @@
         }
     }
 
+    /* 엑셀 등록 창 */
     function openExcel() {
-        if(tablechk === 0) {
+        if (tablechk === 0) {
             $("#data_upload2").modal();
         } else {
             $("#data_upload12").modal();
         }
     }
 
+    /* 엑셀 등록 창 */
+
     /* 엑셀 입력 */
     function InsertExcel() {
-        if(tablechk === 1) {
+        if (tablechk === 1) {
             var data = [];
 
             $("#excel_data").each(function (index, item) {
@@ -1930,18 +1941,9 @@
 
             $("#excelForm1").submit();
         }
-
-
-/*        var uploadHtml = "";
-
-        uploadHtml += '<tr>';
-        uploadHtml += '<td>chk</td>';
-        uploadHtml += '<td>chk</td>';
-        uploadHtml += '<td>chk</td>';
-        uploadHtml += '</tr>';
-
-        $('#uploadDate').prepend(uploadHtml);*/
     }
+
+    /* 엑셀 코드 */
 
     // table to json
     function tableToJson(table) {
@@ -1950,8 +1952,6 @@
         var headers = [];
         for (var i = 0; i < table.rows[0].cells.length; i++) {
             headers[i] = table.rows[0].cells[i].innerText;
-
-            // console.log('headers : ', headers[i]);
         }
 
         for (var i = 1; i < table.rows.length; i++) {
@@ -1966,10 +1966,10 @@
             data.push(rowData);
         }
 
-        // console.log('data : ', data);
-
         return data;
     }
+
+    // table to json
 
     /* form data to json */
     jQuery.fn.serializeObject = function () {
@@ -1991,6 +1991,7 @@
 
         return obj;
     };
+    /* form data to json */
 
     const thisBtn = document.querySelector('#modal_open');
 
@@ -2010,9 +2011,11 @@
         $("#origin_list").val(JSON.stringify(data));
 
         $("#insertForm").submit();
-
     }
 
+    // 시교 자원 추가
+
+    /* 시교자원 수출관리 테이블 구분 */
     var tablechk = 0;
 
     $("#sampleTable1").click(function () {
@@ -2022,14 +2025,17 @@
     $("#sampleTable2").click(function () {
         tablechk = 1;
     })
+    /* 시교자원 수출관리 테이블 구분 */
 
-    // DB에 저장된 데이터 출력
+    // DB에 저장된 데이터 읽어와서 테이블에 보여줌
     $(document).ready(function () {
         SearchSample(1);
+        SearchOutcome(1);
     });
 
     $("#CropSelect").change(function () {
         SearchSample(1);
+        SearchOutcome(1);
     })
 
     var emptyEls;
@@ -2038,7 +2044,6 @@
     var btnindex = 0;
 
     function SearchSample(e) {
-
         var sample_name = $("#CropSelect").val();
         var data = {"sample_name": sample_name, "page_num": e};
 
@@ -2106,9 +2111,82 @@
 
                 }
             });
+
     }
 
+    function SearchOutcome(e) {
+        var sample_name1 = $("#CropSelect").val();
+        var data1 = {"sample_name": sample_name1, "page_num": e};
 
+        $.ajax(
+            {
+                url: 'searchOutcome',
+                method: 'POST',
+                dataType: 'json',
+                data: data1,
+                success: function (result1) {
+                    var sampleOutcome_list = $(".sampleOutcome-list");
+                    sampleOutcome_list.eq(btnindex);
+                    var add_list = "";
+
+                    resultData = result1.sampleOutcome;
+
+                    var pageNum = $("#pageNum");
+                    var page_add = "";
+
+                    for (var i = 0; i < result1.sampleOutcome.length; i++) {
+                        add_list += '<tr>';
+                        add_list += '<td><input type="checkbox" name="RowCheck" value="' + result1.sampleOutcome[i].sample_outcome_id + '"></td>';
+                        add_list += '<td>' + result1.sampleOutcome[i].sample_outcome_code + '</td>';
+                        add_list += '<td>' + result1.sampleOutcome[i].sample_outcome_num + '</td>';
+                        add_list += '<td>' + result1.sampleOutcome[i].sample_outcome_amount + '</td>';
+                        add_list += '<td>' + result1.sampleOutcome[i].sample_outcome_in + '</td>';
+                        add_list += '<td>' + result1.sampleOutcome[i].sample_outcome_out + '</td>';
+                        add_list += '<td>' + result1.sampleOutcome[i].sample_outcome_remain + '</td>';
+                        add_list += '<td>' + result1.sampleOutcome[i].sample_outcome_person + '</td>';
+                        add_list += '<td>' + result1.sampleOutcome[i].sample_outcome_reciever + '</td>';
+                        add_list += '<td>' + result1.sampleOutcome[i].sample_outcome_date + '</td>';
+                        add_list += '<td>' + result1.sampleOutcome[i].sample_outcome_end + '</td>';
+                        add_list += '<td>' + result1.sampleOutcome[i].sample_outcome_country + '</td>';
+                        add_list += '<td>' + result1.sampleOutcome[i].sample_outcome_place + '</td>';
+                        add_list += '</tr>';
+                    }
+
+                    if (result1.page_num == 1) {
+                        page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></button>';
+                    } else {
+                        page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchOutcome(' + (result1.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
+                    }
+
+                    for (var i = 0; i < result1.end_page; i++) {
+                        if (result1.page_num == (i + 1)) {
+                            page_add += '<button class="atbd-pagination__link active" onclick="SearchOutcome(' + (i + 1) + ')">' + (i + 1) + '</button>';
+                        } else {
+                            page_add += '<button class="atbd-pagination__link" onclick="SearchOutcome(' + (i + 1) + ')">' + (i + 1) + '</button>';
+                        }
+                    }
+
+                    if (result1.page_num == result1.end_page) {
+                        page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-right"></span></button>';
+                    } else {
+                        page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchOutcome(' + (result1.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
+                    }
+
+                    sampleOutcome_list.empty();
+                    sampleOutcome_list.append(add_list);
+
+                    pageNum.empty();
+                    pageNum.append(page_add);
+
+                    emptyEls = document.querySelectorAll('#sampleOutcome-list tr .status');
+                    emptyEls = Array.prototype.slice.call(emptyEls);
+                }
+            });
+    }
+
+    // DB에 저장된 데이터 읽어와서 테이블에 보여줌
+
+    // 첨부파일 목록
     function SearchFileList(e) {
 
         $("#data_upload3").modal();
@@ -2139,36 +2217,70 @@
             });
     }
 
+    // 첨부파일 목록
+
     // 시교자원 삭제
     function DeleteSample() {
-        var total_id = [];
+        if (tablechk === 0) {
+            var total_id = [];
 
-        $("input:checkbox[name=RowCheck]:checked").each(function () {
-            var sample_id = $(this).val();
+            $("input:checkbox[name=RowCheck]:checked").each(function () {
+                var sample_id = $(this).val();
 
-            total_id.push(sample_id);
-        });
+                total_id.push(sample_id);
+            });
 
-        var data = {'sample_id': total_id};
+            var data = {'sample_id': total_id};
 
-        if (confirm("삭제하시겠습니까?") == true) {
-            $.ajax(
-                {
-                    url: 'deleteSample',
-                    method: 'POST',
-                    dataType: 'json',
-                    data: data,
-                    success: function (result) {
-                        if (result == 0) {
-                        } else {
-                            location.reload()
+            if (confirm("삭제하시겠습니까?") == true) {
+                $.ajax(
+                    {
+                        url: 'deleteSample',
+                        method: 'POST',
+                        dataType: 'json',
+                        data: data,
+                        success: function (result) {
+                            if (result == 0) {
+                            } else {
+                                location.reload()
+                            }
                         }
-                    }
-                });
-        } else {
+                    });
+            } else {
 
+            }
+        } else {
+            var total_id1 = [];
+
+            $("input:checkbox[name=RowCheck1]:checked").each(function () {
+                var sample_id1 = $(this).val();
+
+                total_id1.push(sample_id1);
+            });
+
+            var data1 = {'sample_outcome_id': total_id1};
+
+            if (confirm("삭제하시겠습니까?") == true) {
+                $.ajax(
+                    {
+                        url: 'deleteSampleOutcome',
+                        method: 'POST',
+                        dataType: 'json',
+                        data: data1,
+                        success: function (result) {
+                            if (result == 0) {
+                            } else {
+                                location.reload()
+                            }
+                        }
+                    });
+            } else {
+
+            }
         }
     }
+
+    // 시교자원 삭제
 
     // 정렬
     $(document).ready(function () {
@@ -2208,7 +2320,9 @@
             });
         });
     });
+    // 정렬
 
+    // 데이터 수정
     var emptyElsIndex = 0;
 
     function emptyFunction(id, e) { // table 내용 모달로 가져오기 2021-10-29 alpadesign 수정
@@ -2238,7 +2352,6 @@
         $("#updateBtn").attr("onclick", "UpdateBtn('id');");
     }
 
-    // 일반 데이터 수정
     function UpdateBtn() {
         const data = [];
 
@@ -2259,6 +2372,8 @@
 
         $("#updateForm").submit();
     }
+
+    // 데이터 수정
 
     // 구글 맵 관련
     const mapContainer = document.querySelector('#google_map1');
@@ -2373,17 +2488,15 @@
         }
     }
 
+    // 구글 맵 관련
+
     document.addEventListener('mousedown', function () {
         if ((event.button == 2) || (event.which == 3)) {
 
         }
     });
 
-    var tableAllEls = document.querySelectorAll('.card-body .table-responsive .table');
-
-    tableAllEls = Array.prototype.slice.call(tableAllEls);
-
-    // row 추가
+    /* row 추가 */
     function addRow() {
         if (tablechk === 0) {
             var row_list = "";
@@ -2459,50 +2572,50 @@
                     }
                 });
         } else {
-            /*var row_list = "";
-            row_list += '<tr id="row_data">';
+            var row_list1 = "";
+            row_list1 += '<tr id="row_data">';
 
-            row_list += '<form action="insertSample" id="rowForm" method="POST" enctype="multipart/form-data">';
-            row_list += '<input type="hidden" id="rowSample" name="rowSample">'
-            row_list += '<td><input type="checkbox" name="RowCheck"></td>';
-            row_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
-            row_list += '<td><input type="text" class="rowInput" name="sample_name" value="' + $("#CropSelect option:selected").text() + '"></td>';
-            row_list += '<td><input type="text" class="rowInput" name="sample_code"></td>';
-            row_list += '<td><input type="text" class="rowInput" name="sample_country"></td>';
-            row_list += '<td><input type="text" class="rowInput" name="sample_type"></td>';
-            row_list += '<td><input type="text" class="rowInput" name="sample_mate"></td>';
-            row_list += '<td><input type="text" class="rowInput" name="sample_seed"></td>';
-            row_list += '<td><input type="text" class="rowInput" name="sample_amount"></td>';
-            row_list += '<td><input type="text" class="rowInput" name="sample_sprout"></td>';
-            row_list += '<td><input type="text" class="rowInput" name="sample_purity"></td>';
-            row_list += '<td><input type="text" class="rowInput" name="sample_comment"></td>';
-            row_list += '</form>';
-            row_list += '</tr>';
+            row_list1 += '<form action="insertSampleOutcome" id="rowForm" method="POST" enctype="multipart/form-data">';
+            row_list1 += '<input type="hidden" id="rowSample1" name="rowSample1">'
+            row_list1 += '<td><input type="checkbox" name="RowCheck"></td>';
+            row_list1 += '<td><input type="text" class="rowInput" name="sample_outcome_code" ></td>';
+            row_list1 += '<td><input type="text" class="rowInput" name="sample_outcome_num"></td>';
+            row_list1 += '<td><input type="text" class="rowInput" name="sample_outcome_amount"></td>';
+            row_list1 += '<td><input type="text" class="rowInput" name="sample_outcome_in"></td>';
+            row_list1 += '<td><input type="text" class="rowInput" name="sample_outcome_out"></td>';
+            row_list1 += '<td><input type="text" class="rowInput" name="sample_outcome_remain"></td>';
+            row_list1 += '<td><input type="text" class="rowInput" name="sample_outcome_person"></td>';
+            row_list1 += '<td><input type="text" class="rowInput" name="sample_outcome_reciever"></td>';
+            row_list1 += '<td><input type="text" class="rowInput" name="sample_outcome_date"></td>';
+            row_list1 += '<td><input type="text" class="rowInput" name="sample_outcome_end"></td>';
+            row_list1 += '<td><input type="text" class="rowInput" name="sample_outcome_country"></td>';
+            row_list1 += '<td><input type="text" class="rowInput" name="sample_outcome_place"></td>';
+            row_list1 += '</form>';
+            row_list1 += '</tr>';
 
-            $("#sample_list").append(row_list);
+            $("#sampleOutcome-list").append(row_list1);
 
-            var input_data = [];
+            var input_data1 = [];
 
-            var input_value = $("#CropSelect option:selected").text();
+            var input_value1 = $("#CropSelect option:selected").text();
 
-            var input_name = {key: "sample_name", value: input_value};
+            var input_name1 = {key: "sample_name", value: input_value1};
 
-            input_data.push(input_name);
-
+            input_data1.push(input_name1);
             $.ajax(
                 {
-                    url: 'insertSample',
+                    url: 'insertSampleOutcome',
                     method: 'POST',
                     dataType: 'json',
                     data: {
-                        "input_data": JSON.stringify(input_data)
+                        "input_data": JSON.stringify(input_data1)
                     },
                     success: function (result) {
                         if (result != null) {
                             $(".rowInput").focusout(function () {
                                 var data = [];
 
-                                var data_in = {key: "sample_id", value: result.sample_id}
+                                var data_in = {key: "sample_outcome_id", value: result.sample_outcome_id}
 
                                 data.push(data_in);
 
@@ -2517,7 +2630,7 @@
 
                                 $.ajax(
                                     {
-                                        url: 'updateSample',
+                                        url: 'updateOutcome',
                                         method: 'POST',
                                         dataType: 'json',
                                         data: {
@@ -2530,9 +2643,11 @@
                             })
                         }
                     }
-                });*/
+                });
         }
     }
+
+    /* row 추가 */
 
     /* 엑셀 다운로드 */
     function s2ab(s) {
@@ -2610,7 +2725,7 @@
             return XLSX.utils.table_to_sheet(this.getExcelData());
         }
     }
-
+    /* 엑셀 다운로드 */
 
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBn0n_LEGxgJuCfTU8aKvuwrcmw0iZjfmY&callback=initMap&region=kr"></script>
