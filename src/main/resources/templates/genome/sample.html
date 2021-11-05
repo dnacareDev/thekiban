@@ -321,7 +321,7 @@
             justify-content: flex-start;
         }
 
-        #data_upload .form-group button, #data_upload2 .form-group button, #data_upload3 .form-group button {
+        #data_upload .form-group button, #data_upload2 .form-group button, #data_upload3 .form-group button, #data_upload12 .form-group button {
             height: 45px;
             padding: 0 20px;
             background-color: #217566;
@@ -331,11 +331,11 @@
             margin-left: 10px;
         }
 
-        #data_upload2 .form-group button {
+        #data_upload2 .form-group button, #data_upload3 .form-group button, #data_upload12 .form-group button {
             margin-left: 0;
         }
 
-        #data_upload .form-group input[type=text], #data_upload2 .form-group input[type=text], #data_upload3 .form-group input[type=text] {
+        #data_upload .form-group input[type=text], #data_upload2 .form-group input[type=text], #data_upload3 .form-group input[type=text], #data_upload12 .form-group input[type=text] {
             flex: 0 0 30%;
             cursor: pointer;
         }
@@ -346,7 +346,7 @@
             color: #B2B2B2;
         }
 
-        #data_upload .atbd-upload, #data_upload2 .atbd-upload, #data_upload3 .atbd-upload {
+        #data_upload .atbd-upload, #data_upload2 .atbd-upload, #data_upload3 .atbd-upload, #data_upload12 .atbd-upload {
             width: 100%;
             height: 300px;
             overflow: auto;
@@ -357,26 +357,26 @@
             border: none;
         }
 
-        #data_upload2 .atbd-upload table, #data_upload3 .atbd-upload table {
+        #data_upload2 .atbd-upload table, #data_upload3 .atbd-upload table, #data_upload12 .atbd-upload table {
             width: 100%;
         }
 
-        #data_upload table thead tr, #data_upload2 table thead tr, #data_upload3 table thead tr {
+        #data_upload table thead tr, #data_upload2 table thead tr, #data_upload3 table thead tr, #data_upload12 table thead tr {
             border-top: none;
             border-bottom: 2px solid #E8EEF2;
         }
 
-        #data_upload table tbody tr, #data_upload2 table tbody tr, #data_upload3 table tbody tr {
+        #data_upload table tbody tr, #data_upload2 table tbody tr, #data_upload3 table tbody tr, #data_upload12 table tbody tr {
             border-bottom: 1px solid #E8EEF2;
         }
 
-        #data_upload .atbd-upload table thead th, #data_upload2 .atbd-upload table thead th, #data_upload3 .atbd-upload table thead th {
+        #data_upload .atbd-upload table thead th, #data_upload2 .atbd-upload table thead th, #data_upload3 .atbd-upload table thead th, #data_upload12 .atbd-upload table thead th {
             background-color: #F7F7F8;
             color: #222222;
             font-size: 16px;
         }
 
-        #data_upload .atbd-upload table tbody td, #data_upload2 .atbd-upload table tbody td, #data_upload3 .atbd-upload table tbody td {
+        #data_upload .atbd-upload table tbody td, #data_upload2 .atbd-upload table tbody td, #data_upload3 .atbd-upload table tbody td, #data_upload12 .atbd-upload table tbody td {
             background-color: #fff;
             color: #666666;
             font-size: 16px;
@@ -436,7 +436,7 @@
             margin: 5px 3px;
         }
 
-        #data_upload2 .form-group button, #data_upload3 .form-group button {
+        #data_upload2 .form-group button, #data_upload3 .form-group button, #data_upload12 .form-group button {
             height: 34px;
             line-height: 2rem;
             font-size: 13px;
@@ -535,7 +535,7 @@
                                             <option value="토마토">토마토</option>
                                         </select>
                                     </form>
-                                    <button class="btn btn-lg btn-primary data_btn2" data-toggle="modal" title="데이터 등록" data-target="#data_upload2">
+                                    <button class="btn btn-lg btn-primary data_btn2" title="데이터 등록" onclick="openExcel()">
                                         <img src="../assets/vendor_assets/img/icon1.png" alt=""></button>
                                     <button type="button" class="btn btn-lg btn-primary data_btn1" title="엑셀 export" id="excelFileExport">
                                         <img src="../assets/vendor_assets/img/icon2.png" title="데이터 등록" alt=""></button>
@@ -552,34 +552,32 @@
                                         <tr>
                                             <th></th>
                                             <th><span class="title">첨부파일</span></th>
-                                            <th style="cursor: pointer;"><span class="title">작물</span><i></i><img
-                                                src="../assets/vendor_assets/img/title_icon.png"
-                                                alt="작물"></th>
-                                            <th style="cursor: pointer;"><span class="title">시교명(ID)</span><i></i><img
+                                            <th style="cursor: pointer;"><span class="title">작물</span></th>
+                                            <th style="cursor: pointer;"><span class="title">시교명(ID)</span><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="시교명"></th>
-                                            <th style="cursor: pointer;"><span class="title">목표 지역</span><i></i><img
+                                            <th style="cursor: pointer;"><span class="title">목표 지역</span><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="목표 지역"></th>
-                                            <th style="cursor: pointer;"><span class="title">구분</span><i></i><img
+                                            <th style="cursor: pointer;"><span class="title">구분</span><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="구분"></th>
-                                            <th style="cursor: pointer;"><span class="title">교배번호</span><i></i><img
+                                            <th style="cursor: pointer;"><span class="title">교배번호</span><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="교배번호"></th>
-                                            <th style="cursor: pointer;"><span class="title">종자번호(ID)</span><i></i><img
+                                            <th style="cursor: pointer;"><span class="title">종자번호(ID)</span><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="종자번호"></th>
-                                            <th style="cursor: pointer;"><span class="title">현 종자량(g)</span><i></i><img
+                                            <th style="cursor: pointer;"><span class="title">현 종자량(g)</span><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="현 종자량"></th>
-                                            <th style="cursor: pointer;"><span class="title">기내 발아율(%)</span><i></i><img
+                                            <th style="cursor: pointer;"><span class="title">기내 발아율(%)</span><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="기내 발아율"></th>
-                                            <th style="cursor: pointer;"><span class="title">기내 순도율(%)</span><i></i><img
+                                            <th style="cursor: pointer;"><span class="title">기내 순도율(%)</span><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="기내 순도율"></th>
-                                            <th style="cursor: pointer;"><span class=" title">비고</span><i></i><img
+                                            <th style="cursor: pointer;"><span class=" title">비고</span><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="비고"></th>
                                         </tr>
@@ -603,42 +601,45 @@
                                         <thead class="text-center">
                                         <tr>
                                             <th></th>
-                                            <th><span class="title">시교명</span><i></i><img
+                                            <th><span class="title">시교명</span><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="시교명"></th>
-                                            <th><span class="title">종자번호(ID)</span><i></i><img
+                                            <th><span class="title">종자번호(ID)</span><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="종자번호(ID)"></th>
-                                            <th><span class="title">종자 보유량</span><i></i><img
+                                            <th><span class="title">종자 보유량</span><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="종자 보유량"></th>
-                                            <th><span class="title">입고량</span><i></i><img
+                                            <th><span class="title">입고량</span><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="입고량"></th>
-                                            <th><span class="title">출고량</span><i></i><img
+                                            <th><span class="title">출고량</span><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="출고량"></th>
-                                            <th><span class="title">재고량</span><i></i><img
+                                            <th><span class="title">재고량</span><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="재고량"></th>
-                                            <th><span class="title">담당자</span><i></i><img
+                                            <th><span class="title">담당자</span><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="담당자"></th>
-                                            <th><span class="title">인수자</span><i></i><img
+                                            <th><span class="title">인수자</span><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="인수자"></th>
-                                            <th><span class="title">날짜</span><i></i><img
+                                            <th><span class="title">날짜</span><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="날짜"></th>
-                                            <th><span class="title">시교종료일자</span><i></i><img
+                                            <th><span class="title">시교종료일자</span><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="시교종료일자"></th>
-                                            <th><span class="title">지역구분</span><i></i><img
+                                            <th><span class="title">지역구분</span><img
+                                                src="../assets/vendor_assets/img/title_icon.png"
+                                                alt="지역구분"></th>
+                                            <th><span class="title">대상 지역</span><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="지역구분"></th>
                                         </tr>
                                         </thead>
-                                        <tbody class="text-center sample-list">
+                                        <tbody class="text-center sampleOutcome-list" id="sampleOutcome-list">
                                         <!--<tr>-->
                                         <!--    <td><input type="checkbox" name="chkBox"></td>-->
                                         <!--    <td><span>19PC0233</span></td>-->
@@ -913,7 +914,7 @@
         </div>
     </div>
 
-    <!-- 데이터 등록 모달창 -->
+    <!-- 시교자원 데이터 등록 모달창 -->
     <div class="modal-basic modal fade show pop5" id="data_upload" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white ">
@@ -953,7 +954,55 @@
                 </div>
                 <div class="modal-footer" style="border: none">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" onclick="dataToggle('#data_upload', '#data_upload2');">취소</button>
-                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" id="" onclick="InsertExcel()">등록</button>
+                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" onclick="InsertExcel()">등록</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 수출자원 데이터 등록 모달창 -->
+    <div class="modal-basic modal fade show pop5" id="data_upload1" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content modal-bg-white ">
+                <div class="modal-header" style="border: none">
+                    <h6 class="modal-title">시교자원관리 > 데이터 등록</h6>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group mb-0">
+                        <input type="text" class="form-control form-control-lg" placeholder="Click to Upload">
+                        <input type="file" id="excelFile1" onchange="excelExport(event)" style="display: none">
+                        <button onclick="filesFunction()">불러오기</button>
+                        <input type="file" name="" id="file_data_upload1" style="display: none;">
+                    </div>
+                    <div>
+                        <form action="excelOutcome" id="excelForm1" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" id="excel_list1" name="excel_list1">
+                            <div class="atbd-upload">
+                                <table id="excel_data1">
+                                    <thead>
+                                    <th><span class="title">시교명</span></th>
+                                    <th><span class="title">종자번호(ID)</span></th>
+                                    <th><span class="title">종자 보유량</span></th>
+                                    <th><span class="title">입고량</span></th>
+                                    <th><span class="title">출고량</span></th>
+                                    <th><span class="title">재고량</span></th>
+                                    <th><span class="title">담당자</span></th>
+                                    <th><span class="title">인수자</span></th>
+                                    <th><span class="title">날짜</span></th>
+                                    <th><span class="title">시교종료일자</span></th>
+                                    <th><span class="title">지역구분</span></th>
+                                    <th><span class="title">대상지역</span></th>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border: none">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" onclick="dataToggle('#data_upload1', '#data_upload12');">취소</button>
+                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" onclick="InsertExcel()">등록</button>
                 </div>
             </div>
         </div>
@@ -969,6 +1018,55 @@
                 <div class="modal-body">
                     <div class="form-group mb-0">
                         <button onclick="dataToggle('#data_upload2', '#data_upload');">데이터 등록</button>
+                        <button>등록서식 다운로드</button>
+                    </div>
+                    <div>
+                        <div class="atbd-upload">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>순번</th>
+                                    <th>등록일</th>
+                                    <th>데이터수</th>
+                                </tr>
+                                </thead>
+                                <tbody id="uploadDate">
+                                <tr>
+                                    <td></td>
+                                    <td>2021-08-15</td>
+                                    <td>185</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>2021-08-15</td>
+                                    <td>185</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border: none">
+                    <div class="col-4">
+                        <div class="row" style="justify-content: center;">
+                            <div id="pageNum1" style="text-align:center; margin: 2% 0 0 0;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 데이터 목록 창 -->
+    <div class="modal-basic modal fade show pop7" id="data_upload12" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content modal-bg-white ">
+                <div class="modal-header" style="border: none">
+                    <h6 class="modal-title">시교수출관리 > 데이터 등록</h6>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group mb-0">
+                        <button onclick="dataToggle('#data_upload12', '#data_upload1');">데이터 등록</button>
                         <button>등록서식 다운로드</button>
                     </div>
                     <div>
@@ -1112,11 +1210,20 @@
 
     /* 엑셀 업로드 버튼 */
     function filesFunction() {
-        let filesBtn = document.getElementById("excelFile");
-        var eventList = document.createEvent("MouseEvent");
+        if(tablechk === 0) {
+            let filesBtn = document.getElementById("excelFile");
+            var eventList = document.createEvent("MouseEvent");
 
-        eventList.initEvent("click");
-        filesBtn.dispatchEvent(eventList);
+            eventList.initEvent("click");
+            filesBtn.dispatchEvent(eventList);
+        } else {
+            let filesBtn = document.getElementById("excelFile1");
+            var eventList1 = document.createEvent("MouseEvent");
+
+            eventList1.initEvent("click");
+            filesBtn.dispatchEvent(eventList1);
+        }
+
     }
 
     /* 엑셀 코드 */
@@ -1134,120 +1241,243 @@
     }
 
     function excelExportCommon(event, callback) {
-        var input = event.target;
-        var reader = new FileReader();
+        if(tablechk == 0) {
+            var input = event.target;
+            var reader = new FileReader();
 
-        reader.onload = function () {
-            var fileData = reader.result;
-            var wb = XLSX.read(fileData, {type: 'binary'});
-            var sheetNameList = wb.SheetNames; // 시트 이름 목록 가져오기
-            var fourthSheetName = sheetNameList[3]; // 네번째 시트명
-            var fourthSheet = wb.Sheets[fourthSheetName]; // 네번째 시트
-            callback(fourthSheet);
+            reader.onload = function () {
+                var fileData = reader.result;
+                var wb = XLSX.read(fileData, {type: 'binary'});
+                var sheetNameList = wb.SheetNames; // 시트 이름 목록 가져오기
+                var fourthSheetName = sheetNameList[3]; // 네번째 시트명
+                var fourthSheet = wb.Sheets[fourthSheetName]; // 네번째 시트
+                callback(fourthSheet);
 
-            delete fourthSheet.A1;
-            delete fourthSheet.A2;
-            var rowdata = XLSX.utils.sheet_to_json(fourthSheet);
+                delete fourthSheet.A1;
+                delete fourthSheet.A2;
+                var rowdata = XLSX.utils.sheet_to_json(fourthSheet);
 
-            var keys = Object.values(rowdata[0]);
+                var keys = Object.values(rowdata[0]);
 
-            var html = "";
+                var html = "";
 
-            for (var i = 1; i < rowdata.length; i++) {
-                if (i === 0) {
-                    html += "<thead class='text-center'>";
-                    html += "<tr>";
+                for (var i = 1; i < rowdata.length; i++) {
+                    if (i === 0) {
+                        html += "<thead class='text-center'>";
+                        html += "<tr>";
 
-                    $.each(rowdata[0], function (idx, value) {
-                        html += "<th><span class='excel-title'>" + value + "</span></th>";
-                    })
+                        $.each(rowdata[0], function (idx, value) {
+                            html += "<th><span class='excel-title'>" + value + "</span></th>";
+                        })
 
-                    html += "</tr>";
-                    html += "</thead>";
-                } else if (i !== 0) {
-                    html += "<tbody class='text-center'>";
-                    html += "<tr>";
+                        html += "</tr>";
+                        html += "</thead>";
+                    } else if (i !== 0) {
+                        html += "<tbody class='text-center'>";
+                        html += "<tr>";
 
-                    var tmp = Object.keys(rowdata[0]);
-                    var j = 0;
+                        var tmp = Object.keys(rowdata[0]);
+                        var j = 0;
 
-                    $.each(rowdata[i], function (idx, value) {
-                        // 공백처리
-                        if (idx == tmp[j]) {
+                        $.each(rowdata[i], function (idx, value) {
+                            // 공백처리
+                            if (idx == tmp[j]) {
 
-                            html += "<td class='excel'><span>" + value + "</span></td>";
-                            j++;
+                                html += "<td class='excel'><span>" + value + "</span></td>";
+                                j++;
 
-                        } else {
-                            var idx_str = idx.replace(/[^0-9]/g, '');
-                            var tmp_str = tmp[j].replace(/[^0-9]/g, '');
+                            } else {
+                                var idx_str = idx.replace(/[^0-9]/g, '');
+                                var tmp_str = tmp[j].replace(/[^0-9]/g, '');
 
-                            var gap = idx_str - tmp_str;
+                                var gap = idx_str - tmp_str;
 
-                            while (gap > 0) {
-                                gap--;
-                                html += "<td><span> </span></td>";
+                                while (gap > 0) {
+                                    gap--;
+                                    html += "<td><span> </span></td>";
+                                }
+
+                                html += "<td class='excel'><span>" + value + "</span></td>";
+                                j++;
+
+                                j = idx_str;
+                                j++;
                             }
+                        });
 
-                            html += "<td class='excel'><span>" + value + "</span></td>";
-                            j++;
-
-                            j = idx_str;
-                            j++;
-                        }
-                    });
-
-                    html += "</tr>";
-                    html += "</tbody>";
-                }
-            }
-
-            var excel = [];
-
-            for (var k = 1; k < rowdata.length; k++) {
-                var chk = Object.values(rowdata[k]);
-
-                for (var n = 0; n < keys.length; n++) {
-                    if (chk[n] == undefined) {
-                        excel[n] = {key: keys[n], value: " "};
-                    } else if (keys[n] === "도입연월일") {
-                        excel[n] = {key: keys[n], value: excelDateToJSDate(chk[n])};
-                    } else {
-                        excel[n] = {key: keys[n], value: "" + chk[n]};
+                        html += "</tr>";
+                        html += "</tbody>";
                     }
                 }
-                const obj = {...excel};
 
-                // console.log(obj);
-                rowdata[k] = obj;
-            }
-            // $("#excel_data").empty();
-            $("#excel_data").append(html);
+                var excel = [];
 
-            var jsonObj = tableToJson(document.getElementById("excel_data"));
+                for (var k = 1; k < rowdata.length; k++) {
+                    var chk = Object.values(rowdata[k]);
 
-            $("#excel_list").val(JSON.stringify(jsonObj));
-        };
+                    for (var n = 0; n < keys.length; n++) {
+                        if (chk[n] == undefined) {
+                            excel[n] = {key: keys[n], value: " "};
+                        } else if (keys[n] === "도입연월일") {
+                            excel[n] = {key: keys[n], value: excelDateToJSDate(chk[n])};
+                        } else {
+                            excel[n] = {key: keys[n], value: "" + chk[n]};
+                        }
+                    }
+                    const obj = {...excel};
 
-        reader.readAsBinaryString(input.files[0]);
+                    // console.log(obj);
+                    rowdata[k] = obj;
+                }
+                // $("#excel_data").empty();
+                $("#excel_data").append(html);
+
+                var jsonObj = tableToJson(document.getElementById("excel_data"));
+
+                $("#excel_list").val(JSON.stringify(jsonObj));
+            };
+
+            reader.readAsBinaryString(input.files[0]);
+        } else {
+            var input1 = event.target;
+            var reader1 = new FileReader();
+
+            reader1.onload = function () {
+                var fileData = reader1.result;
+                var wb = XLSX.read(fileData, {type: 'binary'});
+                var sheetNameList = wb.SheetNames; // 시트 이름 목록 가져오기
+                var fourthSheetName = sheetNameList[3]; // 네번째 시트명
+                var fourthSheet = wb.Sheets[fourthSheetName]; // 네번째 시트
+                callback(fourthSheet);
+
+                delete fourthSheet.A1;
+                delete fourthSheet.A2;
+                var rowdata = XLSX.utils.sheet_to_json(fourthSheet);
+
+                var keys = Object.values(rowdata[0]);
+
+                var html = "";
+
+                for (var i = 1; i < rowdata.length; i++) {
+                    if (i === 0) {
+                        html += "<thead class='text-center'>";
+                        html += "<tr>";
+
+                        $.each(rowdata[0], function (idx, value) {
+                            html += "<th><span class='excel-title'>" + value + "</span></th>";
+                        })
+
+                        html += "</tr>";
+                        html += "</thead>";
+                    } else if (i !== 0) {
+                        html += "<tbody class='text-center'>";
+                        html += "<tr>";
+
+                        var tmp = Object.keys(rowdata[0]);
+                        var j = 0;
+
+                        $.each(rowdata[i], function (idx, value) {
+                            // 공백처리
+                            if (idx == tmp[j]) {
+
+                                html += "<td class='excel'><span>" + value + "</span></td>";
+                                j++;
+
+                            } else {
+                                var idx_str = idx.replace(/[^0-9]/g, '');
+                                var tmp_str = tmp[j].replace(/[^0-9]/g, '');
+
+                                var gap = idx_str - tmp_str;
+
+                                while (gap > 0) {
+                                    gap--;
+                                    html += "<td><span> </span></td>";
+                                }
+
+                                html += "<td class='excel'><span>" + value + "</span></td>";
+                                j++;
+
+                                j = idx_str;
+                                j++;
+                            }
+                        });
+
+                        html += "</tr>";
+                        html += "</tbody>";
+                    }
+                }
+
+                var excel = [];
+
+                for (var k = 1; k < rowdata.length; k++) {
+                    var chk = Object.values(rowdata[k]);
+
+                    for (var n = 0; n < keys.length; n++) {
+                        if (chk[n] == undefined) {
+                            excel[n] = {key: keys[n], value: " "};
+                        } else if (keys[n] === "도입연월일") {
+                            excel[n] = {key: keys[n], value: excelDateToJSDate(chk[n])};
+                        } else {
+                            excel[n] = {key: keys[n], value: "" + chk[n]};
+                        }
+                    }
+                    const obj = {...excel};
+
+                    // console.log(obj);
+                    rowdata[k] = obj;
+                }
+                // $("#excel_data1").empty();
+                $("#excel_data1").append(html);
+
+                var jsonObj = tableToJson(document.getElementById("excel_data1"));
+
+                $("#excel_list").val(JSON.stringify(jsonObj));
+            };
+
+            reader1.readAsBinaryString(input1.files[0]);
+        }
+    }
+
+    function openExcel() {
+        if(tablechk === 0) {
+            $("#data_upload2").modal();
+        } else {
+            $("#data_upload12").modal();
+        }
     }
 
     /* 엑셀 입력 */
     function InsertExcel() {
-        var data = [];
+        if(tablechk === 1) {
+            var data = [];
 
-        $("#excel_data").each(function (index, item) {
-            const key = $(this).attr('id');
-            var value = $(this).val();
+            $("#excel_data").each(function (index, item) {
+                const key = $(this).attr('id');
+                var value = $(this).val();
 
-            var arr = {key: key, value: value};
+                var arr = {key: key, value: value};
 
-            data.push(arr);
-        });
+                data.push(arr);
+            });
 
-        $("#excelForm").submit();
+            $("#excelForm").submit();
+        } else {
+            var data1 = [];
 
-        var uploadHtml = "";
+            $("#excel_data1").each(function (index, item) {
+                const key = $(this).attr('id');
+                var value = $(this).val();
+
+                var arr = {key: key, value: value};
+
+                data1.push(arr);
+            });
+
+            $("#excelForm1").submit();
+        }
+
+
+/*        var uploadHtml = "";
 
         uploadHtml += '<tr>';
         uploadHtml += '<td>chk</td>';
@@ -1255,7 +1485,7 @@
         uploadHtml += '<td>chk</td>';
         uploadHtml += '</tr>';
 
-        $('#uploadDate').prepend(uploadHtml);
+        $('#uploadDate').prepend(uploadHtml);*/
     }
 
     // table to json
@@ -1700,79 +1930,153 @@
 
     // row 추가
     function addRow() {
-        var row_list = "";
-        row_list += '<tr id="row_data">';
+        if (tablechk === 0) {
+            var row_list = "";
+            row_list += '<tr id="row_data">';
 
-        row_list += '<form action="insertSample" id="rowForm" method="POST" enctype="multipart/form-data">';
-        row_list += '<input type="hidden" id="rowSample" name="rowSample">'
-        row_list += '<td><input type="checkbox" name="RowCheck"></td>';
-        row_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
-        row_list += '<td><input type="text" class="rowInput" name="sample_name" value="' + $("#CropSelect option:selected").text() + '"></td>';
-        row_list += '<td><input type="text" class="rowInput" name="sample_code"></td>';
-        row_list += '<td><input type="text" class="rowInput" name="sample_country"></td>';
-        row_list += '<td><input type="text" class="rowInput" name="sample_type"></td>';
-        row_list += '<td><input type="text" class="rowInput" name="sample_mate"></td>';
-        row_list += '<td><input type="text" class="rowInput" name="sample_seed"></td>';
-        row_list += '<td><input type="text" class="rowInput" name="sample_amount"></td>';
-        row_list += '<td><input type="text" class="rowInput" name="sample_sprout"></td>';
-        row_list += '<td><input type="text" class="rowInput" name="sample_purity"></td>';
-        row_list += '<td><input type="text" class="rowInput" name="sample_comment"></td>';
-        row_list += '</form>';
-        row_list += '</tr>';
+            row_list += '<form action="insertSample" id="rowForm" method="POST" enctype="multipart/form-data">';
+            row_list += '<input type="hidden" id="rowSample" name="rowSample">'
+            row_list += '<td><input type="checkbox" name="RowCheck"></td>';
+            row_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
+            row_list += '<td><input type="text" class="rowInput" name="sample_name" value="' + $("#CropSelect option:selected").text() + '"></td>';
+            row_list += '<td><input type="text" class="rowInput" name="sample_code"></td>';
+            row_list += '<td><input type="text" class="rowInput" name="sample_country"></td>';
+            row_list += '<td><input type="text" class="rowInput" name="sample_type"></td>';
+            row_list += '<td><input type="text" class="rowInput" name="sample_mate"></td>';
+            row_list += '<td><input type="text" class="rowInput" name="sample_seed"></td>';
+            row_list += '<td><input type="text" class="rowInput" name="sample_amount"></td>';
+            row_list += '<td><input type="text" class="rowInput" name="sample_sprout"></td>';
+            row_list += '<td><input type="text" class="rowInput" name="sample_purity"></td>';
+            row_list += '<td><input type="text" class="rowInput" name="sample_comment"></td>';
+            row_list += '</form>';
+            row_list += '</tr>';
 
-        $("#sample_list").append(row_list);
+            $("#sample_list").append(row_list);
 
-        var input_data = [];
+            var input_data = [];
 
-        var input_value = $("#CropSelect option:selected").text();
+            var input_value = $("#CropSelect option:selected").text();
 
-        var input_name = {key: "sample_name", value: input_value};
+            var input_name = {key: "sample_name", value: input_value};
 
-        input_data.push(input_name);
+            input_data.push(input_name);
 
-        $.ajax(
-            {
-                url: 'insertSample',
-                method: 'POST',
-                dataType: 'json',
-                data: {
-                    "input_data": JSON.stringify(input_data)
-                },
-                success: function (result) {
-                    if (result != null) {
-                        $(".rowInput").focusout(function () {
-                            var data = [];
+            $.ajax(
+                {
+                    url: 'insertSample',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        "input_data": JSON.stringify(input_data)
+                    },
+                    success: function (result) {
+                        if (result != null) {
+                            $(".rowInput").focusout(function () {
+                                var data = [];
 
-                            var data_in = {key: "sample_id", value: result.sample_id}
+                                var data_in = {key: "sample_id", value: result.sample_id}
 
-                            data.push(data_in);
+                                data.push(data_in);
 
-                            $("input[class=rowInput]").each(function (index, item) {
-                                const key = $(this).attr('name');
-                                var value = $(this).val();
+                                $("input[class=rowInput]").each(function (index, item) {
+                                    const key = $(this).attr('name');
+                                    var value = $(this).val();
 
-                                var arr = {key: key, value: value};
+                                    var arr = {key: key, value: value};
 
-                                data.push(arr);
-                            });
-
-                            $.ajax(
-                                {
-                                    url: 'updateSample',
-                                    method: 'POST',
-                                    dataType: 'json',
-                                    data: {
-                                        "data": JSON.stringify(data)
-                                    },
-                                    success: function (result) {
-
-                                    }
+                                    data.push(arr);
                                 });
-                        })
-                    }
-                }
-            });
 
+                                $.ajax(
+                                    {
+                                        url: 'updateSample',
+                                        method: 'POST',
+                                        dataType: 'json',
+                                        data: {
+                                            "data": JSON.stringify(data)
+                                        },
+                                        success: function (result) {
+
+                                        }
+                                    });
+                            })
+                        }
+                    }
+                });
+        } else {
+            /*var row_list = "";
+            row_list += '<tr id="row_data">';
+
+            row_list += '<form action="insertSample" id="rowForm" method="POST" enctype="multipart/form-data">';
+            row_list += '<input type="hidden" id="rowSample" name="rowSample">'
+            row_list += '<td><input type="checkbox" name="RowCheck"></td>';
+            row_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
+            row_list += '<td><input type="text" class="rowInput" name="sample_name" value="' + $("#CropSelect option:selected").text() + '"></td>';
+            row_list += '<td><input type="text" class="rowInput" name="sample_code"></td>';
+            row_list += '<td><input type="text" class="rowInput" name="sample_country"></td>';
+            row_list += '<td><input type="text" class="rowInput" name="sample_type"></td>';
+            row_list += '<td><input type="text" class="rowInput" name="sample_mate"></td>';
+            row_list += '<td><input type="text" class="rowInput" name="sample_seed"></td>';
+            row_list += '<td><input type="text" class="rowInput" name="sample_amount"></td>';
+            row_list += '<td><input type="text" class="rowInput" name="sample_sprout"></td>';
+            row_list += '<td><input type="text" class="rowInput" name="sample_purity"></td>';
+            row_list += '<td><input type="text" class="rowInput" name="sample_comment"></td>';
+            row_list += '</form>';
+            row_list += '</tr>';
+
+            $("#sample_list").append(row_list);
+
+            var input_data = [];
+
+            var input_value = $("#CropSelect option:selected").text();
+
+            var input_name = {key: "sample_name", value: input_value};
+
+            input_data.push(input_name);
+
+            $.ajax(
+                {
+                    url: 'insertSample',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        "input_data": JSON.stringify(input_data)
+                    },
+                    success: function (result) {
+                        if (result != null) {
+                            $(".rowInput").focusout(function () {
+                                var data = [];
+
+                                var data_in = {key: "sample_id", value: result.sample_id}
+
+                                data.push(data_in);
+
+                                $("input[class=rowInput]").each(function (index, item) {
+                                    const key = $(this).attr('name');
+                                    var value = $(this).val();
+
+                                    var arr = {key: key, value: value};
+
+                                    data.push(arr);
+                                });
+
+                                $.ajax(
+                                    {
+                                        url: 'updateSample',
+                                        method: 'POST',
+                                        dataType: 'json',
+                                        data: {
+                                            "data": JSON.stringify(data)
+                                        },
+                                        success: function (result) {
+
+                                        }
+                                    });
+                            })
+                        }
+                    }
+                });*/
+        }
     }
 
     /* 엑셀 다운로드 */
@@ -1784,7 +2088,7 @@
     }
 
     function exportExcel() {
-        if(tablechk === 0) {
+        if (tablechk === 0) {
             // step 1. workbook 생성
             var wb = XLSX.utils.book_new();
 
