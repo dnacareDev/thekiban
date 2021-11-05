@@ -539,8 +539,8 @@
 							<div class="action-btn d-flex justify-content-end">
 								<div class="atbd-button-list d-flex flex-wrap">
 									<div class="btn-group atbd-button-group btn-group-normal my-2" role="group">
-										<button type="button" class="btn btn-xs btn-outline-light">원종관리</button>
-										<button type="button" class="btn btn-xs btn-outline-light">원종재고관리</button>
+										<button type="button" class="btn btn-xs btn-outline-light" onclick="ChangeBtn(0);">원종관리</button>
+										<button type="button" class="btn btn-xs btn-outline-light" onclick="ChangeBtn(1);">원종재고관리</button>
 									</div>
 									<select class="form-control form-control-lg mt-10 mb-10 mr-10" style="width: 250px;" id="CropSelect">
 										<option value="고추">고추</option>
@@ -575,7 +575,7 @@
 										<tbody class="text-center" id="basic_list">
 										</tbody>
 									</table>
-									<table class="table" id="table2">
+									<table class="table" id="table2" style="display: none;">
 										<thead class="text-center">
 											<tr>
 												<th>종자번호</th>
@@ -601,7 +601,7 @@
 									</table>
 								</div>
                                 <div class="row">
-                                    <div class="col-4">
+                                    <div class="col-4" id="btn1">
                                         <button class="btn btn-icon btn-light btn-circle" onclick="InsertBtn()">
                                             <span data-feather="plus"></span>
                                         </button>
@@ -611,12 +611,20 @@
                                         <button class="btn btn-icon btn-light btn-circle" id="data_check_submit" onclick="AnalysisBtn();" style="width:44.03px; height:42px;">
                                             <img src="../assets/vendor_assets/img/check_tab.png" alt="check" style="width: 17px;margin-left: 4px;">
                                         </button>
-                                        <input type="hidden" id="offset">
+                                    </div>
+                                    <div class="col-4" id="btn2" style="display: none;">
+                                        <button class="btn btn-icon btn-light btn-circle" onclick="InsertInventory()">
+                                            <span data-feather="plus"></span>
+                                        </button>
+                                        <button class="btn btn-icon btn-light btn-circle" onclick="DeleteInventory()">
+                                            <span data-feather="trash-2"></span>
+                                        </button>
                                     </div>
                                     <div class="col-4">
                                         <div class="row" style="justify-content: center;">
                                             <div id="pageNum" style="text-align:center; margin: 2% 0 0 0;"></div>
                                         </div>
+                                        <input type="hidden" id="offset">
                                     </div>
                                 </div>
                             </div>
@@ -1912,6 +1920,36 @@
     	{
     		location.href = "/analysis?total_id=" + total_id + "&type=" + 2;
     	}
+    }
+    
+    function ChangeBtn(e)
+    {
+    	if(e == 0)
+    	{
+	    	$("#table1").css("display", "inline-block");
+	    	$("#btn1").css("display", "block");
+	    	
+	    	$("#table2").css("display", "none");
+	    	$("#btn2").css("display", "none");
+    	}
+    	else
+    	{
+	    	$("#table1").css("display", "none");
+	    	$("#btn1").css("display", "none");
+	    	
+	    	$("#table2").css("display", "block");
+	    	$("#btn2").css("display", "block");
+    	}
+    }
+    
+    function InsertInventory(e)
+    {
+    	console.log(123);
+    }
+    
+    function DeleteInventory(e)
+    {
+    	console.log(456);
     }
 </script>
 </body>
