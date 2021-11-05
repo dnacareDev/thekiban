@@ -545,7 +545,7 @@
 										<button class="btn btn-icon btn-light btn-circle" onclick="DeleteBreed();">
 											<span data-feather="trash-2"></span>
 										</button>
-										<button class="btn btn-icon btn-light btn-circle" id="data_check_submit" style="width:44.03px; height:42px;">
+										<button class="btn btn-icon btn-light btn-circle" id="data_check_submit" onclick="AnalysisBtn();" style="width:44.03px; height:42px;">
 											<img src="../assets/vendor_assets/img/check_tab.png" alt="check" style="width: 17px;margin-left: 4px;">
 										</button>
 										<input type="hidden" id="offset">
@@ -1870,7 +1870,24 @@
 
         display_container.append(add_list);
     }
+    
+    // 통합 분석
+    function AnalysisBtn()
+    {
+    	var total_id = [];
 
+    	$("input:checkbox[name=RowCheck]:checked").each(function()
+    	{
+    		total_id.push($(this).val());
+    	});
+    	
+    	if(total_id.length != 0)
+    	{
+    		location.href = "/analysis?total_id=" + total_id + "&type=" + 1;
+    	}
+    }
+
+    /*
    	$("#data_check_submit").mouseover(function()
    	{
    		$("#data_check_submit img").attr("src", "../assets/vendor_assets/img/check_tab_green.png");
@@ -1880,6 +1897,7 @@
     {
    		$("#data_check_submit img").attr("src", "../assets/vendor_assets/img/check_tab.png");
     });
+    */
 </script>
 </body>
 </html>

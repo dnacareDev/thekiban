@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:with="user = ${#authentication.principal}">
 <style>
-	.top-menu .menu-text {font-size: 14px} /* 2021 - 11 - 01 수정 */
+	.top-menu .menu-text {font-size: 14px}
 	.top-menu .feather {margin-right: 8px}
-
 
 	input[type="text"]:focus{
 		border:1px solid #222;
@@ -22,8 +21,6 @@
   	.main-content .form-group input[type=text]{
   		flex: 0 0 70%;
   	}
-  	
-  	
 </style>
 	<header class="header-top">
         <nav class="navbar navbar-light">
@@ -61,7 +58,7 @@
                                         <a href="/sample">시교 자원 관리</a>
                                     </li>
                                     <li>
-                                        <a href="">통합 분석</a>
+                                        <a href="/analysis">통합 분석</a>
                                     </li>
                                 </ul>
                             </li>
@@ -72,22 +69,8 @@
                                 </a>
                                 <ul class="atbd-menu menu-top menu-vertical subMenu">
                                     <li class="atbd-menu__item">
-                                        <a class="atbd-menu__link active" href="#">
+                                        <a class="atbd-menu__link" href="">
                                             <span class="atbd-menu__text">MABC Tools</span>
-                                        </a>
-                                        <ul class="atbd-submenu">
-                                            <li class="atbd-menu__item">
-                                                <ul class="atbd-submenu-item">
-                                                    <li><a href="">Design tool</a></li>
-                                                    <li><a href="/lab/data_manage">Data 관리</a></li>
-                                                    <li><a href="">Analysis tool</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="atbd-menu__item">
-                                        <a class="atbd-menu__link active" href="#">
-                                            <span class="atbd-menu__text">Genome browser</span>
                                         </a>
                                         <ul class="atbd-submenu">
                                             <li class="atbd-menu__item">
@@ -99,8 +82,24 @@
                                             </li>
                                         </ul>
                                     </li>
-                                    <li>
-                                        <a href="">GWAS tool</a>
+                                    <li class="atbd-menu__item">
+                                        <a class="atbd-menu__link" href="">
+                                            <span class="atbd-menu__text">Genome browser</span>
+                                        </a>
+                                        <ul class="atbd-submenu">
+                                            <li class="atbd-menu__item">
+                                                <ul class="atbd-submenu-item">
+                                                    <li><a href="">Genome Data</a></li>
+                                                    <li><a href="">Marker Information</a></li>
+                                                    <li><a href="">QTL Information</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="atbd-menu__item">
+                                        <a class="atbd-menu__link" href="">
+                                            <span class="atbd-menu__text">GWAS</span>
+                                        </a>
                                     </li>
                                 </ul>
                             </li>
