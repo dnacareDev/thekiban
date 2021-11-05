@@ -22,6 +22,19 @@
         </selectKey>
     </insert>
 
+    <!-- 시교자원 등록 -->
+    <insert id="InsertSampleOutcome" parameterType="Sample">
+        INSERT INTO sampleOutcome
+        (sample_outcome_id, sample_outcome_code, sample_outcome_num, sample_outcome_amount, sample_outcome_in, sample_outcome_out, sample_outcome_remain, sample_outcome_person,
+        sample_outcome_reciever, sample_outcome_date, sample_outcome_end, sample_outcome_country, sample_outcome_place)
+        VALUES (#{sample_outcome_id}, #{sample_outcome_code}, #{sample_outcome_num}, #{sample_outcome_amount}, #{sample_outcome_in},
+        #{sample_outcome_out}, #{sample_outcome_remain}, #{sample_outcome_person}, #{sample_outcome_reciever}, #{sample_outcome_date},
+        #{sample_outcome_end}, #{sample_outcome_country}, #{sample_outcome_place})
+        <selectKey resultType="int" keyProperty="sample_outcome_id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
     <!-- 시교자원 개수 -->
     <select id="SelectSampleCount" parameterType="String" resultType="int">
         SELECT COUNT(*) FROM sample
@@ -44,7 +57,29 @@
         LIMIT #{offset}, #{limit}
     </select>
 
-    <!-- 첨부파일 목록 -->
+    <!-- 출고자원 개수 -->
+    <select id="SelectOutcomeCount" parameterType="String" resultType="int">
+        SELECT COUNT(*) FROM sampleOutcome
+        <choose>
+            <when test="sample_name != 'none'">
+                WHERE sample_name = #{sample_name}
+            </when>
+        </choose>
+    </select>
+
+    <!-- 출고자원 검색 -->
+    <select id="SearchOutcome" resultType="SampleOutcome">
+        SELECT * FROM sampleOutcome
+        <choose>
+            <when test="sample_name != 'none'">
+                WHERE sample_name = #{sample_name}
+                ORDER BY sample_outcome_id DESC
+            </when>
+        </choose>
+        LIMIT #{offset}, #{limit}
+    </select>
+
+    <!-- 첨부파일 목록 검색 -->
     <select id="SearchFileList" resultType="SampleFile">
         SELECT * FROM sampleFile
         <choose>
@@ -80,6 +115,24 @@
         WHERE sample_id = #{sample_id}
     </update>
 
+    <!-- 수출자원 수정 -->
+    <update id="UpdateOutcome" parameterType="SampleOutcome">
+        UPDATE sampleOutcome
+        SET sample_outcome_code    = #{sample_outcome_code},
+            sample_outcome_num    = #{sample_outcome_num},
+            sample_outcome_amount = #{sample_outcome_amount},
+            sample_outcome_in    = #{sample_outcome_in},
+            sample_outcome_out    = #{sample_outcome_out},
+            sample_outcome_remain    = #{sample_outcome_remain},
+            sample_outcome_person  = #{sample_outcome_person},
+            sample_outcome_reciever  = #{sample_outcome_reciever},
+            sample_outcome_date  = #{sample_outcome_date},
+            sample_outcome_end = #{sample_outcome_end},
+            sample_outcome_country    = #{sample_outcome_country},
+            sample_outcome_place    = #{sample_outcome_place}
+        WHERE sample_outcome_id = #{sample_outcome_id}
+    </update>
+
     <!-- 엑셀파일 등록 -->
     <insert id="InsertExcel" parameterType="Sample">
         INSERT INTO sample
@@ -93,7 +146,7 @@
 
     <!-- 수출관리 엑셀 등록 -->
     <insert id="InsertOutcomeExcel" parameterType="SampleOutcome">
-        INSERT INTO sample
+        INSERT INTO sampleOutcome
         (sample_outcome_id, sample_outcome_code, sample_outcome_num, sample_outcome_amount, sample_outcome_in, sample_outcome_out, sample_outcome_remain, sample_outcome_person,
          sample_outcome_reciever, sample_outcome_date, sample_outcome_end, sample_outcome_country, sample_outcome_place)
         VALUES (#{sample_outcome_id}, #{sample_outcome_code}, #{sample_outcome_num}, #{sample_outcome_amount}, #{sample_outcome_in},

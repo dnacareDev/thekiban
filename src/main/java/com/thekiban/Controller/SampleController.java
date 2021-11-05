@@ -33,23 +33,6 @@ public class SampleController {
   }
 
   // 시교자원 입력
-/*  @ResponseBody
-  @RequestMapping("insertSample")
-  public ModelAndView InsertSample(ModelAndView mv, @ModelAttribute Sample sample, @RequestParam("data") String data)
-  {
-    JSONArray arr = new JSONArray(data);
-
-    System.out.println(sample);
-
-    System.out.println(arr);
-
-//    service.InsertSample(sample);
-
-    mv.setViewName("redirect:/sample");
-
-    return mv;
-  }*/
-
   @ResponseBody
   @RequestMapping("insertSample")
   public Sample InsertSample(@ModelAttribute Sample sample, @RequestParam("input_data") String input_data) {
@@ -64,6 +47,23 @@ public class SampleController {
     service.InsertSample(sample);
 
     return sample;
+  }
+
+  @ResponseBody
+  @RequestMapping("insertSampleOutcome")
+  public SampleOutcome InsertSampleOutcome(@ModelAttribute SampleOutcome sampleOutcome, @RequestParam("input_data") String input_data) {
+    JSONArray arr = new JSONArray(input_data);
+
+    JSONObject obj = arr.getJSONObject(0);
+
+    String value = (String) obj.get("value");
+
+    sampleOutcome.setSample_name(value);
+    ;
+
+    service.InsertSampleOutcome(sampleOutcome);
+
+    return sampleOutcome;
   }
 
   // 시교자원 검색
@@ -87,7 +87,30 @@ public class SampleController {
 
     return result;
   }
+  
+  // 수출자원 검색
+  @ResponseBody
+  @RequestMapping("searchOutcome")
+  public Map<String, Object> SearchOutcome(@RequestParam("sample_name") String sample_name, @RequestParam("page_num") int page_num) {
+    Map<String, Object> result1 = new LinkedHashMap<String, Object>();
 
+    int count = service.SelectSampleCount(sample_name);
+
+    int limit = 10;
+    int offset = (page_num - 1) * limit;
+    int end_page = (count + limit - 1) / limit;
+
+    List<SampleOutcome> SampleOutcome = service.SearchOutcome(sample_name, offset, limit);
+
+    result1.put("sampleOutcome", SampleOutcome);
+    result1.put("page_num", page_num);
+    result1.put("end_page", end_page);
+    result1.put("offset", offset);
+
+    return result1;
+  }
+
+  // 첨부파일 검색
   @ResponseBody
   @RequestMapping("searchFileList")
   public Map<String, Object> SearchFileList(@RequestParam("sample_id") String sample_id) {
@@ -180,6 +203,84 @@ public class SampleController {
     return mv;
   }
 
+  @RequestMapping("updateOutcome")
+  public ModelAndView UpdateOutcome(ModelAndView mv, @ModelAttribute SampleOutcome sampleOutcome, @RequestParam("data") String data) {
+    JSONArray arr = new JSONArray(data);
+
+    JSONObject input_id = arr.getJSONObject(0);
+
+    int value_id = (Integer) input_id.get("value");
+
+    sampleOutcome.setSample_outcome_id(value_id);
+
+    for (int i = 1; i < arr.length(); i++) {
+      JSONObject obj = arr.getJSONObject(i);
+
+      String key_id = (String) obj.get("key");
+      String value = (String) obj.get("value");
+
+      if (!value.equals("")) {
+        if (key_id.equals("sample_outcome_code")) {
+          sampleOutcome.setSample_outcome_code(value);
+        } else if (key_id.equals("sample_outcome_num")) {
+          sampleOutcome.setSample_outcome_num(value);
+        } else if (key_id.equals("sample_outcome_amount")) {
+          sampleOutcome.setSample_outcome_amount(Integer.parseInt(value));
+        } else if (key_id.equals("sample_outcome_in")) {
+          sampleOutcome.setSample_outcome_in(Integer.parseInt(value));
+        } else if (key_id.equals("sample_outcome_out")) {
+          sampleOutcome.setSample_outcome_out(Integer.parseInt(value));
+        } else if (key_id.equals("sample_outcome_remain")) {
+          sampleOutcome.setSample_outcome_remain(Integer.parseInt(value));
+        } else if (key_id.equals("sample_outcome_person")) {
+          sampleOutcome.setSample_outcome_person(value);
+        } else if (key_id.equals("sample_outcome_reciever")) {
+          sampleOutcome.setSample_outcome_reciever(value);
+        } else if (key_id.equals("sample_outcome_date")) {
+          sampleOutcome.setSample_outcome_date(value);
+        } else if (key_id.equals("sample_outcome_end")) {
+          sampleOutcome.setSample_outcome_end(value);
+        } else if (key_id.equals("sample_outcome_country")) {
+          sampleOutcome.setSample_outcome_country(value);
+        } else if (key_id.equals("sample_outcome_place")) {
+          sampleOutcome.setSample_outcome_place(value);
+        }
+      } else {
+        if (key_id.equals("sample_outcome_code")) {
+          sampleOutcome.setSample_outcome_code("");
+        } else if (key_id.equals("sample_outcome_num")) {
+          sampleOutcome.setSample_outcome_num("");
+        } else if (key_id.equals("sample_outcome_amount")) {
+          sampleOutcome.setSample_outcome_amount(0);
+        } else if (key_id.equals("sample_outcome_in")) {
+          sampleOutcome.setSample_outcome_in(0);
+        } else if (key_id.equals("sample_outcome_out")) {
+          sampleOutcome.setSample_outcome_out(0);
+        } else if (key_id.equals("sample_outcome_remain")) {
+          sampleOutcome.setSample_outcome_remain(0);
+        } else if (key_id.equals("sample_outcome_person")) {
+          sampleOutcome.setSample_outcome_person("");
+        } else if (key_id.equals("sample_outcome_reciever")) {
+          sampleOutcome.setSample_outcome_reciever("");
+        } else if (key_id.equals("sample_outcome_date")) {
+          sampleOutcome.setSample_outcome_date(null);
+        } else if (key_id.equals("sample_outcome_end")) {
+          sampleOutcome.setSample_outcome_end(null);
+        } else if (key_id.equals("sample_outcome_country")) {
+          sampleOutcome.setSample_outcome_country("");
+        } else if (key_id.equals("sample_outcome_place")) {
+          sampleOutcome.setSample_outcome_place("");
+        }
+      }
+    }
+
+    service.UpdateOutcome(sampleOutcome);
+
+    mv.setViewName("redirect:/sample");
+
+    return mv;
+  }
+
   // 엑셀 등록
   @RequestMapping("excelSample")
   public ModelAndView excelUpload(ModelAndView mv, @ModelAttribute Sample sample, @RequestParam("excel_list") String excel_list) {
@@ -239,7 +340,7 @@ public class SampleController {
         if (k.equals("시교명")) {
           sampleOutcome.setSample_outcome_code(obj.getString(k));
         } else if (k.equals("종자번호 (ID)")) {
-          sampleOutcome.setSample_outcome_num(Integer.parseInt(obj.getString(k)));
+          sampleOutcome.setSample_outcome_num(obj.getString(k));
         } else if (k.equals("종자 보유량")) {
           sampleOutcome.setSample_outcome_amount(Integer.parseInt(obj.getString(k)));
         } else if (k.equals("입고량")) {
