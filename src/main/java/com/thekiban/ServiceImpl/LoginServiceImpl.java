@@ -22,4 +22,11 @@ public class LoginServiceImpl implements LoginService
 
     return user;
 	}
+
+	// 비밀번호 변경
+	@Override
+	public int UpdatePassword(User user)
+	{
+		return mapper.UpdatePassword(user);
+	}
 }

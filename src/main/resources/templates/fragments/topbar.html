@@ -176,11 +176,10 @@
     </header>
     <div class="modal-basic modal fade show pop1" id="settings" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
-            <div class="modal-content modal-bg-white ">
+            <div class="modal-content modal-bg-white" style="width: 750px;">
                 <div class="modal-header" style="border: none">
                     <h6 class="modal-title">비밀번호 변경</h6>
                 </div>
-                <form method="post" action="" onsubmit="return passwordSubmit();">
 	                <div class="modal-body clearfix" id="checking_password">
 	                	<span class="passwordM" style=" color: red; font-size: 10px; text-align: center;">비밀번호가 다릅니다 다시 확인해주세요</span>
 	                    <div class="form-group mb-0 clearfix" style="padding: 10px 0;">
@@ -194,27 +193,44 @@
 	                </div>
 	                <div class="modal-footer clearfix" style="border: none; clear:both;">
 	                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
-	                    <input type="submit" class="btn btn-primary btn-sm" value="저장">
+	                    <input type="submit" class="btn btn-primary btn-sm" value="저장" onclick="UpdateBtn();">
 	                </div>
-                </form>
             </div>
         </div>
     </div>
     <script>
-    	function modalShow(e){
+    	function modalShow(e)
+    	{
     		$(e).modal("show");
     	}
     	
-    	function passwordSubmit(){
-    		
-    		if($("#passwordCh1").val() !== $("#passwordCh2").val()){
+    	function UpdateBtn()
+    	{
+    		if($("#passwordCh1").val() !== $("#passwordCh2").val())
+    		{
     			$("#checking_password").addClass("active");
+    			
     			return false;
-    		} else {
-    			return true;
     		}
-    		
+    		else
+    		{
+    			var data = {"user_password" : $("#passwordCh1").val()};
+    			
+    	        $.ajax(
+    	        {
+    	        	url: 'updatePassword',
+    	        	method: 'POST',
+    	        	dataType: 'json',
+    	        	data: data,
+    	        	success: function(result)
+    	        	{
+    	        		if(result != 0)
+    	        		{
+    	        			location.reload();
+    	        		}
+    	        	}
+    	        });
+    		}
     	}
-    	
     </script>
 </html>
