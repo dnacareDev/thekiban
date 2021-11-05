@@ -21,6 +21,20 @@
   	.main-content .form-group input[type=text]{
   		flex: 0 0 70%;
   	}
+  	#passwordCh1,#passwordCh2{
+  		border: 1px solid #e3e6ef;
+  	}
+  	
+  	#checking_password.active #passwordCh1,
+  	#checking_password.active #passwordCh2{
+  		border: 1px solid red;
+  	}
+  	#checking_password.active .passwordM{
+  		display: block;
+  	} 
+  	.passwordM{
+  		display:none;
+  	}
 </style>
 	<header class="header-top">
         <nav class="navbar navbar-light">
@@ -141,19 +155,7 @@
                                 <div class="nav-author__options">
                                     <ul>
                                         <li>
-                                            <a href=""><span data-feather="user"></span> Profile</a>
-                                        </li>
-                                        <li>
-                                            <a href=""><span data-feather="settings"></span> Settings</a>
-                                        </li>
-                                        <li>
-                                            <a href=""><span data-feather="key"></span> Billing</a>
-                                        </li>
-                                        <li>
-                                            <a href=""><span data-feather="users"></span> Activity</a>
-                                        </li>
-                                        <li>
-                                            <a href=""><span data-feather="bell"></span> Help</a>
+                                            <a href="#" onclick="return modalShow('#settings');"><span data-feather="settings"></span> Settings</a>
                                         </li>
                                     </ul>
                                     <a href="/logout" class="nav-author__signout"><span data-feather="log-out"></span> Sign Out</a>
@@ -172,4 +174,47 @@
             </div>
         </nav>
     </header>
+    <div class="modal-basic modal fade show pop1" id="settings" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content modal-bg-white ">
+                <div class="modal-header" style="border: none">
+                    <h6 class="modal-title">비밀번호 변경</h6>
+                </div>
+                <form method="post" action="" onsubmit="return passwordSubmit();">
+	                <div class="modal-body clearfix" id="checking_password">
+	                	<span class="passwordM" style=" color: red; font-size: 10px; text-align: center;">비밀번호가 다릅니다 다시 확인해주세요</span>
+	                    <div class="form-group mb-0 clearfix" style="padding: 10px 0;">
+	                       <span style="vertical-align: middle;">변경할 비밀번호</span>
+	                       <input id="passwordCh1" type="password" name="" style="width: 80%; float: right; margin-left: 10px; border-radius: 5px;height:45px;">
+	                    </div>
+	                   	<div class="form-group mb-0 clearfix" style="clear: both;">
+	                        <span style="vertical-align: middle;">비밀번호 확인</span>
+	                        <input id="passwordCh2" type="password" name="" style="width: 80%; float: right; margin-left: 10px; border-radius: 5px;height:45px;">
+	                    </div>
+	                </div>
+	                <div class="modal-footer clearfix" style="border: none; clear:both;">
+	                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
+	                    <input type="submit" class="btn btn-primary btn-sm" value="저장">
+	                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+    	function modalShow(e){
+    		$(e).modal("show");
+    	}
+    	
+    	function passwordSubmit(){
+    		
+    		if($("#passwordCh1").val() !== $("#passwordCh2").val()){
+    			$("#checking_password").addClass("active");
+    			return false;
+    		} else {
+    			return true;
+    		}
+    		
+    	}
+    	
+    </script>
 </html>

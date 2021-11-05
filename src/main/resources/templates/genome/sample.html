@@ -413,6 +413,10 @@
             padding-bottom: 28px;
             padding-right: 24px;
         }
+        
+        .modal-search {
+        	width: 250px;
+        }
 
         .btn-primary {
             border: none;
@@ -489,6 +493,78 @@
         .rowInput {
             width: 115px;
         }
+        .box_center .buttonLi button { 
+            width: 32px; 
+		    height: 32px;
+		    border: 2px solid #217566;
+		    background-color: transparent;
+		    border-radius: 50%;
+        }
+		.box_center .buttonLi button svg{
+			display:none;
+		}
+		.box_center .buttonLi button span {
+		    position: relative;
+		}
+		.box_center .buttonLi button span::before {
+		    content: "";
+		    display: block;
+		    position: absolute;
+		    top: -1px;
+		    left: 0;
+		    width: 2px;
+		    height: 10px;
+		    background-color: #217566;
+		    transform: rotate(45deg);
+		}
+		.box_center .buttonLi button span::after {
+		    content: "";
+		    display: block;
+		    position: absolute;
+		    top: -7px;
+		    left: 0;
+		    width: 2px;
+		    height: 10px;
+		    background-color: #217566;
+		    transform: rotate(-45deg);
+		}
+		.box_center .buttonLi button span.left_btn::before {
+		    left: -2px;
+		    transform: rotate(-45deg);
+		}
+		.box_center .buttonLi button span.left_btn::after {
+		    left: -2px;
+    		transform: rotate(45deg);
+		}
+		#grid2 .tab-content .row .detail_list li{
+			width: 100%;
+			border-bottom: 1px solid #E2E3E5;
+		}
+		#grid2 .tab-content .row .list-group{
+			width: 100%;
+			margin:0 !important;
+		}
+		#grid2 .tab-content .row .detail_list li:hover,
+		#grid2 .tab-content .row .display_list li:hover{
+			background-color: #EDF6F1;
+		}
+		#grid2 .tab-content .row .detail_list li.active,
+		#grid2 .tab-content .row .display_list li.active{
+			background-color: #217566;
+			color: #fff;
+			border: none;
+		}
+		#grid2 .tab-content .row .display_list li .row{
+			margin-left:0;
+			margin-right: 0;
+			display:block;
+		}
+		#grid2 input[type="checkbox"]{
+			display:none !important; 
+		}
+		#grid2 .tab-content .row li{
+			padding: 0 10px !important;
+		}
     </style>
 </head>
 
@@ -1113,18 +1189,410 @@
                 <div class="modal-header" style="border: none">
                     <h6 class="modal-title" id="test_click">시교 진행 현황</h6>
                 </div>
+                
+                <input type="text" id="modal-search" />
+                <input type="button" id="modal-search-btn" value="검색" />
+                
                 <div class="modal-body">
                     <ul id="google_container">
-                        <li id="google_map1"><img src="../assets/vendor_assets/img/map1.png" alt="map1"></li>
-                        <li id="google_map2"><img src="../assets/vendor_assets/img/map2.png" alt="map2"></li>
+                        <li id="google_map1">
+                        <!-- <img src="../assets/vendor_assets/img/map1.png" alt="지도1"> -->
+                        </li>
+                        <li id="google_map2"><img src="../assets/vendor_assets/img/map2.png" alt="지도2"></li>
                     </ul>
                 </div>
+                
                 <div class="modal-footer" style="border: none">
-                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
+                    	취소
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+    <div class="modal-basic modal fade show pop2" id="grid2" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-md" role="document">
+			<form action="insertBreedDisplay" method="POST" enctype="multipart/form-data">
+			<div class="modal-content modal-bg-white">
+				<div class="modal-header" style="border: none">
+					<h6 class="modal-title" id="display_title"></h6>
+					<input type="hidden" id="display_name" name="breed_name">
+				</div>
+				<div class="modal-body">
+					<div class="tab-pane fade show active" id="control1" role="tabpanel" aria-labelledby="control1-tab">
+						<div class="tab-slide-content">
+							<div class="atbd-tab tab-horizontal">
+								<div class="top_box">
+									<ul class="nav nav-tabs vertical-tabs" role="tablist">
+										<li class="nav-item">
+											<a class="nav-link" id="tab-horizontal-0-tab" data-toggle="tab" href="#tab-horizontal-0" role="tab" aria-controls="tab-horizontal-0" aria-selected="true">기본 정보</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" id="tab-horizontal-1-tab" data-toggle="tab" href="#tab-horizontal-1" role="tab" aria-controls="tab-horizontal-1" aria-selected="false">원예형질[종자원 기준]</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" id="tab-horizontal-2-tab" data-toggle="tab" href="#tab-horizontal-2" role="tab" aria-controls="tab-horizontal-2" aria-selected="false">원예형질[사내 기준]</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" id="tab-horizontal-3-tab" data-toggle="tab" href="#tab-horizontal-3" role="tab" aria-controls="tab-horizontal-3" aria-selected="false">병저항성[종자원 기준]</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" id="tab-horizontal-4-tab" data-toggle="tab" href="#tab-horizontal-4" role="tab" aria-controls="tab-horizontal-4" aria-selected="false">병저항성[사내 기준]</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" id="tab-horizontal-5-tab" data-toggle="tab" href="#tab-horizontal-5" role="tab" aria-controls="tab-horizontal-5" aria-selected="false">성분정보[종자원 기준]</a>
+										</li>
+										<li class="nav-item">
+											<a class="nav-link" id="tab-horizontal-6-tab" data-toggle="tab" href="#tab-horizontal-6" role="tab" aria-controls="tab-horizontal-6" aria-selected="false">마커정보</a>
+										</li>
+									</ul>
+									<span class="prev"></span>
+									<span class="next"></span>
+								</div>
+									<!-- <input type="hidden" id="detail_list1" name="detail_list"> -->
+									<div class="tab-content">
+										<div class="tab-pane fade show active" id="tab-horizontal-0" role="tabpanel" aria-labelledby="tab-horizontal-0-tab">
+											<div class="content_title clearfix">
+												<ul>
+													<li>형질</li>
+													<li>조사값</li>
+												</ul>
+											</div>
+											<div class="content_1 clearfix">
+												<div class="row mt-20">
+													<div class="col-lg-12">
+														<div class="card">
+															<div class="card-body">
+																<div class="row">
+																	<div class="col-lg-12">
+																		<span class="color-dark align-center" style="font-size: 20px;">표시항목 설정</span>
+																	</div>
+																</div>
+																<div class="row mt-4" style="justify-content: center; align-items: center;">
+																	<div class="col-lg-5">
+																		<div class="row" style="overflow:auto; min-height: 500px; border: 1px solid #D9D9D9;">
+																			<div class="list-group mt-2" style="max-height: 500px; orverfolw-y: auto;">
+																				<ul class="detail_list" id="display_container1" name="기본 정보">
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="box_content">
+                                                                        <div class="box_center">
+                                                                        	<div class="buttonLi">
+                                                                            	<button type="button" onclick="PlusResearch(1);"><span></span></button>
+                                                                            </div>
+                                                                            <div class="buttonLi"> 
+                                                                                <button type="button" onclick="MinusResearch(1);"><span class="left_btn"></span></button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-5" style="padding:0;">
+                                                                        <ul class="display_list" id="step_container1" style="min-height: 500px; max-height: 500px; overflow-y: auto; border: 1px solid #D9D9D9">
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade show" id="tab-horizontal-1" role="tabpanel" aria-labelledby="tab-horizontal-1-tab">
+                                            <div class="content_title clearfix">
+                                                <ul>
+                                                    <li>형질</li>
+                                                    <li>조사값</li>
+                                                </ul>
+                                            </div>
+                                            <div class="content_1 clearfix">
+                                                <div class="row mt-20">
+                                                    <div class="col-lg-12">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-lg-12">
+                                                                        <span class="color-dark align-center" style="font-size: 20px;">표시항목 설정</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mt-4" style="justify-content: center;align-items: center;">
+                                                                    <div class="col-lg-5">
+                                                                        <div class="row" style="overflow:auto; min-height: 500px; border: 1px solid #D9D9D9;">
+                                                                            <div class="list-group mt-2" style="max-height: 500px; orverfolw-y: auto;">
+                                                                                <ul class="detail_list" id="display_container2" name="원예형질 (종자원 기준)">
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="box_content">
+                                                                        <div class="box_center">
+                                                                            <div class="buttonLi">
+                                                                            	<button type="button" onclick="PlusResearch(2);"><span></span></button>
+                                                                            </div>
+                                                                            <div class="buttonLi"> 
+                                                                                <button type="button" onclick="MinusResearch(2);"><span class="left_btn"></span></button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-5" style="padding:0;">
+                                                                        <ul class="display_list" id="step_container2" style="min-height: 500px; max-height: 500px; overflow-y: auto; border: 1px solid #D9D9D9">
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade show" id="tab-horizontal-2" role="tabpanel" aria-labelledby="tab-horizontal-2-tab">
+                                            <div class="content_title clearfix">
+                                                <ul>
+                                                    <li>형질</li>
+                                                    <li>조사값</li>
+                                                </ul>
+                                            </div>
+                                            <div class="content_1 clearfix">
+                                                <div class="row mt-20">
+                                                    <div class="col-lg-12">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-lg-12">
+                                                                        <span class="color-dark align-center" style="font-size: 20px;">표시항목 설정</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mt-4" style="justify-content: center;align-items: center;">
+                                                                    <div class="col-lg-5">
+                                                                        <div class="row" style="overflow:auto; min-height: 500px; border: 1px solid #D9D9D9;">
+                                                                            <div class="list-group mt-2" style="max-height: 500px; overflow-y: auto;">
+                                                                                <ul class="detail_list" id="display_container3" name="원예형질 (사내 기준)">
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="box_content">
+                                                                        <div class="box_center">
+                                                                            <div class="buttonLi">
+                                                                            	<button type="button" onclick="PlusResearch(3);"><span></span></button>
+                                                                            </div>
+                                                                            <div class="buttonLi"> 
+                                                                                <button type="button" onclick="MinusResearch(3);"><span class="left_btn"></span></button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-5" style="padding:0;">
+                                                                        <ul class="display_list" id="step_container3" style="min-height: 500px; max-height: 500px; overflow-y: auto; border: 1px solid #D9D9D9">
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade show" id="tab-horizontal-3" role="tabpanel" aria-labelledby="tab-horizontal-3-tab">
+                                            <div class="content_title clearfix">
+                                                <ul>
+                                                    <li>형질</li>
+                                                    <li>조사값</li>
+                                                </ul>
+                                            </div>
+                                            <div class="content_1 clearfix">
+                                                <div class="row mt-20">
+                                                    <div class="col-lg-12">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-lg-12">
+                                                                        <span class="color-dark align-center" style="font-size: 20px;">표시항목 설정</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mt-4" style="justify-content: center;align-items: center;">
+                                                                    <div class="col-lg-5">
+                                                                        <div class="row" style="overflow:auto; min-height: 500px; border: 1px solid #D9D9D9;">
+                                                                            <div class="list-group mt-2" style="max-height: 500px; orverfolw-y: auto;">
+                                                                                <ul class="detail_list" id="display_container4" name="병저항성 (국립종자원 기준)">
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="box_content">
+                                                                        <div class="box_center">
+                                                                            <div class="buttonLi">
+                                                                            	<button type="button" onclick="PlusResearch(4);"><span></span></button>
+                                                                            </div>
+                                                                            <div class="buttonLi"> 
+                                                                                <button type="button" onclick="MinusResearch(4);"><span class="left_btn"></span></button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-5" style="padding:0;">
+                                                                        <ul class="display_list" id="step_container4" style="min-height: 500px; max-height: 500px; overflow-y: auto; border: 1px solid #D9D9D9">
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade show" id="tab-horizontal-4" role="tabpanel" aria-labelledby="tab-horizontal-4-tab">
+                                            <div class="content_title clearfix">
+                                                <ul>
+                                                    <li>형질</li>
+                                                    <li>조사값</li>
+                                                </ul>
+                                            </div>
+                                            <div class="content_1 clearfix">
+                                                <div class="row mt-20">
+                                                    <div class="col-lg-12">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-lg-12">
+                                                                        <span class="color-dark align-center" style="font-size: 20px;">표시항목 설정</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mt-4" style="justify-content: center;align-items: center;">
+                                                                    <div class="col-lg-5">
+                                                                        <div class="row" style="overflow:auto; min-height: 500px; border: 1px solid #D9D9D9;">
+                                                                            <div class="list-group mt-2" style="max-height: 500px; orverfolw-y: auto;">
+                                                                                <ul class="detail_list" id="display_container5" name="병저항성 (사내 기준)">
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="box_content">
+                                                                        <div class="box_center">
+                                                                            <div class="buttonLi">
+                                                                            	<button type="button" onclick="PlusResearch(5);"><span></span></button>
+                                                                            </div>
+                                                                            <div class="buttonLi"> 
+                                                                                <button type="button" onclick="MinusResearch(5);"><span class="left_btn"></span></button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-5" style="padding:0;">
+                                                                        <ul class="display_list" id="step_container5" style="min-height: 500px; max-height: 500px; overflow-y: auto; border: 1px solid #D9D9D9">
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade show" id="tab-horizontal-5" role="tabpanel" aria-labelledby="tab-horizontal-5-tab">
+                                            <div class="content_title clearfix">
+                                                <ul>
+                                                    <li>형질</li>
+                                                    <li>조사값</li>
+                                                </ul>
+                                            </div>
+                                            <div class="content_1 clearfix">
+                                                <div class="row mt-20">
+                                                    <div class="col-lg-12">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-lg-12">
+                                                                        <span class="color-dark align-center" style="font-size: 20px;">표시항목 설정</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mt-4" style="justify-content: center;align-items: center;">
+                                                                    <div class="col-lg-5">
+                                                                        <div class="row" style="overflow:auto; min-height: 500px; border: 1px solid #D9D9D9;">
+                                                                            <div class="list-group mt-2" style="max-height: 500px; orverfolw-y: auto;">
+                                                                                <ul class="detail_list" id="display_container6" name="성분정보 (국립종자원 기준)">
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="box_content">
+                                                                        <div class="box_center">
+                                                                            <div class="buttonLi">
+                                                                            	<button type="button" onclick="PlusResearch(6);"><span></span></button>
+                                                                            </div>
+                                                                            <div class="buttonLi"> 
+                                                                                <button type="button" onclick="MinusResearch(6);"><span class="left_btn"></span></button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-5" style="padding:0;">
+                                                                        <ul class="display_list" id="step_container6" style="min-height: 500px; max-height: 500px; overflow-y: auto; border: 1px solid #D9D9D9">
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade show" id="tab-horizontal-6" role="tabpanel" aria-labelledby="tab-horizontal-6-tab">
+                                            <div class="content_title clearfix">
+                                                <ul>
+                                                    <li>형질</li>
+                                                    <li>조사값</li>
+                                                </ul>
+                                            </div>
+                                            <div class="content_1 clearfix">
+                                                <div class="row mt-20">
+                                                    <div class="col-lg-12">
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <div class="row">
+                                                                    <div class="col-lg-12">
+                                                                        <span class="color-dark align-center" style="font-size: 20px;">표시항목 설정</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mt-4" style="justify-content: center;align-items: center;">
+                                                                    <div class="col-lg-5">
+                                                                        <div class="row" style="overflow:auto; min-height: 500px; border: 1px solid #D9D9D9;">
+                                                                            <div class="list-group mt-2" style="max-height: 500px; orverfolw-y: auto;">
+                                                                                <ul class="detail_list" id="display_container7" name="마커 정보">
+                                                                                </ul>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="box_content">
+                                                                        <div class="box_center">
+                                                                            <div class="buttonLi">
+                                                                            	<button type="button" onclick="PlusResearch(7);"><span></span></button>
+                                                                            </div>
+                                                                            <div class="buttonLi"> 
+                                                                                <button type="button" onclick="MinusResearch(7);"><span class="left_btn"></span></button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-5" style="padding:0;">
+                                                                        <ul class="display_list" id="step_container7" style="min-height: 500px; max-height: 500px; overflow-y: auto; border: 1px solid #D9D9D9">
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer" style="border: none">
+						<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
+						<button type="submit" class="btn btn-primary btn-sm">저장</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
     <!-- modal end -->
 
     <!-- context menu -->
@@ -1140,6 +1608,93 @@
 <th:block th:include="/../fragments/footer.html"></th:block>
 <!-- 공통 js -->
 <th:block th:include="/../fragments/commonjs.html"></th:block>
+<!-- 정린님 --> <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBn0n_LEGxgJuCfTU8aKvuwrcmw0iZjfmY&callback=initMap&region=kr"></script>  -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAn2DY-pTTMgNQrmoszX9MQ4gbZoZt8c0&callback=initMap&region=kr"></script>
+
+<!-- 지도 검색 -->
+<script type="text/javascript">
+	$("#modal-search").on("keyup", function(e) {
+		if(e.keyCode == 13) {
+			searchArea();
+		}
+	});
+
+	$("#modal-search-btn").click(function() {
+		searchArea();
+	});
+	
+	function searchArea() {
+		/*
+		const mapOptions = {
+				  tilt: 35,
+				  heading: 20,
+				  zoom: 3,
+				  center: { lat: 0, lng: 0 },
+				  mapId: "15431d2b469f209e"
+		};
+		*/
+		
+		var koreaOptions = {
+		        zoom: 6.4,
+		        center: { 
+		        	lat: 36.613766432253634,
+					lng: 127.84942123102657
+				},        
+		        panControl: false,
+		        zoomControl: false,
+		        scaleControl: false,
+		        mapTypeControl: false,
+		        streetViewControl: false,
+		        fullscreenControl: false,
+		        scrollwheel: true,
+		        // mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
+		
+		var globalOptions = {
+		        ...koreaOptions,
+		        zoom: 2,
+		};
+		
+		var geoCoder = new google.maps.Geocoder();
+		var korMap = new google.maps.Map(document.querySelector("#google_map1"), koreaOptions);
+		var globalMap = new google.maps.Map(document.querySelector("#google_map2"), globalOptions);
+				
+		var koreaLocations = ["부산", "밀양", "서울", "제주"];
+		var globalLocations = ["싱가폴", "미국", "파키스탄", "일본"];
+		
+		// var searchInput = document.querySelector("#modal-search"); 
+		// 국내
+		for(var i = 0; i < koreaLocations.length; i++) {
+			geoCoder.geocode({"address": koreaLocations[i]}, function(result, status) {		
+				if(status == "OK") {
+					var centerCoordinate = result[0].geometry.location; // 검색한 지역의 중앙 좌표
+					
+					var marker = new google.maps.Marker({ // 마커 생성
+						map: korMap,
+						position: centerCoordinate
+					});
+				}
+			});
+		}
+		
+		// 해외
+		for(var i = 0; i < globalLocations.length; i++) {
+			geoCoder.geocode({"address": globalLocations[i]}, function(result, status) {			
+				if(status == "OK") {
+					var centerCoordinate = result[0].geometry.location; // 검색한 지역의 중앙 좌표
+					
+					var marker = new google.maps.Marker({ // 마커 생성
+						map: globalMap,
+						position: centerCoordinate
+					});
+					
+					globalMap.setCenter(centerCoordinate);
+				}
+			});
+		}
+	}
+	
+</script>
 
 <script type="text/javascript">
     function dataToggle(one, two) {
@@ -1921,103 +2476,7 @@
     // 데이터 수정
 
     // 구글 맵 관련
-    const mapContainer = document.querySelector('#google_map1');
-    const mapContainer2 = document.querySelector('#google_map2');
-    const koreaOptions = {
-        zoom: 6,
-        center: {lat: 36.613766432253634, lng: 127.84942123102657},
-        panControl: false,
-        zoomControl: false,
-        scaleControl: false,
-        mapTypeControl: false,
-        streetViewControl: false,
-        fullscreenControl: false
-        // mapTypeId: google.maps.MapTypeId.ROADMAP
-    }
-
-    const globalOptions = {
-        ...koreaOptions,
-        zoom: 2,
-        center: {lat: 37.5642135, lng: 127.0016985}
-    }
-
-    let map = new google.maps.Map(mapContainer, koreaOptions);
-    let map2 = new google.maps.Map(mapContainer2, globalOptions);
-    //국내는 부산, 청주, 익산, 남해, 밀양, 전주, 제주, 강릉, 함양, 부여, 성주
-    // 해외는 인도, 중국, 영국, 미국, 파키스탄, 일본, 네덜란드
-    const globalCityDatas = [
-        {lat: 22.22267143294292, lng: 79.13524723236651},
-        {lat: 33.25173879082619, lng: 103.92501603483987},
-        {lat: 38.8498311865453, lng: -102.37095928101904},
-        {lat: 29.48237176159851, lng: 69.69045458640039},
-        {lat: 36.332952986760326, lng: 138.65686172199221},
-        {lat: 52.529665164041596, lng: 4.8670640984935165},
-    ];
-
-    const koreaCityDatas = [
-        {lat: 35.206238513124546, lng: 129.08038118015855},
-        {lat: 36.6424341, lng: 127.4890319},
-        {lat: 35.9482858, lng: 126.9575991},
-        {lat: 36.6424341, lng: 127.4890319},
-        {lat: 35.832732140930425, lng: 127.12353144605112},
-        {lat: 35.492278267228684, lng: 128.74756762815156},
-        {lat: 37.7626809049733, lng: 128.89751079481087},
-        {lat: 33.46962794437109, lng: 126.53995587901136},
-        {lat: 35.62315997859795, lng: 127.64287731141832},
-        {lat: 36.28673472687304, lng: 126.75708382107744},
-        {lat: 35.932930167597355, lng: 128.26808927858545},
-        // {lat: 35.906974893937814, lng: 137.73401019446183 },
-    ]
-
-    const image = {
-        url: "http://maps.google.com/mapfiles/ms/micons/msmarker.shadow.png",
-        // This marker is 20 pixels wide by 32 pixels high.
-        size: new google.maps.Size(10, 20),
-        // The origin for this image is (0, 0).
-        origin: new google.maps.Point(0, 0),
-        // The anchor for this image is the base of the flagpole at (0, 32).
-        anchor: new google.maps.Point(0, 32),
-    };
-
-    const markers = [];
-    koreaCityDatas.forEach((value, i) => {
-        const marker = new google.maps.Marker({
-            position: value,
-            map: map,
-            // icon: image,
-            label: ""
-        })
-        markers.push(marker)
-    })
-
-    markers.forEach((el, i) => {
-        el.addListener('click', () => {
-            map = el.getMap();
-            map.panTo({lat: el.getPosition().lat(), lng: el.getPosition().lng()})
-            smoothZoom(map, 12, map.getZoom())
-            console.log(1)
-        })
-    })
-
-    const gMarkers = [];
-    globalCityDatas.forEach((value, i) => {
-        const marker = new google.maps.Marker({
-            position: value,
-            map: map2,
-            // icon: image,
-            label: ""
-        })
-        gMarkers.push(marker)
-    })
-
-    gMarkers.forEach((el, i) => {
-        el.addListener('click', () => {
-            map = el.getMap();
-            map.panTo({lat: el.getPosition().lat(), lng: el.getPosition().lng()})
-            smoothZoom(map2, 12, map2.getZoom())
-            console.log(1)
-        })
-    })
+    searchArea();
 
     function smoothZoom(map, max, cnt) {
         if (cnt >= max) {
@@ -2032,6 +2491,7 @@
             }, 40);
         }
     }
+    
 
     // 구글 맵 관련
 
@@ -2273,7 +2733,6 @@
     /* 엑셀 다운로드 */
 
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBn0n_LEGxgJuCfTU8aKvuwrcmw0iZjfmY&callback=initMap&region=kr"></script>
 </body>
 
 </html>
