@@ -12,11 +12,11 @@
     <insert id="InsertSample" parameterType="Sample">
         INSERT INTO sample
         (sample_id, sample_code, sample_name, sample_country, sample_type,
-         sample_mate, sample_seed, sample_amount, sample_sprout, sample_purity,
-         sample_comment, create_date, modify_date)
+        sample_mate, sample_seed, sample_amount, sample_sprout, sample_purity,
+        sample_comment, create_date, modify_date)
         VALUES (#{sample_id}, #{sample_code}, #{sample_name}, #{sample_country}, #{sample_type},
-                #{sample_mate}, #{sample_seed}, #{sample_amount}, #{sample_sprout}, #{sample_purity},
-                #{sample_comment}, NOW(), NOW())
+        #{sample_mate}, #{sample_seed}, #{sample_amount}, #{sample_sprout}, #{sample_purity},
+        #{sample_comment}, NOW(), NOW())
         <selectKey resultType="int" keyProperty="sample_id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
@@ -42,6 +42,16 @@
             </when>
         </choose>
         LIMIT #{offset}, #{limit}
+    </select>
+
+    <!-- 첨부파일 목록 -->
+    <select id="SearchFileList" resultType="SampleFile">
+        SELECT * FROM sampleFile
+        <choose>
+            <when test="sample_id != 'none'">
+                WHERE sample_id = #{sample_id}
+            </when>
+        </choose>
     </select>
 
     <!-- 시교자원 삭제 -->
@@ -74,15 +84,21 @@
     <insert id="InsertExcel" parameterType="Sample">
         INSERT INTO sample
         (sample_id, sample_code, sample_name, sample_country, sample_type,
-        sample_mate, sample_seed, sample_amount, sample_sprout, sample_purity,
-        sample_comment, create_date, modify_date)
+         sample_mate, sample_seed, sample_amount, sample_sprout, sample_purity,
+         sample_comment, create_date, modify_date)
         VALUES (#{sample_id}, #{sample_code}, #{sample_name}, #{sample_country}, #{sample_type},
-        #{sample_mate}, #{sample_seed}, #{sample_amount}, #{sample_sprout}, #{sample_purity},
-        #{sample_comment}, NOW(), NOW())
+                #{sample_mate}, #{sample_seed}, #{sample_amount}, #{sample_sprout}, #{sample_purity},
+                #{sample_comment}, NOW(), NOW())
     </insert>
-<!--
-    &lt;!&ndash; 첨부파일 목록 &ndash;&gt;
-    <select id="SearchAttachFile" resultType="SampleFile">
-        SELECT * FROM sampleFile
-    </select>-->
+
+    <!-- 수출관리 엑셀 등록 -->
+    <insert id="InsertOutcomeExcel" parameterType="SampleOutcome">
+        INSERT INTO sample
+        (sample_outcome_id, sample_outcome_code, sample_outcome_num, sample_outcome_amount, sample_outcome_in, sample_outcome_out, sample_outcome_remain, sample_outcome_person,
+         sample_outcome_reciever, sample_outcome_date, sample_outcome_end, sample_outcome_country, sample_outcome_place)
+        VALUES (#{sample_outcome_id}, #{sample_outcome_code}, #{sample_outcome_num}, #{sample_outcome_amount}, #{sample_outcome_in},
+                #{sample_outcome_out}, #{sample_outcome_remain}, #{sample_outcome_person}, #{sample_outcome_reciever}, #{sample_outcome_date},
+                #{sample_outcome_end}, #{sample_outcome_country}, #{sample_outcome_place})
+    </insert>
+
 </mapper>

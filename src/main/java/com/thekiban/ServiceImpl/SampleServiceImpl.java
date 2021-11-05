@@ -1,6 +1,8 @@
 package com.thekiban.ServiceImpl;
 
 import com.thekiban.Entity.Sample;
+import com.thekiban.Entity.SampleFile;
+import com.thekiban.Entity.SampleOutcome;
 import com.thekiban.Mapper.SampleMapper;
 import com.thekiban.Service.SampleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,5 +52,15 @@ public class SampleServiceImpl implements SampleService {
   @Override
   public int InsertExcel(Sample sample) {
     return mapper.InsertExcel(sample);
+  }
+
+  @Override
+  public List<SampleFile> SearchFileList(String sample_id) {
+    return mapper.SearchFileList(sample_id);
+  }
+
+  @Override
+  public int InsertOutcomeExcel(SampleOutcome sampleOutcome) {
+    return mapper.InsertOutcomeExcel(sampleOutcome);
   }
 }
