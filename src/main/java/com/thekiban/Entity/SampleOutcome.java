@@ -10,8 +10,9 @@ import lombok.ToString;
 public class SampleOutcome {
 
   private int sample_outcome_id;
+  private String sample_name;
   private String sample_outcome_code;
-  private int sample_outcome_num;
+  private String sample_outcome_num;
   private int sample_outcome_amount;
   private int sample_outcome_in;
   private int sample_outcome_out;
