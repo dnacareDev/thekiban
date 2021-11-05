@@ -1,6 +1,8 @@
 package com.thekiban.Controller;
 
 import com.thekiban.Entity.Sample;
+import com.thekiban.Entity.SampleFile;
+import com.thekiban.Entity.SampleOutcome;
 import com.thekiban.Service.SampleService;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -82,6 +84,18 @@ public class SampleController {
     result.put("page_num", page_num);
     result.put("end_page", end_page);
     result.put("offset", offset);
+
+    return result;
+  }
+
+  @ResponseBody
+  @RequestMapping("searchFileList")
+  public Map<String, Object> SearchFileList(@RequestParam("sample_id") String sample_id) {
+    Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+    List<SampleFile> SampleFile = service.SearchFileList(sample_id);
+
+    result.put("sampleFile", SampleFile);
 
     return result;
   }
@@ -205,6 +219,52 @@ public class SampleController {
       service.InsertExcel(sample);
     }
 
+    mv.setViewName("redirect:/sample");
+
+    return mv;
+  }
+
+  @RequestMapping("excelOutcome")
+  public ModelAndView outComeExcelUpload(ModelAndView mv, @ModelAttribute SampleOutcome sampleOutcome, @RequestParam("excel_list") String excel_list) {
+    JSONArray arr = new JSONArray(excel_list);
+
+    for (int i = arr.length() - 1; i > -1; i--) {
+
+      JSONObject obj = arr.getJSONObject(i);
+
+      Set<String> key = obj.keySet();
+
+      for (String k : key) {
+
+        if (k.equals("시교명")) {
+          sampleOutcome.setSample_outcome_code(obj.getString(k));
+        } else if (k.equals("종자번호 (ID)")) {
+          sampleOutcome.setSample_outcome_num(Integer.parseInt(obj.getString(k)));
+        } else if (k.equals("종자 보유량")) {
+          sampleOutcome.setSample_outcome_amount(Integer.parseInt(obj.getString(k)));
+        } else if (k.equals("입고량")) {
+          sampleOutcome.setSample_outcome_in(Integer.parseInt(obj.getString(k)));
+        } else if (k.equals("출고량")) {
+          sampleOutcome.setSample_outcome_out(Integer.parseInt(obj.getString(k)));
+        } else if (k.equals("재고량")) {
+          sampleOutcome.setSample_outcome_remain(Integer.parseInt(obj.getString(k)));
+        } else if (k.equals("담당자")) {
+          sampleOutcome.setSample_outcome_person(obj.getString(k));
+        } else if (k.equals("인수자")) {
+          sampleOutcome.setSample_outcome_reciever(obj.getString(k));
+        } else if (k.equals("일자")) {
+          sampleOutcome.setSample_outcome_date(obj.getString(k));
+        } else if (k.equals("시교 종료 일자")) {
+          sampleOutcome.setSample_outcome_end(obj.getString(k));
+        } else if (k.equals("지역 구분")) {
+          sampleOutcome.setSample_outcome_country(obj.getString(k));
+        } else if (k.equals("대상 지역")) {
+          sampleOutcome.setSample_outcome_place(obj.getString(k));
+        }
+      }
+
+      service.InsertOutcomeExcel(sampleOutcome);
+    }
     mv.setViewName("redirect:/sample");
 
     return mv;

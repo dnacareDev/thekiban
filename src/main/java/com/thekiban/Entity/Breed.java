@@ -19,6 +19,7 @@ public class Breed
 	private String create_date;				// 등록일
 	private String modify_date;				// 수정일
 	
-	int standard_count;						// 세부정보 수
-	List<Standard> breed_standard;			// 세부정보
+	private String standard;
+	private int standard_count;						// 세부정보 수
+	private List<Standard> breed_standard;			// 세부정보
 }
