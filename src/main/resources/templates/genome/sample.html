@@ -516,9 +516,9 @@
                             <div class="action-btn d-flex justify-content-end">
                                 <div class="atbd-button-list d-flex flex-wrap">
                                     <div class="btn-group atbd-button-group btn-group-normal my-2" role="group">
-                                        <button type="button" class="btn btn-xs btn-outline-light">시교관리</button>
+                                        <button type="button" class="btn btn-xs btn-outline-light" id="sampleTable1">시교관리</button>
                                         <!-- 2021-10-19 AlpaDesign btn-active클래스를 추가했습니다 -->
-                                        <button type="button" class="btn btn-xs btn-outline-light">시교수출관리</button>
+                                        <button type="button" class="btn btn-xs btn-outline-light" id="sampleTable2">시교수출관리</button>
                                     </div>
 
                                     <form action="" name="searchForm" class="d-flex align-items-center add-contact__form my-sm-0 my-2">
@@ -1307,9 +1307,6 @@
         return obj;
     };
 
-    // 작물 선택 후 목록 입력
-    var searchSelectBox = document.querySelector('#CropSelect');
-
     const thisBtn = document.querySelector('#modal_open');
 
     // 시교 자원 추가
@@ -1330,6 +1327,16 @@
         $("#insertForm").submit();
 
     }
+
+    var tablechk = 0;
+
+    $("#sampleTable1").click(function () {
+        tablechk = 0;
+    })
+
+    $("#sampleTable2").click(function () {
+        tablechk = 1;
+    })
 
     // DB에 저장된 데이터 출력
     $(document).ready(function () {
@@ -1691,8 +1698,6 @@
 
     tableAllEls = Array.prototype.slice.call(tableAllEls);
 
-    searchSelectBox.addEventListener('change', onChangeSelect);
-
     // row 추가
     function addRow() {
         var row_list = "";
@@ -1779,31 +1784,47 @@
     }
 
     function exportExcel() {
-        // step 1. workbook 생성
-        var wb = XLSX.utils.book_new();
+        if(tablechk === 0) {
+            // step 1. workbook 생성
+            var wb = XLSX.utils.book_new();
 
-        // step 2. 시트 만들기
-        var newWorksheet = excelHandler.getWorksheet();
+            // step 2. 시트 만들기
+            var newWorksheet = excelHandler.getWorksheet();
 
-        // step 3. workbook에 새로만든 워크시트에 이름을 주고 붙인다.
-        XLSX.utils.book_append_sheet(wb, newWorksheet, excelHandler.getSheetName());
+            // step 3. workbook에 새로만든 워크시트에 이름을 주고 붙인다.
+            XLSX.utils.book_append_sheet(wb, newWorksheet, excelHandler.getSheetName());
 
-        // step 4. 엑셀 파일 만들기
-        var wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
+            // step 4. 엑셀 파일 만들기
+            var wbOut = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
 
-        // step 5. 엑셀 파일 내보내기
-        saveAs(new Blob([s2ab(wbout)], {type: "application/octet-stream"}), excelHandler.getExcelFileName());
+            // step 5. 엑셀 파일 내보내기
+            saveAs(new Blob([s2ab(wbOut)], {type: "application/octet-stream"}), excelHandler.getExcelFileName());
+        } else {
+            // step 1. workbook 생성
+            var wb1 = XLSX.utils.book_new();
+
+            // step 2. 시트 만들기
+            var newWorksheet1 = excelHandler1.getWorksheet();
+
+            // step 3. workbook에 새로만든 워크시트에 이름을 주고 붙인다.
+            XLSX.utils.book_append_sheet(wb1, newWorksheet1, excelHandler1.getSheetName());
+
+            // step 4. 엑셀 파일 만들기
+            var wbOut1 = XLSX.write(wb1, {bookType: 'xlsx', type: 'binary'});
+
+            // step 5. 엑셀 파일 내보내기
+            saveAs(new Blob([s2ab(wbOut1)], {type: "application/octet-stream"}), excelHandler1.getExcelFileName());
+        }
+
     }
 
-    $(document).ready(function () {
-        $("#excelFileExport").click(function () {
-            exportExcel();
-        });
+    $("#excelFileExport").click(function () {
+        exportExcel();
     });
 
     var excelHandler = {
         getExcelFileName: function () {
-            return '고추_시교자원관리.xlsx';
+            return '시교자원관리.xlsx';
         },
         getSheetName: function () {
             return '시교자원관리';
@@ -1815,6 +1836,22 @@
             return XLSX.utils.table_to_sheet(this.getExcelData());
         }
     }
+
+    var excelHandler1 = {
+        getExcelFileName: function () {
+            return '시교수출관리.xlsx';
+        },
+        getSheetName: function () {
+            return '시교수출관리';
+        },
+        getExcelData: function () {
+            return document.getElementById('table2');
+        },
+        getWorksheet: function () {
+            return XLSX.utils.table_to_sheet(this.getExcelData());
+        }
+    }
+
 
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBn0n_LEGxgJuCfTU8aKvuwrcmw0iZjfmY&callback=initMap&region=kr"></script>
