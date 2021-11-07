@@ -1,8 +1,7 @@
 <!doctype html>
-<html lang="en" dir="ltr"
-      xmlns:th="http://www.thymeleaf.org">
-      <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
 <head>
+      <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 
     <!-- 공통 헤더 -->
     <th:block th:include="/../fragments/header.html"></th:block>
@@ -769,7 +768,6 @@ buildTable();
 //드래그&드롭, 더블클릭 이벤트 추가
 function addGraphEvent(){
 if(window.innerWidth > 1000){
-console.log("PC");
 var isMouseMove = false;
 var clickColumn = "";
 graphWrap.addEventListener("mousedown", function(e){

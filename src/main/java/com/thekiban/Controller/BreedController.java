@@ -1,12 +1,16 @@
 package com.thekiban.Controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -14,12 +18,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.thekiban.Entity.Breed;
+import com.thekiban.Entity.BreedFile;
 import com.thekiban.Entity.Detail;
 import com.thekiban.Entity.Display;
 import com.thekiban.Entity.Standard;
+import com.thekiban.Entity.Uploads;
 import com.thekiban.Entity.User;
 import com.thekiban.Service.BreedService;
 
@@ -28,6 +35,9 @@ public class BreedController
 {
 	@Autowired
 	private BreedService service;
+	
+	@Autowired
+	private FileController fileController;
   
 	// 품종 관리 페이지
 	@RequestMapping("breed")
@@ -41,7 +51,7 @@ public class BreedController
 	// 원종 검색
 	@ResponseBody
 	@RequestMapping("searchBreed")
-	public Map<String, Object> SearchBreed(Authentication auth, @RequestParam("breed_name") String breed_name, @RequestParam("page_num") int page_num)
+	public Map<String, Object> SearchBreed(Authentication auth, @RequestParam("breed_name") String breed_name, @RequestParam("page_num") int page_num, @RequestParam("limit") int limit)
 	{
 		Map<String, Object> result = new LinkedHashMap<String, Object>();
 		
@@ -49,7 +59,6 @@ public class BreedController
 		
 		int count = service.SelectBreedCount(breed_name);
 
-		int limit = 10;
 		int offset = (page_num - 1) * limit;
 		int end_page = (count + limit - 1) / limit;
     
@@ -179,8 +188,24 @@ public class BreedController
 	@RequestMapping("deleteBreed")
 	public int DeleteBreed(@RequestParam("breed_id[]") int[] breed_id)
 	{
+		List<Uploads> uploads = service.SelectUploads(breed_id);
+		
+		for(int i = 0; i < uploads.size(); i++)
+		{
+			String delete_path = "upload/" + uploads.get(i).getUploads_file();
+			File origin_file = new File(delete_path);
+			
+			origin_file.delete();
+		}
+		
 		int[] delete_breed = service.DeleteBreed(breed_id);
-		int[] delete_standard = service.DeleteStandard(breed_id); 
+		int[] delete_standard = service.DeleteStandard(breed_id);
+		int delete_file = service.DeleteFile(breed_id);
+		
+		if(!uploads.isEmpty())
+		{
+			int delete_uploads = service.DeleteUploads(uploads);
+		}
 
 		return 1;
 	}
@@ -193,6 +218,103 @@ public class BreedController
 		
 		int delete = service.DeleteDisplay(user.getUser_id());
 		int insert = service.InsertDisplay(user.getUser_id(), breed_name, detail_id);
+		
+		mv.setViewName("redirect:/breed");
+		
+		return mv;
+	}
+	
+	// 첨부 파일 조회
+	@ResponseBody
+	@RequestMapping("selectBreedFile")
+	public Map<String, Object> SelectBreedFile(@RequestParam("breed_id") int breed_id)
+	{
+		Map<String, Object> result = new LinkedHashMap<String, Object>();
+		
+		Breed breed = service.SelectBreedDetail(breed_id);
+		List<BreedFile> breed_file = service.SelectBreedFile(breed_id);
+		
+		result.put("breed", breed);
+		result.put("breed_file", breed_file);
+		
+		return result;
+	}
+	
+	// 첨부파일 등록
+	@RequestMapping("insertBreedFile")
+	public ModelAndView InsertBreedFile(ModelAndView mv, @ModelAttribute BreedFile breed_file, @RequestParam("file") MultipartFile file) throws IOException
+	{
+		String[] extension = file.getOriginalFilename().split("\\.");
+		
+		String file_name = fileController.ChangeFileName(extension[1]);
+		String origin_file_name = file.getOriginalFilename();
+		
+		String path = "upload";
+		
+		File filePath = new File(path);
+		
+        if (!filePath.exists())
+            filePath.mkdirs();
+        
+       	Path fileLocation = Paths.get(path).toAbsolutePath().normalize();
+       	Path targetLocation = fileLocation.resolve(file_name);
+		
+       	Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+       	
+       	int insert_file = service.InsertBreedFile(breed_file);
+       	
+		Uploads upload = new Uploads();
+		upload.setUploads_file(file_name);
+		upload.setUploads_origin_file(origin_file_name);
+		upload.setBreed_file_id(breed_file.getBreed_file_id());
+		
+		int insert_upload = service.InsertBreedUpload(upload);
+		
+		mv.setViewName("redirect:/breed");
+		
+		return mv;
+	}
+	
+	// 첨부파일 수정
+	@RequestMapping("updateBreedFile")
+	public ModelAndView UpdateBreedFile(ModelAndView mv, @ModelAttribute BreedFile breed_file, @RequestParam("file") MultipartFile file) throws IOException
+	{
+		if(file.isEmpty())
+		{
+			int update_file = service.UpdateBreedFile(breed_file);
+		}
+		else
+		{
+			String delete_path = "upload/" + breed_file.getUploads_file();
+			File origin_file = new File(delete_path);
+			
+			if(origin_file.delete())
+			{
+				String[] extension = file.getOriginalFilename().split("\\.");
+				
+				String file_name = fileController.ChangeFileName(extension[1]);
+				String origin_file_name = file.getOriginalFilename();
+				
+				String path = "upload";
+				
+				File filePath = new File(path);
+				
+		        if (!filePath.exists())
+		            filePath.mkdirs();
+		        
+		       	Path fileLocation = Paths.get(path).toAbsolutePath().normalize();
+		       	Path targetLocation = fileLocation.resolve(file_name);
+				
+		       	Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+		       	
+		       	Uploads upload = new Uploads();
+		       	upload.setUploads_file(file_name);
+				upload.setUploads_origin_file(origin_file_name);
+				upload.setBreed_file_id(breed_file.getBreed_file_id());
+				
+				int update_upload = service.UpdateBreedUpload(upload);
+			}
+		}
 		
 		mv.setViewName("redirect:/breed");
 		

@@ -345,7 +345,6 @@
         anchor: new google.maps.Point(0, 32),
     };
     koreaCityDatas.forEach((value, i) => {
-        console.log(value)
         new google.maps.Marker({
             position: value,
             map: map,
@@ -354,7 +353,6 @@
         })        
     })
     globalCityDatas.forEach((value, i) => {
-        console.log(value)
         new google.maps.Marker({
             position: value,
             map: map2,

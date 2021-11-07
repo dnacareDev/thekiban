@@ -337,7 +337,7 @@
             justify-content: flex-start;
         }
 
-        #data_upload .form-group button, #data_upload2 .form-group button {
+        #data_upload .form-group button, #data_upload2 .form-group button, #breed_file .form-group button {
             height: 45px;
             padding: 0 20px;
             background-color: #217566;
@@ -347,11 +347,11 @@
             margin-left: 10px;
         }
 
-        #data_upload2 .form-group button {
+        #data_upload2 .form-group button, #breed_file .form-group button {
             margin-left: 0;
         }
 
-        #data_upload .form-group input[type=text], #data_upload2 .form-group input[type=text] {
+        #data_upload .form-group input[type=text], #data_upload2 .form-group input[type=text], #breed_file .form-group input[type=text] {
             flex: 0 0 30%;
             cursor: pointer;
         }
@@ -413,9 +413,6 @@
 		.table td {padding: 0px 12px; vertical-align: middle; font-size: 14px; border-bottom: 2px solid #d9d9d9;}  /* 2021 - 11 - 02 수정 */
         .table th {font-size: 16px; border-top: 1px solid #d9d9d9;}  /* 2021 - 11 - 02 수정 */
         .table thead th {border-bottom: 2px solid #adadad;}  /* 2021 - 11 - 02 수정 */
-
-       
-
 
         .main-content .table thead th span.title:before,
         .main-content .table thead th span.title:after,
@@ -538,7 +535,7 @@
 			margin: 5px 3px;
 		}
 		
-		#data_upload2 .form-group button {
+		#data_upload2 .form-group button, #breed_file .form-group button {
        		height: 34px;
        		line-height: 2rem;
 			font-size: 13px;
@@ -567,6 +564,11 @@
 							</div>
 							<div class="action-btn d-flex justify-content-end">
 								<div class="atbd-button-list d-flex flex-wrap">
+									<select class="form-control form-control-lg mt-10 mb-10 mr-10" style="width: 250px; float: left;" id="limit">
+										<option value="10">10개</option>
+										<option value="20">20개</option>
+										<option value="30">30개</option>
+									</select>
 									<select class="form-control form-control-lg mt-10 mb-10 mr-10" style="width: 250px;" id="CropSelect">
 										<option value="고추">고추</option>
 										<option value="대파">대파</option>
@@ -629,46 +631,145 @@
         </div>
     </div>
 
-    <!-- 첨부파일 모달창 -->
-    <div class="modal-basic modal fade show pop1" id="gen-attach" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- 첨부파일 목록창 -->
+    <div class="modal-basic modal fade show pop7" id="breed_file" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
-            <div class="modal-content modal-bg-white ">
+            <div class="modal-content modal-bg-white">
                 <div class="modal-header" style="border: none">
                     <h6 class="modal-title">품종관리 > 첨부파일</h6>
+                    <span class="breed_title"></span>
                 </div>
                 <div class="modal-body">
                     <div class="form-group mb-0">
-                        <span>제목</span>
-                        <input type="text" class="form-control form-control-lg">
-                    </div>
-                    <div class="form-group mb-0">
-                        <textarea style="resize:none;"></textarea>
+                        <button onclick="InsertFileBtn()">데이터 등록</button>
                     </div>
                     <div>
                         <div class="atbd-upload">
-                            <div class="atbd-upload__button">
-                                <a href="javascript:void(0)" class="btn btn-lg btn-outline-lighten btn-upload" onclick="$('#upload').click()"><span data-feather="upload"></span>Click to Upload</a>
-                                <input type="file" name="upload-3" class="upload-one" id="upload">
-                            </div>
-                            <div class="atbd-upload__file">
-                                <ul>
-                                    <li>
-                                        <a href="#" class="file-name"><i class="las la-paperclip"></i> <span
-                                            class="name-text">xxx.png<span></span></span></a>
-                                        <a href="#" class="btn-delete"><i class="la la-trash"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>순번</th>
+                                    <th>제목</th>
+                                    <th>날짜</th>
+                                </tr>
+                                </thead>
+                                <tbody id="file_list">
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer" style="border: none">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-primary btn-sm">저장</button>
                 </div>
             </div>
         </div>
     </div>
+
+	<!-- 첨부파일 등록창 -->
+	<div class="modal-basic modal fade show pop1" id="insert_file" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-md" role="document">
+			<div class="modal-content modal-bg-white ">
+				<div class="modal-header" style="border: none">
+					<h6 class="modal-title">품종관리 > 첨부파일</h6>
+					<span class="breed_title"></span>
+				</div>
+				<form action="insertBreedFile" id="insertFile" method="POST" enctype="multipart/form-data">
+					<div class="modal-body">
+						<div class="form-group mb-0">
+							<span>제목</span>
+							<input type="text" class="form-control form-control-lg inputText" name="breed_file_title">
+						</div>
+						<div class="form-group mb-0">
+							<textarea name="breed_file_contents" style="resize:none;"></textarea>
+						</div>
+						<div>
+							<div class="atbd-upload">
+								<div class="atbd-upload__button">
+									<!--
+									<a href="javascript:void(0)" class="btn btn-lg btn-outline-lighten btn-upload" onclick="$('#upload').click()">
+										<span data-feather="upload">첨부 파일</span>
+									</a>
+									<input type="file" class="upload-one" id="upload" name="file">
+									-->
+									<input type="file" id="upload_file" name="file">
+								</div>
+								<div class="atbd-upload__file">
+									<ul>
+										<li>
+											<a href="" class="file-name">
+												<i class="las la-paperclip"></i>
+												<span class="name-text">xxx.png<span>
+												</span></span>
+											</a>
+											<a href="" class="btn-delete"><i class="la la-trash"></i></a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer" style="border: none">
+						<input type="hidden" id="upload_id" name="breed_id">
+						<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
+						<button type="button" class="btn btn-primary btn-sm" onclick="InsertFile()">저장</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	<!-- 첨부파일 수정창 -->
+	<div class="modal-basic modal fade show pop1" id="modify_file" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-md" role="document">
+			<div class="modal-content modal-bg-white ">
+				<div class="modal-header" style="border: none">
+					<h6 class="modal-title">품종관리 > 첨부파일</h6>
+					<span class="breed_title"></span>
+				</div>
+				<form action="updateBreedFile" id="insertFile" method="POST" enctype="multipart/form-data">
+					<div class="modal-body">
+						<div class="form-group mb-0">
+							<span>제목</span>
+							<input type="text" class="form-control form-control-lg inputText" id="breed_file_title" name="breed_file_title">
+						</div>
+						<div class="form-group mb-0">
+							<textarea id="breed_file_contents" name="breed_file_contents" style="resize:none;"></textarea>
+						</div>
+						<div>
+							<div class="atbd-upload">
+								<div class="atbd-upload__button">
+									<a href="" class="btn btn-lg btn-outline-lighten btn-upload" id="file_download">
+										<span data-feather="upload"></span>
+										<span id="uploads_origin_file"></span>
+									</a>
+									<input type="hidden" id="uploads_file" name="uploads_file">
+									<input type="file" id="modify_file" name="file">
+								</div>
+								<div class="atbd-upload__file">
+									<ul>
+										<li>
+											<a href="" class="file-name">
+												<i class="las la-paperclip"></i>
+												<span class="name-text">xxx.png<span>
+												</span></span>
+											</a>
+											<a href="" class="btn-delete"><i class="la la-trash"></i></a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer" style="border: none">
+						<input type="hidden" id="breed_file_id" name="breed_file_id">
+						<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
+						<button type="submit" class="btn btn-primary btn-sm">수정</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
 
 	<!-- 출력 헤더 선택 모달창 -->
 	<div class="modal-basic modal fade show pop2" id="grid2" tabindex="-1" role="dialog" aria-hidden="true">
@@ -1058,7 +1159,7 @@
     <!-- 데이터 등록 모달창 -->
     <div class="modal-basic modal fade show pop5" id="data_upload" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
-            <div class="modal-content modal-bg-white ">
+            <div class="modal-content modal-bg-white">
                 <div class="modal-header" style="border: none">
                     <h6 class="modal-title">품종관리 > 데이터 등록</h6>
                 </div>
@@ -1108,7 +1209,7 @@
     <!-- 데이터 목록 창 -->
     <div class="modal-basic modal fade show pop7" id="data_upload2" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
-            <div class="modal-content modal-bg-white ">
+            <div class="modal-content modal-bg-white">
                 <div class="modal-header" style="border: none">
                     <h6 class="modal-title">품종관리 > 데이터 등록</h6>
                 </div>
@@ -1411,6 +1512,15 @@
             contentLi[f].classList.add("show");
         }
     }
+    
+	$('.inputText').bind('keydown', function(e)
+   	{
+   		if(e.keyCode == 13)
+   		{
+   			/* e.preventDefault(); */ 
+   			return false;
+   		}
+   	});
 
     /* 엑셀 업로드 버튼 */
     function filesFunction(filename)
@@ -1477,12 +1587,20 @@
     {
         SearchBreed(1);
     })
+    
+    // 갯수 선택
+    $("#limit").change(function()
+    {
+        SearchBreed(1);
+    })
 
     // 품종 검색
     function SearchBreed(e)
     {
         var breed_name = $("#CropSelect").val();
-        var data = {"breed_name": breed_name, "page_num": e};
+        var limit = $("#limit").val();
+        
+        var data = {"breed_name": breed_name, "page_num": e, "limit" : limit};
 
         $.ajax(
         {
@@ -1528,7 +1646,8 @@
                 {
                     add_list += '<tr>';
                     add_list += '<td><input type="checkbox" name="RowCheck" value="' + result.breed[i].breed_id + '"></td>';
-                    add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
+                    /* add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#breed_file"><i class="bi bi-file-earmark-arrow-down"></i></button></td>'; */
+                    add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" onclick="FileBtn(' + result.breed[i].breed_id + ');"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
 
                     if(result.breed[i].standard_count == 0)
                     {
@@ -1651,7 +1770,7 @@
                 pageNum.append(page_add);
                 
                 $("#offset").val(result.offset);
-                checkFunction();
+                CheckFunction();
                 
             }
         });
@@ -1692,7 +1811,7 @@
                 	{
 	                    add_list += '<tr>';
 	                    add_list += '<td><input type="checkbox" name="RowCheck" value="' + result.breed[i].breed_id + '"></td>';
-	                    add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
+	                    add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#breed_file"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
 	
 	                    if(result.breed[i].standard_count == 0)
 	                    {
@@ -1714,7 +1833,7 @@
                 
                 add_list += '<tr>';
                 add_list += '<td><input type="checkbox" name="RowCheck" value="' + result.new_breed.breed_id + '"></td>';
-                add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
+                add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#breed_file"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
                 add_list += '<td onclick="EmptyBtn(' + result.new_breed.breed_id + ');" style="color : blue;">EMPTY</td>';
                	add_list += '<td>' + result.new_breed.breed_name + '</td>';
                 
@@ -1888,7 +2007,7 @@
         });
 
         step_container.append(add_list);
-        checkFunction();
+        CheckFunction();
     }
 
     //조사방법 체크박스 삭제
@@ -1923,7 +2042,7 @@
         });
 
         display_container.append(add_list);
-        checkFunction();
+        CheckFunction();
     }
     
     // 통합 분석
@@ -1954,15 +2073,95 @@
     });
     */
     
+    function FileBtn(e)
+    {
+    	$("#breed_file").modal("show");
+    	
+    	var data = {"breed_id" : e};
+    	
+    	$.ajax(
+    	{
+    		url: 'selectBreedFile',
+    		method: 'POST',
+    		dataType: 'json',
+    		data: data,
+    		success: function(result)
+    		{
+    			$("#upload_id").val(e);
+    			$(".breed_title").text("시교명 : " + result.breed.standard);
+    			
+    			var file_list = $("#file_list");
+    			var file_add = "";
+    			
+    			for(var i = 0; i < result.breed_file.length; i++)
+    			{
+    				var file = JSON.stringify(result.breed_file[i]);
+    				var file_json = file.replace(/\"/g,"&quot;");
+    				
+	    			file_add += '<tr>';
+	    			file_add += '<td>' + (i + 1) + '</td>';
+	    			file_add += '<td><button onclick="ModifyBtn(' + result.breed_file[i].breed_file_id + ')" style="border:0px; color:blue; background: white;">' + result.breed_file[i].breed_file_title + '</button></td>';
+	    			file_add += '<td>' + result.breed_file[i].create_date + '</td>';
+	    			file_add += '<td><input type="hidden" id="file_' + result.breed_file[i].breed_file_id + '" value="' + file.replace(/\"/g,"&quot;") + '"></td>';
+	    			file_add += '</tr>';
+    			}
+    			
+    			file_list.empty();
+    			file_list.append(file_add);
+    		}
+    	});
+    }
     
-    function checkFunction(){// 박스안 리스트 클릭시 체크박스 체크\
-    	$('#grid2 .tab-content .row li').off('click').on('click', function(e){ 
+    function InsertFileBtn()
+    {
+    	$("#breed_file").modal("hide");
+    	$("#insert_file").modal("show");
+    }
+    
+    function InsertFile()
+    {
+    	var file = $("#upload_file");
+    	
+    	if(file.val() == "")
+    	{
+    		return Alert("파일을 선택해주세요.");
+    	}
+    	else
+    	{
+    		$("#insertFile").submit();
+    	}
+    }
+    
+    function ModifyBtn(e)
+    {
+    	var files = JSON.parse($("#file_" + e).val());
+    	
+    	$("#breed_file_id").val(files.breed_file_id);
+    	$("#breed_file_title").val(files.breed_file_title);
+    	$("#breed_file_contents").val(files.breed_file_contents);
+    	$("#uploads_origin_file").text(files.uploads_origin_file);
+    	$("#uploads_file").val(files.uploads_file);
+    	$("#file_download").attr("href", "downloadFile?uploads_file=" + files.uploads_file);
+    	
+    	$("#breed_file").modal("hide");
+    	$("#modify_file").modal("show");
+    }
+    
+    function CheckFunction()
+    {
+    	// 박스안 리스트 클릭시 체크박스 체크
+    	$('#grid2 .tab-content .row li').off('click').on('click', function(e)
+    	{ 
     		e.preventDefault();
     		
      		$(this).toggleClass("active");
-     		if($(this).hasClass("active") == true){
+     		
+     		if($(this).hasClass("active") == true)
+     		{
      			$(this).find("input[type='checkbox']").eq(0).prop("checked", true);
-     		} else {
+     		}
+     		else
+     		{
      			$(this).find("input[type='checkbox']").eq(0).prop("checked", false);
      		}
     	});
