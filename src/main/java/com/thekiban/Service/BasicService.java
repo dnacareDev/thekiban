@@ -3,9 +3,11 @@ package com.thekiban.Service;
 import java.util.List;
 
 import com.thekiban.Entity.Basic;
+import com.thekiban.Entity.BasicFile;
 import com.thekiban.Entity.Detail;
 import com.thekiban.Entity.Display;
 import com.thekiban.Entity.Standard;
+import com.thekiban.Entity.Uploads;
 
 public interface BasicService
 {
@@ -45,6 +47,8 @@ public interface BasicService
 	// 원종 전체 수정
 	int UpdateAllBasic(List<Standard> list);
 	
+	List<Uploads> SelectUploads(int[] basic_id);
+	
 	// 원종 삭제
 	int[] DeleteBasic(int[] basic_id);
 	
@@ -54,6 +58,30 @@ public interface BasicService
 	// 표시항목 삭제
 	int DeleteDisplay(int user_id);
 
+	// 첨부파일 내용 삭제
+	int DeleteFile(int[] basic_id);
+	
+	// 첨부파일 삭제
+	int DeleteUploads(List<Uploads> uploads);
+
 	// 표시항목 등록
 	int InsertDisplay(int user_id, String basic_name, int[] detail_list);
+
+	// 원종 상세 조회
+	Basic SelectBasicDetail(int basic_id);
+
+	// 첨부파일 목록 조회
+	List<BasicFile> SelectBasicFile(int basic_id);
+
+	// 첨부파일 내용 등록
+	int InsertBasicFile(BasicFile basic_file);
+
+	// 첨부파일 등록
+	int InsertBasicUpload(Uploads upload);
+
+	// 첨부파일 내용 수정
+	int UpdateBasicFile(BasicFile basic_file);
+
+	// 첨부파일 수정
+	int UpdateBasicUpload(Uploads upload);
 }

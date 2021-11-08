@@ -541,15 +541,45 @@
 			font-size: 13px;
        }
        
-       
        input[type="text"].updateInput{
        		border:none;
        		height: 45px;
        		
        }
+       #pop_data1 .modal-body li a{
+       		display:block;
+		    width: 120px;
+		    padding: 15px 0;
+		    text-align:center;
+		    margin: 0;
+		    font-size: 14px;
+		    background-color: #FBFBFB;
+		    border-radius: 0 5px 5px 0;
+		}
+		#pop_data1 .modal-body .btn-group > ul > li:first-child a{
+		    border-radius: 5px 0 0 5px;
+		}
+        #pop_data1 .modal-body .btn-group > ul > li a.active, #pop_data1 .btn-group > ul > li:hover a{
+		    border-color: #C3E3CC;
+		    background-color: #EDF6F1 !important;
+		    color: #217566;
+		}
+		#pop_data .atbd-button-group li.active{
+			background-color: #EDF6F1 !important;
+		}
+		
+		.btn:not(:disabled):not(.disabled):active, .btn:not(:disabled):not(.disabled).active{
+			-webkit-box-shadow: none;
+    		box-shadow: none;
+		}
+		.popAdd.active{
+			display:block;
+		}
+		.popAdd{
+			display:none;
+		} 
        /* 푸터 배경색 */
 		.footer-wrapper {background-color: #FCFCFC;}
-        
     </style>
 </head>
 <body class="layout-light top-menu overlayScroll">
@@ -708,7 +738,9 @@
 												<span class="name-text">xxx.png<span>
 												</span></span>
 											</a>
-											<a href="" class="btn-delete"><i class="la la-trash"></i></a>
+											<a href="" class="btn-delete">
+												<i class="la la-trash"></i>
+											</a>
 										</li>
 									</ul>
 								</div>
@@ -750,7 +782,7 @@
 										<span id="uploads_origin_file"></span>
 									</a>
 									<input type="hidden" id="uploads_file" name="uploads_file">
-									<input type="file" id="modify_file" name="file">
+									<input type="file" id="update_file" name="file">
 								</div>
 								<div class="atbd-upload__file">
 									<ul>
@@ -1404,6 +1436,206 @@
 			</form>
 		</div>
 	</div>
+	
+	
+	<!--  시교명 클릭시 팝업 2021-11-08 -->
+	<div class="modal-basic modal fade show pop7" id="pop_data1" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content modal-bg-white">
+                <div class="modal-header" style="border: none">
+                    <h6 class="modal-title">품종관리 > 시교자원관리</h6>
+                    <span class="breed_title">시교명: 11</span>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group mb-0">
+                        <div class="btn-group atbd-button-group btn-group-normal my-2" role="group">
+							<ul class="nav nav-tabs vertical-tabs" role="tablist">
+								<li class="nav-item">
+									<a class="pop_nav-link active" id="tab-horizontal-0-tab-0" data-toggle="tab" href="#tab-horizontal-0-0" role="tab" aria-controls="tab-horizontal-0-0" aria-selected="true">시교 자원 관리</a>
+								</li>
+								<li class="nav-item">
+									<a class="pop_nav-link" id="tab-horizontal-1-tab-1" data-toggle="tab" href="#tab-horizontal-1-1" role="tab" aria-controls="tab-horizontal-1-1" aria-selected="false">원종관리</a>
+								</li>
+							</ul>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="atbd-upload popAdd tab-pane fade show active" id="tab-horizontal-0-0" role="tabpanel" aria-labelledby="tab-horizontal-0-tab-0" style=" overflow: auto; max-height: 500px;">
+                            <table style="width: max-content; min-width: 100%;">
+                                <thead>
+	                                <tr>
+	                                    <th>시교명(ID)</th>
+	                                    <th>목표 지역</th>
+	                                    <th>구분</th>
+	                                    <th>교배번호</th>
+	                                    <th>종자번호(ID)</th>
+	                                    <th>현 종자량(g)</th>
+	                                    <th>기내 발아율(%)</th>
+	                                    <th>비고</th>
+	                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td data-toggle="modal" data-target="#pop_data_sub1">19PF0301</td>
+                                    <td>국내</td>
+                                    <td>185</td>
+                                    <td>185</td>
+                                    <td>185</td>
+                                    <td>185</td>
+                                    <td>185</td>
+                                    <td>185</td>
+                                </tr>
+                                <tr>
+                                    <td data-toggle="modal" data-target="#pop_data_sub1">2</td>
+                                    <td>2021-08-15</td>
+                                    <td>185</td>
+                                    <td>185</td>
+                                    <td>185</td>
+                                    <td>185</td>
+                                    <td>185</td>
+                                    <td>185</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="atbd-upload popAdd tab-pane fade" id="tab-horizontal-1-1" role="tabpanel" aria-labelledby="tab-horizontal-1-tab-1" style="overflow: auto;">
+                        	<div class="pop_top_content1" style="max-height:150px; overflow: auto;" >
+                           	   <span class="sub_title">모계 계통명(ID)</span>
+	                           <table style="width: max-content; min-width: 100%;">
+	                                <thead>
+		                                <tr>
+		                                    <th>첨부파일</th>
+		                                    <th>특성상태</th>
+		                                    <th>작물</th>
+		                                    <th>계통명(ID)</th>
+		                                    <th>원소재 계통번호</th>
+		                                    <th>B.N. 기준년도</th>
+		                                    <th>B.N. (교배번호)</th>
+		                                    <th>숙기(최소 일)</th>
+		                                    <th>숙기(최대 일)</th>
+		                                </tr>
+	                                </thead>
+	                                <tbody>
+		                                <tr>
+		                                    <td><i class="bi bi-file-earmark-arrow-down"></i></td>
+		                                    <td>고추</td>
+		                                    <td>185</td>
+		                                    <td>185</td>
+		                                    <td>185</td>
+		                                    <td>185</td>
+		                                    <td>185</td>
+		                                    <td>185</td>
+		                                    <td>185</td>
+		                                </tr>
+		                                <tr>
+		                                    <td>2</td>
+		                                    <td>2021-08-15</td>
+		                                    <td>185</td>
+		                                    <td>185</td>
+		                                    <td>185</td>
+		                                    <td>185</td>
+		                                    <td>185</td>
+		                                    <td>185</td>
+		                                    <td>185</td>
+		                                </tr>
+	                                </tbody>
+	                            </table>
+                           </div>
+                           <div class="pop_top_content2" style="max-height:150px; overflow: auto; margin-top: 20px;" >
+                           	   <span class="sub_title">부계 계통명(ID)</span>
+	                           <table style="width: max-content; min-width: 100%;">
+	                                <thead>
+		                                <tr>
+		                                    <th>첨부파일</th>
+		                                    <th>특성상태</th>
+		                                    <th>작물</th>
+		                                    <th>계통명(ID)</th>
+		                                    <th>원소재 계통번호</th>
+		                                    <th>B.N. 기준년도</th>
+		                                    <th>B.N. (교배번호)</th>
+		                                    <th>숙기(최소 일)</th>
+		                                    <th>숙기(최대 일)</th>
+		                                </tr>
+	                                </thead>
+	                                <tbody>
+		                                <tr>
+		                                    <td><i class="bi bi-file-earmark-arrow-down"></i></td>
+		                                    <td>고추</td>
+		                                    <td>185</td>
+		                                    <td>185</td>
+		                                    <td>185</td>
+		                                    <td>185</td>
+		                                    <td>185</td>
+		                                    <td>185</td>
+		                                    <td>185</td>
+		                                </tr>
+		                                <tr>
+		                                    <td>2</td>
+		                                    <td>2021-08-15</td>
+		                                    <td>185</td>
+		                                    <td>185</td>
+		                                    <td>185</td>
+		                                    <td>185</td>
+		                                    <td>185</td>
+		                                    <td>185</td>
+		                                    <td>185</td>
+		                                </tr>
+	                                </tbody>
+	                            </table>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border: none">
+                    <div class="col-4">
+                        <div class="row" style="justify-content: center;">
+                            <div id="pageNum1" style="text-align:center; margin: 2% 0 0 0;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal-basic modal fade show pop5" id="pop_data_sub1" tabindex="-1" role="dialog" aria-hidden="true" >
+        <div class="modal-dialog modal-md" role="document" style="margin: 5rem auto; box-shadow: 20px 1px 30px rgb(0 0 0 / 50%);">  
+            <div class="modal-content modal-bg-white">
+                <div class="modal-header" style="border: none">
+                    <h6 class="modal-title">품종관리 > 시교자원관리 > 시교 출고 대장</h6>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="atbd-upload">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>시교명 (ID)</th>
+                                    <th>품종명</th>
+                                    <th>모계 계통명 (ID)</th>
+                                    <th>부계 계통명 (ID)</th>
+                                    <th>생산판매 (신고번호)</th>
+                                    <th>생산판매 (신고일자)</th>
+                                    <th>보호출원 (출원번호)</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>asdasd</td>
+                                    <td>asdasd</td>
+                                    <td>asdasd</td>
+                                    <td>asdasd</td>
+                                    <td>asdasd</td>
+                                    <td>asdasd</td>
+                                    <td>asdasd</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 <!-- 공통 하단 -->
 <th:block th:include="/../fragments/footer.html"></th:block>
@@ -1657,11 +1889,11 @@
 
                     if(result.breed[i].standard_count == 0)
                     {
-                        add_list += '<td onclick="EmptyBtn(' + result.breed[i].breed_id + ');" style="color : blue;">EMPTY</td>';
+                        add_list += '<td onclick="EmptyBtn(' + result.breed[i].breed_id + ');" style="color : blue; cursor:pointer;">EMPTY</td>';
                     }
                     else
                     {
-                        add_list += '<td onclick="EmptyBtn(' + result.breed[i].breed_id + ');" style="color : green;">PROGRESS</td>';
+                        add_list += '<td onclick="EmptyBtn(' + result.breed[i].breed_id + ');" style="color : green; cursor:pointer;">PROGRESS</td>';
                     }
 
                     for(var j = 0; j < result.breed[i].breed_standard.length; j++)
@@ -1779,11 +2011,18 @@
                 
                 $("#offset").val(result.offset);
                 CheckFunction();
-                
+                namedClick();// 추가  alpadesign  2021-11-08
             }
+        	
         });
     }
-
+    namedClick();// 추가  alpadesign  2021-11-08
+	function namedClick(){ // 추가  alpadesign  2021-11-08
+		$("td:nth-child(5)").click(function(){
+	       	$("td:nth-child(5)").css({"cursor": "pointer"});
+	       	$("#pop_data1").modal("show");
+       	});
+	}
 	// 품종 추가
 	function InsertBtn()
 	{
@@ -1821,7 +2060,7 @@
                 
                 for(var i = 1; i < result.detail.length; i++)
                 {
-                	add_list += '<td><input type="text" class="updateInput" id="' + result.new_breed.breed_id + '" name="' + result.detail[i].detail_id + '"></td>';
+                	add_list += '<td><input type="text" class="updateInput" data="' + result.new_breed.breed_id + '" name="' + result.detail[i].detail_id + '"></td>';
                 }
                 
                 for(var i = 0; i < result.breed.length; i++)
