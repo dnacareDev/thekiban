@@ -2,6 +2,7 @@ package com.thekiban.ServiceImpl;
 
 import com.thekiban.Entity.Income;
 import com.thekiban.Entity.IncomeFile;
+import com.thekiban.Entity.IncomeRemain;
 import com.thekiban.Entity.Uploads;
 import com.thekiban.Mapper.IncomeMapper;
 import com.thekiban.Service.IncomeService;
@@ -48,6 +49,11 @@ public class IncomeServiceImpl implements IncomeService {
     return mapper.DeleteIncome(income_id);
   }
 
+  @Override
+  public int[] DeleteRemain(int[] income_remain_id) {
+    return mapper.DeleteRemain(income_remain_id);
+  }
+
   // 도입자원 수정
   @Override
   public int UpdateIncome(Income income) {
@@ -92,5 +98,25 @@ public class IncomeServiceImpl implements IncomeService {
   @Override
   public int UpdateIncomeUpload(Uploads upload) {
     return mapper.UpdateIncomeUpload(upload);
+  }
+
+  @Override
+  public int UpdateInsertIncome(Income income) {
+    return mapper.UpdateInsertIncome(income);
+  }
+
+  @Override
+  public int UpdateInsertRemain(IncomeRemain incomeRemain) {
+    return mapper.UpdateInsertRemain(incomeRemain);
+  }
+
+  @Override
+  public int UpdateIncome(int income_id, String income_name, String income_value) {
+    return mapper.UpdateIncome(income_id, income_name, income_value);
+  }
+
+  @Override
+  public int UpdateRemain(int income_remain_id, String income_remain_name, String income_remain_value) {
+    return mapper.UpdateRemain(income_remain_id, income_remain_name, income_remain_value);
   }
 }

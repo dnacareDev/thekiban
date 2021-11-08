@@ -24,6 +24,9 @@ public interface IncomeMapper {
   // 도입자원 삭제
   int[] DeleteIncome(int[] income_id);
 
+  // 수출자원 삭제
+  int[] DeleteRemain(int[] income_remain_id);
+
   // 도입자원 수정
   int UpdateIncome(Income income);
 
@@ -51,4 +54,14 @@ public interface IncomeMapper {
   // 첨부파일 수정
   int UpdateIncomeUpload(Uploads upload);
 
+  // 시교자원 수정
+  int UpdateInsertIncome(Income income);
+
+  // 수출관리 수정
+  int UpdateInsertRemain(IncomeRemain incomeRemain);
+
+  // 시교자원 수정
+  int UpdateIncome(@Param("income_id") int income_id, @Param("income_name") String income_name, @Param("income_value") String income_value);
+
+  int UpdateRemain(@Param("income_remain_id") int income_remain_id, @Param("income_remain_name") String income_remain_name, @Param("income_remain_value") String income_remain_value);
 }

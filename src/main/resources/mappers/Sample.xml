@@ -23,7 +23,7 @@
     </insert>
 
     <!-- 시교자원 등록 -->
-    <insert id="InsertSampleOutcome" parameterType="Sample">
+    <insert id="InsertSampleOutcome" parameterType="SampleOutcome">
         INSERT INTO sampleOutcome
         (sample_outcome_id, sample_name, sample_outcome_code, sample_outcome_num, sample_outcome_amount, sample_outcome_in, sample_outcome_out, sample_outcome_remain,
         sample_outcome_person,

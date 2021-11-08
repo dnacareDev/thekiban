@@ -193,7 +193,7 @@
             justify-content: flex-start;
         }
 
-        #data_upload .form-group button, #data_upload2 .form-group button, #data_upload3 .form-group button {
+        #data_upload .form-group button, #data_upload2 .form-group button, #data_upload3 .form-group button, #income_file .form-group button {
             height: 45px;
             padding: 0 20px;
             background-color: #217566;
@@ -203,11 +203,11 @@
             margin-left: 10px;
         }
 
-        #data_upload2 .form-group button, #data_upload3 .form-group button {
+        #data_upload2 .form-group button, #data_upload3 .form-group button, #income_file .form-group button {
             margin-left: 0;
         }
 
-        #data_upload .form-group input[type=text], #data_upload2 .form-group input[type=text], #data_upload3 .form-group input[type=text] {
+        #data_upload .form-group input[type=text], #data_upload2 .form-group input[type=text], #data_upload3 .form-group input[type=text], #income_file .form-group input[type=text]{
             flex: 0 0 30%;
             cursor: pointer;
         }
@@ -218,7 +218,7 @@
             color: #B2B2B2;
         }
 
-        #data_upload .atbd-upload, #data_upload2 .atbd-upload, #data_upload3 .atbd-upload {
+        #data_upload .atbd-upload, #data_upload2 .atbd-upload, #data_upload3 .atbd-upload, #income_file .atbd-upload {
             width: 100%;
             height: 300px;
             overflow: auto;
@@ -229,26 +229,26 @@
             border: none;
         }
 
-        #data_upload2 .atbd-upload table, #data_upload3 .atbd-upload table {
+        #data_upload2 .atbd-upload table, #data_upload3 .atbd-upload table, #income_file .atbd-upload table {
             width: 100%;
         }
 
-        #data_upload table thead tr, #data_upload2 table thead tr, #data_upload3 table thead tr {
+        #data_upload table thead tr, #data_upload2 table thead tr, #data_upload3 table thead tr, #income_file table thead tr {
             border-top: none;
             border-bottom: 2px solid #E8EEF2;
         }
 
-        #data_upload table tbody tr, #data_upload2 table tbody tr, #data_upload3 table tbody tr {
+        #data_upload table tbody tr, #data_upload2 table tbody tr, #data_upload3 table tbody tr, #income_file table tbody tr {
             border-bottom: 1px solid #E8EEF2;
         }
 
-        #data_upload .atbd-upload table thead th, #data_upload2 .atbd-upload table thead th, #data_upload3 .atbd-upload table thead th {
+        #data_upload .atbd-upload table thead th, #data_upload2 .atbd-upload table thead th, #data_upload3 .atbd-upload table thead th, #income_file .atbd-upload table thead th {
             background-color: #F7F7F8;
             color: #222222;
             font-size: 16px;
         }
 
-        #data_upload .atbd-upload table tbody td, #data_upload2 .atbd-upload table tbody td, #data_upload3 .atbd-upload table tbody td {
+        #data_upload .atbd-upload table tbody td, #data_upload2 .atbd-upload table tbody td, #data_upload3 .atbd-upload table tbody td, #income_file .atbd-upload table tbody th {
             background-color: #fff;
             color: #666666;
             font-size: 16px;
@@ -395,7 +395,7 @@
             margin: 5px 3px;
         }
 
-        #data_upload2 .form-group button, #data_upload3 .form-group button {
+        #data_upload2 .form-group button, #data_upload3 .form-group button, #income_file .form-group button {
             height: 34px;
             line-height: 2rem;
             font-size: 13px;
@@ -510,10 +510,9 @@
             padding: 0 10px !important;
         }
 
-        input[type="text"].rowInput {
+        input[type="text"].updateInput {
             border: none;
             height: 45px;
-
         }
     </style>
 
@@ -547,6 +546,11 @@
                                         <button type="button" class="btn btn-xs btn-outline-light" id="incomeTable2">도입자원재고관리</button>
                                     </div>
                                     <form action="" name="searchForm" class="d-flex align-items-center add-contact__form my-sm-0 my-2">
+                                        <select class="form-control form-control-lg mt-10 mb-10 mr-10" style="width: 250px; float: left;" id="limit">
+                                            <option value="10">10개</option>
+                                            <option value="20">20개</option>
+                                            <option value="30">30개</option>
+                                        </select>
                                         <select class="form-control form-control-lg mt-10 mb-10 mr-10" style="width: 250px;" id="CropSelect">
                                             <option value="고추">고추</option>
                                             <option value="대파">대파</option>
@@ -604,7 +608,7 @@
                                                                                                                   alt="비고"></th>
                                         </tr>
                                         </thead>
-                                        <tbody class="text-center" id="income_list">
+                                        <tbody class="text-center income-list" id="income_list">
                                         </tbody>
                                     </table>
 
@@ -904,7 +908,7 @@
         }, 5);
     }
 
-    let topBox = document.getElementsByClassName("top_box")[0];
+    /*let topBox = document.getElementsByClassName("top_box")[0];
     let [nav, prev, next] = topBox.children;
     let navLi = nav.children; // pop top list
     let navN = 0; //선택된 변수
@@ -924,7 +928,7 @@
             moveFunction(navN);
         });
 
-    }
+    }*/
 
     /*    let list = navLi.length;
         next.addEventListener("click", function (e) {
@@ -1162,25 +1166,7 @@
         return obj;
     };
 
-    // 작물 선택 후 목록 입력
-    var searchSelectBox = document.querySelector('#CropSelect');
-
     const thisBtn = document.querySelector('#modal_open');
-
-    // thisBtn.dataset.target = '';
-
-    function onChangeSelect() {
-        var thisBtn = document.querySelector('#modal_open');
-        var value = searchSelectBox.value;
-        // if (value === 'none') {
-        //     thisBtn.dataset.target = '';
-        // } else {
-        thisBtn.dataset.target = '#grid';
-        // }
-    }
-
-    // onChangeSelect();
-    searchSelectBox.addEventListener('change', onChangeSelect);
 
     var tablechk = 0;
 
@@ -1204,13 +1190,10 @@
     })
 
     // 갯수 선택
-    $("#limit").change(function()
-    {
+    $("#limit").change(function () {
         SearchIncome(1);
         SearchRemain(1);
     })
-
-    var emptyEls;
 
     var emptyEls;
 
@@ -1218,7 +1201,11 @@
 
     function SearchIncome(e) {
         var income_name = $("#CropSelect").val();
-        var data = {"income_name": income_name, "page_num": e};
+        var limit = $("#limit").val();
+
+        var data = {"income_name": income_name, "page_num": e, "limit": limit};
+
+        console.log(data);
 
         $.ajax(
             {
@@ -1227,7 +1214,7 @@
                 dataType: 'json',
                 data: data,
                 success: function (result) {
-                    var income_list = $("#income_list");
+                    var income_list = $(".income-list");
                     income_list.eq(btnindex);
                     var add_list = "";
 
@@ -1248,7 +1235,7 @@
                         add_list += '<td><input type="text" class="updateInput" data="' + result.income[i].income_id + '" name="income_num" value="' + result.income[i].income_num + '"></td>';
                         add_list += '<td><input type="text" class="updateInput" data="' + result.income[i].income_id + '" name="income_type" value="' + result.income[i].income_type + '"></td>';
                         add_list += '<td><input type="text" class="updateInput" data="' + result.income[i].income_id + '" name="income_trait" value="' + result.income[i].income_trait + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result.income[i].income_id + '" name="income_trait" value="' + result.income[i].income_comment + '"></td>';
+                        add_list += '<td><input type="text" class="updateInput" data="' + result.income[i].income_id + '" name="income_comment" value="' + result.income[i].income_comment + '"></td>';
                         add_list += '</tr>';
                     }
 
@@ -1288,7 +1275,7 @@
         var income_name1 = $("#CropSelect").val();
         var limit1 = $("#limit").val();
 
-        var data1 = {"sample_name": income_name1, "page_num": e, "limit" : limit1};
+        var data1 = {"income_name": income_name1, "page_num": e, "limit": limit1};
 
         $.ajax(
             {
@@ -1306,14 +1293,14 @@
 
                     for (var i = 0; i < result1.incomeRemain.length; i++) {
                         add_list += '<tr>';
-                        add_list += '<td><input type="checkbox" name="RowCheck1" value="' + result1.incomeRemain[i].sample_outcome_id + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result1.incomeRemain[i].sample_outcome_id + '" name="sample_outcome_code" value="' + result1.sampleOutcome[i].sample_outcome_code + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result1.incomeRemain[i].sample_outcome_id + '" name="sample_outcome_num" value="' + result1.sampleOutcome[i].sample_outcome_num + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result1.incomeRemain[i].sample_outcome_id + '" name="sample_outcome_amount" value="' + result1.sampleOutcome[i].sample_outcome_amount + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result1.incomeRemain[i].sample_outcome_id + '" name="sample_outcome_in" value="' + result1.sampleOutcome[i].sample_outcome_in + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result1.incomeRemain[i].sample_outcome_id + '" name="sample_outcome_out" value="' + result1.sampleOutcome[i].sample_outcome_out + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result1.incomeRemain[i].sample_outcome_id + '" name="sample_outcome_remain" value="' + result1.sampleOutcome[i].sample_outcome_remain + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result1.incomeRemain[i].sample_outcome_id + '" name="sample_outcome_person" value="' + result1.sampleOutcome[i].sample_outcome_person + '"></td>';
+                        add_list += '<td><input type="checkbox" name="RowCheck1" value="' + result1.incomeRemain[i].income_remain_id + '"></td>';
+                        add_list += '<td><input type="text" class="updateInput" data="' + result1.incomeRemain[i].income_remain_id + '" name="income_remain_num" value="' + result1.incomeRemain[i].income_remain_num + '"></td>';
+                        add_list += '<td><input type="text" class="updateInput" data="' + result1.incomeRemain[i].income_remain_id + '" name="income_remain_amount" value="' + result1.incomeRemain[i].income_remain_amount + '"></td>';
+                        add_list += '<td><input type="text" class="updateInput" data="' + result1.incomeRemain[i].income_remain_id + '" name="income_remain_in" value="' + result1.incomeRemain[i].income_remain_in + '"></td>';
+                        add_list += '<td><input type="text" class="updateInput" data="' + result1.incomeRemain[i].income_remain_id + '" name="income_remain_out" value="' + result1.incomeRemain[i].income_remain_out + '"></td>';
+                        add_list += '<td><input type="text" class="updateInput" data="' + result1.incomeRemain[i].income_remain_id + '" name="income_remain_re" value="' + result1.incomeRemain[i].income_remain_re + '"></td>';
+                        add_list += '<td><input type="text" class="updateInput" data="' + result1.incomeRemain[i].income_remain_id + '" name="income_remain_person" value="' + result1.incomeRemain[i].income_remain_person + '"></td>';
+                        add_list += '<td><input type="text" class="updateInput" data="' + result1.incomeRemain[i].income_remain_id + '" name="income_remain_date" value="' + result1.incomeRemain[i].income_remain_date + '"></td>';
                         add_list += '</tr>';
                     }
 
@@ -1349,39 +1336,111 @@
             });
     }
 
-    // 도입자원 삭제
-    function DeleteIncome() {
-        var total_id = [];
+    $(document).on("focusout", ".updateInput", function () {
+        if (tablechk === 0) {
+            var income_id = $(this).attr("data");
+            var income_name = $(this).attr("name");
+            var income_value = $(this).val();
 
-        $("input:checkbox[name=RowCheck]:checked").each(function () {
-            var income_id = $(this).val();
+            var data = {"income_id": income_id, "income_name": income_name, "income_value": income_value};
 
-            total_id.push(income_id);
-        });
-
-        var data = {'income_id': total_id};
-
-        if (confirm("삭제하시겠습니까?") == true) {
             $.ajax(
                 {
-                    url: 'deleteIncome',
+                    url: 'updateIncome',
                     method: 'POST',
                     dataType: 'json',
                     data: data,
                     success: function (result) {
-
-                        console.log(result)
-
                         if (result == 0) {
-                            alert("삭제에 실패하였습니다.");
-                            location.reload();
-                        } else {
-                            location.reload();
+                            return Alert("수정에 실패하였습니다.")
                         }
                     }
                 });
         } else {
+            var income_remain_id = $(this).attr("data");
+            var income_remain_name = $(this).attr("name");
+            var income_remain_value = $(this).val();
 
+            var data = {"income_remain_id": income_remain_id, "income_remain_name": income_remain_name, "income_remain_value": income_remain_value};
+
+            $.ajax(
+                {
+                    url: 'updateRemain',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: data,
+                    success: function (result) {
+                        if (result == 0) {
+                            return Alert("수정에 실패하였습니다.")
+                        }
+                    }
+                });
+        }
+
+    });
+
+    // 도입자원 삭제
+    function DeleteIncome() {
+        if(tablechk === 0) {
+            var total_id = [];
+
+            $("input:checkbox[name=RowCheck]:checked").each(function () {
+                var income_id = $(this).val();
+
+                total_id.push(income_id);
+            });
+
+            var data = {'income_id': total_id};
+
+            if (confirm("삭제하시겠습니까?") == true) {
+                $.ajax(
+                    {
+                        url: 'deleteIncome',
+                        method: 'POST',
+                        dataType: 'json',
+                        data: data,
+                        success: function (result) {
+                            if (result == 0) {
+                                alert("삭제에 실패하였습니다.");
+                                location.reload();
+                            } else {
+                                location.reload();
+                            }
+                        }
+                    });
+            } else {
+
+            }
+        } else {
+            var total_id1 = [];
+
+            $("input:checkbox[name=RowCheck1]:checked").each(function () {
+                var income_id1 = $(this).val();
+
+                total_id1.push(income_id1);
+            });
+
+            var data = {'income_remain_id': total_id1};
+
+            if (confirm("삭제하시겠습니까?") == true) {
+                $.ajax(
+                    {
+                        url: 'deleteIncome',
+                        method: 'POST',
+                        dataType: 'json',
+                        data: data,
+                        success: function (result) {
+                            if (result == 0) {
+                                alert("삭제에 실패하였습니다.");
+                                location.reload();
+                            } else {
+                                location.reload();
+                            }
+                        }
+                    });
+            } else {
+
+            }
         }
     }
 
@@ -1401,9 +1460,9 @@
                 $(this).siblings().removeClass('asc');
                 $(this).siblings().removeClass('desc');
 
-                var rec1 = $('#table1').find('tbody>tr').get();
+                var rec = $('#table1').find('tbody>tr').get();
 
-                rec1.sort(function (a, b) {
+                rec.sort(function (a, b) {
                     var val1 = +($(a).children('td').eq(column).text());
                     var val2 = +($(b).children('td').eq(column).text());
 
@@ -1417,12 +1476,49 @@
                     }
                 });
 
-                $.each(rec1, function (index, row) {
+                $.each(rec, function (index, row) {
                     $('#table1 tbody').append(row);
                 });
             });
         });
+
+        $('#table2 th').each(function (column) {
+            $(this).click(function () {
+                if ($(this).is('.asc')) {
+                    $(this).removeClass('asc');
+                    $(this).addClass('desc');
+                    sortdir = -1;
+                } else {
+                    $(this).addClass('asc');
+                    $(this).removeClass('desc');
+                    sortdir = 1;
+                }
+                $(this).siblings().removeClass('asc');
+                $(this).siblings().removeClass('desc');
+
+                var rec = $('#table2').find('tbody>tr').get();
+
+                rec.sort(function (a, b) {
+                    var val1 = +($(a).children('td').eq(column).text());
+                    var val2 = +($(b).children('td').eq(column).text());
+
+                    if (isNaN(val1) && isNaN(val2)) {
+                        val1 = $(a).children('td').eq(column).text();
+                        val2 = $(b).children('td').eq(column).text();
+
+                        return (val1 < val2) ? -sortdir : (val1 > val2) ? sortdir : 0;
+                    } else {
+                        return (val1 < val2) ? -sortdir : (val1 > val2) ? sortdir : 0;
+                    }
+                });
+
+                $.each(rec, function (index, row) {
+                    $('#table2 tbody').append(row);
+                });
+            });
+        });
     });
+    // 정렬
 
     var emptyElsIndex = 0;
 
@@ -1454,105 +1550,152 @@
         $("#updateBtn").attr("onclick", "UpdateBtn('id');");
     }
 
-    // 일반 데이터 수정
-    function UpdateBtn() {
-        const data = [];
-
-        const income_id = {key: 'income_id', value: "" + resultData[emptyElsIndex].income_id};
-
-        data.push(income_id);
-
-        $("input[class=test]").each(function (index, item) {
-            const key = $(this).attr('name');
-            var value = $(this).val();
-
-            var arr = {key: key, value: value};
-
-            data.push(arr);
-        });
-
-
-        $("#update_list").val(JSON.stringify(data));
-
-
-        $("#updateForm").submit();
-    }
-
     function addRow() {
-        var row_list = "";
-        row_list += '<tr id="row_data">';
+        if (tablechk === 0) {
+            var row_list = "";
+            row_list += '<tr id="row_data">';
 
-        row_list += '<form action="insertIncome" id="rowForm" method="POST" enctype="multipart/form-data">';
-        row_list += '<input type="hidden" id="rowIncome" name="rowIncome">';
-        row_list += '<td><input type="checkbox" name="RowCheck"></td>';
-        row_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
-        row_list += '<td><input type="text" class="rowInput" name="income_name" value="' + $("#CropSelect option:selected").text() + '"></td>';
-        row_list += '<td><input type="text" class="rowInput" name="income_code"></td>';
-        row_list += '<td><input type="text" class="rowInput" name="income_kind"></td>';
-        row_list += '<td><input type="text" class="rowInput" name="income_division"></td>';
-        row_list += '<td><input type="text" class="rowInput" name="income_place"></td>';
-        row_list += '<td><input type="text" class="rowInput" name="income_country"></td>';
-        row_list += '<td><input type="text" class="rowInput" name="income_person"></td>';
-        row_list += '<td><input type="text" class="rowInput" name="income_date"></td>';
-        row_list += '<td><input type="text" class="rowInput" name="income_num"></td>';
-        row_list += '<td><input type="text" class="rowInput" name="income_type"></td>';
-        row_list += '<td><input type="text" class="rowInput" name="income_trait"></td>';
-        row_list += '<td><input type="text" class="rowInput" name="income_comment"></td>';
-        row_list += '</form>';
-        row_list += '</tr>';
+            row_list += '<form action="insertIncome" id="rowForm" method="POST" enctype="multipart/form-data">';
+            row_list += '<input type="hidden" id="rowIncome" name="rowIncome">';
+            row_list += '<td><input type="checkbox" name="RowCheck"></td>';
+            row_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#insert_file"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
+            row_list += '<td><input type="text" class="rowInput" name="income_name" value="' + $("#CropSelect option:selected").text() + '"></td>';
+            row_list += '<td><input type="text" class="rowInput" name="income_code"></td>';
+            row_list += '<td><input type="text" class="rowInput" name="income_kind"></td>';
+            row_list += '<td><input type="text" class="rowInput" name="income_division"></td>';
+            row_list += '<td><input type="text" class="rowInput" name="income_place"></td>';
+            row_list += '<td><input type="text" class="rowInput" name="income_country"></td>';
+            row_list += '<td><input type="text" class="rowInput" name="income_person"></td>';
+            row_list += '<td><input type="text" class="rowInput" name="income_date"></td>';
+            row_list += '<td><input type="text" class="rowInput" name="income_num"></td>';
+            row_list += '<td><input type="text" class="rowInput" name="income_type"></td>';
+            row_list += '<td><input type="text" class="rowInput" name="income_trait"></td>';
+            row_list += '<td><input type="text" class="rowInput" name="income_comment"></td>';
+            row_list += '</form>';
+            row_list += '</tr>';
 
-        $("#income_list").append(row_list);
+            $("#income_list").append(row_list);
 
-        var input_data = [];
+            var input_data = [];
 
-        var input_value = $("#CropSelect option:selected").text();
+            var input_value = $("#CropSelect option:selected").text();
 
-        var input_name = {key: "income_name", value: input_value};
+            var input_name = {key: "income_name", value: input_value};
 
-        input_data.push(input_name);
+            input_data.push(input_name);
 
-        $.ajax(
-            {
-                url: 'insertIncome',
-                method: 'POST',
-                dataType: 'json',
-                data: {
-                    "input_data": JSON.stringify(input_data)
-                },
-                success: function (result) {
-                    if (result != null) {
-                        $(".rowInput").focusout(function () {
-                            var data = [];
+            $.ajax(
+                {
+                    url: 'insertIncome',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        "input_data": JSON.stringify(input_data)
+                    },
+                    success: function (result) {
+                        if (result != null) {
+                            $(".rowInput").focusout(function () {
+                                var data = [];
 
-                            var data_in = {key: "income_id", value: result.income_id}
+                                var data_in = {key: "income_id", value: result.income_id}
 
-                            data.push(data_in);
+                                data.push(data_in);
 
-                            $("input[class=rowInput]").each(function (index, item) {
-                                const key = $(this).attr('name');
-                                var value = $(this).val();
+                                $("input[class=rowInput]").each(function (index, item) {
+                                    const key = $(this).attr('name');
+                                    var value = $(this).val();
 
-                                var arr = {key: key, value: value};
+                                    var arr = {key: key, value: value};
 
-                                data.push(arr);
-                            });
-
-                            $.ajax(
-                                {
-                                    url: 'updateIncome',
-                                    method: 'POST',
-                                    dataType: 'json',
-                                    data: {
-                                        "data": JSON.stringify(data)
-                                    },
-                                    success: function (result) {
-
-                                    }
+                                    data.push(arr);
                                 });
-                        })
+
+                                $.ajax(
+                                    {
+                                        url: 'updateInsertIncome',
+                                        method: 'POST',
+                                        dataType: 'json',
+                                        data: {
+                                            "data": JSON.stringify(data)
+                                        },
+                                        success: function (result) {
+
+                                        }
+                                    });
+                            })
+                        }
                     }
-                }
-            });
+                });
+        } else {
+            var row_list1 = "";
+            row_list1 += '<tr id="row_data">';
+
+            row_list1 += '<form action="insertIncome" id="rowForm" method="POST" enctype="multipart/form-data">';
+            row_list1 += '<input type="hidden" id="rowIncome" name="rowIncome1">';
+            row_list1 += '<td><input type="checkbox" name="RowCheck1"></td>';
+            row_list1 += '<td><input type="text" class="rowInput" name="income_remain_num"></td>';
+            row_list1 += '<td><input type="text" class="rowInput" name="income_remain_amount"></td>';
+            row_list1 += '<td><input type="text" class="rowInput" name="income_remain_in"></td>';
+            row_list1 += '<td><input type="text" class="rowInput" name="income_remain_out"></td>';
+            row_list1 += '<td><input type="text" class="rowInput" name="income_remain_re"></td>';
+            row_list1 += '<td><input type="text" class="rowInput" name="income_remain_person"></td>';
+            row_list1 += '<td><input type="text" class="rowInput" name="income_remain_date"></td>';
+            row_list1 += '</form>';
+            row_list1 += '</tr>';
+
+            $("#incomeRemain-list").append(row_list1);
+
+            var input_data1 = [];
+
+            var input_value1 = $("#CropSelect option:selected").text();
+
+            var input_name1 = {key: "income_name", value: input_value1};
+
+            input_data1.push(input_name1);
+
+            $.ajax(
+                {
+                    url: 'insertIncomeRemain',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        "input_data": JSON.stringify(input_data1)
+                    },
+                    success: function (result) {
+                        if (result != null) {
+                            $(".rowInput").focusout(function () {
+                                var data = [];
+
+                                var data_in = {key: "income_remain_id", value: result.income_remain_id}
+
+                                data.push(data_in);
+
+                                $("input[class=rowInput]").each(function (index, item) {
+                                    const key = $(this).attr('name');
+                                    var value = $(this).val();
+
+                                    var arr = {key: key, value: value};
+
+                                    data.push(arr);
+                                });
+
+                                $.ajax(
+                                    {
+                                        url: 'updateInsertRemain',
+                                        method: 'POST',
+                                        dataType: 'json',
+                                        data: {
+                                            "data": JSON.stringify(data)
+                                        },
+                                        success: function (result) {
+
+                                        }
+                                    });
+                            })
+                        }
+                    }
+                });
+        }
 
     }
 

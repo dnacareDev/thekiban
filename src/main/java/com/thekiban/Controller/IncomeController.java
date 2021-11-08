@@ -1,9 +1,6 @@
 package com.thekiban.Controller;
 
-import com.thekiban.Entity.Income;
-import com.thekiban.Entity.IncomeFile;
-import com.thekiban.Entity.SampleFile;
-import com.thekiban.Entity.Uploads;
+import com.thekiban.Entity.*;
 import com.thekiban.Service.IncomeService;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -72,9 +69,9 @@ public class IncomeController {
     int offset = (page_num - 1) * limit;
     int end_page = (count + limit - 1) / limit;
 
-    List<Income> income = service.SearchIncome(income_name, offset, limit);
+    List<Income> Income = service.SearchIncome(income_name, offset, limit);
 
-    result.put("income", income);
+    result.put("income", Income);
     result.put("page_num", page_num);
     result.put("end_page", end_page);
     result.put("offset", offset);
@@ -87,6 +84,15 @@ public class IncomeController {
   @RequestMapping("deleteIncome")
   public int DeleteIncome(@RequestParam("income_id[]") int[] income_id) {
     service.DeleteIncome(income_id);
+
+    return 1;
+  }
+
+  // 도입자원 삭제
+  @ResponseBody
+  @RequestMapping("deleteRemain")
+  public int DeleteRemain(@RequestParam("income_id[]") int[] income_id) {
+    service.DeleteRemain(income_id);
 
     return 1;
   }
@@ -167,6 +173,82 @@ public class IncomeController {
     mv.setViewName("redirect:/income");
 
     return mv;
+  }
+
+  @RequestMapping("updateInsertRemain")
+  public ModelAndView UpdateInsertRemain(ModelAndView mv, @ModelAttribute IncomeRemain incomeRemain, @RequestParam("data") String data) {
+    JSONArray arr = new JSONArray(data);
+
+    JSONObject input_id = arr.getJSONObject(0);
+
+    int value_id = (Integer) input_id.get("value");
+
+    incomeRemain.setIncome_remain_id(value_id);
+
+    for (int i = 1; i < arr.length(); i++) {
+      JSONObject obj = arr.getJSONObject(i);
+
+      String key_id = (String) obj.get("key");
+      String value = (String) obj.get("value");
+
+      if (!value.equals("")) {
+        if (key_id.equals("income_remain_num")) {
+          incomeRemain.setIncome_remain_num(value);
+        } else if (key_id.equals("income_remain_amount")) {
+          incomeRemain.setIncome_remain_amount(Integer.parseInt(value));
+        } else if (key_id.equals("income_remain_in")) {
+          incomeRemain.setIncome_remain_in(Integer.parseInt(value));
+        } else if (key_id.equals("income_remain_out")) {
+          incomeRemain.setIncome_remain_out(Integer.parseInt(value));
+        } else if (key_id.equals("income_remain_re")) {
+          incomeRemain.setIncome_remain_re(Integer.parseInt(value));
+        } else if (key_id.equals("income_remain_person")) {
+          incomeRemain.setIncome_remain_person(value);
+        } else if (key_id.equals("income_remain_date")) {
+          incomeRemain.setIncome_remain_date(value);
+        }
+      } else {
+        if (key_id.equals("income_remain_num")) {
+          incomeRemain.setIncome_remain_num("");
+        } else if (key_id.equals("income_remain_amount")) {
+          incomeRemain.setIncome_remain_amount(0);
+        } else if (key_id.equals("income_remain_in")) {
+          incomeRemain.setIncome_remain_in(0);
+        } else if (key_id.equals("income_remain_out")) {
+          incomeRemain.setIncome_remain_out(0);
+        } else if (key_id.equals("income_remain_re")) {
+          incomeRemain.setIncome_remain_re(0);
+        } else if (key_id.equals("income_remain_person")) {
+          incomeRemain.setIncome_remain_person("");
+        } else if (key_id.equals("income_remain_date")) {
+          incomeRemain.setIncome_remain_date(null);
+        }
+      }
+    }
+    service.UpdateInsertRemain(incomeRemain);
+
+    mv.setViewName("redirect:/income");
+
+    return mv;
+  }
+
+  // 시교자원 수정
+  @ResponseBody
+  @RequestMapping("updateIncome")
+  public int UpdateIncome(@RequestParam("income_id") int income_id, @RequestParam("income_name") String income_name, @RequestParam("income_value") String income_value)
+  {
+    int result = service.UpdateIncome(income_id, income_name, income_value);
+
+    return result;
+  }
+
+  @ResponseBody
+  @RequestMapping("updateRemain")
+  public int UpdateRemain(@RequestParam("income_remain_id") int income_remain_id, @RequestParam("income_remain_name") String income_remain_name, @RequestParam("income_remain_value") String income_remain_value)
+  {
+    int result = service.UpdateRemain(income_remain_id, income_remain_name, income_remain_value);
+
+    return result;
   }
 
   // 엑셀 등록
