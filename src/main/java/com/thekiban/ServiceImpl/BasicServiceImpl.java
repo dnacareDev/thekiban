@@ -1,9 +1,11 @@
 package com.thekiban.ServiceImpl;
 
 import com.thekiban.Entity.Basic;
+import com.thekiban.Entity.BasicFile;
 import com.thekiban.Entity.Detail;
 import com.thekiban.Entity.Display;
 import com.thekiban.Entity.Standard;
+import com.thekiban.Entity.Uploads;
 import com.thekiban.Mapper.BasicMapper;
 import com.thekiban.Service.BasicService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,6 +102,13 @@ public class BasicServiceImpl implements BasicService
 	{
 		return mapper.UpdateAllBasic(list);
 	}
+	
+	// 첨부파일 조회
+	@Override
+	public List<Uploads> SelectUploads(int[] basic_id)
+	{
+		return mapper.SelectUploads(basic_id);
+	}
 
 	// 원종 삭제
 	@Override
@@ -121,11 +130,67 @@ public class BasicServiceImpl implements BasicService
 	{
 		return mapper.DeleteDisplay(user_id);
 	}
+	
+	// 첨부파일 내용 삭제
+	@Override
+	public int DeleteFile(int[] basic_id)
+	{
+		return mapper.DeleteFile(basic_id);
+	}
+	
+	// 첨부파일 삭제
+	@Override
+	public int DeleteUploads(List<Uploads> uploads)
+	{
+		return mapper.DeleteUploads(uploads);
+	}
 
 	// 표시항목 등록
 	@Override
 	public int InsertDisplay(int user_id, String basic_name, int[] detail_list)
 	{
 		return mapper.InsertDisplay(user_id, basic_name, detail_list);
+	}
+
+	// 원종 상세 조회
+	@Override
+	public Basic SelectBasicDetail(int basic_id)
+	{
+		return mapper.SelectBasicDetail(basic_id);
+	}
+
+	// 첨부파일 목록 조회
+	@Override
+	public List<BasicFile> SelectBasicFile(int basic_id)
+	{
+		return mapper.SelectBasicFile(basic_id);
+	}
+
+	// 첨부파일 내용 등록
+	@Override
+	public int InsertBasicFile(BasicFile basic_file)
+	{
+		return mapper.InsertBasicFile(basic_file);
+	}
+
+	// 첨부파일 등록
+	@Override
+	public int InsertBasicUpload(Uploads upload)
+	{
+		return mapper.InsertBasicUpload(upload);
+	}
+
+	// 첨부파일 내용 수정
+	@Override
+	public int UpdateBasicFile(BasicFile basic_file)
+	{
+		return mapper.UpdateBasicFile(basic_file);
+	}
+
+	// 첨부파일 수정
+	@Override
+	public int UpdateBasicUpload(Uploads upload)
+	{
+		return mapper.UpdateBasicUpload(upload);
 	}
 }

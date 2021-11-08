@@ -1,12 +1,16 @@
 package com.thekiban.Controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -14,13 +18,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.thekiban.Entity.Basic;
-import com.thekiban.Entity.Breed;
+import com.thekiban.Entity.BasicFile;
 import com.thekiban.Entity.Detail;
 import com.thekiban.Entity.Display;
 import com.thekiban.Entity.Standard;
+import com.thekiban.Entity.Uploads;
 import com.thekiban.Entity.User;
 import com.thekiban.Service.BasicService;
 
@@ -29,6 +35,9 @@ public class BasicController
 {
 	@Autowired
 	private BasicService service;
+	
+	@Autowired
+	private FileController fileController;
 	
 	// 원종 관리 페이지
 	@RequestMapping("basic")
@@ -42,7 +51,7 @@ public class BasicController
 	// 원종 검색
 	@ResponseBody
 	@RequestMapping("searchBasic")
-	public Map<String, Object> SearchBasic(Authentication auth, @RequestParam("basic_name") String basic_name, @RequestParam("page_num") int page_num)
+	public Map<String, Object> SearchBasic(Authentication auth, @RequestParam("basic_name") String basic_name, @RequestParam("page_num") int page_num, @RequestParam("limit") int limit)
 	{
 		Map<String, Object> result = new LinkedHashMap<String, Object>();
 		
@@ -50,7 +59,6 @@ public class BasicController
 		
 		int count = service.SelectBasicCount(basic_name);
 		
-		int limit = 10;
 		int offset = (page_num - 1) * limit;
 		int end_page = (count + limit - 1) / limit;
 		
@@ -91,7 +99,7 @@ public class BasicController
 		
 		List<Detail> detail = service.SearchBasicDetail(basic_name);
 		
-		int insert_breed = service.InsertBasic(basic);
+		int insert_basic = service.InsertBasic(basic);
 		int insert_standard = service.InsertStandard(basic.getBasic_id(), basic_name, detail);
 		
 		List<Basic> basic_list = service.SelectBasicAll(basic_name, offset);
@@ -179,9 +187,25 @@ public class BasicController
 	@RequestMapping("deleteBasic")
 	public int DeleteBasic(@RequestParam("basic_id[]") int[] basic_id)
 	{
+		List<Uploads> uploads = service.SelectUploads(basic_id);
+		
+		for(int i = 0; i < uploads.size(); i++)
+		{
+			String delete_path = "upload/" + uploads.get(i).getUploads_file();
+			File origin_file = new File(delete_path);
+			
+			origin_file.delete();
+		}
+		
 		int[] delete_basic = service.DeleteBasic(basic_id);
 		int[] delete_standard = service.DeleteStandard(basic_id);
+		int delete_file = service.DeleteFile(basic_id);
 
+		if(!uploads.isEmpty())
+		{
+			int delete_uploads = service.DeleteUploads(uploads);
+		}
+		
 		return 1;
 	}
 	
@@ -193,6 +217,103 @@ public class BasicController
 		
 		int delete = service.DeleteDisplay(user.getUser_id());
 		int insert = service.InsertDisplay(user.getUser_id(), basic_name, detail_id);
+		
+		mv.setViewName("redirect:/basic");
+		
+		return mv;
+	}
+	
+	// 첨부 파일 조회
+	@ResponseBody
+	@RequestMapping("selectBasicFile")
+	public Map<String, Object> SelectBasicFile(@RequestParam("basic_id") int basic_id)
+	{
+		Map<String, Object> result = new LinkedHashMap<String, Object>();
+		
+		Basic basic = service.SelectBasicDetail(basic_id);
+		List<BasicFile> basic_file = service.SelectBasicFile(basic_id);
+		
+		result.put("basic", basic);
+		result.put("basic_file", basic_file);
+		
+		return result;
+	}
+	
+	// 첨부파일 등록
+	@RequestMapping("insertBasicFile")
+	public ModelAndView InsertBasicFile(ModelAndView mv, @ModelAttribute BasicFile basic_file, @RequestParam("file") MultipartFile file) throws IOException
+	{
+		String[] extension = file.getOriginalFilename().split("\\.");
+		
+		String file_name = fileController.ChangeFileName(extension[1]);
+		String origin_file_name = file.getOriginalFilename();
+		
+		String path = "upload";
+		
+		File filePath = new File(path);
+		
+        if (!filePath.exists())
+            filePath.mkdirs();
+        
+       	Path fileLocation = Paths.get(path).toAbsolutePath().normalize();
+       	Path targetLocation = fileLocation.resolve(file_name);
+		
+       	Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+       	
+       	int insert_file = service.InsertBasicFile(basic_file);
+       	
+		Uploads upload = new Uploads();
+		upload.setUploads_file(file_name);
+		upload.setUploads_origin_file(origin_file_name);
+		upload.setBasic_file_id(basic_file.getBasic_file_id());
+		
+		int insert_upload = service.InsertBasicUpload(upload);
+		
+		mv.setViewName("redirect:/basic");
+		
+		return mv;
+	}
+	
+	// 첨부파일 수정
+	@RequestMapping("updateBasicFile")
+	public ModelAndView UpdateBasicFile(ModelAndView mv, @ModelAttribute BasicFile basic_file, @RequestParam("file") MultipartFile file) throws IOException
+	{
+		if(file.isEmpty())
+		{
+			int update_file = service.UpdateBasicFile(basic_file);
+		}
+		else
+		{
+			String delete_path = "upload/" + basic_file.getUploads_file();
+			File origin_file = new File(delete_path);
+			
+			if(origin_file.delete())
+			{
+				String[] extension = file.getOriginalFilename().split("\\.");
+				
+				String file_name = fileController.ChangeFileName(extension[1]);
+				String origin_file_name = file.getOriginalFilename();
+				
+				String path = "upload";
+				
+				File filePath = new File(path);
+				
+		        if (!filePath.exists())
+		            filePath.mkdirs();
+		        
+		       	Path fileLocation = Paths.get(path).toAbsolutePath().normalize();
+		       	Path targetLocation = fileLocation.resolve(file_name);
+				
+		       	Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+		       	
+		       	Uploads upload = new Uploads();
+		       	upload.setUploads_file(file_name);
+				upload.setUploads_origin_file(origin_file_name);
+				upload.setBasic_file_id(basic_file.getBasic_file_id());
+				
+				int update_upload = service.UpdateBasicUpload(upload);
+			}
+		}
 		
 		mv.setViewName("redirect:/basic");
 		

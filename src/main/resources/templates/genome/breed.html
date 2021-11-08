@@ -541,7 +541,6 @@
 			font-size: 13px;
        }
        
-       
        input[type="text"].updateInput{
        		border:none;
        		height: 45px;
@@ -549,7 +548,6 @@
        }
        /* 푸터 배경색 */
 		.footer-wrapper {background-color: #FCFCFC;}
-        
     </style>
 </head>
 <body class="layout-light top-menu overlayScroll">
@@ -708,7 +706,9 @@
 												<span class="name-text">xxx.png<span>
 												</span></span>
 											</a>
-											<a href="" class="btn-delete"><i class="la la-trash"></i></a>
+											<a href="" class="btn-delete">
+												<i class="la la-trash"></i>
+											</a>
 										</li>
 									</ul>
 								</div>
@@ -750,7 +750,7 @@
 										<span id="uploads_origin_file"></span>
 									</a>
 									<input type="hidden" id="uploads_file" name="uploads_file">
-									<input type="file" id="modify_file" name="file">
+									<input type="file" id="update_file" name="file">
 								</div>
 								<div class="atbd-upload__file">
 									<ul>
@@ -1821,7 +1821,7 @@
                 
                 for(var i = 1; i < result.detail.length; i++)
                 {
-                	add_list += '<td><input type="text" class="updateInput" id="' + result.new_breed.breed_id + '" name="' + result.detail[i].detail_id + '"></td>';
+                	add_list += '<td><input type="text" class="updateInput" data="' + result.new_breed.breed_id + '" name="' + result.detail[i].detail_id + '"></td>';
                 }
                 
                 for(var i = 0; i < result.breed.length; i++)
