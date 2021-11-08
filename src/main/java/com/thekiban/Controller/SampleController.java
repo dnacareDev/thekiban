@@ -132,6 +132,14 @@ public class SampleController {
     return 1;
   }
 
+  @ResponseBody
+  @RequestMapping("deleteOutcome")
+  public int DeleteOutcome(@RequestParam("sample_outcome_id[]") int[] sample_outcome_id) {
+    service.DeleteOutcome(sample_outcome_id);
+
+    return 1;
+  }
+
   // 시교자원 수정
   @RequestMapping("updateSample")
   public ModelAndView UpdateSample(ModelAndView mv, @ModelAttribute Sample sample, @RequestParam(value = "update_list", required = false) String update_list, @RequestParam("data") String data) {

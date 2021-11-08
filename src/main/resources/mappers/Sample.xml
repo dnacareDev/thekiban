@@ -98,6 +98,15 @@
         </foreach>
     </select>
 
+    <!-- 수출자원 삭제 -->
+    <select id="DeleteOutcome" parameterType="java.util.ArrayList">
+        DELETE FROM sampleOutcome
+        WHERE
+        <foreach collection="array" item="item" open="(" close=")" separator="OR">
+            sample_outcome_id = #{item}
+        </foreach>
+    </select>
+
     <!-- 시교자원 수정 -->
     <update id="UpdateSample" parameterType="Sample">
         UPDATE sample
