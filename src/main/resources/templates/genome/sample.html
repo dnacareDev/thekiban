@@ -557,6 +557,11 @@
 		#grid2 .tab-content .row li{
 			padding: 0 10px !important;
 		}
+		input[type="text"].updateInput{
+       		border:none;
+       		height: 45px;
+       		
+       }
     </style>
 </head>
 
@@ -1900,8 +1905,6 @@
                 var rowdata = XLSX.utils.sheet_to_json(tenSheet);
                 rowdata.push(...XLSX.utils.sheet_to_json(eleSheet));
 
-                console.log(rowdata);
-
                 var keys = Object.values(rowdata[0]);
 
                 var html = "";
@@ -2429,7 +2432,7 @@
             $("#update-grid input[type='text']").eq(i - 3).val(inner_text);
         }
 
-        $("#update-grid input[type='text']").each(function (f, e) {
+        $("#update-grid input[type='text']").each(function(f, e) {
             input_N += $(e).length;
         });
 
@@ -2592,6 +2595,7 @@
             var input_name1 = {key: "sample_name", value: input_value1};
 
             input_data1.push(input_name1);
+
             $.ajax(
                 {
                     url: 'insertSampleOutcome',

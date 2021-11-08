@@ -25,9 +25,9 @@
     <!-- 시교자원 등록 -->
     <insert id="InsertSampleOutcome" parameterType="Sample">
         INSERT INTO sampleOutcome
-        (sample_outcome_id, sample_outcome_code, sample_outcome_num, sample_outcome_amount, sample_outcome_in, sample_outcome_out, sample_outcome_remain, sample_outcome_person,
+        (sample_outcome_id, sample_name, sample_outcome_code, sample_outcome_num, sample_outcome_amount, sample_outcome_in, sample_outcome_out, sample_outcome_remain, sample_outcome_person,
         sample_outcome_reciever, sample_outcome_date, sample_outcome_end, sample_outcome_country, sample_outcome_place)
-        VALUES (#{sample_outcome_id}, #{sample_outcome_code}, #{sample_outcome_num}, #{sample_outcome_amount}, #{sample_outcome_in},
+        VALUES (#{sample_outcome_id}, #{sample_name}, #{sample_outcome_code}, #{sample_outcome_num}, #{sample_outcome_amount}, #{sample_outcome_in},
         #{sample_outcome_out}, #{sample_outcome_remain}, #{sample_outcome_person}, #{sample_outcome_reciever}, #{sample_outcome_date},
         #{sample_outcome_end}, #{sample_outcome_country}, #{sample_outcome_place})
         <selectKey resultType="int" keyProperty="sample_outcome_id" order="AFTER">

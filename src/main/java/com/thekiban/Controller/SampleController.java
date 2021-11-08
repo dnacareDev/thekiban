@@ -94,7 +94,7 @@ public class SampleController {
   public Map<String, Object> SearchOutcome(@RequestParam("sample_name") String sample_name, @RequestParam("page_num") int page_num) {
     Map<String, Object> result1 = new LinkedHashMap<String, Object>();
 
-    int count = service.SelectSampleCount(sample_name);
+    int count = service.SelectOutcomeCount(sample_name);
 
     int limit = 10;
     int offset = (page_num - 1) * limit;
