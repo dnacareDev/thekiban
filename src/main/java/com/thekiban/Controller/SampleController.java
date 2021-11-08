@@ -1,8 +1,6 @@
 package com.thekiban.Controller;
 
-import com.thekiban.Entity.Sample;
-import com.thekiban.Entity.SampleFile;
-import com.thekiban.Entity.SampleOutcome;
+import com.thekiban.Entity.*;
 import com.thekiban.Service.SampleService;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -12,8 +10,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.*;
 
 // 시교자원
@@ -22,6 +27,9 @@ public class SampleController {
 
   @Autowired
   private SampleService service;
+
+  @Autowired
+  private FileController fileController;
 
   // 시교자원 관리 페이지
   @RequestMapping("sample")
@@ -59,7 +67,6 @@ public class SampleController {
     String value = (String) obj.get("value");
 
     sampleOutcome.setSample_name(value);
-    ;
 
     service.InsertSampleOutcome(sampleOutcome);
 
@@ -110,7 +117,7 @@ public class SampleController {
     return result1;
   }
 
-  // 첨부파일 검색
+ /* // 첨부파일 검색
   @ResponseBody
   @RequestMapping("searchFileList")
   public Map<String, Object> SearchFileList(@RequestParam("sample_id") String sample_id) {
@@ -121,7 +128,7 @@ public class SampleController {
     result.put("sampleFile", SampleFile);
 
     return result;
-  }
+  }*/
 
   // 선택삭제
   @ResponseBody
@@ -140,9 +147,8 @@ public class SampleController {
     return 1;
   }
 
-  // 시교자원 수정
-  @RequestMapping("updateSample")
-  public ModelAndView UpdateSample(ModelAndView mv, @ModelAttribute Sample sample, @RequestParam(value = "update_list", required = false) String update_list, @RequestParam("data") String data) {
+  @RequestMapping("updateInsertSample")
+  public ModelAndView UpdateInsertSample(ModelAndView mv, @ModelAttribute Sample sample, @RequestParam(value = "update_list", required = false) String update_list, @RequestParam("data") String data) {
     JSONArray arr = new JSONArray(data);
 
     JSONObject input_id = arr.getJSONObject(0);
@@ -204,15 +210,15 @@ public class SampleController {
       }
     }
 
-    service.UpdateSample(sample);
+    service.UpdateInsertSample(sample);
 
     mv.setViewName("redirect:/sample");
 
     return mv;
   }
 
-  @RequestMapping("updateOutcome")
-  public ModelAndView UpdateOutcome(ModelAndView mv, @ModelAttribute SampleOutcome sampleOutcome, @RequestParam("data") String data) {
+  @RequestMapping("updateInsertOutcome")
+  public ModelAndView UpdateInsertOutcome(ModelAndView mv, @ModelAttribute SampleOutcome sampleOutcome, @RequestParam("data") String data) {
     JSONArray arr = new JSONArray(data);
 
     JSONObject input_id = arr.getJSONObject(0);
@@ -282,11 +288,30 @@ public class SampleController {
       }
     }
 
-    service.UpdateOutcome(sampleOutcome);
+    service.UpdateInsertOutcome(sampleOutcome);
 
     mv.setViewName("redirect:/sample");
 
     return mv;
+  }
+
+  // 시교자원 수정
+  @ResponseBody
+  @RequestMapping("updateSample")
+  public int UpdateSample(@RequestParam("sample_id") int sample_id, @RequestParam("sample_name") String sample_name, @RequestParam("sample_value") String sample_value)
+  {
+    int result = service.UpdateSample(sample_id, sample_name, sample_value);
+
+    return result;
+  }
+
+  @ResponseBody
+  @RequestMapping("updateOutcome")
+  public int UpdateOutcome(@RequestParam("sample_outcome_id") int sample_outcome_id, @RequestParam("sample_outcome_name") String sample_outcome_name, @RequestParam("sample_outcome_value") String sample_outcome_value)
+  {
+    int result = service.UpdateOutcome(sample_outcome_id, sample_outcome_name, sample_outcome_value);
+
+    return result;
   }
 
   // 엑셀 등록
@@ -374,6 +399,103 @@ public class SampleController {
 
       service.InsertOutcomeExcel(sampleOutcome);
     }
+    mv.setViewName("redirect:/sample");
+
+    return mv;
+  }
+
+  // 첨부 파일 조회
+  @ResponseBody
+  @RequestMapping("selectSampleFile")
+  public Map<String, Object> SelectSampleFile(@RequestParam("sample_id") int sample_id)
+  {
+    Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+//    Breed breed = service.SelectBreedDetail(breed_id);
+    List<SampleFile> sample_file = service.SelectSampleFile(sample_id);
+
+//    result.put("breed", breed);
+    result.put("sample_file", sample_file);
+
+    return result;
+  }
+
+  // 첨부파일 등록
+  @RequestMapping("insertSampleFile")
+  public ModelAndView InsertSampleFile(ModelAndView mv, @ModelAttribute SampleFile sample_file, @RequestParam("file") MultipartFile file) throws IOException
+  {
+    String[] extension = file.getOriginalFilename().split("\\.");
+
+    String file_name = fileController.ChangeFileName(extension[1]);
+    String origin_file_name = file.getOriginalFilename();
+
+    String path = "upload";
+
+    File filePath = new File(path);
+
+    if (!filePath.exists())
+      filePath.mkdirs();
+
+    Path fileLocation = Paths.get(path).toAbsolutePath().normalize();
+    Path targetLocation = fileLocation.resolve(file_name);
+
+    Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+
+    int insert_file = service.InsertSampleFile(sample_file);
+
+    Uploads upload = new Uploads();
+    upload.setUploads_file(file_name);
+    upload.setUploads_origin_file(origin_file_name);
+    upload.setSample_file_id(sample_file.getSample_file_id());
+
+    int insert_upload = service.InsertSampleUpload(upload);
+
+    mv.setViewName("redirect:/sample");
+
+    return mv;
+  }
+
+  // 첨부파일 수정
+  @RequestMapping("updateSampleFile")
+  public ModelAndView UpdateSampleFile(ModelAndView mv, @ModelAttribute SampleFile sample_file, @RequestParam("file") MultipartFile file) throws IOException
+  {
+    if(file.isEmpty())
+    {
+      int update_file = service.UpdateSampleFile(sample_file);
+    }
+    else
+    {
+      String delete_path = "upload/" + sample_file.getUploads_file();
+      File origin_file = new File(delete_path);
+
+      if(origin_file.delete())
+      {
+        String[] extension = file.getOriginalFilename().split("\\.");
+
+        String file_name = fileController.ChangeFileName(extension[1]);
+        String origin_file_name = file.getOriginalFilename();
+
+        String path = "upload";
+
+        File filePath = new File(path);
+
+        if (!filePath.exists())
+          filePath.mkdirs();
+
+        Path fileLocation = Paths.get(path).toAbsolutePath().normalize();
+        Path targetLocation = fileLocation.resolve(file_name);
+
+        Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+
+        Uploads upload = new Uploads();
+        upload.setUploads_file(file_name);
+        upload.setUploads_origin_file(origin_file_name);
+        upload.setSample_file_id(sample_file.getSample_file_id());
+
+        int update_upload = service.UpdateSampleUpload(upload);
+      }
+    }
+
     mv.setViewName("redirect:/sample");
 
     return mv;
