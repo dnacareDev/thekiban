@@ -90,7 +90,7 @@ public class BasicController
 	// 원종 등록
 	@ResponseBody
 	@RequestMapping("insertBasic")
-	public Map<String, Object> ㅑnsertBasic(ModelAndView mv, @RequestParam("basic_name") String basic_name, @RequestParam("offset") int offset)
+	public Map<String, Object> insertBasic(ModelAndView mv, @RequestParam("basic_name") String basic_name, @RequestParam("offset") int offset)
 	{
 		Map<String, Object> result = new LinkedHashMap<String, Object>();
 		

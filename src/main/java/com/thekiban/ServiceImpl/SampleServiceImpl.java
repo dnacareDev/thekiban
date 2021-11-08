@@ -1,8 +1,6 @@
 package com.thekiban.ServiceImpl;
 
-import com.thekiban.Entity.Sample;
-import com.thekiban.Entity.SampleFile;
-import com.thekiban.Entity.SampleOutcome;
+import com.thekiban.Entity.*;
 import com.thekiban.Mapper.SampleMapper;
 import com.thekiban.Service.SampleService;
 import org.apache.ibatis.annotations.Param;
@@ -61,17 +59,33 @@ public class SampleServiceImpl implements SampleService {
   // 시교자원 삭제
   @Override
   public int[] DeleteSample(int[] sample_id) { return mapper.DeleteSample(sample_id); }
-  
+
+  // 수출자원 삭제
+  @Override
+  public int[] DeleteOutcome(int[] sample_outcome_id) {
+    return mapper.DeleteOutcome(sample_outcome_id);
+  }
+
   // 시교자원 수정
   @Override
-  public int UpdateSample(Sample sample) {
-    return mapper.UpdateSample(sample);
+  public int UpdateSample(int sample_id, String sample_name, String sample_value) {
+    return mapper.UpdateSample(sample_id, sample_name, sample_value);
   }
 
   // 수출관리 수정
   @Override
-  public int UpdateOutcome(SampleOutcome sampleOutcome) {
-    return mapper.UpdateOutcome(sampleOutcome);
+  public int UpdateOutcome(int sample_outcome_id, String sample_outcome_name, String sample_outcome_value) {
+    return mapper.UpdateOutcome(sample_outcome_id, sample_outcome_name, sample_outcome_value);
+  }
+
+  @Override
+  public int UpdateInsertSample(Sample sample) {
+    return mapper.UpdateInsertSample(sample);
+  }
+
+  @Override
+  public int UpdateInsertOutcome(SampleOutcome sampleOutcome) {
+    return mapper.UpdateInsertOutcome(sampleOutcome);
   }
 
   @Override
@@ -79,13 +93,53 @@ public class SampleServiceImpl implements SampleService {
     return mapper.InsertExcel(sample);
   }
 
-  @Override
+/*  @Override
   public List<SampleFile> SearchFileList(String sample_id) {
     return mapper.SearchFileList(sample_id);
-  }
+  }*/
 
   @Override
   public int InsertOutcomeExcel(SampleOutcome sampleOutcome) {
     return mapper.InsertOutcomeExcel(sampleOutcome);
+  }
+
+  @Override
+  public List<Uploads> SelectUploads(int[] sample_id) {
+    return mapper.SelectUploads(sample_id);
+  }
+
+  @Override
+  public int DeleteFile(int[] sample_id) {
+    return mapper.DeleteFile(sample_id);
+  }
+
+  @Override
+  public int DeleteUploads(List<Uploads> uploads) {
+    return mapper.DeleteUploads(uploads);
+  }
+
+  @Override
+  public List<SampleFile> SelectSampleFile(int sample_id) {
+    return mapper.SelectSampleFile(sample_id);
+  }
+
+  @Override
+  public int InsertSampleFile(SampleFile sample_file) {
+    return mapper.InsertSampleFile(sample_file);
+  }
+
+  @Override
+  public int InsertSampleUpload(Uploads upload) {
+    return mapper.InsertSampleUpload(upload);
+  }
+
+  @Override
+  public int UpdateSampleFile(SampleFile sample_file) {
+    return mapper.UpdateSampleFile(sample_file);
+  }
+
+  @Override
+  public int UpdateSampleUpload(Uploads upload) {
+    return mapper.UpdateSampleUpload(upload);
   }
 }

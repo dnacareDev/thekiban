@@ -8,13 +8,13 @@ import org.apache.ibatis.type.Alias;
 @Getter
 @Setter
 @ToString
-@Alias("SampleFile")
-public class SampleFile {
+@Alias("IncomeFile")
+public class IncomeFile {
 
-  private int sample_file_id;
-  private int sample_id;
-  private String sample_file_title;
-  private String sample_file_contents;
+  private int income_file_id;
+  private int income_id;
+  private String income_file_title;
+  private String income_file_contents;
   private String create_date;
   private String modify_date;
 
