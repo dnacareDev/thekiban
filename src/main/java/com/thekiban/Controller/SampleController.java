@@ -411,10 +411,8 @@ public class SampleController {
   {
     Map<String, Object> result = new LinkedHashMap<String, Object>();
 
-//    Breed breed = service.SelectBreedDetail(breed_id);
     List<SampleFile> sample_file = service.SelectSampleFile(sample_id);
 
-//    result.put("breed", breed);
     result.put("sample_file", sample_file);
 
     return result;
