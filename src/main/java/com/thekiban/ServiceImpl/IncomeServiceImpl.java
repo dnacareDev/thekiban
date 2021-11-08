@@ -29,6 +29,11 @@ public class IncomeServiceImpl implements IncomeService {
     return mapper.InsertIncome(income);
   }
 
+  @Override
+  public int InsertIncomeRemain(IncomeRemain incomeRemain) {
+    return mapper.InsertIncomeRemain(incomeRemain);
+  }
+
   // 도입자원 갯수 조회
   @Override
   public int SelectIncomeCount(String income_name)
@@ -36,11 +41,21 @@ public class IncomeServiceImpl implements IncomeService {
     return mapper.SelectIncomeCount(income_name);
   }
 
+  @Override
+  public int SelectRemainCount(String income_name) {
+    return mapper.SelectRemainCount(income_name);
+  }
+
   // 도입자원 검색
   @Override
   public List<Income> SearchIncome(String income_name, int offset, int limit)
   {
     return mapper.SearchIncome(income_name, offset, limit);
+  }
+
+  @Override
+  public List<IncomeRemain> SearchRemain(String income_name, int offset, int limit) {
+    return mapper.SearchRemain(income_name, offset, limit);
   }
 
   // 도입자원 삭제

@@ -615,6 +615,7 @@
                                     <table class="table" id="table2">
                                         <thead class="text-center">
                                         <tr>
+                                            <th></th>
                                             <th style="cursor: pointer;"><span class="title">도입번호(ID)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
                                                                                                                         alt="종자번호(ID)"></th>
                                             <th style="cursor: pointer;"><span class="title">종자 보유량</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
@@ -1630,7 +1631,7 @@
             var row_list1 = "";
             row_list1 += '<tr id="row_data">';
 
-            row_list1 += '<form action="insertIncome" id="rowForm" method="POST" enctype="multipart/form-data">';
+            row_list1 += '<form action="insertIncomeRemain" id="rowForm" method="POST" enctype="multipart/form-data">';
             row_list1 += '<input type="hidden" id="rowIncome" name="rowIncome1">';
             row_list1 += '<td><input type="checkbox" name="RowCheck1"></td>';
             row_list1 += '<td><input type="text" class="rowInput" name="income_remain_num"></td>';

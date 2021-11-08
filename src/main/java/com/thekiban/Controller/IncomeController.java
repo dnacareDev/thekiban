@@ -58,6 +58,22 @@ public class IncomeController {
     return income;
   }
 
+  @ResponseBody
+  @RequestMapping("insertIncomeRemain")
+  public IncomeRemain InsertIncomeRemain(@ModelAttribute IncomeRemain incomeRemain, @RequestParam("input_data") String input_data) {
+    JSONArray arr = new JSONArray(input_data);
+
+    JSONObject obj = arr.getJSONObject(0);
+
+    String value = (String) obj.get("value");
+
+    incomeRemain.setIncome_name(value);
+
+    service.InsertIncomeRemain(incomeRemain);
+
+    return incomeRemain;
+  }
+
   // 도입자원 검색
   @ResponseBody
   @RequestMapping("searchIncome")
@@ -72,6 +88,27 @@ public class IncomeController {
     List<Income> Income = service.SearchIncome(income_name, offset, limit);
 
     result.put("income", Income);
+    result.put("page_num", page_num);
+    result.put("end_page", end_page);
+    result.put("offset", offset);
+
+    return result;
+  }
+
+  // 도입자원 검색
+  @ResponseBody
+  @RequestMapping("searchRemain")
+  public Map<String, Object> SearchRemain(@RequestParam("income_name") String income_name, @RequestParam("page_num") int page_num, @RequestParam("limit") int limit) {
+    Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+    int count = service.SelectRemainCount(income_name);
+
+    int offset = (page_num - 1) * limit;
+    int end_page = (count + limit - 1) / limit;
+
+    List<IncomeRemain> IncomeRemain = service.SearchRemain(income_name, offset, limit);
+
+    result.put("incomeRemain", IncomeRemain);
     result.put("page_num", page_num);
     result.put("end_page", end_page);
     result.put("offset", offset);
