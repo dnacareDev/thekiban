@@ -1660,11 +1660,12 @@
 
                     for(var j = 0; j < result.breed[i].breed_standard.length; j++)
                     {
-                    	add_list += '<td>' + result.breed[i].breed_standard[j].standard + '</td>';
+                    	add_list += '<td><input type="text" class="updateInput" data="' + result.breed[i].breed_id + '" name="' + result.breed[i].breed_standard[j].detail_id + '" value="' + result.breed[i].breed_standard[j].standard + '"></td>';
                     }
 
                     add_list += '</tr>';
                 }
+                
                 // detail
                 for(var i = 0; i < detail_list.length; i++)
                 {
@@ -1690,7 +1691,8 @@
 			                		display_add += '<div class="row">';
 			                		display_add += '<input type="checkbox" class="checkbox mr-2" name="mis_research">';
 			                        display_add += '<span class="research-title">' + result.detail[j].detail_title + '</span>';
-			                        display_add += '<input type="hidden" id="detail_id" name="detail_id" value="' + result.detail[j].detail_id + '">';
+			                        /* display_add += '<input type="hidden" id="detail_id" name="detail_id" value="' + result.detail[j].detail_id + '">'; */
+			                        display_add += '<input type="hidden" name="detail_id" value="' + result.detail[j].detail_id + '">';
 			                        display_add += '</div>';
 			                        display_add += '</li>';
 			                        display_add += '</div>';
@@ -1805,6 +1807,17 @@
                 	header_add += '<th style="cursor: pointer;"><span class="title">' + result.detail[i].detail_title + '</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="' + result.detail[i].detail_title + '"></th>'
                 }
                 
+                add_list += '<tr>';
+                add_list += '<td><input type="checkbox" name="RowCheck" value="' + result.new_breed.breed_id + '"></td>';
+                add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#breed_file"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
+                add_list += '<td onclick="EmptyBtn(' + result.new_breed.breed_id + ');" style="color : blue;">EMPTY</td>';
+               	add_list += '<td>' + result.new_breed.breed_name + '</td>';
+                
+                for(var i = 1; i < result.detail.length; i++)
+                {
+                	add_list += '<td><input type="text" class="updateInput" id="' + result.new_breed.breed_id + '" name="' + result.detail[i].detail_id + '"></td>';
+                }
+                
                 for(var i = 0; i < result.breed.length; i++)
                 {
                 	if(result.breed[i].breed_id != result.new_breed.breed_id)
@@ -1831,17 +1844,6 @@
                 	}
                 }
                 
-                add_list += '<tr>';
-                add_list += '<td><input type="checkbox" name="RowCheck" value="' + result.new_breed.breed_id + '"></td>';
-                add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#breed_file"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
-                add_list += '<td onclick="EmptyBtn(' + result.new_breed.breed_id + ');" style="color : blue;">EMPTY</td>';
-               	add_list += '<td>' + result.new_breed.breed_name + '</td>';
-                
-                for(var i = 1; i < result.detail.length; i++)
-                {
-                	add_list += '<td><input type="text" class="updateInput" id="' + result.new_breed.breed_id + '" name="' + result.detail[i].detail_id + '"></td>';
-                }
-                
                 add_list += '</tr>';
                 
                 header_list.empty();
@@ -1856,7 +1858,7 @@
 	// 품종 수정
 	$(document).on("focusout", ".updateInput", function()
 	{
-		var breed_id = $(this).attr("id");
+		var breed_id = $(this).attr("data");
 		var detail_id = $(this).attr("name");
 		var standard = $(this).val();
 		
@@ -1870,7 +1872,10 @@
         	data: data,
         	success: function(result)
         	{
-        		console.log(result);
+        		if(result == 0)
+        		{
+        			return Alert("수정에 실패하였습니다.")
+        		}
         	}
         });
 	});
@@ -1997,7 +2002,8 @@
             add_list += '<li class="list-group-item-sm list-group-item">';
             add_list += '<div class="row">';
             add_list += '<input type="checkbox" class="checkbox mr-2" name="mis_research">';
-            add_list += '<input type="hidden" id="detail_id" name="detail_id" value="' + research_id + '">';
+            /* add_list += '<input type="hidden" id="detail_id" name="detail_id" value="' + research_id + '">'; */
+            add_list += '<input type="hidden" name="detail_id" value="' + research_id + '">';
             add_list += '<span class="research-title">' + research_title + '</span>';
             add_list += '</div>';
             add_list += '</li>';
