@@ -6,8 +6,6 @@
     <!-- 공통 헤더 -->
     <th:block th:include="/../fragments/header.html"></th:block>
     <style>
-        *{margin:0; padding:0; border:0; outline:0; box-sizing:border-box; list-style-type: none; -webkit-tap-highlight-color:none; transition: 0.5s; line-height: 1.2; letter-spacing: -0.3px;}
-        a{font-size: 13px; color:#0955e0; padding-left:100px;}
         .clearfix::after{clear:both; content: ""; display: block;}
 
         .title{
@@ -15,7 +13,7 @@
             padding-bottom:100px;
         }
         .container{
-            width: 1300px;
+            width: 100%;
             margin:50px auto;
         }
         .contents{
@@ -59,12 +57,15 @@
         .data_file{
         	clear: both;
         	border: 1px solid #ddd;
+        	margin-top: 30px;
+        	padding: 10px;
+        	
         }
         *{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+		    margin: 0;
+		    padding: 0;
+		    box-sizing: border-box;
+		}
 #wrap {height: auto;}
 ::-webkit-scrollbar {width:8px; height: 8px;}
 ::-webkit-scrollbar-track {background:#efefef;}
@@ -108,13 +109,13 @@
 
 /* mab_chr_wrap */
 .mab_chr_wrap {display: flex; justify-content: space-between; width: 100%;}
-.mab_chr_wrap_left {width: 50%; padding: 0 20px; border: 1px solid #E6EBEE; margin-right: 10px; height: 640px; border-radius: 8px; -webkit-border-radius: 8px; padding: 24px ;}
-.mab_chr_wrap_right {width: 50%; display: flex; justify-content: flex-end; border: 1px solid #E6EBEE; height: 640px; border-radius: 8px; -webkit-border-radius: 8px; padding: 24px;}
+.mab_chr_wrap_left {width: 50%; padding: 0 20px; border: 1px solid #E6EBEE; margin-right: 10px; height: 640px; border-radius: 8px; -webkit-border-radius: 8px; padding: 24px ; background-color:#fff;}
+.mab_chr_wrap_right {width: 50%; display: flex; justify-content: flex-end; border: 1px solid #E6EBEE; height: 640px; border-radius: 8px; -webkit-border-radius: 8px; padding: 24px; background-color:#fff;}
 
 .mab_chr_wrap_left .btn_all_box {margin-bottom: 20px; padding-right: 5px;}
 
 .chr_btn_wrap {display: flex; align-items: center; justify-content: space-between; width: 100%;}
-.chr_select_wrap {display: flex; align-items: center; justify-content: flex-end; margin-top: 12px;}
+.chr_select_wrap {display: flex; align-items: center; justify-content: center; margin-top: 12px;}
 .chr_btn_wrap > div {display: flex; align-items: center;}
 .chr_btn_wrap p {font-size: 20px; color: #000;}
 .commonBtn {width: 120px; height: 40px; font-size: 14px; line-height: 40px; text-align: center; border: 1px solid #000; background: #fff; color: #4E4E4E; border-radius: 4px; cursor: pointer; font-weight: bold; margin: 0 0px 0 6px;  position: relative; z-index: 1;}
@@ -412,6 +413,12 @@
     display: flex;
     align-items: flex-end;
 }
+
+@media (min-width: 1200px){
+	.container, .container-sm, .container-md, .container-lg, .container-xl {
+    	max-width: 100%;
+    }
+}
     </style>
 </head>
 <body class="layout-light top-menu overlayScroll">
@@ -422,7 +429,7 @@
 <main class="main-content">
     <div class="container">
         <h2 class="title">Digtal Lab > MABC Tools > Data 관리</h2>
-        <div class="contents">
+        <div class="contents clearfix" style="max-width: 1300px; margin: 0 auto;">
         	<form action="" method="">
 	        	<input type="text" class="text pcText" readonly>
 	        	<input type="file" onchange="onChangeLen()" class="addMabcFile submitLen" id="len_file" style="display:none;">
