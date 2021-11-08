@@ -541,6 +541,12 @@
 			font-size: 13px;
        }
        
+       
+       input[type="text"].updateInput{
+       		border:none;
+       		height: 45px;
+       		
+       }
        /* 푸터 배경색 */
 		.footer-wrapper {background-color: #FCFCFC;}
         
@@ -1849,6 +1855,8 @@
 
                 breed_list.empty();
                 breed_list.append(add_list);
+                
+                $("input[type='text'].updateInput").eq(0).focus();
         	}
         });
     }

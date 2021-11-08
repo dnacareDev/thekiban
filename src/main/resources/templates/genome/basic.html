@@ -588,6 +588,11 @@
 		#grid2 .tab-content .row li{
 			padding: 0 10px !important;
 		}
+		
+		input[type="text"].updateInput{
+       		border:none;
+       		height: 45px;
+       }
 		/* 푸터 배경색 */
 		.footer-wrapper {background-color: #FCFCFC;}
     </style>
@@ -1551,6 +1556,8 @@
 
                 basic_list.empty();
                 basic_list.append(add_list);
+                
+                $("input[type='text'].updateInput").eq(0).focus();
         	}
         });
     }
