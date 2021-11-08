@@ -5,4 +5,11 @@
 		SELECT * FROM user
 		WHERE user_username = #{user_username}
 	</select>
+	
+	<!-- 비밀번호 변경 -->
+	<update id="UpdatePassword" parameterType="User">
+		UPDATE user
+		SET user_password = #{user_password}
+		WHERE user_id = #{user_id}
+	</update>
 </mapper>

@@ -3,6 +3,7 @@ plugins
     id 'org.springframework.boot' version '2.5.5'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+    id 'war'
 }
 
 group = 'com.thekiban'
@@ -21,6 +22,9 @@ repositories
 {
     mavenCentral()
 }
+
+bootWar.enabled = false
+war.enabled = true
 
 dependencies
 {
@@ -43,6 +47,9 @@ dependencies
     implementation 'org.apache.poi:poi-ooxml:5.0.0'
     implementation 'org.apache.tika:tika-core:2.1.0'
     implementation group: 'org.json', name: 'json', version: '20160810'
+    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+
+	//implementation group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat', version: '2.5.2'
 }
 
 test

@@ -6,13 +6,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping(value = "/lab")
 public class LabController
 {
-	@GetMapping(value = "data_manage")
+	@RequestMapping(value = "mabc")
 	public ModelAndView getDataManage(ModelAndView mv)
 	{
-		mv.setViewName("lab/data_manage");
+		mv.setViewName("lab/mabc");
 
 		return mv;
 	}

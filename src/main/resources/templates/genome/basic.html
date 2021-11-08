@@ -751,11 +751,11 @@
 	<!-- 출력 헤더 선택 모달창 -->
 	<div class="modal-basic modal fade show pop2" id="grid2" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-dialog modal-md" role="document">
-			<form action="insertBreedDisplay" method="POST" enctype="multipart/form-data">
+			<form action="insertBasicDisplay" method="POST" enctype="multipart/form-data">
 			<div class="modal-content modal-bg-white">
 				<div class="modal-header" style="border: none">
 					<h6 class="modal-title" id="display_title"></h6>
-					<input type="hidden" id="display_name" name="breed_name">
+					<input type="hidden" id="display_name" name="basic_name">
 				</div>
 				<div class="modal-body">
 					<div class="tab-pane fade show active" id="control1" role="tabpanel" aria-labelledby="control1-tab">
@@ -1982,6 +1982,7 @@
     		location.href = "/analysis?total_id=" + total_id + "&type=" + 2;
     	}
     }
+    
     function checkFunction(){// 박스안 리스트 클릭시 체크박스 체크
     	$('#grid2 .tab-content .row li').off('click').on('click', function(e){ 
     		e.preventDefault();

@@ -1,9 +1,6 @@
 <!doctype html>
-<html lang="en" dir="ltr"
-      xmlns:th="http://www.thymeleaf.org">
-
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
 <head>
-
     <!-- 공통 헤더 -->
     <th:block th:include="/../fragments/header.html"></th:block>
     <!-- js -->
@@ -353,18 +350,20 @@ input[type="checkbox"]{
 									<div class="text_box text_box1">
 										<ul>
 											<th:block th:each="breed : ${breed}">
-												<li><input type="checkbox"><span th:text="${breed.standard}">99PC0233</span></li>
+												<li><input type="checkbox" class="plus_target" th:value="${breed.breed_id}"><span th:text="${breed.standard}"></span></li>
 											</th:block>
 											<th:block th:each="basic : ${basic}">
-												<li><input type="checkbox"><span  th:text="${basic.standard}">19PC0233</span></li>
+												<li><input type="checkbox" class="plus_target"><span th:text="${basic.standard}"></span></li>
 											</th:block>
 										</ul>
 									</div>
 								</div>
 								<div class="button clearfix">
 									<ul>
-										<li><button type="button" class="right_plus" onclick="plusFunction(this, array1)"><span class="right_btn"></span></button></li>
-										<li><button type="button" onclick="plusFunction(this, array2)"><span class="left_btn"></span></button></li>
+										<!-- <li><button type="button" class="right_plus" onclick="plusFunction(this, array1)"><span class="right_btn"></span></button></li> -->
+										<!-- <li><button type="button" onclick="plusFunction(this, array2)"><span class="left_btn"></span></button></li> -->
+										<li><button type="button" class="right_plus" onclick="PlusBtn(0)"><span class="right_btn"></span></button></li>
+										<li><button type="button" onclick="MinusBtn(0)"><span class="left_btn"></span></button></li>
 									</ul>
 								</div>
 								<div class="box box2">
@@ -381,21 +380,23 @@ input[type="checkbox"]{
 									<input type="hidden">
 									<div class="text_box text_box3">
 										<ul>
-											<li><input type="checkbox"><span>Correlation</span></li>
-											<li><input type="checkbox"><span>Trait View</span></li>
+											<li><input type="checkbox" class="plus_method" value="Correlation"><span>Correlation</span></li>
+											<li><input type="checkbox" class="plus_method" value="Trait View"><span>Trait View</span></li>
 										</ul>
 									</div>
 								</div>
 								<div class="button clearfix">
 									<ul>
-										<li><button type="button" class="right_plus" onclick="plusFunction(this, array1)"><span class="right_btn"></span></button></li>
-										<li><button type="button" onclick="plusFunction(this, array2)"><span class="left_btn"></span></button></li>
+										<!-- <li><button type="button" class="right_plus" onclick="plusFunction(this, array1)"><span class="right_btn"></span></button></li> -->
+										<!-- <li><button type="button" onclick="plusFunction(this, array2)"><span class="left_btn"></span></button></li> -->
+										<li><button type="button" class="right_plus" onclick="PlusBtn(1)"><span class="right_btn"></span></button></li>
+										<li><button type="button" onclick="MinusBtn(1)"><span class="left_btn"></span></button></li>
 									</ul>
 								</div>
 								<div class="box box4">
 									<input type="hidden">
 									<div class="text_box text_box4">
-										<ul>
+										<ul id="method_ul">
 										</ul>
 									</div>
 								</div>
@@ -449,54 +450,61 @@ input[type="checkbox"]{
 <!-- 공통 js -->
  <th:block th:include="/../fragments/commonjs.html"></th:block>
 <script>
-let inner_html= "";
-let text_box;
-let array1 = [];
-let array2 = [];
-let textLi;
-function plusFunction(e, Arrays)
-{
-	Arrays = [];
-	
-	if($(e).hasClass("right_plus") == true)
+	$(document).ready(function()
 	{
-		textLi = $(e).parent().parent().parent().prev().children().eq(1).children().children();
-		text_box = $(e).parent().parent().parent().next().children().eq(1).children();
-	}
-	else
-	{
-		textLi = $(e).parent().parent().parent().next().children().eq(1).children().children();
-		text_box = $(e).parent().parent().parent().prev().children().eq(1).children();
-	}
-	
-	textLi.each(function(idx, elem)
-	{
-		if($(elem).children().eq(0).is(":checked") == true)
-		{
-			Arrays.push($(elem).children().eq(1).text());
-			$(elem).remove();
-		}
+		CheckFunction();
+		autoHeight();
 	});
+
+	let inner_html= "";
+	let text_box;
+	let array1 = [];
+	let array2 = [];
+	let textLi;
 	
-	for(let i=0; i< Arrays.length; i++)
+	function plusFunction(e, Arrays)
 	{
-		inner_html += "<li><input type='checkbox'><span>"+ Arrays[i]+"</span></li>";
+		Arrays = [];
+		
+		if($(e).hasClass("right_plus") == true)
+		{
+			textLi = $(e).parent().parent().parent().prev().children().eq(1).children().children();
+			text_box = $(e).parent().parent().parent().next().children().eq(1).children();
+		}
+		else
+		{
+			textLi = $(e).parent().parent().parent().next().children().eq(1).children().children();
+			text_box = $(e).parent().parent().parent().prev().children().eq(1).children();
+		}
+		
+		textLi.each(function(idx, elem)
+		{
+			if($(elem).children().eq(0).is(":checked") == true)
+			{
+				Arrays.push($(elem).children().eq(1).text());
+				$(elem).remove();
+			}
+		});
+		
+		for(let i=0; i< Arrays.length; i++)
+		{
+			inner_html += "<li><input type='checkbox'><span>"+ Arrays[i]+"</span></li>";
+		}
+		
+		text_box.append(inner_html);
+		inner_html = "";
+		
+		CheckFunction();
 	}
-	
-	text_box.append(inner_html);
-	inner_html = "";
-	
-	checkFunction();
-}
 
-	checkFunction();
+	
 
-	function checkFunction()
+	function CheckFunction()
 	{
 		$('.text_box li').off('click').on('click', function(e)
 		{
 			e.preventDefault();
-			console.log($(this));
+			
 			$(this).toggleClass("clicked");
 			
 			if($(this).hasClass("clicked") == true)
@@ -519,7 +527,73 @@ function plusFunction(e, Arrays)
 			$(elem).parent().next().css({"height" : $(elem).parent().height(), "padding-top": 0});
 		});
 	}
-	autoHeight();
+	
+	function PlusBtn(e)
+	{
+		if(e == 0)
+		{
+			$(document).find("input:checkbox[class=plus_target]:checked").each(function()
+			{
+				var target_add = "";
+				
+				target_add += '<li><input type="checkbox" class="minus_target" value="' + $(this).val() + '"><span>' + $(this).next().text() + '</span></li>';
+				
+				$(this).parent().remove();
+				$(".text_box2").append(target_add);
+			})
+		}
+		else if(e == 1)
+		{
+			if($(".minus_method").length == 0)
+			{
+				$(document).find("input:checkbox[class=plus_method]:checked").each(function()
+				{
+					var target_add = "";
+					
+					target_add += '<li><input type="checkbox" class="minus_method" value="' + $(this).val() + '"><span>' + $(this).next().text() + '</span></li>';
+					
+					$(this).parent().remove();
+					$(".text_box4").append(target_add);
+				})
+			}
+			else
+			{
+				return Alert("분석방법은 단일 선택만 가능합니다.");
+			}
+		}
+		
+		CheckFunction();
+	}
+	
+	function MinusBtn(e)
+	{
+		if(e == 0)
+		{
+			$(document).find("input:checkbox[class=minus_target]:checked").each(function()
+			{
+				var add_list = "";
+				
+				add_list += '<li><input type="checkbox" class="plus_target"><span>' + $(this).next().text() + '</span></li>';
+				
+				$(this).parent().remove();
+				$(".text_box1").append(add_list);
+			})
+		}
+		else if(e == 1)
+		{
+			$(document).find("input:checkbox[class=minus_method]:checked").each(function()
+			{
+				var add_list = "";
+				
+				add_list += '<li><input type="checkbox" class="plus_target"><span>' + $(this).next().text() + '</span></li>';
+				
+				$(this).parent().remove();
+				$(".text_box3").append(add_list);
+			})
+		}
+		
+		CheckFunction();
+	}
 </script>
 </body>
 </html>

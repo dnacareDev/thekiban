@@ -1,9 +1,11 @@
 package com.thekiban.ServiceImpl;
 
 import com.thekiban.Entity.Breed;
+import com.thekiban.Entity.BreedFile;
 import com.thekiban.Entity.Detail;
 import com.thekiban.Entity.Display;
 import com.thekiban.Entity.Standard;
+import com.thekiban.Entity.Uploads;
 import com.thekiban.Mapper.BreedMapper;
 import com.thekiban.Service.BreedService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,6 +103,13 @@ public class BreedServiceImpl implements BreedService
 		return mapper.UpdateAllBreed(list);
 	}
 
+	// 첨부파일 조회
+	@Override
+	public List<Uploads> SelectUploads(int[] breed_id)
+	{
+		return mapper.SelectUploads(breed_id);
+	}
+
 	// 품종 삭제
 	@Override
 	public int[] DeleteBreed(int[] breed_id)
@@ -122,10 +131,66 @@ public class BreedServiceImpl implements BreedService
 		return mapper.DeleteDisplay(user_id);
 	}
 
+	// 첨부파일 내용 삭제
+	@Override
+	public int DeleteFile(int[] breed_id)
+	{
+		return mapper.DeleteFile(breed_id);
+	}
+
+	// 첨부파일 삭제
+	@Override
+	public int DeleteUploads(List<Uploads> uploads)
+	{
+		return mapper.DeleteUploads(uploads);
+	}
+
 	// 표시항목 등록
 	@Override
 	public int InsertDisplay(int user_id, String breed_name, int[] detail_list)
 	{
 		return mapper.InsertDisplay(user_id, breed_name, detail_list);
+	}
+
+	// 품종 상세 조회
+	@Override
+	public Breed SelectBreedDetail(int breed_id)
+	{
+		return mapper.SelectBreedDetail(breed_id);
+	}
+
+	// 첨부파일 목록 조회
+	@Override
+	public List<BreedFile> SelectBreedFile(int breed_id)
+	{
+		return mapper.SelectBreedFile(breed_id);
+	}
+
+	// 첨부파일 내용 등록
+	@Override
+	public int InsertBreedFile(BreedFile breed_file)
+	{
+		return mapper.InsertBreedFile(breed_file);
+	}
+
+	// 첨부파일 등록
+	@Override
+	public int InsertBreedUpload(Uploads upload)
+	{
+		return mapper.InsertBreedUpload(upload);
+	}
+
+	// 첨부파일 내용 수정
+	@Override
+	public int UpdateBreedFile(BreedFile breed_file)
+	{
+		return mapper.UpdateBreedFile(breed_file);
+	}
+
+	// 첨부파일 수정
+	@Override
+	public int UpdateBreedUpload(Uploads upload)
+	{
+		return mapper.UpdateBreedUpload(upload);
 	}
 }

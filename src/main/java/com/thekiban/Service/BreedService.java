@@ -2,9 +2,11 @@ package com.thekiban.Service;
 
 import com.thekiban.Entity.Basic;
 import com.thekiban.Entity.Breed;
+import com.thekiban.Entity.BreedFile;
 import com.thekiban.Entity.Detail;
 import com.thekiban.Entity.Display;
 import com.thekiban.Entity.Standard;
+import com.thekiban.Entity.Uploads;
 
 import java.util.List;
 
@@ -46,6 +48,9 @@ public interface BreedService
 	// 품목 전체 수정
 	int UpdateAllBreed(List<Standard> list);
 
+	// 첨부파일 조회
+	List<Uploads> SelectUploads(int[] breed_id);
+
 	// 품종 삭제
 	int[] DeleteBreed(int[] breed_id);
 
@@ -55,6 +60,30 @@ public interface BreedService
 	// 표시항목 삭제
 	int DeleteDisplay(int user_id);
 
+	// 첨부파일 내용 삭제
+	int DeleteFile(int[] breed_id);
+	
+	// 첨부파일 삭제
+	int DeleteUploads(List<Uploads> uploads);
+
 	// 표시항목 등록
 	int InsertDisplay(int user_id, String breed_name, int[] detail_list);
+
+	// 품종 상세 조회
+	Breed SelectBreedDetail(int breed_id);
+
+	// 첨부파일 목록 조회
+	List<BreedFile> SelectBreedFile(int breed_id);
+
+	// 첨부파일 내용 등록
+	int InsertBreedFile(BreedFile breed_file);
+
+	// 첨부파일 등록
+	int InsertBreedUpload(Uploads upload);
+
+	// 첨부파일 내용 수정
+	int UpdateBreedFile(BreedFile breed_file);
+
+	// 첨부파일 수정
+	int UpdateBreedUpload(Uploads upload);
 }
