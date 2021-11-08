@@ -1900,8 +1900,6 @@
                 var rowdata = XLSX.utils.sheet_to_json(tenSheet);
                 rowdata.push(...XLSX.utils.sheet_to_json(eleSheet));
 
-                console.log(rowdata);
-
                 var keys = Object.values(rowdata[0]);
 
                 var html = "";
@@ -2592,6 +2590,7 @@
             var input_name1 = {key: "sample_name", value: input_value1};
 
             input_data1.push(input_name1);
+
             $.ajax(
                 {
                     url: 'insertSampleOutcome',
