@@ -602,6 +602,11 @@
                                     </div>
 
                                     <form action="" name="searchForm" class="d-flex align-items-center add-contact__form my-sm-0 my-2">
+                                        <select class="form-control form-control-lg mt-10 mb-10 mr-10" style="width: 250px; float: left;" id="limit">
+                                            <option value="10">10개</option>
+                                            <option value="20">20개</option>
+                                            <option value="30">30개</option>
+                                        </select>
                                         <select class="form-control form-control-lg mt-10 mb-10 mr-10" style="width: 250px;" id="CropSelect">
                                             <option value="고추">고추</option>
                                             <option value="대파">대파</option>
@@ -663,18 +668,6 @@
                                         </tr>
                                         </thead>
                                         <tbody class="text-center sample-list" id="sample_list">
-                                        <!--<tr>
-                                            <td><input type="checkbox"></td>
-                                            <td><span>19PC4155</span></td>
-                                            <td><span>P20C0080</span></td>
-                                            <td><span>0</span></td>
-                                            <td><span>40</span></td>
-                                            <td><span>0</span></td>
-                                            <td><span>40</span></td>
-                                            <td><span>백향구</span></td>
-                                            <td><span>이호석</span></td>
-                                            <td><span>2019-11-11</span></td>
-                                        </tr>-->
                                         </tbody>
                                     </table>
                                     <table class="table" id="table2">
@@ -720,20 +713,6 @@
                                         </tr>
                                         </thead>
                                         <tbody class="text-center sampleOutcome-list" id="sampleOutcome-list">
-                                        <!--<tr>-->
-                                        <!--    <td><input type="checkbox" name="chkBox"></td>-->
-                                        <!--    <td><span>19PC0233</span></td>-->
-                                        <!--    <td><span>P20C0080</span></td>-->
-                                        <!--    <td><span>0</span></td>-->
-                                        <!--    <td><span>40</span></td>-->
-                                        <!--    <td><span>0</span></td>-->
-                                        <!--    <td><span>40</span></td>-->
-                                        <!--    <td><span>백향구</span></td>-->
-                                        <!--    <td><span>이호석</span></td>-->
-                                        <!--    <td><span>2019-01-01</span></td>-->
-                                        <!--    <td><span>-</span></td>-->
-                                        <!--    <td><span>해외</span></td>-->
-                                        <!--</tr>-->
                                         </tbody>
                                     </table>
                                 </div>
@@ -756,7 +735,7 @@
                                         </div>
                                     </div>
                                     <div class="col-4">
-                                        <button class="btn btn-lg btn-primary bottom_btn" data-toggle="modal" data-target="#recent">
+                                        <button class="btn btn-lg btn-primary bottom_btn" onclick="openMap()">
                                             <span>시교 진행 현황</span>
                                         </button>
                                     </div>
@@ -896,97 +875,6 @@
                         <button type="button" class="btn btn-primary btn-sm">수정</button>
                     </div>
                 </form>
-            </div>
-        </div>
-    </div>
-
-    <!-- 일반 데이터 수정 -->
-    <div class="modal-basic modal fade show pop2" tabindex="-1" role="dialog" aria-hidden="true" id="update-grid">
-        <div class="modal-dialog modal-md" role="document">
-            <div class="modal-content modal-bg-white ">
-                <div class="modal-header" style="border: none">
-                    <h6 class="modal-title">시교자원관리 > 기본 정보</h6>
-                    시교명 ID : <span></span>
-                </div>
-                <div class="modal-body">
-                    <div class="tab-pane fade show active" id="control2" role="tabpanel" aria-labelledby="control2-tab">
-                        <div class="tab-slide-content">
-                            <div class="atbd-tab tab-horizontal">
-                                <div class="top_box">
-                                    <ul class="nav nav-tabs vertical-tabs" role="tablist">
-                                        <li class="nav-item">
-                                            <a class="nav-link active" id="tab-horizontal-1-tab" data-toggle="tab"
-                                               href="#tab-horizontal-1" role="tab" aria-controls="tab-horizontal-1"
-                                               aria-selected="true">기본 정보</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <form action="updateSample" id="updateForm" method="POST" enctype="multipart/form-data">
-                                    <input type="hidden" id="update_list" name="update_list">
-                                    <div class="tab-content">
-                                        <div class="tab-pane fade show active" id="tab-horizontal-1" role="tabpanel"
-                                             aria-labelledby="tab-horizontal-1-tab">
-                                            <div class="content_title clearfix">
-                                                <ul>
-                                                    <li>형질</li>
-                                                    <li>조사값</li>
-                                                </ul>
-                                            </div>
-                                            <div class="content_1 clearfix">
-                                                <ul>
-                                                    <li>
-                                                        <div class="title">작물</div>
-                                                        <div class="input_text"><input type="text" class="test" name="sample_name" readonly></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">시교명(ID)</div>
-                                                        <div class="input_text"><input type="text" class="test" name="sample_code"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">목표 지역</div>
-                                                        <div class="input_text"><input type="text" class="test" name="sample_country"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">구분</div>
-                                                        <div class="input_text"><input type="text" class="test" name="sample_type"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">교배번호</div>
-                                                        <div class="input_text"><input type="text" class="test" name="sample_mate"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">종자번호(ID)</div>
-                                                        <div class="input_text"><input type="text" class="test" name="sample_seed"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">현 종자량(g)</div>
-                                                        <div class="input_text"><input type="text" class="test" name="sample_amount"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">기내 발아율(%)</div>
-                                                        <div class="input_text"><input type="text" class="test" name="sample_sprout"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">기내 순도율(%)</div>
-                                                        <div class="input_text"><input type="text" class="test" name="sample_purity"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">비고</div>
-                                                        <div class="input_text"><input type="text" class="test" name="sample_comment"></div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer" style="border: none">
-                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-primary btn-sm" id="updateBtn" onclick="UpdateBtn()" data-dismiss="modal">저장</button>
-                </div>
             </div>
         </div>
     </div>
@@ -1674,8 +1562,17 @@
         var korMap = new google.maps.Map(document.querySelector("#google_map1"), koreaOptions);
         var globalMap = new google.maps.Map(document.querySelector("#google_map2"), globalOptions);
 
-        var koreaLocations = ["부산", "밀양", "서울", "제주"];
-        var globalLocations = ["싱가폴", "미국", "파키스탄", "일본"];
+        // var koreaLocations = ["부산", "밀양", "서울", "제주"];
+        // var globalLocations = ["싱가폴", "미국", "파키스탄", "일본"];
+
+        var koreaLocations = [];
+        var globalLocations = [];
+
+        if(  === "국내") {
+            koreaLocations.push();
+        } else {
+            globalLocations.push();
+        }
 
         // var searchInput = document.querySelector("#modal-search");
         // 국내
@@ -1712,6 +1609,10 @@
 </script>
 
 <script type="text/javascript">
+    function openMap() {
+        $("#recent").modal();
+    }
+
     function dataToggle(one, two) {
         $(one).modal("hide");
 
@@ -2108,26 +2009,6 @@
 
     const thisBtn = document.querySelector('#modal_open');
 
-    // 시교 자원 추가
-    function insertBtn() {
-        var data = [];
-
-        $("input[name=detail]").each(function (index, item) {
-            const key = $(this).attr('id');
-            var value = $(this).val();
-
-            var arr = {key: key, value: value};
-
-            data.push(arr);
-        });
-
-        $("#origin_list").val(JSON.stringify(data));
-
-        $("#insertForm").submit();
-    }
-
-    // 시교 자원 추가
-
     /* 시교자원 수출관리 테이블 구분 */
     var tablechk = 0;
 
@@ -2151,14 +2032,22 @@
         SearchOutcome(1);
     })
 
+    // 갯수 선택
+    $("#limit").change(function()
+    {
+        SearchBreed(1);
+        SearchOutcome(1);
+    })
+
     var emptyEls;
-    var resultData = [];
 
     var btnindex = 0;
 
     function SearchSample(e) {
         var sample_name = $("#CropSelect").val();
-        var data = {"sample_name": sample_name, "page_num": e};
+        var limit = $("#limit").val();
+
+        var data = {"sample_name": sample_name, "page_num": e, "limit" : limit};
 
         $.ajax(
             {
@@ -2170,8 +2059,6 @@
                     var sample_list = $(".sample-list");
                     sample_list.eq(btnindex);
                     var add_list = "";
-
-                    resultData = result.sample;
 
                     var pageNum = $("#pageNum");
                     var page_add = "";
@@ -2229,7 +2116,9 @@
 
     function SearchOutcome(e) {
         var sample_name1 = $("#CropSelect").val();
-        var data1 = {"sample_name": sample_name1, "page_num": e};
+        var limit1 = $("#limit").val();
+
+        var data1 = {"sample_name": sample_name1, "page_num": e, "limit" : limit1};
 
         $.ajax(
             {
@@ -2241,8 +2130,6 @@
                     var sampleOutcome_list = $(".sampleOutcome-list");
                     sampleOutcome_list.eq(btnindex);
                     var add_list = "";
-
-                    resultData = result1.sampleOutcome;
 
                     var pageNum = $("#pageNum");
                     var page_add = "";

@@ -1,6 +1,9 @@
 package com.thekiban.Controller;
 
 import com.thekiban.Entity.Income;
+import com.thekiban.Entity.IncomeFile;
+import com.thekiban.Entity.SampleFile;
+import com.thekiban.Entity.Uploads;
 import com.thekiban.Service.IncomeService;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -10,8 +13,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +32,9 @@ public class IncomeController {
 
   @Autowired
   private IncomeService service;
+
+  @Autowired
+  private FileController fileController;
 
   //도입자원 관리 페이지
   @RequestMapping(value = "income")
@@ -51,12 +64,11 @@ public class IncomeController {
   // 도입자원 검색
   @ResponseBody
   @RequestMapping("searchIncome")
-  public Map<String, Object> SearchIncome(@RequestParam("income_name") String income_name, @RequestParam("page_num") int page_num) {
+  public Map<String, Object> SearchIncome(@RequestParam("income_name") String income_name, @RequestParam("page_num") int page_num, @RequestParam("limit") int limit) {
     Map<String, Object> result = new LinkedHashMap<String, Object>();
 
     int count = service.SelectIncomeCount(income_name);
 
-    int limit = 10;
     int offset = (page_num - 1) * limit;
     int end_page = (count + limit - 1) / limit;
 
@@ -80,16 +92,8 @@ public class IncomeController {
   }
 
   // 도입자원 수정
-  @RequestMapping("updateIncome")
-  public ModelAndView UpdateSample(ModelAndView mv, @ModelAttribute Income income, @RequestParam(value = "update_list", required = false) String update_list, @RequestParam("data") String data) {
-    /*JSONArray arr = new JSONArray(update_list);
-
-    JSONObject obj = arr.getJSONObject(0);
-
-    String value = (String) obj.get("value");
-
-    income.setIncome_id(Integer.parseInt(value));*/
-
+  @RequestMapping("updateInsertIncome")
+  public ModelAndView UpdateInsertIncome(ModelAndView mv, @ModelAttribute Income income, @RequestParam(value = "update_list", required = false) String update_list, @RequestParam("data") String data) {
     JSONArray arr = new JSONArray(data);
 
     JSONObject input_id = arr.getJSONObject(0);
@@ -205,6 +209,101 @@ public class IncomeController {
       }
 
       service.InsertIncome(income);
+    }
+
+    mv.setViewName("redirect:/income");
+
+    return mv;
+  }
+
+  // 첨부 파일 조회
+  @ResponseBody
+  @RequestMapping("selectIncomeFile")
+  public Map<String, Object> SelectIncomeFile(@RequestParam("income_id") int income_id)
+  {
+    Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+    List<IncomeFile> income_file = service.SelectIncomeFile(income_id);
+
+    result.put("income_file", income_file);
+
+    return result;
+  }
+
+  // 첨부파일 등록
+  @RequestMapping("insertIncomeFile")
+  public ModelAndView InsertIncomeFile(ModelAndView mv, @ModelAttribute IncomeFile income_file, @RequestParam("file") MultipartFile file) throws IOException
+  {
+    String[] extension = file.getOriginalFilename().split("\\.");
+
+    String file_name = fileController.ChangeFileName(extension[1]);
+    String origin_file_name = file.getOriginalFilename();
+
+    String path = "upload";
+
+    File filePath = new File(path);
+
+    if (!filePath.exists())
+      filePath.mkdirs();
+
+    Path fileLocation = Paths.get(path).toAbsolutePath().normalize();
+    Path targetLocation = fileLocation.resolve(file_name);
+
+    Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+
+    int insert_file = service.InsertIncomeFile(income_file);
+
+    Uploads upload = new Uploads();
+    upload.setUploads_file(file_name);
+    upload.setUploads_origin_file(origin_file_name);
+    upload.setIncome_file_id(income_file.getIncome_file_id());
+
+    int insert_upload = service.InsertIncomeUpload(upload);
+
+    mv.setViewName("redirect:/income");
+
+    return mv;
+  }
+
+  // 첨부파일 수정
+  @RequestMapping("updateIncomeFile")
+  public ModelAndView UpdateIncomeFile(ModelAndView mv, @ModelAttribute IncomeFile income_file, @RequestParam("file") MultipartFile file) throws IOException
+  {
+    if(file.isEmpty())
+    {
+      int update_file = service.UpdateIncomeFile(income_file);
+    }
+    else
+    {
+      String delete_path = "upload/" + income_file.getUploads_file();
+      File origin_file = new File(delete_path);
+
+      if(origin_file.delete())
+      {
+        String[] extension = file.getOriginalFilename().split("\\.");
+
+        String file_name = fileController.ChangeFileName(extension[1]);
+        String origin_file_name = file.getOriginalFilename();
+
+        String path = "upload";
+
+        File filePath = new File(path);
+
+        if (!filePath.exists())
+          filePath.mkdirs();
+
+        Path fileLocation = Paths.get(path).toAbsolutePath().normalize();
+        Path targetLocation = fileLocation.resolve(file_name);
+
+        Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+
+        Uploads upload = new Uploads();
+        upload.setUploads_file(file_name);
+        upload.setUploads_origin_file(origin_file_name);
+        upload.setIncome_file_id(income_file.getIncome_file_id());
+
+        int update_upload = service.UpdateIncomeUpload(upload);
+      }
     }
 
     mv.setViewName("redirect:/income");

@@ -76,12 +76,11 @@ public class SampleController {
   // 시교자원 검색
   @ResponseBody
   @RequestMapping("searchSample")
-  public Map<String, Object> SearchSample(@RequestParam("sample_name") String sample_name, @RequestParam("page_num") int page_num) {
+  public Map<String, Object> SearchSample(@RequestParam("sample_name") String sample_name, @RequestParam("page_num") int page_num, @RequestParam("limit") int limit) {
     Map<String, Object> result = new LinkedHashMap<String, Object>();
 
     int count = service.SelectSampleCount(sample_name);
 
-    int limit = 10;
     int offset = (page_num - 1) * limit;
     int end_page = (count + limit - 1) / limit;
 
@@ -98,12 +97,11 @@ public class SampleController {
   // 수출자원 검색
   @ResponseBody
   @RequestMapping("searchOutcome")
-  public Map<String, Object> SearchOutcome(@RequestParam("sample_name") String sample_name, @RequestParam("page_num") int page_num) {
+  public Map<String, Object> SearchOutcome(@RequestParam("sample_name") String sample_name, @RequestParam("page_num") int page_num, @RequestParam("limit") int limit) {
     Map<String, Object> result1 = new LinkedHashMap<String, Object>();
 
     int count = service.SelectOutcomeCount(sample_name);
 
-    int limit = 10;
     int offset = (page_num - 1) * limit;
     int end_page = (count + limit - 1) / limit;
 
@@ -116,19 +114,6 @@ public class SampleController {
 
     return result1;
   }
-
- /* // 첨부파일 검색
-  @ResponseBody
-  @RequestMapping("searchFileList")
-  public Map<String, Object> SearchFileList(@RequestParam("sample_id") String sample_id) {
-    Map<String, Object> result = new LinkedHashMap<String, Object>();
-
-    List<SampleFile> SampleFile = service.SearchFileList(sample_id);
-
-    result.put("sampleFile", SampleFile);
-
-    return result;
-  }*/
 
   // 선택삭제
   @ResponseBody

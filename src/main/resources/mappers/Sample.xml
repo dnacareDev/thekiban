@@ -80,18 +80,6 @@
         LIMIT #{offset}, #{limit}
     </select>
 
-<!--
-    &lt;!&ndash; 첨부파일 목록 검색 &ndash;&gt;
-    <select id="SearchFileList" resultType="SampleFile">
-        SELECT * FROM sampleFile
-        <choose>
-            <when test="sample_id != 'none'">
-                WHERE sample_id = #{sample_id}
-            </when>
-        </choose>
-    </select>
--->
-
     <!-- 시교자원 삭제 -->
     <select id="DeleteSample" parameterType="java.util.ArrayList">
         DELETE FROM sample

@@ -423,85 +423,98 @@
         .rowInput {
             width: 115px;
         }
-        
-        .box_center .buttonLi button { 
-            width: 32px; 
-		    height: 32px;
-		    border: 2px solid #217566;
-		    background-color: transparent;
-		    border-radius: 50%;
+
+        .box_center .buttonLi button {
+            width: 32px;
+            height: 32px;
+            border: 2px solid #217566;
+            background-color: transparent;
+            border-radius: 50%;
         }
-		.box_center .buttonLi button svg{
-			display:none;
-		}
-		.box_center .buttonLi button span {
-		    position: relative;
-		}
-		.box_center .buttonLi button span::before {
-		    content: "";
-		    display: block;
-		    position: absolute;
-		    top: -1px;
-		    left: 0;
-		    width: 2px;
-		    height: 10px;
-		    background-color: #217566;
-		    transform: rotate(45deg);
-		}
-		.box_center .buttonLi button span::after {
-		    content: "";
-		    display: block;
-		    position: absolute;
-		    top: -7px;
-		    left: 0;
-		    width: 2px;
-		    height: 10px;
-		    background-color: #217566;
-		    transform: rotate(-45deg);
-		}
-		.box_center .buttonLi button span.left_btn::before {
-		    left: -2px;
-		    transform: rotate(-45deg);
-		}
-		.box_center .buttonLi button span.left_btn::after {
-		    left: -2px;
-    		transform: rotate(45deg);
-		}
-		#grid2 .tab-content .row .detail_list li{
-			width: 100%;
-			border-bottom: 1px solid #E2E3E5;
-		}
-		#grid2 .tab-content .row .list-group{
-			width: 100%;
-			margin:0 !important;
-		}
-		#grid2 .tab-content .row .detail_list li:hover,
-		#grid2 .tab-content .row .display_list li:hover{
-			background-color: #EDF6F1;
-		}
-		#grid2 .tab-content .row .detail_list li.active,
-		#grid2 .tab-content .row .display_list li.active{
-			background-color: #217566;
-			color: #fff;
-			border: none;
-		}
-		#grid2 .tab-content .row .display_list li .row{
-			margin-left:0;
-			margin-right: 0;
-			display:block;
-		}
-		#grid2 input[type="checkbox"]{
-			display:none !important; 
-		}
-		#grid2 .tab-content .row li{
-			padding: 0 10px !important;
-		}
-		
-		input[type="text"].rowInput{
-       		border:none;
-       		height: 45px;
-       		
-       }
+
+        .box_center .buttonLi button svg {
+            display: none;
+        }
+
+        .box_center .buttonLi button span {
+            position: relative;
+        }
+
+        .box_center .buttonLi button span::before {
+            content: "";
+            display: block;
+            position: absolute;
+            top: -1px;
+            left: 0;
+            width: 2px;
+            height: 10px;
+            background-color: #217566;
+            transform: rotate(45deg);
+        }
+
+        .box_center .buttonLi button span::after {
+            content: "";
+            display: block;
+            position: absolute;
+            top: -7px;
+            left: 0;
+            width: 2px;
+            height: 10px;
+            background-color: #217566;
+            transform: rotate(-45deg);
+        }
+
+        .box_center .buttonLi button span.left_btn::before {
+            left: -2px;
+            transform: rotate(-45deg);
+        }
+
+        .box_center .buttonLi button span.left_btn::after {
+            left: -2px;
+            transform: rotate(45deg);
+        }
+
+        #grid2 .tab-content .row .detail_list li {
+            width: 100%;
+            border-bottom: 1px solid #E2E3E5;
+        }
+
+        #grid2 .tab-content .row .list-group {
+            width: 100%;
+            margin: 0 !important;
+        }
+
+        #grid2 .tab-content .row .detail_list li:hover,
+        #grid2 .tab-content .row .display_list li:hover {
+            background-color: #EDF6F1;
+        }
+
+        #grid2 .tab-content .row .detail_list li.active,
+        #grid2 .tab-content .row .display_list li.active {
+            background-color: #217566;
+            color: #fff;
+            border: none;
+        }
+
+        #grid2 .tab-content .row .display_list li .row {
+            margin-left: 0;
+            margin-right: 0;
+            display: block;
+        }
+
+        #grid2 input[type="checkbox"] {
+            display: none !important;
+        }
+
+        #grid2 .tab-content .row li {
+            padding: 0 10px !important;
+        }
+
+        input[type="text"].rowInput {
+            border: none;
+            height: 45px;
+
+        }
     </style>
 
 </head>
@@ -530,8 +543,8 @@
                             <div class="action-btn d-flex justify-content-end">
                                 <div class="atbd-button-list d-flex flex-wrap">
                                     <div class="btn-group atbd-button-group btn-group-normal my-2" role="group">
-                                        <button type="button" class="btn btn-xs btn-outline-light" onclick="view(1)">도입자원관리</button>
-                                        <button type="button" class="btn btn-xs btn-outline-light" onclick="view(2)">도입자원재고관리</button>
+                                        <button type="button" class="btn btn-xs btn-outline-light" id="incomeTable1">도입자원관리</button>
+                                        <button type="button" class="btn btn-xs btn-outline-light" id="incomeTable2">도입자원재고관리</button>
                                     </div>
                                     <form action="" name="searchForm" class="d-flex align-items-center add-contact__form my-sm-0 my-2">
                                         <select class="form-control form-control-lg mt-10 mb-10 mr-10" style="width: 250px;" id="CropSelect">
@@ -547,12 +560,12 @@
                                             <option value="토마토">토마토</option>
                                         </select>
                                     </form>
-                                    <button class="btn btn-lg btn-primary data_btn2" data-toggle="modal" title="데이터 등록" data-target="#data_upload2">
-                                        <img src="../assets/vendor_assets/img/icon1.png" alt=""></button>
-                                    <button type="button" class="btn btn-lg btn-primary data_btn1" title="엑셀 export">
-                                        <img src="../assets/vendor_assets/img/icon2.png" title="데이터 등록" alt=""></button>
-                                    <button class="btn btn-lg btn-primary data_btn2" title="표시항목 선택" onclick="DisplayBtn();">
-                                        <img src="../assets/vendor_assets/img/icon3.png" alt=""></button>
+                                    <button class="btn btn-lg btn-primary data_btn2" title="데이터 등록" onclick="openExcel()">
+                                        <img src="../assets/vendor_assets/img/icon1.png" alt="">
+                                    </button>
+                                    <button type="button" class="btn btn-lg btn-primary data_btn1" title="엑셀 export" id="excelFileExport">
+                                        <img src="../assets/vendor_assets/img/icon2.png" title="데이터 등록" alt="">
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -592,28 +605,14 @@
                                         </tr>
                                         </thead>
                                         <tbody class="text-center" id="income_list">
-                                        <!--<tr>
-                                            <td><input type="checkbox"></td>
-                                            <td>
-                                                <button class="btn btn-light btn-default btn-squared btn-transparent-light"
-                                                        data-toggle="modal" data-target="#gen-attach"><span data-feather="file-plus"></span></button>
-                                            </td>
-                                            <td><span>P16E0001</span></td>
-                                            <td><span>128 F1</span></td>
-                                            <td><span>F1</span></td>
-                                            <td><span>shouguang</span></td>
-                                            <td><span>중국</span></td>
-                                            <td><span>-</span></td>
-                                            <td><span>2016-11-21</span></td>
-                                        </tr>-->
                                         </tbody>
                                     </table>
 
                                     <table class="table" id="table2">
                                         <thead class="text-center">
                                         <tr>
-                                            <th style="cursor: pointer;"><span class="title">종자번호(ID)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                                                  alt="종자번호(ID)"></th>
+                                            <th style="cursor: pointer;"><span class="title">도입번호(ID)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
+                                                                                                                        alt="종자번호(ID)"></th>
                                             <th style="cursor: pointer;"><span class="title">종자 보유량</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
                                                                                                                       alt="종자 보유량"></th>
                                             <th style="cursor: pointer;"><span class="title">입고량</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
@@ -628,7 +627,7 @@
                                                                                                                   alt="일자"></th>
                                         </tr>
                                         </thead>
-                                        <tbody class="text-center">
+                                        <tbody class="text-center incomeRemain-list" id="incomeRemain-list">
                                         </tbody>
                                     </table>
                                 </div>
@@ -661,28 +660,62 @@
     </div>
 
     <!-- modal code -->
-    <!-- 첨부파일 -->
-    <div class="modal-basic modal fade show pop1" id="gen-attach" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- 첨부파일 리스트  2021-11-04 -->
+    <div class="modal-basic modal fade show pop7" id="income_file" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white ">
-                <form id="fileUp" name="fileUp" enctype="multipart/form-data">
-                    <div class="modal-header" style="border: none">
-                        <h6 class="modal-title">도입자원관리 > 첨부파일</h6>
+                <div class="modal-header" style="border: none">
+                    <h6 class="modal-title">도입자원관리 > 첨부파일</h6>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group mb-0">
+                        <button onclick="InsertFileBtn()">데이터 등록</button>
                     </div>
+                    <div>
+                        <div class="atbd-upload">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>순번</th>
+                                    <th>제목</th>
+                                    <th>등록일</th>
+                                </tr>
+                                </thead>
+                                <tbody id="file_list">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border: none">
+                    <div class="col-4">
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--첨부파일 등록-->
+    <div class="modal-basic modal fade show pop1" id="insert_file" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content modal-bg-white ">
+                <div class="modal-header" style="border: none">
+                    <h6 class="modal-title">도입자원관리 > 첨부파일</h6>
+                </div>
+                <form action="insertIncomeFile" id="insertFile" method="POST" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="form-group mb-0">
                             <span>제목</span>
-                            <input type="text" class="form-control form-control-lg">
+                            <input type="text" class="form-control form-control-lg inputText" name="income_file_title">
                         </div>
                         <div class="form-group mb-0">
-                            <textarea style="resize:none;"></textarea>
+                            <textarea name="income_file_contents" style="resize:none;"></textarea>
                         </div>
                         <div>
                             <div class="atbd-upload">
                                 <div class="atbd-upload__button">
-                                    <a href="javascript:void(0)" class="btn btn-lg btn-outline-lighten btn-upload"
-                                       onclick="$('#upload').click()"> <span data-feather="upload"></span>Click to Upload</a>
-                                    <input type="file" name="upload-3" class="upload-one" id="upload">
+                                    <input type="file" id="upload_file" name="file">
                                 </div>
                                 <div class="atbd-upload__file">
                                     <ul>
@@ -697,208 +730,60 @@
                         </div>
                     </div>
                     <div class="modal-footer" style="border: none">
-                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" onclick="dataToggle('#gen-attach', '#data_upload3');">취소</button>
-                        <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" id="saveFile">저장</button>
+                        <input type="hidden" id="upload_id" name="income_id">
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
+                        <button type="button" class="btn btn-primary btn-sm" onclick="InsertFile()">저장</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
 
-    <!-- 일반 데이터 등록 -->
-    <!--<div class="modal-basic modal fade show pop2" id="grid" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- 등록된 첨부파일 -->
+    <div class="modal-basic modal fade show pop1" id="modify_file" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white ">
                 <div class="modal-header" style="border: none">
-                    <h6 class="modal-title">도입자원관리 > 기본 정보</h6>
-                    시교명 ID : <span></span>
+                    <h6 class="modal-title">시교자원관리 > 첨부파일</h6>
+                    <span class="income_title"></span>
                 </div>
-                <div class="modal-body">
-                    <div class="tab-pane fade show active" id="control2" role="tabpanel" aria-labelledby="control1-tab">
-                        <div class="tab-slide-content">
-                            <div class="atbd-tab tab-horizontal">
-                                <div class="top_box">
-                                    <ul class="nav nav-tabs vertical-tabs" role="tablist">
-                                        <li class="nav-item">
-                                            <a class="nav-link active" id="tab-horizontal-0-tab" data-toggle="tab"
-                                               href="#tab-horizontal-0" role="tab" aria-controls="tab-horizontal-0"
-                                               aria-selected="true">기본 정보</a>
+                <form action="updateIncomeFile" id="insertFile" method="POST" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <div class="form-group mb-0">
+                            <span>제목</span>
+                            <input type="text" class="form-control form-control-lg inputText" id="income_file_title" name="income_file_title">
+                        </div>
+                        <div class="form-group mb-0">
+                            <textarea id="income_file_contents" name="income_file_contents" style="resize:none;"></textarea>
+                        </div>
+                        <div>
+                            <div class="atbd-upload">
+                                <div class="atbd-upload__button">
+                                    <a href="" class="btn btn-lg btn-outline-lighten btn-upload" id="file_download">
+                                        <span data-feather="upload"></span>
+                                        <span id="uploads_origin_file"></span>
+                                    </a>
+                                    <input type="hidden" id="uploads_file" name="uploads_file">
+                                    <input type="file" id="modify_file" name="file">
+                                </div>
+                                <div class="atbd-upload__file">
+                                    <ul>
+                                        <li>
+                                            <a href="#" class="file-name"><i class="las la-paperclip"></i> <span
+                                                class="name-text">xxx.png<span></span></span></a>
+                                            <a href="#" class="btn-delete"><i class="la la-trash"></i></a>
                                         </li>
                                     </ul>
                                 </div>
-                                <form action="insertIncome" id="insertForm" method="POST" enctype="multipart/form-data">
-                                    <input type="hidden" id="income_list" name="income_list">
-                                    <div class="tab-content">
-                                        <div class="tab-pane fade show active" id="tab-horizontal-0" role="tabpanel"
-                                             aria-labelledby="tab-horizontal-0-tab">
-                                            <div class="content_title clearfix">
-                                                <ul>
-                                                    <li>형질</li>
-                                                    <li>조사값</li>
-                                                </ul>
-                                            </div>
-                                            <div class="content_1 clearfix">
-                                                <ul>
-                                                    <li>
-                                                        <div class="title">작물</div>
-                                                        <div class="input_text"><input type="text" name="income_name"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">도입번호(ID)</div>
-                                                        <div class="input_text"><input type="text" name="income_code"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">품종명</div>
-                                                        <div class="input_text"><input type="text" name="income_kind"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">구분</div>
-                                                        <div class="input_text"><input type="text" name="income_division"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">도입처</div>
-                                                        <div class="input_text"><input type="text" name="income_place"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">도입국가</div>
-                                                        <div class="input_text"><input type="text" name="income_country"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">도입자</div>
-                                                        <div class="input_text"><input type="text" name="income_person"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">도입연월일</div>
-                                                        <div class="input_text"><input type="date" name="income_date"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">현 종자량</div>
-                                                        <div class="input_text"><input type="text" name="income_num"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">타입</div>
-                                                        <div class="input_text"><input type="text" name="income_type"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">주요 특성</div>
-                                                        <div class="input_text"><input type="text" name="income_trait"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">비고</div>
-                                                        <div class="input_text"><input type="text" name="income_comment"></div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer" style="border: none">
-                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-primary btn-sm" onclick="insertBtn()" data-dismiss="modal">저장</button>
-                </div>
-            </div>
-        </div>
-    </div>-->
-
-    <!-- 일반 데이터 수정 -->
-    <div class="modal-basic modal fade show pop2" id="update-grid" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-md" role="document">
-            <div class="modal-content modal-bg-white ">
-                <div class="modal-header" style="border: none">
-                    <h6 class="modal-title">도입자원관리 > 기본 정보</h6>
-                    시교명 ID : <span></span>
-                </div>
-                <div class="modal-body">
-                    <div class="tab-pane fade show active" id="control1" role="tabpanel" aria-labelledby="control1-tab">
-                        <div class="tab-slide-content">
-                            <div class="atbd-tab tab-horizontal">
-                                <div class="top_box">
-                                    <ul class="nav nav-tabs vertical-tabs" role="tablist">
-                                        <li class="nav-item">
-                                            <a class="nav-link active" id="tab-horizontal-1-tab" data-toggle="tab"
-                                               href="#tab-horizontal-0" role="tab" aria-controls="tab-horizontal-0"
-                                               aria-selected="true">기본 정보</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <form action="updateIncome" id="updateForm" method="POST" enctype="multipart/form-data">
-                                    <input type="hidden" id="update_list" name="update_list">
-                                    <div class="tab-content">
-                                        <div class="tab-pane fade show active" id="tab-horizontal-1" role="tabpanel"
-                                             aria-labelledby="tab-horizontal-0-tab">
-                                            <div class="content_title clearfix">
-                                                <ul>
-                                                    <li>형질</li>
-                                                    <li>조사값</li>
-                                                </ul>
-                                            </div>
-                                            <div class="content_1 clearfix">
-                                                <ul>
-                                                    <li>
-                                                        <div class="title">작물</div>
-                                                        <div class="input_text"><input type="text" class="test" name="income_name" readonly></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">도입번호(ID)</div>
-                                                        <div class="input_text"><input type="text" class="test" name="income_code"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">품종명</div>
-                                                        <div class="input_text"><input type="text" class="test" name="income_kind"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">구분</div>
-                                                        <div class="input_text"><input type="text" class="test" name="income_division"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">도입처</div>
-                                                        <div class="input_text"><input type="text" class="test" name="income_place"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">도입국가</div>
-                                                        <div class="input_text"><input type="text" class="test" name="income_country"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">도입자</div>
-                                                        <div class="input_text"><input type="text" class="test" name="income_person"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">도입연월일</div>
-                                                        <div class="input_text"><input type="text" class="test" name="income_date"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">현 종자량</div>
-                                                        <div class="input_text"><input type="text" class="test" name="income_num"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">타입</div>
-                                                        <div class="input_text"><input type="text" class="test" name="income_type"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">주요 특성</div>
-                                                        <div class="input_text"><input type="text" class="test" name="income_trait"></div>
-                                                    </li>
-                                                    <li>
-                                                        <div class="title">비고</div>
-                                                        <div class="input_text"><input type="text" class="test" name="income_comment"></div>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+                    <div class="modal-footer" style="border: none">
+                        <input type="hidden" id="income_file_id" name="income_file_id">
+                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
+                        <button type="button" class="btn btn-primary btn-sm">수정</button>
                     </div>
-                </div>
-                <div class="modal-footer" style="border: none">
-                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
-                    <button type="button" class="btn btn-primary btn-sm" id="updateBtn" onclick="UpdateBtn()" data-dismiss="modal">저장</button>
-                </div>
+                </form>
             </div>
         </div>
     </div>
@@ -1000,437 +885,6 @@
         </div>
     </div>
 
-    <!-- 첨부파일 리스트  2021-11-04 -->
-    <div class="modal-basic modal fade show pop7" id="data_upload3" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-md" role="document">
-            <div class="modal-content modal-bg-white ">
-                <div class="modal-header" style="border: none">
-                    <h6 class="modal-title">도입자원관리 > 첨부파일 등록</h6>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group mb-0">
-                        <button onclick="dataToggle('#data_upload3', '#gen-attach');">데이터 등록</button>
-                        <button>등록서식 다운로드</button>
-                    </div>
-                    <div>
-                        <div class="atbd-upload">
-                            <table>
-                                <thead>
-                                <tr>
-                                    <th>순번</th>
-                                    <th>등록일</th>
-                                    <th>데이터수</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>2</td>
-                                    <td>2021-08-15</td>
-                                    <td>185</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>2021-08-15</td>
-                                    <td>185</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer" style="border: none">
-                    <div class="col-4">
-                        <div class="row" style="justify-content: center;">
-                            <div id="pageNum2" style="text-align:center; margin: 2% 0 0 0;"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-<div class="modal-basic modal fade show pop2" id="grid2" tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="modal-dialog modal-md" role="document">
-			<form action="insertBreedDisplay" method="POST" enctype="multipart/form-data">
-			<div class="modal-content modal-bg-white">
-				<div class="modal-header" style="border: none">
-					<h6 class="modal-title" id="display_title"></h6>
-					<input type="hidden" id="display_name" name="breed_name">
-				</div>
-				<div class="modal-body">
-					<div class="tab-pane fade show active" id="control1" role="tabpanel" aria-labelledby="control1-tab">
-						<div class="tab-slide-content">
-							<div class="atbd-tab tab-horizontal">
-								<div class="top_box">
-									<ul class="nav nav-tabs vertical-tabs" role="tablist">
-										<li class="nav-item">
-											<a class="nav-link" id="tab-horizontal-0-tab" data-toggle="tab" href="#tab-horizontal-0" role="tab" aria-controls="tab-horizontal-0" aria-selected="true">기본 정보</a>
-										</li>
-										<li class="nav-item">
-											<a class="nav-link" id="tab-horizontal-1-tab" data-toggle="tab" href="#tab-horizontal-1" role="tab" aria-controls="tab-horizontal-1" aria-selected="false">원예형질[종자원 기준]</a>
-										</li>
-										<li class="nav-item">
-											<a class="nav-link" id="tab-horizontal-2-tab" data-toggle="tab" href="#tab-horizontal-2" role="tab" aria-controls="tab-horizontal-2" aria-selected="false">원예형질[사내 기준]</a>
-										</li>
-										<li class="nav-item">
-											<a class="nav-link" id="tab-horizontal-3-tab" data-toggle="tab" href="#tab-horizontal-3" role="tab" aria-controls="tab-horizontal-3" aria-selected="false">병저항성[종자원 기준]</a>
-										</li>
-										<li class="nav-item">
-											<a class="nav-link" id="tab-horizontal-4-tab" data-toggle="tab" href="#tab-horizontal-4" role="tab" aria-controls="tab-horizontal-4" aria-selected="false">병저항성[사내 기준]</a>
-										</li>
-										<li class="nav-item">
-											<a class="nav-link" id="tab-horizontal-5-tab" data-toggle="tab" href="#tab-horizontal-5" role="tab" aria-controls="tab-horizontal-5" aria-selected="false">성분정보[종자원 기준]</a>
-										</li>
-										<li class="nav-item">
-											<a class="nav-link" id="tab-horizontal-6-tab" data-toggle="tab" href="#tab-horizontal-6" role="tab" aria-controls="tab-horizontal-6" aria-selected="false">마커정보</a>
-										</li>
-									</ul>
-									<span class="prev"></span>
-									<span class="next"></span>
-								</div>
-									<!-- <input type="hidden" id="detail_list1" name="detail_list"> -->
-									<div class="tab-content">
-										<div class="tab-pane fade show active" id="tab-horizontal-0" role="tabpanel" aria-labelledby="tab-horizontal-0-tab">
-											<div class="content_title clearfix">
-												<ul>
-													<li>형질</li>
-													<li>조사값</li>
-												</ul>
-											</div>
-											<div class="content_1 clearfix">
-												<div class="row mt-20">
-													<div class="col-lg-12">
-														<div class="card">
-															<div class="card-body">
-																<div class="row">
-																	<div class="col-lg-12">
-																		<span class="color-dark align-center" style="font-size: 20px;">표시항목 설정</span>
-																	</div>
-																</div>
-																<div class="row mt-4" style="justify-content: center; align-items: center;">
-																	<div class="col-lg-5">
-																		<div class="row" style="overflow:auto; min-height: 500px; border: 1px solid #D9D9D9;">
-																			<div class="list-group mt-2" style="max-height: 500px; orverfolw-y: auto;">
-																				<ul class="detail_list" id="display_container1" name="기본 정보">
-                                                                                </ul>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="box_content">
-                                                                        <div class="box_center">
-                                                                        	<div class="buttonLi">
-                                                                            	<button type="button" onclick="PlusResearch(1);"><span></span></button>
-                                                                            </div>
-                                                                            <div class="buttonLi"> 
-                                                                                <button type="button" onclick="MinusResearch(1);"><span class="left_btn"></span></button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-lg-5" style="padding:0;">
-                                                                        <ul class="display_list" id="step_container1" style="min-height: 500px; max-height: 500px; overflow-y: auto; border: 1px solid #D9D9D9">
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade show" id="tab-horizontal-1" role="tabpanel" aria-labelledby="tab-horizontal-1-tab">
-                                            <div class="content_title clearfix">
-                                                <ul>
-                                                    <li>형질</li>
-                                                    <li>조사값</li>
-                                                </ul>
-                                            </div>
-                                            <div class="content_1 clearfix">
-                                                <div class="row mt-20">
-                                                    <div class="col-lg-12">
-                                                        <div class="card">
-                                                            <div class="card-body">
-                                                                <div class="row">
-                                                                    <div class="col-lg-12">
-                                                                        <span class="color-dark align-center" style="font-size: 20px;">표시항목 설정</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row mt-4" style="justify-content: center;align-items: center;">
-                                                                    <div class="col-lg-5">
-                                                                        <div class="row" style="overflow:auto; min-height: 500px; border: 1px solid #D9D9D9;">
-                                                                            <div class="list-group mt-2" style="max-height: 500px; orverfolw-y: auto;">
-                                                                                <ul class="detail_list" id="display_container2" name="원예형질 (종자원 기준)">
-                                                                                </ul>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="box_content">
-                                                                        <div class="box_center">
-                                                                            <div class="buttonLi">
-                                                                            	<button type="button" onclick="PlusResearch(2);"><span></span></button>
-                                                                            </div>
-                                                                            <div class="buttonLi"> 
-                                                                                <button type="button" onclick="MinusResearch(2);"><span class="left_btn"></span></button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-lg-5" style="padding:0;">
-                                                                        <ul class="display_list" id="step_container2" style="min-height: 500px; max-height: 500px; overflow-y: auto; border: 1px solid #D9D9D9">
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade show" id="tab-horizontal-2" role="tabpanel" aria-labelledby="tab-horizontal-2-tab">
-                                            <div class="content_title clearfix">
-                                                <ul>
-                                                    <li>형질</li>
-                                                    <li>조사값</li>
-                                                </ul>
-                                            </div>
-                                            <div class="content_1 clearfix">
-                                                <div class="row mt-20">
-                                                    <div class="col-lg-12">
-                                                        <div class="card">
-                                                            <div class="card-body">
-                                                                <div class="row">
-                                                                    <div class="col-lg-12">
-                                                                        <span class="color-dark align-center" style="font-size: 20px;">표시항목 설정</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row mt-4" style="justify-content: center;align-items: center;">
-                                                                    <div class="col-lg-5">
-                                                                        <div class="row" style="overflow:auto; min-height: 500px; border: 1px solid #D9D9D9;">
-                                                                            <div class="list-group mt-2" style="max-height: 500px; overflow-y: auto;">
-                                                                                <ul class="detail_list" id="display_container3" name="원예형질 (사내 기준)">
-                                                                                </ul>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="box_content">
-                                                                        <div class="box_center">
-                                                                            <div class="buttonLi">
-                                                                            	<button type="button" onclick="PlusResearch(3);"><span></span></button>
-                                                                            </div>
-                                                                            <div class="buttonLi"> 
-                                                                                <button type="button" onclick="MinusResearch(3);"><span class="left_btn"></span></button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-lg-5" style="padding:0;">
-                                                                        <ul class="display_list" id="step_container3" style="min-height: 500px; max-height: 500px; overflow-y: auto; border: 1px solid #D9D9D9">
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade show" id="tab-horizontal-3" role="tabpanel" aria-labelledby="tab-horizontal-3-tab">
-                                            <div class="content_title clearfix">
-                                                <ul>
-                                                    <li>형질</li>
-                                                    <li>조사값</li>
-                                                </ul>
-                                            </div>
-                                            <div class="content_1 clearfix">
-                                                <div class="row mt-20">
-                                                    <div class="col-lg-12">
-                                                        <div class="card">
-                                                            <div class="card-body">
-                                                                <div class="row">
-                                                                    <div class="col-lg-12">
-                                                                        <span class="color-dark align-center" style="font-size: 20px;">표시항목 설정</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row mt-4" style="justify-content: center;align-items: center;">
-                                                                    <div class="col-lg-5">
-                                                                        <div class="row" style="overflow:auto; min-height: 500px; border: 1px solid #D9D9D9;">
-                                                                            <div class="list-group mt-2" style="max-height: 500px; orverfolw-y: auto;">
-                                                                                <ul class="detail_list" id="display_container4" name="병저항성 (국립종자원 기준)">
-                                                                                </ul>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="box_content">
-                                                                        <div class="box_center">
-                                                                            <div class="buttonLi">
-                                                                            	<button type="button" onclick="PlusResearch(4);"><span></span></button>
-                                                                            </div>
-                                                                            <div class="buttonLi"> 
-                                                                                <button type="button" onclick="MinusResearch(4);"><span class="left_btn"></span></button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-lg-5" style="padding:0;">
-                                                                        <ul class="display_list" id="step_container4" style="min-height: 500px; max-height: 500px; overflow-y: auto; border: 1px solid #D9D9D9">
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade show" id="tab-horizontal-4" role="tabpanel" aria-labelledby="tab-horizontal-4-tab">
-                                            <div class="content_title clearfix">
-                                                <ul>
-                                                    <li>형질</li>
-                                                    <li>조사값</li>
-                                                </ul>
-                                            </div>
-                                            <div class="content_1 clearfix">
-                                                <div class="row mt-20">
-                                                    <div class="col-lg-12">
-                                                        <div class="card">
-                                                            <div class="card-body">
-                                                                <div class="row">
-                                                                    <div class="col-lg-12">
-                                                                        <span class="color-dark align-center" style="font-size: 20px;">표시항목 설정</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row mt-4" style="justify-content: center;align-items: center;">
-                                                                    <div class="col-lg-5">
-                                                                        <div class="row" style="overflow:auto; min-height: 500px; border: 1px solid #D9D9D9;">
-                                                                            <div class="list-group mt-2" style="max-height: 500px; orverfolw-y: auto;">
-                                                                                <ul class="detail_list" id="display_container5" name="병저항성 (사내 기준)">
-                                                                                </ul>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="box_content">
-                                                                        <div class="box_center">
-                                                                            <div class="buttonLi">
-                                                                            	<button type="button" onclick="PlusResearch(5);"><span></span></button>
-                                                                            </div>
-                                                                            <div class="buttonLi"> 
-                                                                                <button type="button" onclick="MinusResearch(5);"><span class="left_btn"></span></button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-lg-5" style="padding:0;">
-                                                                        <ul class="display_list" id="step_container5" style="min-height: 500px; max-height: 500px; overflow-y: auto; border: 1px solid #D9D9D9">
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade show" id="tab-horizontal-5" role="tabpanel" aria-labelledby="tab-horizontal-5-tab">
-                                            <div class="content_title clearfix">
-                                                <ul>
-                                                    <li>형질</li>
-                                                    <li>조사값</li>
-                                                </ul>
-                                            </div>
-                                            <div class="content_1 clearfix">
-                                                <div class="row mt-20">
-                                                    <div class="col-lg-12">
-                                                        <div class="card">
-                                                            <div class="card-body">
-                                                                <div class="row">
-                                                                    <div class="col-lg-12">
-                                                                        <span class="color-dark align-center" style="font-size: 20px;">표시항목 설정</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row mt-4" style="justify-content: center;align-items: center;">
-                                                                    <div class="col-lg-5">
-                                                                        <div class="row" style="overflow:auto; min-height: 500px; border: 1px solid #D9D9D9;">
-                                                                            <div class="list-group mt-2" style="max-height: 500px; orverfolw-y: auto;">
-                                                                                <ul class="detail_list" id="display_container6" name="성분정보 (국립종자원 기준)">
-                                                                                </ul>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="box_content">
-                                                                        <div class="box_center">
-                                                                            <div class="buttonLi">
-                                                                            	<button type="button" onclick="PlusResearch(6);"><span></span></button>
-                                                                            </div>
-                                                                            <div class="buttonLi"> 
-                                                                                <button type="button" onclick="MinusResearch(6);"><span class="left_btn"></span></button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-lg-5" style="padding:0;">
-                                                                        <ul class="display_list" id="step_container6" style="min-height: 500px; max-height: 500px; overflow-y: auto; border: 1px solid #D9D9D9">
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade show" id="tab-horizontal-6" role="tabpanel" aria-labelledby="tab-horizontal-6-tab">
-                                            <div class="content_title clearfix">
-                                                <ul>
-                                                    <li>형질</li>
-                                                    <li>조사값</li>
-                                                </ul>
-                                            </div>
-                                            <div class="content_1 clearfix">
-                                                <div class="row mt-20">
-                                                    <div class="col-lg-12">
-                                                        <div class="card">
-                                                            <div class="card-body">
-                                                                <div class="row">
-                                                                    <div class="col-lg-12">
-                                                                        <span class="color-dark align-center" style="font-size: 20px;">표시항목 설정</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row mt-4" style="justify-content: center;align-items: center;">
-                                                                    <div class="col-lg-5">
-                                                                        <div class="row" style="overflow:auto; min-height: 500px; border: 1px solid #D9D9D9;">
-                                                                            <div class="list-group mt-2" style="max-height: 500px; orverfolw-y: auto;">
-                                                                                <ul class="detail_list" id="display_container7" name="마커 정보">
-                                                                                </ul>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="box_content">
-                                                                        <div class="box_center">
-                                                                            <div class="buttonLi">
-                                                                            	<button type="button" onclick="PlusResearch(7);"><span></span></button>
-                                                                            </div>
-                                                                            <div class="buttonLi"> 
-                                                                                <button type="button" onclick="MinusResearch(7);"><span class="left_btn"></span></button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-lg-5" style="padding:0;">
-                                                                        <ul class="display_list" id="step_container7" style="min-height: 500px; max-height: 500px; overflow-y: auto; border: 1px solid #D9D9D9">
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="modal-footer" style="border: none">
-						<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
-						<button type="submit" class="btn btn-primary btn-sm">저장</button>
-					</div>
-				</div>
-			</form>
-		</div>
-	</div>
     <!-- modal end -->
 </main>
 
@@ -1727,39 +1181,40 @@
 
     // onChangeSelect();
     searchSelectBox.addEventListener('change', onChangeSelect);
-    /*$("#modal_open").click(function () {
-        $("input[name=income_name]").val($("#CropSelect option:selected").text());
-    });*/
 
-    // 도입 자원 추가
-    function insertBtn() {
-        var data = [];
+    var tablechk = 0;
 
-        $("input[name=detail]").each(function (index, item) {
-            const key = $(this).attr('id');
-            var value = $(this).val();
+    $("#incomeTable1").click(function () {
+        tablechk = 0;
+    })
 
-            var arr = {key: key, value: value};
-
-            data.push(arr);
-        });
-
-        $("#income_list").val(JSON.stringify(data));
-
-        $("#insertForm").submit();
-    }
+    $("#incomeTable2").click(function () {
+        tablechk = 1;
+    })
 
     // DB 데이터 출력
     $(document).ready(function () {
         SearchIncome(1);
+        SearchRemain(1);
     });
 
     $("#CropSelect").change(function () {
         SearchIncome(1);
+        SearchRemain(1);
+    })
+
+    // 갯수 선택
+    $("#limit").change(function()
+    {
+        SearchIncome(1);
+        SearchRemain(1);
     })
 
     var emptyEls;
-    var resultData = [];
+
+    var emptyEls;
+
+    var btnindex = 0;
 
     function SearchIncome(e) {
         var income_name = $("#CropSelect").val();
@@ -1773,9 +1228,8 @@
                 data: data,
                 success: function (result) {
                     var income_list = $("#income_list");
+                    income_list.eq(btnindex);
                     var add_list = "";
-
-                    resultData = result.income;
 
                     var pageNum = $("#pageNum");
                     var page_add = "";
@@ -1783,19 +1237,18 @@
                     for (var i = 0; i < result.income.length; i++) {
                         add_list += '<tr>';
                         add_list += '<td><input type="checkbox" name="RowCheck" value="' + result.income[i].income_id + '"></td>';
-                        add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#data_upload3"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
-                        add_list += '<td>' + result.income[i].income_name + '</td>';
-                        add_list += '<td>' + result.income[i].income_code + '</td>';
-                        add_list += '<td>' + result.income[i].income_kind + '</td>';
-                        add_list += '<td>' + result.income[i].income_division + '</td>';
-                        add_list += '<td>' + result.income[i].income_place + '</td>';
-                        add_list += '<td>' + result.income[i].income_country + '</td>';
-                        add_list += '<td>' + result.income[i].income_person + '</td>';
-                        add_list += '<td>' + result.income[i].income_date + '</td>';
-                        add_list += '<td>' + result.income[i].income_num + '</td>';
-                        add_list += '<td>' + result.income[i].income_type + '</td>';
-                        add_list += '<td>' + result.income[i].income_trait + '</td>';
-                        add_list += '<td>' + result.income[i].income_comment + '</td>';
+                        add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" onclick="FileBtn(' + result.income[i].income_id + ');"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
+                        add_list += '<td><input type="text" class="updateInput" data="' + result.income[i].income_id + '" name="income_code" value="' + result.income[i].income_code + '"></td>';
+                        add_list += '<td><input type="text" class="updateInput" data="' + result.income[i].income_id + '" name="income_kind" value="' + result.income[i].income_kind + '"></td>';
+                        add_list += '<td><input type="text" class="updateInput" data="' + result.income[i].income_id + '" name="income_division" value="' + result.income[i].income_division + '"></td>';
+                        add_list += '<td><input type="text" class="updateInput" data="' + result.income[i].income_id + '" name="income_place" value="' + result.income[i].income_place + '"></td>';
+                        add_list += '<td><input type="text" class="updateInput" data="' + result.income[i].income_id + '" name="income_country" value="' + result.income[i].income_country + '"></td>';
+                        add_list += '<td><input type="text" class="updateInput" data="' + result.income[i].income_id + '" name="income_person" value="' + result.income[i].income_person + '"></td>';
+                        add_list += '<td><input type="text" class="updateInput" data="' + result.income[i].income_id + '" name="income_date" value="' + result.income[i].income_date + '"></td>';
+                        add_list += '<td><input type="text" class="updateInput" data="' + result.income[i].income_id + '" name="income_num" value="' + result.income[i].income_num + '"></td>';
+                        add_list += '<td><input type="text" class="updateInput" data="' + result.income[i].income_id + '" name="income_type" value="' + result.income[i].income_type + '"></td>';
+                        add_list += '<td><input type="text" class="updateInput" data="' + result.income[i].income_id + '" name="income_trait" value="' + result.income[i].income_trait + '"></td>';
+                        add_list += '<td><input type="text" class="updateInput" data="' + result.income[i].income_id + '" name="income_trait" value="' + result.income[i].income_comment + '"></td>';
                         add_list += '</tr>';
                     }
 
@@ -1826,6 +1279,71 @@
                     pageNum.append(page_add);
 
                     emptyEls = document.querySelectorAll('#income_list tr .status');
+                    emptyEls = Array.prototype.slice.call(emptyEls);
+                }
+            });
+    }
+
+    function SearchRemain(e) {
+        var income_name1 = $("#CropSelect").val();
+        var limit1 = $("#limit").val();
+
+        var data1 = {"sample_name": income_name1, "page_num": e, "limit" : limit1};
+
+        $.ajax(
+            {
+                url: 'searchRemain',
+                method: 'POST',
+                dataType: 'json',
+                data: data1,
+                success: function (result1) {
+                    var incomeRemain_list = $(".incomeRemain-list");
+                    incomeRemain_list.eq(btnindex);
+                    var add_list = "";
+
+                    var pageNum = $("#pageNum");
+                    var page_add = "";
+
+                    for (var i = 0; i < result1.incomeRemain.length; i++) {
+                        add_list += '<tr>';
+                        add_list += '<td><input type="checkbox" name="RowCheck1" value="' + result1.incomeRemain[i].sample_outcome_id + '"></td>';
+                        add_list += '<td><input type="text" class="updateInput" data="' + result1.incomeRemain[i].sample_outcome_id + '" name="sample_outcome_code" value="' + result1.sampleOutcome[i].sample_outcome_code + '"></td>';
+                        add_list += '<td><input type="text" class="updateInput" data="' + result1.incomeRemain[i].sample_outcome_id + '" name="sample_outcome_num" value="' + result1.sampleOutcome[i].sample_outcome_num + '"></td>';
+                        add_list += '<td><input type="text" class="updateInput" data="' + result1.incomeRemain[i].sample_outcome_id + '" name="sample_outcome_amount" value="' + result1.sampleOutcome[i].sample_outcome_amount + '"></td>';
+                        add_list += '<td><input type="text" class="updateInput" data="' + result1.incomeRemain[i].sample_outcome_id + '" name="sample_outcome_in" value="' + result1.sampleOutcome[i].sample_outcome_in + '"></td>';
+                        add_list += '<td><input type="text" class="updateInput" data="' + result1.incomeRemain[i].sample_outcome_id + '" name="sample_outcome_out" value="' + result1.sampleOutcome[i].sample_outcome_out + '"></td>';
+                        add_list += '<td><input type="text" class="updateInput" data="' + result1.incomeRemain[i].sample_outcome_id + '" name="sample_outcome_remain" value="' + result1.sampleOutcome[i].sample_outcome_remain + '"></td>';
+                        add_list += '<td><input type="text" class="updateInput" data="' + result1.incomeRemain[i].sample_outcome_id + '" name="sample_outcome_person" value="' + result1.sampleOutcome[i].sample_outcome_person + '"></td>';
+                        add_list += '</tr>';
+                    }
+
+                    if (result1.page_num == 1) {
+                        page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></button>';
+                    } else {
+                        page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchRemain(' + (result1.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
+                    }
+
+                    for (var i = 0; i < result1.end_page; i++) {
+                        if (result1.page_num == (i + 1)) {
+                            page_add += '<button class="atbd-pagination__link active" onclick="SearchRemain(' + (i + 1) + ')">' + (i + 1) + '</button>';
+                        } else {
+                            page_add += '<button class="atbd-pagination__link" onclick="SearchRemain(' + (i + 1) + ')">' + (i + 1) + '</button>';
+                        }
+                    }
+
+                    if (result1.page_num == result1.end_page) {
+                        page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-right"></span></button>';
+                    } else {
+                        page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchRemain(' + (result1.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
+                    }
+
+                    incomeRemain_list.empty();
+                    incomeRemain_list.append(add_list);
+
+                    pageNum.empty();
+                    pageNum.append(page_add);
+
+                    emptyEls = document.querySelectorAll('#incomeRemain-list tr .status');
                     emptyEls = Array.prototype.slice.call(emptyEls);
                 }
             });
@@ -2037,6 +1555,74 @@
             });
 
     }
+
+    /* 첨부파일 */
+    function FileBtn(e) {
+        $("#income_file").modal("show");
+
+        var data = {"income_id": e};
+
+        $.ajax(
+            {
+                url: 'selectIncomeFile',
+                method: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function (result) {
+                    $("#upload_id").val(e);
+                    // $(".sample_title").text("시교명 : " + result.sample.standard);
+
+                    var file_list = $("#file_list");
+                    var file_add = "";
+
+                    for (var i = 0; i < result.income_file.length; i++) {
+                        var file = JSON.stringify(result.income_file[i]);
+                        var file_json = file.replace(/\"/g, "&quot;");
+
+                        file_add += '<tr>';
+                        file_add += '<td>' + (i + 1) + '</td>';
+                        file_add += '<td><button onclick="ModifyBtn(' + result.income_file[i].income_file_id + ')" style="border:0px; color:blue; background: white;">' + result.income_file[i].income_file_title + '</button></td>';
+                        file_add += '<td>' + result.income_file[i].create_date + '</td>';
+                        file_add += '<td><input type="hidden" id="file_' + result.income_file[i].income_file_id + '" value="' + file.replace(/\"/g, "&quot;") + '"></td>';
+                        file_add += '</tr>';
+                    }
+
+                    file_list.empty();
+                    file_list.append(file_add);
+                }
+            });
+    }
+
+    function InsertFileBtn() {
+        $("#income_file").modal("hide");
+        $("#insert_file").modal("show");
+    }
+
+    function InsertFile() {
+        var file = $("#upload_file");
+
+        if (file.val() == "") {
+            return Alert("파일을 선택해주세요.");
+        } else {
+            $("#insertFile").submit();
+        }
+    }
+
+    function ModifyBtn(e) {
+        var files = JSON.parse($("#file_" + e).val());
+
+        $("#income_file_id").val(files.income_file_id);
+        $("#income_file_title").val(files.income_file_title);
+        $("#income_file_contents").val(files.income_file_contents);
+        $("#uploads_origin_file").text(files.uploads_origin_file);
+        $("#uploads_file").val(files.uploads_file);
+        $("#file_download").attr("href", "downloadFile?uploads_file=" + files.uploads_file);
+
+        $("#income_file").modal("hide");
+        $("#modify_file").modal("show");
+    }
+
+    /* 첨부파일 */
 </script>
 
 </body>
