@@ -2,16 +2,9 @@ package com.thekiban.Mapper;
 
 import java.util.List;
 
-import com.thekiban.Entity.Sample;
+import com.thekiban.Entity.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
-import com.thekiban.Entity.Basic;
-import com.thekiban.Entity.BasicFile;
-import com.thekiban.Entity.Detail;
-import com.thekiban.Entity.Display;
-import com.thekiban.Entity.Standard;
-import com.thekiban.Entity.Uploads;
 
 @Mapper
 public interface BasicMapper
@@ -21,9 +14,13 @@ public interface BasicMapper
 
 	// 원종 갯수 조회
 	int SelectBasicCount(String basic_name);
-	
+
+	int SelectRemainCount(String basic_name);
+
 	// 원종 검색
 	List<Basic> SearchBasic(@Param("basic_name") String basic_name, @Param("offset") int offset, @Param("limit") int limit);
+
+	List<BasicRemain> SearchRemain(@Param("basic_name") String basic_name, @Param("offset") int offset, @Param("limit") int limit);
 
 	// 원종별 세부 정보 조회
 	List<Detail> SearchBasicDetail(String basic_name);
@@ -36,6 +33,8 @@ public interface BasicMapper
 
 	// 원종 등록
 	int InsertBasic(Basic basic);
+
+	int InsertRemain(BasicRemain basicRemain);
 
 	// 원정 상세 정보 등록
 	int InsertStandard(@Param("basic_id") int basic_id, @Param("basic_name") String basic_name, @Param("detail") List<Detail> detail);
@@ -69,6 +68,8 @@ public interface BasicMapper
 	
 	// 첨부파일 삭제
 	int DeleteUploads(List<Uploads> uploads);
+
+	int[] DeleteBasicRemain(int[] basic_remain_id);
 
 	// 표시항목 등록
 	int InsertDisplay(@Param("user_id") int user_id, @Param("basic_name") String basic_name, @Param("detail_list") int[] detail_list);

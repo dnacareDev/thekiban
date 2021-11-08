@@ -55,6 +55,28 @@
         </foreach>
     </select>
 
+	<!-- 재고자원 개수 -->
+	<select id="SelectRemainCount" parameterType="String" resultType="int">
+		SELECT COUNT(*) FROM basicRemain
+		<choose>
+			<when test="basic_name != 'none'">
+				WHERE basic_name = #{basic_name}
+			</when>
+		</choose>
+	</select>
+
+	<!-- 재고자원 검색 -->
+	<select id="SearchBasicRemain" resultType="basicRemain">
+		SELECT * FROM basicRemain
+		<choose>
+			<when test="basic_name != 'none'">
+				WHERE basic_name = #{basic_name}
+				ORDER BY basic_remain_id DESC
+			</when>
+		</choose>
+		LIMIT #{offset}, #{limit}
+	</select>
+
 	<!-- 원종 등록 -->
 	<insert id="InsertBasic" parameterType="Basic">
 		INSERT INTO basic
@@ -85,6 +107,16 @@
         	</choose>
         </foreach>
     </insert>
+
+	<insert id="InsertRemain" parameterType="BasicRemain">
+		INSERT INTO BasicRemain
+		(basic_remain_id, basic_name, basic_remain_num, basic_remain_amount, basic_remain_in, basic_remain_out, basic_remain_re, basic_remain_person, basic_remain_date)
+		VALUES
+		(#{basic_remain_id}, #{basic_name}, #{basic_remain_num}, #{basic_remain_amount}, #{basic_remain_in}, #{basic_remain_out}, #{basic_remain_re}, #{basic_remain_person}, #{basic_remain_date})
+		<selectKey resultType="int" keyProperty="basic_remain_id" order="AFTER">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
     
     <!-- 원종별 전체 조회 -->
     <select id="SelectBasicAll" resultType="Basic">
@@ -170,6 +202,14 @@
             uploads_id = #{item.uploads_id}
         </foreach>
     </delete>
+
+	<select id="DeleteBasicRemain" parameterType="java.util.ArrayList">
+		DELETE FROM basicRemain
+		WHERE
+		<foreach collection="array" item="item" open="(" close=")" separator="OR">
+			basic_remain_id = #{item}
+		</foreach>
+	</select>
     
     <!-- 표시항목 등록 -->
     <insert id="InsertDisplay">

@@ -1562,17 +1562,17 @@
         var korMap = new google.maps.Map(document.querySelector("#google_map1"), koreaOptions);
         var globalMap = new google.maps.Map(document.querySelector("#google_map2"), globalOptions);
 
-        // var koreaLocations = ["부산", "밀양", "서울", "제주"];
-        // var globalLocations = ["싱가폴", "미국", "파키스탄", "일본"];
+        var koreaLocations = ["부산", "밀양", "서울", "제주"];
+        var globalLocations = ["싱가폴", "미국", "파키스탄", "일본"];
 
-        var koreaLocations = [];
+/*        var koreaLocations = [];
         var globalLocations = [];
 
         if(  === "국내") {
             koreaLocations.push();
         } else {
             globalLocations.push();
-        }
+        }*/
 
         // var searchInput = document.querySelector("#modal-search");
         // 국내
@@ -2580,10 +2580,10 @@
             XLSX.utils.book_append_sheet(wb, newWorksheet, excelHandler.getSheetName());
 
             // step 4. 엑셀 파일 만들기
-            var wbOut = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
+            var wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
 
             // step 5. 엑셀 파일 내보내기
-            saveAs(new Blob([s2ab(wbOut)], {type: "application/octet-stream"}), excelHandler.getExcelFileName());
+            saveAs(new Blob([s2ab(wbout)], {type: "application/octet-stream"}), excelHandler.getExcelFileName());
         } else {
             // step 1. workbook 생성
             var wb1 = XLSX.utils.book_new();

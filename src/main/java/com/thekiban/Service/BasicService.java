@@ -2,12 +2,8 @@ package com.thekiban.Service;
 
 import java.util.List;
 
-import com.thekiban.Entity.Basic;
-import com.thekiban.Entity.BasicFile;
-import com.thekiban.Entity.Detail;
-import com.thekiban.Entity.Display;
-import com.thekiban.Entity.Standard;
-import com.thekiban.Entity.Uploads;
+import com.thekiban.Entity.*;
+import org.apache.ibatis.annotations.Param;
 
 public interface BasicService
 {
@@ -17,9 +13,13 @@ public interface BasicService
 	// 원종 갯수 조회
 	int SelectBasicCount(String basic_name);
 
+	int SelectRemainCount(String basic_name);
+
 	// 원종 검색
 	List<Basic> SearchBasic(String basic_name, int offset, int limit);
-	
+
+	List<BasicRemain> SearchRemain(String basic_name, int offset, int limit);
+
 	// 원종별 세부 정보 조회
 	List<Detail> SearchBasicDetail(String basic_name);
 	
@@ -31,6 +31,8 @@ public interface BasicService
 
 	// 원종 등록
 	int InsertBasic(Basic basic);
+
+	int InsertRemain(BasicRemain basicRemain);
 
 	// 원종 상세 정보 등록
 	int InsertStandard(int basic_id, String basic_name, List<Detail> detail);
@@ -63,6 +65,8 @@ public interface BasicService
 	
 	// 첨부파일 삭제
 	int DeleteUploads(List<Uploads> uploads);
+
+	int[] DeleteBasicRemain(int[] basic_remain_id);
 
 	// 표시항목 등록
 	int InsertDisplay(int user_id, String basic_name, int[] detail_list);

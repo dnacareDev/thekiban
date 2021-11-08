@@ -27,7 +27,7 @@ public interface IncomeService {
   // 도입자원 검색
   List<Income> SearchIncome(String income_name, int offset, int limit);
 
-  List<IncomeRemain> SearchRemain(@Param("income_name") String income_name, @Param("offset") int offset, @Param("limit") int limit);
+  List<IncomeRemain> SearchRemain(String income_name, int offset, int limit);
 
 
   // 도입자원 삭제

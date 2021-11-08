@@ -11,6 +11,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.thekiban.Entity.*;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -21,13 +24,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.thekiban.Entity.Basic;
-import com.thekiban.Entity.BasicFile;
-import com.thekiban.Entity.Detail;
-import com.thekiban.Entity.Display;
-import com.thekiban.Entity.Standard;
-import com.thekiban.Entity.Uploads;
-import com.thekiban.Entity.User;
 import com.thekiban.Service.BasicService;
 
 @Controller
@@ -86,7 +82,27 @@ public class BasicController
 
 		return result;
 	}
-	
+
+	@ResponseBody
+	@RequestMapping("searchBasicRemain")
+	public Map<String, Object> SearchBasicRemain(@RequestParam("basic_name") String basic_name, @RequestParam("page_num") int page_num, @RequestParam("limit") int limit) {
+		Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+		int count = service.SelectRemainCount(basic_name);
+
+		int offset = (page_num - 1) * limit;
+		int end_page = (count + limit - 1) / limit;
+
+		List<BasicRemain> basicRemains = service.SearchRemain(basic_name, offset, limit);
+
+		result.put("basicRemain", basicRemains);
+		result.put("page_num", page_num);
+		result.put("end_page", end_page);
+		result.put("offset", offset);
+
+		return result;
+	}
+
 	// 원종 등록
 	@ResponseBody
 	@RequestMapping("insertBasic")
@@ -122,7 +138,23 @@ public class BasicController
 		
 		return result;
 	}
-	
+
+	@ResponseBody
+	@RequestMapping("insertRemain")
+	public BasicRemain InsertRemain(@ModelAttribute BasicRemain basicRemain, @RequestParam("input_data") String input_data) {
+		JSONArray arr = new JSONArray(input_data);
+
+		JSONObject obj = arr.getJSONObject(0);
+
+		String value = (String) obj.get("value");
+
+		basicRemain.setBasic_name(value);
+
+		service.InsertRemain(basicRemain);
+
+		return basicRemain;
+	}
+
 	// 원종 수정
 	@ResponseBody
 	@RequestMapping("updateBasic")
@@ -206,6 +238,15 @@ public class BasicController
 			int delete_uploads = service.DeleteUploads(uploads);
 		}
 		
+		return 1;
+	}
+
+	@ResponseBody
+	@RequestMapping("deleteBasicRemain")
+	public int DeleteBasicRemain(@RequestParam("basic_remain_id[]") int[] basic_remain_id)
+	{
+		service.DeleteBasicRemain(basic_remain_id);
+
 		return 1;
 	}
 	

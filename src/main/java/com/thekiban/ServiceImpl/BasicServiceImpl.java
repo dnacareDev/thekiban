@@ -1,11 +1,6 @@
 package com.thekiban.ServiceImpl;
 
-import com.thekiban.Entity.Basic;
-import com.thekiban.Entity.BasicFile;
-import com.thekiban.Entity.Detail;
-import com.thekiban.Entity.Display;
-import com.thekiban.Entity.Standard;
-import com.thekiban.Entity.Uploads;
+import com.thekiban.Entity.*;
 import com.thekiban.Mapper.BasicMapper;
 import com.thekiban.Service.BasicService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,11 +28,21 @@ public class BasicServiceImpl implements BasicService
 		return mapper.SelectBasicCount(basic_name);
 	}
 
+	@Override
+	public int SelectRemainCount(String basic_name) {
+		return mapper.SelectRemainCount(basic_name);
+	}
+
 	// 원종 검색
 	@Override
 	public List<Basic> SearchBasic(String basic_name, int offset, int limit)
 	{
 		return mapper.SearchBasic(basic_name, offset, limit);
+	}
+
+	@Override
+	public List<BasicRemain> SearchRemain(String basic_name, int offset, int limit) {
+		return mapper.SearchRemain(basic_name, offset, limit);
 	}
 
 	// 원종별 세부 정보 조회
@@ -66,6 +71,11 @@ public class BasicServiceImpl implements BasicService
 	public int InsertBasic(Basic basic)
 	{
 		return mapper.InsertBasic(basic);
+	}
+
+	@Override
+	public int InsertRemain(BasicRemain basicRemain) {
+		return mapper.InsertRemain(basicRemain);
 	}
 
 	// 원종 상세 정보 등록
@@ -143,6 +153,11 @@ public class BasicServiceImpl implements BasicService
 	public int DeleteUploads(List<Uploads> uploads)
 	{
 		return mapper.DeleteUploads(uploads);
+	}
+
+	@Override
+	public int[] DeleteBasicRemain(int[] basic_remain_id) {
+		return mapper.DeleteBasicRemain(basic_remain_id);
 	}
 
 	// 표시항목 등록
