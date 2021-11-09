@@ -1515,99 +1515,6 @@
 <!-- 정린님 --> <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBn0n_LEGxgJuCfTU8aKvuwrcmw0iZjfmY&callback=initMap&region=kr"></script>  -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAn2DY-pTTMgNQrmoszX9MQ4gbZoZt8c0&callback=initMap&region=kr"></script>
 
-<!-- 지도 검색 -->
-<script type="text/javascript">
-    $("#modal-search").on("keyup", function (e) {
-        if (e.keyCode == 13) {
-            searchArea();
-        }
-    });
-
-    $("#modal-search-btn").click(function () {
-        searchArea();
-    });
-
-    function searchArea() {
-        /*
-        const mapOptions = {
-                  tilt: 35,
-                  heading: 20,
-                  zoom: 3,
-                  center: { lat: 0, lng: 0 },
-                  mapId: "15431d2b469f209e"
-        };
-        */
-
-        var koreaOptions = {
-            zoom: 6.4,
-            center: {
-                lat: 36.613766432253634,
-                lng: 127.84942123102657
-            },
-            panControl: false,
-            zoomControl: false,
-            scaleControl: false,
-            mapTypeControl: false,
-            streetViewControl: false,
-            fullscreenControl: false,
-            scrollwheel: true,
-            // mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-
-        var globalOptions = {
-            ...koreaOptions,
-            zoom: 2,
-        };
-
-        var geoCoder = new google.maps.Geocoder();
-        var korMap = new google.maps.Map(document.querySelector("#google_map1"), koreaOptions);
-        var globalMap = new google.maps.Map(document.querySelector("#google_map2"), globalOptions);
-
-        var koreaLocations = ["부산", "밀양", "서울", "제주"];
-        var globalLocations = ["싱가폴", "미국", "파키스탄", "일본"];
-
-/*        var koreaLocations = [];
-        var globalLocations = [];
-
-        if(  === "국내") {
-            koreaLocations.push();
-        } else {
-            globalLocations.push();
-        }*/
-
-        // var searchInput = document.querySelector("#modal-search");
-        // 국내
-        for (var i = 0; i < koreaLocations.length; i++) {
-            geoCoder.geocode({"address": koreaLocations[i]}, function (result, status) {
-                if (status == "OK") {
-                    var centerCoordinate = result[0].geometry.location; // 검색한 지역의 중앙 좌표
-
-                    var marker = new google.maps.Marker({ // 마커 생성
-                        map: korMap,
-                        position: centerCoordinate
-                    });
-                }
-            });
-        }
-
-        // 해외
-        for (var i = 0; i < globalLocations.length; i++) {
-            geoCoder.geocode({"address": globalLocations[i]}, function (result, status) {
-                if (status == "OK") {
-                    var centerCoordinate = result[0].geometry.location; // 검색한 지역의 중앙 좌표
-
-                    var marker = new google.maps.Marker({ // 마커 생성
-                        map: globalMap,
-                        position: centerCoordinate
-                    });
-
-                    globalMap.setCenter(centerCoordinate);
-                }
-            });
-        }
-    }
-</script>
-
 <script type="text/javascript">
     function openMap() {
         $("#recent").modal();
@@ -2715,6 +2622,97 @@
     }
     /* 첨부파일 */
 
+
+    /* 지도 검색 */
+    $("#modal-search").on("keyup", function (e) {
+        if (e.keyCode == 13) {
+            searchArea();
+        }
+    });
+
+    $("#modal-search-btn").click(function () {
+        searchArea();
+    });
+
+    function searchArea() {
+        /*
+        const mapOptions = {
+                  tilt: 35,
+                  heading: 20,
+                  zoom: 3,
+                  center: { lat: 0, lng: 0 },
+                  mapId: "15431d2b469f209e"
+        };
+        */
+
+        var koreaOptions = {
+            zoom: 6.4,
+            center: {
+                lat: 36.613766432253634,
+                lng: 127.84942123102657
+            },
+            panControl: false,
+            zoomControl: false,
+            scaleControl: false,
+            mapTypeControl: false,
+            streetViewControl: false,
+            fullscreenControl: false,
+            scrollwheel: true,
+            // mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        var globalOptions = {
+            ...koreaOptions,
+            zoom: 2,
+        };
+
+        var geoCoder = new google.maps.Geocoder();
+        var korMap = new google.maps.Map(document.querySelector("#google_map1"), koreaOptions);
+        var globalMap = new google.maps.Map(document.querySelector("#google_map2"), globalOptions);
+
+        var koreaLocations = ["부산", "밀양", "서울", "제주"];
+        var globalLocations = ["싱가폴", "미국", "파키스탄", "일본"];
+
+        /*        var koreaLocations = [];
+                var globalLocations = [];
+
+                if(  === "국내") {
+                    koreaLocations.push();
+                } else {
+                    globalLocations.push();
+                }*/
+
+        // var searchInput = document.querySelector("#modal-search");
+        // 국내
+        for (var i = 0; i < koreaLocations.length; i++) {
+            geoCoder.geocode({"address": koreaLocations[i]}, function (result, status) {
+                if (status == "OK") {
+                    var centerCoordinate = result[0].geometry.location; // 검색한 지역의 중앙 좌표
+
+                    var marker = new google.maps.Marker({ // 마커 생성
+                        map: korMap,
+                        position: centerCoordinate
+                    });
+                }
+            });
+        }
+
+        // 해외
+        for (var i = 0; i < globalLocations.length; i++) {
+            geoCoder.geocode({"address": globalLocations[i]}, function (result, status) {
+                if (status == "OK") {
+                    var centerCoordinate = result[0].geometry.location; // 검색한 지역의 중앙 좌표
+
+                    var marker = new google.maps.Marker({ // 마커 생성
+                        map: globalMap,
+                        position: centerCoordinate
+                    });
+
+                    globalMap.setCenter(centerCoordinate);
+                }
+            });
+        }
+    }
 </script>
 </body>
 

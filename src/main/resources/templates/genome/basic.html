@@ -1827,16 +1827,16 @@
                     
                     if(result.basic[i].standard_count == 0)
                     {
-                        add_list += '<td onclick="EmptyBtn(' + result.basic[i].basic_id + ');" style="color : blue;">EMPTY</td>';
+                        add_list += '<td onclick="EmptyBtn(' + result.basic[i].basic_id + ');" style="color : blue; cursor:pointer;">EMPTY</td>';
                     }
                     else
                     {
-                        add_list += '<td onclick="EmptyBtn(' + result.basic[i].basic_id + ');" style="color : green;">PROGRESS</td>';
+                        add_list += '<td onclick="EmptyBtn(' + result.basic[i].basic_id + ');" style="color : green; cursor:pointer;">PROGRESS</td>';
                     }
 
                     for(var j = 0; j < result.basic[i].basic_standard.length; j++)
                     {
-                    	add_list += '<td>' + result.basic[i].basic_standard[j].standard + '</td>';
+                        add_list += '<td><input type="text" class="updateInput" data="' + result.basic[i].basic_id + '" name="' + result.basic[i].basic_standard[j].detail_id + '" value="' + result.basic[i].basic_standard[j].standard + '"></td>';
                     }
 
                     add_list += '</tr>';
@@ -2190,7 +2190,9 @@
                     data: data,
                     success: function(result)
                     {
-                        console.log(result);
+                        if (result == 0) {
+                            return Alert("수정에 실패하였습니다.")
+                        }
                     }
                 });
         }
