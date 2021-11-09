@@ -93,7 +93,7 @@ public class BasicController
 		int offset = (page_num - 1) * limit;
 		int end_page = (count + limit - 1) / limit;
 
-		List<BasicRemain> basicRemains = service.SearchRemain(basic_name, offset, limit);
+		List<BasicRemain> basicRemains = service.SearchBasicRemain(basic_name, offset, limit);
 
 		result.put("basicRemain", basicRemains);
 		result.put("page_num", page_num);
@@ -203,7 +203,16 @@ public class BasicController
 		
 		return mv;
 	}
-	
+
+	@ResponseBody
+	@RequestMapping("updateBasicRemain")
+	public int UpdateBasicRemain(@RequestParam("basic_remain_id") int basic_remain_id, @RequestParam("basic_remain_name") String basic_remain_name, @RequestParam("basic_remain_value") String basic_remain_value)
+	{
+		int result = service.UpdateBasicRemain(basic_remain_id, basic_remain_name, basic_remain_value);
+
+		return result;
+	}
+
 	// 표시항목 조회
 	@ResponseBody
 	@RequestMapping("selectBasicStandard")
@@ -212,6 +221,63 @@ public class BasicController
 		List<Standard> result = service.SelectBasicStandard(basic_id);
 		
 		return result;
+	}
+
+	@RequestMapping("updateInsertBasicRemain")
+	public ModelAndView UpdateInsertBasicRemain(ModelAndView mv, @ModelAttribute BasicRemain basicRemain, @RequestParam("data") String data) {
+		JSONArray arr = new JSONArray(data);
+
+		JSONObject input_id = arr.getJSONObject(0);
+
+		int value_id = (Integer) input_id.get("value");
+
+		basicRemain.setBasic_remain_id(value_id);
+
+		for (int i = 1; i < arr.length(); i++) {
+			JSONObject obj = arr.getJSONObject(i);
+
+			String key_id = (String) obj.get("key");
+			String value = (String) obj.get("value");
+
+			if (!value.equals("")) {
+				if (key_id.equals("basic_remain_num")) {
+					basicRemain.setBasic_remain_num(value);
+				} else if (key_id.equals("basic_remain_amount")) {
+					basicRemain.setBasic_remain_amount(Integer.parseInt(value));
+				} else if (key_id.equals("basic_remain_in")) {
+					basicRemain.setBasic_remain_in(Integer.parseInt(value));
+				} else if (key_id.equals("basic_remain_out")) {
+					basicRemain.setBasic_remain_out(Integer.parseInt(value));
+				} else if (key_id.equals("basic_remain_re")) {
+					basicRemain.setBasic_remain_re(Integer.parseInt(value));
+				} else if (key_id.equals("basic_remain_person")) {
+					basicRemain.setBasic_remain_person(value);
+				} else if (key_id.equals("basic_remain_date")) {
+					basicRemain.setBasic_remain_date(value);
+				}
+			} else {
+				if (key_id.equals("basic_remain_num")) {
+					basicRemain.setBasic_remain_num("");
+				} else if (key_id.equals("basic_remain_amount")) {
+					basicRemain.setBasic_remain_amount(0);
+				} else if (key_id.equals("basic_remain_in")) {
+					basicRemain.setBasic_remain_in(0);
+				} else if (key_id.equals("basic_remain_out")) {
+					basicRemain.setBasic_remain_out(0);
+				} else if (key_id.equals("basic_remain_re")) {
+					basicRemain.setBasic_remain_re(0);
+				} else if (key_id.equals("basic_remain_person")) {
+					basicRemain.setBasic_remain_person("");
+				} else if (key_id.equals("basic_remain_date")) {
+					basicRemain.setBasic_remain_date(null);
+				}
+			}
+		}
+		service.UpdateInsertBasicRemain(basicRemain);
+
+		mv.setViewName("redirect:/basic");
+
+		return mv;
 	}
 
 	// 선택삭제

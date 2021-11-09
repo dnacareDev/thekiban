@@ -18,7 +18,7 @@ public interface BasicService
 	// 원종 검색
 	List<Basic> SearchBasic(String basic_name, int offset, int limit);
 
-	List<BasicRemain> SearchRemain(String basic_name, int offset, int limit);
+	List<BasicRemain> SearchBasicRemain(String basic_name, int offset, int limit);
 
 	// 원종별 세부 정보 조회
 	List<Detail> SearchBasicDetail(String basic_name);
@@ -46,9 +46,13 @@ public interface BasicService
 	// 원종 수정
 	int UpdateBasic(int basic_id, int detail_id, String standard);
 
+	int UpdateBasicRemain(int basic_remain_id, String basic_remain_name, String basic_remain_value);
+
 	// 원종 전체 수정
 	int UpdateAllBasic(List<Standard> list);
-	
+
+	int UpdateInsertBasicRemain(BasicRemain basicRemain);
+
 	List<Uploads> SelectUploads(int[] basic_id);
 	
 	// 원종 삭제

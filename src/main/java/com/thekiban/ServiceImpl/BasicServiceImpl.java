@@ -41,8 +41,8 @@ public class BasicServiceImpl implements BasicService
 	}
 
 	@Override
-	public List<BasicRemain> SearchRemain(String basic_name, int offset, int limit) {
-		return mapper.SearchRemain(basic_name, offset, limit);
+	public List<BasicRemain> SearchBasicRemain(String basic_name, int offset, int limit) {
+		return mapper.SearchBasicRemain(basic_name, offset, limit);
 	}
 
 	// 원종별 세부 정보 조회
@@ -105,14 +105,24 @@ public class BasicServiceImpl implements BasicService
 	{
 		return mapper.UpdateBasic(basic_id, detail_id, standard);
 	}
-	
+
+	@Override
+	public int UpdateBasicRemain(int basic_remain_id, String basic_remain_name, String basic_remain_value) {
+		return mapper.UpdateBasicRemain(basic_remain_id, basic_remain_name, basic_remain_value);
+	}
+
 	// 원종 전체 수정
 	@Override
 	public int UpdateAllBasic(List<Standard> list)
 	{
 		return mapper.UpdateAllBasic(list);
 	}
-	
+
+	@Override
+	public int UpdateInsertBasicRemain(BasicRemain basicRemain) {
+		return mapper.UpdateInsertBasicRemain(basicRemain);
+	}
+
 	// 첨부파일 조회
 	@Override
 	public List<Uploads> SelectUploads(int[] basic_id)

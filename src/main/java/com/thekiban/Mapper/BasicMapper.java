@@ -20,7 +20,7 @@ public interface BasicMapper
 	// 원종 검색
 	List<Basic> SearchBasic(@Param("basic_name") String basic_name, @Param("offset") int offset, @Param("limit") int limit);
 
-	List<BasicRemain> SearchRemain(@Param("basic_name") String basic_name, @Param("offset") int offset, @Param("limit") int limit);
+	List<BasicRemain> SearchBasicRemain(@Param("basic_name") String basic_name, @Param("offset") int offset, @Param("limit") int limit);
 
 	// 원종별 세부 정보 조회
 	List<Detail> SearchBasicDetail(String basic_name);
@@ -48,8 +48,12 @@ public interface BasicMapper
 	// 원종 수정
 	int UpdateBasic(@Param("basic_id") int basic_id, @Param("detail_id") int detail_id, @Param("standard") String standard);
 
+	int UpdateBasicRemain(@Param("basic_remain_id") int basic_remain_id, @Param("basic_remain_name") String basic_remain_name, @Param("basic_remain_value") String basic_remain_value);
+
 	// 원종 전체 수정
 	int UpdateAllBasic(List<Standard> list);
+
+	int UpdateInsertBasicRemain(BasicRemain basicRemain);
 
 	// 첨부파일 조회
 	List<Uploads> SelectUploads(int[] basic_id);

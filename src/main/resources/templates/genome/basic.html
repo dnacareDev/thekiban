@@ -654,7 +654,7 @@
 										<tbody class="text-center" id="basic_list">
 										</tbody>
 									</table>
-									<table class="table" id="table2" style="display: none;">
+									<table class="table" id="table2">
 										<thead class="text-center">
 											<tr>
                                                 <th></th>
@@ -1587,80 +1587,151 @@
 	// 원종 추가
 	function InsertBtn()
 	{
-		var data = {"basic_name" : $("#CropSelect").val(), "offset" : $("#offset").val()};
-		
-		$.ajax(
-		{
-        	url: 'insertBasic',
-        	method: 'POST',
-        	dataType: 'json',
-        	data: data,
-        	success: function(result)
-        	{
-                var header_list = $("#header_list");
-                var header_add = "";
+		if(tablechk === 0) {
+            var data = {"basic_name" : $("#CropSelect").val(), "offset" : $("#offset").val()};
 
-                var basic_list = $("#basic_list");
-                var add_list = "";
-                
-                header_add += '<tr>';
-                header_add += '<th></th>';
-                header_add += '<th><span class="title">첨부파일</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="첨부파일"></th>';
-                header_add += '<th><span class="title">특성상태</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="특성상태"></th>';
-                
-                for(var i = 0; i < result.detail.length; i++)
+            $.ajax(
                 {
-                	header_add += '<th style="cursor: pointer;"><span class="title">' + result.detail[i].detail_title + '</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="' + result.detail[i].detail_title + '"></th>'
-                }
-                
-                add_list += '<tr>';
-                add_list += '<td><input type="checkbox" name="RowCheck" value="' + result.new_basic.basic_id + '"></td>';
-                add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
-                add_list += '<td onclick="EmptyBtn(' + result.new_basic.basic_id + ');" style="color : blue;">EMPTY</td>';
-               	add_list += '<td>' + result.new_basic.basic_name + '</td>';
-                
-                for(var i = 1; i < result.detail.length; i++)
-                {
-                	add_list += '<td><input type="text" class="updateInput" data="' + result.new_basic.basic_id + '" name="' + result.detail[i].detail_id + '"></td>';
-                }
-                
-                for(var i = 0; i < result.basic.length; i++)
-                {
-                	if(result.basic[i].basic_id != result.new_basic.basic_id)
-                	{
-	                    add_list += '<tr>';
-	                    add_list += '<td><input type="checkbox" name="RowCheck" value="' + result.basic[i].basic_id + '"></td>';
-	                    add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
-	
-	                    if(result.basic[i].standard_count == 0)
-	                    {
-	                        add_list += '<td onclick="EmptyBtn(' + result.basic[i].basic_id + ');" style="color : blue;">EMPTY</td>';
-	                    }
-	                    else
-	                    {
-	                        add_list += '<td onclick="EmptyBtn(' + result.basic[i].basic_id + ');" style="color : green;">PROGRESS</td>';
-	                    }
-	
-	                    for(var j = 0; j < result.basic[i].basic_standard.length; j++)
-	                    {
-	                    	add_list += '<td>' + result.basic[i].basic_standard[j].standard + '</td>';
-	                    }
-	
-	                    add_list += '</tr>';
-                	}
-                }
-                
-                add_list += '</tr>';
-                
-                header_list.empty();
-                header_list.append(header_add);
+                    url: 'insertBasic',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: data,
+                    success: function(result)
+                    {
+                        var header_list = $("#header_list");
+                        var header_add = "";
 
-                basic_list.empty();
-                basic_list.append(add_list);
-                
-                $("input[type='text'].updateInput").eq(0).focus();
-        	}
-        });
+                        var basic_list = $("#basic_list");
+                        var add_list = "";
+
+                        header_add += '<tr>';
+                        header_add += '<th></th>';
+                        header_add += '<th><span class="title">첨부파일</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="첨부파일"></th>';
+                        header_add += '<th><span class="title">특성상태</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="특성상태"></th>';
+
+                        for(var i = 0; i < result.detail.length; i++)
+                        {
+                            header_add += '<th style="cursor: pointer;"><span class="title">' + result.detail[i].detail_title + '</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="' + result.detail[i].detail_title + '"></th>'
+                        }
+
+                        add_list += '<tr>';
+                        add_list += '<td><input type="checkbox" name="RowCheck" value="' + result.new_basic.basic_id + '"></td>';
+                        add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
+                        add_list += '<td onclick="EmptyBtn(' + result.new_basic.basic_id + ');" style="color : blue;">EMPTY</td>';
+                        add_list += '<td>' + result.new_basic.basic_name + '</td>';
+
+                        for(var i = 1; i < result.detail.length; i++)
+                        {
+                            add_list += '<td><input type="text" class="updateInput" data="' + result.new_basic.basic_id + '" name="' + result.detail[i].detail_id + '"></td>';
+                        }
+
+                        for(var i = 0; i < result.basic.length; i++)
+                        {
+                            if(result.basic[i].basic_id != result.new_basic.basic_id)
+                            {
+                                add_list += '<tr>';
+                                add_list += '<td><input type="checkbox" name="RowCheck" value="' + result.basic[i].basic_id + '"></td>';
+                                add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
+
+                                if(result.basic[i].standard_count == 0)
+                                {
+                                    add_list += '<td onclick="EmptyBtn(' + result.basic[i].basic_id + ');" style="color : blue;">EMPTY</td>';
+                                }
+                                else
+                                {
+                                    add_list += '<td onclick="EmptyBtn(' + result.basic[i].basic_id + ');" style="color : green;">PROGRESS</td>';
+                                }
+
+                                for(var j = 0; j < result.basic[i].basic_standard.length; j++)
+                                {
+                                    add_list += '<td>' + result.basic[i].basic_standard[j].standard + '</td>';
+                                }
+
+                                add_list += '</tr>';
+                            }
+                        }
+
+                        add_list += '</tr>';
+
+                        header_list.empty();
+                        header_list.append(header_add);
+
+                        basic_list.empty();
+                        basic_list.append(add_list);
+
+                        $("input[type='text'].updateInput").eq(0).focus();
+                    }
+                });
+        } else {
+            var row_list1 = "";
+            row_list1 += '<tr id="row_data">';
+
+            row_list1 += '<form action="insertBasicRemain" id="rowForm" method="POST" enctype="multipart/form-data">';
+            row_list1 += '<input type="hidden" id="rowBasic" name="rowBasic1">';
+            row_list1 += '<td><input type="checkbox" name="RowCheck1"></td>';
+            row_list1 += '<td><input type="text" class="rowInput" name="basic_remain_num"></td>';
+            row_list1 += '<td><input type="text" class="rowInput" name="basic_remain_amount"></td>';
+            row_list1 += '<td><input type="text" class="rowInput" name="basic_remain_in"></td>';
+            row_list1 += '<td><input type="text" class="rowInput" name="basic_remain_out"></td>';
+            row_list1 += '<td><input type="text" class="rowInput" name="basic_remain_re"></td>';
+            row_list1 += '<td><input type="text" class="rowInput" name="basic_remain_person"></td>';
+            row_list1 += '<td><input type="text" class="rowInput" name="basic_remain_date"></td>';
+            row_list1 += '</form>';
+            row_list1 += '</tr>';
+
+            $("#basicRemain-list").append(row_list1);
+
+            var input_data1 = [];
+
+            var input_value1 = $("#CropSelect option:selected").text();
+
+            var input_name1 = {key: "basic_name", value: input_value1};
+
+            input_data1.push(input_name1);
+
+            $.ajax(
+                {
+                    url: 'insertRemain',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        "input_data": JSON.stringify(input_data1)
+                    },
+                    success: function (result) {
+                        if (result != null) {
+                            $(".rowInput").focusout(function () {
+                                var data = [];
+
+                                var data_in = {key: "basic_remain_id", value: result.basic_remain_id}
+
+                                data.push(data_in);
+
+                                $("input[class=rowInput]").each(function (index, item) {
+                                    const key = $(this).attr('name');
+                                    var value = $(this).val();
+
+                                    var arr = {key: key, value: value};
+
+                                    data.push(arr);
+                                });
+
+                                $.ajax(
+                                    {
+                                        url: 'updateBasicRemain',
+                                        method: 'POST',
+                                        dataType: 'json',
+                                        data: {
+                                            "data": JSON.stringify(data)
+                                        },
+                                        success: function (result) {
+
+                                        }
+                                    });
+                            })
+                        }
+                    }
+                });
+        }
     }
 	
     function UpdateAllBtn()
@@ -1887,15 +1958,16 @@
 
         var data1 = {"basic_name": basic_name1, "page_num": e, "limit": limit1};
 
+        console.log(data1);
+
         $.ajax(
             {
-                url: 'searchRemain',
+                url: 'searchBasicRemain',
                 method: 'POST',
                 dataType: 'json',
                 data: data1,
                 success: function (result1) {
                     var basicRemain_list = $(".basicRemain-list");
-                    basicRemain_list.eq(btnindex);
                     var add_list = "";
 
                     var pageNum = $("#pageNum");
@@ -1904,13 +1976,13 @@
                     for (var i = 0; i < result1.basicRemain.length; i++) {
                         add_list += '<tr>';
                         add_list += '<td><input type="checkbox" name="RowCheck1" value="' + result1.basicRemain[i].basic_remain_id + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result1.basicRemain[i].basic_remain_id + '" name="income_remain_num" value="' + result1.basicRemain[i].basic_remain_num + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result1.basicRemain[i].basic_remain_id + '" name="income_remain_amount" value="' + result1.basicRemain[i].basic_remain_amount + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result1.basicRemain[i].basic_remain_id + '" name="income_remain_in" value="' + result1.basicRemain[i].basic_remain_in + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result1.basicRemain[i].basic_remain_id + '" name="income_remain_out" value="' + result1.basicRemain[i].basic_remain_out + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result1.basicRemain[i].basic_remain_id + '" name="income_remain_re" value="' + result1.basicRemain[i].basic_remain_re + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result1.basicRemain[i].basic_remain_id + '" name="income_remain_person" value="' + result1.basicRemain[i].basic_remain_person + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result1.basicRemain[i].basic_remain_id + '" name="income_remain_date" value="' + result1.basicRemain[i].basic_remain_date + '"></td>';
+                        add_list += '<td><input type="text" class="updateInput" data="' + result1.basicRemain[i].basic_remain_id + '" name="basic_remain_num" value="' + result1.basicRemain[i].basic_remain_num + '"></td>';
+                        add_list += '<td><input type="text" class="updateInput" data="' + result1.basicRemain[i].basic_remain_id + '" name="basic_remain_amount" value="' + result1.basicRemain[i].basic_remain_amount + '"></td>';
+                        add_list += '<td><input type="text" class="updateInput" data="' + result1.basicRemain[i].basic_remain_id + '" name="basic_remain_in" value="' + result1.basicRemain[i].basic_remain_in + '"></td>';
+                        add_list += '<td><input type="text" class="updateInput" data="' + result1.basicRemain[i].basic_remain_id + '" name="basic_remain_out" value="' + result1.basicRemain[i].basic_remain_out + '"></td>';
+                        add_list += '<td><input type="text" class="updateInput" data="' + result1.basicRemain[i].basic_remain_id + '" name="basic_remain_re" value="' + result1.basicRemain[i].basic_remain_re + '"></td>';
+                        add_list += '<td><input type="text" class="updateInput" data="' + result1.basicRemain[i].basic_remain_id + '" name="basic_remain_person" value="' + result1.basicRemain[i].basic_remain_person + '"></td>';
+                        add_list += '<td><input type="text" class="updateInput" data="' + result1.basicRemain[i].basic_remain_id + '" name="basic_remain_date" value="' + result1.basicRemain[i].basic_remain_date + '"></td>';
                         add_list += '</tr>';
                     }
 
@@ -2086,23 +2158,43 @@
 	// 품종 수정
 	$(document).on("focusout", ".updateInput", function()
 	{
-		var basic_id = $(this).attr("data");
-		var detail_id = $(this).attr("name");
-		var standard = $(this).val();
-		
-		var data = {"basic_id" : basic_id, "detail_id" : detail_id, "standard" : standard};
-		
-        $.ajax(
-        {
-        	url: 'updateBasic',
-        	method: 'POST',
-        	dataType: 'json',
-        	data: data,
-        	success: function(result)
-        	{
-        		console.log(result);
-        	}
-        });
+		if(tablechk === 0) {
+            var basic_id = $(this).attr("data");
+            var detail_id = $(this).attr("name");
+            var standard = $(this).val();
+
+            var data = {"basic_id" : basic_id, "detail_id" : detail_id, "standard" : standard};
+
+            $.ajax(
+                {
+                    url: 'updateBasic',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: data,
+                    success: function(result)
+                    {
+                        console.log(result);
+                    }
+                });
+        } else {
+            var basic_remain_id = $(this).attr("data");
+            var basic_remain_name = $(this).attr("name");
+            var basic_remain_value = $(this).val();
+
+            var data = {"basic_remain_id" : basic_remain_id, "basic_remain_name" : basic_remain_name, "basic_remain_value" : basic_remain_value};
+
+            $.ajax(
+                {
+                    url: 'updateBasicRemain',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: data,
+                    success: function(result)
+                    {
+                        console.log(result);
+                    }
+                });
+        }
 	});
     
     // 표시항목 버튼
@@ -2319,32 +2411,12 @@
      		}
     	});
     }
-    
-    function ChangeBtn(e)
-    {
-    	if(e == 0)
-    	{
-	    	$("#table1").css("display", "inline-block");
-	    	$("#btn1").css("display", "block");
-	    	
-	    	$("#table2").css("display", "none");
-	    	$("#btn2").css("display", "none");
-    	}
-    	else
-    	{
-	    	$("#table1").css("display", "none");
-	    	$("#btn1").css("display", "none");
-	    	
-	    	$("#table2").css("display", "block");
-	    	$("#btn2").css("display", "block");
-    	}
-    }
-    
+
     function InsertInventory(e)
     {
     	console.log(123);
     }
-    
+
     function DeleteInventory(e)
     {
     	console.log(456);
