@@ -83,6 +83,7 @@ public class BasicController
 		return result;
 	}
 
+	// 재고 검색
 	@ResponseBody
 	@RequestMapping("searchBasicRemain")
 	public Map<String, Object> SearchBasicRemain(@RequestParam("basic_name") String basic_name, @RequestParam("page_num") int page_num, @RequestParam("limit") int limit) {
@@ -106,7 +107,7 @@ public class BasicController
 	// 원종 등록
 	@ResponseBody
 	@RequestMapping("insertBasic")
-	public Map<String, Object> insertBasic(ModelAndView mv, @RequestParam("basic_name") String basic_name, @RequestParam("offset") int offset)
+	public Map<String, Object> InsertBasic(ModelAndView mv, @RequestParam("basic_name") String basic_name, @RequestParam("offset") int offset)
 	{
 		Map<String, Object> result = new LinkedHashMap<String, Object>();
 		
@@ -139,9 +140,10 @@ public class BasicController
 		return result;
 	}
 
+	// 재고 등록
 	@ResponseBody
-	@RequestMapping("insertRemain")
-	public BasicRemain InsertRemain(@ModelAttribute BasicRemain basicRemain, @RequestParam("input_data") String input_data) {
+	@RequestMapping("insertBasicRemain")
+	public BasicRemain InsertBasicRemain(@ModelAttribute BasicRemain basicRemain, @RequestParam("input_data") String input_data) {
 		JSONArray arr = new JSONArray(input_data);
 
 		JSONObject obj = arr.getJSONObject(0);
@@ -204,6 +206,7 @@ public class BasicController
 		return mv;
 	}
 
+	// 재고 수정
 	@ResponseBody
 	@RequestMapping("updateBasicRemain")
 	public int UpdateBasicRemain(@RequestParam("basic_remain_id") int basic_remain_id, @RequestParam("basic_remain_name") String basic_remain_name, @RequestParam("basic_remain_value") String basic_remain_value)
@@ -223,6 +226,7 @@ public class BasicController
 		return result;
 	}
 
+	// 재고 입력
 	@RequestMapping("updateInsertBasicRemain")
 	public ModelAndView UpdateInsertBasicRemain(ModelAndView mv, @ModelAttribute BasicRemain basicRemain, @RequestParam("data") String data) {
 		JSONArray arr = new JSONArray(data);
@@ -307,6 +311,7 @@ public class BasicController
 		return 1;
 	}
 
+	// 재고 삭제
 	@ResponseBody
 	@RequestMapping("deleteBasicRemain")
 	public int DeleteBasicRemain(@RequestParam("basic_remain_id[]") int[] basic_remain_id)

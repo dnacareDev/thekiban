@@ -586,11 +586,12 @@
 		#grid2 .tab-content .row li{
 			padding: 0 10px !important;
 		}
-		
-		input[type="text"].updateInput{
-       		border:none;
-       		height: 45px;
-       }
+
+        input[type="text"].updateInput{
+            border:none;
+            height: 45px;
+            text-align: center;
+        }
 		/* 푸터 배경색 */
 		.footer-wrapper {background-color: #FCFCFC;}
     </style>
@@ -1679,7 +1680,7 @@
             row_list1 += '</form>';
             row_list1 += '</tr>';
 
-            $("#basicRemain-list").append(row_list1);
+            $("#basicRemain-list").prepend(row_list1);
 
             var input_data1 = [];
 
@@ -1691,7 +1692,7 @@
 
             $.ajax(
                 {
-                    url: 'insertRemain',
+                    url: 'insertBasicRemain',
                     method: 'POST',
                     dataType: 'json',
                     data: {
@@ -1717,7 +1718,7 @@
 
                                 $.ajax(
                                     {
-                                        url: 'updateBasicRemain',
+                                        url: 'updateInsertBasicRemain',
                                         method: 'POST',
                                         dataType: 'json',
                                         data: {
@@ -1958,8 +1959,6 @@
 
         var data1 = {"basic_name": basic_name1, "page_num": e, "limit": limit1};
 
-        console.log(data1);
-
         $.ajax(
             {
                 url: 'searchBasicRemain',
@@ -2076,7 +2075,7 @@
             {
                 $.ajax(
                     {
-                        url: 'deleteRemain',
+                        url: 'deleteBasicRemain',
                         method: 'POST',
                         dataType: 'json',
                         data: data,
