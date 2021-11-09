@@ -609,6 +609,7 @@
                                             <option value="30">30개</option>
                                         </select>
                                         <select class="form-control form-control-lg mt-10 mb-10 mr-10" style="width: 250px;" id="CropSelect">
+                                            <option value="none">전체선택</option>
                                             <option value="고추">고추</option>
                                             <option value="대파">대파</option>
                                             <option value="멜론">멜론</option>
@@ -636,7 +637,7 @@
                                     <table class="table" id="table1">
                                         <thead class="text-center">
                                         <tr>
-                                            <th></th>
+                                            <th><input type="checkbox" name="RowCheck" value="selectAll" onclick="selectAll(this)"></th>
                                             <th><span class="title">첨부파일</span></th>
                                             <th style="cursor: pointer;"><span class="title">작물</span></th>
                                             <th style="cursor: pointer;"><span class="title">시교명(ID)</span><img
@@ -674,7 +675,7 @@
                                     <table class="table" id="table2">
                                         <thead class="text-center">
                                         <tr>
-                                            <th></th>
+                                            <th><input type="checkbox" name="RowCheck1" value="selectAll" onclick="selectAll(this)"></th>
                                             <th style="cursor: pointer;"><span class="title">시교명</span><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="시교명"></th>
@@ -823,8 +824,8 @@
                     </div>
                     <div class="modal-footer" style="border: none">
                         <input type="hidden" id="upload_id" name="sample_id">
-                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
-                        <button type="button" class="btn btn-primary btn-sm" onclick="InsertFile()">저장</button>
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="dataToggle('#insert_file', '#sample_file');">취소</button>
+                        <button type="button" class="btn btn-primary btn-sm" onclick="dataToggle('#insert_file', '#sample_file'); InsertFile();">저장</button>
                     </div>
                 </form>
             </div>
@@ -872,8 +873,8 @@
                     </div>
                     <div class="modal-footer" style="border: none">
                         <input type="hidden" id="sample_file_id" name="sample_file_id">
-                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
-                        <button type="button" class="btn btn-primary btn-sm">수정</button>
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="dataToggle('#modify_file', '#sample_file');">취소</button>
+                        <button type="button" class="btn btn-primary btn-sm" onclick="dataToggle('#modify_file', '#sample_file');">수정</button>
                     </div>
                 </form>
             </div>
@@ -920,7 +921,7 @@
                 </div>
                 <div class="modal-footer" style="border: none">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" onclick="dataToggle('#data_upload', '#data_upload2');">취소</button>
-                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" onclick="InsertExcel()">등록</button>
+                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" onclick="dataToggle('#data_upload1', '#data_upload2'); InsertExcel();">등록</button>
                 </div>
             </div>
         </div>
@@ -968,7 +969,7 @@
                 </div>
                 <div class="modal-footer" style="border: none">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" onclick="dataToggle('#data_upload1', '#data_upload12');">취소</button>
-                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" onclick="InsertExcel()">등록</button>
+                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" onclick="dataToggle('#data_upload1', '#data_upload12'); InsertExcel();">등록</button>
                 </div>
             </div>
         </div>
@@ -1815,7 +1816,7 @@
 
                 var jsonObj = tableToJson(document.getElementById("excel_data1"));
 
-                $("#excel_list").val(JSON.stringify(jsonObj));
+                $("#excel_list1").val(JSON.stringify(jsonObj));
             };
 
             reader1.readAsBinaryString(input1.files[0]);
@@ -1835,7 +1836,7 @@
 
     /* 엑셀 입력 */
     function InsertExcel() {
-        if (tablechk === 1) {
+        if (tablechk === 0) {
             var data = [];
 
             $("#excel_data").each(function (index, item) {
@@ -1945,6 +1946,24 @@
         SearchBreed(1);
         SearchOutcome(1);
     })
+
+    function selectAll(selectAll)  {
+        if(tablechk === 0) {
+            const checkboxes
+                = document.getElementsByName('RowCheck');
+
+            checkboxes.forEach((checkbox) => {
+                checkbox.checked = selectAll.checked;
+            })
+        } else {
+            const checkboxes1
+                = document.getElementsByName('RowCheck1');
+
+            checkboxes1.forEach((checkbox) => {
+                checkbox.checked = selectAll.checked;
+            })
+        }
+    }
 
     var emptyEls;
 
@@ -2226,12 +2245,12 @@
                 var rec = $('#table1').find('tbody>tr').get();
 
                 rec.sort(function (a, b) {
-                    var val1 = +($(a).children('td').eq(column).text());
-                    var val2 = +($(b).children('td').eq(column).text());
+                    var val1 = +($(a).children('input').eq(column).text());
+                    var val2 = +($(b).children('input').eq(column).text());
 
                     if (isNaN(val1) && isNaN(val2)) {
-                        val1 = $(a).children('td').eq(column).text();
-                        val2 = $(b).children('td').eq(column).text();
+                        val1 = $(a).children('input').eq(column).text();
+                        val2 = $(b).children('input').eq(column).text();
 
                         return (val1 < val2) ? -sortdir : (val1 > val2) ? sortdir : 0;
                     } else {
@@ -2305,8 +2324,6 @@
         }
     }
 
-
-    // 구글 맵 관련
 
     document.addEventListener('mousedown', function () {
         if ((event.button == 2) || (event.which == 3)) {

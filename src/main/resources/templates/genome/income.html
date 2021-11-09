@@ -515,6 +515,15 @@
             height: 45px;
             text-align: center;
         }
+
+        .img_wrap {
+            width: 600px;
+            margin-top: 50px;
+        }
+
+        .img_wrap img {
+            max-width: 200px;
+        }
     </style>
 
 </head>
@@ -553,6 +562,7 @@
                                             <option value="30">30개</option>
                                         </select>
                                         <select class="form-control form-control-lg mt-10 mb-10 mr-10" style="width: 250px;" id="CropSelect">
+                                            <option value="none">전체선택</option>
                                             <option value="고추">고추</option>
                                             <option value="대파">대파</option>
                                             <option value="멜론">멜론</option>
@@ -580,7 +590,7 @@
                                     <table class="table" id="table1">
                                         <thead class="text-center">
                                         <tr>
-                                            <th></th>
+                                            <th><input type="checkbox" name="RowCheck" value="selectAll" onclick="selectAll(this)"></th>
                                             <th><span class="title">첨부파일</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
                                                                                            alt="첨부파일"></th>
                                             <th style="cursor: pointer;"><span class="title">작물</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
@@ -616,7 +626,7 @@
                                     <table class="table" id="table2">
                                         <thead class="text-center">
                                         <tr>
-                                            <th></th>
+                                            <th><input type="checkbox" name="RowCheck1" value="selectAll" onclick="selectAll(this)"></th>
                                             <th style="cursor: pointer;"><span class="title">도입번호(ID)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
                                                                                                                         alt="도입번호(ID)"></th>
                                             <th style="cursor: pointer;"><span class="title">종자 보유량</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
@@ -717,6 +727,9 @@
                         </div>
                         <div class="form-group mb-0">
                             <textarea name="income_file_contents" style="resize:none;"></textarea>
+                            <div class="img_wrap">
+                                <img id="img"/>
+                            </div>
                         </div>
                         <div>
                             <div class="atbd-upload">
@@ -1167,6 +1180,24 @@
 
         return obj;
     };
+
+    function selectAll(selectAll)  {
+        if(tablechk === 0) {
+            const checkboxes
+                = document.getElementsByName('RowCheck');
+
+            checkboxes.forEach((checkbox) => {
+                checkbox.checked = selectAll.checked;
+            })
+        } else {
+            const checkboxes1
+                = document.getElementsByName('RowCheck1');
+
+            checkboxes1.forEach((checkbox) => {
+                checkbox.checked = selectAll.checked;
+            })
+        }
+    }
 
     const thisBtn = document.querySelector('#modal_open');
 
@@ -1738,6 +1769,28 @@
 
         $("#income_file").modal("hide");
         $("#modify_file").modal("show");
+    }
+
+    var sel_file;
+
+    $(document).ready(function () {
+        $("#upload_file").on("change", handleImgFileSelect);
+    });
+
+    function handleImgFileSelect(e) {
+        var files = e.target.files;
+        var filesArr = Array.prototype.slice.call(files);
+
+        filesArr.forEach(function(f) {
+            sel_file = f;
+
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $("#img").attr("src", e.target.result);
+            }
+
+            reader.readAsDataURL(f);
+        });
     }
 
     /* 첨부파일 */
