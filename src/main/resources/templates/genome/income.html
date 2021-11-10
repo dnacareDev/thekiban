@@ -1098,7 +1098,6 @@
                 }
                 const obj = {...excel};
 
-                // console.log(obj);
                 rowdata[k] = obj;
             }
 
@@ -1237,8 +1236,6 @@
 
         var data = {"income_name": income_name, "page_num": e, "limit": limit};
 
-        console.log(data);
-
         $.ajax(
             {
                 url: 'searchIncome',
@@ -1257,6 +1254,7 @@
                         add_list += '<tr>';
                         add_list += '<td><input type="checkbox" name="RowCheck" value="' + result.income[i].income_id + '"></td>';
                         add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" onclick="FileBtn(' + result.income[i].income_id + ');"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
+                        add_list += '<td><input type="text" class="updateInput" data="' + result.income[i].income_id + '" name="income_name" value="' + result.income[i].income_name + '"></td>';
                         add_list += '<td><input type="text" class="updateInput" data="' + result.income[i].income_id + '" name="income_code" value="' + result.income[i].income_code + '"></td>';
                         add_list += '<td><input type="text" class="updateInput" data="' + result.income[i].income_id + '" name="income_kind" value="' + result.income[i].income_kind + '"></td>';
                         add_list += '<td><input type="text" class="updateInput" data="' + result.income[i].income_id + '" name="income_division" value="' + result.income[i].income_division + '"></td>';
@@ -1494,6 +1492,8 @@
                 $(this).siblings().removeClass('desc');
 
                 var rec = $('#table1').find('tbody>tr').get();
+
+                console.log(rec);
 
                 rec.sort(function (a, b) {
                     var val1 = +($(a).children('td').eq(column).text());
@@ -1793,6 +1793,45 @@
     }
 
     /* 첨부파일 */
+
+    $(document).on("keydown", ".result_tr input:text", function(e){
+        var resultTr = document.querySelectorAll(".result_tr input[type=text]");
+        var resultTr = Array.prototype.slice.call(resultTr);
+        var resultTrLength = resultTr.length;
+        var methodLength = method.length;
+        var target = e.currentTarget;
+        var index = resultTr.indexOf(target);
+
+        if(event.keyCode == "37"){
+            //방향키 좌
+            if($(this).parent().prev().find("input:text").length == "0"){
+                $(this).focus();
+            }else{
+                $(this).parent().prev().find("input:text").focus();
+            }
+        }else if(event.keyCode == "38"){
+            //방향키 상
+            if($(this).parent().parent().prev().find("input:text").length == "0"){
+                $(this).focus();
+            }else{
+                $(this).parent().parent().parent().find("input:text").eq(index - methodLength).focus();
+            }
+        }else if(event.keyCode == "39"){
+            //방향키 우
+            if($(this).parent().next().find("input:text").length == "0"){
+                $(this).focus();
+            }else{
+                $(this).parent().next().find("input:text").focus();
+            }
+        }else if(event.keyCode == "40"){
+            //방향키 하
+            if($(this).parent().parent().next().find("input:text").length == "0"){
+                $(this).focus();
+            }else{
+                $(this).parent().parent().parent().find("input:text").eq(index + methodLength).focus();
+            }
+        }
+    });
 </script>
 
 </body>

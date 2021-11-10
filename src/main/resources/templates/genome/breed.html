@@ -1540,21 +1540,21 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td data-toggle="modal" data-target="#pop_data_sub1">19PF0301</td>
+                                    <td>19PF0301</td>
                                     <td>국내</td>
                                     <td>185</td>
                                     <td>185</td>
-                                    <td>185</td>
+                                    <td>185 <a data-toggle="modal" href="#pop_data_sub1"><i class="fas fa-link"></i></a></td>
                                     <td>185</td>
                                     <td>185</td>
                                     <td>185</td>
                                 </tr>
                                 <tr>
-                                    <td data-toggle="modal" data-target="#pop_data_sub1">2</td>
+                                    <td>19PF0302</td>
                                     <td>2021-08-15</td>
                                     <td>185</td>
                                     <td>185</td>
-                                    <td>185</td>
+                                    <td>185 <a data-toggle="modal" href="#pop_data_sub1"><i class="fas fa-link"></i></a></td>
                                     <td>185</td>
                                     <td>185</td>
                                     <td>185</td>
@@ -1923,7 +1923,11 @@
                         }
 
                         for (var j = 0; j < result.breed[i].breed_standard.length; j++) {
-                            add_list += '<td><input type="text" class="updateInput" data="' + result.breed[i].breed_id + '" name="' + result.breed[i].breed_standard[j].detail_id + '" value="' + result.breed[i].breed_standard[j].standard + '"></td>';
+                            if(result.breed[i].breed_standard[j].detail_id === 2 || result.breed[i].breed_standard[j].detail_id === 4 || result.breed[i].breed_standard[j].detail_id === 5) {
+                                add_list += '<td><input type="text" class="updateInput" data="' + result.breed[i].breed_id + '" name="' + result.breed[i].breed_standard[j].detail_id + '" value="' + result.breed[i].breed_standard[j].standard + '"><a data-toggle="modal" href="#pop_data1"><i class="fas fa-link"></i></a></td>';
+                            } else {
+                                add_list += '<td><input type="text" class="updateInput" data="' + result.breed[i].breed_id + '" name="' + result.breed[i].breed_standard[j].detail_id + '" value="' + result.breed[i].breed_standard[j].standard + '"></td>';
+                            }
                         }
 
                         add_list += '</tr>';
@@ -2019,19 +2023,19 @@
 
                     $("#offset").val(result.offset);
                     CheckFunction();
-                    namedClick();// 추가  alpadesign  2021-11-08
+                    // namedClick();// 추가  alpadesign  2021-11-08
                 }
 
             });
     }
 
-    namedClick();// 추가  alpadesign  2021-11-08
-    function namedClick() { // 추가  alpadesign  2021-11-08
-        $("td:nth-child(5)").click(function () {
-            $("td:nth-child(5)").css({"cursor": "pointer"});
-            $("#pop_data1").modal("show");
-        });
-    }
+    // namedClick();// 추가  alpadesign  2021-11-08
+    // function namedClick() { // 추가  alpadesign  2021-11-08
+    //     // $("td:nth-child(5)").click(function () {
+    //     //     $("td:nth-child(5)").css({"cursor": "pointer"});
+    //         $("#pop_data1").modal("show");
+    //     // });
+    // }
 
     // 품종 추가
     function InsertBtn() {
