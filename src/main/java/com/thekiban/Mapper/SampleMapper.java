@@ -31,6 +31,9 @@ public interface SampleMapper {
   // 수출자원 검색
   List<SampleOutcome> SearchOutcome(@Param("sample_name") String sample_name, @Param("offset") int offset, @Param("limit") int limit);
 
+
+  List<SampleOutcome> SearchSeed(@Param("sample_name") String sample_name);
+
   // 시교자원 삭제
   int[] DeleteSample(int[] sample_id);
 
@@ -50,11 +53,6 @@ public interface SampleMapper {
 
   // 시교자원 엑셀 등록
   int InsertExcel(Sample sample);
-
-/*
-  // 첨부파일 목록
-  List<SampleFile> SearchFileList(@Param("sample_id") String sample_id);
-*/
 
   // 수출관리 엑셀 등록
   int InsertOutcomeExcel(SampleOutcome sampleOutcome);
@@ -82,6 +80,21 @@ public interface SampleMapper {
 
   // 첨부파일 수정
   int UpdateSampleUpload(Uploads upload);
+
+  // 품종 갯수 조회
+  int SelectBreedCount(String breed_name);
+
+  // 품종 검색
+  List<Breed> SearchBreed(@Param("breed_name") String breed_name, @Param("offset") int offset, @Param("limit") int limit);
+
+  // 품종별 세부 정보 조회
+  List<Detail> SearchBreedDetail(String breed_name);
+
+  // 표시항목 조회
+  List<Display> SelectDisplay(@Param("user_id") int user_id, @Param("breed_name") String breed_name);
+
+  // 품종별 정보값 조회
+  List<Standard> SearchBreedStandard(@Param("detail") List<Detail> detail, @Param("user_id") int user_id, @Param("breed_id") int breed_id);
 
 }
 

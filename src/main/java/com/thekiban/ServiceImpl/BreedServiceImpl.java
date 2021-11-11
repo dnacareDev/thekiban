@@ -26,14 +26,14 @@ public class BreedServiceImpl implements BreedService
 		return mapper.SelectDetail();
 	}
 
-	// 원종 갯수 조회
+	// 품종 갯수 조회
 	@Override
 	public int SelectBreedCount(String breed_name)
 	{
 		return mapper.SelectBreedCount(breed_name);
 	}
 
-	// 원종 검색
+	// 품종 검색
 	@Override
 	public List<Breed> SearchBreed(String breed_name, int offset, int limit)
 	{

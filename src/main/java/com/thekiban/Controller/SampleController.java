@@ -5,6 +5,7 @@ import com.thekiban.Service.SampleService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -111,6 +112,18 @@ public class SampleController {
     result1.put("page_num", page_num);
     result1.put("end_page", end_page);
     result1.put("offset", offset);
+
+    return result1;
+  }
+
+  @ResponseBody
+  @RequestMapping("searchSeed")
+  public Map<String, Object> SearchSeed(@RequestParam("sample_name") String sample_name) {
+    Map<String, Object> result1 = new LinkedHashMap<String, Object>();
+
+    List<SampleOutcome> SampleOutcome = service.SearchSeed(sample_name);
+
+    result1.put("sampleOutcome", SampleOutcome);
 
     return result1;
   }
@@ -482,5 +495,45 @@ public class SampleController {
     mv.setViewName("redirect:/sample");
 
     return mv;
+  }
+
+  // 품종 검색
+  @ResponseBody
+  @RequestMapping("searchBreedList")
+  public Map<String, Object> SearchBreed(Authentication auth, @RequestParam("breed_name") String breed_name, @RequestParam("page_num") int page_num, @RequestParam("limit") int limit)
+  {
+    Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+    User user = (User)auth.getPrincipal();
+
+    int count = service.SelectBreedCount(breed_name);
+
+    int offset = (page_num - 1) * limit;
+    int end_page = (count + limit - 1) / limit;
+
+    List<Breed> breed = service.SearchBreed(breed_name, offset, limit);								// 품종 검색
+    List<Detail> detail = service.SearchBreedDetail(breed_name);									// 품종 작물별 컬럼 조회
+    List<Display> display = service.SelectDisplay(user.getUser_id(), breed_name);					// 사용자별 품종 표시항목 조회
+
+    List<Standard> standard = new ArrayList<Standard>();
+
+    if(!detail.isEmpty())
+    {
+      for(int i = 0; i < breed.size(); i++)
+      {
+        standard = service.SearchBreedStandard(detail, user.getUser_id(), breed.get(i).getBreed_id());
+
+        breed.get(i).setBreed_standard(standard);
+      }
+    }
+
+    result.put("breed", breed);
+    result.put("detail", detail);
+    result.put("display", display);
+    result.put("page_num", page_num);
+    result.put("end_page", end_page);
+    result.put("offset", offset);
+
+    return result;
   }
 }

@@ -1110,7 +1110,7 @@
         </div>
     </div>
 
-    <!-- 시교명 -->
+    <!-- 시교명 팝업 -->
     <div class="modal-basic modal fade show pop7" id="pop_data1" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white">
@@ -1132,125 +1132,11 @@
                     <div>
                         <div class="atbd-upload popAdd tab-pane fade show active" id="tab-horizontal-0-0" role="tabpanel" aria-labelledby="tab-horizontal-0-tab-0"
                              style=" overflow: auto; max-height: 500px;">
-                            <table style="width: max-content; min-width: 100%;">
-                                <thead>
-                                <tr>
-                                    <th>시교명(ID)</th>
-                                    <th>목표 지역</th>
-                                    <th>구분</th>
-                                    <th>교배번호</th>
-                                    <th>종자번호(ID)</th>
-                                    <th>현 종자량(g)</th>
-                                    <th>기내 발아율(%)</th>
-                                    <th>비고</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>19PF0301</td>
-                                    <td>국내</td>
-                                    <td>185</td>
-                                    <td>185</td>
-                                    <td>185 <a data-toggle="modal" href="#pop_seed"><i class="fas fa-link"></i></a></td>
-                                    <td>185</td>
-                                    <td>185</td>
-                                    <td>185</td>
-                                </tr>
-                                <tr>
-                                    <td>19PF0302</td>
-                                    <td>2021-08-15</td>
-                                    <td>185</td>
-                                    <td>185</td>
-                                    <td>185 <a data-toggle="modal" href="#pop_seed"><i class="fas fa-link"></i></a></td>
-                                    <td>185</td>
-                                    <td>185</td>
-                                    <td>185</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="atbd-upload popAdd tab-pane fade" id="tab-horizontal-1-1" role="tabpanel" aria-labelledby="tab-horizontal-1-tab-1" style="overflow: auto;">
-                            <div class="pop_top_content1" style="max-height:150px; overflow: auto;">
-                                <span class="sub_title">모계 계통명(ID)</span>
-                                <table style="width: max-content; min-width: 100%;">
-                                    <thead>
-                                    <tr>
-                                        <th>첨부파일</th>
-                                        <th>특성상태</th>
-                                        <th>작물</th>
-                                        <th>계통명(ID)</th>
-                                        <th>원소재 계통번호</th>
-                                        <th>B.N. 기준년도</th>
-                                        <th>B.N. (교배번호)</th>
-                                        <th>숙기(최소 일)</th>
-                                        <th>숙기(최대 일)</th>
-                                    </tr>
+                            <div class="table-responsive">
+                                <table class="table" id="display">
+                                    <thead class="text-center" id="header_list">
                                     </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td><i class="bi bi-file-earmark-arrow-down"></i></td>
-                                        <td>고추</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>2021-08-15</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="pop_top_content2" style="max-height:150px; overflow: auto; margin-top: 20px;">
-                                <span class="sub_title">부계 계통명(ID)</span>
-                                <table style="width: max-content; min-width: 100%;">
-                                    <thead>
-                                    <tr>
-                                        <th>첨부파일</th>
-                                        <th>특성상태</th>
-                                        <th>작물</th>
-                                        <th>계통명(ID)</th>
-                                        <th>원소재 계통번호</th>
-                                        <th>B.N. 기준년도</th>
-                                        <th>B.N. (교배번호)</th>
-                                        <th>숙기(최소 일)</th>
-                                        <th>숙기(최대 일)</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td><i class="bi bi-file-earmark-arrow-down"></i></td>
-                                        <td>고추</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>2021-08-15</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                    </tr>
+                                    <tbody class="text-center" id="breed_list">
                                     </tbody>
                                 </table>
                             </div>
@@ -1258,17 +1144,12 @@
                     </div>
                 </div>
                 <div class="modal-footer" style="border: none">
-                    <div class="col-4">
-                        <div class="row" style="justify-content: center;">
-                            <div id="pageNum1" style="text-align:center; margin: 2% 0 0 0;"></div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 종자번호 -->
+    <!-- 종자번호 팝업 -->
     <div class="modal-basic modal fade show pop7" id="pop_seed" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white">
@@ -1283,6 +1164,7 @@
                                 <table class="table table2">
                                     <thead class="text-center">
                                     <tr>
+                                        <th><input type="checkbox" name="RowCheck1" value="selectAll" onclick="selectAll(this)"></th>
                                         <th style="cursor: pointer;"><span class="title">시교명</span><img
                                             src="../assets/vendor_assets/img/title_icon.png"
                                             alt="시교명"></th>
@@ -1769,17 +1651,20 @@
     $(document).ready(function () {
         SearchSample(1);
         SearchOutcome(1);
+        SearchBreed(1);
     });
 
     $("#CropSelect").change(function () {
         SearchSample(1);
         SearchOutcome(1);
+        SearchBreed(1);
     })
 
     // 갯수 선택
     $("#limit").change(function () {
         SearchSample(1);
         SearchOutcome(1);
+        SearchBreed(1);
     })
 
     function selectAll(selectAll) {
@@ -1833,7 +1718,7 @@
                         add_list += '<td><input type="text" class="updateInput" data="' + result.sample[i].sample_id + '" name="sample_country" value="' + result.sample[i].sample_country + '"></td>';
                         add_list += '<td><input type="text" class="updateInput" data="' + result.sample[i].sample_id + '" name="sample_type" value="' + result.sample[i].sample_type + '"></td>';
                         add_list += '<td><input type="text" class="updateInput" data="' + result.sample[i].sample_id + '" name="sample_mate" value="' + result.sample[i].sample_mate + '"></td>';
-                        add_list += '<td><a data-toggle="modal" href="#pop_seed">' + result.sample[i].sample_seed + '</a></td>';
+                        add_list += '<td><a href="javascript:;" onclick="seedModal(this)" class="test">' + result.sample[i].sample_seed + '</a></td>';
                         add_list += '<td><input type="text" class="updateInput" data="' + result.sample[i].sample_id + '" name="sample_amount" value="' + result.sample[i].sample_amount + '"></td>';
                         add_list += '<td><input type="text" class="updateInput" data="' + result.sample[i].sample_id + '" name="sample_sprout" value="' + result.sample[i].sample_sprout + '"></td>';
                         add_list += '<td><input type="text" class="updateInput" data="' + result.sample[i].sample_id + '" name="sample_purity" value="' + result.sample[i].sample_purity + '"></td>';
@@ -1889,10 +1774,10 @@
                 data: data1,
                 success: function (result1) {
                     var sampleOutcome_list = $(".sampleOutcome-list");
-                    var outcome_list = $(".outcome_list");
+                    // var outcome_list = $(".outcome_list");
                     sampleOutcome_list.eq(btnindex);
                     var add_list = "";
-                    var seed_list = "";
+                    // var seed_list = "";
 
                     var pageNum = $("#pageNum");
                     var page_add = "";
@@ -1913,21 +1798,6 @@
                         add_list += '<td><input type="text" class="updateInput" data="' + result1.sampleOutcome[i].sample_outcome_id + '" name="sample_outcome_country" value="' + result1.sampleOutcome[i].sample_outcome_country + '"></td>';
                         add_list += '<td><input type="text" class="updateInput" data="' + result1.sampleOutcome[i].sample_outcome_id + '" name="sample_outcome_place" value="' + result1.sampleOutcome[i].sample_outcome_place + '"></td>';
                         add_list += '</tr>';
-
-                        seed_list += '<tr>';
-                        seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_code + '</td>';
-                        seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_num + '</td>';
-                        seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_amount + '</td>';
-                        seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_in + '</td>';
-                        seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_out + '</td>';
-                        seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_remain + '</td>';
-                        seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_person + '</td>';
-                        seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_reciever + '</td>';
-                        seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_date + '</td>';
-                        seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_end + '</td>';
-                        seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_country + '</td>';
-                        seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_place + '</td>';
-                        seed_list += '</tr>';
                     }
 
                     if (result1.page_num == 1) {
@@ -1953,15 +1823,215 @@
                     sampleOutcome_list.empty();
                     sampleOutcome_list.append(add_list);
 
-                    outcome_list.empty();
-                    outcome_list.append(seed_list);
-
                     pageNum.empty();
                     pageNum.append(page_add);
 
                     emptyEls = document.querySelectorAll('#sampleOutcome-list tr .status');
                     emptyEls = Array.prototype.slice.call(emptyEls);
                 }
+            });
+    }
+
+    function seedModal(e) {
+        $("#pop_seed").modal();
+
+        SearchSeed(e);
+    }
+
+    function SearchSeed(e) {
+        var sample_name1 = $("#CropSelect").val();
+
+        var data1 = {"sample_name": sample_name1};
+
+        $.ajax(
+            {
+                url: 'searchSeed',
+                method: 'POST',
+                dataType: 'json',
+                data: data1,
+                success: function (result1) {
+                    var outcome_list = $(".outcome_list");
+
+                    var seed_list = "";
+
+                    for (var i = 0; i < result1.sampleOutcome.length; i++) {
+                        if(result1.sampleOutcome[i].sample_outcome_num === e.innerText) {
+                            seed_list += '<tr>';
+                            seed_list += '<td><input type="checkbox" name="RowCheck1" value="' + result1.sampleOutcome[i].sample_outcome_id + '"></td>';
+                            seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_code + '</td>';
+                            seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_num + '</td>';
+                            seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_amount + '</td>';
+                            seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_in + '</td>';
+                            seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_out + '</td>';
+                            seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_remain + '</td>';
+                            seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_person + '</td>';
+                            seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_reciever + '</td>';
+                            seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_date + '</td>';
+                            seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_end + '</td>';
+                            seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_country + '</td>';
+                            seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_place + '</td>';
+                            seed_list += '</tr>';
+                        }
+                    }
+
+                    outcome_list.empty();
+                    outcome_list.append(seed_list);
+                }
+            });
+    }
+
+    function SearchBreed(e) {
+        var breed_name = $("#CropSelect").val();
+        var limit = $("#limit").val();
+
+        var data = {"breed_name": breed_name, "page_num": e, "limit": limit};
+
+        $.ajax(
+            {
+                url: 'searchBreedList',
+                method: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function (result) {
+                    var header_list = $("#header_list");
+                    var header_add = "";
+
+                    var breed_list = $("#breed_list");
+                    var add_list = "";
+
+                    var detail_list = $(".detail_list");
+                    var detail_list2 = $(".detail_list2");
+
+                    var display_list = $(".display_list");
+                    var display_add = "";
+
+                    var detail_add = "";
+                    var detail_add2 = "";
+
+                    var pageNum = $("#pageNum");
+                    var page_add = "";
+
+                    // header
+                    header_add += '<tr>';
+                    header_add += '<th></th>';
+                    header_add += '<th><span class="title">첨부파일</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="첨부파일"></th>';
+                    header_add += '<th><span class="title">특성상태</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="특성상태"></th>';
+
+                    for (var i = 0; i < result.display.length; i++) {
+                        header_add += '<th style="cursor: pointer;"><span class="title">' + result.display[i].detail_title + '</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="' + result.display[i].detail_title + '"></th>'
+                    }
+
+                    header_add += '</tr>';
+
+                    // body
+                    for (var i = 0; i < result.breed.length; i++) {
+                        add_list += '<tr>';
+                        add_list += '<td><input type="checkbox" name="RowCheck" value="' + result.breed[i].breed_id + '"></td>';
+                        add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" onclick="FileBtn(' + result.breed[i].breed_id + ');"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
+
+                        if (result.breed[i].standard_count == 0) {
+                            add_list += '<td style="color : blue; cursor:pointer;">EMPTY</td>';
+                        } else {
+                            add_list += '<td style="color : green; cursor:pointer;">PROGRESS</td>';
+                        }
+
+                        for (var j = 0; j < result.breed[i].breed_standard.length; j++) {
+                            add_list += '<td>' + result.breed[i].breed_standard[j].standard + '</td>';
+                        }
+
+                        add_list += '</tr>';
+                    }
+
+                    // detail
+                    for (var i = 0; i < detail_list.length; i++) {
+                        detail_add = "";
+                        detail_add2 = "";
+                        display_add = "";
+
+                        for (var j = 0; j < result.detail.length; j++) {
+                            // 표시항목
+                            if (result.detail[j].detail_spec == detail_list.eq(i).attr("name")) {
+                                var check = true;
+
+                                for (var k = 0; k < result.display.length; k++) {
+                                    if (result.display[k].detail_id == result.detail[j].detail_id) {
+                                        check = false;
+
+                                        display_add += '<div data-id="' + result.detail[j].detail_id + '" class="list-group step">';
+                                        display_add += '<li class="list-group-item-sm list-group-item">';
+                                        display_add += '<div class="row">';
+                                        display_add += '<input type="checkbox" class="checkbox mr-2" name="mis_research">';
+                                        display_add += '<span class="research-title">' + result.detail[j].detail_title + '</span>';
+                                        display_add += '<input type="hidden" name="detail_id" value="' + result.detail[j].detail_id + '">';
+                                        display_add += '</div>';
+                                        display_add += '</li>';
+                                        display_add += '</div>';
+                                    }
+                                }
+
+                                if (check) {
+                                    detail_add += '<li>';
+                                    detail_add += '<input type="checkbox" class="check_box" name="chk_research" value="' + result.detail[j].detail_id + '">';
+                                    detail_add += '<div class="title">' + result.detail[j].detail_title + '</div>';
+                                    detail_add += '</li>';
+                                }
+                            }
+
+                            // 특성상태
+                            if (result.detail[j].detail_spec == detail_list.eq(i).attr("name")) {
+                                detail_add2 += '<li>';
+                                detail_add2 += '<div class="title">' + result.detail[j].detail_title + '</div>';
+                                detail_add2 += '<div class="input_text">';
+                                detail_add2 += '<input type="text" class="empty_list" name="standard">';
+                                detail_add2 += '<input type="hidden" name="detail_id" value="' + result.detail[j].detail_id + '"></div>';
+                                detail_add2 += '</div>';
+                                detail_add2 += '</li>';
+                            }
+                        }
+
+                        detail_list.eq(i).empty();
+                        detail_list.eq(i).append(detail_add);
+
+                        detail_list2.eq(i).empty();
+                        detail_list2.eq(i).append(detail_add2);
+
+                        display_list.eq(i).empty();
+                        display_list.eq(i).append(display_add);
+                    }
+
+                    // paging
+                    if (result.page_num == 1) {
+                        page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></button>';
+                    } else {
+                        page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchBreed(' + (result.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
+                    }
+
+                    for (var i = 0; i < result.end_page; i++) {
+                        if (result.page_num == (i + 1)) {
+                            page_add += '<button class="atbd-pagination__link active" onclick="SearchBreed(' + (i + 1) + ')">' + (i + 1) + '</button>';
+                        } else {
+                            page_add += '<button class="atbd-pagination__link" onclick="SearchBreed(' + (i + 1) + ')">' + (i + 1) + '</button>';
+                        }
+                    }
+
+                    if (result.page_num == result.end_page) {
+                        page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-right"></span></button>';
+                    } else {
+                        page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchBreed(' + (result.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
+                    }
+
+                    header_list.empty();
+                    header_list.append(header_add);
+
+                    breed_list.empty();
+                    breed_list.append(add_list);
+
+                    pageNum.empty();
+                    pageNum.append(page_add);
+
+                    $("#offset").val(result.offset);
+                }
+
             });
     }
 

@@ -3,7 +3,6 @@ package com.thekiban.ServiceImpl;
 import com.thekiban.Entity.*;
 import com.thekiban.Mapper.SampleMapper;
 import com.thekiban.Service.SampleService;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,6 +55,11 @@ public class SampleServiceImpl implements SampleService {
     return mapper.SearchOutcome(sample_name, offset, limit);
   }
 
+  @Override
+  public List<SampleOutcome> SearchSeed(String sample_name) {
+    return mapper.SearchSeed(sample_name);
+  }
+
   // 시교자원 삭제
   @Override
   public int[] DeleteSample(int[] sample_id) { return mapper.DeleteSample(sample_id); }
@@ -92,11 +96,6 @@ public class SampleServiceImpl implements SampleService {
   public int InsertExcel(Sample sample) {
     return mapper.InsertExcel(sample);
   }
-
-/*  @Override
-  public List<SampleFile> SearchFileList(String sample_id) {
-    return mapper.SearchFileList(sample_id);
-  }*/
 
   @Override
   public int InsertOutcomeExcel(SampleOutcome sampleOutcome) {
@@ -141,5 +140,40 @@ public class SampleServiceImpl implements SampleService {
   @Override
   public int UpdateSampleUpload(Uploads upload) {
     return mapper.UpdateSampleUpload(upload);
+  }
+
+  // 품종 갯수 조회
+  @Override
+  public int SelectBreedCount(String breed_name)
+  {
+    return mapper.SelectBreedCount(breed_name);
+  }
+
+  // 품종 검색
+  @Override
+  public List<Breed> SearchBreed(String breed_name, int offset, int limit)
+  {
+    return mapper.SearchBreed(breed_name, offset, limit);
+  }
+
+  // 품종별 세부 정보 조회
+  @Override
+  public List<Detail> SearchBreedDetail(String breed_name)
+  {
+    return mapper.SearchBreedDetail(breed_name);
+  }
+
+  // 표시항목 조회
+  @Override
+  public List<Display> SelectDisplay(int user_id, String breed_name)
+  {
+    return mapper.SelectDisplay(user_id, breed_name);
+  }
+
+  // 품종별 정보값 조회
+  @Override
+  public List<Standard> SearchBreedStandard(List<Detail> detail, int user_id, int breed_id)
+  {
+    return mapper.SearchBreedStandard(detail, user_id, breed_id);
   }
 }
