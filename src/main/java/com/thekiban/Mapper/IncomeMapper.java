@@ -27,6 +27,10 @@ public interface IncomeMapper {
 
   List<IncomeRemain> SearchRemain(@Param("income_name") String income_name, @Param("offset") int offset, @Param("limit") int limit);
 
+
+  // 재고 팝업
+  List<IncomeRemain> SearchIncomeRemain(@Param("income_name") String income_name);
+
   // 도입자원 삭제
   int[] DeleteIncome(int[] income_id);
 

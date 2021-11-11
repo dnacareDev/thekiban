@@ -81,7 +81,7 @@ public interface SampleService {
   int SelectBreedCount(String breed_name);
 
   // 품종 검색
-  List<Breed> SearchBreed(String breed_name, int offset, int limit);
+  List<Breed> SearchBreed(String breed_name);
 
   // 품종별 세부 정보 조회
   List<Detail> SearchBreedDetail(String breed_name);

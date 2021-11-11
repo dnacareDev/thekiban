@@ -271,7 +271,6 @@
             </when>
         </choose>
         ORDER BY b.breed_id DESC
-        LIMIT #{offset}, #{limit}
     </select>
 
     <!-- 품종별 세부 정보 조회 -->

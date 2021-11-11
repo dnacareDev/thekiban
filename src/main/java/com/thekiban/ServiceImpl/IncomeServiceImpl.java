@@ -58,6 +58,11 @@ public class IncomeServiceImpl implements IncomeService {
     return mapper.SearchRemain(income_name, offset, limit);
   }
 
+  @Override
+  public List<IncomeRemain> SearchIncomeRemain(String income_name) {
+    return mapper.SearchIncomeRemain(income_name);
+  }
+
   // 도입자원 삭제
   @Override
   public int[] DeleteIncome(int[] income_id) {

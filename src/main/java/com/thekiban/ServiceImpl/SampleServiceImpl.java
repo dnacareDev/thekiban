@@ -151,9 +151,9 @@ public class SampleServiceImpl implements SampleService {
 
   // 품종 검색
   @Override
-  public List<Breed> SearchBreed(String breed_name, int offset, int limit)
+  public List<Breed> SearchBreed(String breed_name)
   {
-    return mapper.SearchBreed(breed_name, offset, limit);
+    return mapper.SearchBreed(breed_name);
   }
 
   // 품종별 세부 정보 조회

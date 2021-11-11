@@ -95,7 +95,7 @@ public class IncomeController {
     return result;
   }
 
-  // 도입자원 검색
+  // 자원재고 검색
   @ResponseBody
   @RequestMapping("searchRemain")
   public Map<String, Object> SearchRemain(@RequestParam("income_name") String income_name, @RequestParam("page_num") int page_num, @RequestParam("limit") int limit) {
@@ -112,6 +112,21 @@ public class IncomeController {
     result.put("page_num", page_num);
     result.put("end_page", end_page);
     result.put("offset", offset);
+
+    return result;
+  }
+
+  // 재고 팝업
+  @ResponseBody
+  @RequestMapping("searchIncomeRemain")
+  public Map<String, Object> SearchIncomeRemain(@RequestParam("income_name") String income_name) {
+    Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+    int count = service.SelectRemainCount(income_name);
+
+    List<IncomeRemain> IncomeRemain = service.SearchIncomeRemain(income_name);
+
+    result.put("incomeRemain", IncomeRemain);
 
     return result;
   }

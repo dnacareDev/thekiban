@@ -29,6 +29,8 @@ public interface IncomeService {
 
   List<IncomeRemain> SearchRemain(String income_name, int offset, int limit);
 
+  // 재고 팝업
+  List<IncomeRemain> SearchIncomeRemain(String income_name);
 
   // 도입자원 삭제
   int[] DeleteIncome(int[] income_id);

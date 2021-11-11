@@ -1111,12 +1111,12 @@
     </div>
 
     <!-- 시교명 팝업 -->
-    <div class="modal-basic modal fade show pop7" id="pop_data1" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-basic modal fade show pop7" id="pop_breed" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white">
                 <div class="modal-header" style="border: none">
                     <h6 class="modal-title">시교자원관리 > 품종관리</h6>
-                    <span class="breed_title">시교명: 11</span>
+                    <span class="breed_title"></span>
                 </div>
                 <div class="modal-body">
                     <div class="form-group mb-0">
@@ -1155,7 +1155,7 @@
             <div class="modal-content modal-bg-white">
                 <div class="modal-header" style="border: none">
                     <h6 class="modal-title">시교수출관리</h6>
-                    <span class="breed_title">시교명: </span>
+                    <span class="seed_title"></span>
                 </div>
                 <div class="modal-body">
                     <div>
@@ -1164,7 +1164,6 @@
                                 <table class="table table2">
                                     <thead class="text-center">
                                     <tr>
-                                        <th><input type="checkbox" name="RowCheck1" value="selectAll" onclick="selectAll(this)"></th>
                                         <th style="cursor: pointer;"><span class="title">시교명</span><img
                                             src="../assets/vendor_assets/img/title_icon.png"
                                             alt="시교명"></th>
@@ -1651,20 +1650,17 @@
     $(document).ready(function () {
         SearchSample(1);
         SearchOutcome(1);
-        SearchBreed(1);
     });
 
     $("#CropSelect").change(function () {
         SearchSample(1);
         SearchOutcome(1);
-        SearchBreed(1);
     })
 
     // 갯수 선택
     $("#limit").change(function () {
         SearchSample(1);
         SearchOutcome(1);
-        SearchBreed(1);
     })
 
     function selectAll(selectAll) {
@@ -1714,11 +1710,11 @@
                         add_list += '<td><input type="checkbox" name="RowCheck" value="' + result.sample[i].sample_id + '"></td>';
                         add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" onclick="FileBtn(' + result.sample[i].sample_id + ');"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
                         add_list += '<td><input type="text" class="updateInput" data="' + result.sample[i].sample_id + '" name="sample_name" value="' + result.sample[i].sample_name + '"></td>';
-                        add_list += '<td><a data-toggle="modal" href="#pop_data1">' + result.sample[i].sample_code + '</a></td>';
+                        add_list += '<td><a href="javascript:;" onclick="SearchBreed(this)">' + result.sample[i].sample_code + '</a></td>';
                         add_list += '<td><input type="text" class="updateInput" data="' + result.sample[i].sample_id + '" name="sample_country" value="' + result.sample[i].sample_country + '"></td>';
                         add_list += '<td><input type="text" class="updateInput" data="' + result.sample[i].sample_id + '" name="sample_type" value="' + result.sample[i].sample_type + '"></td>';
                         add_list += '<td><input type="text" class="updateInput" data="' + result.sample[i].sample_id + '" name="sample_mate" value="' + result.sample[i].sample_mate + '"></td>';
-                        add_list += '<td><a href="javascript:;" onclick="seedModal(this)" class="test">' + result.sample[i].sample_seed + '</a></td>';
+                        add_list += '<td><a href="javascript:;" onclick="SearchSeed(this)">' + result.sample[i].sample_seed + '</a></td>';
                         add_list += '<td><input type="text" class="updateInput" data="' + result.sample[i].sample_id + '" name="sample_amount" value="' + result.sample[i].sample_amount + '"></td>';
                         add_list += '<td><input type="text" class="updateInput" data="' + result.sample[i].sample_id + '" name="sample_sprout" value="' + result.sample[i].sample_sprout + '"></td>';
                         add_list += '<td><input type="text" class="updateInput" data="' + result.sample[i].sample_id + '" name="sample_purity" value="' + result.sample[i].sample_purity + '"></td>';
@@ -1774,10 +1770,8 @@
                 data: data1,
                 success: function (result1) {
                     var sampleOutcome_list = $(".sampleOutcome-list");
-                    // var outcome_list = $(".outcome_list");
                     sampleOutcome_list.eq(btnindex);
                     var add_list = "";
-                    // var seed_list = "";
 
                     var pageNum = $("#pageNum");
                     var page_add = "";
@@ -1832,13 +1826,10 @@
             });
     }
 
-    function seedModal(e) {
+    // 종자번호 팝업
+    function SearchSeed(e) {
         $("#pop_seed").modal();
 
-        SearchSeed(e);
-    }
-
-    function SearchSeed(e) {
         var sample_name1 = $("#CropSelect").val();
 
         var data1 = {"sample_name": sample_name1};
@@ -1850,6 +1841,8 @@
                 dataType: 'json',
                 data: data1,
                 success: function (result1) {
+                    $(".seed_title").text("종자번호(ID) - " + e.innerText);
+
                     var outcome_list = $(".outcome_list");
 
                     var seed_list = "";
@@ -1857,7 +1850,6 @@
                     for (var i = 0; i < result1.sampleOutcome.length; i++) {
                         if(result1.sampleOutcome[i].sample_outcome_num === e.innerText) {
                             seed_list += '<tr>';
-                            seed_list += '<td><input type="checkbox" name="RowCheck1" value="' + result1.sampleOutcome[i].sample_outcome_id + '"></td>';
                             seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_code + '</td>';
                             seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_num + '</td>';
                             seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_amount + '</td>';
@@ -1880,11 +1872,13 @@
             });
     }
 
+    // 시교명 팝업
     function SearchBreed(e) {
-        var breed_name = $("#CropSelect").val();
-        var limit = $("#limit").val();
+        $("#pop_breed").modal();
 
-        var data = {"breed_name": breed_name, "page_num": e, "limit": limit};
+        var breed_name = $("#CropSelect").val();
+
+        var data = {"breed_name": breed_name};
 
         $.ajax(
             {
@@ -1893,6 +1887,8 @@
                 dataType: 'json',
                 data: data,
                 success: function (result) {
+                    $(".breed_title").text("시교명 (ID) : " + e.innerText);
+
                     var header_list = $("#header_list");
                     var header_add = "";
 
@@ -1907,9 +1903,6 @@
 
                     var detail_add = "";
                     var detail_add2 = "";
-
-                    var pageNum = $("#pageNum");
-                    var page_add = "";
 
                     // header
                     header_add += '<tr>';
@@ -1999,35 +1992,11 @@
                         display_list.eq(i).append(display_add);
                     }
 
-                    // paging
-                    if (result.page_num == 1) {
-                        page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></button>';
-                    } else {
-                        page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchBreed(' + (result.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
-                    }
-
-                    for (var i = 0; i < result.end_page; i++) {
-                        if (result.page_num == (i + 1)) {
-                            page_add += '<button class="atbd-pagination__link active" onclick="SearchBreed(' + (i + 1) + ')">' + (i + 1) + '</button>';
-                        } else {
-                            page_add += '<button class="atbd-pagination__link" onclick="SearchBreed(' + (i + 1) + ')">' + (i + 1) + '</button>';
-                        }
-                    }
-
-                    if (result.page_num == result.end_page) {
-                        page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-right"></span></button>';
-                    } else {
-                        page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchBreed(' + (result.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
-                    }
-
                     header_list.empty();
                     header_list.append(header_add);
 
                     breed_list.empty();
                     breed_list.append(add_list);
-
-                    pageNum.empty();
-                    pageNum.append(page_add);
 
                     $("#offset").val(result.offset);
                 }
@@ -2078,8 +2047,6 @@
         }
 
     });
-
-    // DB에 저장된 데이터 읽어와서 테이블에 보여줌
 
     // 시교자원 삭제
     function DeleteSample() {
