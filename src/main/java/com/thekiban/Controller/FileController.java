@@ -36,7 +36,6 @@ public class FileController
 	@RequestMapping("downloadFile")
 	public ResponseEntity<Object> DownloadFile(@RequestParam("uploads_file") String uploads_file)
 	{
-		System.out.println(uploads_file);
 		String path = "upload/" + uploads_file;
 		
 		try
