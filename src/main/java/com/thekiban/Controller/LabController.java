@@ -1,17 +1,33 @@
 package com.thekiban.Controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.thekiban.Entity.AnalysisFile;
+import com.thekiban.Entity.User;
+import com.thekiban.RModule.RunEtcR;
+import com.thekiban.Service.LabService;
 
 @Controller
 public class LabController
 {
+	@Autowired
+	private LabService service;
+	
 	@RequestMapping("/mabc")
 	public ModelAndView getDataManage(ModelAndView mv)
 	{
@@ -29,28 +45,40 @@ public class LabController
 	}
 	
 	@RequestMapping("/insertMatrix")
-	public ModelAndView InsertMatrix(ModelAndView mv, @RequestParam("file") MultipartFile file)
+	public void InsertMatrix(ModelAndView mv, Authentication auth, @RequestParam("file") MultipartFile file) throws IOException
 	{
-		System.out.println(file);
-		System.out.println(file.getContentType());
-		System.out.println(file.getOriginalFilename());
+		User user = (User)auth.getPrincipal();
 		
 		Date date = new Date();
-		System.out.println(date);
-		System.out.println(date.getYear());
-		System.out.println(date.getMonth());
-		System.out.println(date.getDate());
-		System.out.println(date.getDay());
-		System.out.println(date.getHours());
-		System.out.println(date.getMinutes());
-		System.out.println(date.getSeconds());
-		System.out.println(date.getTime());
 		
-		String file_name = (1900 + date.getYear()) + "" + (date.getMonth() + 1) + "" + date.getDate() + "" + date.getHours() + "" + date.getMinutes() + "" + date.getSeconds();
-		System.out.println(file_name);
+        String date_name = (1900 + date.getYear()) + "" + (date.getMonth() + 1) + "" + date.getDate() + "" + date.getHours() + "" + date.getMinutes() + "" + date.getSeconds();
+        String origin_name = file.getOriginalFilename();
+        String file_name = date_name + "_" + origin_name;
+        
+        String path = "/data/apache-tomcat-9.0.8/webapps/ROOT/common/r/result/" + date_name;
+        
+        File filePath = new File(path);
+        
+        if (!filePath.exists())
+        	filePath.mkdirs();
+        
+       	Path fileLocation = Paths.get(path).toAbsolutePath().normalize();
+       	Path targetLocation = fileLocation.resolve(file_name);
+		
+       	Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+       	
+       	AnalysisFile analysis = new AnalysisFile();
+       	analysis.setUser_id(user.getUser_id());
+       	analysis.setAnalysis_file(file_name);
+       	analysis.setAnalysis_origin_file(origin_name);
+       	
+       	int result = service.InsertAnalysisFile(analysis);
+       	
+       	RunEtcR runetcr = new RunEtcR();
+       	runetcr.MakeRunEtcR(date_name, file_name);
 		
 		mv.setViewName("lab/matrix");
 		
-		return mv;
+//		return mv;
 	}
 }
