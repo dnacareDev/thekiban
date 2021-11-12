@@ -25201,6 +25201,7 @@ table.table-rounded tbody tr td:last-child {
     padding: 19px 0;
   }
 }
+
 table {
             border-top: 1px solid grey;
             border-collapse: collapse;
@@ -25372,7 +25373,7 @@ table {
         .main-content .modal-header h6{
         	font-size:20px;
         }
-        
+
         .main-content .modal-footer .btn-secondary{
         	background-color:#EDF6F1;
         	border: 1px solid #EDF6F1;
