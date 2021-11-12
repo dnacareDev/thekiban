@@ -58,4 +58,22 @@
 
     <!-- favicon 이미지 확인되면 변경해주기 -->
     <link rel="icon" type="image/png" sizes="16x16" th:href="@{/img/favicon.png}">
+    
+    <style>
+	    html { scrollbar-arrow-color: #eeeeee73;
+	    scrollbar-Track-Color: #eeeeee73; 
+	    scrollbar-base-color: #eeeeee73;
+	    scrollbar-Face-Color: #eeeeee73;
+	    scrollbar-3dLight-Color: #eeeeee73;         
+	    scrollbar-DarkShadow-Color: #eeeeee73;
+	    scrollbar-Highlight-Color: #eeeeee73;
+	    scrollbar-Shadow-Color: #eeeeee73}
+	
+	/* Chrome, Safari용 스크롤 바 */
+	::-webkit-scrollbar {width: 5px; height: 12px;}
+	::-webkit-scrollbar-button:start:decrement, 
+	::-webkit-scrollbar-button:end:increment {display: block; width: 0px; height: 0px; background: url() rgba(0,0,0,.05);}
+	::-webkit-scrollbar-track {  background: #eeeeee73;}
+	::-webkit-scrollbar-thumb {  background: #7c87988e;  border-radius: 6px;}
+    </style>
 </html>
