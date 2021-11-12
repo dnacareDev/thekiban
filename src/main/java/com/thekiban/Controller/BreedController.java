@@ -48,7 +48,7 @@ public class BreedController
 		return mv;
 	}
   
-	// 원종 검색
+	// 품종 검색
 	@ResponseBody
 	@RequestMapping("searchBreed")
 	public Map<String, Object> SearchBreed(Authentication auth, @RequestParam("breed_name") String breed_name, @RequestParam("page_num") int page_num, @RequestParam("limit") int limit)

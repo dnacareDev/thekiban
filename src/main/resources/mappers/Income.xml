@@ -75,6 +75,15 @@
         LIMIT #{offset}, #{limit}
     </select>
 
+    <select id="SearchIncomeRemain" resultType="incomeRemain">
+        SELECT * FROM incomeRemain
+        <choose>
+            <when test="income_name != 'none'">
+                WHERE income_name = #{income_name}
+            </when>
+        </choose>
+    </select>
+
     <!-- 도입자원 삭제 -->
     <select id="DeleteIncome" parameterType="java.util.ArrayList">
         DELETE FROM income

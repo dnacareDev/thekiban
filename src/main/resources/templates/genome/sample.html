@@ -577,6 +577,12 @@
             height: 45px;
             text-align: center;
         }
+
+        .sample-list a:link {
+            color: mediumblue;
+            text-decoration: underline;
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -636,7 +642,7 @@
                                     <table class="table" id="table1">
                                         <thead class="text-center">
                                         <tr>
-                                            <th></th>
+                                            <th><input type="checkbox" name="RowCheck" value="selectAll" onclick="selectAll(this)"></th>
                                             <th><span class="title">첨부파일</span></th>
                                             <th style="cursor: pointer;"><span class="title">작물</span></th>
                                             <th style="cursor: pointer;"><span class="title">시교명(ID)</span><img
@@ -671,10 +677,10 @@
                                         <tbody class="text-center sample-list" id="sample_list">
                                         </tbody>
                                     </table>
-                                    <table class="table" id="table2">
+                                    <table class="table table2" id="table2">
                                         <thead class="text-center">
                                         <tr>
-                                            <th></th>
+                                            <th><input type="checkbox" name="RowCheck1" value="selectAll" onclick="selectAll(this)"></th>
                                             <th style="cursor: pointer;"><span class="title">시교명</span><img
                                                 src="../assets/vendor_assets/img/title_icon.png"
                                                 alt="시교명"></th>
@@ -722,6 +728,9 @@
                                     <div class="col-4">
                                         <button class="btn btn-icon btn-light btn-circle" id="addRow" onclick="addRow()">
                                             <span data-feather="plus"></span>
+                                        </button>
+                                        <button class="btn btn-icon btn-light btn-circle" onclick="ModifySample()">
+                                            <span data-feather="trash-2"></span>
                                         </button>
                                         <button class="btn btn-icon btn-light btn-circle" onclick="DeleteSample()">
                                             <span data-feather="trash-2"></span>
@@ -823,8 +832,8 @@
                     </div>
                     <div class="modal-footer" style="border: none">
                         <input type="hidden" id="upload_id" name="sample_id">
-                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
-                        <button type="button" class="btn btn-primary btn-sm" onclick="InsertFile()">저장</button>
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="dataToggle('#insert_file', '#sample_file');">취소</button>
+                        <button type="button" class="btn btn-primary btn-sm" onclick="dataToggle('#insert_file', '#sample_file'); InsertFile();">저장</button>
                     </div>
                 </form>
             </div>
@@ -872,8 +881,8 @@
                     </div>
                     <div class="modal-footer" style="border: none">
                         <input type="hidden" id="sample_file_id" name="sample_file_id">
-                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
-                        <button type="button" class="btn btn-primary btn-sm">수정</button>
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="dataToggle('#modify_file', '#sample_file');">취소</button>
+                        <button type="button" class="btn btn-primary btn-sm" onclick="dataToggle('#modify_file', '#sample_file');">수정</button>
                     </div>
                 </form>
             </div>
@@ -920,7 +929,7 @@
                 </div>
                 <div class="modal-footer" style="border: none">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" onclick="dataToggle('#data_upload', '#data_upload2');">취소</button>
-                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" onclick="InsertExcel()">등록</button>
+                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" onclick="dataToggle('#data_upload1', '#data_upload2'); InsertExcel();">등록</button>
                 </div>
             </div>
         </div>
@@ -968,7 +977,7 @@
                 </div>
                 <div class="modal-footer" style="border: none">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" onclick="dataToggle('#data_upload1', '#data_upload12');">취소</button>
-                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" onclick="InsertExcel()">등록</button>
+                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" onclick="dataToggle('#data_upload1', '#data_upload12'); InsertExcel();">등록</button>
                 </div>
             </div>
         </div>
@@ -1100,403 +1109,112 @@
             </div>
         </div>
     </div>
-    <div class="modal-basic modal fade show pop2" id="grid2" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- 시교명 팝업 -->
+    <div class="modal-basic modal fade show pop7" id="pop_breed" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
-            <form action="insertBreedDisplay" method="POST" enctype="multipart/form-data">
-                <div class="modal-content modal-bg-white">
-                    <div class="modal-header" style="border: none">
-                        <h6 class="modal-title" id="display_title"></h6>
-                        <input type="hidden" id="display_name" name="breed_name">
+            <div class="modal-content modal-bg-white">
+                <div class="modal-header" style="border: none">
+                    <h6 class="modal-title">시교자원관리 > 품종관리</h6>
+                    <span class="breed_title"></span>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group mb-0">
+                        <div class="btn-group atbd-button-group btn-group-normal my-2" role="group">
+                            <ul class="nav nav-tabs vertical-tabs" role="tablist">
+                                <li class="nav-item">
+                                    <a class="pop_nav-link active" id="tab-horizontal-0-tab-0" data-toggle="tab" href="#tab-horizontal-0-0" role="tab"
+                                       aria-controls="tab-horizontal-0-0" aria-selected="true">품종관리</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-                    <div class="modal-body">
-                        <div class="tab-pane fade show active" id="control1" role="tabpanel" aria-labelledby="control1-tab">
-                            <div class="tab-slide-content">
-                                <div class="atbd-tab tab-horizontal">
-                                    <div class="top_box">
-                                        <ul class="nav nav-tabs vertical-tabs" role="tablist">
-                                            <li class="nav-item">
-                                                <a class="nav-link" id="tab-horizontal-0-tab" data-toggle="tab" href="#tab-horizontal-0" role="tab" aria-controls="tab-horizontal-0"
-                                                   aria-selected="true">기본 정보</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" id="tab-horizontal-1-tab" data-toggle="tab" href="#tab-horizontal-1" role="tab" aria-controls="tab-horizontal-1"
-                                                   aria-selected="false">원예형질[종자원 기준]</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" id="tab-horizontal-2-tab" data-toggle="tab" href="#tab-horizontal-2" role="tab" aria-controls="tab-horizontal-2"
-                                                   aria-selected="false">원예형질[사내 기준]</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" id="tab-horizontal-3-tab" data-toggle="tab" href="#tab-horizontal-3" role="tab" aria-controls="tab-horizontal-3"
-                                                   aria-selected="false">병저항성[종자원 기준]</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" id="tab-horizontal-4-tab" data-toggle="tab" href="#tab-horizontal-4" role="tab" aria-controls="tab-horizontal-4"
-                                                   aria-selected="false">병저항성[사내 기준]</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" id="tab-horizontal-5-tab" data-toggle="tab" href="#tab-horizontal-5" role="tab" aria-controls="tab-horizontal-5"
-                                                   aria-selected="false">성분정보[종자원 기준]</a>
-                                            </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" id="tab-horizontal-6-tab" data-toggle="tab" href="#tab-horizontal-6" role="tab" aria-controls="tab-horizontal-6"
-                                                   aria-selected="false">마커정보</a>
-                                            </li>
-                                        </ul>
-                                        <span class="prev"></span>
-                                        <span class="next"></span>
-                                    </div>
-                                    <!-- <input type="hidden" id="detail_list1" name="detail_list"> -->
-                                    <div class="tab-content">
-                                        <div class="tab-pane fade show active" id="tab-horizontal-0" role="tabpanel" aria-labelledby="tab-horizontal-0-tab">
-                                            <div class="content_title clearfix">
-                                                <ul>
-                                                    <li>형질</li>
-                                                    <li>조사값</li>
-                                                </ul>
-                                            </div>
-                                            <div class="content_1 clearfix">
-                                                <div class="row mt-20">
-                                                    <div class="col-lg-12">
-                                                        <div class="card">
-                                                            <div class="card-body">
-                                                                <div class="row">
-                                                                    <div class="col-lg-12">
-                                                                        <span class="color-dark align-center" style="font-size: 20px;">표시항목 설정</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row mt-4" style="justify-content: center; align-items: center;">
-                                                                    <div class="col-lg-5">
-                                                                        <div class="row" style="overflow:auto; min-height: 500px; border: 1px solid #D9D9D9;">
-                                                                            <div class="list-group mt-2" style="max-height: 500px; orverfolw-y: auto;">
-                                                                                <ul class="detail_list" id="display_container1" name="기본 정보">
-                                                                                </ul>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="box_content">
-                                                                        <div class="box_center">
-                                                                            <div class="buttonLi">
-                                                                                <button type="button" onclick="PlusResearch(1);"><span></span></button>
-                                                                            </div>
-                                                                            <div class="buttonLi">
-                                                                                <button type="button" onclick="MinusResearch(1);"><span class="left_btn"></span></button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-lg-5" style="padding:0;">
-                                                                        <ul class="display_list" id="step_container1"
-                                                                            style="min-height: 500px; max-height: 500px; overflow-y: auto; border: 1px solid #D9D9D9">
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade show" id="tab-horizontal-1" role="tabpanel" aria-labelledby="tab-horizontal-1-tab">
-                                            <div class="content_title clearfix">
-                                                <ul>
-                                                    <li>형질</li>
-                                                    <li>조사값</li>
-                                                </ul>
-                                            </div>
-                                            <div class="content_1 clearfix">
-                                                <div class="row mt-20">
-                                                    <div class="col-lg-12">
-                                                        <div class="card">
-                                                            <div class="card-body">
-                                                                <div class="row">
-                                                                    <div class="col-lg-12">
-                                                                        <span class="color-dark align-center" style="font-size: 20px;">표시항목 설정</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row mt-4" style="justify-content: center;align-items: center;">
-                                                                    <div class="col-lg-5">
-                                                                        <div class="row" style="overflow:auto; min-height: 500px; border: 1px solid #D9D9D9;">
-                                                                            <div class="list-group mt-2" style="max-height: 500px; orverfolw-y: auto;">
-                                                                                <ul class="detail_list" id="display_container2" name="원예형질 (종자원 기준)">
-                                                                                </ul>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="box_content">
-                                                                        <div class="box_center">
-                                                                            <div class="buttonLi">
-                                                                                <button type="button" onclick="PlusResearch(2);"><span></span></button>
-                                                                            </div>
-                                                                            <div class="buttonLi">
-                                                                                <button type="button" onclick="MinusResearch(2);"><span class="left_btn"></span></button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-lg-5" style="padding:0;">
-                                                                        <ul class="display_list" id="step_container2"
-                                                                            style="min-height: 500px; max-height: 500px; overflow-y: auto; border: 1px solid #D9D9D9">
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade show" id="tab-horizontal-2" role="tabpanel" aria-labelledby="tab-horizontal-2-tab">
-                                            <div class="content_title clearfix">
-                                                <ul>
-                                                    <li>형질</li>
-                                                    <li>조사값</li>
-                                                </ul>
-                                            </div>
-                                            <div class="content_1 clearfix">
-                                                <div class="row mt-20">
-                                                    <div class="col-lg-12">
-                                                        <div class="card">
-                                                            <div class="card-body">
-                                                                <div class="row">
-                                                                    <div class="col-lg-12">
-                                                                        <span class="color-dark align-center" style="font-size: 20px;">표시항목 설정</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row mt-4" style="justify-content: center;align-items: center;">
-                                                                    <div class="col-lg-5">
-                                                                        <div class="row" style="overflow:auto; min-height: 500px; border: 1px solid #D9D9D9;">
-                                                                            <div class="list-group mt-2" style="max-height: 500px; overflow-y: auto;">
-                                                                                <ul class="detail_list" id="display_container3" name="원예형질 (사내 기준)">
-                                                                                </ul>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="box_content">
-                                                                        <div class="box_center">
-                                                                            <div class="buttonLi">
-                                                                                <button type="button" onclick="PlusResearch(3);"><span></span></button>
-                                                                            </div>
-                                                                            <div class="buttonLi">
-                                                                                <button type="button" onclick="MinusResearch(3);"><span class="left_btn"></span></button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-lg-5" style="padding:0;">
-                                                                        <ul class="display_list" id="step_container3"
-                                                                            style="min-height: 500px; max-height: 500px; overflow-y: auto; border: 1px solid #D9D9D9">
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade show" id="tab-horizontal-3" role="tabpanel" aria-labelledby="tab-horizontal-3-tab">
-                                            <div class="content_title clearfix">
-                                                <ul>
-                                                    <li>형질</li>
-                                                    <li>조사값</li>
-                                                </ul>
-                                            </div>
-                                            <div class="content_1 clearfix">
-                                                <div class="row mt-20">
-                                                    <div class="col-lg-12">
-                                                        <div class="card">
-                                                            <div class="card-body">
-                                                                <div class="row">
-                                                                    <div class="col-lg-12">
-                                                                        <span class="color-dark align-center" style="font-size: 20px;">표시항목 설정</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row mt-4" style="justify-content: center;align-items: center;">
-                                                                    <div class="col-lg-5">
-                                                                        <div class="row" style="overflow:auto; min-height: 500px; border: 1px solid #D9D9D9;">
-                                                                            <div class="list-group mt-2" style="max-height: 500px; orverfolw-y: auto;">
-                                                                                <ul class="detail_list" id="display_container4" name="병저항성 (국립종자원 기준)">
-                                                                                </ul>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="box_content">
-                                                                        <div class="box_center">
-                                                                            <div class="buttonLi">
-                                                                                <button type="button" onclick="PlusResearch(4);"><span></span></button>
-                                                                            </div>
-                                                                            <div class="buttonLi">
-                                                                                <button type="button" onclick="MinusResearch(4);"><span class="left_btn"></span></button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-lg-5" style="padding:0;">
-                                                                        <ul class="display_list" id="step_container4"
-                                                                            style="min-height: 500px; max-height: 500px; overflow-y: auto; border: 1px solid #D9D9D9">
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade show" id="tab-horizontal-4" role="tabpanel" aria-labelledby="tab-horizontal-4-tab">
-                                            <div class="content_title clearfix">
-                                                <ul>
-                                                    <li>형질</li>
-                                                    <li>조사값</li>
-                                                </ul>
-                                            </div>
-                                            <div class="content_1 clearfix">
-                                                <div class="row mt-20">
-                                                    <div class="col-lg-12">
-                                                        <div class="card">
-                                                            <div class="card-body">
-                                                                <div class="row">
-                                                                    <div class="col-lg-12">
-                                                                        <span class="color-dark align-center" style="font-size: 20px;">표시항목 설정</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row mt-4" style="justify-content: center;align-items: center;">
-                                                                    <div class="col-lg-5">
-                                                                        <div class="row" style="overflow:auto; min-height: 500px; border: 1px solid #D9D9D9;">
-                                                                            <div class="list-group mt-2" style="max-height: 500px; orverfolw-y: auto;">
-                                                                                <ul class="detail_list" id="display_container5" name="병저항성 (사내 기준)">
-                                                                                </ul>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="box_content">
-                                                                        <div class="box_center">
-                                                                            <div class="buttonLi">
-                                                                                <button type="button" onclick="PlusResearch(5);"><span></span></button>
-                                                                            </div>
-                                                                            <div class="buttonLi">
-                                                                                <button type="button" onclick="MinusResearch(5);"><span class="left_btn"></span></button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-lg-5" style="padding:0;">
-                                                                        <ul class="display_list" id="step_container5"
-                                                                            style="min-height: 500px; max-height: 500px; overflow-y: auto; border: 1px solid #D9D9D9">
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade show" id="tab-horizontal-5" role="tabpanel" aria-labelledby="tab-horizontal-5-tab">
-                                            <div class="content_title clearfix">
-                                                <ul>
-                                                    <li>형질</li>
-                                                    <li>조사값</li>
-                                                </ul>
-                                            </div>
-                                            <div class="content_1 clearfix">
-                                                <div class="row mt-20">
-                                                    <div class="col-lg-12">
-                                                        <div class="card">
-                                                            <div class="card-body">
-                                                                <div class="row">
-                                                                    <div class="col-lg-12">
-                                                                        <span class="color-dark align-center" style="font-size: 20px;">표시항목 설정</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row mt-4" style="justify-content: center;align-items: center;">
-                                                                    <div class="col-lg-5">
-                                                                        <div class="row" style="overflow:auto; min-height: 500px; border: 1px solid #D9D9D9;">
-                                                                            <div class="list-group mt-2" style="max-height: 500px; orverfolw-y: auto;">
-                                                                                <ul class="detail_list" id="display_container6" name="성분정보 (국립종자원 기준)">
-                                                                                </ul>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="box_content">
-                                                                        <div class="box_center">
-                                                                            <div class="buttonLi">
-                                                                                <button type="button" onclick="PlusResearch(6);"><span></span></button>
-                                                                            </div>
-                                                                            <div class="buttonLi">
-                                                                                <button type="button" onclick="MinusResearch(6);"><span class="left_btn"></span></button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-lg-5" style="padding:0;">
-                                                                        <ul class="display_list" id="step_container6"
-                                                                            style="min-height: 500px; max-height: 500px; overflow-y: auto; border: 1px solid #D9D9D9">
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade show" id="tab-horizontal-6" role="tabpanel" aria-labelledby="tab-horizontal-6-tab">
-                                            <div class="content_title clearfix">
-                                                <ul>
-                                                    <li>형질</li>
-                                                    <li>조사값</li>
-                                                </ul>
-                                            </div>
-                                            <div class="content_1 clearfix">
-                                                <div class="row mt-20">
-                                                    <div class="col-lg-12">
-                                                        <div class="card">
-                                                            <div class="card-body">
-                                                                <div class="row">
-                                                                    <div class="col-lg-12">
-                                                                        <span class="color-dark align-center" style="font-size: 20px;">표시항목 설정</span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row mt-4" style="justify-content: center;align-items: center;">
-                                                                    <div class="col-lg-5">
-                                                                        <div class="row" style="overflow:auto; min-height: 500px; border: 1px solid #D9D9D9;">
-                                                                            <div class="list-group mt-2" style="max-height: 500px; orverfolw-y: auto;">
-                                                                                <ul class="detail_list" id="display_container7" name="마커 정보">
-                                                                                </ul>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="box_content">
-                                                                        <div class="box_center">
-                                                                            <div class="buttonLi">
-                                                                                <button type="button" onclick="PlusResearch(7);"><span></span></button>
-                                                                            </div>
-                                                                            <div class="buttonLi">
-                                                                                <button type="button" onclick="MinusResearch(7);"><span class="left_btn"></span></button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-lg-5" style="padding:0;">
-                                                                        <ul class="display_list" id="step_container7"
-                                                                            style="min-height: 500px; max-height: 500px; overflow-y: auto; border: 1px solid #D9D9D9">
-                                                                        </ul>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                    <div>
+                        <div class="atbd-upload popAdd tab-pane fade show active" id="tab-horizontal-0-0" role="tabpanel" aria-labelledby="tab-horizontal-0-tab-0"
+                             style=" overflow: auto; max-height: 500px;">
+                            <div class="table-responsive">
+                                <table class="table" id="display">
+                                    <thead class="text-center" id="header_list">
+                                    </thead>
+                                    <tbody class="text-center" id="breed_list">
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer" style="border: none">
-                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
-                        <button type="submit" class="btn btn-primary btn-sm">저장</button>
-                    </div>
                 </div>
-            </form>
+                <div class="modal-footer" style="border: none">
+                </div>
+            </div>
         </div>
     </div>
+
+    <!-- 종자번호 팝업 -->
+    <div class="modal-basic modal fade show pop7" id="pop_seed" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content modal-bg-white">
+                <div class="modal-header" style="border: none">
+                    <h6 class="modal-title">시교수출관리</h6>
+                    <span class="seed_title"></span>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="atbd-upload">
+                            <div class="table-responsive">
+                                <table class="table table2">
+                                    <thead class="text-center">
+                                    <tr>
+                                        <th style="cursor: pointer;"><span class="title">시교명</span><img
+                                            src="../assets/vendor_assets/img/title_icon.png"
+                                            alt="시교명"></th>
+                                        <th style="cursor: pointer;"><span class="title">종자번호(ID)</span><img
+                                            src="../assets/vendor_assets/img/title_icon.png"
+                                            alt="종자번호(ID)"></th>
+                                        <th style="cursor: pointer;"><span class="title">종자 보유량</span><img
+                                            src="../assets/vendor_assets/img/title_icon.png"
+                                            alt="종자 보유량"></th>
+                                        <th style="cursor: pointer;"><span class="title">입고량</span><img
+                                            src="../assets/vendor_assets/img/title_icon.png"
+                                            alt="입고량"></th>
+                                        <th style="cursor: pointer;"><span class="title">출고량</span><img
+                                            src="../assets/vendor_assets/img/title_icon.png"
+                                            alt="출고량"></th>
+                                        <th style="cursor: pointer;"><span class="title">재고량</span><img
+                                            src="../assets/vendor_assets/img/title_icon.png"
+                                            alt="재고량"></th>
+                                        <th style="cursor: pointer;"><span class="title">담당자</span><img
+                                            src="../assets/vendor_assets/img/title_icon.png"
+                                            alt="담당자"></th>
+                                        <th style="cursor: pointer;"><span class="title">인수자</span><img
+                                            src="../assets/vendor_assets/img/title_icon.png"
+                                            alt="인수자"></th>
+                                        <th style="cursor: pointer;"><span class="title">날짜</span><img
+                                            src="../assets/vendor_assets/img/title_icon.png"
+                                            alt="날짜"></th>
+                                        <th style="cursor: pointer;"><span class="title">시교종료일자</span><img
+                                            src="../assets/vendor_assets/img/title_icon.png"
+                                            alt="시교종료일자"></th>
+                                        <th style="cursor: pointer;"><span class="title">지역구분</span><img
+                                            src="../assets/vendor_assets/img/title_icon.png"
+                                            alt="지역구분"></th>
+                                        <th style="cursor: pointer;"><span class="title">대상 지역</span><img
+                                            src="../assets/vendor_assets/img/title_icon.png"
+                                            alt="지역구분"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="text-center outcome_list">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border: none">
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- modal end -->
 
     <!-- context menu -->
@@ -1528,7 +1246,7 @@
         }, 5);
     }
 
-    let topBox = document.getElementsByClassName("top_box")[0];
+    /*let topBox = document.getElementsByClassName("top_box")[0];
     let [nav, prev, next] = topBox.children;
     let navLi = nav.children; // pop top list
     let navN = 0; //선택된 변수
@@ -1547,7 +1265,7 @@
             moveFunction(navN);
         });
 
-    }
+    }*/
 
     /*let list = navLi.length;
     next.addEventListener("click", function (e) {
@@ -1815,7 +1533,7 @@
 
                 var jsonObj = tableToJson(document.getElementById("excel_data1"));
 
-                $("#excel_list").val(JSON.stringify(jsonObj));
+                $("#excel_list1").val(JSON.stringify(jsonObj));
             };
 
             reader1.readAsBinaryString(input1.files[0]);
@@ -1835,7 +1553,7 @@
 
     /* 엑셀 입력 */
     function InsertExcel() {
-        if (tablechk === 1) {
+        if (tablechk === 0) {
             var data = [];
 
             $("#excel_data").each(function (index, item) {
@@ -1940,11 +1658,28 @@
     })
 
     // 갯수 선택
-    $("#limit").change(function()
-    {
-        SearchBreed(1);
+    $("#limit").change(function () {
+        SearchSample(1);
         SearchOutcome(1);
     })
+
+    function selectAll(selectAll) {
+        if (tablechk === 0) {
+            const checkboxes
+                = document.getElementsByName('RowCheck');
+
+            checkboxes.forEach((checkbox) => {
+                checkbox.checked = selectAll.checked;
+            })
+        } else {
+            const checkboxes1
+                = document.getElementsByName('RowCheck1');
+
+            checkboxes1.forEach((checkbox) => {
+                checkbox.checked = selectAll.checked;
+            })
+        }
+    }
 
     var emptyEls;
 
@@ -1954,7 +1689,7 @@
         var sample_name = $("#CropSelect").val();
         var limit = $("#limit").val();
 
-        var data = {"sample_name": sample_name, "page_num": e, "limit" : limit};
+        var data = {"sample_name": sample_name, "page_num": e, "limit": limit};
 
         $.ajax(
             {
@@ -1975,11 +1710,11 @@
                         add_list += '<td><input type="checkbox" name="RowCheck" value="' + result.sample[i].sample_id + '"></td>';
                         add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" onclick="FileBtn(' + result.sample[i].sample_id + ');"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
                         add_list += '<td><input type="text" class="updateInput" data="' + result.sample[i].sample_id + '" name="sample_name" value="' + result.sample[i].sample_name + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result.sample[i].sample_id + '" name="sample_code" value="' + result.sample[i].sample_code + '"></td>';
+                        add_list += '<td><a href="javascript:;" onclick="SearchBreed(this)">' + result.sample[i].sample_code + '</a></td>';
                         add_list += '<td><input type="text" class="updateInput" data="' + result.sample[i].sample_id + '" name="sample_country" value="' + result.sample[i].sample_country + '"></td>';
                         add_list += '<td><input type="text" class="updateInput" data="' + result.sample[i].sample_id + '" name="sample_type" value="' + result.sample[i].sample_type + '"></td>';
                         add_list += '<td><input type="text" class="updateInput" data="' + result.sample[i].sample_id + '" name="sample_mate" value="' + result.sample[i].sample_mate + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result.sample[i].sample_id + '" name="sample_seed" value="' + result.sample[i].sample_seed + '"></td>';
+                        add_list += '<td><a href="javascript:;" onclick="SearchSeed(this)">' + result.sample[i].sample_seed + '</a></td>';
                         add_list += '<td><input type="text" class="updateInput" data="' + result.sample[i].sample_id + '" name="sample_amount" value="' + result.sample[i].sample_amount + '"></td>';
                         add_list += '<td><input type="text" class="updateInput" data="' + result.sample[i].sample_id + '" name="sample_sprout" value="' + result.sample[i].sample_sprout + '"></td>';
                         add_list += '<td><input type="text" class="updateInput" data="' + result.sample[i].sample_id + '" name="sample_purity" value="' + result.sample[i].sample_purity + '"></td>';
@@ -2025,7 +1760,7 @@
         var sample_name1 = $("#CropSelect").val();
         var limit1 = $("#limit").val();
 
-        var data1 = {"sample_name": sample_name1, "page_num": e, "limit" : limit1};
+        var data1 = {"sample_name": sample_name1, "page_num": e, "limit": limit1};
 
         $.ajax(
             {
@@ -2091,15 +1826,192 @@
             });
     }
 
+    // 종자번호 팝업
+    function SearchSeed(e) {
+        $("#pop_seed").modal();
+
+        var sample_name1 = $("#CropSelect").val();
+
+        var data1 = {"sample_name": sample_name1};
+
+        $.ajax(
+            {
+                url: 'searchSeed',
+                method: 'POST',
+                dataType: 'json',
+                data: data1,
+                success: function (result1) {
+                    $(".seed_title").text("종자번호(ID) - " + e.innerText);
+
+                    var outcome_list = $(".outcome_list");
+
+                    var seed_list = "";
+
+                    for (var i = 0; i < result1.sampleOutcome.length; i++) {
+                        if(result1.sampleOutcome[i].sample_outcome_num === e.innerText) {
+                            seed_list += '<tr>';
+                            seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_code + '</td>';
+                            seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_num + '</td>';
+                            seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_amount + '</td>';
+                            seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_in + '</td>';
+                            seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_out + '</td>';
+                            seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_remain + '</td>';
+                            seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_person + '</td>';
+                            seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_reciever + '</td>';
+                            seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_date + '</td>';
+                            seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_end + '</td>';
+                            seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_country + '</td>';
+                            seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_place + '</td>';
+                            seed_list += '</tr>';
+                        }
+                    }
+
+                    outcome_list.empty();
+                    outcome_list.append(seed_list);
+                }
+            });
+    }
+
+    // 시교명 팝업
+    function SearchBreed(e) {
+        $("#pop_breed").modal();
+
+        var breed_name = $("#CropSelect").val();
+
+        var data = {"breed_name": breed_name};
+
+        $.ajax(
+            {
+                url: 'searchBreedList',
+                method: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function (result) {
+                    $(".breed_title").text("시교명 (ID) : " + e.innerText);
+
+                    var header_list = $("#header_list");
+                    var header_add = "";
+
+                    var breed_list = $("#breed_list");
+                    var add_list = "";
+
+                    var detail_list = $(".detail_list");
+                    var detail_list2 = $(".detail_list2");
+
+                    var display_list = $(".display_list");
+                    var display_add = "";
+
+                    var detail_add = "";
+                    var detail_add2 = "";
+
+                    // header
+                    header_add += '<tr>';
+                    header_add += '<th></th>';
+                    header_add += '<th><span class="title">첨부파일</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="첨부파일"></th>';
+                    header_add += '<th><span class="title">특성상태</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="특성상태"></th>';
+
+                    for (var i = 0; i < result.display.length; i++) {
+                        header_add += '<th style="cursor: pointer;"><span class="title">' + result.display[i].detail_title + '</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="' + result.display[i].detail_title + '"></th>'
+                    }
+
+                    header_add += '</tr>';
+
+                    // body
+                    for (var i = 0; i < result.breed.length; i++) {
+                        add_list += '<tr>';
+                        add_list += '<td><input type="checkbox" name="RowCheck" value="' + result.breed[i].breed_id + '"></td>';
+                        add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" onclick="FileBtn(' + result.breed[i].breed_id + ');"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
+
+                        if (result.breed[i].standard_count == 0) {
+                            add_list += '<td style="color : blue; cursor:pointer;">EMPTY</td>';
+                        } else {
+                            add_list += '<td style="color : green; cursor:pointer;">PROGRESS</td>';
+                        }
+
+                        for (var j = 0; j < result.breed[i].breed_standard.length; j++) {
+                            add_list += '<td>' + result.breed[i].breed_standard[j].standard + '</td>';
+                        }
+
+                        add_list += '</tr>';
+                    }
+
+                    // detail
+                    for (var i = 0; i < detail_list.length; i++) {
+                        detail_add = "";
+                        detail_add2 = "";
+                        display_add = "";
+
+                        for (var j = 0; j < result.detail.length; j++) {
+                            // 표시항목
+                            if (result.detail[j].detail_spec == detail_list.eq(i).attr("name")) {
+                                var check = true;
+
+                                for (var k = 0; k < result.display.length; k++) {
+                                    if (result.display[k].detail_id == result.detail[j].detail_id) {
+                                        check = false;
+
+                                        display_add += '<div data-id="' + result.detail[j].detail_id + '" class="list-group step">';
+                                        display_add += '<li class="list-group-item-sm list-group-item">';
+                                        display_add += '<div class="row">';
+                                        display_add += '<input type="checkbox" class="checkbox mr-2" name="mis_research">';
+                                        display_add += '<span class="research-title">' + result.detail[j].detail_title + '</span>';
+                                        display_add += '<input type="hidden" name="detail_id" value="' + result.detail[j].detail_id + '">';
+                                        display_add += '</div>';
+                                        display_add += '</li>';
+                                        display_add += '</div>';
+                                    }
+                                }
+
+                                if (check) {
+                                    detail_add += '<li>';
+                                    detail_add += '<input type="checkbox" class="check_box" name="chk_research" value="' + result.detail[j].detail_id + '">';
+                                    detail_add += '<div class="title">' + result.detail[j].detail_title + '</div>';
+                                    detail_add += '</li>';
+                                }
+                            }
+
+                            // 특성상태
+                            if (result.detail[j].detail_spec == detail_list.eq(i).attr("name")) {
+                                detail_add2 += '<li>';
+                                detail_add2 += '<div class="title">' + result.detail[j].detail_title + '</div>';
+                                detail_add2 += '<div class="input_text">';
+                                detail_add2 += '<input type="text" class="empty_list" name="standard">';
+                                detail_add2 += '<input type="hidden" name="detail_id" value="' + result.detail[j].detail_id + '"></div>';
+                                detail_add2 += '</div>';
+                                detail_add2 += '</li>';
+                            }
+                        }
+
+                        detail_list.eq(i).empty();
+                        detail_list.eq(i).append(detail_add);
+
+                        detail_list2.eq(i).empty();
+                        detail_list2.eq(i).append(detail_add2);
+
+                        display_list.eq(i).empty();
+                        display_list.eq(i).append(display_add);
+                    }
+
+                    header_list.empty();
+                    header_list.append(header_add);
+
+                    breed_list.empty();
+                    breed_list.append(add_list);
+
+                    $("#offset").val(result.offset);
+                }
+
+            });
+    }
+
     // 시교자원 수정
-    $(document).on("focusout", ".updateInput", function()
-    {
-        if(tablechk === 0) {
+    $(document).on("focusout", ".updateInput", function () {
+        if (tablechk === 0) {
             var sample_id = $(this).attr("data");
             var sample_name = $(this).attr("name");
             var sample_value = $(this).val();
 
-            var data = {"sample_id" : sample_id, "sample_name" : sample_name, "sample_value" : sample_value};
+            var data = {"sample_id": sample_id, "sample_name": sample_name, "sample_value": sample_value};
 
             $.ajax(
                 {
@@ -2107,10 +2019,8 @@
                     method: 'POST',
                     dataType: 'json',
                     data: data,
-                    success: function(result)
-                    {
-                        if(result == 0)
-                        {
+                    success: function (result) {
+                        if (result == 0) {
                             return Alert("수정에 실패하였습니다.")
                         }
                     }
@@ -2120,7 +2030,7 @@
             var sample_outcome_name = $(this).attr("name");
             var sample_outcome_value = $(this).val();
 
-            var data = {"sample_outcome_id" : sample_outcome_id, "sample_outcome_name" : sample_outcome_name, "sample_outcome_value" : sample_outcome_value};
+            var data = {"sample_outcome_id": sample_outcome_id, "sample_outcome_name": sample_outcome_name, "sample_outcome_value": sample_outcome_value};
 
             $.ajax(
                 {
@@ -2128,10 +2038,8 @@
                     method: 'POST',
                     dataType: 'json',
                     data: data,
-                    success: function(result)
-                    {
-                        if(result == 0)
-                        {
+                    success: function (result) {
+                        if (result == 0) {
                             return Alert("수정에 실패하였습니다.")
                         }
                     }
@@ -2139,8 +2047,6 @@
         }
 
     });
-
-    // DB에 저장된 데이터 읽어와서 테이블에 보여줌
 
     // 시교자원 삭제
     function DeleteSample() {
@@ -2226,12 +2132,12 @@
                 var rec = $('#table1').find('tbody>tr').get();
 
                 rec.sort(function (a, b) {
-                    var val1 = +($(a).children('td').eq(column).text());
-                    var val2 = +($(b).children('td').eq(column).text());
+                    var val1 = +($(a).children('input').eq(column).text());
+                    var val2 = +($(b).children('input').eq(column).text());
 
                     if (isNaN(val1) && isNaN(val2)) {
-                        val1 = $(a).children('td').eq(column).text();
-                        val2 = $(b).children('td').eq(column).text();
+                        val1 = $(a).children('input').eq(column).text();
+                        val2 = $(b).children('input').eq(column).text();
 
                         return (val1 < val2) ? -sortdir : (val1 > val2) ? sortdir : 0;
                     } else {
@@ -2284,7 +2190,9 @@
     // 정렬
 
     // 데이터 수정
-    var emptyElsIndex = 0;
+    function ModifySample() {
+
+    }
 
     // 데이터 수정
 
@@ -2305,8 +2213,6 @@
         }
     }
 
-
-    // 구글 맵 관련
 
     document.addEventListener('mousedown', function () {
         if ((event.button == 2) || (event.which == 3)) {
@@ -2547,11 +2453,10 @@
     /* 엑셀 다운로드 */
 
     /* 첨부파일 */
-    function FileBtn(e)
-    {
+    function FileBtn(e) {
         $("#sample_file").modal("show");
 
-        var data = {"sample_id" : e};
+        var data = {"sample_id": e};
 
         $.ajax(
             {
@@ -2559,24 +2464,22 @@
                 method: 'POST',
                 dataType: 'json',
                 data: data,
-                success: function(result)
-                {
+                success: function (result) {
                     $("#upload_id").val(e);
                     // $(".sample_title").text("시교명 : " + result.sample.standard);
 
                     var file_list = $("#file_list");
                     var file_add = "";
 
-                    for(var i = 0; i < result.sample_file.length; i++)
-                    {
+                    for (var i = 0; i < result.sample_file.length; i++) {
                         var file = JSON.stringify(result.sample_file[i]);
-                        var file_json = file.replace(/\"/g,"&quot;");
+                        var file_json = file.replace(/\"/g, "&quot;");
 
                         file_add += '<tr>';
                         file_add += '<td>' + (i + 1) + '</td>';
                         file_add += '<td><button onclick="ModifyBtn(' + result.sample_file[i].sample_file_id + ')" style="border:0px; color:blue; background: white;">' + result.sample_file[i].sample_file_title + '</button></td>';
                         file_add += '<td>' + result.sample_file[i].create_date + '</td>';
-                        file_add += '<td><input type="hidden" id="file_' + result.sample_file[i].sample_file_id + '" value="' + file.replace(/\"/g,"&quot;") + '"></td>';
+                        file_add += '<td><input type="hidden" id="file_' + result.sample_file[i].sample_file_id + '" value="' + file.replace(/\"/g, "&quot;") + '"></td>';
                         file_add += '</tr>';
                     }
 
@@ -2586,28 +2489,22 @@
             });
     }
 
-    function InsertFileBtn()
-    {
+    function InsertFileBtn() {
         $("#sample_file").modal("hide");
         $("#insert_file").modal("show");
     }
 
-    function InsertFile()
-    {
+    function InsertFile() {
         var file = $("#upload_file");
 
-        if(file.val() == "")
-        {
+        if (file.val() == "") {
             return Alert("파일을 선택해주세요.");
-        }
-        else
-        {
+        } else {
             $("#insertFile").submit();
         }
     }
 
-    function ModifyBtn(e)
-    {
+    function ModifyBtn(e) {
         var files = JSON.parse($("#file_" + e).val());
 
         $("#sample_file_id").val(files.sample_file_id);
@@ -2620,6 +2517,7 @@
         $("#sample_file").modal("hide");
         $("#modify_file").modal("show");
     }
+
     /* 첨부파일 */
 
 

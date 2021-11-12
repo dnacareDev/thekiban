@@ -207,7 +207,7 @@
             margin-left: 0;
         }
 
-        #data_upload .form-group input[type=text], #data_upload2 .form-group input[type=text], #data_upload3 .form-group input[type=text], #income_file .form-group input[type=text]{
+        #data_upload .form-group input[type=text], #data_upload2 .form-group input[type=text], #data_upload3 .form-group input[type=text], #income_file .form-group input[type=text] {
             flex: 0 0 30%;
             cursor: pointer;
         }
@@ -515,6 +515,21 @@
             height: 45px;
             text-align: center;
         }
+
+        .img_wrap {
+            width: 600px;
+            margin-top: 50px;
+        }
+
+        .img_wrap img {
+            max-width: 200px;
+        }
+
+        .income-list a:link {
+            color: mediumblue;
+            text-decoration: underline;
+            cursor: pointer;
+        }
     </style>
 
 </head>
@@ -580,7 +595,7 @@
                                     <table class="table" id="table1">
                                         <thead class="text-center">
                                         <tr>
-                                            <th></th>
+                                            <th><input type="checkbox" name="RowCheck" value="selectAll" onclick="selectAll(this)"></th>
                                             <th><span class="title">첨부파일</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
                                                                                            alt="첨부파일"></th>
                                             <th style="cursor: pointer;"><span class="title">작물</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
@@ -616,7 +631,7 @@
                                     <table class="table" id="table2">
                                         <thead class="text-center">
                                         <tr>
-                                            <th></th>
+                                            <th><input type="checkbox" name="RowCheck1" value="selectAll" onclick="selectAll(this)"></th>
                                             <th style="cursor: pointer;"><span class="title">도입번호(ID)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
                                                                                                                         alt="도입번호(ID)"></th>
                                             <th style="cursor: pointer;"><span class="title">종자 보유량</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
@@ -717,6 +732,9 @@
                         </div>
                         <div class="form-group mb-0">
                             <textarea name="income_file_contents" style="resize:none;"></textarea>
+                            <div class="img_wrap">
+                                <img id="img"/>
+                            </div>
                         </div>
                         <div>
                             <div class="atbd-upload">
@@ -891,6 +909,59 @@
         </div>
     </div>
 
+    <!-- 도입번호 팝업 -->
+    <div class="modal-basic modal fade show pop7" id="pop_remain" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content modal-bg-white">
+                <div class="modal-header" style="border: none">
+                    <h6 class="modal-title">도입자원재고관리</h6>
+                    <span class="remain_title"></span>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="atbd-upload">
+                            <div class="table-responsive">
+                                <table class="table table2">
+                                    <thead class="text-center">
+                                    <tr>
+                                        <th style="cursor: pointer;"><span class="title">순번</span><img
+                                            src="../assets/vendor_assets/img/title_icon.png"
+                                            alt="순번"></th>
+                                        <th style="cursor: pointer;"><span class="title">도입번호(ID)</span><img
+                                            src="../assets/vendor_assets/img/title_icon.png"
+                                            alt="도입번호(ID)"></th>
+                                        <th style="cursor: pointer;"><span class="title">종자 보유량</span><img
+                                            src="../assets/vendor_assets/img/title_icon.png"
+                                            alt="종자 보유량"></th>
+                                        <th style="cursor: pointer;"><span class="title">입고량</span><img
+                                            src="../assets/vendor_assets/img/title_icon.png"
+                                            alt="입고량"></th>
+                                        <th style="cursor: pointer;"><span class="title">출고량</span><img
+                                            src="../assets/vendor_assets/img/title_icon.png"
+                                            alt="출고량"></th>
+                                        <th style="cursor: pointer;"><span class="title">재고량</span><img
+                                            src="../assets/vendor_assets/img/title_icon.png"
+                                            alt="재고량"></th>
+                                        <th style="cursor: pointer;"><span class="title">담당자</span><img
+                                            src="../assets/vendor_assets/img/title_icon.png"
+                                            alt="담당자"></th>
+                                        <th style="cursor: pointer;"><span class="title">일자</span><img
+                                            src="../assets/vendor_assets/img/title_icon.png"
+                                            alt="일자"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="text-center remain_list">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border: none">
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- modal end -->
 </main>
 
@@ -1086,7 +1157,6 @@
                 }
                 const obj = {...excel};
 
-                // console.log(obj);
                 rowdata[k] = obj;
             }
 
@@ -1168,6 +1238,24 @@
         return obj;
     };
 
+    function selectAll(selectAll) {
+        if (tablechk === 0) {
+            const checkboxes
+                = document.getElementsByName('RowCheck');
+
+            checkboxes.forEach((checkbox) => {
+                checkbox.checked = selectAll.checked;
+            })
+        } else {
+            const checkboxes1
+                = document.getElementsByName('RowCheck1');
+
+            checkboxes1.forEach((checkbox) => {
+                checkbox.checked = selectAll.checked;
+            })
+        }
+    }
+
     const thisBtn = document.querySelector('#modal_open');
 
     var tablechk = 0;
@@ -1207,8 +1295,6 @@
 
         var data = {"income_name": income_name, "page_num": e, "limit": limit};
 
-        console.log(data);
-
         $.ajax(
             {
                 url: 'searchIncome',
@@ -1227,7 +1313,8 @@
                         add_list += '<tr>';
                         add_list += '<td><input type="checkbox" name="RowCheck" value="' + result.income[i].income_id + '"></td>';
                         add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" onclick="FileBtn(' + result.income[i].income_id + ');"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result.income[i].income_id + '" name="income_code" value="' + result.income[i].income_code + '"></td>';
+                        add_list += '<td><input type="text" class="updateInput" data="' + result.income[i].income_id + '" name="income_name" value="' + result.income[i].income_name + '"></td>';
+                        add_list += '<td><a href="javascript:;" onclick="SearchRemainPop(this)">' + result.income[i].income_code + '</a></td>';
                         add_list += '<td><input type="text" class="updateInput" data="' + result.income[i].income_id + '" name="income_kind" value="' + result.income[i].income_kind + '"></td>';
                         add_list += '<td><input type="text" class="updateInput" data="' + result.income[i].income_id + '" name="income_division" value="' + result.income[i].income_division + '"></td>';
                         add_list += '<td><input type="text" class="updateInput" data="' + result.income[i].income_id + '" name="income_place" value="' + result.income[i].income_place + '"></td>';
@@ -1338,6 +1425,53 @@
             });
     }
 
+    // 도입번호 팝업
+    function SearchRemainPop(e) {
+        $("#pop_remain").modal();
+
+        var income_name1 = $("#CropSelect").val();
+
+        var data1 = {"income_name": income_name1};
+
+        $.ajax(
+            {
+                url: 'searchIncomeRemain',
+                method: 'POST',
+                dataType: 'json',
+                data: data1,
+                success: function (result1) {
+                    $(".remain_title").text("도입번호(ID) - " + e.innerText);
+
+                    var incomeRe_list = $(".remain_list");
+
+                    var re_list = "";
+
+                    var j = 1;
+
+                    for (var i = 0; i < result1.incomeRemain.length; i++) {
+                        if (result1.incomeRemain[i].income_remain_num === e.innerText) {
+                            re_list += '<tr>';
+                            re_list += '<td>' + j + '</td>';
+                            re_list += '<td>' + result1.incomeRemain[i].income_remain_num + '</td>';
+                            re_list += '<td>' + result1.incomeRemain[i].income_remain_amount + '</td>';
+                            re_list += '<td>' + result1.incomeRemain[i].income_remain_in + '</td>';
+                            re_list += '<td>' + result1.incomeRemain[i].income_remain_out + '</td>';
+                            re_list += '<td>' + result1.incomeRemain[i].income_remain_re + '</td>';
+                            re_list += '<td>' + result1.incomeRemain[i].income_remain_person + '</td>';
+                            re_list += '<td>' + result1.incomeRemain[i].income_remain_date + '</td>';
+                            re_list += '</tr>';
+
+                            j++;
+                        }
+                    }
+
+                    incomeRe_list.empty();
+                    incomeRe_list.append(re_list);
+                }
+            });
+    }
+
+
     // 수정
     $(document).on("focusout", ".updateInput", function () {
         if (tablechk === 0) {
@@ -1384,7 +1518,7 @@
 
     // 도입자원 삭제
     function DeleteIncome() {
-        if(tablechk === 0) {
+        if (tablechk === 0) {
             var total_id = [];
 
             $("input:checkbox[name=RowCheck]:checked").each(function () {
@@ -1464,6 +1598,8 @@
                 $(this).siblings().removeClass('desc');
 
                 var rec = $('#table1').find('tbody>tr').get();
+
+                console.log(rec);
 
                 rec.sort(function (a, b) {
                     var val1 = +($(a).children('td').eq(column).text());
@@ -1740,7 +1876,68 @@
         $("#modify_file").modal("show");
     }
 
+    var sel_file;
+
+    $(document).ready(function () {
+        $("#upload_file").on("change", handleImgFileSelect);
+    });
+
+    function handleImgFileSelect(e) {
+        var files = e.target.files;
+        var filesArr = Array.prototype.slice.call(files);
+
+        filesArr.forEach(function (f) {
+            sel_file = f;
+
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $("#img").attr("src", e.target.result);
+            }
+
+            reader.readAsDataURL(f);
+        });
+    }
+
     /* 첨부파일 */
+
+    $(document).on("keydown", ".result_tr input:text", function (e) {
+        var resultTr = document.querySelectorAll(".result_tr input[type=text]");
+        var resultTr = Array.prototype.slice.call(resultTr);
+        var resultTrLength = resultTr.length;
+        var methodLength = method.length;
+        var target = e.currentTarget;
+        var index = resultTr.indexOf(target);
+
+        if (event.keyCode == "37") {
+            //방향키 좌
+            if ($(this).parent().prev().find("input:text").length == "0") {
+                $(this).focus();
+            } else {
+                $(this).parent().prev().find("input:text").focus();
+            }
+        } else if (event.keyCode == "38") {
+            //방향키 상
+            if ($(this).parent().parent().prev().find("input:text").length == "0") {
+                $(this).focus();
+            } else {
+                $(this).parent().parent().parent().find("input:text").eq(index - methodLength).focus();
+            }
+        } else if (event.keyCode == "39") {
+            //방향키 우
+            if ($(this).parent().next().find("input:text").length == "0") {
+                $(this).focus();
+            } else {
+                $(this).parent().next().find("input:text").focus();
+            }
+        } else if (event.keyCode == "40") {
+            //방향키 하
+            if ($(this).parent().parent().next().find("input:text").length == "0") {
+                $(this).focus();
+            } else {
+                $(this).parent().parent().parent().find("input:text").eq(index + methodLength).focus();
+            }
+        }
+    });
 </script>
 
 </body>

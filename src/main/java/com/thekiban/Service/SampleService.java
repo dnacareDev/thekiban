@@ -26,7 +26,9 @@ public interface SampleService {
   int SelectOutcomeCount(String sample_name);
 
   // 수출자원 검색
-  List<SampleOutcome> SearchOutcome(@Param("sample_name") String sample_name, @Param("offset") int offset, @Param("limit") int limit);
+  List<SampleOutcome> SearchOutcome(String sample_name, int offset, int limit);
+
+  List<SampleOutcome> SearchSeed(String sample_name);
 
   // 시교자원 삭제
   int[] DeleteSample(int[] sample_id);
@@ -35,9 +37,9 @@ public interface SampleService {
   int[] DeleteOutcome(int[] sample_outcome_id);
 
   // 시교자원 수정
-  int UpdateSample(@Param("sample_id") int sample_id, @Param("sample_name") String sample_name, @Param("sample_value") String sample_value);
+  int UpdateSample(int sample_id, String sample_name, String sample_value);
 
-  int UpdateOutcome(@Param("sample_outcome_id") int sample_outcome_id, @Param("sample_outcome_name") String sample_outcome_name, @Param("sample_outcome_value") String sample_outcome_value);
+  int UpdateOutcome(int sample_outcome_id, String sample_outcome_name, String sample_outcome_value);
 
   // 시교자원 수정
   int UpdateInsertSample(Sample sample);
@@ -47,9 +49,6 @@ public interface SampleService {
 
   // 시교자원 엑셀 등록
   int InsertExcel(Sample sample);
-
-/*  // 첨부파일 목록
-  List<SampleFile> SearchFileList(String sample_id);*/
 
   // 수출관리 엑셀 등록
   int InsertOutcomeExcel(SampleOutcome sampleOutcome);
@@ -77,5 +76,20 @@ public interface SampleService {
 
   // 첨부파일 수정
   int UpdateSampleUpload(Uploads upload);
+
+  // 품종 갯수 조회
+  int SelectBreedCount(String breed_name);
+
+  // 품종 검색
+  List<Breed> SearchBreed(String breed_name);
+
+  // 품종별 세부 정보 조회
+  List<Detail> SearchBreedDetail(String breed_name);
+
+  // 표시항목 조회
+  List<Display> SelectDisplay(int user_id, String breed_name);
+
+  // 품종별 정보값 조회
+  List<Standard> SearchBreedStandard(List<Detail> detail, int user_id, int breed_id);
 
 }

@@ -623,7 +623,7 @@
 										<option value="30">30개</option>
 									</select>
 									<select class="form-control form-control-lg mt-10 mb-10 mr-10" style="width: 250px;" id="CropSelect">
-										<option value="고추">고추</option>
+                                        <option value="고추">고추</option>
 										<option value="대파">대파</option>
 										<option value="멜론">멜론</option>
 										<option value="무">무</option>
@@ -1383,11 +1383,105 @@
 			</form>
 		</div>
 	</div>
+
+    <!-- 계통명 팝업 : 품종 -->
+    <div class="modal-basic modal fade show pop7" id="pop_breed" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content modal-bg-white">
+                <div class="modal-header" style="border: none">
+                    <h6 class="modal-title">원종관리 > 품종관리</h6>
+                    <span class="breed_title"></span>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group mb-0">
+                        <div class="btn-group atbd-button-group btn-group-normal my-2" role="group">
+                            <ul class="nav nav-tabs vertical-tabs" role="tablist">
+                                <li class="nav-item">
+                                    <a class="pop_nav-link active" id="tab-horizontal-0-tab-0" data-toggle="tab" href="#tab-horizontal-0-0" role="tab"
+                                       aria-controls="tab-horizontal-0-0" aria-selected="true">품종관리</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="atbd-upload popAdd tab-pane fade show active" id="tab-horizontal-0-0" role="tabpanel" aria-labelledby="tab-horizontal-0-tab-0"
+                             style=" overflow: auto; max-height: 500px;">
+                            <div class="table-responsive">
+                                <table class="table" id="display">
+                                    <thead class="text-center" id="breed_header_list">
+                                    </thead>
+                                    <tbody class="text-center" id="breed_breed_list">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border: none">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 종자번호 팝업 : 재고관리 -->
+    <div class="modal-basic modal fade show pop7" id="pop_seed" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content modal-bg-white">
+                <div class="modal-header" style="border: none">
+                    <h6 class="modal-title">원종재고관리</h6>
+                    <span class="seed_title"></span>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="atbd-upload">
+                            <div class="table-responsive">
+                                <table class="table table2">
+                                    <thead class="text-center">
+                                    <tr>
+                                        <th style="cursor: pointer;"><span class="title">순번</span><img
+                                            src="../assets/vendor_assets/img/title_icon.png"
+                                            alt="순번"></th>
+                                        <th style="cursor: pointer;"><span class="title">종자번호(ID)</span><img
+                                            src="../assets/vendor_assets/img/title_icon.png"
+                                            alt="종자번호(ID)"></th>
+                                        <th style="cursor: pointer;"><span class="title">종자 보유량</span><img
+                                            src="../assets/vendor_assets/img/title_icon.png"
+                                            alt="종자 보유량"></th>
+                                        <th style="cursor: pointer;"><span class="title">입고량</span><img
+                                            src="../assets/vendor_assets/img/title_icon.png"
+                                            alt="입고량"></th>
+                                        <th style="cursor: pointer;"><span class="title">출고량</span><img
+                                            src="../assets/vendor_assets/img/title_icon.png"
+                                            alt="출고량"></th>
+                                        <th style="cursor: pointer;"><span class="title">재고량</span><img
+                                            src="../assets/vendor_assets/img/title_icon.png"
+                                            alt="재고량"></th>
+                                        <th style="cursor: pointer;"><span class="title">담당자</span><img
+                                            src="../assets/vendor_assets/img/title_icon.png"
+                                            alt="담당자"></th>
+                                        <th style="cursor: pointer;"><span class="title">일자</span><img
+                                            src="../assets/vendor_assets/img/title_icon.png"
+                                            alt="일자"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="text-center outcome_list">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border: none">
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 <!-- 공통 하단 -->
 <th:block th:include="/../fragments/footer.html"></th:block>
 <!-- 공통 js -->
 <th:block th:include="/../fragments/commonjs.html"></th:block>
+
 <script type="text/javascript">
 	let topBox = document.getElementsByClassName("top_box");
 	let navN = 0; //선택된 변수
@@ -1459,7 +1553,7 @@
 	    }
 	}
 
-    function moveFunction(f) {
+/*    function moveFunction(f) {
 
         for (let k = 0; k < navLi.length; k++) {
             navLi[k].classList.remove("active");
@@ -1483,7 +1577,7 @@
         navLi[f].classList.add("active");
         contentLi[f].classList.add("active");
         contentLi[f].classList.add("show");
-    }
+    }*/
 
     /* 엑셀 업로드 버튼 */
     function filesFunction(filename)
@@ -1734,7 +1828,9 @@
                 });
         }
     }
-	
+
+    var searchSelectBox = document.querySelector('#CropSelect');
+
     function UpdateAllBtn()
     {
     	$("#updateAllForm").submit();
@@ -1822,7 +1918,6 @@
                 {
                     add_list += '<tr>';
                     add_list += '<td><input type="checkbox" name="RowCheck" value="' + result.basic[i].basic_id + '"></td>';
-                    /* add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><i class="bi bi-file-earmark-arrow-down"></i></button></td>'; */
                     add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" onclick="FileBtn(' + result.basic[i].basic_id + ');"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
                     
                     if(result.basic[i].standard_count == 0)
@@ -1836,6 +1931,11 @@
 
                     for(var j = 0; j < result.basic[i].basic_standard.length; j++)
                     {
+                        /*if(result.breed[i].breed_standard[j].detail_id === 170) {
+                            add_list += '<td><input type="text" class="updateInput" data="' + result.breed[i].breed_id + '" name="' + result.breed[i].breed_standard[j].detail_id + '" value="' + result.breed[i].breed_standard[j].standard + '"><a data-toggle="modal" href="#pop_data1"><i class="fas fa-link"></i></a></td>';
+                        } else {
+                            add_list += '<td><input type="text" class="updateInput" data="' + result.breed[i].breed_id + '" name="' + result.breed[i].breed_standard[j].detail_id + '" value="' + result.breed[i].breed_standard[j].standard + '"></td>';
+                        }*/
                         add_list += '<td><input type="text" class="updateInput" data="' + result.basic[i].basic_id + '" name="' + result.basic[i].basic_standard[j].detail_id + '" value="' + result.basic[i].basic_standard[j].standard + '"></td>';
                     }
 
