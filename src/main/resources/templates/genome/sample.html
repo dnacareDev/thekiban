@@ -639,7 +639,8 @@
                         <div class="card-body">
                             <div class="bg-white">
                                 <div class="table-responsive">
-                                    <table class="table" id="table1">
+                                    <div id="grid"></div>
+                                    <!--<table class="table" id="table1">
                                         <thead class="text-center">
                                         <tr>
                                             <th><input type="checkbox" name="RowCheck" value="selectAll" onclick="selectAll(this)"></th>
@@ -676,7 +677,7 @@
                                         </thead>
                                         <tbody class="text-center sample-list" id="sample_list">
                                         </tbody>
-                                    </table>
+                                    </table>-->
                                     <table class="table table2" id="table2">
                                         <thead class="text-center">
                                         <tr>
@@ -723,6 +724,8 @@
                                         </tbody>
                                     </table>
                                 </div>
+
+
 
                                 <div class="row">
                                     <div class="col-4">
@@ -1649,17 +1652,20 @@
     // DB에 저장된 데이터 읽어와서 테이블에 보여줌
     $(document).ready(function () {
         SearchSample(1);
+        SearchSample1(1);
         SearchOutcome(1);
     });
 
     $("#CropSelect").change(function () {
         SearchSample(1);
+        SearchSample1(1);
         SearchOutcome(1);
     })
 
     // 갯수 선택
     $("#limit").change(function () {
         SearchSample(1);
+        SearchSample1(1);
         SearchOutcome(1);
     })
 
@@ -1704,6 +1710,10 @@
 
                     var pageNum = $("#pageNum");
                     var page_add = "";
+
+                    console.log('result : ', result);
+
+                    console.log('result.sample : ', result.sample);
 
                     for (var i = 0; i < result.sample.length; i++) {
                         add_list += '<tr>';
@@ -1753,7 +1763,6 @@
 
                 }
             });
-
     }
 
     function SearchOutcome(e) {
@@ -1848,7 +1857,7 @@
                     var seed_list = "";
 
                     for (var i = 0; i < result1.sampleOutcome.length; i++) {
-                        if(result1.sampleOutcome[i].sample_outcome_num === e.innerText) {
+                        if (result1.sampleOutcome[i].sample_outcome_num === e.innerText) {
                             seed_list += '<tr>';
                             seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_code + '</td>';
                             seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_num + '</td>';
@@ -2611,6 +2620,95 @@
             });
         }
     }
+
+    // grid test
+    function SearchSample1(e) {
+        var sample_name = $("#CropSelect").val();
+        var limit = $("#limit").val();
+
+        var data = {"sample_name": sample_name, "page_num": e, "limit": limit};
+
+        $.ajax(
+            {
+                url: 'searchSample',
+                method: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function (result) {
+                    const grid = new tui.Grid({
+                        el: document.getElementById('grid'),
+                        scrollX: false,
+                        scrollY: false,
+                        rowHeaders: ['checkbox'],
+                        columns: [
+                            {
+                                header: '첨부파일',
+                                name: 'file',
+                                editor: 'text'
+                            },
+                            {
+                                header: '작물',
+                                name: 'sample_name',
+                                editor: 'text'
+                            },
+                            {
+                                header: '시교명(ID)',
+                                name: 'sample_code',
+                                editor: 'text',
+                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
+                            },
+                            {
+                                header: '목표 지역',
+                                name: 'sample_country',
+                                editor: 'text'
+                            },
+                            {
+                                header: '구분',
+                                name: 'sample_type',
+                                editor: 'text'
+                            },
+                            {
+                                header: '교배번호',
+                                name: 'sample_mate',
+                                editor: 'text'
+                            },
+                            {
+                                header: '종자번호(ID)',
+                                name: 'sample_seed',
+                                editor: 'text'
+                            },
+                            {
+                                header: '현 종자량(g)',
+                                name: 'sample_amount',
+                                editor: 'text',
+                                filter: 'number'
+                            },
+                            {
+                                header: '기내 발아율(%)',
+                                name: 'sample_sprout',
+                                editor: 'text',
+                                filter: 'number'
+                            },
+                            {
+                                header: '기내 순도율(%)',
+                                name: 'sample_purity',
+                                editor: 'text',
+                                filter: 'number'
+                            },
+                            {
+                                header: '비고',
+                                name: 'sample_comment',
+                                editor: 'text'
+                            }
+                        ]
+                    });
+
+                    grid.resetData(result.sample);
+                }
+            });
+
+    }
+
 </script>
 </body>
 

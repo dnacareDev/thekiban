@@ -41,14 +41,6 @@ public class SampleController {
     return mv;
   }
 
-  @RequestMapping("sample2")
-  public ModelAndView Sample2List(ModelAndView mv) {
-
-    mv.setViewName("genome/sample2");
-
-    return mv;
-  }
-
   // 시교자원 입력
   @ResponseBody
   @RequestMapping("insertSample")
