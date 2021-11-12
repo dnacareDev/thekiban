@@ -48,8 +48,6 @@ dependencies
     implementation 'org.apache.tika:tika-core:2.1.0'
     implementation group: 'org.json', name: 'json', version: '20160810'
     providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
-
-	//implementation group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat', version: '2.5.2'
 }
 
 test
