@@ -49,9 +49,7 @@ public class SampleController {
 
     JSONObject obj = arr.getJSONObject(0);
 
-    String value = (String) obj.get("value");
-
-    sample.setSample_name(value);
+    sample.setSample_name((String) obj.get("sample_name"));
 
     service.InsertSample(sample);
 
@@ -94,7 +92,7 @@ public class SampleController {
 
     return result;
   }
-  
+
   // 수출자원 검색
   @ResponseBody
   @RequestMapping("searchOutcome")
@@ -296,8 +294,7 @@ public class SampleController {
   // 시교자원 수정
   @ResponseBody
   @RequestMapping("updateSample")
-  public int UpdateSample(@RequestParam("sample_id") int sample_id, @RequestParam("sample_name") String sample_name, @RequestParam("sample_value") String sample_value)
-  {
+  public int UpdateSample(@RequestParam("sample_id") int sample_id, @RequestParam("sample_name") String sample_name, @RequestParam("sample_value") String sample_value) {
     int result = service.UpdateSample(sample_id, sample_name, sample_value);
 
     return result;
@@ -305,8 +302,7 @@ public class SampleController {
 
   @ResponseBody
   @RequestMapping("updateOutcome")
-  public int UpdateOutcome(@RequestParam("sample_outcome_id") int sample_outcome_id, @RequestParam("sample_outcome_name") String sample_outcome_name, @RequestParam("sample_outcome_value") String sample_outcome_value)
-  {
+  public int UpdateOutcome(@RequestParam("sample_outcome_id") int sample_outcome_id, @RequestParam("sample_outcome_name") String sample_outcome_name, @RequestParam("sample_outcome_value") String sample_outcome_value) {
     int result = service.UpdateOutcome(sample_outcome_id, sample_outcome_name, sample_outcome_value);
 
     return result;
@@ -405,8 +401,7 @@ public class SampleController {
   // 첨부 파일 조회
   @ResponseBody
   @RequestMapping("selectSampleFile")
-  public Map<String, Object> SelectSampleFile(@RequestParam("sample_id") int sample_id)
-  {
+  public Map<String, Object> SelectSampleFile(@RequestParam("sample_id") int sample_id) {
     Map<String, Object> result = new LinkedHashMap<String, Object>();
 
     List<SampleFile> sample_file = service.SelectSampleFile(sample_id);
@@ -418,8 +413,7 @@ public class SampleController {
 
   // 첨부파일 등록
   @RequestMapping("insertSampleFile")
-  public ModelAndView InsertSampleFile(ModelAndView mv, @ModelAttribute SampleFile sample_file, @RequestParam("file") MultipartFile file) throws IOException
-  {
+  public ModelAndView InsertSampleFile(ModelAndView mv, @ModelAttribute SampleFile sample_file, @RequestParam("file") MultipartFile file) throws IOException {
     String[] extension = file.getOriginalFilename().split("\\.");
 
     String file_name = fileController.ChangeFileName(extension[1]);
@@ -453,19 +447,14 @@ public class SampleController {
 
   // 첨부파일 수정
   @RequestMapping("updateSampleFile")
-  public ModelAndView UpdateSampleFile(ModelAndView mv, @ModelAttribute SampleFile sample_file, @RequestParam("file") MultipartFile file) throws IOException
-  {
-    if(file.isEmpty())
-    {
+  public ModelAndView UpdateSampleFile(ModelAndView mv, @ModelAttribute SampleFile sample_file, @RequestParam("file") MultipartFile file) throws IOException {
+    if (file.isEmpty()) {
       int update_file = service.UpdateSampleFile(sample_file);
-    }
-    else
-    {
+    } else {
       String delete_path = "upload/" + sample_file.getUploads_file();
       File origin_file = new File(delete_path);
 
-      if(origin_file.delete())
-      {
+      if (origin_file.delete()) {
         String[] extension = file.getOriginalFilename().split("\\.");
 
         String file_name = fileController.ChangeFileName(extension[1]);
@@ -500,24 +489,21 @@ public class SampleController {
   // 품종 검색
   @ResponseBody
   @RequestMapping("searchBreedList")
-  public Map<String, Object> SearchBreed(Authentication auth, @RequestParam("breed_name") String breed_name)
-  {
+  public Map<String, Object> SearchBreed(Authentication auth, @RequestParam("breed_name") String breed_name) {
     Map<String, Object> result = new LinkedHashMap<String, Object>();
 
-    User user = (User)auth.getPrincipal();
+    User user = (User) auth.getPrincipal();
 
     int count = service.SelectBreedCount(breed_name);
 
-    List<Breed> breed = service.SearchBreed(breed_name);								// 품종 검색
-    List<Detail> detail = service.SearchBreedDetail(breed_name);									// 품종 작물별 컬럼 조회
-    List<Display> display = service.SelectDisplay(user.getUser_id(), breed_name);					// 사용자별 품종 표시항목 조회
+    List<Breed> breed = service.SearchBreed(breed_name);                // 품종 검색
+    List<Detail> detail = service.SearchBreedDetail(breed_name);                  // 품종 작물별 컬럼 조회
+    List<Display> display = service.SelectDisplay(user.getUser_id(), breed_name);          // 사용자별 품종 표시항목 조회
 
     List<Standard> standard = new ArrayList<Standard>();
 
-    if(!detail.isEmpty())
-    {
-      for(int i = 0; i < breed.size(); i++)
-      {
+    if (!detail.isEmpty()) {
+      for (int i = 0; i < breed.size(); i++) {
         standard = service.SearchBreedStandard(detail, user.getUser_id(), breed.get(i).getBreed_id());
 
         breed.get(i).setBreed_standard(standard);

@@ -572,7 +572,7 @@
             text-align: center;
         }
 
-        #sampleGrid .tui-grid-body-area td[data-column-name='sample_code'], #sampleGrid .tui-grid-body-area td[data-column-name='sample_seed']  {
+        #sampleGrid .tui-grid-body-area td[data-column-name='sample_code'], #sampleGrid .tui-grid-body-area td[data-column-name='sample_seed'] {
             color: mediumblue;
             text-decoration: underline;
             cursor: pointer;
@@ -582,6 +582,24 @@
             color: mediumblue;
             text-decoration: underline;
             cursor: pointer;
+        }
+
+        #saveRow {
+            float: right;
+            color: #fff;
+            background-color: #217566;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        #cancelRow {
+            float: right;
+            color: #217566;
+            background-color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
         }
     </style>
 </head>
@@ -596,7 +614,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12 mb-30">
-                    <div class="card">
+                    <div class="card" id="cardPlus">
                         <div class="card-extra mt-20 mr-20">
                             <div class="breadcrumb-main" style="float: left;">
                                 <h4 class="text-capitalize breadcrumb-title">시교 자원 관리</h4>
@@ -636,7 +654,11 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body">
+                        <div class='card-extra mt-10 mb-10 mr-20 plus_btn_submit1'>
+                            <button type='button' id="cancelRow" onclick="cancelRow()" style="visibility: hidden;">취소</button>
+                            <button type='button' id="saveRow" onclick="saveRow()" style="visibility: hidden;">저장</button>
+                        </div>
+                        <div class="card-body" style="padding-top: 0;">
                             <div class="bg-white">
                                 <div id="sampleGrid"></div>
                                 <div id="outcomeGrid" style="visibility: hidden; height: 0;"></div>
@@ -1545,14 +1567,14 @@
 
     $("#sampleTable1").click(function () {
         tablechk = 0;
-        $("#sampleGrid").css("display","block");
-        $("#outcomeGrid").css("display","none");
+        $("#sampleGrid").css("display", "block");
+        $("#outcomeGrid").css("display", "none");
     })
 
     $("#sampleTable2").click(function () {
         tablechk = 1;
-        $("#sampleGrid").css("display","none");
-        $("#outcomeGrid").css({"display":"block", "visibility":"", "height":"auto"});
+        $("#sampleGrid").css("display", "none");
+        $("#outcomeGrid").css({"display": "block", "visibility": "", "height": "auto"});
     })
     /* 시교자원 수출관리 테이블 구분 */
 
@@ -1569,8 +1591,10 @@
 
     // 갯수 선택
     $("#limit").change(function () {
-        SearchSample(1);
-        SearchOutcome(1);
+        // SearchSample(1);
+        // SearchOutcome(1);
+        OtherSample(1);
+        OtherOutcome(1);
     })
 
     function selectAll(selectAll) {
@@ -1962,15 +1986,15 @@
         if (tablechk === 0) {
             var total_id = [];
 
-            $("input:checkbox[name=RowCheck]:checked").each(function () {
-                var sample_id = $(this).val();
+            var l = samplegrid.getCheckedRows().length;
 
-                total_id.push(sample_id);
-            });
+            console.log();
+
+            for (let i = 0; i < l; i++) {
+                total_id.push(samplegrid.getCheckedRows()[i].sample_id)
+            }
 
             var data = {'sample_id': total_id};
-
-            console.log(data);
 
             if (confirm("삭제하시겠습니까?") == true) {
                 $.ajax(
@@ -1992,11 +2016,13 @@
         } else {
             var total_id1 = [];
 
-            $("input:checkbox[name=RowCheck1]:checked").each(function () {
-                var sample_id1 = $(this).val();
+            var l1 = outcomegrid.getCheckedRows().length;
 
-                total_id1.push(sample_id1);
-            });
+            console.log();
+
+            for (let i = 0; i < l1; i++) {
+                total_id1.push(outcomegrid.getCheckedRows()[i].sample_outcome_id)
+            }
 
             var data1 = {'sample_outcome_id': total_id1};
 
@@ -2526,6 +2552,7 @@
 
         var data = {"sample_name": sample_name, "page_num": e, "limit": limit};
 
+
         $.ajax(
             {
                 url: 'searchSample',
@@ -2537,6 +2564,7 @@
                         el: document.getElementById('sampleGrid'),
                         scrollX: false,
                         scrollY: false,
+                        data: result.sample,
                         rowHeaders: ['checkbox'],
                         columns: [
                             {
@@ -2616,35 +2644,25 @@
                                 sortable: true,
                                 sortingType: 'asc'
                             }
-                        ]
+                        ],
+                        pageOptions: {
+                            perPage: limit,
+                        }
                     });
 
-                    samplegrid.resetData(result.sample);
+                    // samplegrid.resetData(result.sample);
 
                     samplegrid.on('click', (ev) => {
-                        if(ev.targetType === 'cell' && ev.columnName === 'sample_seed') {
+                        if (ev.targetType === 'cell' && ev.columnName === 'sample_seed') {
                             var value_seed = ev.nativeEvent.srcElement;
 
                             SearchSeed(value_seed);
-                        } else if(ev.targetType === 'cell' && ev.columnName === 'sample_code') {
+                        } else if (ev.targetType === 'cell' && ev.columnName === 'sample_code') {
                             var value_breed = ev.nativeEvent.srcElement;
 
                             SearchBreed(value_breed);
                         }
                     });
-
-                    const dummy = {
-                        sample_name : $("#CropSelect").val()
-                    };
-
-                    let addBtnEl = document.querySelector('#arrRow');
-
-                    function onClickAddBtnEL(e){
-                        samplegrid.prependRow(dummy);
-                    }
-
-                    addBtnEl.addEventListener('click', onClickAddBtnEL);
-
                 }
             });
 
@@ -2665,12 +2683,14 @@
                 success: function (result) {
                     samplegrid.resetData(result.sample);
 
+                    samplegrid.setPerPage(limit);
+
                     samplegrid.on('click', (ev) => {
-                        if(ev.targetType === 'cell' && ev.columnName === 'sample_seed') {
+                        if (ev.targetType === 'cell' && ev.columnName === 'sample_seed') {
                             var value_seed = ev.nativeEvent.srcElement;
 
                             SearchSeed(value_seed);
-                        } else if(ev.targetType === 'cell' && ev.columnName === 'sample_code') {
+                        } else if (ev.targetType === 'cell' && ev.columnName === 'sample_code') {
                             var value_breed = ev.nativeEvent.srcElement;
 
                             SearchBreed(value_breed);
@@ -2781,8 +2801,10 @@
 
                     outcomegrid.resetData(result1.sampleOutcome);
 
+                    outcomegrid.setPerPage(limit1);
+
                     outcomegrid.on('click', (ev) => {
-                        if(ev.targetType === 'cell' && ev.columnName === 'sample_outcome_num') {
+                        if (ev.targetType === 'cell' && ev.columnName === 'sample_outcome_num') {
                             var value = ev.nativeEvent.srcElement;
 
                             SearchSeed(value);
@@ -2808,8 +2830,10 @@
                 success: function (result1) {
                     outcomegrid.resetData(result1.sampleOutcome);
 
+                    outcomegrid.setPerPage(limit1);
+
                     outcomegrid.on('click', (ev) => {
-                        if(ev.targetType === 'cell' && ev.columnName === 'sample_outcome_num') {
+                        if (ev.targetType === 'cell' && ev.columnName === 'sample_outcome_num') {
                             var value = ev.nativeEvent.srcElement;
 
                             SearchSeed(value);
@@ -2820,26 +2844,113 @@
             });
     }
 
+    var lastID = 0;
+
     function insertRow() {
+        $("#saveRow").css("visibility", "");
+        $("#cancelRow").css("visibility", "");
+
         if (tablechk === 0) {
-            const dummy = {
-                sample_name : $("#CropSelect").val(),
-                sample_code :
+            var cnt = samplegrid.getRowCount();
+            const newRow = {
+                sample_name: $("#CropSelect").val(),
             };
 
-            samplegrid.prependRow(dummy);
+            samplegrid.prependRow(newRow);
+            samplegrid.check(cnt);
+
+            var input_data = [];
+
+            input_data.push(samplegrid.getCheckedRows()[0]);
+
+            $.ajax(
+                {
+                    url: 'insertSample',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        "input_data": JSON.stringify(input_data)
+                    },
+                    success: function (result) {
+                        if (result != null) {
+                            console.log(result.sample_id);
+                            lastID = result.sample_id;
+                        }
+                    }
+                });
         } else {
-            const dummy = {
-                sample_name : $("#CropSelect").val(),
-
+            const newRow = {
+                sample_name: $("#CropSelect").val(),
             };
 
-            outcomegrid.prependRow(dummy);
+            outcomegrid.prependRow(newRow);
+            outcomegrid.check(cnt);
         }
     }
 
     function saveRow() {
+        if(tablechk === 0) {
+            var data = [];
 
+            var data_in = samplegrid.getCheckedRows()[0];
+
+            console.log(data_in);
+
+            // data.push(data_in);
+            //
+            // $("input[class=rowInput]").each(function (index, item) {
+            //     const key = $(this).attr('name');
+            //     var value = $(this).val();
+            //
+            //     var arr = {key: key, value: value};
+            //
+            //     data.push(arr);
+            // });
+            //
+            // $.ajax(
+            //     {
+            //         url: 'updateInsertSample',
+            //         method: 'POST',
+            //         dataType: 'json',
+            //         data: {
+            //             "data": JSON.stringify(data)
+            //         },
+            //         success: function (result) {
+            //
+            //         }
+            //     });
+        } else {
+
+        }
+    }
+
+    function cancelRow() {
+        if (tablechk === 0) {
+            var total_id = [];
+
+            total_id.push(lastID);
+
+            var data = {'sample_id': total_id};
+
+            $.ajax(
+                {
+                    url: 'deleteSample',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: data,
+                    success: function (result) {
+                        if (result == 0) {
+                        } else {
+                            OtherSample(1);
+                        }
+                    }
+                });
+        } else {
+            OtherOutcome(1);
+        }
+
+        $("#saveRow").css("visibility", "hidden");
+        $("#cancelRow").css("visibility", "hidden");
     }
 </script>
 </body>
