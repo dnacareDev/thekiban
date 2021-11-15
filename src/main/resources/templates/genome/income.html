@@ -549,7 +549,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12 mb-30">
-                    <div class="card">
+                    <div class="card" id="cardPlus">
                         <div class="card-extra mt-20 mr-20">
                             <div class="breadcrumb-main" style="float: left;">
                                 <h4 class="text-capitalize breadcrumb-title">도입 자원 관리</h4>
@@ -589,7 +589,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body">
+                        <div class='card-extra mt-10 mb-10 mr-20 plus_btn_submit1'><button type='button' style="float:right; color:#fff;background-color:#217566; border:none; padding: 5px 10px; border-radius: 5px">저장</button></div>
+                        <div class="card-body" style="padding-top: 0;">
                             <div class="bg-white">
                                 <div class="table-responsive">
                                     <table class="table" id="table1">
@@ -1686,7 +1687,7 @@
             row_list += '</tr>';
 
             $("#income_list").append(row_list);
-
+            
             var input_data = [];
 
             var input_value = $("#CropSelect option:selected").text();
@@ -1755,7 +1756,7 @@
             row_list1 += '</tr>';
 
             $("#incomeRemain-list").append(row_list1);
-
+            
             var input_data1 = [];
 
             var input_value1 = $("#CropSelect option:selected").text();
@@ -1807,7 +1808,7 @@
                     }
                 });
         }
-
+        
     }
 
     /* 첨부파일 */
