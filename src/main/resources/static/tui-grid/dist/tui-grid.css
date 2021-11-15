@@ -350,6 +350,7 @@
   overflow: hidden;
   box-sizing: border-box;
   word-break: break-all;
+  text-align: center;
 }
 .tui-grid-cell img {
   vertical-align: middle;
