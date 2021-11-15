@@ -2823,21 +2823,24 @@
     function insertRow() {
         if (tablechk === 0) {
             const dummy = {
-                sample_name : $("#CropSelect").val()
+                sample_name : $("#CropSelect").val(),
+                sample_code :
             };
 
             samplegrid.prependRow(dummy);
         } else {
             const dummy = {
-                sample_name : $("#CropSelect").val()
+                sample_name : $("#CropSelect").val(),
+
             };
 
             outcomegrid.prependRow(dummy);
         }
     }
 
+    function saveRow() {
 
-
+    }
 </script>
 </body>
 
