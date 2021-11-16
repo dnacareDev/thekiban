@@ -2143,13 +2143,6 @@
         }
     }
 
-
-    document.addEventListener('mousedown', function () {
-        if ((event.button == 2) || (event.which == 3)) {
-
-        }
-    });
-
     /* row 추가 */
     function addRow() {
         if (tablechk === 0) {
@@ -2651,8 +2644,6 @@
                         }
                     });
 
-                    // samplegrid.resetData(result.sample);
-
                     samplegrid.on('click', (ev) => {
                         if (ev.targetType === 'cell' && ev.columnName === 'sample_seed') {
                             var value_seed = ev.nativeEvent.srcElement;
@@ -2662,6 +2653,38 @@
                             var value_breed = ev.nativeEvent.srcElement;
 
                             SearchBreed(value_breed);
+                        }
+                    });
+
+                    var before = null;
+                    var after = null;
+
+                    samplegrid.on('editingStart', (ev) => {
+                        before = ev.value;
+                    });
+
+                    samplegrid.on('editingFinish', (ev) => {
+                        after = ev.value;
+
+                        if(after != before) {
+                            var sample_id = ev.instance.getRow(ev.rowKey).sample_id;
+                            var sample_name = ev.columnName;
+                            var sample_value = ev.value;
+
+                            var data = {"sample_id": sample_id, "sample_name": sample_name, "sample_value": sample_value};
+
+                            $.ajax(
+                                {
+                                    url: 'updateSample',
+                                    method: 'POST',
+                                    dataType: 'json',
+                                    data: data,
+                                    success: function (result) {
+                                        if (result == 0) {
+                                            return Alert("수정에 실패하였습니다.")
+                                        }
+                                    }
+                                });
                         }
                     });
                 }
@@ -2698,6 +2721,37 @@
                         }
                     });
 
+                    var before = null;
+                    var after = null;
+
+                    samplegrid.on('editingStart', (ev) => {
+                        before = ev.value;
+                    });
+
+                    samplegrid.on('editingFinish', (ev) => {
+                        after = ev.value;
+
+                        if(after != before) {
+                            var sample_id = ev.instance.getRow(ev.rowKey).sample_id;
+                            var sample_name = ev.columnName;
+                            var sample_value = ev.value;
+
+                            var data = {"sample_id": sample_id, "sample_name": sample_name, "sample_value": sample_value};
+
+                            $.ajax(
+                                {
+                                    url: 'updateSample',
+                                    method: 'POST',
+                                    dataType: 'json',
+                                    data: data,
+                                    success: function (result) {
+                                        if (result == 0) {
+                                            return Alert("수정에 실패하였습니다.")
+                                        }
+                                    }
+                                });
+                        }
+                    });
                 }
             });
 
@@ -2720,6 +2774,7 @@
                         el: document.getElementById('outcomeGrid'),
                         scrollX: false,
                         scrollY: false,
+                        data: result1.sampleOutcome,
                         rowHeaders: ['checkbox'],
                         columns: [
                             {
@@ -2798,12 +2853,11 @@
                                 editor: 'text',
                                 sortable: true
                             }
-                        ]
+                        ],
+                        pageOptions: {
+                            perPage: limit1,
+                        }
                     });
-
-                    outcomegrid.resetData(result1.sampleOutcome);
-
-                    outcomegrid.setPerPage(limit1);
 
                     outcomegrid.on('click', (ev) => {
                         if (ev.targetType === 'cell' && ev.columnName === 'sample_outcome_num') {
@@ -2813,11 +2867,35 @@
                         }
                     });
 
-                    outcomegrid.on('dblclick', (ev) => {
-                        if (ev.targetType === 'cell' && ev.columnName === 'sample_outcome_num') {
-                            var value = ev.nativeEvent.srcElement;
+                    var before = null;
+                    var after = null;
 
-                            SearchSeed(value);
+                    outcomegrid.on('editingStart', (ev) => {
+                        before = ev.value;
+                    });
+
+                    outcomegrid.on('editingFinish', (ev) => {
+                        after = ev.value;
+
+                        if(after != before) {
+                            var sample_outcome_id = ev.instance.getRow(ev.rowKey).sample_outcome_id;
+                            var sample_outcome_name = ev.columnName;
+                            var sample_outcome_value = ev.value;
+
+                            var data = {"sample_outcome_id": sample_outcome_id, "sample_outcome_name": sample_outcome_name, "sample_outcome_value": sample_outcome_value};
+
+                            $.ajax(
+                                {
+                                    url: 'updateOutcome',
+                                    method: 'POST',
+                                    dataType: 'json',
+                                    data: data,
+                                    success: function (result) {
+                                        if (result == 0) {
+                                            return Alert("수정에 실패하였습니다.")
+                                        }
+                                    }
+                                });
                         }
                     });
 
@@ -2850,6 +2928,37 @@
                         }
                     });
 
+                    var before = null;
+                    var after = null;
+
+                    outcomegrid.on('editingStart', (ev) => {
+                        before = ev.value;
+                    });
+
+                    outcomegrid.on('editingFinish', (ev) => {
+                        after = ev.value;
+
+                        if(after != before) {
+                            var sample_outcome_id = ev.instance.getRow(ev.rowKey).sample_outcome_id;
+                            var sample_outcome_name = ev.columnName;
+                            var sample_outcome_value = ev.value;
+
+                            var data = {"sample_outcome_id": sample_outcome_id, "sample_outcome_name": sample_outcome_name, "sample_outcome_value": sample_outcome_value};
+
+                            $.ajax(
+                                {
+                                    url: 'updateOutcome',
+                                    method: 'POST',
+                                    dataType: 'json',
+                                    data: data,
+                                    success: function (result) {
+                                        if (result == 0) {
+                                            return Alert("수정에 실패하였습니다.")
+                                        }
+                                    }
+                                });
+                        }
+                    });
                 }
             });
     }
