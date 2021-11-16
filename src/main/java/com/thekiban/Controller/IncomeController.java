@@ -19,10 +19,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 @Controller
 public class IncomeController {
@@ -49,7 +50,7 @@ public class IncomeController {
 
     JSONObject obj = arr.getJSONObject(0);
 
-    String value = (String) obj.get("value");
+    String value = (String) obj.get("income_name");
 
     income.setIncome_name(value);
 
@@ -65,7 +66,7 @@ public class IncomeController {
 
     JSONObject obj = arr.getJSONObject(0);
 
-    String value = (String) obj.get("value");
+    String value = (String) obj.get("income_name");
 
     incomeRemain.setIncome_name(value);
 
@@ -150,7 +151,97 @@ public class IncomeController {
   }
 
   // 도입자원 수정
+  @ResponseBody
   @RequestMapping("updateInsertIncome")
+  public int UpdateInsertIncome(ModelAndView mv, @ModelAttribute Income income, @RequestParam(value = "update_list", required = false) String update_list, @RequestParam("data") String data) throws ParseException {
+    JSONArray arr = new JSONArray(data);
+
+    JSONObject obj = arr.getJSONObject(0);
+
+    if(!obj.isNull("income_code")) {
+      income.setIncome_code((String) obj.get("income_code"));
+    } else {
+      income.setIncome_code("");
+    }
+
+    if(!obj.isNull("income_name")) {
+      income.setIncome_name((String) obj.get("income_name"));
+    } else {
+      income.setIncome_name("");
+    }
+
+    if(!obj.isNull("income_kind")) {
+      income.setIncome_kind((String) obj.get("income_kind"));
+    } else {
+      income.setIncome_kind("");
+    }
+
+    if(!obj.isNull("income_division")) {
+      income.setIncome_division((String) obj.get("income_division"));
+    } else {
+      income.setIncome_division("");
+    }
+
+    if(!obj.isNull("income_place")) {
+      income.setIncome_place((String) obj.get("income_place"));
+    } else {
+      income.setIncome_place("");
+    }
+
+    if(!obj.isNull("income_country")) {
+      income.setIncome_country((String) obj.get("income_country"));
+    } else {
+      income.setIncome_country("");
+    }
+
+    if(!obj.isNull("income_person")) {
+      income.setIncome_person((String) obj.get("income_person"));
+    } else {
+      income.setIncome_person("");
+    }
+
+    if(!obj.isNull("income_date")) {
+      String date = (String) obj.get("income_date");
+      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.KOREA);
+      LocalDate ldate = LocalDate.parse(date, formatter);
+
+      income.setIncome_date(ldate);
+    } else {
+      income.setIncome_date(null);
+    }
+
+    if(!obj.isNull("income_num")) {
+      String income_num = (String) obj.get("income_num");
+      income_num = income_num.trim();
+      income.setIncome_num(Integer.parseInt(income_num));
+    } else {
+      income.setIncome_num(0);
+    }
+
+    if(!obj.isNull("income_type")) {
+      income.setIncome_type((String) obj.get("income_type"));
+    } else {
+      income.setIncome_type("");
+    }
+
+    if(!obj.isNull("income_trait")) {
+      income.setIncome_trait((String) obj.get("income_trait"));
+    } else {
+      income.setIncome_trait("");
+    }
+
+    if(!obj.isNull("income_comment")) {
+      income.setIncome_comment((String) obj.get("income_comment"));
+    } else {
+      income.setIncome_comment("");
+    }
+
+    int result = service.UpdateInsertIncome(income);
+
+    return result;
+  }
+
+/*  @RequestMapping("updateInsertIncome")
   public ModelAndView UpdateInsertIncome(ModelAndView mv, @ModelAttribute Income income, @RequestParam(value = "update_list", required = false) String update_list, @RequestParam("data") String data) {
     JSONArray arr = new JSONArray(data);
 
@@ -225,9 +316,77 @@ public class IncomeController {
     mv.setViewName("redirect:/income");
 
     return mv;
+  }*/
+
+  @ResponseBody
+  @RequestMapping("updateInsertRemain")
+  public int UpdateInsertRemain(ModelAndView mv, @ModelAttribute IncomeRemain incomeRemain, @RequestParam("data") String data) {
+    JSONArray arr = new JSONArray(data);
+
+    JSONObject obj = arr.getJSONObject(0);
+
+    if(!obj.isNull("income_name")) {
+      incomeRemain.setIncome_name((String) obj.get("income_name"));
+    } else {
+      incomeRemain.setIncome_name("");
+    }
+
+    if(!obj.isNull("income_remain_num")) {
+      incomeRemain.setIncome_remain_num((String) obj.get("income_remain_num"));
+    } else {
+      incomeRemain.setIncome_remain_num("");
+    }
+
+    if(!obj.isNull("income_remain_amount")) {
+      String income_remain_amount = (String) obj.get("income_remain_amount");
+      income_remain_amount = income_remain_amount.trim();
+      incomeRemain.setIncome_remain_amount(Integer.parseInt(income_remain_amount));
+    } else {
+      incomeRemain.setIncome_remain_amount(0);
+    }
+
+    if(!obj.isNull("income_remain_in")) {
+      String income_remain_in = (String) obj.get("income_remain_in");
+      income_remain_in = income_remain_in.trim();
+      incomeRemain.setIncome_remain_in(Integer.parseInt(income_remain_in));
+    } else {
+      incomeRemain.setIncome_remain_in(0);
+    }
+
+    if(!obj.isNull("income_remain_out")) {
+      String income_remain_out = (String) obj.get("income_remain_out");
+      income_remain_out = income_remain_out.trim();
+      incomeRemain.setIncome_remain_out(Integer.parseInt(income_remain_out));
+    } else {
+      incomeRemain.setIncome_remain_out(0);
+    }
+
+    if(!obj.isNull("income_remain_re")) {
+      String income_remain_re = (String) obj.get("income_remain_re");
+      income_remain_re = income_remain_re.trim();
+      incomeRemain.setIncome_remain_re(Integer.parseInt(income_remain_re));
+    } else {
+      incomeRemain.setIncome_remain_re(0);
+    }
+
+    if(!obj.isNull("income_remain_person")) {
+      incomeRemain.setIncome_remain_person((String) obj.get("income_remain_person"));
+    } else {
+      incomeRemain.setIncome_remain_person("");
+    }
+
+    if(!obj.isNull("income_remain_date")) {
+      incomeRemain.setIncome_remain_date((String) obj.get("income_remain_date"));
+    } else {
+      incomeRemain.setIncome_remain_date("");
+    }
+
+    int result = service.UpdateInsertRemain(incomeRemain);
+
+    return result;
   }
 
-  @RequestMapping("updateInsertRemain")
+  /*@RequestMapping("updateInsertRemain")
   public ModelAndView UpdateInsertRemain(ModelAndView mv, @ModelAttribute IncomeRemain incomeRemain, @RequestParam("data") String data) {
     JSONArray arr = new JSONArray(data);
 
@@ -282,7 +441,7 @@ public class IncomeController {
     mv.setViewName("redirect:/income");
 
     return mv;
-  }
+  }*/
 
   // 시교자원 수정
   @ResponseBody
@@ -330,7 +489,7 @@ public class IncomeController {
         } else if (k.equals("도입자")) {
           income.setIncome_person(obj.getString(k));
         } else if (k.equals("도입연월일")) {
-          income.setIncome_date(obj.getString(k));
+//          income.setIncome_date(obj.getString(k));
         } else if (k.equals("현 종자량")) {
           income.setIncome_num(Integer.parseInt(obj.getString(k)));
         } else if (k.equals("타입")) {

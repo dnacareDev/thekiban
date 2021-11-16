@@ -5,6 +5,8 @@ import lombok.Setter;
 import lombok.ToString;
 import org.apache.ibatis.type.Alias;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @ToString
@@ -19,7 +21,7 @@ public class Income {
   private String income_place;
   private String income_country;
   private String income_person;
-  private String income_date;
+  private LocalDate income_date;
   private int income_num;
   private String income_type;
   private String income_trait;

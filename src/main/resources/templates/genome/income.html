@@ -530,6 +530,30 @@
             text-decoration: underline;
             cursor: pointer;
         }
+
+        #incomeGrid .tui-grid-body-area td[data-column-name='income_code'] {
+            color: mediumblue;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        #saveRow {
+            float: right;
+            color: #fff;
+            background-color: #217566;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        #cancelRow {
+            float: right;
+            color: #217566;
+            background-color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
     </style>
 
 </head>
@@ -589,74 +613,18 @@
                                 </div>
                             </div>
                         </div>
-                        <div class='card-extra mt-10 mb-10 mr-20 plus_btn_submit1'><button type='button' style="float:right; color:#fff;background-color:#217566; border:none; padding: 5px 10px; border-radius: 5px">저장</button></div>
+                        <div class='card-extra mt-10 mb-10 mr-20 plus_btn_submit1'>
+                            <button type='button' id="cancelRow" onclick="cancelRow()" style="visibility: hidden;">취소</button>
+                            <button type='button' id="saveRow" onclick="saveRow()" style="visibility: hidden;">저장</button>
+                        </div>
                         <div class="card-body" style="padding-top: 0;">
                             <div class="bg-white">
-                                <div class="table-responsive">
-                                    <table class="table" id="table1">
-                                        <thead class="text-center">
-                                        <tr>
-                                            <th><input type="checkbox" name="RowCheck" value="selectAll" onclick="selectAll(this)"></th>
-                                            <th><span class="title">첨부파일</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                           alt="첨부파일"></th>
-                                            <th style="cursor: pointer;"><span class="title">작물</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                                                  alt="작물"></th>
-                                            <th style="cursor: pointer;"><span class="title">도입번호 (ID)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                                                         alt="도입번호"></th>
-                                            <th style="cursor: pointer;"><span class="title">품종명</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="품종명">
-                                            </th>
-                                            <th style="cursor: pointer;"><span class="title">구분</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="구분">
-                                            </th>
-                                            <th style="cursor: pointer;"><span class="title">도입처</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="도입처">
-                                            </th>
-                                            <th style="cursor: pointer;"><span class="title">도입국가</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                                                    alt="도입국가"></th>
-                                            <th style="cursor: pointer;"><span class="title">도입자</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="도입자">
-                                            </th>
-                                            <th style="cursor: pointer;"><span class="title">도입연월일</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                                                     alt="도입연월일"></th>
-                                            <th style="cursor: pointer;"><span class="title">현 종자량</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                                                     alt="현 종자량"></th>
-                                            <th style="cursor: pointer;"><span class="title">타입</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                                                  alt="타입"></th>
-                                            <th style="cursor: pointer;"><span class="title">주요 특성</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                                                     alt="주요 특성"></th>
-                                            <th style="cursor: pointer;"><span class="title">비고</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                                                  alt="비고"></th>
-                                        </tr>
-                                        </thead>
-                                        <tbody class="text-center income-list" id="income_list">
-                                        </tbody>
-                                    </table>
-
-                                    <table class="table" id="table2">
-                                        <thead class="text-center">
-                                        <tr>
-                                            <th><input type="checkbox" name="RowCheck1" value="selectAll" onclick="selectAll(this)"></th>
-                                            <th style="cursor: pointer;"><span class="title">도입번호(ID)</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                                                        alt="도입번호(ID)"></th>
-                                            <th style="cursor: pointer;"><span class="title">종자 보유량</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                                                      alt="종자 보유량"></th>
-                                            <th style="cursor: pointer;"><span class="title">입고량</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                                                   alt="입고량"></th>
-                                            <th style="cursor: pointer;"><span class="title">출고량</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                                                   alt="출고량"></th>
-                                            <th style="cursor: pointer;"><span class="title">재고량</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                                                   alt="재고량"></th>
-                                            <th style="cursor: pointer;"><span class="title">담당자</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                                                   alt="담당자"></th>
-                                            <th style="cursor: pointer;"><span class="title">일자</span><i></i><img src="../assets/vendor_assets/img/title_icon.png"
-                                                                                                                  alt="일자"></th>
-                                        </tr>
-                                        </thead>
-                                        <tbody class="text-center incomeRemain-list" id="incomeRemain-list">
-                                        </tbody>
-                                    </table>
-                                </div>
+                                <div id="incomeGrid"></div>
+                                <div id="remainGrid" style="visibility: hidden; height: 0;"></div>
 
                                 <div class="row">
                                     <div class="col-4">
-                                        <button class="btn btn-icon btn-light btn-circle" id="addRow" onclick="addRow()">
+                                        <button class="btn btn-icon btn-light btn-circle" onclick="insertRow()">
                                             <span data-feather="plus"></span>
                                         </button>
                                         <button class="btn btn-icon btn-light btn-circle" onclick="DeleteIncome()">
@@ -1276,21 +1244,21 @@
     });
 
     $("#CropSelect").change(function () {
-        SearchIncome(1);
-        SearchRemain(1);
+        OtherIncome(1);
+        OtherRemain(1);
     })
 
     // 갯수 선택
     $("#limit").change(function () {
-        SearchIncome(1);
-        SearchRemain(1);
+        OtherIncome(1);
+        OtherRemain(1);
     })
 
     var emptyEls;
 
     var btnindex = 0;
 
-    function SearchIncome(e) {
+    /*function SearchIncome(e) {
         var income_name = $("#CropSelect").val();
         var limit = $("#limit").val();
 
@@ -1424,7 +1392,7 @@
                     emptyEls = Array.prototype.slice.call(emptyEls);
                 }
             });
-    }
+    }*/
 
     // 도입번호 팝업
     function SearchRemainPop(e) {
@@ -1522,11 +1490,11 @@
         if (tablechk === 0) {
             var total_id = [];
 
-            $("input:checkbox[name=RowCheck]:checked").each(function () {
-                var income_id = $(this).val();
+            var l = incomegrid.getCheckedRows().length;
 
-                total_id.push(income_id);
-            });
+            for(let i = 0; i < l; i++) {
+                total_id.push(incomegrid.getCheckedRows()[i].income_id)
+            }
 
             var data = {'income_id': total_id};
 
@@ -1539,8 +1507,6 @@
                         data: data,
                         success: function (result) {
                             if (result == 0) {
-                                alert("삭제에 실패하였습니다.");
-                                location.reload();
                             } else {
                                 location.reload();
                             }
@@ -1552,13 +1518,13 @@
         } else {
             var total_id1 = [];
 
-            $("input:checkbox[name=RowCheck1]:checked").each(function () {
-                var income_id1 = $(this).val();
+            var l1 = remaingrid.getCheckedRows().length;
 
-                total_id1.push(income_id1);
-            });
+            for(let i = 0; i < l1; i++) {
+                total_id1.push(remaingrid.getCheckedRows()[i].income_remain_id)
+            }
 
-            var data = {'income_remain_id': total_id1};
+            var data1 = {'income_remain_id': total_id1};
 
             if (confirm("삭제하시겠습니까?") == true) {
                 $.ajax(
@@ -1566,11 +1532,9 @@
                         url: 'deleteRemain',
                         method: 'POST',
                         dataType: 'json',
-                        data: data,
+                        data: data1,
                         success: function (result) {
                             if (result == 0) {
-                                alert("삭제에 실패하였습니다.");
-                                location.reload();
                             } else {
                                 location.reload();
                             }
@@ -1581,86 +1545,6 @@
             }
         }
     }
-
-    // 정렬
-    $(document).ready(function () {
-        $('#table1 th').each(function (column) {
-            $(this).click(function () {
-                if ($(this).is('.asc')) {
-                    $(this).removeClass('asc');
-                    $(this).addClass('desc');
-                    sortdir = -1;
-                } else {
-                    $(this).addClass('asc');
-                    $(this).removeClass('desc');
-                    sortdir = 1;
-                }
-                $(this).siblings().removeClass('asc');
-                $(this).siblings().removeClass('desc');
-
-                var rec = $('#table1').find('tbody>tr').get();
-
-                console.log(rec);
-
-                rec.sort(function (a, b) {
-                    var val1 = +($(a).children('td').eq(column).text());
-                    var val2 = +($(b).children('td').eq(column).text());
-
-                    if (isNaN(val1) && isNaN(val2)) {
-                        val1 = $(a).children('td').eq(column).text();
-                        val2 = $(b).children('td').eq(column).text();
-
-                        return (val1 < val2) ? -sortdir : (val1 > val2) ? sortdir : 0;
-                    } else {
-                        return (val1 < val2) ? -sortdir : (val1 > val2) ? sortdir : 0;
-                    }
-                });
-
-                $.each(rec, function (index, row) {
-                    $('#table1 tbody').append(row);
-                });
-            });
-        });
-
-        $('#table2 th').each(function (column) {
-            $(this).click(function () {
-                if ($(this).is('.asc')) {
-                    $(this).removeClass('asc');
-                    $(this).addClass('desc');
-                    sortdir = -1;
-                } else {
-                    $(this).addClass('asc');
-                    $(this).removeClass('desc');
-                    sortdir = 1;
-                }
-                $(this).siblings().removeClass('asc');
-                $(this).siblings().removeClass('desc');
-
-                var rec = $('#table2').find('tbody>tr').get();
-
-                rec.sort(function (a, b) {
-                    var val1 = +($(a).children('td').eq(column).text());
-                    var val2 = +($(b).children('td').eq(column).text());
-
-                    if (isNaN(val1) && isNaN(val2)) {
-                        val1 = $(a).children('td').eq(column).text();
-                        val2 = $(b).children('td').eq(column).text();
-
-                        return (val1 < val2) ? -sortdir : (val1 > val2) ? sortdir : 0;
-                    } else {
-                        return (val1 < val2) ? -sortdir : (val1 > val2) ? sortdir : 0;
-                    }
-                });
-
-                $.each(rec, function (index, row) {
-                    $('#table2 tbody').append(row);
-                });
-            });
-        });
-    });
-    // 정렬
-
-    var emptyElsIndex = 0;
 
     function addRow() {
         if (tablechk === 0) {
@@ -1825,7 +1709,6 @@
                 data: data,
                 success: function (result) {
                     $("#upload_id").val(e);
-                    // $(".sample_title").text("시교명 : " + result.sample.standard);
 
                     var file_list = $("#file_list");
                     var file_add = "";
@@ -1900,7 +1783,7 @@
     }
 
     /* 첨부파일 */
-
+/*
     $(document).on("keydown", ".result_tr input:text", function (e) {
         var resultTr = document.querySelectorAll(".result_tr input[type=text]");
         var resultTr = Array.prototype.slice.call(resultTr);
@@ -1938,9 +1821,571 @@
                 $(this).parent().parent().parent().find("input:text").eq(index + methodLength).focus();
             }
         }
-    });
-</script>
+    });*/
 
+    /* 도입자원 재고관리 테이블 구분 */
+    var tablechk = 0;
+
+    $("#incomeTable1").click(function () {
+        tablechk = 0;
+        $("#incomeGrid").css("display", "block");
+        $("#remainGrid").css("display", "none");
+    })
+
+    $("#incomeTable2").click(function () {
+        tablechk = 1;
+        $("#incomeGrid").css("display", "none");
+        $("#remainGrid").css({"display": "block", "visibility": "", "height": "auto"});
+    })
+    /* 도입자원 재고관리 테이블 구분 */
+
+    // grid
+    var incomegrid = null;
+    var remaingrid = null;
+
+    function SearchIncome(e) {
+        var income_name = $("#CropSelect").val();
+        var limit = $("#limit").val();
+
+        var data = {"income_name": income_name, "page_num": e, "limit": limit};
+
+        $.ajax(
+            {
+                url: 'searchIncome',
+                method: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function (result) {
+                    incomegrid = new tui.Grid({
+                        el: document.getElementById('incomeGrid'),
+                        scrollX: false,
+                        scrollY: false,
+                        data: result.income,
+                        rowHeaders: ['checkbox'],
+                        columns: [
+                            {
+                                header: '첨부파일',
+                                name: 'file'
+                            },
+                            {
+                                header: '작물',
+                                name: 'income_name',
+                                editor: 'text',
+                                sortable: true,
+                                sortingType: 'asc'
+                            },
+                            {
+                                header: '도입번호 (ID)',
+                                name: 'income_code',
+                                editor: 'text',
+                                sortable: true,
+                                sortingType: 'asc',
+                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
+                            },
+                            {
+                                header: '품종명',
+                                name: 'income_kind',
+                                editor: 'text',
+                                sortable: true,
+                                sortingType: 'asc'
+                            },
+                            {
+                                header: '구분',
+                                name: 'income_division',
+                                editor: 'text',
+                                sortable: true,
+                                sortingType: 'asc'
+                            },
+                            {
+                                header: '도입처',
+                                name: 'income_place',
+                                editor: 'text',
+                                sortable: true,
+                                sortingType: 'asc'
+                            },
+                            {
+                                header: '도입국가',
+                                name: 'income_country',
+                                editor: 'text',
+                                sortable: true,
+                                sortingType: 'asc'
+                            },
+                            {
+                                header: '도입자',
+                                name: 'income_person',
+                                editor: 'text',
+                                sortable: true,
+                                sortingType: 'asc'
+                            },
+                            {
+                                header: '도입연월일',
+                                name: 'income_date',
+                                editor: 'text',
+                                filter: 'number',
+                                sortable: true,
+                                sortingType: 'asc'
+                            },
+                            {
+                                header: '현 종자량',
+                                name: 'income_num',
+                                editor: 'text',
+                                sortable: true,
+                                sortingType: 'asc'
+                            },
+                            {
+                                header: '타입',
+                                name: 'income_type',
+                                editor: 'text',
+                                sortable: true,
+                                sortingType: 'asc'
+                            },
+                            {
+                                header: '주요 특성',
+                                name: 'income_trait',
+                                editor: 'text',
+                                sortable: true,
+                                sortingType: 'asc'
+                            },
+                            {
+                                header: '비고',
+                                name: 'income_comment',
+                                editor: 'text',
+                                sortable: true,
+                                sortingType: 'asc'
+                            }
+                        ],
+                        pageOptions: {
+                            perPage: limit,
+                        }
+                    });
+
+                    incomegrid.on('click', (ev) => {
+                        if (ev.targetType === 'cell' && ev.columnName === 'income_code') {
+                            var value_seed = ev.nativeEvent.srcElement;
+
+                            SearchRemainPop(value_seed);
+                        }
+                    });
+
+                    var before = null;
+                    var after = null;
+
+                    incomegrid.on('editingStart', (ev) => {
+                        before = ev.value;
+                    });
+
+                    incomegrid.on('editingFinish', (ev) => {
+                        after = ev.value;
+
+                        if(after != before) {
+                            var income_id = ev.instance.getRow(ev.rowKey).income_id;
+                            var income_name = ev.columnName;
+                            var income_value = ev.value;
+
+                            var data = {"income_id": income_id, "income_name": income_name, "income_value": income_value};
+
+                            $.ajax(
+                                {
+                                    url: 'updateIncome',
+                                    method: 'POST',
+                                    dataType: 'json',
+                                    data: data,
+                                    success: function (result) {
+                                        if (result == 0) {
+                                            return Alert("수정에 실패하였습니다.")
+                                        }
+                                    }
+                                });
+                        }
+                    });
+                }
+            });
+
+    }
+
+    function OtherIncome(e) {
+        var income_name = $("#CropSelect").val();
+        var limit = $("#limit").val();
+
+        var data = {"income_name": income_name, "page_num": e, "limit": limit};
+
+        $.ajax(
+            {
+                url: 'searchIncome',
+                method: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function (result) {
+                    incomegrid.resetData(result.income);
+
+                    incomegrid.setPerPage(limit);
+
+                    incomegrid.on('click', (ev) => {
+                        if (ev.targetType === 'cell' && ev.columnName === 'income_code') {
+                            var value_seed = ev.nativeEvent.srcElement;
+
+                            SearchRemainPop(value_seed);
+                        }
+                    });
+
+                    var before = null;
+                    var after = null;
+
+                    incomegrid.on('editingStart', (ev) => {
+                        before = ev.value;
+                    });
+
+                    incomegrid.on('editingFinish', (ev) => {
+                        after = ev.value;
+
+                        if(after != before) {
+                            var income_id = ev.instance.getRow(ev.rowKey).income_id;
+                            var income_name = ev.columnName;
+                            var income_value = ev.value;
+
+                            var data = {"income_id": income_id, "income_name": income_name, "income_value": income_value};
+
+                            $.ajax(
+                                {
+                                    url: 'updateIncome',
+                                    method: 'POST',
+                                    dataType: 'json',
+                                    data: data,
+                                    success: function (result) {
+                                        if (result == 0) {
+                                            return Alert("수정에 실패하였습니다.")
+                                        }
+                                    }
+                                });
+                        }
+                    });
+                }
+            });
+
+    }
+
+    function SearchRemain(e) {
+        var income_name1 = $("#CropSelect").val();
+        var limit1 = $("#limit").val();
+
+        var data1 = {"income_name": income_name1, "page_num": e, "limit": limit1};
+
+        $.ajax(
+            {
+                url: 'searchRemain',
+                method: 'POST',
+                dataType: 'json',
+                data: data1,
+                success: function (result1) {
+                    remaingrid = new tui.Grid({
+                        el: document.getElementById('remainGrid'),
+                        scrollX: false,
+                        scrollY: false,
+                        data: result1.incomeRemain,
+                        rowHeaders: ['checkbox'],
+                        columns: [
+                            {
+                                header: '도입번호(ID)',
+                                name: 'income_remain_num',
+                                editor: 'text',
+                                sortable: true
+                            },
+                            {
+                                header: '종자 보유량',
+                                name: 'income_remain_amount',
+                                editor: 'text',
+                                sortable: true
+                            },
+                            {
+                                header: '입고량',
+                                name: 'income_remain_in',
+                                editor: 'text',
+                                sortable: true
+                            },
+                            {
+                                header: '출고량',
+                                name: 'income_remain_out',
+                                editor: 'text',
+                                sortable: true
+                            },
+                            {
+                                header: '재고량',
+                                name: 'income_remain_re',
+                                editor: 'text',
+                                sortable: true
+                            },
+                            {
+                                header: '담당자',
+                                name: 'income_remain_person',
+                                editor: 'text',
+                                filter: 'number',
+                                sortable: true
+                            },
+                            {
+                                header: '일자',
+                                name: 'income_remain_date',
+                                editor: 'text',
+                                filter: 'number',
+                                sortable: true
+                            }
+                        ],
+                        pageOptions: {
+                            perPage: limit1,
+                        }
+                    });
+
+                    var before = null;
+                    var after = null;
+
+                    remaingrid.on('editingStart', (ev) => {
+                        before = ev.value;
+                    });
+
+                    remaingrid.on('editingFinish', (ev) => {
+                        after = ev.value;
+
+                        if(after != before) {
+                            var income_remain_id = ev.instance.getRow(ev.rowKey).income_remain_id;
+                            var income_remain_name = ev.columnName;
+                            var income_remain_value = ev.value;
+
+                            var data = {"income_remain_id": income_remain_id, "income_remain_name": income_remain_name, "income_remain_value": income_remain_value};
+
+                            $.ajax(
+                                {
+                                    url: 'updateRemain',
+                                    method: 'POST',
+                                    dataType: 'json',
+                                    data: data,
+                                    success: function (result) {
+                                        if (result == 0) {
+                                            return Alert("수정에 실패하였습니다.")
+                                        }
+                                    }
+                                });
+                        }
+                    });
+
+                }
+            });
+    }
+
+    function OtherRemain(e) {
+        var income_name1 = $("#CropSelect").val();
+        var limit1 = $("#limit").val();
+
+        var data1 = {"income_name": income_name1, "page_num": e, "limit": limit1};
+
+        $.ajax(
+            {
+                url: 'searchRemain',
+                method: 'POST',
+                dataType: 'json',
+                data: data1,
+                success: function (result1) {
+                    remaingrid.resetData(result1.incomeRemain);
+
+                    remaingrid.setPerPage(limit1);
+
+                    var before = null;
+                    var after = null;
+
+                    remaingrid.on('editingStart', (ev) => {
+                        before = ev.value;
+                    });
+
+                    remaingrid.on('editingFinish', (ev) => {
+                        after = ev.value;
+
+                        if(after != before) {
+                            var income_remain_id = ev.instance.getRow(ev.rowKey).income_remain_id;
+                            var income_remain_name = ev.columnName;
+                            var income_remain_value = ev.value;
+
+                            var data = {"income_remain_id": income_remain_id, "income_remain_name": income_remain_name, "income_remain_value": income_remain_value};
+
+                            $.ajax(
+                                {
+                                    url: 'updateRemain',
+                                    method: 'POST',
+                                    dataType: 'json',
+                                    data: data,
+                                    success: function (result) {
+                                        if (result == 0) {
+                                            return Alert("수정에 실패하였습니다.")
+                                        }
+                                    }
+                                });
+                        }
+                    });
+                }
+            });
+    }
+
+    var lastID = 0;
+
+    function insertRow() {
+        $("#saveRow").css("visibility", "");
+        $("#cancelRow").css("visibility", "");
+
+        if (tablechk === 0) {
+            var cnt = incomegrid.getRowCount();
+
+            const newRow = {
+                income_name: $("#CropSelect").val(),
+            };
+
+            incomegrid.prependRow(newRow);
+            incomegrid.check(cnt);
+
+            var input_data = [];
+
+            input_data.push(incomegrid.getCheckedRows()[0]);
+
+            $.ajax(
+                {
+                    url: 'insertIncome',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        "input_data": JSON.stringify(input_data)
+                    },
+                    success: function (result) {
+                        if (result != null) {
+                            lastID = result.income_id;
+                        }
+                    }
+                });
+        } else {
+            var cnt1 = remaingrid.getRowCount();
+
+            const newRow = {
+                income_name: $("#CropSelect").val(),
+            };
+
+            remaingrid.prependRow(newRow);
+            remainegrid.check(cnt1);
+
+            var input_data1 = [];
+
+            input_data1.push(remaingrid.getCheckedRows()[0]);
+
+            $.ajax(
+                {
+                    url: 'insertIncomeRemain',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        "input_data": JSON.stringify(input_data1)
+                    },
+                    success: function (result) {
+                        if (result != null) {
+                            lastID = result.income_remain_id;
+                        }
+                    }
+                });
+        }
+    }
+
+    function saveRow() {
+        if(tablechk === 0) {
+            var data = [];
+
+            var data_in = incomegrid.getCheckedRows()[0];
+
+            data.push(data_in);
+
+            $.ajax(
+                {
+                    url: 'updateInsertIncome',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        "data": JSON.stringify(data)
+                    },
+                    success: function (result) {
+                        if(result == 0) {
+                            return Alert("저장에 실패하였습니다.");
+                        } else {
+                            location.reload();
+                        }
+                    }
+                });
+        } else {
+            var data1 = [];
+
+            var data_in1 = remaingrid.getCheckedRows()[0];
+
+            data1.push(data_in1);
+
+            console.log(data1);
+
+            $.ajax(
+                {
+                    url: 'updateInsertRemain',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        "data": JSON.stringify(data1)
+                    },
+                    success: function (result) {
+                        if(result == 0) {
+                            return Alert("저장에 실패하였습니다.");
+                        } else {
+                            location.reload();
+                        }
+                    }
+                });
+        }
+    }
+
+    function cancelRow() {
+        if (tablechk === 0) {
+            var total_id = [];
+
+            total_id.push(lastID);
+
+            var data = {'income_id': total_id};
+
+            $.ajax(
+                {
+                    url: 'deleteIncome',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: data,
+                    success: function (result) {
+                        if (result == 0) {
+                        } else {
+                            OtherIncome(1);
+                        }
+                    }
+                });
+        } else {
+            var total_id1 = [];
+
+            total_id1.push(lastID);
+
+            var data1 = {'income_remain_id': total_id1};
+
+            $.ajax(
+                {
+                    url: 'deleteRemain',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: data1,
+                    success: function (result) {
+                        if (result == 0) {
+                        } else {
+                            OtherRemain(1);
+                        }
+                    }
+                });
+        }
+
+        $("#saveRow").css("visibility", "hidden");
+        $("#cancelRow").css("visibility", "hidden");
+    }
+</script>
 </body>
 
 </html>

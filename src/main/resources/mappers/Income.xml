@@ -129,7 +129,7 @@
             income_type     = #{income_type},
             income_trait    = #{income_trait},
             income_comment  = #{income_comment}
-        WHERE income_id = #{income_id}
+        ORDER BY income_id DESC LIMIT 1;
     </update>
 
     <!-- 수출자원 수정 -->
@@ -142,7 +142,7 @@
             income_remain_re     = #{income_remain_re},
             income_remain_person = #{income_remain_person},
             income_remain_date   = #{income_remain_date}
-        WHERE income_remain_id = #{income_remain_id}
+        ORDER BY income_remain_id DESC LIMIT 1;
     </update>
 
     <!-- 첨부파일 조회 -->

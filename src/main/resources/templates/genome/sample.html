@@ -2018,8 +2018,6 @@
 
             var l1 = outcomegrid.getCheckedRows().length;
 
-            console.log();
-
             for (let i = 0; i < l1; i++) {
                 total_id1.push(outcomegrid.getCheckedRows()[i].sample_outcome_id)
             }
@@ -2045,7 +2043,6 @@
             }
         }
     }
-
     // 시교자원 삭제
 
     // 정렬
@@ -2535,16 +2532,15 @@
         }
     }
 
+    // grid
     var samplegrid = null;
     var outcomegrid = null;
 
-    // grid test
     function SearchSample(e) {
         var sample_name = $("#CropSelect").val();
         var limit = $("#limit").val();
 
         var data = {"sample_name": sample_name, "page_num": e, "limit": limit};
-
 
         $.ajax(
             {
