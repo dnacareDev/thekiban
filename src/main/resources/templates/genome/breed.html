@@ -679,6 +679,7 @@
                                         <tbody class="text-center" id="breed_list">
                                         </tbody>
                                     </table>
+                                    <div id="breedGrid"></div>
                                 </div>
                                 <div class="row">
                                     <div class="col-4">
@@ -1853,6 +1854,7 @@
     // DB에 저장된 데이터 출력
     $(document).ready(function () {
         SearchBreed(1);
+        SearchBreedgrid(1);
     });
 
     // 작물 선택
@@ -2225,7 +2227,6 @@
             add_list += '<li class="list-group-item-sm list-group-item">';
             add_list += '<div class="row">';
             add_list += '<input type="checkbox" class="checkbox mr-2" name="mis_research">';
-            /* add_list += '<input type="hidden" id="detail_id" name="detail_id" value="' + research_id + '">'; */
             add_list += '<input type="hidden" name="detail_id" value="' + research_id + '">';
             add_list += '<span class="research-title">' + research_title + '</span>';
             add_list += '</div>';
@@ -2372,6 +2373,116 @@
                 $(this).find("input[type='checkbox']").eq(0).prop("checked", false);
             }
         });
+    }
+
+    var breedgrid = null;
+
+    function SearchBreedgrid(e) {
+        var breed_name = $("#CropSelect").val();
+        var limit = $("#limit").val();
+
+        var data = {"breed_name": breed_name, "page_num": e, "limit": limit};
+
+        $.ajax(
+            {
+                url: 'searchBreed',
+                method: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function (result) {
+                    breedgrid = new tui.Grid({
+                        el: document.getElementById('breedGrid'),
+                        scrollX: false,
+                        scrollY: false,
+                        data: result.breed,
+                        rowHeaders: ['checkbox'],
+                        columns: [
+                            {
+                                header: '첨부파일',
+                                name: 'file'
+                            },
+                            {
+                                header: '작물',
+                                name: 'sample_name',
+                                editor: 'text',
+                                sortable: true,
+                                sortingType: 'asc'
+                            },
+                            {
+                                header: '시교명(ID)',
+                                name: 'sample_code',
+                                editor: 'text',
+                                sortable: true,
+                                sortingType: 'asc',
+                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
+                            },
+                            {
+                                header: '목표 지역',
+                                name: 'sample_country',
+                                editor: 'text',
+                                sortable: true,
+                                sortingType: 'asc'
+                            },
+                            {
+                                header: '구분',
+                                name: 'sample_type',
+                                editor: 'text',
+                                sortable: true,
+                                sortingType: 'asc'
+                            },
+                            {
+                                header: '교배번호',
+                                name: 'sample_mate',
+                                editor: 'text',
+                                sortable: true,
+                                sortingType: 'asc'
+                            },
+                            {
+                                header: '종자번호(ID)',
+                                name: 'sample_seed',
+                                editor: 'text',
+                                sortable: true,
+                                sortingType: 'asc'
+                            },
+                            {
+                                header: '현 종자량(g)',
+                                name: 'sample_amount',
+                                editor: 'text',
+                                filter: 'number',
+                                sortable: true,
+                                sortingType: 'asc'
+                            },
+                            {
+                                header: '기내 발아율(%)',
+                                name: 'sample_sprout',
+                                editor: 'text',
+                                filter: 'number',
+                                sortable: true,
+                                sortingType: 'asc'
+                            },
+                            {
+                                header: '기내 순도율(%)',
+                                name: 'sample_purity',
+                                editor: 'text',
+                                filter: 'number',
+                                sortable: true,
+                                sortingType: 'asc'
+                            },
+                            {
+                                header: '비고',
+                                name: 'sample_comment',
+                                editor: 'text',
+                                sortable: true,
+                                sortingType: 'asc'
+                            }
+                        ],
+                        pageOptions: {
+                            perPage: limit,
+                        }
+                    });
+                }
+            });
+
     }
 </script>
 </body>
