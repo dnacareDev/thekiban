@@ -2581,6 +2581,7 @@
                             {
                                 header: '시교명(ID)',
                                 name: 'sample_code',
+                                editor: 'text',
                                 sortable: true,
                                 sortingType: 'asc',
                                 filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
@@ -2730,6 +2731,7 @@
                             {
                                 header: '종자번호(ID)',
                                 name: 'sample_outcome_num',
+                                editor: 'text',
                                 sortable: true,
                                 filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
                             },
@@ -2811,6 +2813,14 @@
                         }
                     });
 
+                    outcomegrid.on('dblclick', (ev) => {
+                        if (ev.targetType === 'cell' && ev.columnName === 'sample_outcome_num') {
+                            var value = ev.nativeEvent.srcElement;
+
+                            SearchSeed(value);
+                        }
+                    });
+
                 }
             });
     }
@@ -2852,6 +2862,7 @@
 
         if (tablechk === 0) {
             var cnt = samplegrid.getRowCount();
+
             const newRow = {
                 sample_name: $("#CropSelect").val(),
             };
@@ -2873,18 +2884,38 @@
                     },
                     success: function (result) {
                         if (result != null) {
-                            console.log(result.sample_id);
                             lastID = result.sample_id;
                         }
                     }
                 });
         } else {
+            var cnt1 = outcomegrid.getRowCount();
+
             const newRow = {
                 sample_name: $("#CropSelect").val(),
             };
 
             outcomegrid.prependRow(newRow);
-            outcomegrid.check(cnt);
+            outcomegrid.check(cnt1);
+
+            var input_data1 = [];
+
+            input_data1.push(outcomegrid.getCheckedRows()[0]);
+
+            $.ajax(
+                {
+                    url: 'insertSampleOutcome',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        "input_data": JSON.stringify(input_data1)
+                    },
+                    success: function (result) {
+                        if (result != null) {
+                            lastID = result.sample_outcome_id;
+                        }
+                    }
+                });
         }
     }
 
@@ -2894,33 +2925,49 @@
 
             var data_in = samplegrid.getCheckedRows()[0];
 
-            console.log(data_in);
+            data.push(data_in);
 
-            // data.push(data_in);
-            //
-            // $("input[class=rowInput]").each(function (index, item) {
-            //     const key = $(this).attr('name');
-            //     var value = $(this).val();
-            //
-            //     var arr = {key: key, value: value};
-            //
-            //     data.push(arr);
-            // });
-            //
-            // $.ajax(
-            //     {
-            //         url: 'updateInsertSample',
-            //         method: 'POST',
-            //         dataType: 'json',
-            //         data: {
-            //             "data": JSON.stringify(data)
-            //         },
-            //         success: function (result) {
-            //
-            //         }
-            //     });
+            $.ajax(
+                {
+                    url: 'updateInsertSample',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        "data": JSON.stringify(data)
+                    },
+                    success: function (result) {
+                        if(result == 0) {
+                            return Alert("저장에 실패하였습니다.");
+                        } else {
+                            location.reload();
+                        }
+                    }
+                });
         } else {
+            var data1 = [];
 
+            var data_in1 = outcomegrid.getCheckedRows()[0];
+
+            data1.push(data_in1);
+
+            console.log(data1);
+
+            $.ajax(
+                {
+                    url: 'updateInsertOutcome',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        "data": JSON.stringify(data1)
+                    },
+                    success: function (result) {
+                        if(result == 0) {
+                            return Alert("저장에 실패하였습니다.");
+                        } else {
+                            location.reload();
+                        }
+                    }
+                });
         }
     }
 
@@ -2946,7 +2993,25 @@
                     }
                 });
         } else {
-            OtherOutcome(1);
+            var total_id1 = [];
+
+            total_id1.push(lastID);
+
+            var data1 = {'sample_outcome_id': total_id1};
+
+            $.ajax(
+                {
+                    url: 'deleteSample',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: data1,
+                    success: function (result) {
+                        if (result == 0) {
+                        } else {
+                            OtherOutcome(1);
+                        }
+                    }
+                });
         }
 
         $("#saveRow").css("visibility", "hidden");

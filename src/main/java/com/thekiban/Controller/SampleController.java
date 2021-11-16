@@ -63,7 +63,7 @@ public class SampleController {
 
     JSONObject obj = arr.getJSONObject(0);
 
-    String value = (String) obj.get("value");
+    String value = (String) obj.get("sample_name");
 
     sampleOutcome.setSample_name(value);
 
@@ -143,18 +143,90 @@ public class SampleController {
     return 1;
   }
 
+  @ResponseBody
   @RequestMapping("updateInsertSample")
+  public int UpdateInsertSample(ModelAndView mv, @ModelAttribute Sample sample, @RequestParam(value = "update_list", required = false) String update_list, @RequestParam("data") String data) {
+    JSONArray arr = new JSONArray(data);
+
+    JSONObject obj = arr.getJSONObject(0);
+
+    if(!obj.isNull("sample_code")) {
+      sample.setSample_code((String) obj.get("sample_code"));
+    } else {
+      sample.setSample_code("");
+    }
+
+    if(!obj.isNull("sample_name")) {
+      sample.setSample_name((String) obj.get("sample_name"));
+    } else {
+      sample.setSample_name("");
+    }
+
+    if(!obj.isNull("sample_country")) {
+      sample.setSample_country((String) obj.get("sample_country"));
+    } else {
+      sample.setSample_country("");
+    }
+
+    if(!obj.isNull("sample_type")) {
+      sample.setSample_type((String) obj.get("sample_type"));
+    } else {
+      sample.setSample_type("");
+    }
+
+    if(!obj.isNull("sample_mate")) {
+      sample.setSample_mate((String) obj.get("sample_mate"));
+    } else {
+      sample.setSample_mate("");
+    }
+
+    if(!obj.isNull("sample_seed")) {
+      sample.setSample_seed((String) obj.get("sample_seed"));
+    } else {
+      sample.setSample_seed("");
+    }
+
+    if(!obj.isNull("sample_amount")) {
+      sample.setSample_amount(Double.parseDouble((String) obj.get("sample_amount")));
+    } else {
+      sample.setSample_amount(0);
+    }
+
+    if(!obj.isNull("sample_sprout")) {
+      String sample_sprout = (String) obj.get("sample_sprout");
+      sample_sprout = sample_sprout.trim();
+      sample.setSample_sprout(Integer.parseInt(sample_sprout));
+    } else {
+      sample.setSample_sprout(0);
+    }
+
+    if(!obj.isNull("sample_purity")) {
+      String sample_purity = (String) obj.get("sample_sprout");
+      sample_purity = sample_purity.trim();
+      sample.setSample_purity(Integer.parseInt(sample_purity));
+    } else {
+      sample.setSample_purity(0);
+    }
+
+    if(!obj.isNull("sample_comment")) {
+      sample.setSample_comment((String) obj.get("sample_comment"));
+    } else {
+      sample.setSample_comment("");
+    }
+
+    int result = service.UpdateInsertSample(sample);
+
+    return result;
+  }
+
+  /*@RequestMapping("updateInsertSample")
   public ModelAndView UpdateInsertSample(ModelAndView mv, @ModelAttribute Sample sample, @RequestParam(value = "update_list", required = false) String update_list, @RequestParam("data") String data) {
     JSONArray arr = new JSONArray(data);
 
-    JSONObject input_id = arr.getJSONObject(0);
+    Object obj = arr.get(0);
 
-    int value_id = (Integer) input_id.get("value");
-
-    sample.setSample_id(value_id);
-
-    for (int i = 1; i < arr.length(); i++) {
-      JSONObject obj = arr.getJSONObject(i);
+    System.out.println(obj);
+    for (int i = 0; i < arr.length(); i++) {
 
       String key_id = (String) obj.get("key");
       String value = (String) obj.get("value");
@@ -211,9 +283,107 @@ public class SampleController {
     mv.setViewName("redirect:/sample");
 
     return mv;
+  }*/
+
+  @ResponseBody
+  @RequestMapping("updateInsertOutcome")
+  public int UpdateInsertOutcome(@ModelAttribute SampleOutcome sampleOutcome, @RequestParam("data") String data) {
+    JSONArray arr = new JSONArray(data);
+
+    JSONObject obj = arr.getJSONObject(0);
+
+    if(!obj.isNull("sample_outcome_code")) {
+      sampleOutcome.setSample_outcome_code((String) obj.get("sample_outcome_code"));
+    } else {
+      sampleOutcome.setSample_outcome_code("");
+    }
+
+    if(!obj.isNull("sample_name")) {
+      sampleOutcome.setSample_name((String) obj.get("sample_name"));
+    } else {
+      sampleOutcome.setSample_name("");
+    }
+
+    if(!obj.isNull("sample_outcome_num")) {
+      sampleOutcome.setSample_outcome_num((String) obj.get("sample_outcome_num"));
+    } else {
+      sampleOutcome.setSample_outcome_num("");
+    }
+
+    if(!obj.isNull("sample_outcome_amount")) {
+      String sample_outcome_amount = (String) obj.get("sample_outcome_amount");
+      sample_outcome_amount = sample_outcome_amount.trim();
+      sampleOutcome.setSample_outcome_amount(Integer.parseInt(sample_outcome_amount));
+    } else {
+      sampleOutcome.setSample_outcome_amount(0);
+    }
+
+    if(!obj.isNull("sample_outcome_in")) {
+      String sample_outcome_in = (String) obj.get("sample_outcome_in");
+      sample_outcome_in = sample_outcome_in.trim();
+      sampleOutcome.setSample_outcome_in(Integer.parseInt(sample_outcome_in));
+    } else {
+      sampleOutcome.setSample_outcome_in(0);
+    }
+
+    if(!obj.isNull("sample_outcome_out")) {
+      String sample_outcome_out = (String) obj.get("sample_outcome_out");
+      sample_outcome_out = sample_outcome_out.trim();
+      sampleOutcome.setSample_outcome_out(Integer.parseInt(sample_outcome_out));
+    } else {
+      sampleOutcome.setSample_outcome_out(0);
+    }
+
+    if(!obj.isNull("sample_outcome_remain")) {
+      String sample_outcome_remain = (String) obj.get("sample_outcome_remain");
+      sample_outcome_remain = sample_outcome_remain.trim();
+      sampleOutcome.setSample_outcome_remain(Integer.parseInt(sample_outcome_remain));
+    } else {
+      sampleOutcome.setSample_outcome_remain(0);
+    }
+
+    if(!obj.isNull("sample_outcome_person")) {
+      sampleOutcome.setSample_outcome_person((String) obj.get("sample_outcome_person"));
+    } else {
+      sampleOutcome.setSample_outcome_person("");
+    }
+
+    if(!obj.isNull("sample_outcome_reciever")) {
+      sampleOutcome.setSample_outcome_reciever((String) obj.get("sample_outcome_reciever"));
+    } else {
+      sampleOutcome.setSample_outcome_reciever("");
+    }
+
+    if(!obj.isNull("sample_outcome_date")) {
+      sampleOutcome.setSample_outcome_date((String) obj.get("sample_outcome_date"));
+    } else {
+      sampleOutcome.setSample_outcome_date("");
+    }
+
+    if(!obj.isNull("sample_outcome_end")) {
+      sampleOutcome.setSample_outcome_end((String) obj.get("sample_outcome_end"));
+    } else {
+      sampleOutcome.setSample_outcome_end("");
+    }
+
+    if(!obj.isNull("sample_outcome_country")) {
+      sampleOutcome.setSample_outcome_country((String) obj.get("sample_outcome_country"));
+    } else {
+      sampleOutcome.setSample_outcome_country("");
+    }
+
+    if(!obj.isNull("sample_outcome_place")) {
+      sampleOutcome.setSample_outcome_place((String) obj.get("sample_outcome_place"));
+    } else {
+      sampleOutcome.setSample_outcome_place("");
+    }
+
+    int result = service.UpdateInsertOutcome(sampleOutcome);
+
+    return result;
   }
 
-  @RequestMapping("updateInsertOutcome")
+  /*@RequestMapping("updateInsertOutcome")
   public ModelAndView UpdateInsertOutcome(ModelAndView mv, @ModelAttribute SampleOutcome sampleOutcome, @RequestParam("data") String data) {
     JSONArray arr = new JSONArray(data);
 
@@ -289,7 +459,7 @@ public class SampleController {
     mv.setViewName("redirect:/sample");
 
     return mv;
-  }
+  }*/
 
   // 시교자원 수정
   @ResponseBody
