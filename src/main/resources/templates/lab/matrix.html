@@ -2,7 +2,6 @@
 <html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
       <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 <head>
-	<page import="bms.*">
     <!-- 공통 헤더 -->
     <!-- <th:block th:import="bms.*"></th:block> -->
     <th:block th:include="/../fragments/header.html"></th:block>
@@ -104,24 +103,23 @@
 		<div class="data_file" style="overflow: auto; height: 500px;">
         	<div class="top_menu_bar">
         		<ul>
-        			<li>menu1</li>
-        			<li>menu2</li>
-        			<li>menu3</li>
-        			<li>menu4</li>
+        			<li>distance matrix</li>
+        			<li>Phylogenic tree</li>
+        			<li>PCA plot</li>
+        			<li>pedigree map</li>
         		</ul>
         	</div>
         	<div class="content_type1 contents">
-        		content1
-        		<img src="../assets/vendor_assets/img/map1.png">
+        		<img th:src="|http://112.169.63.197:8883/common/r/result/${path}/${path}_distancematrix.png|">
         	</div>
         	<div class="content_type2 contents">
-        		content2
+        		<img th:src="|http://112.169.63.197:8883/common/r/result/${path}/${path}_phylogenictree3.png|">
         	</div>
         	<div class="content_type3 contents">
-        		content3
+        		<img th:src="|http://112.169.63.197:8883/common/r/result/${path}/${path}_pca.png|">
         	</div>
         	<div class="content_type4 contents">
-        		content4
+        		<!-- <img th:src="|http://112.169.63.197:8883/common/r/result/${path}/${path}_distancematrix.png|"> -->
         	</div>
 		</div>
 	</div>

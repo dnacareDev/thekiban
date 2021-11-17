@@ -12,6 +12,13 @@ public class LabServiceImpl implements LabService
 {
 	@Autowired
 	private LabMapper mapper;
+
+	// 분석 파일 조회
+	@Override
+	public AnalysisFile SelectAnalysisFile()
+	{
+		return mapper.SelectAnalysisFile();
+	}
 	
 	// 분석 파일 등록
 	@Override

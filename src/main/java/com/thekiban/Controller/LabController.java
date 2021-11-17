@@ -39,6 +39,13 @@ public class LabController
 	@RequestMapping("/matrix")
 	public ModelAndView Analysis(ModelAndView mv)
 	{
+		AnalysisFile analysis = service.SelectAnalysisFile();
+		
+		String[] extension = analysis.getAnalysis_file().split("_");
+		
+		mv.addObject("analysis", analysis);
+		mv.addObject("path", extension[0]);
+		
 		mv.setViewName("lab/matrix");
 		
 		return mv;
@@ -77,7 +84,7 @@ public class LabController
        	RunEtcR runetcr = new RunEtcR();
        	runetcr.MakeRunEtcR(date_name, file_name);
 		
-		mv.setViewName("lab/matrix");
+		mv.setViewName("redirect:/matrix");
 		
 //		return mv;
 	}
