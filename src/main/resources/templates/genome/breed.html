@@ -679,8 +679,8 @@
                                         <tbody class="text-center" id="breed_list">
                                         </tbody>
                                     </table>
-                                    <div id="breedGrid"></div>
                                 </div>
+                                <div id="breedGrid"></div>
                                 <div class="row">
                                     <div class="col-4">
                                         <button class="btn btn-icon btn-light btn-circle" onclick="InsertBtn();">
@@ -1859,12 +1859,12 @@
 
     // 작물 선택
     $("#CropSelect").change(function () {
-        SearchBreed(1);
+        OtherBreedgrid(1);
     })
 
     // 갯수 선택
     $("#limit").change(function () {
-        SearchBreed(1);
+        OtherBreedgrid(1);
     })
 
     // 품종 검색
@@ -2237,6 +2237,7 @@
         });
 
         step_container.append(add_list);
+
         CheckFunction();
     }
 
@@ -2392,97 +2393,127 @@
                 success: function (result) {
                     breedgrid = new tui.Grid({
                         el: document.getElementById('breedGrid'),
-                        scrollX: false,
+                        scrollX: true,
                         scrollY: false,
                         data: result.breed,
                         rowHeaders: ['checkbox'],
+                        columnOptions: {
+                          minWidth: 150
+                        },
                         columns: [
-                            {
-                                header: '첨부파일',
-                                name: 'file'
-                            },
-                            {
-                                header: '작물',
-                                name: 'sample_name',
-                                editor: 'text',
-                                sortable: true,
-                                sortingType: 'asc'
-                            },
-                            {
-                                header: '시교명(ID)',
-                                name: 'sample_code',
-                                editor: 'text',
-                                sortable: true,
-                                sortingType: 'asc',
-                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
-                            },
-                            {
-                                header: '목표 지역',
-                                name: 'sample_country',
-                                editor: 'text',
-                                sortable: true,
-                                sortingType: 'asc'
-                            },
-                            {
-                                header: '구분',
-                                name: 'sample_type',
-                                editor: 'text',
-                                sortable: true,
-                                sortingType: 'asc'
-                            },
-                            {
-                                header: '교배번호',
-                                name: 'sample_mate',
-                                editor: 'text',
-                                sortable: true,
-                                sortingType: 'asc'
-                            },
-                            {
-                                header: '종자번호(ID)',
-                                name: 'sample_seed',
-                                editor: 'text',
-                                sortable: true,
-                                sortingType: 'asc'
-                            },
-                            {
-                                header: '현 종자량(g)',
-                                name: 'sample_amount',
-                                editor: 'text',
-                                filter: 'number',
-                                sortable: true,
-                                sortingType: 'asc'
-                            },
-                            {
-                                header: '기내 발아율(%)',
-                                name: 'sample_sprout',
-                                editor: 'text',
-                                filter: 'number',
-                                sortable: true,
-                                sortingType: 'asc'
-                            },
-                            {
-                                header: '기내 순도율(%)',
-                                name: 'sample_purity',
-                                editor: 'text',
-                                filter: 'number',
-                                sortable: true,
-                                sortingType: 'asc'
-                            },
-                            {
-                                header: '비고',
-                                name: 'sample_comment',
-                                editor: 'text',
-                                sortable: true,
-                                sortingType: 'asc'
-                            }
                         ],
                         pageOptions: {
                             perPage: limit,
                         }
                     });
+
+                    const headerArr = [{
+                        'header': '첨부파일',
+                        'name': 'file',
+                        'width': 100
+                    }];
+
+                    var headerName = [];
+
+                    for(let i = 0; i < result.display.length; i++) {
+                        var colHeader = result.display[i].detail_title;
+                        var colName = result.display[i].detail_id;
+                        headerName[i] = result.display[i].detail_id;
+
+                        var arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc'}
+
+                        headerArr.push(arr);
+                    }
+
+                    breedgrid.setColumns(headerArr);
+
+                    const dataArr = [];
+
+                    for(let i = 0; i < result.breed.length; i++) {
+                        let rowArr = {};
+
+                        for (var j = 0; j < result.breed[i].breed_standard.length; j++) {
+                            var rowData = result.breed[i].breed_standard[j].standard;
+                            rowArr[headerName[j]] = rowData;
+                        }
+
+                        dataArr.push(rowArr);
+                    }
+
+                    console.log(dataArr);
+
+                    breedgrid.resetData(dataArr);
+
+                    samplegrid.on('click', (ev) => {
+                        if (ev.targetType === 'cell' && ev.columnName === '2') {
+                            var value_sample = ev.nativeEvent.srcElement;
+
+                            SearchSample(value_sample);
+                        } else if (ev.targetType === 'cell' && ev.columnName === '4') {
+                            var value_mom = ev.nativeEvent.srcElement;
+
+                            SearchBasic(value_mom);
+                        } else if (ev.targetType === 'cell' && ev.columnName === '5') {
+                            var value_dad = ev.nativeEvent.srcElement;
+
+                            SearchBasic(value_dad);
+                        }
+                    });
                 }
             });
+    }
 
+    function OtherBreedgrid(e) {
+        var breed_name = $("#CropSelect").val();
+        var limit = $("#limit").val();
+
+        var data = {"breed_name": breed_name, "page_num": e, "limit": limit};
+
+        $.ajax(
+            {
+                url: 'searchBreed',
+                method: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function (result) {
+                    const headerArr = [{
+                        'header': '첨부파일',
+                        'name': 'file',
+                        'width': 100
+                    }];
+
+                    var headerName = [];
+
+                    for(let i = 0; i < result.display.length; i++) {
+                        var colHeader = result.display[i].detail_title;
+                        var colName = result.display[i].detail_id;
+                        headerName[i] = result.display[i].detail_id;
+
+                        var arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc'}
+
+                        headerArr.push(arr);
+                    }
+
+                    breedgrid.setColumns(headerArr);
+
+                    const dataArr = [];
+
+                    for(let i = 0; i < result.breed.length; i++) {
+                        let rowArr = {};
+
+                        for (var j = 0; j < result.breed[i].breed_standard.length; j++) {
+                            var rowData = result.breed[i].breed_standard[j].standard;
+                            rowArr[headerName[j]] = rowData;
+                        }
+
+                        dataArr.push(rowArr);
+                    }
+
+                    breedgrid.resetData(dataArr);
+
+                    breedgrid.setPerPage(limit);
+                }
+            });
     }
 </script>
 </body>
