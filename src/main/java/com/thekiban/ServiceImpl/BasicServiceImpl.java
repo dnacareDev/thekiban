@@ -16,9 +16,9 @@ public class BasicServiceImpl implements BasicService
 	
 	// 세부정보 조회
 	@Override
-	public List<Detail> SelectDetail()
+	public List<Detail> SelectDetail(String basic_name)
 	{
-		return mapper.SelectDetail();
+		return mapper.SelectDetail(basic_name);
 	}
 
 	// 원종 갯수 조회
@@ -217,5 +217,15 @@ public class BasicServiceImpl implements BasicService
 	public int UpdateBasicUpload(Uploads upload)
 	{
 		return mapper.UpdateBasicUpload(upload);
+	}
+
+	@Override
+	public int InsertBasicExcel(List<Standard> standards) {
+		return mapper.InsertBasicExcel(standards);
+	}
+
+	@Override
+	public int InsertRemainExcel(BasicRemain basicRemain) {
+		return mapper.InsertRemainExcel(basicRemain);
 	}
 }
