@@ -4,13 +4,13 @@ import java.io.*;
 import java.util.*;
 import java.text.*;
 
-public class RunTrait
-{
-	public  void MakeTrait(String comname, String jobid,  String pheno_list)
-	{
+public class RunTrait {
+          
+	public  void MakeTraitplot(String pheno_list, String path,  String fileName) {
 		String r_path = "/data/apache-tomcat-9.0.8/webapps/ROOT/common/r/";
-		String phenotype_file =  "/data/apache-tomcat-9.0.8/webapps/ROOT/"+comname+"/resultfiles/accession_phenotype_list.txt";
-		String traitplotfile =  "/data/apache-tomcat-9.0.8/webapps/ROOT/"+comname+"/resultfiles/"+jobid+"/"+jobid+"_traitplot_whitespace.png";
+		String phenotype_file = path+"r_plot/trait/"+fileName+"/"+fileName+"_phenotype_list.txt";
+		String traitplotfile = path+"r_plot/trait/"+fileName+"/"+fileName+"_traitplot_whitespace.png";
+
 
 		//myY[!is.na(myY[,c(5,6)][,1]),6]
 		String option_pheno = "myY[!is.na\\(myY[,c\\(1,"+pheno_list+"\\)][,1]\\),"+pheno_list+"]";
@@ -18,7 +18,8 @@ public class RunTrait
 		execute(cmd);
 		System.out.println(" RunTrait cmd : " + cmd);
 
-		String convert_whitespace = "convert " +"/data/apache-tomcat-9.0.8/webapps/ROOT/"+comname+"/resultfiles/"+jobid+"/"+jobid+"_traitplot_whitespace.png" + " -trim -bordercolor White +repage " + "/data/apache-tomcat-9.0.8/webapps/ROOT/"+comname+"/resultfiles/"+jobid+"/"+jobid+"_traitplot.png";
+		String convert_whitespace = "convert " + path+"r_plot/trait/"+fileName+"/"+fileName+"_traitplot_whitespace.png" + " -trim -bordercolor White +repage " + path+"r_plot/trait/"+fileName+"/"+fileName+"_traitplot.png";
+		System.out.println(convert_whitespace);
 		execute(convert_whitespace);
     }
 

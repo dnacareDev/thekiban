@@ -30,4 +30,10 @@
 			</when>
 		</choose>
 	</select>
+	
+	<!--  -->
+	<select id="SelectTrait" parameterType="String" resultType="Detail">
+		SELECT * FROM detail
+		WHERE detail_name = #{deatil_name} AND detail_title != '작물'
+	</select>
 </mapper>

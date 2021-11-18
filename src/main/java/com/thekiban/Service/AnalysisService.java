@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.thekiban.Entity.Basic;
 import com.thekiban.Entity.Breed;
+import com.thekiban.Entity.Detail;
 
 public interface AnalysisService
 {
@@ -12,4 +13,6 @@ public interface AnalysisService
 
 	// 원종 조회
 	List<Basic> SelectBasic(int[] total_id, int type);
+
+	List<Detail> SelectTrait(String deatil_name);
 }

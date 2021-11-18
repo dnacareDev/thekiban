@@ -346,14 +346,20 @@ input[type="checkbox"]{
 							<div class="contents clearfix">
 								<h6 class="title">분석대상선택</h6>
 								<div class="box box1">
-									<input type="text" placeholder="품종-시교명ID, 원종-계통명ID 검색">
+									<input type="text" id="search_target" onchange="SearchTarget();" placeholder="품종-시교명ID, 원종-계통명ID 검색">
 									<div class="text_box text_box1">
 										<ul>
 											<th:block th:each="breed : ${breed}">
-												<li><input type="checkbox" class="plus_target" th:value="${breed.breed_id}"><span th:text="${breed.standard}"></span></li>
+												<li>
+													<input type="checkbox" class="plus_target" th:name="${breed.breed_name}" th:value="${breed.breed_id}">
+													<span class="target_list" th:text="${breed.standard}"></span>
+												</li>
 											</th:block>
 											<th:block th:each="basic : ${basic}">
-												<li><input type="checkbox" class="plus_target"><span th:text="${basic.standard}"></span></li>
+												<li>
+													<input type="checkbox" class="plus_target" th:name="${basic.basic_name}" th:value="${basic.basic_id}">
+													<span class="target_list" th:text="${basic.standard}"></span>
+												</li>
 											</th:block>
 										</ul>
 									</div>
@@ -406,24 +412,16 @@ input[type="checkbox"]{
 								<div class="box box1">
 									<input type="text" value="품종-시교명ID, 원종-계통명ID 검색">
 									<div class="text_box text_box5">
-										<ul>
-											<li><input type="checkbox"><span>19PC0233</span></li> 
-											<li><input type="checkbox"><span>29PC0233</span></li>
-											<li><input type="checkbox"><span>39PC0233</span></li>
-											<li><input type="checkbox"><span>49PC0233</span></li>
-											<li><input type="checkbox"><span>59PC0233</span></li>
-											<li><input type="checkbox"><span>69PC0233</span></li>
-											<li><input type="checkbox"><span>79PC0233</span></li>
-											<li><input type="checkbox"><span>89PC0233</span></li>
-											<li><input type="checkbox"><span>99PC0233</span></li>
-											<li><input type="checkbox"><span>19PC0233</span></li>
+										<ul id="trait_list">
 										</ul>
 									</div>
 								</div>
 								<div class="button clearfix">
 									<ul>
-										<li><button type="button" class="right_plus" onclick="plusFunction(this, array1)"><span class="right_btn"></span></button></li>
-										<li><button type="button" onclick="plusFunction(this, array2)"><span class="left_btn"></span></button></li>
+										<!-- <li><button type="button" class="right_plus" onclick="plusFunction(this, array1)"><span class="right_btn"></span></button></li> -->
+										<!-- <li><button type="button" onclick="plusFunction(this, array2)"><span class="left_btn"></span></button></li> -->
+										<li><button type="button" class="right_plus" onclick="PlusBtn(2)"><span class="right_btn"></span></button></li>
+										<li><button type="button" onclick="MinusBtn(2)"><span class="left_btn"></span></button></li>
 									</ul>
 								</div>
 								<div class="box box2">
@@ -435,8 +433,11 @@ input[type="checkbox"]{
 								</div>
 							</div>
 							<div class="submit_btn">
-								<input type="submit" class="btn btn-primary btn-sm" value="분석실행">
+								<input type="button" class="btn btn-primary btn-sm" onclick="Analysis();" value="분석실행">
 							</div>
+						</form>
+						<form action="Correlation" id="Correlation" method="POST" enctype="multipart/form-data">
+								<input type="file" id="input_file" name="file">
 						</form>
 					</div>
 				</div>
@@ -497,8 +498,6 @@ input[type="checkbox"]{
 		CheckFunction();
 	}
 
-	
-
 	function CheckFunction()
 	{
 		$('.text_box li').off('click').on('click', function(e)
@@ -540,10 +539,47 @@ input[type="checkbox"]{
 				
 				$(this).parent().remove();
 				$(".text_box2").append(target_add);
+				
+				var data = {"deatil_name" : $(this).attr("name")};
+				
+				$.ajax(
+				{
+					url : "selectTrait",
+					method : "POST",
+					dataType : "JSON",
+					data : data,
+					success : function(result)
+					{
+						var trait_list = $("#trait_list");
+						var add_list = "";
+						
+						for(var i = 0; i< result.length; i++)
+						{
+							if(result[i].detail_type == 0)
+							{
+								add_list += '<li><input type="checkbox" class="plus_trait"><span>품종-' + result[i].detail_title + '</span></li>' 
+							}
+							else
+							{
+								add_list += '<li><input type="checkbox" class="plus_trait"><span>원종-' + result[i].detail_title + '</span></li>' 
+							}
+						}
+						
+						trait_list.empty();
+						trait_list.append(add_list);
+						
+						CheckFunction();
+					}
+				});
 			})
 		}
 		else if(e == 1)
 		{
+			if($("input:checkbox[class=plus_method]:checked").length == 2)
+			{
+				return Alert("분석방법은 단일 선택만 가능합니다.");
+			}
+			
 			if($(".minus_method").length == 0)
 			{
 				$(document).find("input:checkbox[class=plus_method]:checked").each(function()
@@ -561,6 +597,25 @@ input[type="checkbox"]{
 				return Alert("분석방법은 단일 선택만 가능합니다.");
 			}
 		}
+		else if(e == 2)
+		{
+			if($(".minus_method").val() == "Trait View" && $(".minus_trait").length == 1)
+			{
+				return Alert("하나의 분석 형질만 선택 가능합니다.");
+			}
+			else
+			{
+				$(document).find("input:checkbox[class=plus_trait]:checked").each(function()
+				{
+					var target_add = "";
+					
+					target_add += '<li><input type="checkbox" class="minus_trait" value="' + $(this).val() + '"><span>' + $(this).next().text() + '</span></li>';
+					
+					$(this).parent().remove();
+					$(".text_box6").append(target_add);
+				});
+			}
+		}
 		
 		CheckFunction();
 	}
@@ -573,7 +628,7 @@ input[type="checkbox"]{
 			{
 				var add_list = "";
 				
-				add_list += '<li><input type="checkbox" class="plus_target"><span>' + $(this).next().text() + '</span></li>';
+				add_list += '<li><input type="checkbox" class="plus_target"><span class="target_list">' + $(this).next().text() + '</span></li>';
 				
 				$(this).parent().remove();
 				$(".text_box1").append(add_list);
@@ -585,7 +640,7 @@ input[type="checkbox"]{
 			{
 				var add_list = "";
 				
-				add_list += '<li><input type="checkbox" class="plus_target"><span>' + $(this).next().text() + '</span></li>';
+				add_list += '<li><input type="checkbox" class="plus_method"><span>' + $(this).next().text() + '</span></li>';
 				
 				$(this).parent().remove();
 				$(".text_box3").append(add_list);
@@ -593,6 +648,42 @@ input[type="checkbox"]{
 		}
 		
 		CheckFunction();
+	}
+	
+	$("#search_target").keyup(function()
+	{
+		var keyword = $("#search_target").val();
+		var target_list = $(".target_list");
+		
+		for(var i = 0; i < target_list.length; i++)
+		{
+			if(target_list[i].innerHTML.includes(keyword))
+			{
+				target_list[i].parentNode.style.display = "";
+			}
+			else
+			{
+				target_list[i].parentNode.style.display = "none";
+			}
+		}
+	});
+	
+	function Analysis()
+	{
+		var method = $(".minus_method").val();
+		
+		if(method == "Correlation")
+		{
+			$("#Correlation").submit();
+		}
+		else if(method == "trait view")
+		{
+			console.log("trait view");
+		}
+		else
+		{
+			return Alert("분석방법을 선택하세요.")
+		}
 	}
 </script>
 </body>

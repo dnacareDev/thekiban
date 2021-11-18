@@ -6,20 +6,17 @@ import java.text.*;
 
 public class RunCorrlation {
           
-
-	public  void MakeCorrplot(String comname, String jobid,  String pheno_list) {
-
-	//public  void MakeCorrplot(String pheno_list, String path,  String pfilename) {
+	public  void MakeCorrplot(String pheno_list, String path,  String pfilename) {
 
 		String r_path = "/data/apache-tomcat-9.0.8/webapps/ROOT/common/r/";
-		String phenotype_file = "/data/apache-tomcat-9.0.8/webapps/ROOT/"+comname+"/resultfiles/"+jobid+"/"+jobid+"_phenotype_list.txt";
-		String corrplotfile =  "/data/apache-tomcat-9.0.8/webapps/ROOT/"+comname+"/resultfiles/"+jobid+"/"+jobid+"_corrplot_whitespace.png";
+		String phenotype_file = path+"r_plot/corrplot/"+pfilename+"/"+pfilename+"_phenotype_list.txt";
+		String corrplotfile = path+"r_plot/corrplot/"+pfilename+"/"+pfilename+"_corrplot_whitespace.png";
 		
 		String cmd = "Rscript " + r_path+"pc_corrplot.R " + " " + phenotype_file + " " + pheno_list + " " + corrplotfile;
 
 		System.out.println(" RunCorrlation cmd : " + cmd);
 		execute(cmd);
-		String convert_whitespace = "convert " + corrplotfile + " -trim -bordercolor White +repage " +  "/data/apache-tomcat-9.0.8/webapps/ROOT/"+comname+"/resultfiles/"+jobid+"/"+jobid+"_corrplot.png";
+		String convert_whitespace = "convert " + path+"r_plot/corrplot/"+pfilename+"/"+pfilename+"_corrplot_whitespace.png" + " -trim -bordercolor White +repage " + path+"r_plot/corrplot/"+pfilename+"/"+pfilename+"_corrplot.png";
 		execute(convert_whitespace);
     }
 
