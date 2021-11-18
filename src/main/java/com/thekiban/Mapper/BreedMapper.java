@@ -1,12 +1,6 @@
 package com.thekiban.Mapper;
 
-import com.thekiban.Entity.Basic;
-import com.thekiban.Entity.Breed;
-import com.thekiban.Entity.BreedFile;
-import com.thekiban.Entity.Detail;
-import com.thekiban.Entity.Display;
-import com.thekiban.Entity.Standard;
-import com.thekiban.Entity.Uploads;
+import com.thekiban.Entity.*;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -91,4 +85,13 @@ public interface BreedMapper
 
 	// 첨부파일 수정
 	int UpdateBreedUpload(Uploads upload);
+
+	// 시교자원 목록 조회
+	List<Sample> SelectSampleList();
+
+	// 시교자원 갯수 조회
+	int SelectSampleCount(String sample_name);
+
+	// 시교자원 검색
+	List<Sample> SearchSample(@Param("sample_name") String sample_name);
 }

@@ -11,6 +11,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.thekiban.Entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -21,13 +22,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.thekiban.Entity.Breed;
-import com.thekiban.Entity.BreedFile;
-import com.thekiban.Entity.Detail;
-import com.thekiban.Entity.Display;
-import com.thekiban.Entity.Standard;
-import com.thekiban.Entity.Uploads;
-import com.thekiban.Entity.User;
 import com.thekiban.Service.BreedService;
 
 @Controller
@@ -319,5 +313,17 @@ public class BreedController
 		mv.setViewName("redirect:/breed");
 		
 		return mv;
+	}
+
+	@ResponseBody
+	@RequestMapping("searchSampleList")
+	public Map<String, Object> SearchSample(@RequestParam("sample_name") String sample_name) {
+		Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+		List<Sample> Sample = service.SearchSample(sample_name);
+
+		result.put("sample", Sample);
+
+		return result;
 	}
 }

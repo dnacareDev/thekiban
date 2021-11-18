@@ -1988,11 +1988,11 @@
 
             var l = samplegrid.getCheckedRows().length;
 
-            console.log();
-
             for (let i = 0; i < l; i++) {
                 total_id.push(samplegrid.getCheckedRows()[i].sample_id)
             }
+
+            console.log(samplegrid.getCheckedRows());
 
             var data = {'sample_id': total_id};
 

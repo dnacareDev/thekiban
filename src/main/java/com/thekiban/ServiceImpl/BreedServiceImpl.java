@@ -1,11 +1,6 @@
 package com.thekiban.ServiceImpl;
 
-import com.thekiban.Entity.Breed;
-import com.thekiban.Entity.BreedFile;
-import com.thekiban.Entity.Detail;
-import com.thekiban.Entity.Display;
-import com.thekiban.Entity.Standard;
-import com.thekiban.Entity.Uploads;
+import com.thekiban.Entity.*;
 import com.thekiban.Mapper.BreedMapper;
 import com.thekiban.Service.BreedService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -192,5 +187,20 @@ public class BreedServiceImpl implements BreedService
 	public int UpdateBreedUpload(Uploads upload)
 	{
 		return mapper.UpdateBreedUpload(upload);
+	}
+
+	@Override
+	public List<Sample> SelectSampleList() {
+		return mapper.SelectSampleList();
+	}
+
+	@Override
+	public int SelectSampleCount(String sample_name) {
+		return mapper.SelectSampleCount(sample_name);
+	}
+
+	@Override
+	public List<Sample> SearchSample(String sample_name) {
+		return mapper.SearchSample(sample_name);
 	}
 }

@@ -228,4 +228,31 @@
     	SET uploads_file = #{uploads_file}, uploads_origin_file = #{uploads_origin_file}, modify_date = NOW()
     	WHERE breed_file_id = #{breed_file_id}
     </update>
+
+    <!-- 시교자원 개수 -->
+    <select id="SelectSampleCount" parameterType="String" resultType="int">
+        SELECT COUNT(*) FROM sample
+        <choose>
+            <when test="sample_name != 'none'">
+                WHERE sample_name = #{sample_name}
+            </when>
+        </choose>
+    </select>
+
+    <!-- 시교자원 검색 -->
+    <select id="SearchSample" resultType="Sample">
+        SELECT * FROM sample
+        <choose>
+            <when test="sample_name != 'none'">
+                WHERE sample_name = #{sample_name}
+                ORDER BY sample_id DESC
+            </when>
+        </choose>
+    </select>
+
+    <!-- 시교자원 목록 조회 -->
+    <select id="SelectSampleList" resultType="Sample">
+        SELECT *
+        FROM sample
+    </select>
 </mapper>
