@@ -1,17 +1,8 @@
 package com.thekiban.Controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.thekiban.Entity.*;
+import com.thekiban.Service.BreedService;
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -22,7 +13,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.thekiban.Service.BreedService;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 public class BreedController
@@ -355,6 +355,44 @@ public class BreedController
 		result.put("display", display);
 
 		return result;
+	}
+
+	@RequestMapping("excelBreed")
+	public ModelAndView excelUpload(ModelAndView mv, @RequestParam("excel_list") String excel_list) {
+
+		JSONArray arr = new JSONArray(excel_list);
+
+		List<Standard> standards = new ArrayList<Standard>();
+
+		for(int i = 0; i < arr.length(); i++)
+		{
+			JSONArray item = arr.getJSONArray(i);
+
+			String breed_name = (String)item.get(0);
+
+			Breed breed = new Breed();
+			breed.setBreed_name(breed_name);
+
+			int breed_result = service.InsertBreed(breed);
+
+			List<Detail> detail = service.SelectDetail(breed_name);
+
+			for(int j = 0; j < detail.size(); j++)
+			{
+				Standard standard = new Standard();
+				standard.setBreed_id(breed.getBreed_id());
+				standard.setDetail_id(detail.get(j).getDetail_id());
+				standard.setStandard((String)item.get(j));
+
+				standards.add(standard);
+			}
+		}
+
+		int standard_result = service.InsertExcel(standards);
+
+		mv.setViewName("redirect:/breed");
+
+		return mv;
 	}
 
 }
