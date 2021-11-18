@@ -1,11 +1,6 @@
 package com.thekiban.ServiceImpl;
 
-import com.thekiban.Entity.Breed;
-import com.thekiban.Entity.BreedFile;
-import com.thekiban.Entity.Detail;
-import com.thekiban.Entity.Display;
-import com.thekiban.Entity.Standard;
-import com.thekiban.Entity.Uploads;
+import com.thekiban.Entity.*;
 import com.thekiban.Mapper.BreedMapper;
 import com.thekiban.Service.BreedService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +16,9 @@ public class BreedServiceImpl implements BreedService
   
 	// 세부정보 조회
 	@Override
-	public List<Detail> SelectDetail()
+	public List<Detail> SelectDetail(String breed_name)
 	{
-		return mapper.SelectDetail();
+		return mapper.SelectDetail(breed_name);
 	}
 
 	// 품종 갯수 조회
@@ -192,5 +187,55 @@ public class BreedServiceImpl implements BreedService
 	public int UpdateBreedUpload(Uploads upload)
 	{
 		return mapper.UpdateBreedUpload(upload);
+	}
+
+	@Override
+	public List<Sample> SelectSampleList() {
+		return mapper.SelectSampleList();
+	}
+
+	@Override
+	public int SelectSampleCount(String sample_name) {
+		return mapper.SelectSampleCount(sample_name);
+	}
+
+	@Override
+	public List<Sample> SearchSample(String sample_name) {
+		return mapper.SearchSample(sample_name);
+	}
+
+	@Override
+	public List<Detail> SelectDetail1() {
+		return mapper.SelectDetail1();
+	}
+
+	@Override
+	public int SelectBasicCount(String basic_name) {
+		return mapper.SelectBasicCount(basic_name);
+	}
+
+	@Override
+	public List<Basic> SearchBasic(String basic_name) {
+		return mapper.SearchBasic(basic_name);
+	}
+
+	@Override
+	public List<Detail> SearchBasicDetail(String basic_name) {
+		return mapper.SearchBasicDetail(basic_name);
+	}
+
+	@Override
+	public List<Display> SelectDisplay1(int user_id, String basic_name) {
+		return mapper.SelectDisplay1(user_id, basic_name);
+	}
+
+	@Override
+	public List<Standard> SearchBasicStandard(List<Detail> detail, int user_id, int basic_id) {
+		return mapper.SearchBasicStandard(detail, user_id, basic_id);
+	}
+
+	@Override
+	public int InsertExcel(List<Standard> standards) {
+		return mapper.InsertExcel(standards);
 	}
 }

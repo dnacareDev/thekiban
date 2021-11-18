@@ -620,6 +620,30 @@
         .footer-wrapper {
             background-color: #FCFCFC;
         }
+
+        #breedGrid .tui-grid-body-area td[data-column-name='2'], #breedGrid .tui-grid-body-area td[data-column-name='4'], #breedGrid .tui-grid-body-area td[data-column-name='5'] {
+            color: mediumblue;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        #saveRow {
+            float: right;
+            color: #fff;
+            background-color: #217566;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        #cancelRow {
+            float: right;
+            color: #217566;
+            background-color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body class="layout-light top-menu overlayScroll">
@@ -657,33 +681,26 @@
                                         <option value="참외">참외</option>
                                         <option value="토마토">토마토</option>
                                     </select>
-                                    <input type="file" id="excelFile" onchange="excelExport(event)" title="파일 선택" style="display: none">
-                                    <button class="btn btn-lg btn-primary data_btn2" data-toggle="modal" title="데이터 등록" data-target="#data_upload2">
+                                    <button class="btn btn-lg btn-primary data_btn2" title="데이터 등록" onclick="openExcel()">
                                         <img src="../assets/vendor_assets/img/icon1.png" alt="">
                                     </button>
-                                    <button type="button" class="btn btn-lg btn-primary data_btn1" title="파일 선택" onclick="filesFunction('excelFile')">
-                                        <img src="../assets/vendor_assets/img/icon2.png" title="데이터 등록" alt="">
-                                    </button>
-                                    <button class="btn btn-lg btn-primary data_btn2" title="표시항목 선택" onclick="DisplayBtn();">
-                                        <img src="../assets/vendor_assets/img/icon3.png" alt="">
-                                    </button>
+                                    <button type="button" class="btn btn-lg btn-primary data_btn1" title="엑셀 export" id="excelFileExport">
+                                        <button class="btn btn-lg btn-primary data_btn2" title="표시항목 선택" onclick="DisplayBtn();">
+                                            <img src="../assets/vendor_assets/img/icon3.png" alt="">
+                                        </button>
                                 </div>
                             </div>
                         </div>
+                        <div class='card-extra mt-10 mb-10 mr-20 plus_btn_submit1'>
+                            <button type='button' id="cancelRow" onclick="cancelRow()" style="visibility: hidden;">취소</button>
+                            <button type='button' id="saveRow" onclick="saveRow()" style="visibility: hidden;">저장</button>
+                        </div>
                         <div class="card-body">
                             <div class="bg-white">
-                                <div class="table-responsive">
-                                    <table class="table" id="display">
-                                        <thead class="text-center" id="header_list">
-                                        </thead>
-                                        <tbody class="text-center" id="breed_list">
-                                        </tbody>
-                                    </table>
-                                </div>
                                 <div id="breedGrid"></div>
                                 <div class="row">
                                     <div class="col-4">
-                                        <button class="btn btn-icon btn-light btn-circle" onclick="InsertBtn();">
+                                        <button class="btn btn-icon btn-light btn-circle" onclick="insertRow();">
                                             <span data-feather="plus"></span>
                                         </button>
                                         <button class="btn btn-icon btn-light btn-circle" onclick="DeleteBreed();">
@@ -693,11 +710,6 @@
                                             <img src="../assets/vendor_assets/img/check_tab.png" alt="check" style="width: 17px;margin-left: 4px;">
                                         </button>
                                         <input type="hidden" id="offset">
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="row" style="justify-content: center;">
-                                            <div id="pageNum" style="text-align:center; margin: 2% 0 0 0;"></div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1249,62 +1261,12 @@
         </div>
     </div>
 
-    <!-- 데이터 등록 모달창 -->
-    <div class="modal-basic modal fade show pop5" id="data_upload" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-md" role="document">
-            <div class="modal-content modal-bg-white">
-                <div class="modal-header" style="border: none">
-                    <h6 class="modal-title">품종관리 > 데이터 등록</h6>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group mb-0">
-                        <input type="text" class="form-control form-control-lg" placeholder="Click to Upload">
-                        <button onclick="filesFunction('file_data_upload')">불러오기</button>
-                        <input type="file" name="" id="file_data_upload" style="display: none;">
-                    </div>
-                    <div>
-                        <div class="atbd-upload">
-                            <table>
-                                <thead>
-                                <tr>
-                                    <th>시교명 (ID)</th>
-                                    <th>품종명</th>
-                                    <th>모계 계통명 (ID)</th>
-                                    <th>부계 계통명 (ID)</th>
-                                    <th>생산판매 (신고번호)</th>
-                                    <th>생산판매 (신고일자)</th>
-                                    <th>보호출원 (출원번호)</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>asdasd</td>
-                                    <td>asdasd</td>
-                                    <td>asdasd</td>
-                                    <td>asdasd</td>
-                                    <td>asdasd</td>
-                                    <td>asdasd</td>
-                                    <td>asdasd</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer" style="border: none">
-                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" onclick="dataToggle('#data_upload', '#data_upload2');">취소</button>
-                    <button type="button" class="btn btn-primary btn-sm" onclick="dataToggle('#data_upload', '#data_upload2');">등록</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- 데이터 목록 창 -->
     <div class="modal-basic modal fade show pop7" id="data_upload2" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
-            <div class="modal-content modal-bg-white">
+            <div class="modal-content modal-bg-white ">
                 <div class="modal-header" style="border: none">
-                    <h6 class="modal-title">품종관리 > 데이터 등록</h6>
+                    <h6 class="modal-title">시교자원관리 > 데이터 등록</h6>
                 </div>
                 <div class="modal-body">
                     <div class="form-group mb-0">
@@ -1321,9 +1283,9 @@
                                     <th>데이터수</th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="uploadDate">
                                 <tr>
-                                    <td>2</td>
+                                    <td></td>
                                     <td>2021-08-15</td>
                                     <td>185</td>
                                 </tr>
@@ -1343,6 +1305,52 @@
                             <div id="pageNum1" style="text-align:center; margin: 2% 0 0 0;"></div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 데이터 등록 모달창 -->
+    <div class="modal-basic modal fade show pop5" id="data_upload" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content modal-bg-white ">
+                <div class="modal-header" style="border: none">
+                    <h6 class="modal-title">시교자원관리 > 데이터 등록</h6>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group mb-0">
+                        <input type="text" class="form-control form-control-lg" placeholder="Click to Upload">
+                        <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none">
+                        <button onclick="filesFunction()">불러오기</button>
+                        <input type="file" name="" id="file_data_upload" style="display: none;">
+                    </div>
+                    <div>
+                        <form action="excelBreed" id="excelForm" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" id="excel_list" name="excel_list">
+                            <div class="atbd-upload">
+                                <table id="excel_data">
+                                    <thead>
+                                    <th><span class="title">작물</span></th>
+                                    <th><span class="title">시교명(ID)</span></th>
+                                    <th><span class="title">목표 지역</span></th>
+                                    <th><span class="title">구분</span></th>
+                                    <th><span class="title">교배번호</span></th>
+                                    <th><span class="title">종자번호(ID)</span></th>
+                                    <th><span class="title">현 종자량(g)</span></th>
+                                    <th><span class="title">기내 발아율(%)</span></th>
+                                    <th><span class="title">기내 순도율(%)</span></th>
+                                    <th><span class="title">비고</span></th>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border: none">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" onclick="dataToggle('#data_upload', '#data_upload2');">취소</button>
+                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" onclick="dataToggle('#data_upload1', '#data_upload2'); InsertExcel();">등록</button>
                 </div>
             </div>
         </div>
@@ -1506,7 +1514,7 @@
             <div class="modal-content modal-bg-white">
                 <div class="modal-header" style="border: none">
                     <h6 class="modal-title">품종관리 > 시교자원관리</h6>
-                    <span class="breed_title">시교명: 11</span>
+                    <span class="sample_title"></span>
                 </div>
                 <div class="modal-body">
                     <div class="form-group mb-0">
@@ -1529,122 +1537,64 @@
                             <table style="width: max-content; min-width: 100%;">
                                 <thead>
                                 <tr>
-                                    <th>시교명(ID)</th>
-                                    <th>목표 지역</th>
-                                    <th>구분</th>
-                                    <th>교배번호</th>
-                                    <th>종자번호(ID)</th>
-                                    <th>현 종자량(g)</th>
-                                    <th>기내 발아율(%)</th>
-                                    <th>비고</th>
+                                    <th><span class="title">작물</span></th>
+                                    <th><span class="title">시교명(ID)</span></th>
+                                    <th><span class="title">목표 지역</span></th>
+                                    <th><span class="title">구분</span></th>
+                                    <th><span class="title">교배번호</span></th>
+                                    <th><span class="title">종자번호(ID)</span></th>
+                                    <th><span class="title">현 종자량(g)</span></th>
+                                    <th><span class="title">기내 발아율(%)</span></th>
+                                    <th><span class="title">기내 순도율(%)</span></th>
+                                    <th><span class="title">비고</span></th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                <tr>
-                                    <td>19PF0301</td>
-                                    <td>국내</td>
-                                    <td>185</td>
-                                    <td>185</td>
-                                    <td>185 <a data-toggle="modal" href="#pop_data_sub1"><i class="fas fa-link"></i></a></td>
-                                    <td>185</td>
-                                    <td>185</td>
-                                    <td>185</td>
-                                </tr>
-                                <tr>
-                                    <td>19PF0302</td>
-                                    <td>2021-08-15</td>
-                                    <td>185</td>
-                                    <td>185</td>
-                                    <td>185 <a data-toggle="modal" href="#pop_data_sub1"><i class="fas fa-link"></i></a></td>
-                                    <td>185</td>
-                                    <td>185</td>
-                                    <td>185</td>
-                                </tr>
+                                <tbody class="sample-list">
                                 </tbody>
                             </table>
                         </div>
                         <div class="atbd-upload popAdd tab-pane fade" id="tab-horizontal-1-1" role="tabpanel" aria-labelledby="tab-horizontal-1-tab-1" style="overflow: auto;">
+                            <span class="sub_title">모계 계통명(ID)</span>
                             <div class="pop_top_content1" style="max-height:150px; overflow: auto;">
-                                <span class="sub_title">모계 계통명(ID)</span>
                                 <table style="width: max-content; min-width: 100%;">
                                     <thead>
                                     <tr>
-                                        <th>첨부파일</th>
-                                        <th>특성상태</th>
-                                        <th>작물</th>
-                                        <th>계통명(ID)</th>
-                                        <th>원소재 계통번호</th>
-                                        <th>B.N. 기준년도</th>
-                                        <th>B.N. (교배번호)</th>
-                                        <th>숙기(최소 일)</th>
-                                        <th>숙기(최대 일)</th>
+                                        <th><span class="title">작물</span></th>
+                                        <th><span class="title">계통명(ID)</span></th>
+                                        <th><span class="title">원소재 계통번호</span></th>
+                                        <th><span class="title">원종 계통번호</span></th>
+                                        <th><span class="title">B.N. 기준 년도</span></th>
+                                        <th><span class="title">B.N. (교배번호)</span></th>
+                                        <th><span class="title">종자번호(ID)</span></th>
+                                        <th><span class="title">현 종자량(g)</span></th>
+                                        <th><span class="title">천립중(g)</span></th>
+                                        <th><span class="title">계통번호 부여일</span></th>
+                                        <th><span class="title">비고</span></th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td><i class="bi bi-file-earmark-arrow-down"></i></td>
-                                        <td>고추</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>2021-08-15</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                    </tr>
+                                    <tbody class="basic_mom" id="basic_list">
                                     </tbody>
                                 </table>
                             </div>
+                            <span class="sub_title">부계 계통명(ID)</span>
                             <div class="pop_top_content2" style="max-height:150px; overflow: auto; margin-top: 20px;">
-                                <span class="sub_title">부계 계통명(ID)</span>
                                 <table style="width: max-content; min-width: 100%;">
                                     <thead>
                                     <tr>
-                                        <th>첨부파일</th>
-                                        <th>특성상태</th>
-                                        <th>작물</th>
-                                        <th>계통명(ID)</th>
-                                        <th>원소재 계통번호</th>
-                                        <th>B.N. 기준년도</th>
-                                        <th>B.N. (교배번호)</th>
-                                        <th>숙기(최소 일)</th>
-                                        <th>숙기(최대 일)</th>
+                                        <th><span class="title">작물</span></th>
+                                        <th><span class="title">계통명(ID)</span></th>
+                                        <th><span class="title">원소재 계통번호</span></th>
+                                        <th><span class="title">원종 계통번호</span></th>
+                                        <th><span class="title">B.N. 기준 년도</span></th>
+                                        <th><span class="title">B.N. (교배번호)</span></th>
+                                        <th><span class="title">종자번호(ID)</span></th>
+                                        <th><span class="title">현 종자량(g)</span></th>
+                                        <th><span class="title">천립중(g)</span></th>
+                                        <th><span class="title">계통번호 부여일</span></th>
+                                        <th><span class="title">비고</span></th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td><i class="bi bi-file-earmark-arrow-down"></i></td>
-                                        <td>고추</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>2021-08-15</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                        <td>185</td>
-                                    </tr>
+                                    <tbody class="basic_dad" id="basicD_list">
                                     </tbody>
                                 </table>
                             </div>
@@ -1707,6 +1657,7 @@
 <!-- 공통 js -->
 <th:block th:include="/../fragments/commonjs.html"></th:block>
 <script type="text/javascript">
+
     function dataToggle(one, two) {
         $(one).modal("hide");
 
@@ -1859,6 +1810,7 @@
 
     // 작물 선택
     $("#CropSelect").change(function () {
+        SearchBreed(1);
         OtherBreedgrid(1);
     })
 
@@ -1925,7 +1877,7 @@
                         }
 
                         for (var j = 0; j < result.breed[i].breed_standard.length; j++) {
-                            if(result.breed[i].breed_standard[j].detail_id === 2 || result.breed[i].breed_standard[j].detail_id === 4 || result.breed[i].breed_standard[j].detail_id === 5) {
+                            if (result.breed[i].breed_standard[j].detail_id === 2 || result.breed[i].breed_standard[j].detail_id === 4 || result.breed[i].breed_standard[j].detail_id === 5) {
                                 add_list += '<td><input type="text" class="updateInput" data="' + result.breed[i].breed_id + '" name="' + result.breed[i].breed_standard[j].detail_id + '" value="' + result.breed[i].breed_standard[j].standard + '"><a data-toggle="modal" href="#pop_data1"><i class="fas fa-link"></i></a></td>';
                             } else {
                                 add_list += '<td><input type="text" class="updateInput" data="' + result.breed[i].breed_id + '" name="' + result.breed[i].breed_standard[j].detail_id + '" value="' + result.breed[i].breed_standard[j].standard + '"></td>';
@@ -2134,11 +2086,11 @@
     function DeleteBreed() {
         var total_id = [];
 
-        $("input:checkbox[name=RowCheck]:checked").each(function () {
-            var breed_id = $(this).val();
+        var l = breedgrid.getCheckedRows().length;
 
-            total_id.push(breed_id);
-        });
+        for (let i = 0; i < l; i++) {
+            total_id.push(breedgrid.getCheckedRows()[i].breed_id)
+        }
 
         var data = {'breed_id': total_id};
 
@@ -2151,9 +2103,6 @@
                     data: data,
                     success: function (result) {
                         if (result == 0) {
-                            alert("삭제에 실패하였습니다.");
-
-                            location.reload();
                         } else {
                             location.reload();
                         }
@@ -2163,48 +2112,6 @@
             false;
         }
     }
-
-    // 정렬
-    $(document).ready(function () {
-        $('#display th').each(function (column) {
-            $(this).click(function () {
-                if ($(this).is('.asc')) {
-                    $(this).removeClass('asc');
-                    $(this).addClass('desc');
-
-                    sortdir = -1;
-                } else {
-                    $(this).addClass('asc');
-                    $(this).removeClass('desc');
-
-                    sortdir = 1;
-                }
-
-                $(this).siblings().removeClass('asc');
-                $(this).siblings().removeClass('desc');
-
-                var rec = $('#display').find('tbody>tr').get();
-
-                rec.sort(function (a, b) {
-                    var val1 = +($(a).children('td').eq(column).text());
-                    var val2 = +($(b).children('td').eq(column).text());
-
-                    if (isNaN(val1) && isNaN(val2)) {
-                        val1 = $(a).children('td').eq(column).text();
-                        val2 = $(b).children('td').eq(column).text();
-
-                        return (val1 < val2) ? -sortdir : (val1 > val2) ? sortdir : 0;
-                    } else {
-                        return (val1 < val2) ? -sortdir : (val1 > val2) ? sortdir : 0;
-                    }
-                });
-
-                $.each(rec, function (index, row) {
-                    $('#display tbody').append(row);
-                });
-            });
-        });
-    });
 
     /* 헤더 선택 */
     function PlusResearch(e) {
@@ -2289,7 +2196,7 @@
    	{
    		$("#data_check_submit img").attr("src", "../assets/vendor_assets/img/check_tab_green.png");
     });
-   	
+
     $("#data_check_submit").mouseout(function()
     {
    		$("#data_check_submit img").attr("src", "../assets/vendor_assets/img/check_tab.png");
@@ -2376,6 +2283,277 @@
         });
     }
 
+    // 시교명 팝업
+    function SearchSample(e) {
+        $("#pop_data1").modal();
+
+        var sample_name = $("#CropSelect").val();
+
+        var data = {"sample_name": sample_name};
+
+        $.ajax(
+            {
+                url: 'searchSampleList',
+                method: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function (result) {
+                    $(".sample_title").text("시교명 (ID) : " + e.innerText);
+
+                    var sample_list = $(".sample-list");
+
+                    var add_list = "";
+
+                    for (var i = 0; i < result.sample.length; i++) {
+                        if (result.sample[i].sample_code === e.innerText) {
+                            add_list += '<tr>';
+                            add_list += '<td>' + result.sample[i].sample_name + '</td>';
+                            add_list += '<td>' + result.sample[i].sample_code + '</td>';
+                            add_list += '<td>' + result.sample[i].sample_country + '</td>';
+                            add_list += '<td>' + result.sample[i].sample_type + '</td>';
+                            add_list += '<td>' + result.sample[i].sample_mate + '</td>';
+                            add_list += '<td>' + result.sample[i].sample_seed + '</a></td>';
+                            add_list += '<td>' + result.sample[i].sample_amount + '</td>';
+                            add_list += '<td>' + result.sample[i].sample_sprout + '</td>';
+                            add_list += '<td>' + result.sample[i].sample_purity + '</td>';
+                            add_list += '<td>' + result.sample[i].sample_comment + '</td>';
+                            add_list += '</tr>';
+                        }
+                    }
+
+                    sample_list.empty();
+                    sample_list.append(add_list);
+                }
+            });
+    }
+
+    function SearchSample1(e) {
+        $("#pop_data1").modal();
+
+        var sample_name = $("#CropSelect").val();
+
+        var data = {"sample_name": sample_name};
+
+        $.ajax(
+            {
+                url: 'searchSampleList',
+                method: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function (result) {
+                    $(".sample_title").text("시교명 (ID) : " + e);
+
+                    var sample_list = $(".sample-list");
+
+                    var add_list = "";
+
+                    for (var i = 0; i < result.sample.length; i++) {
+                        if (result.sample[i].sample_code === e.innerText) {
+                            add_list += '<tr>';
+                            add_list += '<td>' + result.sample[i].sample_name + '</td>';
+                            add_list += '<td>' + result.sample[i].sample_code + '</td>';
+                            add_list += '<td>' + result.sample[i].sample_country + '</td>';
+                            add_list += '<td>' + result.sample[i].sample_type + '</td>';
+                            add_list += '<td>' + result.sample[i].sample_mate + '</td>';
+                            add_list += '<td>' + result.sample[i].sample_seed + '</a></td>';
+                            add_list += '<td>' + result.sample[i].sample_amount + '</td>';
+                            add_list += '<td>' + result.sample[i].sample_sprout + '</td>';
+                            add_list += '<td>' + result.sample[i].sample_purity + '</td>';
+                            add_list += '<td>' + result.sample[i].sample_comment + '</td>';
+                            add_list += '</tr>';
+                        }
+                    }
+
+                    sample_list.empty();
+                    sample_list.append(add_list);
+                }
+            });
+    }
+
+    function SearchSample2(e) {
+        $("#pop_data1").modal();
+
+        var sample_name = $("#CropSelect").val();
+
+        var data = {"sample_name": sample_name};
+
+        $.ajax(
+            {
+                url: 'searchSampleList',
+                method: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function (result) {
+                    $(".sample_title").text("시교명 (ID) : " + e);
+
+                    var sample_list = $(".sample-list");
+
+                    var add_list = "";
+
+                    for (var i = 0; i < result.sample.length; i++) {
+                        if (result.sample[i].sample_code === e.innerText) {
+                            add_list += '<tr>';
+                            add_list += '<td>' + result.sample[i].sample_name + '</td>';
+                            add_list += '<td>' + result.sample[i].sample_code + '</td>';
+                            add_list += '<td>' + result.sample[i].sample_country + '</td>';
+                            add_list += '<td>' + result.sample[i].sample_type + '</td>';
+                            add_list += '<td>' + result.sample[i].sample_mate + '</td>';
+                            add_list += '<td>' + result.sample[i].sample_seed + '</a></td>';
+                            add_list += '<td>' + result.sample[i].sample_amount + '</td>';
+                            add_list += '<td>' + result.sample[i].sample_sprout + '</td>';
+                            add_list += '<td>' + result.sample[i].sample_purity + '</td>';
+                            add_list += '<td>' + result.sample[i].sample_comment + '</td>';
+                            add_list += '</tr>';
+                        }
+                    }
+
+                    sample_list.empty();
+                    sample_list.append(add_list);
+                }
+            });
+    }
+
+    function SearchBasic(e1, e2) {
+        $("#pop_data1").modal();
+
+        var basic_name = $("#CropSelect").val();
+
+        var data = {"basic_name": basic_name};
+
+        $.ajax(
+            {
+                url: 'searchBasic1',
+                method: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function (result) {
+                    var basic_list = $("#basic_list");
+                    var basicD_list = $("#basicD_list");
+
+                    var add_list = "";
+                    var add_listD = "";
+
+                    for (var i = 0; i < result.basic.length; i++) {
+                        add_list += '<tr>';
+                        add_listD += '<tr>';
+
+                        for (var j = 0; j < result.basic[i].basic_standard.length; j++) {
+                            if (result.basic[i].basic_standard[1].standard === e1) {
+                                add_list += '<td>' + result.basic[i].basic_standard[j].standard + '</td>';
+                            }
+
+                            if (result.basic[i].basic_standard[1].standard === e2) {
+                                add_listD += '<td>' + result.basic[i].basic_standard[j].standard + '</td>';
+                            }
+                        }
+
+                        add_list += '</tr>';
+                        add_listD += '</tr>';
+                    }
+
+                    basic_list.empty();
+                    basic_list.append(add_list);
+
+                    basicD_list.empty();
+                    basicD_list.append(add_listD);
+                }
+            });
+    }
+
+    function SearchBasic1(e1, e2) {
+        $("#pop_data1").modal();
+
+        var basic_name = $("#CropSelect").val();
+
+        var data = {"basic_name": basic_name};
+
+        $.ajax(
+            {
+                url: 'searchBasic1',
+                method: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function (result) {
+                    var basic_list = $("#basic_list");
+                    var basicD_list = $("#basicD_list");
+
+                    var add_list = "";
+                    var add_listD = "";
+
+                    for (var i = 0; i < result.basic.length; i++) {
+                        add_list += '<tr>';
+                        add_listD += '<tr>';
+
+                        for (var j = 0; j < result.basic[i].basic_standard.length; j++) {
+                            if (result.basic[i].basic_standard[1].standard === e1.innerText) {
+                                add_list += '<td>' + result.basic[i].basic_standard[j].standard + '</td>';
+                            }
+
+                            if (result.basic[i].basic_standard[1].standard === e2) {
+                                add_listD += '<td>' + result.basic[i].basic_standard[j].standard + '</td>';
+                            }
+                        }
+
+                        add_list += '</tr>';
+                        add_listD += '</tr>';
+                    }
+
+                    basic_list.empty();
+                    basic_list.append(add_list);
+
+                    basicD_list.empty();
+                    basicD_list.append(add_listD);
+                }
+            });
+    }
+
+    function SearchBasic2(e1, e2) {
+        $("#pop_data1").modal();
+
+        var basic_name = $("#CropSelect").val();
+
+        var data = {"basic_name": basic_name};
+
+        $.ajax(
+            {
+                url: 'searchBasic1',
+                method: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function (result) {
+                    var basic_list = $("#basic_list");
+                    var basicD_list = $("#basicD_list");
+
+                    var add_list = "";
+                    var add_listD = "";
+
+                    for (var i = 0; i < result.basic.length; i++) {
+                        add_list += '<tr>';
+                        add_listD += '<tr>';
+
+                        for (var j = 0; j < result.basic[i].basic_standard.length; j++) {
+                            if (result.basic[i].basic_standard[1].standard === e1) {
+                                add_list += '<td>' + result.basic[i].basic_standard[j].standard + '</td>';
+                            }
+
+                            if (result.basic[i].basic_standard[1].standard === e2.innerText) {
+                                add_listD += '<td>' + result.basic[i].basic_standard[j].standard + '</td>';
+                            }
+                        }
+
+                        add_list += '</tr>';
+                        add_listD += '</tr>';
+                    }
+
+                    basic_list.empty();
+                    basic_list.append(add_list);
+
+                    basicD_list.empty();
+                    basicD_list.append(add_listD);
+                }
+            });
+    }
+
     var breedgrid = null;
 
     function SearchBreedgrid(e) {
@@ -2397,11 +2575,11 @@
                         scrollY: false,
                         data: result.breed,
                         rowHeaders: ['checkbox'],
+                        editingEvent: 'click',
                         columnOptions: {
-                          minWidth: 150
+                            minWidth: 150
                         },
-                        columns: [
-                        ],
+                        columns: [],
                         pageOptions: {
                             perPage: limit,
                         }
@@ -2415,12 +2593,14 @@
 
                     var headerName = [];
 
-                    for(let i = 0; i < result.display.length; i++) {
+                    var arr = {};
+
+                    for (let i = 0; i < result.display.length; i++) {
                         var colHeader = result.display[i].detail_title;
                         var colName = result.display[i].detail_id;
                         headerName[i] = result.display[i].detail_id;
 
-                        var arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc'}
+                        arr = {'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'header': colHeader, 'name': colName};
 
                         headerArr.push(arr);
                     }
@@ -2429,8 +2609,10 @@
 
                     const dataArr = [];
 
-                    for(let i = 0; i < result.breed.length; i++) {
+                    for (let i = 0; i < result.breed.length; i++) {
                         let rowArr = {};
+
+                        rowArr = {'file': '<div>f</div>', 'breed_id': result.breed[i].breed_id};
 
                         for (var j = 0; j < result.breed[i].breed_standard.length; j++) {
                             var rowData = result.breed[i].breed_standard[j].standard;
@@ -2440,23 +2622,59 @@
                         dataArr.push(rowArr);
                     }
 
-                    console.log(dataArr);
-
                     breedgrid.resetData(dataArr);
 
-                    samplegrid.on('click', (ev) => {
+                    breedgrid.on('click', (ev) => {
                         if (ev.targetType === 'cell' && ev.columnName === '2') {
                             var value_sample = ev.nativeEvent.srcElement;
+                            var value_mom = breedgrid.getRow(ev.rowKey)[4];
+                            var value_dad = breedgrid.getRow(ev.rowKey)[5];
 
                             SearchSample(value_sample);
+                            SearchBasic(value_mom, value_dad);
                         } else if (ev.targetType === 'cell' && ev.columnName === '4') {
-                            var value_mom = ev.nativeEvent.srcElement;
+                            var value_sample1 = breedgrid.getRow(ev.rowKey)[2];
+                            var value_mom1 = ev.nativeEvent.srcElement;
+                            var value_dad1 = breedgrid.getRow(ev.rowKey)[5];
 
-                            SearchBasic(value_mom);
+                            SearchSample1(value_sample1);
+                            SearchBasic1(value_mom1, value_dad1);
                         } else if (ev.targetType === 'cell' && ev.columnName === '5') {
-                            var value_dad = ev.nativeEvent.srcElement;
+                            var value_sample2 = breedgrid.getRow(ev.rowKey)[2];
+                            var value_mom2 = breedgrid.getRow(ev.rowKey)[4];
+                            var value_dad2 = ev.nativeEvent.srcElement;
 
-                            SearchBasic(value_dad);
+                            SearchSample2(value_sample2);
+                            SearchBasic2(value_mom2, value_dad2);
+                        }
+                    });
+
+                    var before = null;
+                    var after = null;
+
+                    breedgrid.on('afterChange', (ev) => {
+                        before = ev.changes[0].prevValue;
+                        after = ev.changes[0].value;
+
+                        if (after != before) {
+                            var breed_id = breedgrid.getRow(ev.changes[0].rowKey).breed_id;
+                            var detail_id = ev.changes[0].columnName;
+                            var standard = after;
+
+                            var data = {"breed_id": breed_id, "detail_id": detail_id, "standard": standard};
+
+                            $.ajax(
+                                {
+                                    url: 'updateBreed',
+                                    method: 'POST',
+                                    dataType: 'json',
+                                    data: data,
+                                    success: function (result) {
+                                        if (result == 0) {
+                                            return Alert("수정에 실패하였습니다.")
+                                        }
+                                    }
+                                });
                         }
                     });
                 }
@@ -2484,7 +2702,7 @@
 
                     var headerName = [];
 
-                    for(let i = 0; i < result.display.length; i++) {
+                    for (let i = 0; i < result.display.length; i++) {
                         var colHeader = result.display[i].detail_title;
                         var colName = result.display[i].detail_id;
                         headerName[i] = result.display[i].detail_id;
@@ -2498,8 +2716,10 @@
 
                     const dataArr = [];
 
-                    for(let i = 0; i < result.breed.length; i++) {
+                    for (let i = 0; i < result.breed.length; i++) {
                         let rowArr = {};
+
+                        rowArr = {'file': '<div>f</div>', 'breed_id': result.breed[i].breed_id};
 
                         for (var j = 0; j < result.breed[i].breed_standard.length; j++) {
                             var rowData = result.breed[i].breed_standard[j].standard;
@@ -2511,10 +2731,329 @@
 
                     breedgrid.resetData(dataArr);
 
-                    breedgrid.setPerPage(limit);
+                    breedgrid.on('click', (ev) => {
+                        if (ev.targetType === 'cell' && ev.columnName === '2') {
+                            var value_sample = ev.nativeEvent.srcElement;
+                            var value_mom = breedgrid.getRow(ev.rowKey)[4];
+                            var value_dad = breedgrid.getRow(ev.rowKey)[5];
+
+                            SearchSample(value_sample);
+                            SearchBasic(value_mom, value_dad);
+                        } else if (ev.targetType === 'cell' && ev.columnName === '4') {
+                            var value_sample1 = breedgrid.getRow(ev.rowKey)[2];
+                            var value_mom1 = ev.nativeEvent.srcElement;
+                            var value_dad1 = breedgrid.getRow(ev.rowKey)[5];
+
+                            SearchSample1(value_sample1);
+                            SearchBasic1(value_mom1, value_dad1);
+                        } else if (ev.targetType === 'cell' && ev.columnName === '5') {
+                            var value_sample2 = breedgrid.getRow(ev.rowKey)[2];
+                            var value_mom2 = breedgrid.getRow(ev.rowKey)[4];
+                            var value_dad2 = ev.nativeEvent.srcElement;
+
+                            SearchSample2(value_sample2);
+                            SearchBasic2(value_mom2, value_dad2);
+                        }
+                    });
+
+                    var before = null;
+                    var after = null;
+
+                    breedgrid.on('afterChange', (ev) => {
+                        before = ev.changes[0].prevValue;
+                        after = ev.changes[0].value;
+
+                        if (after != before) {
+                            var breed_id = breedgrid.getRow(ev.changes[0].rowKey).breed_id;
+                            var detail_id = ev.changes[0].columnName;
+                            var standard = after;
+
+                            var data = {"breed_id": breed_id, "detail_id": detail_id, "standard": standard};
+
+                            $.ajax(
+                                {
+                                    url: 'updateBreed',
+                                    method: 'POST',
+                                    dataType: 'json',
+                                    data: data,
+                                    success: function (result) {
+                                        if (result == 0) {
+                                            return Alert("수정에 실패하였습니다.")
+                                        }
+                                    }
+                                });
+                        }
+                    });
                 }
             });
     }
+
+    var lastID = 0;
+    var saveDetail_id = [];
+    var saveStandard = [];
+
+    function insertRow() {
+        $("#saveRow").css("visibility", "");
+        $("#cancelRow").css("visibility", "");
+
+        var cnt = breedgrid.getRowCount();
+
+        const newRow = {
+            'breed_id': '',
+            '1': $("#CropSelect").val(),
+        };
+
+        breedgrid.prependRow(newRow);
+        breedgrid.check(cnt);
+
+        var data = {"breed_name": $("#CropSelect").val(), "offset": $("#offset").val()};
+
+        console.log(data);
+
+        $.ajax(
+            {
+                url: 'insertBreed',
+                method: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function (result) {
+                    if (result != null) {
+                        lastID = result.breed[0].breed_id;
+
+                        breedgrid.on('editingFinish', (ev) => {
+                            saveDetail_id.push(ev.columnName);
+                            saveStandard.push(ev.value);
+                        })
+                    }
+                }
+            });
+    }
+
+    function saveRow() {
+        var breed_id = lastID;
+
+        var data = {"breed_id": breed_id, "detail_id": saveDetail_id, "standard": saveStandard};
+
+        console.log(data);
+
+        $.ajax(
+            {
+                url: 'updateAllBreed',
+                method: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function (result) {
+                    if (result == 0) {
+                        return Alert("저장에 실패하였습니다.");
+                    } else {
+                        location.reload();
+                    }
+                }
+            });
+    }
+
+    function cancelRow() {
+        var total_id = [];
+
+        total_id.push(lastID);
+
+        var data = {'breed_id': total_id};
+
+        $.ajax(
+            {
+                url: 'deleteBreed',
+                method: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function (result) {
+                    if (result == 0) {
+                    } else {
+                        OtherBreedgrid(1);
+                    }
+                }
+            });
+
+        $("#saveRow").css("visibility", "hidden");
+        $("#cancelRow").css("visibility", "hidden");
+    }
+
+    /* 엑셀 업로드 목록창 */
+    function filesFunction() {
+        let filesBtn = document.getElementById("excelFile");
+        var eventList = document.createEvent("MouseEvent");
+
+        eventList.initEvent("click");
+        filesBtn.dispatchEvent(eventList);
+
+    }
+
+    /* 엑셀 업로드 목록창 */
+
+    /* 엑셀 코드 */
+    function handleExcelDataAll(sheet) {
+        handleExcelDataHtml(sheet); // html 형태
+    }
+
+    /* Html 형태로 출력 */
+    function handleExcelDataHtml(sheet) {
+        $("#displayExcelHtml").html(XLSX.utils.sheet_to_html(sheet));
+    }
+
+    function excelExport(event) {
+        excelExportCommon(event, handleExcelDataAll);
+    }
+
+    function excelExportCommon(event, callback) {
+        var input = event.target;
+        var reader = new FileReader();
+
+        reader.onload = function () {
+            var fileData = reader.result;
+            var wb = XLSX.read(fileData, {type: 'binary'});
+            var sheetNameList = wb.SheetNames; // 시트 이름 목록 가져오기
+            var firstSheetName = sheetNameList[0]; // 첫번째 시트명
+            var firstSheet = wb.Sheets[firstSheetName]; // 첫번째 시트
+            callback(firstSheet);
+
+            delete firstSheet.A1;
+            delete firstSheet.A2;
+            var rowdata = XLSX.utils.sheet_to_json(firstSheet);
+
+            var keys = Object.values(rowdata[1]);
+
+            var html = "";
+
+            for (var i = 1; i < rowdata.length; i++) {
+                if (i === 1) {
+                    html += "<thead class='text-center'>";
+                    html += "<tr>";
+
+                    $.each(rowdata[1], function (idx, value) {
+                        html += "<th><span class='excel-title'>" + value + "</span></th>";
+                    })
+
+                    html += "</tr>";
+                    html += "</thead>";
+                } else if (i !== 1) {
+                    html += "<tbody class='text-center'>";
+                    html += "<tr class='excel_tr'>";
+
+                    var tmp = Object.keys(rowdata[1]);
+                    var j = 0;
+
+                    $.each(rowdata[i], function (idx, value) {
+                        // 공백처리
+                        if (idx == tmp[j]) {
+
+                            html += "<td class='excel'><span>" + value + "</span></td>";
+                            j++;
+
+                        } else {
+                            var idx_str = idx.replace(/[^0-9]/g, '');
+                            var tmp_str = tmp[j].replace(/[^0-9]/g, '');
+
+                            var gap = idx_str - tmp_str;
+
+                            while (gap > 0) {
+                                gap--;
+                                html += "<td><span> </span></td>";
+                            }
+
+                            html += "<td class='excel'><span>" + value + "</span></td>";
+                            j++;
+
+                            j = idx_str;
+                            j++;
+                        }
+                    });
+
+                    html += "</tr>";
+                    html += "</tbody>";
+                }
+            }
+
+            var excel = [];
+
+            for (var k = 1; k < rowdata.length; k++) {
+                var chk = Object.values(rowdata[k]);
+
+                for (var n = 0; n < keys.length; n++) {
+                    if (chk[n] == undefined) {
+                        excel[n] = {key: keys[n], value: " "};
+                    } else if (keys[n] === "도입연월일") {
+                        excel[n] = {key: keys[n], value: excelDateToJSDate(chk[n])};
+                    } else {
+                        excel[n] = {key: keys[n], value: "" + chk[n]};
+                    }
+                }
+                const obj = {...excel};
+
+                // console.log(obj);
+                rowdata[k] = obj;
+            }
+            $("#excel_data").empty();
+            $("#excel_data").append(html);
+        };
+
+        reader.readAsBinaryString(input.files[0]);
+    }
+
+    /* 엑셀 등록 창 */
+    function openExcel() {
+        $("#data_upload2").modal();
+    }
+    /* 엑셀 등록 창 */
+
+    /* 엑셀 입력 */
+    function InsertExcel() {
+        var excel_list = $(".excel_tr");
+
+        var total_arr = [];
+        var excel_arr = [];
+        for(var i = 0; i < excel_list.length; i++)
+        {
+            excel_arr = [];
+
+            var items = $(".excel_tr")[i].childNodes;
+
+            for(var j = 0; j < items.length; j++)
+            {
+                excel_arr.push(items[j].innerText);
+            }
+
+            total_arr.push(excel_arr);
+        }
+
+        $("#excel_list").val(JSON.stringify(total_arr));
+        $("#excelForm").submit();
+    }
+    /* 엑셀 코드 */
+
+    // table to json
+    function tableToJson(table) {
+        var data = [];
+
+        var headers = [];
+        for (var i = 0; i < table.rows[0].cells.length; i++) {
+            headers[i] = table.rows[0].cells[i].innerText;
+        }
+
+        for (var i = 1; i < table.rows.length; i++) {
+            var tableRow = table.rows[i];
+
+            var rowData = {};
+
+            for (var j = 0; j < tableRow.cells.length; j++) {
+                rowData[headers[j]] = tableRow.cells[j].innerText;
+            }
+
+            data.push(rowData);
+        }
+
+        return data;
+    }
+
+    // table to json
 </script>
 </body>
 </html>

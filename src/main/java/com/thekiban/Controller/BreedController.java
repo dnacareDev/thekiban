@@ -1,16 +1,8 @@
 package com.thekiban.Controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.thekiban.Entity.*;
+import com.thekiban.Service.BreedService;
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -21,14 +13,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.thekiban.Entity.Breed;
-import com.thekiban.Entity.BreedFile;
-import com.thekiban.Entity.Detail;
-import com.thekiban.Entity.Display;
-import com.thekiban.Entity.Standard;
-import com.thekiban.Entity.Uploads;
-import com.thekiban.Entity.User;
-import com.thekiban.Service.BreedService;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 public class BreedController
@@ -135,13 +129,12 @@ public class BreedController
 	}
 	
 	// 품종 수정
+	@ResponseBody
 	@RequestMapping("updateAllBreed")
-	public ModelAndView UpdateAllBreed(ModelAndView mv, @RequestParam("breed_id") int breed_id, @RequestParam("detail_id") int[] detail_id, @RequestParam("standard") String[] standard)
+	public int UpdateAllBreed(ModelAndView mv, @RequestParam("breed_id") int breed_id, @RequestParam("detail_id") int[] detail_id, @RequestParam("standard") String[] standard)
 	{
-		int result = 0;
-		
 		List<Standard> list = new ArrayList<Standard>();
-		
+
 		Standard item = new Standard();
 		
 		for(int i = 0; i < detail_id.length; i++)
@@ -166,11 +159,9 @@ public class BreedController
 			}
 		}
 		
-		result = service.UpdateAllBreed(list);
+		int result = service.UpdateAllBreed(list);
 		
-		mv.setViewName("redirect:/breed");
-		
-		return mv;
+		return result;
 	}
 	
 	// 표시항목 조회
@@ -320,4 +311,88 @@ public class BreedController
 		
 		return mv;
 	}
+
+	@ResponseBody
+	@RequestMapping("searchSampleList")
+	public Map<String, Object> SearchSample(@RequestParam("sample_name") String sample_name) {
+		Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+		List<Sample> Sample = service.SearchSample(sample_name);
+
+		result.put("sample", Sample);
+
+		return result;
+	}
+
+	// 원종 검색
+	@ResponseBody
+	@RequestMapping("searchBasic1")
+	public Map<String, Object> SearchBasic(Authentication auth, @RequestParam("basic_name") String basic_name)
+	{
+		Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+		User user = (User)auth.getPrincipal();
+
+		int count = service.SelectBasicCount(basic_name);
+
+		List<Basic> basic = service.SearchBasic(basic_name);						// 원종 검색
+		List<Detail> detail = service.SearchBasicDetail(basic_name);							// 원종 작물별 컬럼 조회
+		List<Display> display = service.SelectDisplay(user.getUser_id(), basic_name);			// 사용자별 원종 표시항목 조회
+
+		List<Standard> standard = new ArrayList<Standard>();
+
+		if(!detail.isEmpty())
+		{
+			for(int i = 0; i < basic.size(); i++)
+			{
+				standard = service.SearchBasicStandard(detail, user.getUser_id(), basic.get(i).getBasic_id());
+				basic.get(i).setBasic_standard(standard);
+			}
+		}
+
+		result.put("basic", basic);
+		result.put("detail", detail);
+		result.put("display", display);
+
+		return result;
+	}
+
+	@RequestMapping("excelBreed")
+	public ModelAndView excelUpload(ModelAndView mv, @RequestParam("excel_list") String excel_list) {
+
+		JSONArray arr = new JSONArray(excel_list);
+
+		List<Standard> standards = new ArrayList<Standard>();
+
+		for(int i = 0; i < arr.length(); i++)
+		{
+			JSONArray item = arr.getJSONArray(i);
+
+			String breed_name = (String)item.get(0);
+
+			Breed breed = new Breed();
+			breed.setBreed_name(breed_name);
+
+			int breed_result = service.InsertBreed(breed);
+
+			List<Detail> detail = service.SelectDetail(breed_name);
+
+			for(int j = 0; j < detail.size(); j++)
+			{
+				Standard standard = new Standard();
+				standard.setBreed_id(breed.getBreed_id());
+				standard.setDetail_id(detail.get(j).getDetail_id());
+				standard.setStandard((String)item.get(j));
+
+				standards.add(standard);
+			}
+		}
+
+		int standard_result = service.InsertExcel(standards);
+
+		mv.setViewName("redirect:/breed");
+
+		return mv;
+	}
+
 }

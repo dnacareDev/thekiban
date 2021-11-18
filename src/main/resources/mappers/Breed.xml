@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.thekiban.Mapper.BreedMapper">
     <!-- 세부정보 조회 -->
-    <select id="SelectDetail" resultType="Detail">
+    <select id="SelectDetail" parameterType="String" resultType="Detail">
         SELECT * FROM detail
-        WHERE detail_type = 0
+        WHERE detail_type = 0 AND detail_name = #{breed_name}
     </select>
 
     <!-- 품종 갯수 조회 -->
@@ -83,6 +83,16 @@
 		            (#{item.detail_id}, #{breed_id})
         		</when>
         	</choose>
+        </foreach>
+    </insert>
+
+    <insert id="InsertExcel" parameterType="java.util.ArrayList">
+        <foreach collection="list" item="item" separator=";">
+                    INSERT INTO standard
+                    (detail_id, breed_id, standard)
+                    VALUES
+                    (#{item.detail_id}, #{item.breed_id}, #{item.standard})
+
         </foreach>
     </insert>
     
@@ -228,4 +238,84 @@
     	SET uploads_file = #{uploads_file}, uploads_origin_file = #{uploads_origin_file}, modify_date = NOW()
     	WHERE breed_file_id = #{breed_file_id}
     </update>
+
+    <!-- 시교자원 개수 -->
+    <select id="SelectSampleCount" parameterType="String" resultType="int">
+        SELECT COUNT(*) FROM sample
+        <choose>
+            <when test="sample_name != 'none'">
+                WHERE sample_name = #{sample_name}
+            </when>
+        </choose>
+    </select>
+
+    <!-- 시교자원 검색 -->
+    <select id="SearchSample" resultType="Sample">
+        SELECT * FROM sample
+        <choose>
+            <when test="sample_name != 'none'">
+                WHERE sample_name = #{sample_name}
+                ORDER BY sample_id DESC
+            </when>
+        </choose>
+    </select>
+
+    <!-- 시교자원 목록 조회 -->
+    <select id="SelectSampleList" resultType="Sample">
+        SELECT *
+        FROM sample
+    </select>
+
+    <!-- 세부정보 조회 -->
+    <select id="SelectDetail1" resultType="Detail">
+        SELECT * FROM detail
+        WHERE detail_type = 1
+    </select>
+
+    <!-- 원종 갯수 조회 -->
+    <select id="SelectBasicCount" resultType="int">
+        SELECT COUNT(*) FROM basic
+        <choose>
+            <when test="basic_name != 'none'">
+                WHERE basic_name = #{basic_name}
+            </when>
+        </choose>
+    </select>
+
+    <!-- 원종 검색 -->
+    <select id="SearchBasic" resultType="Basic">
+        SELECT *,
+        (SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE s.basic_id = b.basic_id AND d.detail_origin = 1 AND s.standard IS NOT NULL) AS standard_count
+        FROM basic b
+        <choose>
+            <when test="basic_name != 'none'">
+                WHERE b.basic_name = #{basic_name}
+            </when>
+        </choose>
+        ORDER BY b.basic_id DESC
+    </select>
+
+    <!-- 원종별 세부 정보 조회 -->
+    <select id="SearchBasicDetail" parameterType="String" resultType="Detail">
+        SELECT * FROM detail
+        WHERE detail_type = 1 AND detail_name = #{basic_name}
+    </select>
+
+    <!-- 표시항목 조회 -->
+    <select id="SelectDisplay1" resultType="Display">
+        SELECT * FROM display dp
+                          LEFT JOIN detail dt ON dp.detail_id = dt.detail_id
+        WHERE dp.user_id = #{user_id} AND dp.basic_name = #{basic_name}
+    </select>
+
+    <!-- 원종별 정보값 조회 -->
+    <select id="SearchBasicStandard" resultType="Standard">
+        SELECT * FROM standard s
+        LEFT JOIN detail d ON s.detail_id = d.detail_id
+        LEFT JOIN display dp ON d.detail_id = dp.detail_id
+        WHERE s.basic_id = #{basic_id} AND dp.user_id = #{user_id}
+        <foreach collection="detail" item="item" open="AND (" close=")" separator="OR">
+            dp.detail_id = #{item.detail_id}
+        </foreach>
+    </select>
 </mapper>

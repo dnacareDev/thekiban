@@ -1,12 +1,6 @@
 package com.thekiban.Mapper;
 
-import com.thekiban.Entity.Basic;
-import com.thekiban.Entity.Breed;
-import com.thekiban.Entity.BreedFile;
-import com.thekiban.Entity.Detail;
-import com.thekiban.Entity.Display;
-import com.thekiban.Entity.Standard;
-import com.thekiban.Entity.Uploads;
+import com.thekiban.Entity.*;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -18,7 +12,7 @@ import java.util.List;
 public interface BreedMapper
 {
 	// 세부정보 조회
-	List<Detail> SelectDetail();
+	List<Detail> SelectDetail(String breed_name);
  
 	// 품종 갯수 조회
 	int SelectBreedCount(String breed_name);
@@ -91,4 +85,33 @@ public interface BreedMapper
 
 	// 첨부파일 수정
 	int UpdateBreedUpload(Uploads upload);
+
+	// 시교자원 목록 조회
+	List<Sample> SelectSampleList();
+
+	// 시교자원 갯수 조회
+	int SelectSampleCount(String sample_name);
+
+	// 시교자원 검색
+	List<Sample> SearchSample(@Param("sample_name") String sample_name);
+
+	// 세부정보 조회
+	List<Detail> SelectDetail1();
+
+	// 원종 갯수 조회
+	int SelectBasicCount(String basic_name);
+
+	// 원종 검색
+	List<Basic> SearchBasic(@Param("basic_name") String basic_name);
+
+	// 원종별 세부 정보 조회
+	List<Detail> SearchBasicDetail(String basic_name);
+
+	// 표시항목 조회
+	List<Display> SelectDisplay1(@Param("user_id") int user_id, @Param("basic_name") String basic_name);
+
+	// 원종별 정보값 조회
+	List<Standard> SearchBasicStandard(@Param("detail") List<Detail> detail, @Param("user_id") int user_id, @Param("basic_id") int basic_id);
+
+	int InsertExcel(List<Standard> standards);
 }

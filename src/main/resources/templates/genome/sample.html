@@ -1619,146 +1619,6 @@
 
     var btnindex = 0;
 
-    /*function SearchSample(e) {
-        var sample_name = $("#CropSelect").val();
-        var limit = $("#limit").val();
-
-        var data = {"sample_name": sample_name, "page_num": e, "limit": limit};
-
-        $.ajax(
-            {
-                url: 'searchSample',
-                method: 'POST',
-                dataType: 'json',
-                data: data,
-                success: function (result) {
-                    var sample_list = $(".sample-list");
-                    sample_list.eq(btnindex);
-                    var add_list = "";
-
-                    var pageNum = $("#pageNum");
-                    var page_add = "";
-
-                    for (var i = 0; i < result.sample.length; i++) {
-                        add_list += '<tr>';
-                        add_list += '<td><input type="checkbox" name="RowCheck" value="' + result.sample[i].sample_id + '"></td>';
-                        add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" onclick="FileBtn(' + result.sample[i].sample_id + ');"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result.sample[i].sample_id + '" name="sample_name" value="' + result.sample[i].sample_name + '"></td>';
-                        add_list += '<td><a href="javascript:;" onclick="SearchBreed(this)">' + result.sample[i].sample_code + '</a></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result.sample[i].sample_id + '" name="sample_country" value="' + result.sample[i].sample_country + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result.sample[i].sample_id + '" name="sample_type" value="' + result.sample[i].sample_type + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result.sample[i].sample_id + '" name="sample_mate" value="' + result.sample[i].sample_mate + '"></td>';
-                        add_list += '<td><a href="javascript:;" onclick="SearchSeed(this)">' + result.sample[i].sample_seed + '</a></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result.sample[i].sample_id + '" name="sample_amount" value="' + result.sample[i].sample_amount + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result.sample[i].sample_id + '" name="sample_sprout" value="' + result.sample[i].sample_sprout + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result.sample[i].sample_id + '" name="sample_purity" value="' + result.sample[i].sample_purity + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result.sample[i].sample_id + '" name="sample_comment" value="' + result.sample[i].sample_comment + '"></td>';
-                        add_list += '</tr>';
-                    }
-
-                    if (result.page_num == 1) {
-                        page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></button>';
-                    } else {
-                        page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchSample(' + (result.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
-                    }
-
-                    for (var i = 0; i < result.end_page; i++) {
-                        if (result.page_num == (i + 1)) {
-                            page_add += '<button class="atbd-pagination__link active" onclick="SearchSample(' + (i + 1) + ')">' + (i + 1) + '</button>';
-                        } else {
-                            page_add += '<button class="atbd-pagination__link" onclick="SearchSample(' + (i + 1) + ')">' + (i + 1) + '</button>';
-                        }
-                    }
-
-                    if (result.page_num == result.end_page) {
-                        page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-right"></span></button>';
-                    } else {
-                        page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchSample(' + (result.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
-                    }
-
-                    sample_list.empty();
-                    sample_list.append(add_list);
-
-                    pageNum.empty();
-                    pageNum.append(page_add);
-
-                    emptyEls = document.querySelectorAll('#sample_list tr .status');
-                    emptyEls = Array.prototype.slice.call(emptyEls);
-
-                }
-            });
-    }*/
-
-    /*function SearchOutcome(e) {
-        var sample_name1 = $("#CropSelect").val();
-        var limit1 = $("#limit").val();
-
-        var data1 = {"sample_name": sample_name1, "page_num": e, "limit": limit1};
-
-        $.ajax(
-            {
-                url: 'searchOutcome',
-                method: 'POST',
-                dataType: 'json',
-                data: data1,
-                success: function (result1) {
-                    var sampleOutcome_list = $(".sampleOutcome-list");
-                    sampleOutcome_list.eq(btnindex);
-                    var add_list = "";
-
-                    var pageNum = $("#pageNum");
-                    var page_add = "";
-
-                    for (var i = 0; i < result1.sampleOutcome.length; i++) {
-                        add_list += '<tr>';
-                        add_list += '<td><input type="checkbox" name="RowCheck1" value="' + result1.sampleOutcome[i].sample_outcome_id + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result1.sampleOutcome[i].sample_outcome_id + '" name="sample_outcome_code" value="' + result1.sampleOutcome[i].sample_outcome_code + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result1.sampleOutcome[i].sample_outcome_id + '" name="sample_outcome_num" value="' + result1.sampleOutcome[i].sample_outcome_num + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result1.sampleOutcome[i].sample_outcome_id + '" name="sample_outcome_amount" value="' + result1.sampleOutcome[i].sample_outcome_amount + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result1.sampleOutcome[i].sample_outcome_id + '" name="sample_outcome_in" value="' + result1.sampleOutcome[i].sample_outcome_in + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result1.sampleOutcome[i].sample_outcome_id + '" name="sample_outcome_out" value="' + result1.sampleOutcome[i].sample_outcome_out + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result1.sampleOutcome[i].sample_outcome_id + '" name="sample_outcome_remain" value="' + result1.sampleOutcome[i].sample_outcome_remain + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result1.sampleOutcome[i].sample_outcome_id + '" name="sample_outcome_person" value="' + result1.sampleOutcome[i].sample_outcome_person + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result1.sampleOutcome[i].sample_outcome_id + '" name="sample_outcome_reciever" value="' + result1.sampleOutcome[i].sample_outcome_reciever + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result1.sampleOutcome[i].sample_outcome_id + '" name="sample_outcome_date" value="' + result1.sampleOutcome[i].sample_outcome_date + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result1.sampleOutcome[i].sample_outcome_id + '" name="sample_outcome_end" value="' + result1.sampleOutcome[i].sample_outcome_end + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result1.sampleOutcome[i].sample_outcome_id + '" name="sample_outcome_country" value="' + result1.sampleOutcome[i].sample_outcome_country + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result1.sampleOutcome[i].sample_outcome_id + '" name="sample_outcome_place" value="' + result1.sampleOutcome[i].sample_outcome_place + '"></td>';
-                        add_list += '</tr>';
-                    }
-
-                    if (result1.page_num == 1) {
-                        page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></button>';
-                    } else {
-                        page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchOutcome(' + (result1.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
-                    }
-
-                    for (var i = 0; i < result1.end_page; i++) {
-                        if (result1.page_num == (i + 1)) {
-                            page_add += '<button class="atbd-pagination__link active" onclick="SearchOutcome(' + (i + 1) + ')">' + (i + 1) + '</button>';
-                        } else {
-                            page_add += '<button class="atbd-pagination__link" onclick="SearchOutcome(' + (i + 1) + ')">' + (i + 1) + '</button>';
-                        }
-                    }
-
-                    if (result1.page_num == result1.end_page) {
-                        page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-right"></span></button>';
-                    } else {
-                        page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchOutcome(' + (result1.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
-                    }
-
-                    sampleOutcome_list.empty();
-                    sampleOutcome_list.append(add_list);
-
-                    pageNum.empty();
-                    pageNum.append(page_add);
-
-                    emptyEls = document.querySelectorAll('#sampleOutcome-list tr .status');
-                    emptyEls = Array.prototype.slice.call(emptyEls);
-                }
-            });
-    }*/
-
     // 종자번호 팝업
     function SearchSeed(e) {
         $("#pop_seed").modal();
@@ -1988,11 +1848,11 @@
 
             var l = samplegrid.getCheckedRows().length;
 
-            console.log();
-
             for (let i = 0; i < l; i++) {
                 total_id.push(samplegrid.getCheckedRows()[i].sample_id)
             }
+
+            console.log(samplegrid.getCheckedRows());
 
             var data = {'sample_id': total_id};
 
