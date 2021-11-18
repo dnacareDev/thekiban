@@ -52,7 +52,7 @@ public class LabController
 	}
 	
 	@RequestMapping("/insertMatrix")
-	public void InsertMatrix(ModelAndView mv, Authentication auth, @RequestParam("file") MultipartFile file) throws IOException
+	public ModelAndView InsertMatrix(ModelAndView mv, Authentication auth, @RequestParam("file") MultipartFile file) throws IOException
 	{
 		User user = (User)auth.getPrincipal();
 		
@@ -86,6 +86,6 @@ public class LabController
 		
 		mv.setViewName("redirect:/matrix");
 		
-//		return mv;
+		return mv;
 	}
 }
