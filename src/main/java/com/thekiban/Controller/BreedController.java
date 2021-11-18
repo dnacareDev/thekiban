@@ -129,13 +129,12 @@ public class BreedController
 	}
 	
 	// 품종 수정
+	@ResponseBody
 	@RequestMapping("updateAllBreed")
-	public ModelAndView UpdateAllBreed(ModelAndView mv, @RequestParam("breed_id") int breed_id, @RequestParam("detail_id") int[] detail_id, @RequestParam("standard") String[] standard)
+	public int UpdateAllBreed(ModelAndView mv, @RequestParam("breed_id") int breed_id, @RequestParam("detail_id") int[] detail_id, @RequestParam("standard") String[] standard)
 	{
-		int result = 0;
-		
 		List<Standard> list = new ArrayList<Standard>();
-		
+
 		Standard item = new Standard();
 		
 		for(int i = 0; i < detail_id.length; i++)
@@ -160,11 +159,9 @@ public class BreedController
 			}
 		}
 		
-		result = service.UpdateAllBreed(list);
+		int result = service.UpdateAllBreed(list);
 		
-		mv.setViewName("redirect:/breed");
-		
-		return mv;
+		return result;
 	}
 	
 	// 표시항목 조회
@@ -326,4 +323,38 @@ public class BreedController
 
 		return result;
 	}
+
+	// 원종 검색
+	@ResponseBody
+	@RequestMapping("searchBasic1")
+	public Map<String, Object> SearchBasic(Authentication auth, @RequestParam("basic_name") String basic_name)
+	{
+		Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+		User user = (User)auth.getPrincipal();
+
+		int count = service.SelectBasicCount(basic_name);
+
+		List<Basic> basic = service.SearchBasic(basic_name);						// 원종 검색
+		List<Detail> detail = service.SearchBasicDetail(basic_name);							// 원종 작물별 컬럼 조회
+		List<Display> display = service.SelectDisplay(user.getUser_id(), basic_name);			// 사용자별 원종 표시항목 조회
+
+		List<Standard> standard = new ArrayList<Standard>();
+
+		if(!detail.isEmpty())
+		{
+			for(int i = 0; i < basic.size(); i++)
+			{
+				standard = service.SearchBasicStandard(detail, user.getUser_id(), basic.get(i).getBasic_id());
+				basic.get(i).setBasic_standard(standard);
+			}
+		}
+
+		result.put("basic", basic);
+		result.put("detail", detail);
+		result.put("display", display);
+
+		return result;
+	}
+
 }

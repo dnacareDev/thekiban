@@ -203,4 +203,34 @@ public class BreedServiceImpl implements BreedService
 	public List<Sample> SearchSample(String sample_name) {
 		return mapper.SearchSample(sample_name);
 	}
+
+	@Override
+	public List<Detail> SelectDetail1() {
+		return mapper.SelectDetail1();
+	}
+
+	@Override
+	public int SelectBasicCount(String basic_name) {
+		return mapper.SelectBasicCount(basic_name);
+	}
+
+	@Override
+	public List<Basic> SearchBasic(String basic_name) {
+		return mapper.SearchBasic(basic_name);
+	}
+
+	@Override
+	public List<Detail> SearchBasicDetail(String basic_name) {
+		return mapper.SearchBasicDetail(basic_name);
+	}
+
+	@Override
+	public List<Display> SelectDisplay1(int user_id, String basic_name) {
+		return mapper.SelectDisplay1(user_id, basic_name);
+	}
+
+	@Override
+	public List<Standard> SearchBasicStandard(List<Detail> detail, int user_id, int basic_id) {
+		return mapper.SearchBasicStandard(detail, user_id, basic_id);
+	}
 }

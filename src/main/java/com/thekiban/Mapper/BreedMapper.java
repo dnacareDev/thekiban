@@ -94,4 +94,22 @@ public interface BreedMapper
 
 	// 시교자원 검색
 	List<Sample> SearchSample(@Param("sample_name") String sample_name);
+
+	// 세부정보 조회
+	List<Detail> SelectDetail1();
+
+	// 원종 갯수 조회
+	int SelectBasicCount(String basic_name);
+
+	// 원종 검색
+	List<Basic> SearchBasic(@Param("basic_name") String basic_name);
+
+	// 원종별 세부 정보 조회
+	List<Detail> SearchBasicDetail(String basic_name);
+
+	// 표시항목 조회
+	List<Display> SelectDisplay1(@Param("user_id") int user_id, @Param("basic_name") String basic_name);
+
+	// 원종별 정보값 조회
+	List<Standard> SearchBasicStandard(@Param("detail") List<Detail> detail, @Param("user_id") int user_id, @Param("basic_id") int basic_id);
 }

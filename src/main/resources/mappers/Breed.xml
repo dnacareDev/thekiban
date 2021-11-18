@@ -255,4 +255,57 @@
         SELECT *
         FROM sample
     </select>
+
+    <!-- 세부정보 조회 -->
+    <select id="SelectDetail1" resultType="Detail">
+        SELECT * FROM detail
+        WHERE detail_type = 1
+    </select>
+
+    <!-- 원종 갯수 조회 -->
+    <select id="SelectBasicCount" resultType="int">
+        SELECT COUNT(*) FROM basic
+        <choose>
+            <when test="basic_name != 'none'">
+                WHERE basic_name = #{basic_name}
+            </when>
+        </choose>
+    </select>
+
+    <!-- 원종 검색 -->
+    <select id="SearchBasic" resultType="Basic">
+        SELECT *,
+        (SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE s.basic_id = b.basic_id AND d.detail_origin = 1 AND s.standard IS NOT NULL) AS standard_count
+        FROM basic b
+        <choose>
+            <when test="basic_name != 'none'">
+                WHERE b.basic_name = #{basic_name}
+            </when>
+        </choose>
+        ORDER BY b.basic_id DESC
+    </select>
+
+    <!-- 원종별 세부 정보 조회 -->
+    <select id="SearchBasicDetail" parameterType="String" resultType="Detail">
+        SELECT * FROM detail
+        WHERE detail_type = 1 AND detail_name = #{basic_name}
+    </select>
+
+    <!-- 표시항목 조회 -->
+    <select id="SelectDisplay1" resultType="Display">
+        SELECT * FROM display dp
+                          LEFT JOIN detail dt ON dp.detail_id = dt.detail_id
+        WHERE dp.user_id = #{user_id} AND dp.basic_name = #{basic_name}
+    </select>
+
+    <!-- 원종별 정보값 조회 -->
+    <select id="SearchBasicStandard" resultType="Standard">
+        SELECT * FROM standard s
+        LEFT JOIN detail d ON s.detail_id = d.detail_id
+        LEFT JOIN display dp ON d.detail_id = dp.detail_id
+        WHERE s.basic_id = #{basic_id} AND dp.user_id = #{user_id}
+        <foreach collection="detail" item="item" open="AND (" close=")" separator="OR">
+            dp.detail_id = #{item.detail_id}
+        </foreach>
+    </select>
 </mapper>

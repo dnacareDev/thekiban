@@ -90,4 +90,22 @@ public interface BreedService
 
 	// 시교자원 검색
 	List<Sample> SearchSample(String sample_name);
+
+	// 세부정보 조회
+	List<Detail> SelectDetail1();
+
+	// 원종 갯수 조회
+	int SelectBasicCount(String basic_name);
+
+	// 원종 검색
+	List<Basic> SearchBasic(String basic_name);
+
+	// 원종별 세부 정보 조회
+	List<Detail> SearchBasicDetail(String basic_name);
+
+	// 표시항목 조회
+	List<Display> SelectDisplay1(int user_id, String basic_name);
+
+	// 원종별 정보값 조회
+	List<Standard> SearchBasicStandard(List<Detail> detail, int user_id, int basic_id);
 }
