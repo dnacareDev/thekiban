@@ -22,6 +22,7 @@ import com.thekiban.Entity.Basic;
 import com.thekiban.Entity.Breed;
 import com.thekiban.Entity.Detail;
 import com.thekiban.RModule.RunCorrlation;
+import com.thekiban.RModule.RunTrait;
 import com.thekiban.Service.AnalysisService;
 
 @Controller
@@ -65,41 +66,67 @@ public class AnalysisController
 		return result;
 	}
 	
-	@RequestMapping("Correlation")
-	public ModelAndView Correlation(ModelAndView mv, @RequestParam("file") MultipartFile file)
+	@RequestMapping("runAnalysis")
+	public ModelAndView RunAnalysis(ModelAndView mv, @RequestParam("method") String method, @RequestParam("file") MultipartFile file)
 	{
-		System.out.println(file);
-		System.out.println(file.getOriginalFilename());
 		Date date = new Date();
 		
         String date_name = (1900 + date.getYear()) + "" + (date.getMonth() + 1) + "" + date.getDate() + "" + date.getHours() + "" + date.getMinutes() + "" + date.getSeconds();
         String origin_name = file.getOriginalFilename();
         String file_name = date_name + "_" + origin_name;
         
-        String path = "/data/apache-tomcat-9.0.8/webapps/ROOT/kiban/resultfiles/r_plot/corrplot/" + date_name;
-        
-        File filePath = new File(path);
-        
-        if (!filePath.exists())
-        	filePath.mkdirs();
-        
-       	Path fileLocation = Paths.get(path).toAbsolutePath().normalize();
-       	Path targetLocation = fileLocation.resolve(file_name);
-       	
-       	try
-       	{
-			Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-		}
-       	catch (IOException e)
-       	{
-			System.out.println(e.getMessage());
-			
-			e.printStackTrace();
-		}
-        
-//       	RunCorrlation runcorrlation = new RunCorrlation();
-//       	runcorrlation.MakeCorrplot("c(2,4,8)", path, date_name);
-
+        if(method.equals("Correlation"))
+        {
+        	String path = "/data/apache-tomcat-9.0.8/webapps/ROOT/kiban/resultfiles/r_plot/corrplot/" + date_name;
+        	
+        	File filePath = new File(path);
+        	
+        	if (!filePath.exists())
+        		filePath.mkdirs();
+        	
+        	Path fileLocation = Paths.get(path).toAbsolutePath().normalize();
+        	Path targetLocation = fileLocation.resolve(file_name);
+        	
+        	try
+        	{
+        		Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+        	}
+        	catch (IOException e)
+        	{
+        		System.out.println(e.getMessage());
+        		
+        		e.printStackTrace();
+        	}
+        	
+        	RunCorrlation runcorrlation = new RunCorrlation();
+        	runcorrlation.MakeCorrplot("c(2,4,8)", path, date_name);
+        }
+        else if(method.equals("Trait View"))
+        {
+        	String path = "/data/apache-tomcat-9.0.8/webapps/ROOT/kiban/resultfiles/r_plot/trait/" + date_name;
+        	
+        	File filePath = new File(path);
+        	
+        	if (!filePath.exists())
+        		filePath.mkdirs();
+        	
+        	Path fileLocation = Paths.get(path).toAbsolutePath().normalize();
+        	Path targetLocation = fileLocation.resolve(file_name);
+        	
+        	try
+        	{
+        		Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+        	}
+        	catch (IOException e)
+        	{
+        		System.out.println(e.getMessage());
+        		
+        		e.printStackTrace();
+        	}
+        	
+        	RunTrait runtrait = new RunTrait();
+        	runtrait.MakeTraitplot("Pheno : 1", path, date_name);
+        }
         
         mv.setViewName("redirect:/analysis");
         
