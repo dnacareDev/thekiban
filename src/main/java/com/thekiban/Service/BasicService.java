@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
 public interface BasicService
 {
 	// 세부 정보 조회
-	List<Detail> SelectDetail();
+	List<Detail> SelectDetail(String basic_name);
 
 	// 원종 갯수 조회
 	int SelectBasicCount(String basic_name);
@@ -92,4 +92,8 @@ public interface BasicService
 
 	// 첨부파일 수정
 	int UpdateBasicUpload(Uploads upload);
+
+	int InsertBasicExcel(List<Standard> standards);
+
+	int InsertRemainExcel(BasicRemain basicRemain);
 }

@@ -92,7 +92,6 @@
                     (detail_id, breed_id, standard)
                     VALUES
                     (#{item.detail_id}, #{item.breed_id}, #{item.standard})
-
         </foreach>
     </insert>
     

@@ -1754,16 +1754,6 @@
         }
     });
 
-    /* 엑셀 업로드 버튼 */
-    function filesFunction(filename) {
-        //filename = input type='file' id 명을 적으세요 ex) onclick="filesFUnction('태그 아이디')"
-        let filesBtn = document.getElementById(filename);
-        var eventList = document.createEvent("MouseEvent");
-
-        eventList.initEvent("click");
-        filesBtn.dispatchEvent(eventList);
-    }
-
     // 표시항목 버튼
     function DisplayBtn() {
         $("#display_title").text("품종관리 > " + $("#CropSelect").val());

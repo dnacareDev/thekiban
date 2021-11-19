@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.thekiban.Mapper.BasicMapper">
 	<!-- 세부정보 조회 -->
-	<select id="SelectDetail" resultType="Detail">
+	<select id="SelectDetail" parameterType="String" resultType="Detail">
 		SELECT * FROM detail
-		WHERE detail_type = 1
+		WHERE detail_type = 1 AND detail_name = #{basic_name}
 	</select>
 
 	<!-- 원종 갯수 조회 -->
@@ -107,6 +107,23 @@
         	</choose>
         </foreach>
     </insert>
+
+	<insert id="InsertBasicExcel" parameterType="java.util.ArrayList">
+		<foreach collection="list" item="item" separator=";">
+					INSERT INTO standard
+					(detail_id, basic_id, standard)
+					VALUES
+					(#{item.detail_id}, #{item.basic_id}, #{item.standard})
+		</foreach>
+	</insert>
+
+	<insert id="InsertRemainExcel" parameterType="BasicRemain">
+		INSERT INTO basicRemain
+		(basic_remain_id, basic_name, basic_remain_num, basic_remain_amount, basic_remain_in, basic_remain_out, basic_remain_re, basic_remain_person,
+		 basic_remain_date)
+		VALUES (#{basic_remain_id}, #{basic_name}, #{basic_remain_num}, #{basic_remain_amount}, #{basic_remain_in},
+				#{basic_remain_out}, #{basic_remain_re}, #{basic_remain_person}, #{basic_remain_date})
+	</insert>
 
 	<!-- 재고 등록 -->
 	<insert id="InsertRemain" parameterType="BasicRemain">

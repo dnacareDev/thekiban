@@ -6,10 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.thekiban.Entity.*;
 import org.json.JSONArray;
@@ -431,4 +428,79 @@ public class BasicController
 		
 		return mv;
 	}
+
+	@RequestMapping("excelBasic")
+	public ModelAndView excelUpload(ModelAndView mv, @RequestParam("excel_list") String excel_list) {
+
+		JSONArray arr = new JSONArray(excel_list);
+
+		List<Standard> standards = new ArrayList<Standard>();
+
+		for(int i = 0; i < arr.length(); i++)
+		{
+			JSONArray item = arr.getJSONArray(i);
+
+			String basic_name = (String)item.get(0);
+
+			Basic basic = new Basic();
+			basic.setBasic_name(basic_name);
+
+			int basic_result = service.InsertBasic(basic);
+
+			List<Detail> detail = service.SelectDetail(basic_name);
+
+			for(int j = 0; j < detail.size(); j++)
+			{
+				Standard standard = new Standard();
+				standard.setBasic_id(basic.getBasic_id());
+				standard.setDetail_id(detail.get(j).getDetail_id());
+				standard.setStandard((String)item.get(j));
+
+				standards.add(standard);
+			}
+		}
+
+		int standard_result = service.InsertBasicExcel(standards);
+
+		mv.setViewName("redirect:/basic");
+
+		return mv;
+	}
+
+	@RequestMapping("excelRemain")
+	public ModelAndView remainExcelUpload(ModelAndView mv, @ModelAttribute BasicRemain basicRemain, @RequestParam("excel_list") String excel_list) {
+		JSONArray arr = new JSONArray(excel_list);
+
+		for (int i = arr.length() - 1; i > -1; i--) {
+
+			JSONObject obj = arr.getJSONObject(i);
+
+			Set<String> key = obj.keySet();
+
+			for (String k : key) {
+
+				if (k.equals("종자번호 (ID)")) {
+					basicRemain.setBasic_remain_num(obj.getString(k));
+				} else if (k.equals("종자 보유량")) {
+					basicRemain.setBasic_remain_amount(Integer.parseInt(obj.getString(k)));
+				} else if (k.equals("입고량")) {
+					basicRemain.setBasic_remain_in(Integer.parseInt(obj.getString(k)));
+				} else if (k.equals("출고량")) {
+					basicRemain.setBasic_remain_out(Integer.parseInt(obj.getString(k)));
+				} else if (k.equals("재고량")) {
+					basicRemain.setBasic_remain_re(Integer.parseInt(obj.getString(k)));
+				} else if (k.equals("담당자")) {
+					basicRemain.setBasic_remain_person(obj.getString(k));
+				} else if (k.equals("일자")) {
+					basicRemain.setBasic_remain_date(obj.getString(k));
+				}
+			}
+
+			service.InsertRemainExcel(basicRemain);
+		}
+		mv.setViewName("redirect:/basic");
+
+		return mv;
+	}
+
 }
