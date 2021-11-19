@@ -391,7 +391,7 @@ public class BreedController
 
 			int breed_result = service.InsertBreed(breed);
 
-			List<Detail> detail = service.SelectDetail(breed_name);
+			List<Detail> detail = service.SelectDetailExcel(breed_name);
 
 			for(int j = 0; j < detail.size(); j++)
 			{

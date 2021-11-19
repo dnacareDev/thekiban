@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Param;
 public interface BasicMapper
 {
 	// 세부정보 조회
-	List<Detail> SelectDetail(String basic_name);
+	List<Detail> SelectDetailExcel(String basic_name);
 
 	// 원종 갯수 조회
 	int SelectBasicCount(String basic_name);

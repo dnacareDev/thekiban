@@ -16,9 +16,9 @@ public class BreedServiceImpl implements BreedService
   
 	// 세부정보 조회
 	@Override
-	public List<Detail> SelectDetail(String breed_name)
+	public List<Detail> SelectDetailExcel(String breed_name)
 	{
-		return mapper.SelectDetail(breed_name);
+		return mapper.SelectDetailExcel(breed_name);
 	}
 
 	// 품종 갯수 조회
@@ -237,5 +237,10 @@ public class BreedServiceImpl implements BreedService
 	@Override
 	public int InsertExcel(List<Standard> standards) {
 		return mapper.InsertExcel(standards);
+	}
+
+	@Override
+	public List<Detail> SelectDetail() {
+		return mapper.SelectDetail();
 	}
 }

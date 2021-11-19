@@ -488,7 +488,7 @@ public class BasicController
 
 			int basic_result = service.InsertBasic(basic);
 
-			List<Detail> detail = service.SelectDetail(basic_name);
+			List<Detail> detail = service.SelectDetailExcel(basic_name);
 
 			for(int j = 0; j < detail.size(); j++)
 			{

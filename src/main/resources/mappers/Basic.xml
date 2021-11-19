@@ -2,11 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.thekiban.Mapper.BasicMapper">
     <!-- 세부정보 조회 -->
-    <select id="SelectDetail" parameterType="String" resultType="Detail">
+    <select id="SelectDetailExcel" parameterType="String" resultType="Detail">
         SELECT *
         FROM detail
         WHERE detail_type = 1
           AND detail_name = #{basic_name}
+    </select>
+
+    <select id="SelectDetail" resultType="Detail">
+        SELECT *
+        FROM detail
+        WHERE detail_type = 1
     </select>
 
     <!-- 원종 갯수 조회 -->

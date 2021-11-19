@@ -12,7 +12,7 @@ import java.util.List;
 public interface BreedMapper
 {
 	// 세부정보 조회
-	List<Detail> SelectDetail(String breed_name);
+	List<Detail> SelectDetailExcel(String breed_name);
  
 	// 품종 갯수 조회
 	int SelectBreedCount(String breed_name);
@@ -114,4 +114,6 @@ public interface BreedMapper
 	List<Standard> SearchBasicStandard(@Param("detail") List<Detail> detail, @Param("user_id") int user_id, @Param("basic_id") int basic_id);
 
 	int InsertExcel(List<Standard> standards);
+
+	List<Detail> SelectDetail();
 }

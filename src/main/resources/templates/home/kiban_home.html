@@ -149,7 +149,7 @@
                                         	<canvas id="doughnut1" style="height:210px; width:200px"></canvas>
                                         </div>
                                         <div class="data_number">
-                                    		<span class="data">174건</span>
+                                    		<span class="data breed_count"></span>
                                     	</div>
                                     </div>
                                     <div class="data_percent" id="doughnut1_data">
@@ -391,16 +391,159 @@
         }
     }  */
 
-
    $(document).ready(function () {
        SearchMarker(1);
+       SearchChart(1);
    });
 
+   var inKorea = [];
+   var outKorea = [];
+
    function SearchMarker(e) {
+       var data = {"sample_name": "고추"};
 
+       $.ajax(
+           {
+               url: 'selectOutcomeList',
+               method: 'POST',
+               dataType: 'json',
+               data: data,
+               success: function (result1) {
+                   for (let i = 0; i < result1.sampleOutcome.length; i++) {
+                       if (result1.sampleOutcome[i].sample_outcome_country == '국내') {
+                           inKorea.push(result1.sampleOutcome[i].sample_outcome_place);
+                       } else if(result1.sampleOutcome[i].sample_outcome_country == '해외') {
+                           outKorea.push(result1.sampleOutcome[i].sample_outcome_place);
+                       }
+                   }
 
+                   searchArea();
+               }
+           });
+   }
 
-       searchArea();
+   let chartData1 = [];
+   let chartData2 = [];
+   let chartData3 = [];
+   let chartData4 = [];
+
+   function SearchChart(e) {
+
+       var data = {"breed_name": '고추'};
+
+       $.ajax(
+           {
+               url: 'searchChart',
+               method: 'POST',
+               dataType: 'json',
+               data: data,
+               success: function (result) {
+                   let count_go = 0;
+                   let count_dae = 0;
+                   let count_mel = 0;
+                   let count_mu = 0;
+                   let count_bae = 0;
+                   let count_su = 0;
+                   let count_ybae = 0;
+                   let count_yang = 0;
+                   let count_cham = 0;
+                   let count_to = 0;
+                   let count_go1 = 0;
+                   let count_dae1 = 0;
+                   let count_mel1 = 0;
+                   let count_mu1 = 0;
+                   let count_bae1 = 0;
+                   let count_su1 = 0;
+                   let count_ybae1 = 0;
+                   let count_yang1 = 0;
+                   let count_cham1 = 0;
+                   let count_to1 = 0;
+                   let count_go2 = 0;
+                   let count_dae2 = 0;
+                   let count_mel2 = 0;
+                   let count_mu2 = 0;
+                   let count_bae2 = 0;
+                   let count_su2 = 0;
+                   let count_ybae2 = 0;
+                   let count_yang2 = 0;
+                   let count_cham2 = 0;
+                   let count_to2 = 0;
+                   let count_go3 = 0;
+                   let count_dae3 = 0;
+                   let count_mel3 = 0;
+                   let count_mu3 = 0;
+                   let count_bae3 = 0;
+                   let count_su3 = 0;
+                   let count_ybae3 = 0;
+                   let count_yang3 = 0;
+                   let count_cham3 = 0;
+                   let count_to3 = 0;
+
+                   for(let i = 0; i < result.breed.length; i++) {
+                       if(result.breed[i].breed_name === '고추') {
+                           count_go++;
+                       } else if(result.breed[i].breed_name === '대파') {
+                           count_dae++;
+                       } else if(result.breed[i].breed_name === '멜론') {
+                           count_mel++;
+                       } else if(result.breed[i].breed_name === '무') {
+                           count_mu++;
+                       } else if(result.breed[i].breed_name === '배추') {
+                           count_bae++;
+                       } else if(result.breed[i].breed_name === '수박') {
+                           count_su++;
+                       } else if(result.breed[i].breed_name === '양배추') {
+                           count_ybae++;
+                       } else if(result.breed[i].breed_name === '양파') {
+                           count_yang++;
+                       } else if(result.breed[i].breed_name === '참외') {
+                           count_cham++;
+                       } else if(result.breed[i].breed_name === '토마토') {
+                           count_to++;
+                       }
+                   }
+
+                   let count_all = (count_go + count_dae + count_mel + count_mu + count_bae + count_su + count_ybae + count_yang + count_cham + count_to);
+
+                   chartData1.push(count_go);
+                   chartData1.push(count_dae);
+                   chartData1.push(count_mel);
+                   chartData1.push(count_mu);
+                   chartData1.push(count_bae);
+                   chartData1.push(count_su);
+                   chartData1.push(count_ybae);
+                   chartData1.push(count_yang);
+                   chartData1.push(count_cham);
+                   chartData1.push(count_to);
+
+                   $(".breed_count").text(count_all + "건");
+
+                   for(let i = 0; i < result.detail.length; i++) {
+                       if(result.detail[i].detail_title === '생산판매 (신고번호)') {
+                           count_go++;
+                       } else if(result.breed[i].breed_name === '대파') {
+                           count_dae++;
+                       } else if(result.breed[i].breed_name === '멜론') {
+                           count_mel++;
+                       } else if(result.breed[i].breed_name === '무') {
+                           count_mu++;
+                       } else if(result.breed[i].breed_name === '배추') {
+                           count_bae++;
+                       } else if(result.breed[i].breed_name === '수박') {
+                           count_su++;
+                       } else if(result.breed[i].breed_name === '양배추') {
+                           count_ybae++;
+                       } else if(result.breed[i].breed_name === '양파') {
+                           count_yang++;
+                       } else if(result.breed[i].breed_name === '참외') {
+                           count_cham++;
+                       } else if(result.breed[i].breed_name === '토마토') {
+                           count_to++;
+                       }
+                   }
+
+               }
+           });
    }
 
    /* 지도 검색 */
@@ -491,14 +634,14 @@
        }
    }
 
-    var ctx = document.getElementById("doughnut1");
-    var doughnut1 = new Chart(ctx, {
+    var ctx = $("#doughnut1").get(0).getContext('2d');
+    let doughnut1 = new Chart(ctx, {
         type: 'doughnut',
         data: {
             labels: ["고추", "대파", "멜론", "무", "배추", "수박", "양배추", "양파", "참외", "토마토"],
             datasets: [{
             	label: "#",
-                data: [20.81, 8.09, 4.62, 8.09, 8.09, 2, 5.02, 8.61, 20.81, 14.45],
+                data: chartData1,
                 backgroundColor: [
                     'rgb(255, 155, 147)',
                     'rgb(255, 207, 141)',
@@ -537,7 +680,7 @@
             labels: ["고추", "대파", "멜론", "무", "배추", "수박", "양배추", "양파", "참외", "토마토"],
             datasets: [{
                 label: '#',
-                data: [20.81, 8.09, 4.62, 8.09, 8.09, 2, 5.02, 8.61, 20.81, 14.45],
+                data: chartData2,
                 backgroundColor: [
                     'rgb(255, 155, 147)',
                     'rgb(255, 207, 141)',
@@ -576,7 +719,7 @@
             labels: ["고추", "대파", "멜론", "무", "배추", "수박", "양배추", "양파", "참외", "토마토"],
             datasets: [{
                 label: "#",
-                data: [20.81, 8.09, 4.62, 8.09, 8.09, 2, 5.02, 8.61, 20.81, 14.45],
+                data: chartData3,
                 backgroundColor: [
                     'rgb(255, 155, 147)',
                     'rgb(255, 207, 141)',
@@ -615,7 +758,7 @@
             labels: ["고추", "대파", "멜론", "무", "배추", "수박", "양배추", "양파", "참외", "토마토"],
             datasets: [{
                 label: '#',
-                data: [20.81, 8.09, 4.62, 8.09, 8.09, 2, 5.02, 8.61, 20.81, 14.45],
+                data: chartData4,
                 backgroundColor: [
                     'rgb(255, 155, 147)',
                     'rgb(255, 207, 141)',
