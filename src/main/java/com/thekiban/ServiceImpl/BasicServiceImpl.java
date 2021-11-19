@@ -16,9 +16,9 @@ public class BasicServiceImpl implements BasicService
 	
 	// 세부정보 조회
 	@Override
-	public List<Detail> SelectDetail(String basic_name)
+	public List<Detail> SelectDetailExcel(String basic_name)
 	{
-		return mapper.SelectDetail(basic_name);
+		return mapper.SelectDetailExcel(basic_name);
 	}
 
 	// 원종 갯수 조회
