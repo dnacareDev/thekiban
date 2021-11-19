@@ -6,6 +6,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import com.thekiban.Entity.*;
@@ -104,36 +106,47 @@ public class BasicController
 	// 원종 등록
 	@ResponseBody
 	@RequestMapping("insertBasic")
-	public Map<String, Object> InsertBasic(ModelAndView mv, @RequestParam("basic_name") String basic_name, @RequestParam("offset") int offset)
+	public Map<String, Object> InsertBasic(@RequestParam("data") String data)
 	{
+		JSONArray arr = new JSONArray(data);
+
+		JSONObject obj = new JSONObject();
+
+		for(int i = 0; i < arr.length(); i++){
+			obj = arr.getJSONObject(i);
+		}
+
+		String basic_name = obj.getString("basic_name");
+		int offset = 0;
+
 		Map<String, Object> result = new LinkedHashMap<String, Object>();
-		
+
 		Basic basic = new Basic();
 		basic.setBasic_name(basic_name);
-		
+
 		List<Detail> detail = service.SearchBasicDetail(basic_name);
-		
+
 		int insert_basic = service.InsertBasic(basic);
 		int insert_standard = service.InsertStandard(basic.getBasic_id(), basic_name, detail);
-		
+
 		List<Basic> basic_list = service.SelectBasicAll(basic_name, offset);
-		
+
 		List<Standard> standard = new ArrayList<Standard>();
-		
+
 		if(!basic_list.isEmpty())
 		{
 			for(int i = 0; i < basic_list.size(); i++)
 			{
 				standard = service.SelectBasicStandard(basic_list.get(i).getBasic_id());
-				
+
 				basic_list.get(i).setBasic_standard(standard);
 			}
 		}
-		
+
 		result.put("basic", basic_list);
 		result.put("new_basic", basic);
 		result.put("detail", detail);
-		
+
 		return result;
 	}
 
@@ -145,7 +158,7 @@ public class BasicController
 
 		JSONObject obj = arr.getJSONObject(0);
 
-		String value = (String) obj.get("value");
+		String value = (String) obj.get("basic_name");
 
 		basicRemain.setBasic_name(value);
 
@@ -165,23 +178,38 @@ public class BasicController
 	}
 	
 	// 원종 수정
+	@ResponseBody
 	@RequestMapping("updateAllBasic")
-	public ModelAndView UpdateAllBasic(ModelAndView mv, @RequestParam("basic_id") int basic_id, @RequestParam("detail_id") int[] detail_id, @RequestParam("standard") String[] standard)
+	public int UpdateAllBasic(@RequestParam("data") String data)
 	{
-		int result = 0;
-		
+		JSONArray arr = new JSONArray(data);
+
+		System.out.println(arr);
+
+		JSONObject obj = new JSONObject();
+
+		for (int i = 0; i < arr.length(); i++) {
+			obj = arr.getJSONObject(i);
+		}
+
+		int basic_id = obj.getInt("basic_id");
+
+		JSONArray detail_id = obj.getJSONArray("detail_id");
+
+		JSONArray standard = obj.getJSONArray("standard");
+
 		List<Standard> list = new ArrayList<Standard>();
-		
+
 		Standard item = new Standard();
 		
-		for(int i = 0; i < detail_id.length; i++)
+		for(int i = 0; i < detail_id.length(); i++)
 		{
 			item = new Standard();
 			
-			if(standard[i].equals(""))
+			if(standard.get(i).equals(""))
 			{
 				item.setBasic_id(basic_id);
-				item.setDetail_id(detail_id[i]);
+				item.setDetail_id(detail_id.getInt(i));
 				item.setStandard(null);
 				
 				list.add(item);
@@ -189,18 +217,16 @@ public class BasicController
 			else
 			{
 				item.setBasic_id(basic_id);
-				item.setDetail_id(detail_id[i]);
-				item.setStandard(standard[i]);
+				item.setDetail_id(detail_id.getInt(i));
+				item.setStandard((String)standard.get(i));
 				
 				list.add(item);
 			}
 		}
 		
-		result = service.UpdateAllBasic(list);
+		int result = service.UpdateAllBasic(list);
 		
-		mv.setViewName("redirect:/basic");
-		
-		return mv;
+		return result;
 	}
 
 	// 재고 수정
@@ -224,61 +250,76 @@ public class BasicController
 	}
 
 	// 재고 입력
+	@ResponseBody
 	@RequestMapping("updateInsertBasicRemain")
-	public ModelAndView UpdateInsertBasicRemain(ModelAndView mv, @ModelAttribute BasicRemain basicRemain, @RequestParam("data") String data) {
+	public int UpdateInsertBasicRemain(@ModelAttribute BasicRemain basicRemain, @RequestParam("data") String data) {
 		JSONArray arr = new JSONArray(data);
 
-		JSONObject input_id = arr.getJSONObject(0);
+		JSONObject obj = arr.getJSONObject(0);
 
-		int value_id = (Integer) input_id.get("value");
-
-		basicRemain.setBasic_remain_id(value_id);
-
-		for (int i = 1; i < arr.length(); i++) {
-			JSONObject obj = arr.getJSONObject(i);
-
-			String key_id = (String) obj.get("key");
-			String value = (String) obj.get("value");
-
-			if (!value.equals("")) {
-				if (key_id.equals("basic_remain_num")) {
-					basicRemain.setBasic_remain_num(value);
-				} else if (key_id.equals("basic_remain_amount")) {
-					basicRemain.setBasic_remain_amount(Integer.parseInt(value));
-				} else if (key_id.equals("basic_remain_in")) {
-					basicRemain.setBasic_remain_in(Integer.parseInt(value));
-				} else if (key_id.equals("basic_remain_out")) {
-					basicRemain.setBasic_remain_out(Integer.parseInt(value));
-				} else if (key_id.equals("basic_remain_re")) {
-					basicRemain.setBasic_remain_re(Integer.parseInt(value));
-				} else if (key_id.equals("basic_remain_person")) {
-					basicRemain.setBasic_remain_person(value);
-				} else if (key_id.equals("basic_remain_date")) {
-					basicRemain.setBasic_remain_date(value);
-				}
-			} else {
-				if (key_id.equals("basic_remain_num")) {
-					basicRemain.setBasic_remain_num("");
-				} else if (key_id.equals("basic_remain_amount")) {
-					basicRemain.setBasic_remain_amount(0);
-				} else if (key_id.equals("basic_remain_in")) {
-					basicRemain.setBasic_remain_in(0);
-				} else if (key_id.equals("basic_remain_out")) {
-					basicRemain.setBasic_remain_out(0);
-				} else if (key_id.equals("basic_remain_re")) {
-					basicRemain.setBasic_remain_re(0);
-				} else if (key_id.equals("basic_remain_person")) {
-					basicRemain.setBasic_remain_person("");
-				} else if (key_id.equals("basic_remain_date")) {
-					basicRemain.setBasic_remain_date(null);
-				}
-			}
+		if(!obj.isNull("basic_name")) {
+			basicRemain.setBasic_name((String) obj.get("basic_name"));
+		} else {
+			basicRemain.setBasic_name("");
 		}
-		service.UpdateInsertBasicRemain(basicRemain);
 
-		mv.setViewName("redirect:/basic");
+		if(!obj.isNull("basic_remain_num")) {
+			basicRemain.setBasic_remain_num((String) obj.get("basic_remain_num"));
+		} else {
+			basicRemain.setBasic_remain_num("");
+		}
 
-		return mv;
+		if(!obj.isNull("basic_remain_amount")) {
+			String basic_remain_amount = (String) obj.get("basic_remain_amount");
+			basic_remain_amount = basic_remain_amount.trim();
+			basicRemain.setBasic_remain_amount(Integer.parseInt(basic_remain_amount));
+		} else {
+			basicRemain.setBasic_remain_amount(0);
+		}
+
+		if(!obj.isNull("basic_remain_in")) {
+			String basic_remain_in = (String) obj.get("basic_remain_in");
+			basic_remain_in = basic_remain_in.trim();
+			basicRemain.setBasic_remain_in(Integer.parseInt(basic_remain_in));
+		} else {
+			basicRemain.setBasic_remain_in(0);
+		}
+
+		if(!obj.isNull("basic_remain_out")) {
+			String basic_remain_out = (String) obj.get("basic_remain_out");
+			basic_remain_out = basic_remain_out.trim();
+			basicRemain.setBasic_remain_out(Integer.parseInt(basic_remain_out));
+		} else {
+			basicRemain.setBasic_remain_out(0);
+		}
+
+		if(!obj.isNull("basic_remain_re")) {
+			String basic_remain_re = (String) obj.get("basic_remain_re");
+			basic_remain_re = basic_remain_re.trim();
+			basicRemain.setBasic_remain_re(Integer.parseInt(basic_remain_re));
+		} else {
+			basicRemain.setBasic_remain_re(0);
+		}
+
+		if(!obj.isNull("basic_remain_person")) {
+			basicRemain.setBasic_remain_person((String) obj.get("basic_remain_person"));
+		} else {
+			basicRemain.setBasic_remain_person("");
+		}
+
+		if(!obj.isNull("basic_remain_date")) {
+			String date = (String) obj.get("income_date");
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.KOREA);
+			LocalDate ldate = LocalDate.parse(date, formatter);
+
+			basicRemain.setBasic_remain_date(ldate);
+		} else {
+			basicRemain.setBasic_remain_date(null);
+		}
+
+		int result = service.UpdateInsertBasicRemain(basicRemain);
+
+		return result;
 	}
 
 	// 선택삭제
@@ -492,7 +533,11 @@ public class BasicController
 				} else if (k.equals("담당자")) {
 					basicRemain.setBasic_remain_person(obj.getString(k));
 				} else if (k.equals("일자")) {
-					basicRemain.setBasic_remain_date(obj.getString(k));
+					String date = obj.getString(k);
+					DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.KOREA);
+					LocalDate ldate1 = LocalDate.parse(date, formatter);
+
+					basicRemain.setBasic_remain_date(ldate1);
 				}
 			}
 

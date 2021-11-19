@@ -3,6 +3,7 @@ package com.thekiban.Controller;
 import com.thekiban.Entity.*;
 import com.thekiban.Service.BreedService;
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -131,36 +132,51 @@ public class BreedController
 	// 품종 수정
 	@ResponseBody
 	@RequestMapping("updateAllBreed")
-	public int UpdateAllBreed(ModelAndView mv, @RequestParam("breed_id") int breed_id, @RequestParam("detail_id") int[] detail_id, @RequestParam("standard") String[] standard)
+	public int UpdateAllBreed(@RequestParam("data") String data)
 	{
+		JSONArray arr = new JSONArray(data);
+
+		JSONObject obj = new JSONObject();
+
+		for (int i = 0; i < arr.length(); i++) {
+			obj = arr.getJSONObject(i);
+		}
+
+		int breed_id = obj.getInt("breed_id");
+
+		JSONArray detail_id = obj.getJSONArray("detail_id");
+
+		JSONArray standard = obj.getJSONArray("standard");
+
 		List<Standard> list = new ArrayList<Standard>();
 
 		Standard item = new Standard();
-		
-		for(int i = 0; i < detail_id.length; i++)
+
+		for(int i = 0; i < detail_id.length(); i++)
 		{
 			item = new Standard();
-			
-			if(standard[i].equals(""))
+
+			if(standard.get(i).equals(""))
 			{
 				item.setBreed_id(breed_id);
-				item.setDetail_id(detail_id[i]);
+				item.setDetail_id(detail_id.getInt(i));
 				item.setStandard(null);
-				
+
 				list.add(item);
 			}
 			else
 			{
 				item.setBreed_id(breed_id);
-				item.setDetail_id(detail_id[i]);
-				item.setStandard(standard[i]);
-				
+				item.setDetail_id(detail_id.getInt(i));
+				item.setStandard((String)standard.get(i));
+
 				list.add(item);
 			}
 		}
-		
+
 		int result = service.UpdateAllBreed(list);
-		
+//		int result = 1;
+
 		return result;
 	}
 	
