@@ -629,6 +629,30 @@
         .footer-wrapper {
             background-color: #FCFCFC;
         }
+
+        #basicGrid .tui-grid-body-area td[data-column-name='170'] {
+            color: mediumblue;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        #saveRow {
+            float: right;
+            color: #fff;
+            background-color: #217566;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        #cancelRow {
+            float: right;
+            color: #217566;
+            background-color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body class="layout-light top-menu overlayScroll">
@@ -691,7 +715,7 @@
                                 <div id="remainGrid" style="visibility: hidden; height: 0;"></div>
                                 <div class="row">
                                     <div class="col-4" id="btn1">
-                                        <button class="btn btn-icon btn-light btn-circle" onclick="InsertBtn()">
+                                        <button class="btn btn-icon btn-light btn-circle" onclick="insertRow()">
                                             <span data-feather="plus"></span>
                                         </button>
                                         <button class="btn btn-icon btn-light btn-circle" onclick="DeleteBasic()">
@@ -700,6 +724,7 @@
                                         <button class="btn btn-icon btn-light btn-circle" id="data_check_submit" onclick="AnalysisBtn();" style="width:44.03px; height:42px;">
                                             <img src="../assets/vendor_assets/img/check_tab.png" alt="check" style="width: 17px;margin-left: 4px;">
                                         </button>
+                                        <input type="hidden" id="offset">
                                     </div>
                                     <div class="col-4" id="btn2" style="display: none;">
                                         <button class="btn btn-icon btn-light btn-circle" onclick="InsertInventory()">
@@ -708,12 +733,6 @@
                                         <button class="btn btn-icon btn-light btn-circle" onclick="DeleteInventory()">
                                             <span data-feather="trash-2"></span>
                                         </button>
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="row" style="justify-content: center;">
-                                            <div id="pageNum" style="text-align:center; margin: 2% 0 0 0;"></div>
-                                        </div>
-                                        <input type="hidden" id="offset">
                                     </div>
                                 </div>
                             </div>
@@ -1820,148 +1839,6 @@
         return obj;
     };
 
-    // 원종 추가
-    function InsertBtn() {
-        if (tablechk === 0) {
-            var data = {"basic_name": $("#CropSelect").val(), "offset": $("#offset").val()};
-
-            $.ajax(
-                {
-                    url: 'insertBasic',
-                    method: 'POST',
-                    dataType: 'json',
-                    data: data,
-                    success: function (result) {
-                        var header_list = $("#header_list");
-                        var header_add = "";
-
-                        var basic_list = $("#basic_list");
-                        var add_list = "";
-
-                        header_add += '<tr>';
-                        header_add += '<th></th>';
-                        header_add += '<th><span class="title">첨부파일</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="첨부파일"></th>';
-                        header_add += '<th><span class="title">특성상태</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="특성상태"></th>';
-
-                        for (var i = 0; i < result.detail.length; i++) {
-                            header_add += '<th style="cursor: pointer;"><span class="title">' + result.detail[i].detail_title + '</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="' + result.detail[i].detail_title + '"></th>'
-                        }
-
-                        add_list += '<tr>';
-                        add_list += '<td><input type="checkbox" name="RowCheck" value="' + result.new_basic.basic_id + '"></td>';
-                        add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
-                        add_list += '<td onclick="EmptyBtn(' + result.new_basic.basic_id + ');" style="color : blue;">EMPTY</td>';
-                        add_list += '<td>' + result.new_basic.basic_name + '</td>';
-
-                        for (var i = 1; i < result.detail.length; i++) {
-                            add_list += '<td><input type="text" class="updateInput" data="' + result.new_basic.basic_id + '" name="' + result.detail[i].detail_id + '"></td>';
-                        }
-
-                        for (var i = 0; i < result.basic.length; i++) {
-                            if (result.basic[i].basic_id != result.new_basic.basic_id) {
-                                add_list += '<tr>';
-                                add_list += '<td><input type="checkbox" name="RowCheck" value="' + result.basic[i].basic_id + '"></td>';
-                                add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#gen-attach"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
-
-                                if (result.basic[i].standard_count == 0) {
-                                    add_list += '<td onclick="EmptyBtn(' + result.basic[i].basic_id + ');" style="color : blue;">EMPTY</td>';
-                                } else {
-                                    add_list += '<td onclick="EmptyBtn(' + result.basic[i].basic_id + ');" style="color : green;">PROGRESS</td>';
-                                }
-
-                                for (var j = 0; j < result.basic[i].basic_standard.length; j++) {
-                                    add_list += '<td>' + result.basic[i].basic_standard[j].standard + '</td>';
-                                }
-
-                                add_list += '</tr>';
-                            }
-                        }
-
-                        add_list += '</tr>';
-
-                        header_list.empty();
-                        header_list.append(header_add);
-
-                        basic_list.empty();
-                        basic_list.append(add_list);
-
-                        $("input[type='text'].updateInput").eq(0).focus();
-                    }
-                });
-        } else {
-            var row_list1 = "";
-            row_list1 += '<tr id="row_data">';
-
-            row_list1 += '<form action="insertBasicRemain" id="rowForm" method="POST" enctype="multipart/form-data">';
-            row_list1 += '<input type="hidden" id="rowBasic" name="rowBasic1">';
-            row_list1 += '<td><input type="checkbox" name="RowCheck1"></td>';
-            row_list1 += '<td><input type="text" class="rowInput" name="basic_remain_num"></td>';
-            row_list1 += '<td><input type="text" class="rowInput" name="basic_remain_amount"></td>';
-            row_list1 += '<td><input type="text" class="rowInput" name="basic_remain_in"></td>';
-            row_list1 += '<td><input type="text" class="rowInput" name="basic_remain_out"></td>';
-            row_list1 += '<td><input type="text" class="rowInput" name="basic_remain_re"></td>';
-            row_list1 += '<td><input type="text" class="rowInput" name="basic_remain_person"></td>';
-            row_list1 += '<td><input type="text" class="rowInput" name="basic_remain_date"></td>';
-            row_list1 += '</form>';
-            row_list1 += '</tr>';
-
-            $("#basicRemain-list").prepend(row_list1);
-
-            var input_data1 = [];
-
-            var input_value1 = $("#CropSelect option:selected").text();
-
-            var input_name1 = {key: "basic_name", value: input_value1};
-
-            input_data1.push(input_name1);
-
-            $.ajax(
-                {
-                    url: 'insertBasicRemain',
-                    method: 'POST',
-                    dataType: 'json',
-                    data: {
-                        "input_data": JSON.stringify(input_data1)
-                    },
-                    success: function (result) {
-                        if (result != null) {
-                            $(".rowInput").focusout(function () {
-                                var data = [];
-
-                                var data_in = {key: "basic_remain_id", value: result.basic_remain_id}
-
-                                data.push(data_in);
-
-                                $("input[class=rowInput]").each(function (index, item) {
-                                    const key = $(this).attr('name');
-                                    var value = $(this).val();
-
-                                    var arr = {key: key, value: value};
-
-                                    data.push(arr);
-                                });
-
-                                $.ajax(
-                                    {
-                                        url: 'updateInsertBasicRemain',
-                                        method: 'POST',
-                                        dataType: 'json',
-                                        data: {
-                                            "data": JSON.stringify(data)
-                                        },
-                                        success: function (result) {
-
-                                        }
-                                    });
-                            })
-                        }
-                    }
-                });
-        }
-    }
-
-    var searchSelectBox = document.querySelector('#CropSelect');
-
     function UpdateAllBtn() {
         $("#updateAllForm").submit();
     }
@@ -1992,227 +1869,6 @@
         OtherBasicgrid(1);
         OtherBasicRemain(1);
     })
-
-    // 원종 검색
-    function SearchBasic(e) {
-        var basic_name = $("#CropSelect").val();
-        var limit = $("#limit").val();
-
-        var data = {"basic_name": basic_name, "page_num": e, "limit": limit};
-
-        $.ajax(
-            {
-                url: 'searchBasic',
-                method: 'POST',
-                dataType: 'json',
-                data: data,
-                success: function (result) {
-                    var header_list = $("#header_list");
-                    var header_add = "";
-
-                    var basic_list = $("#basic_list");
-                    var add_list = "";
-
-                    var detail_list = $(".detail_list");
-                    var detail_list2 = $(".detail_list2");
-
-                    var display_list = $(".display_list");
-                    var display_add = "";
-
-                    var detail_add = "";
-                    var detail_add2 = "";
-
-                    var pageNum = $("#pageNum");
-                    var page_add = "";
-
-                    // header
-                    header_add += '<tr>';
-                    header_add += '<th></th>';
-                    header_add += '<th><span class="title">첨부파일</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="첨부파일"></th>';
-                    header_add += '<th><span class="title">특성상태</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="특성상태"></th>';
-
-                    for (var i = 0; i < result.display.length; i++) {
-                        header_add += '<th style="cursor: pointer;"><span class="title">' + result.display[i].detail_title + '</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="' + result.display[i].detail_title + '"></th>'
-                    }
-
-                    header_add += '</tr>';
-
-                    // body
-                    for (var i = 0; i < result.basic.length; i++) {
-                        add_list += '<tr>';
-                        add_list += '<td><input type="checkbox" name="RowCheck" value="' + result.basic[i].basic_id + '"></td>';
-                        add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" onclick="FileBtn(' + result.basic[i].basic_id + ');"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
-
-                        if (result.basic[i].standard_count == 0) {
-                            add_list += '<td onclick="EmptyBtn(' + result.basic[i].basic_id + ');" style="color : blue; cursor:pointer;">EMPTY</td>';
-                        } else {
-                            add_list += '<td onclick="EmptyBtn(' + result.basic[i].basic_id + ');" style="color : green; cursor:pointer;">PROGRESS</td>';
-                        }
-
-                        for (var j = 0; j < result.basic[i].basic_standard.length; j++) {
-                            add_list += '<td><input type="text" class="updateInput" data="' + result.basic[i].basic_id + '" name="' + result.basic[i].basic_standard[j].detail_id + '" value="' + result.basic[i].basic_standard[j].standard + '"></td>';
-                        }
-
-                        add_list += '</tr>';
-                    }
-
-                    // detail
-                    for (var i = 0; i < detail_list.length; i++) {
-                        detail_add = "";
-                        detail_add2 = "";
-                        display_add = "";
-
-                        for (var j = 0; j < result.detail.length; j++) {
-                            // 표시항목
-                            if (result.detail[j].detail_spec == detail_list.eq(i).attr("name")) {
-                                var check = true;
-
-                                for (var k = 0; k < result.display.length; k++) {
-                                    if (result.display[k].detail_id == result.detail[j].detail_id) {
-                                        check = false;
-
-                                        display_add += '<div data-id="' + result.detail[j].detail_id + '" class="list-group step">';
-                                        display_add += '<li class="list-group-item-sm list-group-item">';
-                                        display_add += '<div class="row">';
-                                        display_add += '<input type="checkbox" class="checkbox mr-2" name="mis_research">';
-                                        display_add += '<span class="research-title">' + result.detail[j].detail_title + '</span>';
-                                        display_add += '<input type="hidden" name="detail_id" value="' + result.detail[j].detail_id + '">';
-                                        display_add += '</div>';
-                                        display_add += '</li>';
-                                        display_add += '</div>';
-                                    }
-                                }
-
-                                if (check) {
-                                    detail_add += '<li>';
-                                    detail_add += '<input type="checkbox" class="check_box" name="chk_research" value="' + result.detail[j].detail_id + '">';
-                                    detail_add += '<div class="title">' + result.detail[j].detail_title + '</div>';
-                                    detail_add += '</li>';
-                                }
-                            }
-
-                            // 특성상태
-                            if (result.detail[j].detail_spec == detail_list.eq(i).attr("name")) {
-                                detail_add2 += '<li>';
-                                detail_add2 += '<div class="title">' + result.detail[j].detail_title + '</div>';
-                                detail_add2 += '<div class="input_text">';
-                                detail_add2 += '<input type="text" class="empty_list" name="standard">';
-                                detail_add2 += '<input type="hidden" name="detail_id" value="' + result.detail[j].detail_id + '"></div>';
-                                detail_add2 += '</div>';
-                                detail_add2 += '</li>';
-                            }
-                        }
-
-                        detail_list.eq(i).empty();
-                        detail_list.eq(i).append(detail_add);
-
-                        detail_list2.eq(i).empty();
-                        detail_list2.eq(i).append(detail_add2);
-
-                        display_list.eq(i).empty();
-                        display_list.eq(i).append(display_add);
-                    }
-
-                    // paging
-                    if (result.page_num == 1) {
-                        page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></button>';
-                    } else {
-                        page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchBasic(' + (result.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
-                    }
-
-                    for (var i = 0; i < result.end_page; i++) {
-                        if (result.page_num == (i + 1)) {
-                            page_add += '<button class="atbd-pagination__link active" onclick="SearchBasic(' + (i + 1) + ')">' + (i + 1) + '</button>';
-                        } else {
-                            page_add += '<button class="atbd-pagination__link" onclick="SearchBasic(' + (i + 1) + ')">' + (i + 1) + '</button>';
-                        }
-                    }
-
-                    if (result.page_num == result.end_page) {
-                        page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-right"></span></button>';
-                    } else {
-                        page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchBasic(' + (result.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
-                    }
-
-                    header_list.empty();
-                    header_list.append(header_add);
-
-                    basic_list.empty();
-                    basic_list.append(add_list);
-
-                    pageNum.empty();
-                    pageNum.append(page_add);
-
-                    $("#offset").val(result.offset);
-
-                    checkFunction()
-                }
-            });
-    }
-
-    function SearchRemain(e) {
-        var basic_name1 = $("#CropSelect").val();
-        var limit1 = $("#limit").val();
-
-        var data1 = {"basic_name": basic_name1, "page_num": e, "limit": limit1};
-
-        $.ajax(
-            {
-                url: 'searchBasicRemain',
-                method: 'POST',
-                dataType: 'json',
-                data: data1,
-                success: function (result1) {
-                    var basicRemain_list = $(".basicRemain-list");
-                    var add_list = "";
-
-                    var pageNum = $("#pageNum");
-                    var page_add = "";
-
-                    for (var i = 0; i < result1.basicRemain.length; i++) {
-                        add_list += '<tr>';
-                        add_list += '<td><input type="checkbox" name="RowCheck1" value="' + result1.basicRemain[i].basic_remain_id + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result1.basicRemain[i].basic_remain_id + '" name="basic_remain_num" value="' + result1.basicRemain[i].basic_remain_num + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result1.basicRemain[i].basic_remain_id + '" name="basic_remain_amount" value="' + result1.basicRemain[i].basic_remain_amount + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result1.basicRemain[i].basic_remain_id + '" name="basic_remain_in" value="' + result1.basicRemain[i].basic_remain_in + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result1.basicRemain[i].basic_remain_id + '" name="basic_remain_out" value="' + result1.basicRemain[i].basic_remain_out + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result1.basicRemain[i].basic_remain_id + '" name="basic_remain_re" value="' + result1.basicRemain[i].basic_remain_re + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result1.basicRemain[i].basic_remain_id + '" name="basic_remain_person" value="' + result1.basicRemain[i].basic_remain_person + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result1.basicRemain[i].basic_remain_id + '" name="basic_remain_date" value="' + result1.basicRemain[i].basic_remain_date + '"></td>';
-                        add_list += '</tr>';
-                    }
-
-                    if (result1.page_num == 1) {
-                        page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></button>';
-                    } else {
-                        page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchRemain(' + (result1.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
-                    }
-
-                    for (var i = 0; i < result1.end_page; i++) {
-                        if (result1.page_num == (i + 1)) {
-                            page_add += '<button class="atbd-pagination__link active" onclick="SearchRemain(' + (i + 1) + ')">' + (i + 1) + '</button>';
-                        } else {
-                            page_add += '<button class="atbd-pagination__link" onclick="SearchRemain(' + (i + 1) + ')">' + (i + 1) + '</button>';
-                        }
-                    }
-
-                    if (result1.page_num == result1.end_page) {
-                        page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-right"></span></button>';
-                    } else {
-                        page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchRemain(' + (result1.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
-                    }
-
-                    basicRemain_list.empty();
-                    basicRemain_list.append(add_list);
-
-                    pageNum.empty();
-                    pageNum.append(page_add);
-
-                    emptyEls = document.querySelectorAll('#incomeRemain-list tr .status');
-                    emptyEls = Array.prototype.slice.call(emptyEls);
-                }
-            });
-    }
 
     // 원종 삭제
     function DeleteBasic() {
@@ -2274,89 +1930,6 @@
             }
         }
     }
-
-    // 정렬
-    $(document).ready(function () {
-        $('#table1 th').each(function (column) {
-            $(this).click(function () {
-                if ($(this).is('.asc')) {
-                    $(this).removeClass('asc');
-                    $(this).addClass('desc');
-
-                    sortdir = -1;
-                } else {
-                    $(this).addClass('asc');
-                    $(this).removeClass('desc');
-
-                    sortdir = 1;
-                }
-
-                $(this).siblings().removeClass('asc');
-                $(this).siblings().removeClass('desc');
-
-                var rec = $('#table1').find('tbody>tr').get();
-
-                rec.sort(function (a, b) {
-                    var val1 = +($(a).children('td').eq(column).text());
-                    var val2 = +($(b).children('td').eq(column).text());
-
-                    if (isNaN(val1) && isNaN(val2)) {
-                        val1 = $(a).children('td').eq(column).text();
-                        val2 = $(b).children('td').eq(column).text();
-
-                        return (val1 < val2) ? -sortdir : (val1 > val2) ? sortdir : 0;
-                    } else {
-                        return (val1 < val2) ? -sortdir : (val1 > val2) ? sortdir : 0;
-                    }
-                });
-
-                $.each(rec, function (index, row) {
-                    $('#table1 tbody').append(row);
-                });
-            });
-        });
-    });
-
-    // 품종 수정
-    $(document).on("focusout", ".updateInput", function () {
-        if (tablechk === 0) {
-            var basic_id = $(this).attr("data");
-            var detail_id = $(this).attr("name");
-            var standard = $(this).val();
-
-            var data = {"basic_id": basic_id, "detail_id": detail_id, "standard": standard};
-
-            $.ajax(
-                {
-                    url: 'updateBasic',
-                    method: 'POST',
-                    dataType: 'json',
-                    data: data,
-                    success: function (result) {
-                        console.log(result);
-                    }
-                });
-        } else {
-            var basic_remain_id = $(this).attr("data");
-            var basic_remain_name = $(this).attr("name");
-            var basic_remain_value = $(this).val();
-
-            var data = {"basic_remain_id": basic_remain_id, "basic_remain_name": basic_remain_name, "basic_remain_value": basic_remain_value};
-
-            $.ajax(
-                {
-                    url: 'updateBasicRemain',
-                    method: 'POST',
-                    dataType: 'json',
-                    data: data,
-                    success: function (result) {
-                        if (result == 0) {
-                            return Alert("수정에 실패하였습니다.")
-                        }
-                    }
-                });
-        }
-    });
 
     // 표시항목 버튼
     function DisplayBtn() {
@@ -2642,57 +2215,39 @@
                     basicgrid.on('click', (ev) => {
                         if (ev.targetType === 'cell' && ev.columnName === '2') {
                             var value_sample = ev.nativeEvent.srcElement;
-                            var value_mom = basicgrid.getRow(ev.rowKey)[4];
-                            var value_dad = basicgrid.getRow(ev.rowKey)[5];
 
-                            SearchSample(value_sample);
-                            SearchBasic(value_mom, value_dad);
-                        } else if (ev.targetType === 'cell' && ev.columnName === '4') {
-                            var value_sample1 = basicgrid.getRow(ev.rowKey)[2];
-                            var value_mom1 = ev.nativeEvent.srcElement;
-                            var value_dad1 = basicgrid.getRow(ev.rowKey)[5];
-
-                            SearchSample1(value_sample1);
-                            SearchBasic1(value_mom1, value_dad1);
-                        } else if (ev.targetType === 'cell' && ev.columnName === '5') {
-                            var value_sample2 = basicgrid.getRow(ev.rowKey)[2];
-                            var value_mom2 = basicgrid.getRow(ev.rowKey)[4];
-                            var value_dad2 = ev.nativeEvent.srcElement;
-
-                            SearchSample2(value_sample2);
-                            SearchBasic2(value_mom2, value_dad2);
+                            SearchBreed(value_sample);
                         }
                     });
 
                     var before = null;
                     var after = null;
 
-                    basicgrid.on('beforeChange', (ev) => {
-                        before = ev.value;
-                    });
-
                     basicgrid.on('afterChange', (ev) => {
-                        after = ev.value;
+                        for(let i = 0; i < ev.changes.length; i++) {
+                            before = ev.changes[i].prevValue;
+                            after = ev.changes[i].value;
 
-                        if (after != before) {
-                            var basic_id = ev.instance.getRow(ev.rowKey).basic_id;
-                            var detail_id = ev.columnName;
-                            var standard = ev.value;
+                            if (after != before) {
+                                var basic_id = basicgrid.getRow(ev.changes[i].rowKey).basic_id;
+                                var detail_id = ev.changes[i].columnName;
+                                var standard = after;
 
-                            var data = {"basic_id": basic_id, "detail_id": detail_id, "standard": standard};
+                                var data = {"basic_id": basic_id, "detail_id": detail_id, "standard": standard};
 
-                            $.ajax(
-                                {
-                                    url: 'updateBasic',
-                                    method: 'POST',
-                                    dataType: 'json',
-                                    data: data,
-                                    success: function (result) {
-                                        if (result == 0) {
-                                            return Alert("수정에 실패하였습니다.")
+                                $.ajax(
+                                    {
+                                        url: 'updateBasic',
+                                        method: 'POST',
+                                        dataType: 'json',
+                                        data: data,
+                                        success: function (result) {
+                                            if (result == 0) {
+                                                return Alert("수정에 실패하였습니다.")
+                                            }
                                         }
-                                    }
-                                });
+                                    });
+                            }
                         }
                     });
                 }
@@ -2720,14 +2275,12 @@
 
                     var headerName = [];
 
-                    var arr = {};
-
                     for (let i = 0; i < result.display.length; i++) {
                         var colHeader = result.display[i].detail_title;
                         var colName = result.display[i].detail_id;
                         headerName[i] = result.display[i].detail_id;
 
-                        arr = {'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'header': colHeader, 'name': colName};
+                        var arr = {'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'header': colHeader, 'name': colName};
 
                         headerArr.push(arr);
                     }
@@ -2762,32 +2315,31 @@
                     var before = null;
                     var after = null;
 
-                    basicgrid.on('beforeChange', (ev) => {
-                        before = ev.value;
-                    });
-
                     basicgrid.on('afterChange', (ev) => {
-                        after = ev.value;
+                        for(let i = 0; i < ev.changes.length; i++) {
+                            before = ev.changes[i].prevValue;
+                            after = ev.changes[i].value;
 
-                        if (after != before) {
-                            var basic_id = ev.instance.getRow(ev.rowKey).basic_id;
-                            var detail_id = ev.columnName;
-                            var standard = ev.value;
+                            if (after != before) {
+                                var basic_id = basicgrid.getRow(ev.changes[i].rowKey).basic_id;
+                                var detail_id = ev.changes[i].columnName;
+                                var standard = after;
 
-                            var data = {"basic_id": basic_id, "detail_id": detail_id, "standard": standard};
+                                var data = {"basic_id": basic_id, "detail_id": detail_id, "standard": standard};
 
-                            $.ajax(
-                                {
-                                    url: 'updateBasic',
-                                    method: 'POST',
-                                    dataType: 'json',
-                                    data: data,
-                                    success: function (result) {
-                                        if (result == 0) {
-                                            return Alert("수정에 실패하였습니다.")
+                                $.ajax(
+                                    {
+                                        url: 'updateBasic',
+                                        method: 'POST',
+                                        dataType: 'json',
+                                        data: data,
+                                        success: function (result) {
+                                            if (result == 0) {
+                                                return Alert("수정에 실패하였습니다.")
+                                            }
                                         }
-                                    }
-                                });
+                                    });
+                            }
                         }
                     });
                 }
@@ -2948,6 +2500,160 @@
             });
     }
 
+    var lastID = 0;
+    var saveDetail_id = [];
+    var saveStandard = [];
+
+    function insertRow() {
+        $("#saveRow").css("visibility", "");
+        $("#cancelRow").css("visibility", "");
+
+        if(tablechk == 0){
+            var cnt = basicgrid.getRowCount();
+
+            const newRow = {
+                'basic_id': '',
+                '169': $("#CropSelect").val(),
+            };
+
+            basicgrid.prependRow(newRow);
+            basicgrid.check(cnt);
+
+            var data = [];
+
+            var data_in = {"basic_name": $("#CropSelect").val(), "offset": $("#offset").val()};
+
+            data.push(data_in);
+
+            $.ajax(
+                {
+                    url: 'insertBasic',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                      "data" : JSON.stringify(data)
+                    },
+                    success: function (result) {
+                        if (result != null) {
+                            lastID = result.basic[0].basic_id;
+
+                            basicgrid.on('afterChange', (ev) => {
+                                for(let i = 0; i < ev.changes.length; i++) {
+                                    saveDetail_id.push(ev.changes[i].columnName);
+                                    saveStandard.push(ev.changes[i].value);
+                                }
+                            })
+                        }
+                    }
+                });
+        } else {
+            var cnt1 = remaingrid.getRowCount();
+
+            const newRow = {
+                basic_name: $("#CropSelect").val(),
+            };
+
+            remaingrid.prependRow(newRow);
+            remaingrid.check(cnt1);
+
+            var input_data1 = [];
+
+            input_data1.push(remaingrid.getCheckedRows()[0]);
+
+            $.ajax(
+                {
+                    url: 'insertBasicRemain',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        "input_data": JSON.stringify(input_data1)
+                    },
+                    success: function (result) {
+                        if (result != null) {
+                            lastID = result.basic_remain_id;
+                        }
+                    }
+                });
+        }
+    }
+
+    function saveRow() {
+        if(tablechk == 0) {
+            var basic_id = lastID;
+
+            var data = [];
+
+            var data_in = {"basic_id": basic_id, "detail_id": saveDetail_id, "standard": saveStandard};
+
+            data.push(data_in);
+
+            $.ajax(
+                {
+                    url: 'updateAllBasic',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        "data": JSON.stringify(data)
+                    },
+                    success: function (result) {
+                        if (result == 0) {
+                            return Alert("저장에 실패하였습니다.");
+                        } else {
+                            location.reload();
+                        }
+                    }
+                });
+        } else {
+            var data1 = [];
+
+            var data_in1 = remaingrid.getCheckedRows()[0];
+
+            data1.push(data_in1);
+
+            $.ajax(
+                {
+                    url: 'updateInsertBasicRemain',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        "data": JSON.stringify(data1)
+                    },
+                    success: function (result) {
+                        if(result == 0) {
+                            return Alert("저장에 실패하였습니다.");
+                        } else {
+                            location.reload();
+                        }
+                    }
+                });
+        }
+
+    }
+
+    function cancelRow() {
+        var total_id = [];
+
+        total_id.push(lastID);
+
+        var data = {'basic_id': total_id};
+
+        $.ajax(
+            {
+                url: 'deleteBasic',
+                method: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function (result) {
+                    if (result == 0) {
+                    } else {
+                        OtherBasicgrid(1);
+                    }
+                }
+            });
+
+        $("#saveRow").css("visibility", "hidden");
+        $("#cancelRow").css("visibility", "hidden");
+    }
 
     /* 엑셀 업로드 버튼 */
     function filesFunction() {
@@ -3193,7 +2899,7 @@
 
     /* 엑셀 입력 */
     function InsertExcel() {
-        if (tablechk === 0) {
+        if (tablechk == 0) {
             var excel_list = $(".excel_tr");
 
             var total_arr = [];

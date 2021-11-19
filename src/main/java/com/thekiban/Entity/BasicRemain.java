@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @ToString
@@ -17,6 +19,6 @@ public class BasicRemain {
   private int basic_remain_out;
   private int basic_remain_re;
   private String basic_remain_person;
-  private String basic_remain_date;
+  private LocalDate basic_remain_date;
 
 }
