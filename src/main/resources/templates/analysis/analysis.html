@@ -380,14 +380,30 @@ input[type="checkbox"]{
 						<form action="" method="post">
 							<div class="cover_top">
 								<div class="selectType">
-									<select>
-										<option>aaaaaaaaaaaaaa</option>
+									<select id="select_crop">
+										<option value="고추">고추</option>
+                                        <option value="대파">대파</option>
+                                        <option value="멜론">멜론</option>
+                                        <option value="무">무</option>
+                                        <option value="배추">배추</option>
+                                        <option value="수박">수박</option>
+                                        <option value="양배추">양배추</option>
+                                        <option value="양파">양파</option>
+                                        <option value="참외">참외</option>
+                                        <option value="토마토">토마토</option>
 									</select>
 								</div>
+								<input type="hidden" id="type" th:value="${type}">
 								<div class="checkbox_top">
 									<ul>
-										<li><input type="checkbox" value="품종관리" style="display:inline"><span>품종관리</span></li>
-										<li><input type="checkbox" value="원종관리" style="display:inline"><span>원종관리</span></li>
+										<li>
+											<input type="checkbox" class="manage" value="품종관리" onclick="CheckManage(this);" style="display:inline" th:checked="${type != 2}">
+											<span>품종관리</span>
+										</li>
+										<li>
+											<input type="checkbox" class="manage" value="원종관리" onclick="CheckManage(this);" style="display:inline" th:checked="${type == 2}">
+											<span>원종관리</span>
+										</li>
 									</ul>
 								</div>
 							</div>
@@ -396,19 +412,7 @@ input[type="checkbox"]{
 								<div class="box box1">
 									<input type="text" id="search_target" onchange="SearchTarget();" placeholder="품종-시교명ID, 원종-계통명ID 검색">
 									<div class="text_box text_box1">
-										<ul>
-											<th:block th:each="breed : ${breed}">
-												<li>
-													<input type="checkbox" class="plus_target" th:name="${breed.breed_name}" th:value="${breed.breed_id}">
-													<span class="target_list" th:text="${breed.standard}"></span>
-												</li>
-											</th:block>
-											<th:block th:each="basic : ${basic}">
-												<li>
-													<input type="checkbox" class="plus_target" th:name="${basic.basic_name}" th:value="${basic.basic_id}">
-													<span class="target_list" th:text="${basic.standard}"></span>
-												</li>
-											</th:block>
+										<ul id="target_list">
 										</ul>
 									</div>
 								</div>
@@ -420,7 +424,7 @@ input[type="checkbox"]{
 								</div>
 								<div class="box box2">
 									<div class="text_box text_box2">
-										<ul>
+										<ul id="plus_target">
 										</ul>
 									</div>
 								</div>   
@@ -491,18 +495,112 @@ input[type="checkbox"]{
 <th:block th:include="/../fragments/footer.html"></th:block>
 <!-- 공통 js -->
  <th:block th:include="/../fragments/commonjs.html"></th:block>
-<script>
-	$(document).ready(function()
-	{
-		CheckFunction();
-		autoHeight();
-	});
-
+<script th:inline="javascript">
 	let inner_html= "";
 	let text_box;
 	let array1 = [];
 	let array2 = [];
 	let textLi;
+	
+	$(document).ready(function()
+	{
+		SearchTarget();
+		CheckFunction();
+		autoHeight();
+	});
+	
+	// 작물 선택
+	$("#select_crop").change(function()
+	{
+		SearchTarget();
+		
+		$("#plus_target").empty();
+		$("#trait_list").empty();
+	});
+	
+	// 품종/원종 선택
+	function CheckManage(e)
+	{
+		var chk = $(".manage");
+		
+		for(var i = 0; i < chk.length; i++)
+		{
+			if(chk[i] != e)
+			{
+				chk[i].checked = false;
+				
+				SearchTarget();
+				
+				$("#plus_target").empty();
+				$("#trait_list").empty();
+			}
+		}
+	}
+	
+	function SearchTarget()
+	{
+		var name = $("#select_crop").val();
+		var url = new URL(window.location).searchParams;
+		var total_id = url.get("total_id");
+		var selected = $(".manage");
+		var type = 0;
+		
+		for(var i = 0; i < selected.length; i++)
+		{
+			if(selected[i].checked == true)
+			{
+				if(selected[i].value == '품종관리')
+				{
+					type = 1;
+				}
+				else
+				{
+					type = 2;
+				}
+			}
+		}
+		
+		var data = {"name" : name, "total_id" : total_id, "type" : type};
+		
+		$.ajax(
+		{
+			url : "selectTarget",
+			method : "POST",
+			dataType : "JSON",
+			data : data,
+			success : function(result)
+			{
+				var target_list = $("#target_list");
+				var add_list = "";
+
+				if(result.breed != null)
+				{
+					for(var i = 0; i< result.breed.length; i++)
+					{
+						add_list += '<li>';
+						add_list += '<input type="checkbox" class="plus_target" name="' + result.breed[i].breed_name + '" value="' + result.breed[i].breed_id + '">';
+						add_list += '<span class="target_list">' + result.breed[i].standard + '</span>';
+						add_list += '</li>'; 
+					}
+				}
+				if(result.basic != null)
+				{
+					for(var i = 0; i< result.basic.length; i++)
+					{
+						add_list += '<li>';
+						add_list += '<input type="checkbox" class="plus_target" name="' + result.basic[i].basic_name + '" value="' + result.basic[i].basic_id + '">';
+						add_list += '<span class="target_list">' + result.basic[i].standard + '</span>';
+						add_list += '</li>'; 
+					}
+				}
+				
+				target_list.empty();
+				target_list.append(add_list);
+				
+				CheckFunction();
+			}
+		});
+	}
 	
 	function plusFunction(e, Arrays)
 	{
@@ -574,14 +672,35 @@ input[type="checkbox"]{
 		{
 			$(document).find("input:checkbox[class=plus_target]:checked").each(function()
 			{
+				var selected = $(".manage");
+				var detail_type = 0;
+				
 				var target_add = "";
 				
-				target_add += '<li><input type="checkbox" class="minus_target" value="' + $(this).val() + '"><span>' + $(this).next().text() + '</span></li>';
+				for(var i = 0; i < selected.length; i++)
+				{
+					if(selected[i].checked == true)
+					{
+						if(selected[i].value == '품종관리')
+						{
+							detail_type = 0;
+						}
+						else
+						{
+							detail_type = 1;
+						}
+					}
+				}
+				
+				target_add += '<li>';
+				target_add += '<input type="checkbox" class="minus_target" value="' + $(this).val() + '">';
+				target_add += '<span>' + $(this).next().text() + '</span>';
+				target_add += '</li>';
 				
 				$(this).parent().remove();
-				$(".text_box2").append(target_add);
+				$("#plus_target").append(target_add);
 				
-				var data = {"deatil_name" : $(this).attr("name")};
+				var data = {"deatil_name" : $(this).attr("name"), "detail_type" : detail_type};
 				
 				$.ajax(
 				{
@@ -598,11 +717,17 @@ input[type="checkbox"]{
 						{
 							if(result[i].detail_type == 0)
 							{
-								add_list += '<li><input type="checkbox" class="plus_trait"><span class="trait_list">품종-' + result[i].detail_title + '</span></li>' 
+								add_list += '<li>';
+								add_list += '<input type="checkbox" class="plus_trait">';
+								add_list += '<span class="trait_list">품종-' + result[i].detail_title + '</span>';
+								add_list += '</li>'; 
 							}
 							else
 							{
-								add_list += '<li><input type="checkbox" class="plus_trait"><span class="trait_list">원종-' + result[i].detail_title + '</span></li>' 
+								add_list += '<li>';
+								add_list += '<input type="checkbox" class="plus_trait">';
+								add_list += '<span class="trait_list">원종-' + result[i].detail_title + '</span>';
+								add_list += '</li>';
 							}
 						}
 						
@@ -729,8 +854,12 @@ input[type="checkbox"]{
 	
 	function RunAnalysis()
 	{
+		$(".plus_target").each(function()
+		{
+			console.log(this);
+		});
+		/*
 		var method = $(".minus_method").val();
-		console.log(method);
 		
 		if(method == "Correlation")
 		{
@@ -748,8 +877,8 @@ input[type="checkbox"]{
 		{
 			return Alert("분석방법을 선택하세요.")
 		}
+		*/
 	}
-	
 </script>
 </body>
 </html>
