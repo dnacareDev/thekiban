@@ -433,11 +433,12 @@ input[type="checkbox"]{
 								</div>
 							</div>
 							<div class="submit_btn">
-								<input type="button" class="btn btn-primary btn-sm" onclick="Analysis();" value="분석실행">
+								<input type="button" class="btn btn-primary btn-sm" onclick="RunAnalysis();" value="분석실행">
 							</div>
 						</form>
-						<form action="Correlation" id="Correlation" method="POST" enctype="multipart/form-data">
-								<input type="file" id="input_file" name="file">
+						<form action="runAnalysis" id="runAnalysis" method="POST" enctype="multipart/form-data">
+							<input type="text" id="method" name="method">
+							<input type="file" id="input_file" name="file">
 						</form>
 					</div>
 				</div>
@@ -668,17 +669,22 @@ input[type="checkbox"]{
 		}
 	});
 	
-	function Analysis()
+	function RunAnalysis()
 	{
 		var method = $(".minus_method").val();
+		console.log(method);
 		
 		if(method == "Correlation")
 		{
-			$("#Correlation").submit();
+			$("#method").val(method);
+			
+			$("#runAnalysis").submit();
 		}
-		else if(method == "trait view")
+		else if(method == "Trait View")
 		{
-			console.log("trait view");
+			$("#method").val(method);
+			
+			$("#runAnalysis").submit();
 		}
 		else
 		{
