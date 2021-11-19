@@ -75,6 +75,44 @@ public class AnalysisController
         String origin_name = file.getOriginalFilename();
         String file_name = date_name + "_" + origin_name;
         
+        /*
+        File testPath = new File("C:\\Users\\User\\pref\\project\\DNA\\kiban_github\\upload\\" + date_name);
+        File testFile = new File("C:\\Users\\User\\pref\\project\\DNA\\kiban_github\\upload\\" + date_name + "\\" + file_name);
+        
+        try
+        {
+        	if (!testPath.exists())
+        	{
+        		testPath.mkdirs();
+        	}
+        	
+        	if (!testFile.exists())
+        	{
+        		testFile.createNewFile();
+        	}
+        	
+        	BufferedWriter writer = new BufferedWriter(new FileWriter(testFile, true));
+        	
+			writer.write("test1");
+			writer.write("\t");
+			writer.write("test2");
+			
+			writer.flush();
+			writer.close();
+			
+        	Path fileLocation = Paths.get("C:\\Users\\User\\pref\\project\\DNA\\kiban_github\\upload\\" + date_name + ".txt").toAbsolutePath().normalize();
+        	Path targetLocation = fileLocation.resolve(file_name);
+        	
+        	Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+		}
+        catch
+        (IOException e)
+        {
+        	System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+		*/
+        
         if(method.equals("Correlation"))
         {
         	String path = "/data/apache-tomcat-9.0.8/webapps/ROOT/kiban/resultfiles/r_plot/corrplot/" + date_name;
@@ -99,7 +137,7 @@ public class AnalysisController
         	}
         	
         	RunCorrlation runcorrlation = new RunCorrlation();
-        	runcorrlation.MakeCorrplot("c(2,4,8)", path, date_name);
+        	runcorrlation.MakeCorrplot("c\\(2,4,8\\)", "/data/apache-tomcat-9.0.8/webapps/ROOT/kiban/resultfiles/", date_name);
         }
         else if(method.equals("Trait View"))
         {
@@ -125,7 +163,7 @@ public class AnalysisController
         	}
         	
         	RunTrait runtrait = new RunTrait();
-        	runtrait.MakeTraitplot("Pheno : 1", path, date_name);
+        	runtrait.MakeTraitplot("c\\(4\\)", "/data/apache-tomcat-9.0.8/webapps/ROOT/kiban/resultfiles/", date_name);
         }
         
         mv.setViewName("redirect:/analysis");

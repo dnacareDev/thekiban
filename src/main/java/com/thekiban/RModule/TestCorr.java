@@ -1,6 +1,6 @@
 package com.thekiban.RModule;
 
-class  TestCorr
+class TestCorr
 {
 	public static void main(String[] args) 
 	{
