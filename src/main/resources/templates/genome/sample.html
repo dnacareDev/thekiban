@@ -680,7 +680,7 @@
                                         </div>
                                     </div>
                                     <div class="col-4">
-                                        <button class="btn btn-lg btn-primary bottom_btn" onclick="openMap()">
+                                        <button class="btn btn-lg btn-primary bottom_btn" data-toggle="modal" data-target="#recent">
                                             <span>시교 진행 현황</span>
                                         </button>
                                     </div>
@@ -1024,8 +1024,9 @@
                     <h6 class="modal-title" id="test_click">시교 진행 현황</h6>
                 </div>
 
-                <input type="text" id="modal-search"/>
-                <input type="button" id="modal-search-btn" value="검색"/>
+                <select class="form-control form-control-lg mt-10 mb-10 mr-10" style="width: 250px;" id="modal-search">
+                    <option value="none">선택</option>
+                </select>
 
                 <div class="modal-body">
                     <ul id="google_container">
@@ -1162,74 +1163,12 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAn2DY-pTTMgNQrmoszX9MQ4gbZoZt8c0&callback=initMap&region=kr"></script>
 
 <script type="text/javascript">
-    function openMap() {
-        $("#recent").modal();
-    }
-
     function dataToggle(one, two) {
         $(one).modal("hide");
 
         setTimeout(function () {
             $(two).modal("show");
         }, 5);
-    }
-
-    /*let topBox = document.getElementsByClassName("top_box")[0];
-    let [nav, prev, next] = topBox.children;
-    let navLi = nav.children; // pop top list
-    let navN = 0; //선택된 변수
-    let navMove = 0;
-    let content = document.getElementsByClassName("tab-content")[0];
-    let contentLi = content.children;
-
-    navLi[navN].classList.add("active");
-
-    for (let i = 0; i < navLi.length; i++) {
-        navLi[i].idx = i;
-
-        navLi[i].addEventListener("click", function (e) {
-            navN = e.currentTarget.idx;
-
-            moveFunction(navN);
-        });
-
-    }*/
-
-    /*let list = navLi.length;
-    next.addEventListener("click", function (e) {
-        (navN < list - 1) ? navN += 1 : navN = list - 1;
-        moveFunction(navN);
-    });
-
-    prev.addEventListener("click", function (e) {
-        (navN > 0) ? navN -= 1 : navN = 0;
-        moveFunction(navN);
-    });*/
-
-    function moveFunction(f) {
-
-        for (let k = 0; k < navLi.length; k++) {
-            navLi[k].classList.remove("active");
-            contentLi[k].classList.remove("active");
-        }
-        let navW = navLi[f].offsetWidth;
-        navMove = navW * f;
-
-
-        let a = topBox.offsetWidth;
-        let b = nav.offsetWidth;
-        let c = b - a;
-        let d = c + 40 + "px";
-
-        if (navMove > c) {
-            nav.style.marginLeft = "-" + d;
-        } else {
-            nav.style.marginLeft = "-" + navMove + "px";
-        }
-
-        navLi[f].classList.add("active");
-        contentLi[f].classList.add("active");
-        contentLi[f].classList.add("show");
     }
 
     /* 엑셀 업로드 목록창 */
@@ -1591,8 +1530,6 @@
 
     // 갯수 선택
     $("#limit").change(function () {
-        // SearchSample(1);
-        // SearchOutcome(1);
         OtherSample(1);
         OtherOutcome(1);
     })
@@ -1616,8 +1553,6 @@
     }
 
     var emptyEls;
-
-    var btnindex = 0;
 
     // 종자번호 팝업
     function SearchSeed(e) {
@@ -1903,6 +1838,7 @@
             }
         }
     }
+
     // 시교자원 삭제
 
     // 정렬
@@ -1984,21 +1920,6 @@
     // 데이터 수정
 
     // 구글 맵 관련
-    searchArea();
-
-    function smoothZoom(map, max, cnt) {
-        if (cnt >= max) {
-            return;
-        } else {
-            z = google.maps.event.addListener(map, 'zoom_changed', function (event) {
-                google.maps.event.removeListener(z);
-                smoothZoom(map, max, cnt + 1);
-            });
-            setTimeout(function () {
-                map.setZoom(cnt)
-            }, 40);
-        }
-    }
 
     /* row 추가 */
     function addRow() {
@@ -2301,97 +2222,6 @@
     /* 첨부파일 */
 
 
-    /* 지도 검색 */
-    $("#modal-search").on("keyup", function (e) {
-        if (e.keyCode == 13) {
-            searchArea();
-        }
-    });
-
-    $("#modal-search-btn").click(function () {
-        searchArea();
-    });
-
-    function searchArea() {
-        /*
-        const mapOptions = {
-                  tilt: 35,
-                  heading: 20,
-                  zoom: 3,
-                  center: { lat: 0, lng: 0 },
-                  mapId: "15431d2b469f209e"
-        };
-        */
-
-        var koreaOptions = {
-            zoom: 6.4,
-            center: {
-                lat: 36.613766432253634,
-                lng: 127.84942123102657
-            },
-            panControl: false,
-            zoomControl: false,
-            scaleControl: false,
-            mapTypeControl: false,
-            streetViewControl: false,
-            fullscreenControl: false,
-            scrollwheel: true,
-            // mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
-
-        var globalOptions = {
-            ...koreaOptions,
-            zoom: 2,
-        };
-
-        var geoCoder = new google.maps.Geocoder();
-        var korMap = new google.maps.Map(document.querySelector("#google_map1"), koreaOptions);
-        var globalMap = new google.maps.Map(document.querySelector("#google_map2"), globalOptions);
-
-        var koreaLocations = ["부산", "밀양", "서울", "제주"];
-        var globalLocations = ["싱가폴", "미국", "파키스탄", "일본"];
-
-        /*        var koreaLocations = [];
-                var globalLocations = [];
-
-                if(  === "국내") {
-                    koreaLocations.push();
-                } else {
-                    globalLocations.push();
-                }*/
-
-        // var searchInput = document.querySelector("#modal-search");
-        // 국내
-        for (var i = 0; i < koreaLocations.length; i++) {
-            geoCoder.geocode({"address": koreaLocations[i]}, function (result, status) {
-                if (status == "OK") {
-                    var centerCoordinate = result[0].geometry.location; // 검색한 지역의 중앙 좌표
-
-                    var marker = new google.maps.Marker({ // 마커 생성
-                        map: korMap,
-                        position: centerCoordinate
-                    });
-                }
-            });
-        }
-
-        // 해외
-        for (var i = 0; i < globalLocations.length; i++) {
-            geoCoder.geocode({"address": globalLocations[i]}, function (result, status) {
-                if (status == "OK") {
-                    var centerCoordinate = result[0].geometry.location; // 검색한 지역의 중앙 좌표
-
-                    var marker = new google.maps.Marker({ // 마커 생성
-                        map: globalMap,
-                        position: centerCoordinate
-                    });
-
-                    globalMap.setCenter(centerCoordinate);
-                }
-            });
-        }
-    }
-
     // grid
     var samplegrid = null;
     var outcomegrid = null;
@@ -2522,7 +2352,7 @@
                     samplegrid.on('editingFinish', (ev) => {
                         after = ev.value;
 
-                        if(after != before) {
+                        if (after != before) {
                             var sample_id = ev.instance.getRow(ev.rowKey).sample_id;
                             var sample_name = ev.columnName;
                             var sample_value = ev.value;
@@ -2587,7 +2417,7 @@
                     samplegrid.on('editingFinish', (ev) => {
                         after = ev.value;
 
-                        if(after != before) {
+                        if (after != before) {
                             var sample_id = ev.instance.getRow(ev.rowKey).sample_id;
                             var sample_name = ev.columnName;
                             var sample_value = ev.value;
@@ -2612,6 +2442,9 @@
             });
 
     }
+
+    var inKorea = [];
+    var outKorea = [];
 
     function SearchOutcome(e) {
         var sample_name1 = $("#CropSelect").val();
@@ -2733,7 +2566,7 @@
                     outcomegrid.on('editingFinish', (ev) => {
                         after = ev.value;
 
-                        if(after != before) {
+                        if (after != before) {
                             var sample_outcome_id = ev.instance.getRow(ev.rowKey).sample_outcome_id;
                             var sample_outcome_name = ev.columnName;
                             var sample_outcome_value = ev.value;
@@ -2755,6 +2588,17 @@
                         }
                     });
 
+                    for (let i = 0; i < result1.sampleOutcome.length; i++) {
+                        if (result1.sampleOutcome[i].sample_outcome_country == '국내') {
+                            inKorea.push(result1.sampleOutcome[i].sample_outcome_place);
+                        } else if(result1.sampleOutcome[i].sample_outcome_country == '해외') {
+                            outKorea.push(result1.sampleOutcome[i].sample_outcome_place);
+                        }
+                    }
+
+                    searchArea();
+
+                    makeSelect();
                 }
             });
     }
@@ -2794,7 +2638,7 @@
                     outcomegrid.on('editingFinish', (ev) => {
                         after = ev.value;
 
-                        if(after != before) {
+                        if (after != before) {
                             var sample_outcome_id = ev.instance.getRow(ev.rowKey).sample_outcome_id;
                             var sample_outcome_name = ev.columnName;
                             var sample_outcome_value = ev.value;
@@ -2815,6 +2659,18 @@
                                 });
                         }
                     });
+
+                    for (let i = 0; i < result1.sampleOutcome.length; i++) {
+                        if (result1.sampleOutcome[i].sample_outcome_country == '국내') {
+                            inKorea.push(result1.sampleOutcome[i].sample_outcome_place);
+                        } else if(result1.sampleOutcome[i].sample_outcome_country == '해외') {
+                            outKorea.push(result1.sampleOutcome[i].sample_outcome_place);
+                        }
+                    }
+
+                    searchArea();
+
+                    makeSelect();
                 }
             });
     }
@@ -2885,7 +2741,7 @@
     }
 
     function saveRow() {
-        if(tablechk === 0) {
+        if (tablechk === 0) {
             var data = [];
 
             var data_in = samplegrid.getCheckedRows()[0];
@@ -2901,7 +2757,7 @@
                         "data": JSON.stringify(data)
                     },
                     success: function (result) {
-                        if(result == 0) {
+                        if (result == 0) {
                             return Alert("저장에 실패하였습니다.");
                         } else {
                             location.reload();
@@ -2926,7 +2782,7 @@
                         "data": JSON.stringify(data1)
                     },
                     success: function (result) {
-                        if(result == 0) {
+                        if (result == 0) {
                             return Alert("저장에 실패하였습니다.");
                         } else {
                             location.reload();
@@ -2982,7 +2838,122 @@
         $("#saveRow").css("visibility", "hidden");
         $("#cancelRow").css("visibility", "hidden");
     }
+
+
+    /* 지도 검색 */
+    $("#modal-search").change(function() {
+        searchArea();
+    });
+
+    function searchArea() {
+
+        var koreaOptions = {
+            zoom: 6.4,
+            center: {
+                lat: 36.613766432253634,
+                lng: 127.84942123102657
+            },
+            panControl: false,
+            zoomControl: false,
+            scaleControl: false,
+            mapTypeControl: false,
+            streetViewControl: false,
+            fullscreenControl: false,
+            scrollwheel: true,
+            // mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+        var globalOptions = {
+            ...koreaOptions,
+            zoom: 2,
+        };
+
+        var geoCoder = new google.maps.Geocoder();
+        var korMap = new google.maps.Map(document.querySelector("#google_map1"), koreaOptions);
+        var globalMap = new google.maps.Map(document.querySelector("#google_map2"), globalOptions);
+
+        var koreaLocations = [];
+        var globalLocations = [];
+
+        for(let i = 0; i < inKorea.length; i++) {
+            koreaLocations.push(inKorea[i]);
+        }
+
+        for(let o = 0; o < outKorea.length; o++) {
+            globalLocations.push(outKorea[o]);
+        }
+
+        // 국내
+        for (var i = 0; i < koreaLocations.length; i++) {
+            geoCoder.geocode({"address": koreaLocations[i]}, function (result, status) {
+                if (status == "OK") {
+                    var centerCoordinate = result[0].geometry.location; // 검색한 지역의 중앙 좌표
+
+                    var marker = new google.maps.Marker({ // 마커 생성
+                        map: korMap,
+                        position: centerCoordinate
+                    });
+                }
+            });
+        }
+
+        // 해외
+        for (var i = 0; i < globalLocations.length; i++) {
+            geoCoder.geocode({"address": globalLocations[i]}, function (result, status) {
+                if (status == "OK") {
+                    var centerCoordinate = result[0].geometry.location; // 검색한 지역의 중앙 좌표
+
+                    var marker = new google.maps.Marker({ // 마커 생성
+                        map: globalMap,
+                        position: centerCoordinate
+                    });
+
+                    globalMap.setCenter(centerCoordinate);
+                }
+            });
+        }
+    }
+
+    function smoothZoom(map, max, cnt) {
+        if (cnt >= max) {
+            return;
+        } else {
+            z = google.maps.event.addListener(map, 'zoom_changed', function (event) {
+                google.maps.event.removeListener(z);
+                smoothZoom(map, max, cnt + 1);
+            });
+            setTimeout(function () {
+                map.setZoom(cnt)
+            }, 40);
+        }
+    }
+
+    function makeSelect() {
+        var sbox = document.querySelector("#modal-search");
+
+        var info = [];
+        var infoTag = [];
+
+        for(let i = 0; i < inKorea.length; i++) {
+            info.push(inKorea[i]);
+        }
+
+        for(let o = 0; o < outKorea.length; o++) {
+            info.push(outKorea[o]);
+        }
+
+        for(let i = 0; i < info.length; i++) {
+            var optionElement = document.createElement("option");
+            optionElement.value = info[i];
+            optionElement.innerText = info[i];
+            infoTag.push(optionElement);
+            sbox.append(infoTag[i]);
+        }
+
+        console.log(infoTag);
+    }
 </script>
+
 </body>
 
 </html>

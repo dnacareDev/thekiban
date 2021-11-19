@@ -267,8 +267,8 @@
                         <p class="color-primary fa-lg mb-3 mt-5 ml-3" id="test_click">시교 진행 현황</p>
                         <div class="card-body">
                         	<ul class="map" id="google_container">
-                        		<li id="google_map1"><img src="../assets/vendor_assets/img/map1.png" alt="지도1"></li>
-                        		<li id="google_map2"><img src="../assets/vendor_assets/img/map2.png" alt="지도2"></li>
+                        		<li id="google_map1"><!--<img src="../assets/vendor_assets/img/map1.png" alt="지도1">--></li>
+                        		<li id="google_map2"><!--<img src="../assets/vendor_assets/img/map2.png" alt="지도2">--></li>
                         	</ul>
                         </div>
                     </div>
@@ -283,10 +283,10 @@
 <th:block th:include="/../fragments/footer.html"></th:block>
 <!-- 공통 js -->
 <th:block th:include="/../fragments/commonjs.html"></th:block>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAAn2DY-pTTMgNQrmoszX9MQ4gbZoZt8c0&callback=initMap&region=kr"></script>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBn0n_LEGxgJuCfTU8aKvuwrcmw0iZjfmY&callback=initMap&region=kr"></script>
 <script type="text/javascript">	
-    // 구글 맵 관련 
+   /* // 구글 맵 관련
     const mapContainer = document.querySelector('#google_map1');
     const mapContainer2 = document.querySelector('#google_map2');
     const koreaOptions = {
@@ -303,7 +303,7 @@
 
     const globalOptions = {
         ...koreaOptions,
-        zoom: 1, /* 2021 - 11 - 01 수정 */
+        zoom: 1, /!* 2021 - 11 - 01 수정 *!/
         center: { lat: 37.5642135 ,lng: 127.0016985 }
     }
 
@@ -389,7 +389,107 @@
             });
             setTimeout(function(){map.setZoom(cnt)}, 80); // 80ms is what I found to work well on my system -- it might not work well on all systems
         }
-    }  
+    }  */
+
+
+   $(document).ready(function () {
+       SearchMarker(1);
+   });
+
+   function SearchMarker(e) {
+
+
+
+       searchArea();
+   }
+
+   /* 지도 검색 */
+   $("#modal-search").change(function() {
+       searchArea();
+   });
+
+   function searchArea() {
+
+       var koreaOptions = {
+           zoom: 6.4,
+           center: {
+               lat: 36.613766432253634,
+               lng: 127.84942123102657
+           },
+           panControl: false,
+           zoomControl: false,
+           scaleControl: false,
+           mapTypeControl: false,
+           streetViewControl: false,
+           fullscreenControl: false,
+           scrollwheel: true,
+           // mapTypeId: google.maps.MapTypeId.ROADMAP
+       };
+
+       var globalOptions = {
+           ...koreaOptions,
+           zoom: 2,
+       };
+
+       var geoCoder = new google.maps.Geocoder();
+       var korMap = new google.maps.Map(document.querySelector("#google_map1"), koreaOptions);
+       var globalMap = new google.maps.Map(document.querySelector("#google_map2"), globalOptions);
+
+       var koreaLocations = [];
+       var globalLocations = [];
+
+       for(let i = 0; i < inKorea.length; i++) {
+           koreaLocations.push(inKorea[i]);
+       }
+
+       for(let o = 0; o < outKorea.length; o++) {
+           globalLocations.push(outKorea[o]);
+       }
+
+       // 국내
+       for (var i = 0; i < koreaLocations.length; i++) {
+           geoCoder.geocode({"address": koreaLocations[i]}, function (result, status) {
+               if (status == "OK") {
+                   var centerCoordinate = result[0].geometry.location; // 검색한 지역의 중앙 좌표
+
+                   var marker = new google.maps.Marker({ // 마커 생성
+                       map: korMap,
+                       position: centerCoordinate
+                   });
+               }
+           });
+       }
+
+       // 해외
+       for (var i = 0; i < globalLocations.length; i++) {
+           geoCoder.geocode({"address": globalLocations[i]}, function (result, status) {
+               if (status == "OK") {
+                   var centerCoordinate = result[0].geometry.location; // 검색한 지역의 중앙 좌표
+
+                   var marker = new google.maps.Marker({ // 마커 생성
+                       map: globalMap,
+                       position: centerCoordinate
+                   });
+
+                   globalMap.setCenter(centerCoordinate);
+               }
+           });
+       }
+   }
+
+   function smoothZoom(map, max, cnt) {
+       if (cnt >= max) {
+           return;
+       } else {
+           z = google.maps.event.addListener(map, 'zoom_changed', function (event) {
+               google.maps.event.removeListener(z);
+               smoothZoom(map, max, cnt + 1);
+           });
+           setTimeout(function () {
+               map.setZoom(cnt)
+           }, 40);
+       }
+   }
 
     var ctx = document.getElementById("doughnut1");
     var doughnut1 = new Chart(ctx, {
