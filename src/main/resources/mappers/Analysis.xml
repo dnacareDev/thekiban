@@ -6,7 +6,7 @@
 		SELECT * FROM breed b
 		LEFT JOIN detail d ON b.breed_name = d.detail_name
 		LEFT JOIN standard s ON d.detail_id = s.detail_id
-		WHERE d.detail_title = '시교명 (ID)' AND s.breed_id = b.breed_id AND s.standard IS NOT NULL
+		WHERE b.breed_name = #{name} AND d.detail_title = '시교명 (ID)' AND s.breed_id = b.breed_id AND s.standard IS NOT NULL
 		<choose>
 			<when test="type != '0' and total_id != null">
 				<foreach collection="total_id" item="item" open="AND (" close=")" separator="OR">
@@ -21,7 +21,7 @@
 		SELECT * FROM basic b
 		LEFT JOIN detail d ON b.basic_name = d.detail_name
 		LEFT JOIN standard s ON d.detail_id = s.detail_id
-		WHERE d.detail_title = '계통명 (ID)' AND s.basic_id = b.basic_id AND s.standard IS NOT NULL
+		WHERE b.basic_name = #{name} AND d.detail_title = '계통명 (ID)' AND s.basic_id = b.basic_id AND s.standard IS NOT NULL
 		<choose>
 			<when test="type != '0' and total_id != null">
 				<foreach collection="total_id" item="item" open="AND (" close=")" separator="OR">
@@ -31,9 +31,9 @@
 		</choose>
 	</select>
 	
-	<!--  -->
-	<select id="SelectTrait" parameterType="String" resultType="Detail">
+	<!-- 분석 형질 조회 -->
+	<select id="SelectTrait" resultType="Detail">
 		SELECT * FROM detail
-		WHERE detail_name = #{deatil_name} AND detail_title != '작물'
+		WHERE detail_name = #{detail_name} AND detail_title != '작물' AND detail_type = #{detail_type}
 	</select>
 </mapper>

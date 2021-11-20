@@ -2030,14 +2030,19 @@
     }
 
     // 통합 분석
-    function AnalysisBtn() {
+    function AnalysisBtn()
+    {
         var total_id = [];
 
-        $("input:checkbox[name=RowCheck]:checked").each(function () {
-            total_id.push($(this).val());
-        });
+        var l = basicgrid.getCheckedRows().length;
 
-        if (total_id.length != 0) {
+        for(let i = 0; i < l; i++)
+        {
+            total_id.push(basicgrid.getCheckedRows()[i].basic_id)
+        }
+
+        if(total_id.length != 0)
+        {
             location.href = "/analysis?total_id=" + total_id + "&type=" + 2;
         }
     }

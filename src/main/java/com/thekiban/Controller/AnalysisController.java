@@ -8,8 +8,11 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.json.JSONString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,37 +38,51 @@ public class AnalysisController
 	@RequestMapping("/analysis")
 	public ModelAndView Analysis(ModelAndView mv, @RequestParam(required = false, value = "total_id") int[] total_id, @RequestParam(defaultValue = "0", value = "type") int type)
 	{
-		List<Breed> breed = new ArrayList<Breed>();
-		List<Basic> basic = new ArrayList<Basic>();
-		
-		if(type != 2)
-		{
-			breed = service.SelectBreed(total_id, type);
-		}
-		
-		if(type != 1)
-		{
-			basic = service.SelectBasic(total_id, type);
-		}
-		
 		mv.addObject("total_id", total_id);
-		mv.addObject("breed", breed);
-		mv.addObject("basic", basic);
+		mv.addObject("type", type);
 		
 		mv.setViewName("analysis/analysis");
 		
 		return mv;
 	}
 	
+	// 작목 조회
 	@ResponseBody
-	@RequestMapping("selectTrait")
-	public List<Detail> SelectTrait(@RequestParam("deatil_name") String deatil_name)
+	@RequestMapping("/selectTarget")
+	public Map<String, Object> SelectTarget(@RequestParam("name") String name, @RequestParam(required = false, value = "total_id") int[] total_id, @RequestParam("type") int type)
 	{
-		List<Detail> result = service.SelectTrait(deatil_name);
+		Map<String, Object> result = new LinkedHashMap<String, Object>();
+		
+		List<Breed> breed = new ArrayList<Breed>();
+		List<Basic> basic = new ArrayList<Basic>();
+		
+		if(type == 1)
+		{
+			breed = service.SelectBreed(name, total_id, type);
+			
+			result.put("breed", breed);
+		}
+		else if(type == 2)
+		{
+			basic = service.SelectBasic(name, total_id, type);
+			
+			result.put("basic", basic);
+		}
 		
 		return result;
 	}
 	
+	// 분석형질 조회(품종, 원종)
+	@ResponseBody
+	@RequestMapping("selectTrait")
+	public List<Detail> SelectTrait(@RequestParam("deatil_name") String deatil_name, @RequestParam("detail_type") int detail_type)
+	{
+		List<Detail> result = service.SelectTrait(deatil_name, detail_type);
+		
+		return result;
+	}
+	
+	// 형질 분석
 	@RequestMapping("runAnalysis")
 	public ModelAndView RunAnalysis(ModelAndView mv, @RequestParam("method") String method, @RequestParam("file") MultipartFile file)
 	{

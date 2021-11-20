@@ -870,6 +870,7 @@
                     <div class="modal-header" style="border: none">
                         <h6 class="modal-title" id="display_title"></h6>
                         <input type="hidden" id="display_name" name="breed_name">
+                        <input type="hidden" id="total_id">
                     </div>
                     <div class="modal-body">
                         <div class="tab-pane fade show active" id="control1" role="tabpanel" aria-labelledby="control1-tab">
@@ -1904,14 +1905,19 @@
     }
 
     // 통합 분석
-    function AnalysisBtn() {
+    function AnalysisBtn()
+    {
         var total_id = [];
+        
+        var l = breedgrid.getCheckedRows().length;
 
-        $("input:checkbox[name=RowCheck]:checked").each(function () {
-            total_id.push($(this).val());
-        });
+        for (let i = 0; i < l; i++)
+        {
+            total_id.push(breedgrid.getCheckedRows()[i].breed_id)
+        }
 
-        if (total_id.length != 0) {
+        if (total_id.length != 0)
+        {
             location.href = "/analysis?total_id=" + total_id + "&type=" + 1;
         }
     }
@@ -2348,6 +2354,10 @@
                     }
 
                     breedgrid.resetData(dataArr);
+                    
+                    breedgrid.on('check', (ev) => {
+                        breedgrid.getRow(ev.rowKey).breed_id;
+                    })
 
                     breedgrid.on('click', (ev) => {
                         if (ev.targetType === 'cell' && ev.columnName === '2') {
@@ -2373,6 +2383,8 @@
                             SearchBasic2(value_mom2, value_dad2);
                         }
                     });
+                    
+                    breedgrid
 
                     var before = null;
                     var after = null;
@@ -2536,8 +2548,6 @@
         breedgrid.check(cnt);
 
         var data = {"breed_name": $("#CropSelect").val(), "offset": $("#offset").val()};
-
-        console.log(data);
 
         $.ajax(
             {
