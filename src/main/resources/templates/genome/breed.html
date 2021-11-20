@@ -2337,7 +2337,7 @@
                     for (let i = 0; i < result.breed.length; i++) {
                         let rowArr = {};
 
-                        rowArr = {'file': '<div>f</div>', 'breed_id': result.breed[i].breed_id};
+                        rowArr = {'file': '<i class="bi bi-file-earmark-arrow-down"></i>', 'breed_id': result.breed[i].breed_id};
 
                         for (var j = 0; j < result.breed[i].breed_standard.length; j++) {
                             var rowData = result.breed[i].breed_standard[j].standard;
@@ -2446,8 +2446,8 @@
                     for (let i = 0; i < result.breed.length; i++) {
                         let rowArr = {};
 
-                        rowArr = {'file': '<div>f</div>', 'breed_id': result.breed[i].breed_id};
-
+                        rowArr = {'file': '<i class="bi bi-file-earmark-arrow-down"></i>', 'breed_id': result.breed[i].breed_id};
+                        
                         for (var j = 0; j < result.breed[i].breed_standard.length; j++) {
                             var rowData = result.breed[i].breed_standard[j].standard;
                             rowArr[headerName[j]] = rowData;
