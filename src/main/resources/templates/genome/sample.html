@@ -978,8 +978,8 @@
                 div class="modal-footer" style="border: none">
                 <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
             </div>
-            </div>
         </div>
+    </div>
     </div>
 
     <!-- 지도 -->
@@ -1757,6 +1757,7 @@
             }
         }
     }
+
     // 시교자원 삭제
 
     /* 엑셀 다운로드 */
@@ -2028,15 +2029,33 @@
                         }
                     });
 
+                    const dataArr = [];
+
+                    for(let i = 0; i < result.sample.length; i++) {
+                        let rowArr = {
+                            'file': '<i class="bi bi-file-earmark-arrow-down"></i>',
+                            'sample_name': result.sample[i].sample_name,
+                            'sample_code': result.sample[i].sample_code,
+                            'sample_country': result.sample[i].sample_country,
+                            'sample_type': result.sample[i].sample_type,
+                            'sample_mate': result.sample[i].sample_mate,
+                            'sample_seed': result.sample[i].sample_seed,
+                            'sample_amount': result.sample[i].sample_amount,
+                            'sample_sprout': result.sample[i].sample_sprout,
+                            'sample_purity': result.sample[i].sample_purity,
+                            'sample_comment': result.sample[i].sample_comment
+                        }
+
+                        dataArr.push(rowArr);
+                    }
+
+                    samplegrid.resetData(dataArr);
+
                     var before = null;
                     var after = null;
 
-                    let rowArr = {'file': '<i class="bi bi-file-earmark-arrow-down"></i>'};
-
-                    samplegrid.setColumnValues('file', '<i class="bi bi-file-earmark-arrow-down"></i>');
-
                     samplegrid.on('afterChange', (ev) => {
-                        for(let i = 0; i < ev.changes.length; i++) {
+                        for (let i = 0; i < ev.changes.length; i++) {
                             before = ev.changes[i].prevValue;
                             after = ev.changes[i].value;
 
@@ -2080,7 +2099,27 @@
                 dataType: 'json',
                 data: data,
                 success: function (result) {
-                    samplegrid.resetData(result.sample);
+                    const dataArr = [];
+
+                    for(let i = 0; i < result.sample.length; i++) {
+                        let rowArr = {
+                            'file': '<i class="bi bi-file-earmark-arrow-down"></i>',
+                            'sample_name': result.sample[i].sample_name,
+                            'sample_code': result.sample[i].sample_code,
+                            'sample_country': result.sample[i].sample_country,
+                            'sample_type': result.sample[i].sample_type,
+                            'sample_mate': result.sample[i].sample_mate,
+                            'sample_seed': result.sample[i].sample_seed,
+                            'sample_amount': result.sample[i].sample_amount,
+                            'sample_sprout': result.sample[i].sample_sprout,
+                            'sample_purity': result.sample[i].sample_purity,
+                            'sample_comment': result.sample[i].sample_comment
+                        }
+
+                        dataArr.push(rowArr);
+                    }
+
+                    samplegrid.resetData(dataArr);
 
                     samplegrid.setPerPage(limit);
 
@@ -2100,11 +2139,13 @@
                         }
                     });
 
+                    samplegrid.setColumnValues('file', '<i class="bi bi-file-earmark-arrow-down"></i>');
+
                     var before = null;
                     var after = null;
 
                     samplegrid.on('afterChange', (ev) => {
-                        for(let i = 0; i < ev.changes.length; i++) {
+                        for (let i = 0; i < ev.changes.length; i++) {
                             before = ev.changes[i].prevValue;
                             after = ev.changes[i].value;
 
@@ -2252,7 +2293,7 @@
                     var after = null;
 
                     outcomegrid.on('afterChange', (ev) => {
-                        for(let i = 0; i < ev.changes.length; i++) {
+                        for (let i = 0; i < ev.changes.length; i++) {
                             before = ev.changes[i].prevValue;
                             after = ev.changes[i].value;
 
@@ -2282,7 +2323,7 @@
                     for (let i = 0; i < result1.sampleOutcome.length; i++) {
                         if (result1.sampleOutcome[i].sample_outcome_country == '국내') {
                             inKorea.push(result1.sampleOutcome[i].sample_outcome_place);
-                        } else if(result1.sampleOutcome[i].sample_outcome_country == '해외') {
+                        } else if (result1.sampleOutcome[i].sample_outcome_country == '해외') {
                             outKorea.push(result1.sampleOutcome[i].sample_outcome_place);
                         }
                     }
@@ -2323,7 +2364,7 @@
                     var after = null;
 
                     outcomegrid.on('afterChange', (ev) => {
-                        for(let i = 0; i < ev.changes.length; i++) {
+                        for (let i = 0; i < ev.changes.length; i++) {
                             before = ev.changes[i].prevValue;
                             after = ev.changes[i].value;
 
@@ -2353,7 +2394,7 @@
                     for (let i = 0; i < result1.sampleOutcome.length; i++) {
                         if (result1.sampleOutcome[i].sample_outcome_country == '국내') {
                             inKorea.push(result1.sampleOutcome[i].sample_outcome_place);
-                        } else if(result1.sampleOutcome[i].sample_outcome_country == '해외') {
+                        } else if (result1.sampleOutcome[i].sample_outcome_country == '해외') {
                             outKorea.push(result1.sampleOutcome[i].sample_outcome_place);
                         }
                     }
@@ -2529,7 +2570,7 @@
 
 
     /* 지도 검색 */
-    $("#modal-search").change(function() {
+    $("#modal-search").change(function () {
         searchArea();
     });
 
@@ -2563,11 +2604,11 @@
         var koreaLocations = [];
         var globalLocations = [];
 
-        for(let i = 0; i < inKorea.length; i++) {
+        for (let i = 0; i < inKorea.length; i++) {
             koreaLocations.push(inKorea[i]);
         }
 
-        for(let o = 0; o < outKorea.length; o++) {
+        for (let o = 0; o < outKorea.length; o++) {
             globalLocations.push(outKorea[o]);
         }
 
@@ -2622,15 +2663,15 @@
         var info = [];
         var infoTag = [];
 
-        for(let i = 0; i < inKorea.length; i++) {
+        for (let i = 0; i < inKorea.length; i++) {
             info.push(inKorea[i]);
         }
 
-        for(let o = 0; o < outKorea.length; o++) {
+        for (let o = 0; o < outKorea.length; o++) {
             info.push(outKorea[o]);
         }
 
-        for(let i = 0; i < info.length; i++) {
+        for (let i = 0; i < info.length; i++) {
             var optionElement = document.createElement("option");
             optionElement.value = info[i];
             optionElement.innerText = info[i];

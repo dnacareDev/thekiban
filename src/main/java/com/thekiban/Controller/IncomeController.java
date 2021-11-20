@@ -135,17 +135,17 @@ public class IncomeController {
   // 도입자원 삭제
   @ResponseBody
   @RequestMapping("deleteIncome")
-  public int DeleteIncome(@RequestParam("income_id[]") int[] income_id) {
+  public int DeleteIncome(@RequestParam("income_id") int[] income_id) {
     service.DeleteIncome(income_id);
 
     return 1;
   }
 
-  // 도입자원 삭제
+  // 재고관리 삭제
   @ResponseBody
   @RequestMapping("deleteRemain")
-  public int DeleteRemain(@RequestParam("income_id[]") int[] income_id) {
-    service.DeleteRemain(income_id);
+  public int DeleteRemain(@RequestParam("income_remain_id") int[] income_remain_id) {
+    service.DeleteRemain(income_remain_id);
 
     return 1;
   }
@@ -367,7 +367,7 @@ public class IncomeController {
         }
       }
 
-      service.InsertIncome(income);
+      service.InsertIncomeExcel(income);
     }
 
     mv.setViewName("redirect:/income");
