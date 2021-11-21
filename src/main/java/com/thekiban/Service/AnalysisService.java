@@ -5,6 +5,7 @@ import java.util.List;
 import com.thekiban.Entity.Basic;
 import com.thekiban.Entity.Breed;
 import com.thekiban.Entity.Detail;
+import com.thekiban.Entity.Standard;
 
 public interface AnalysisService
 {
@@ -16,4 +17,8 @@ public interface AnalysisService
 
 	// 분석 형질 조회
 	List<Detail> SelectTrait(String deatil_name, int detail_type);
+	
+	List<Detail> SelectDetail(String detail_name, int detail_type);
+
+	List<Standard> SelectStandard(int[] target_id, int detail_type);
 }
