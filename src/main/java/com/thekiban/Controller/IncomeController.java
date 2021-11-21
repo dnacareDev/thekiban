@@ -135,7 +135,7 @@ public class IncomeController {
   // 도입자원 삭제
   @ResponseBody
   @RequestMapping("deleteIncome")
-  public int DeleteIncome(@RequestParam("income_id") int[] income_id) {
+  public int DeleteIncome(@RequestParam("income_id[]") int[] income_id) {
     service.DeleteIncome(income_id);
 
     return 1;
@@ -144,7 +144,7 @@ public class IncomeController {
   // 재고관리 삭제
   @ResponseBody
   @RequestMapping("deleteRemain")
-  public int DeleteRemain(@RequestParam("income_remain_id") int[] income_remain_id) {
+  public int DeleteRemain(@RequestParam("income_remain_id[]") int[] income_remain_id) {
     service.DeleteRemain(income_remain_id);
 
     return 1;
@@ -355,7 +355,10 @@ public class IncomeController {
         } else if (k.equals("도입자")) {
           income.setIncome_person(obj.getString(k));
         } else if (k.equals("도입연월일")) {
-//          income.setIncome_date(obj.getString(k));
+          String date = obj.getString(k);
+          DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.KOREA);
+          LocalDate ldate = LocalDate.parse(date, formatter);
+          income.setIncome_date(ldate);
         } else if (k.equals("현 종자량")) {
           income.setIncome_num(Integer.parseInt(obj.getString(k)));
         } else if (k.equals("타입")) {

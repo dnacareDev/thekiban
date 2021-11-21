@@ -1295,7 +1295,7 @@
             var l = incomegrid.getCheckedRows().length;
 
             for(let i = 0; i < l; i++) {
-                total_id.push(incomegrid.getCheckedRows()[i].income_id)
+                total_id.push(incomegrid.getCheckedRows()[i].income_id);
             }
 
             var data = {'income_id': total_id};
@@ -1588,6 +1588,7 @@
                     for(let i = 0; i < result.income.length; i++) {
                         let rowArr = {
                             'file': '<i class="bi bi-file-earmark-arrow-down"></i>',
+                            'income_id': result.income[i].income_id,
                             'income_name': result.income[i].income_name,
                             'income_code': result.income[i].income_code,
                             'income_kind': result.income[i].income_kind,
@@ -1660,6 +1661,7 @@
                     for(let i = 0; i < result.income.length; i++) {
                         let rowArr = {
                             'file': '<i class="bi bi-file-earmark-arrow-down"></i>',
+                            'income_id': result.income[i].income_id,
                             'income_name': result.income[i].income_name,
                             'income_code': result.income[i].income_code,
                             'income_kind': result.income[i].income_kind,
@@ -1671,7 +1673,7 @@
                             'income_num': result.income[i].income_num,
                             'income_type': result.income[i].income_type,
                             'income_trait': result.income[i].income_trait,
-                            'income_comment': result.income[i].income_comment
+                            'income_comment': result.income[i].income_comment,
                         }
 
                         dataArr.push(rowArr);

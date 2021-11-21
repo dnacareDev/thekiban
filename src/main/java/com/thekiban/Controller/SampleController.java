@@ -129,7 +129,7 @@ public class SampleController {
   // 선택삭제
   @ResponseBody
   @RequestMapping("deleteSample")
-  public int DeleteSample(@RequestParam("sample_id") int[] sample_id) {
+  public int DeleteSample(@RequestParam("sample_id[]") int[] sample_id) {
     service.DeleteSample(sample_id);
 
     return 1;
@@ -137,7 +137,7 @@ public class SampleController {
 
   @ResponseBody
   @RequestMapping("deleteOutcome")
-  public int DeleteOutcome(@RequestParam("sample_outcome_id") int[] sample_outcome_id) {
+  public int DeleteOutcome(@RequestParam("sample_outcome_id[]") int[] sample_outcome_id) {
     service.DeleteOutcome(sample_outcome_id);
 
     return 1;
