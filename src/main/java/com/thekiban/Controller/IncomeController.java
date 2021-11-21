@@ -370,10 +370,11 @@ public class IncomeController {
         }
       }
 
-      service.InsertIncomeExcel(income);
+      System.out.println(income);
+//      service.InsertIncomeExcel(income);
     }
 
-    mv.setViewName("redirect:/income");
+//    mv.setViewName("redirect:/income");
 
     return mv;
   }

@@ -840,17 +840,7 @@
                                     <th>데이터수</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                <tr>
-                                    <td>2</td>
-                                    <td>2021-08-15</td>
-                                    <td>185</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>2021-08-15</td>
-                                    <td>185</td>
-                                </tr>
+                                <tbody id="dataExcel_list">
                                 </tbody>
                             </table>
                         </div>
@@ -1120,6 +1110,8 @@
 
                 data.push(arr);
             });
+
+            console.log(data);
 
             $("#excelForm").submit();
         } else {
