@@ -25,8 +25,8 @@ public interface IncomeMapper {
   // 도입자원 검색
   List<Income> SearchIncome(@Param("income_name") String income_name, @Param("offset") int offset, @Param("limit") int limit);
 
+  // 재고관리 검색
   List<IncomeRemain> SearchRemain(@Param("income_name") String income_name, @Param("offset") int offset, @Param("limit") int limit);
-
 
   // 재고 팝업
   List<IncomeRemain> SearchIncomeRemain(@Param("income_name") String income_name);
@@ -38,7 +38,22 @@ public interface IncomeMapper {
   int[] DeleteRemain(int[] income_remain_id);
 
   // 도입자원 수정
-  int UpdateIncome(Income income);
+  int UpdateIncome(@Param("income_id") int income_id, @Param("income_name") String income_name, @Param("income_value") String income_value);
+
+  // 재고관리 수정
+  int UpdateRemain(@Param("income_remain_id") int income_remain_id, @Param("income_remain_name") String income_remain_name, @Param("income_remain_value") String income_remain_value);
+
+  // 도입자원 입력수정
+  int UpdateInsertIncome(Income income);
+
+  // 재고관리 입력수정
+  int UpdateInsertRemain(IncomeRemain incomeRemain);
+
+  // 도입자원 엑셀 등록
+  int InsertIncomeExcel(Income income);
+
+  // 재고관리 엑셀 등록
+  int InsertRemainExcel(IncomeRemain incomeRemain);
 
   // 첨부파일 조회
   List<Uploads> SelectUploads(int[] income_id);
@@ -64,14 +79,4 @@ public interface IncomeMapper {
   // 첨부파일 수정
   int UpdateIncomeUpload(Uploads upload);
 
-  // 시교자원 수정
-  int UpdateInsertIncome(Income income);
-
-  // 수출관리 수정
-  int UpdateInsertRemain(IncomeRemain incomeRemain);
-
-  // 시교자원 수정
-  int UpdateIncome(@Param("income_id") int income_id, @Param("income_name") String income_name, @Param("income_value") String income_value);
-
-  int UpdateRemain(@Param("income_remain_id") int income_remain_id, @Param("income_remain_name") String income_remain_name, @Param("income_remain_value") String income_remain_value);
 }

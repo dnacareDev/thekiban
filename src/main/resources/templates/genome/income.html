@@ -607,9 +607,6 @@
                                     <button class="btn btn-lg btn-primary data_btn2" title="데이터 등록" onclick="openExcel()">
                                         <img src="../assets/vendor_assets/img/icon1.png" alt="">
                                     </button>
-                                    <button type="button" class="btn btn-lg btn-primary data_btn1" title="엑셀 export" id="excelFileExport">
-                                        <img src="../assets/vendor_assets/img/icon2.png" title="데이터 등록" alt="">
-                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -630,14 +627,6 @@
                                         <button class="btn btn-icon btn-light btn-circle" onclick="DeleteIncome()">
                                             <span data-feather="trash-2"></span>
                                         </button>
-                                        <button class="btn btn-icon btn-light btn-circle" id="data_check_submit" style="width:44.03px; height:42px;">
-                                            <img src="../assets/vendor_assets/img/check_tab.png" alt="check" style="width: 17px;margin-left: 4px;">
-                                        </button>
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="row" style="justify-content: center;">
-                                            <div id="pageNum" style="text-align:center; margin: 2% 0 0 0;"></div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -950,39 +939,6 @@
         }, 5);
     }
 
-    /*let topBox = document.getElementsByClassName("top_box")[0];
-    let [nav, prev, next] = topBox.children;
-    let navLi = nav.children; // pop top list
-    let navN = 0; //선택된 변수
-    let navMove = 0;
-
-    let content = document.getElementsByClassName("tab-content")[0];
-    let contentLi = content.children;
-
-    navLi[navN].classList.add("active");
-
-    for (let i = 0; i < navLi.length; i++) {
-        navLi[i].idx = i;
-
-        navLi[i].addEventListener("click", function (e) {
-            navN = e.currentTarget.idx;
-
-            moveFunction(navN);
-        });
-
-    }*/
-
-    /*    let list = navLi.length;
-        next.addEventListener("click", function (e) {
-            (navN < list - 1) ? navN += 1 : navN = list - 1;
-            moveFunction(navN);
-        });
-
-        prev.addEventListener("click", function (e) {
-            (navN > 0) ? navN -= 1 : navN = 0;
-            moveFunction(navN);
-        });*/
-
     function moveFunction(f) {
 
         for (let k = 0; k < navLi.length; k++) {
@@ -1140,20 +1096,49 @@
         reader.readAsBinaryString(input.files[0]);
     }
 
-    function InsertExcel() {
-        var data = [];
-
-        $("#excel_data").each(function (index, item) {
-            const key = $(this).attr('id');
-            var value = $(this).val();
-
-            var arr = {key: key, value: value};
-
-            data.push(arr);
-        });
-
-        $("#excelForm").submit();
+    /* 엑셀 등록 창 */
+    function openExcel() {
+        if (tablechk === 0) {
+            $("#data_upload2").modal();
+        } else {
+            $("#data_upload12").modal();
+        }
     }
+
+    /* 엑셀 등록 창 */
+
+    /* 엑셀 입력 */
+    function InsertExcel() {
+        if (tablechk === 0) {
+            var data = [];
+
+            $("#excel_data").each(function (index, item) {
+                const key = $(this).attr('id');
+                var value = $(this).val();
+
+                var arr = {key: key, value: value};
+
+                data.push(arr);
+            });
+
+            $("#excelForm").submit();
+        } else {
+            var data1 = [];
+
+            $("#excel_data1").each(function (index, item) {
+                const key = $(this).attr('id');
+                var value = $(this).val();
+
+                var arr = {key: key, value: value};
+
+                data1.push(arr);
+            });
+
+            $("#excelForm1").submit();
+        }
+    }
+
+    /* 엑셀 코드 */
 
     // table to json
     function tableToJson(table) {
@@ -1256,144 +1241,6 @@
 
     var emptyEls;
 
-    var btnindex = 0;
-
-    /*function SearchIncome(e) {
-        var income_name = $("#CropSelect").val();
-        var limit = $("#limit").val();
-
-        var data = {"income_name": income_name, "page_num": e, "limit": limit};
-
-        $.ajax(
-            {
-                url: 'searchIncome',
-                method: 'POST',
-                dataType: 'json',
-                data: data,
-                success: function (result) {
-                    var income_list = $(".income-list");
-                    income_list.eq(btnindex);
-                    var add_list = "";
-
-                    var pageNum = $("#pageNum");
-                    var page_add = "";
-
-                    for (var i = 0; i < result.income.length; i++) {
-                        add_list += '<tr>';
-                        add_list += '<td><input type="checkbox" name="RowCheck" value="' + result.income[i].income_id + '"></td>';
-                        add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" onclick="FileBtn(' + result.income[i].income_id + ');"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result.income[i].income_id + '" name="income_name" value="' + result.income[i].income_name + '"></td>';
-                        add_list += '<td><a href="javascript:;" onclick="SearchRemainPop(this)">' + result.income[i].income_code + '</a></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result.income[i].income_id + '" name="income_kind" value="' + result.income[i].income_kind + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result.income[i].income_id + '" name="income_division" value="' + result.income[i].income_division + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result.income[i].income_id + '" name="income_place" value="' + result.income[i].income_place + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result.income[i].income_id + '" name="income_country" value="' + result.income[i].income_country + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result.income[i].income_id + '" name="income_person" value="' + result.income[i].income_person + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result.income[i].income_id + '" name="income_date" value="' + result.income[i].income_date + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result.income[i].income_id + '" name="income_num" value="' + result.income[i].income_num + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result.income[i].income_id + '" name="income_type" value="' + result.income[i].income_type + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result.income[i].income_id + '" name="income_trait" value="' + result.income[i].income_trait + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result.income[i].income_id + '" name="income_comment" value="' + result.income[i].income_comment + '"></td>';
-                        add_list += '</tr>';
-                    }
-
-                    if (result.page_num == 1) {
-                        page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></button>';
-                    } else {
-                        page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchIncome(' + (result.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
-                    }
-
-                    for (var i = 0; i < result.end_page; i++) {
-                        if (result.page_num == (i + 1)) {
-                            page_add += '<button class="atbd-pagination__link active" onclick="SearchIncome(' + (i + 1) + ')">' + (i + 1) + '</button>';
-                        } else {
-                            page_add += '<button class="atbd-pagination__link" onclick="SearchIncome(' + (i + 1) + ')">' + (i + 1) + '</button>';
-                        }
-                    }
-
-                    if (result.page_num == result.end_page) {
-                        page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-right"></span></button>';
-                    } else {
-                        page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchIncome(' + (result.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
-                    }
-
-                    income_list.empty();
-                    income_list.append(add_list);
-
-                    pageNum.empty();
-                    pageNum.append(page_add);
-
-                    emptyEls = document.querySelectorAll('#income_list tr .status');
-                    emptyEls = Array.prototype.slice.call(emptyEls);
-                }
-            });
-    }
-
-    function SearchRemain(e) {
-        var income_name1 = $("#CropSelect").val();
-        var limit1 = $("#limit").val();
-
-        var data1 = {"income_name": income_name1, "page_num": e, "limit": limit1};
-
-        $.ajax(
-            {
-                url: 'searchRemain',
-                method: 'POST',
-                dataType: 'json',
-                data: data1,
-                success: function (result1) {
-                    var incomeRemain_list = $(".incomeRemain-list");
-                    incomeRemain_list.eq(btnindex);
-                    var add_list = "";
-
-                    var pageNum = $("#pageNum");
-                    var page_add = "";
-
-                    for (var i = 0; i < result1.incomeRemain.length; i++) {
-                        add_list += '<tr>';
-                        add_list += '<td><input type="checkbox" name="RowCheck1" value="' + result1.incomeRemain[i].income_remain_id + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result1.incomeRemain[i].income_remain_id + '" name="income_remain_num" value="' + result1.incomeRemain[i].income_remain_num + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result1.incomeRemain[i].income_remain_id + '" name="income_remain_amount" value="' + result1.incomeRemain[i].income_remain_amount + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result1.incomeRemain[i].income_remain_id + '" name="income_remain_in" value="' + result1.incomeRemain[i].income_remain_in + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result1.incomeRemain[i].income_remain_id + '" name="income_remain_out" value="' + result1.incomeRemain[i].income_remain_out + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result1.incomeRemain[i].income_remain_id + '" name="income_remain_re" value="' + result1.incomeRemain[i].income_remain_re + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result1.incomeRemain[i].income_remain_id + '" name="income_remain_person" value="' + result1.incomeRemain[i].income_remain_person + '"></td>';
-                        add_list += '<td><input type="text" class="updateInput" data="' + result1.incomeRemain[i].income_remain_id + '" name="income_remain_date" value="' + result1.incomeRemain[i].income_remain_date + '"></td>';
-                        add_list += '</tr>';
-                    }
-
-                    if (result1.page_num == 1) {
-                        page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></button>';
-                    } else {
-                        page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchRemain(' + (result1.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
-                    }
-
-                    for (var i = 0; i < result1.end_page; i++) {
-                        if (result1.page_num == (i + 1)) {
-                            page_add += '<button class="atbd-pagination__link active" onclick="SearchRemain(' + (i + 1) + ')">' + (i + 1) + '</button>';
-                        } else {
-                            page_add += '<button class="atbd-pagination__link" onclick="SearchRemain(' + (i + 1) + ')">' + (i + 1) + '</button>';
-                        }
-                    }
-
-                    if (result1.page_num == result1.end_page) {
-                        page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-right"></span></button>';
-                    } else {
-                        page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchRemain(' + (result1.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
-                    }
-
-                    incomeRemain_list.empty();
-                    incomeRemain_list.append(add_list);
-
-                    pageNum.empty();
-                    pageNum.append(page_add);
-
-                    emptyEls = document.querySelectorAll('#incomeRemain-list tr .status');
-                    emptyEls = Array.prototype.slice.call(emptyEls);
-                }
-            });
-    }*/
-
     // 도입번호 팝업
     function SearchRemainPop(e) {
         $("#pop_remain").modal();
@@ -1440,51 +1287,6 @@
             });
     }
 
-
-    // 수정
-    $(document).on("focusout", ".updateInput", function () {
-        if (tablechk === 0) {
-            var income_id = $(this).attr("data");
-            var income_name = $(this).attr("name");
-            var income_value = $(this).val();
-
-            var data = {"income_id": income_id, "income_name": income_name, "income_value": income_value};
-
-            $.ajax(
-                {
-                    url: 'updateIncome',
-                    method: 'POST',
-                    dataType: 'json',
-                    data: data,
-                    success: function (result) {
-                        if (result == 0) {
-                            return Alert("수정에 실패하였습니다.")
-                        }
-                    }
-                });
-        } else {
-            var income_remain_id = $(this).attr("data");
-            var income_remain_name = $(this).attr("name");
-            var income_remain_value = $(this).val();
-
-            var data = {"income_remain_id": income_remain_id, "income_remain_name": income_remain_name, "income_remain_value": income_remain_value};
-
-            $.ajax(
-                {
-                    url: 'updateRemain',
-                    method: 'POST',
-                    dataType: 'json',
-                    data: data,
-                    success: function (result) {
-                        if (result == 0) {
-                            return Alert("수정에 실패하였습니다.")
-                        }
-                    }
-                });
-        }
-
-    });
-
     // 도입자원 삭제
     function DeleteIncome() {
         if (tablechk === 0) {
@@ -1493,7 +1295,7 @@
             var l = incomegrid.getCheckedRows().length;
 
             for(let i = 0; i < l; i++) {
-                total_id.push(incomegrid.getCheckedRows()[i].income_id)
+                total_id.push(incomegrid.getCheckedRows()[i].income_id);
             }
 
             var data = {'income_id': total_id};
@@ -1544,155 +1346,6 @@
 
             }
         }
-    }
-
-    function addRow() {
-        if (tablechk === 0) {
-            var row_list = "";
-            row_list += '<tr id="row_data">';
-
-            row_list += '<form action="insertIncome" id="rowForm" method="POST" enctype="multipart/form-data">';
-            row_list += '<input type="hidden" id="rowIncome" name="rowIncome">';
-            row_list += '<td><input type="checkbox" name="RowCheck"></td>';
-            row_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#insert_file"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
-            row_list += '<td><input type="text" class="rowInput" name="income_name" value="' + $("#CropSelect option:selected").text() + '"></td>';
-            row_list += '<td><input type="text" class="rowInput" name="income_code"></td>';
-            row_list += '<td><input type="text" class="rowInput" name="income_kind"></td>';
-            row_list += '<td><input type="text" class="rowInput" name="income_division"></td>';
-            row_list += '<td><input type="text" class="rowInput" name="income_place"></td>';
-            row_list += '<td><input type="text" class="rowInput" name="income_country"></td>';
-            row_list += '<td><input type="text" class="rowInput" name="income_person"></td>';
-            row_list += '<td><input type="text" class="rowInput" name="income_date"></td>';
-            row_list += '<td><input type="text" class="rowInput" name="income_num"></td>';
-            row_list += '<td><input type="text" class="rowInput" name="income_type"></td>';
-            row_list += '<td><input type="text" class="rowInput" name="income_trait"></td>';
-            row_list += '<td><input type="text" class="rowInput" name="income_comment"></td>';
-            row_list += '</form>';
-            row_list += '</tr>';
-
-            $("#income_list").append(row_list);
-            
-            var input_data = [];
-
-            var input_value = $("#CropSelect option:selected").text();
-
-            var input_name = {key: "income_name", value: input_value};
-
-            input_data.push(input_name);
-
-            $.ajax(
-                {
-                    url: 'insertIncome',
-                    method: 'POST',
-                    dataType: 'json',
-                    data: {
-                        "input_data": JSON.stringify(input_data)
-                    },
-                    success: function (result) {
-                        if (result != null) {
-                            $(".rowInput").focusout(function () {
-                                var data = [];
-
-                                var data_in = {key: "income_id", value: result.income_id}
-
-                                data.push(data_in);
-
-                                $("input[class=rowInput]").each(function (index, item) {
-                                    const key = $(this).attr('name');
-                                    var value = $(this).val();
-
-                                    var arr = {key: key, value: value};
-
-                                    data.push(arr);
-                                });
-
-                                $.ajax(
-                                    {
-                                        url: 'updateInsertIncome',
-                                        method: 'POST',
-                                        dataType: 'json',
-                                        data: {
-                                            "data": JSON.stringify(data)
-                                        },
-                                        success: function (result) {
-
-                                        }
-                                    });
-                            })
-                        }
-                    }
-                });
-        } else {
-            var row_list1 = "";
-            row_list1 += '<tr id="row_data">';
-
-            row_list1 += '<form action="insertIncomeRemain" id="rowForm" method="POST" enctype="multipart/form-data">';
-            row_list1 += '<input type="hidden" id="rowIncome" name="rowIncome1">';
-            row_list1 += '<td><input type="checkbox" name="RowCheck1"></td>';
-            row_list1 += '<td><input type="text" class="rowInput" name="income_remain_num"></td>';
-            row_list1 += '<td><input type="text" class="rowInput" name="income_remain_amount"></td>';
-            row_list1 += '<td><input type="text" class="rowInput" name="income_remain_in"></td>';
-            row_list1 += '<td><input type="text" class="rowInput" name="income_remain_out"></td>';
-            row_list1 += '<td><input type="text" class="rowInput" name="income_remain_re"></td>';
-            row_list1 += '<td><input type="text" class="rowInput" name="income_remain_person"></td>';
-            row_list1 += '<td><input type="text" class="rowInput" name="income_remain_date"></td>';
-            row_list1 += '</form>';
-            row_list1 += '</tr>';
-
-            $("#incomeRemain-list").append(row_list1);
-            
-            var input_data1 = [];
-
-            var input_value1 = $("#CropSelect option:selected").text();
-
-            var input_name1 = {key: "income_name", value: input_value1};
-
-            input_data1.push(input_name1);
-
-            $.ajax(
-                {
-                    url: 'insertIncomeRemain',
-                    method: 'POST',
-                    dataType: 'json',
-                    data: {
-                        "input_data": JSON.stringify(input_data1)
-                    },
-                    success: function (result) {
-                        if (result != null) {
-                            $(".rowInput").focusout(function () {
-                                var data = [];
-
-                                var data_in = {key: "income_remain_id", value: result.income_remain_id}
-
-                                data.push(data_in);
-
-                                $("input[class=rowInput]").each(function (index, item) {
-                                    const key = $(this).attr('name');
-                                    var value = $(this).val();
-
-                                    var arr = {key: key, value: value};
-
-                                    data.push(arr);
-                                });
-
-                                $.ajax(
-                                    {
-                                        url: 'updateInsertRemain',
-                                        method: 'POST',
-                                        dataType: 'json',
-                                        data: {
-                                            "data": JSON.stringify(data)
-                                        },
-                                        success: function (result) {
-
-                                        }
-                                    });
-                            })
-                        }
-                    }
-                });
-        }
-        
     }
 
     /* 첨부파일 */
@@ -1781,47 +1434,6 @@
             reader.readAsDataURL(f);
         });
     }
-
-    /* 첨부파일 */
-/*
-    $(document).on("keydown", ".result_tr input:text", function (e) {
-        var resultTr = document.querySelectorAll(".result_tr input[type=text]");
-        var resultTr = Array.prototype.slice.call(resultTr);
-        var resultTrLength = resultTr.length;
-        var methodLength = method.length;
-        var target = e.currentTarget;
-        var index = resultTr.indexOf(target);
-
-        if (event.keyCode == "37") {
-            //방향키 좌
-            if ($(this).parent().prev().find("input:text").length == "0") {
-                $(this).focus();
-            } else {
-                $(this).parent().prev().find("input:text").focus();
-            }
-        } else if (event.keyCode == "38") {
-            //방향키 상
-            if ($(this).parent().parent().prev().find("input:text").length == "0") {
-                $(this).focus();
-            } else {
-                $(this).parent().parent().parent().find("input:text").eq(index - methodLength).focus();
-            }
-        } else if (event.keyCode == "39") {
-            //방향키 우
-            if ($(this).parent().next().find("input:text").length == "0") {
-                $(this).focus();
-            } else {
-                $(this).parent().next().find("input:text").focus();
-            }
-        } else if (event.keyCode == "40") {
-            //방향키 하
-            if ($(this).parent().parent().next().find("input:text").length == "0") {
-                $(this).focus();
-            } else {
-                $(this).parent().parent().parent().find("input:text").eq(index + methodLength).focus();
-            }
-        }
-    });*/
 
     /* 도입자원 재고관리 테이블 구분 */
     var tablechk = 0;
@@ -1964,38 +1576,66 @@
                             var value_seed = ev.nativeEvent.srcElement;
 
                             SearchRemainPop(value_seed);
+                        } else if (ev.targetType === 'cell' && ev.columnName === 'file') {
+                            var id = incomegrid.getRow(ev.rowKey).income_id;
+
+                            FileBtn(id);
                         }
                     });
+
+                    const dataArr = [];
+
+                    for(let i = 0; i < result.income.length; i++) {
+                        let rowArr = {
+                            'file': '<i class="bi bi-file-earmark-arrow-down"></i>',
+                            'income_id': result.income[i].income_id,
+                            'income_name': result.income[i].income_name,
+                            'income_code': result.income[i].income_code,
+                            'income_kind': result.income[i].income_kind,
+                            'income_division': result.income[i].income_division,
+                            'income_place': result.income[i].income_place,
+                            'income_country': result.income[i].income_country,
+                            'income_person': result.income[i].income_person,
+                            'income_date': result.income[i].income_date,
+                            'income_num': result.income[i].income_num,
+                            'income_type': result.income[i].income_type,
+                            'income_trait': result.income[i].income_trait,
+                            'income_comment': result.income[i].income_comment
+                        }
+
+                        dataArr.push(rowArr);
+                    }
+
+                    incomegrid.resetData(dataArr);
 
                     var before = null;
                     var after = null;
 
-                    incomegrid.on('editingStart', (ev) => {
-                        before = ev.value;
-                    });
+                    incomegrid.on('afterChange', (ev) => {
+                        for(let i = 0; i < ev.changes.length; i++) {
+                            before = ev.changes[i].prevValue;
+                            after = ev.changes[i].value;
 
-                    incomegrid.on('editingFinish', (ev) => {
-                        after = ev.value;
+                            if (after != before) {
+                                var income_id = incomegrid.getRow(ev.changes[i].rowKey).income_id;
+                                var income_name = ev.changes[i].columnName;
+                                var income_value = after;
 
-                        if(after != before) {
-                            var income_id = ev.instance.getRow(ev.rowKey).income_id;
-                            var income_name = ev.columnName;
-                            var income_value = ev.value;
+                                var data = {"income_id": income_id, "income_name": income_name, "income_value": income_value};
 
-                            var data = {"income_id": income_id, "income_name": income_name, "income_value": income_value};
-
-                            $.ajax(
-                                {
-                                    url: 'updateIncome',
-                                    method: 'POST',
-                                    dataType: 'json',
-                                    data: data,
-                                    success: function (result) {
-                                        if (result == 0) {
-                                            return Alert("수정에 실패하였습니다.")
+                                $.ajax(
+                                    {
+                                        url: 'updateIncome',
+                                        method: 'POST',
+                                        dataType: 'json',
+                                        data: data,
+                                        success: function (result) {
+                                            if (result == 0) {
+                                                return Alert("수정에 실패하였습니다.")
+                                            }
                                         }
-                                    }
-                                });
+                                    });
+                            }
                         }
                     });
                 }
@@ -2016,7 +1656,30 @@
                 dataType: 'json',
                 data: data,
                 success: function (result) {
-                    incomegrid.resetData(result.income);
+                    const dataArr = [];
+
+                    for(let i = 0; i < result.income.length; i++) {
+                        let rowArr = {
+                            'file': '<i class="bi bi-file-earmark-arrow-down"></i>',
+                            'income_id': result.income[i].income_id,
+                            'income_name': result.income[i].income_name,
+                            'income_code': result.income[i].income_code,
+                            'income_kind': result.income[i].income_kind,
+                            'income_division': result.income[i].income_division,
+                            'income_place': result.income[i].income_place,
+                            'income_country': result.income[i].income_country,
+                            'income_person': result.income[i].income_person,
+                            'income_date': result.income[i].income_date,
+                            'income_num': result.income[i].income_num,
+                            'income_type': result.income[i].income_type,
+                            'income_trait': result.income[i].income_trait,
+                            'income_comment': result.income[i].income_comment,
+                        }
+
+                        dataArr.push(rowArr);
+                    }
+
+                    incomegrid.resetData(dataArr);
 
                     incomegrid.setPerPage(limit);
 
@@ -2025,38 +1688,43 @@
                             var value_seed = ev.nativeEvent.srcElement;
 
                             SearchRemainPop(value_seed);
+                        } else if (ev.targetType === 'cell' && ev.columnName === 'file') {
+                            var id = incomegrid.getRow(ev.rowKey).income_id;
+
+                            FileBtn(id);
                         }
                     });
+
+                    incomegrid.setColumnValues('file', '<i class="bi bi-file-earmark-arrow-down"></i>');
 
                     var before = null;
                     var after = null;
 
-                    incomegrid.on('editingStart', (ev) => {
-                        before = ev.value;
-                    });
+                    incomegrid.on('afterChange', (ev) => {
+                        for(let i = 0; i < ev.changes.length; i++) {
+                            before = ev.changes[i].prevValue;
+                            after = ev.changes[i].value;
 
-                    incomegrid.on('editingFinish', (ev) => {
-                        after = ev.value;
+                            if (after != before) {
+                                var income_id = incomegrid.getRow(ev.changes[i].rowKey).income_id;
+                                var income_name = ev.changes[i].columnName;
+                                var income_value = after;
 
-                        if(after != before) {
-                            var income_id = ev.instance.getRow(ev.rowKey).income_id;
-                            var income_name = ev.columnName;
-                            var income_value = ev.value;
+                                var data = {"income_id": income_id, "income_name": income_name, "income_value": income_value};
 
-                            var data = {"income_id": income_id, "income_name": income_name, "income_value": income_value};
-
-                            $.ajax(
-                                {
-                                    url: 'updateIncome',
-                                    method: 'POST',
-                                    dataType: 'json',
-                                    data: data,
-                                    success: function (result) {
-                                        if (result == 0) {
-                                            return Alert("수정에 실패하였습니다.")
+                                $.ajax(
+                                    {
+                                        url: 'updateIncome',
+                                        method: 'POST',
+                                        dataType: 'json',
+                                        data: data,
+                                        success: function (result) {
+                                            if (result == 0) {
+                                                return Alert("수정에 실패하였습니다.")
+                                            }
                                         }
-                                    }
-                                });
+                                    });
+                            }
                         }
                     });
                 }
@@ -2137,32 +1805,31 @@
                     var before = null;
                     var after = null;
 
-                    remaingrid.on('editingStart', (ev) => {
-                        before = ev.value;
-                    });
+                    remaingrid.on('afterChange', (ev) => {
+                        for(let i = 0; i < ev.changes.length; i++) {
+                            before = ev.changes[i].prevValue;
+                            after = ev.changes[i].value;
 
-                    remaingrid.on('editingFinish', (ev) => {
-                        after = ev.value;
+                            if (after != before) {
+                                var income_remain_id = remaingrid.getRow(ev.changes[i].rowKey).income_remain_id
+                                var income_remain_name = ev.changes[i].columnName;
+                                var income_remain_value = after;
 
-                        if(after != before) {
-                            var income_remain_id = ev.instance.getRow(ev.rowKey).income_remain_id;
-                            var income_remain_name = ev.columnName;
-                            var income_remain_value = ev.value;
+                                var data = {"income_remain_id": income_remain_id, "income_remain_name": income_remain_name, "income_remain_value": income_remain_value};
 
-                            var data = {"income_remain_id": income_remain_id, "income_remain_name": income_remain_name, "income_remain_value": income_remain_value};
-
-                            $.ajax(
-                                {
-                                    url: 'updateRemain',
-                                    method: 'POST',
-                                    dataType: 'json',
-                                    data: data,
-                                    success: function (result) {
-                                        if (result == 0) {
-                                            return Alert("수정에 실패하였습니다.")
+                                $.ajax(
+                                    {
+                                        url: 'updateRemain',
+                                        method: 'POST',
+                                        dataType: 'json',
+                                        data: data,
+                                        success: function (result) {
+                                            if (result == 0) {
+                                                return Alert("수정에 실패하였습니다.")
+                                            }
                                         }
-                                    }
-                                });
+                                    });
+                            }
                         }
                     });
 
@@ -2190,32 +1857,31 @@
                     var before = null;
                     var after = null;
 
-                    remaingrid.on('editingStart', (ev) => {
-                        before = ev.value;
-                    });
+                    remaingrid.on('afterChange', (ev) => {
+                        for(let i = 0; i < ev.changes.length; i++) {
+                            before = ev.changes[i].prevValue;
+                            after = ev.changes[i].value;
 
-                    remaingrid.on('editingFinish', (ev) => {
-                        after = ev.value;
+                            if (after != before) {
+                                var income_remain_id = remaingrid.getRow(ev.changes[i].rowKey).income_remain_id
+                                var income_remain_name = ev.changes[i].columnName;
+                                var income_remain_value = after;
 
-                        if(after != before) {
-                            var income_remain_id = ev.instance.getRow(ev.rowKey).income_remain_id;
-                            var income_remain_name = ev.columnName;
-                            var income_remain_value = ev.value;
+                                var data = {"income_remain_id": income_remain_id, "income_remain_name": income_remain_name, "income_remain_value": income_remain_value};
 
-                            var data = {"income_remain_id": income_remain_id, "income_remain_name": income_remain_name, "income_remain_value": income_remain_value};
-
-                            $.ajax(
-                                {
-                                    url: 'updateRemain',
-                                    method: 'POST',
-                                    dataType: 'json',
-                                    data: data,
-                                    success: function (result) {
-                                        if (result == 0) {
-                                            return Alert("수정에 실패하였습니다.")
+                                $.ajax(
+                                    {
+                                        url: 'updateRemain',
+                                        method: 'POST',
+                                        dataType: 'json',
+                                        data: data,
+                                        success: function (result) {
+                                            if (result == 0) {
+                                                return Alert("수정에 실패하였습니다.")
+                                            }
                                         }
-                                    }
-                                });
+                                    });
+                            }
                         }
                     });
                 }

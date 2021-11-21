@@ -18,20 +18,20 @@ public interface SampleMapper {
 
   // 수출관리 등록
   int InsertSampleOutcome(SampleOutcome sampleOutcome);
-  
+
   // 시교자원 갯수 조회
   int SelectSampleCount(String sample_name);
-
-  // 시교자원 검색
-  List<Sample> SearchSample(@Param("sample_name") String sample_name, @Param("offset") int offset, @Param("limit") int limit);
 
   // 수출자원 갯수 조회
   int SelectOutcomeCount(String sample_name);
 
+  // 시교자원 검색
+  List<Sample> SearchSample(@Param("sample_name") String sample_name, @Param("offset") int offset, @Param("limit") int limit);
+  
   // 수출자원 검색
   List<SampleOutcome> SearchOutcome(@Param("sample_name") String sample_name, @Param("offset") int offset, @Param("limit") int limit);
 
-
+  // 시교 팝업
   List<SampleOutcome> SearchSeed(@Param("sample_name") String sample_name);
 
   // 시교자원 삭제
@@ -45,10 +45,10 @@ public interface SampleMapper {
 
   int UpdateOutcome(@Param("sample_outcome_id") int sample_outcome_id, @Param("sample_outcome_name") String sample_outcome_name, @Param("sample_outcome_value") String sample_outcome_value);
 
-  // 시교자원 수정
+  // 시교자원 입력수정
   int UpdateInsertSample(Sample sample);
 
-  // 수출관리 수정
+  // 수출관리 입력수정
   int UpdateInsertOutcome(SampleOutcome sampleOutcome);
 
   // 시교자원 엑셀 등록

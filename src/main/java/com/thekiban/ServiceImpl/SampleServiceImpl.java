@@ -37,16 +37,16 @@ public class SampleServiceImpl implements SampleService {
     return mapper.SelectSampleCount(sample_name);
   }
 
-  // 시교자원 검색
-  @Override
-  public List<Sample> SearchSample(String sample_name, int offset, int limit) {
-    return mapper.SearchSample(sample_name, offset, limit);
-  }
-
   // 수출자원 갯수 조회
   @Override
   public int SelectOutcomeCount(String sample_name) {
     return mapper.SelectOutcomeCount(sample_name);
+  }
+
+  // 시교자원 검색
+  @Override
+  public List<Sample> SearchSample(String sample_name, int offset, int limit) {
+    return mapper.SearchSample(sample_name, offset, limit);
   }
 
   // 수출자원 검색
@@ -55,6 +55,7 @@ public class SampleServiceImpl implements SampleService {
     return mapper.SearchOutcome(sample_name, offset, limit);
   }
 
+  // 시교 팝업
   @Override
   public List<SampleOutcome> SearchSeed(String sample_name) {
     return mapper.SearchSeed(sample_name);
@@ -81,17 +82,20 @@ public class SampleServiceImpl implements SampleService {
   public int UpdateOutcome(int sample_outcome_id, String sample_outcome_name, String sample_outcome_value) {
     return mapper.UpdateOutcome(sample_outcome_id, sample_outcome_name, sample_outcome_value);
   }
-
+  
+  // 시교자원 입력수정
   @Override
   public int UpdateInsertSample(Sample sample) {
     return mapper.UpdateInsertSample(sample);
   }
 
+  // 수출관리 입력수정
   @Override
   public int UpdateInsertOutcome(SampleOutcome sampleOutcome) {
     return mapper.UpdateInsertOutcome(sampleOutcome);
   }
 
+  // 엑셀 입력
   @Override
   public int InsertExcel(Sample sample) {
     return mapper.InsertExcel(sample);
