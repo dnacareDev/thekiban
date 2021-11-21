@@ -1091,6 +1091,21 @@
     function openExcel() {
         if (tablechk === 0) {
             $("#data_upload2").modal();
+
+            var income_name = $("#CropSelect").val();
+
+            var data = {"income_name": income_name}
+
+            $.ajax(
+                {
+                    url: '',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: data,
+                    success: function (result) {
+
+                    }
+                })
         } else {
             $("#data_upload12").modal();
         }
@@ -1111,8 +1126,6 @@
 
                 data.push(arr);
             });
-
-            console.log(data);
 
             $("#excelForm").submit();
         } else {
