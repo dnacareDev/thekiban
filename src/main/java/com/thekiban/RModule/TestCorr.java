@@ -2,6 +2,7 @@ package com.thekiban.RModule;
 
 class TestCorr
 {
+	/*
 	public static void main(String[] args) 
 	{
 		
@@ -14,4 +15,5 @@ class TestCorr
 
 		System.out.println("success");
 	}
+	*/
 }
