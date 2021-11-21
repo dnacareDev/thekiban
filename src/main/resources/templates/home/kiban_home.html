@@ -1,9 +1,6 @@
 <!doctype html>
-<html lang="en" dir="ltr"
-      xmlns:th="http://www.thymeleaf.org">
-
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
 <head>
-
     <!-- 공통 헤더 -->
     <th:block th:include="/../fragments/header.html"></th:block>
 
@@ -145,7 +142,7 @@
                                 <div class="slick-slider__single d-flex">
                                     <p class="color-primary fa-lg mb-3 mt-5 ml-3" style="color: black">총 품종 수</p>
                                     <div class="data_relative">
-                                    	<div class="doughnut_cover"> <!-- 2021-10-19 AlpaDesign 자동으로 가운데로 오기위해 추가했습니다 (vertical-align=middle) -->
+                                    	<div class="doughnut_cover">
                                         	<canvas id="doughnut1" style="height:210px; width:200px"></canvas>
                                         </div>
                                         <div class="data_number">
@@ -153,6 +150,7 @@
                                     	</div>
                                     </div>
                                     <div class="data_percent" id="doughnut1_data">
+                                    	<!--
                                     	<ul>
                                     		<li>20.81%</li>
                                     		<li>8.09%</li>
@@ -165,17 +163,19 @@
                                     		<li>20.81%</li>
                                     		<li>14.45%</li>
                                     	</ul>
+                                    	-->
                                    	</div>
                                     <p class="color-primary fa-lg mb-3 mt-5 ml-3" style="color: black">생산 판매 신고</p>
                                     <div class="data_relative">
-                                   		<div class="doughnut_cover"> <!-- 2021-10-19 AlpaDesign 자동으로 가운데로 오기위해 추가했습니다 (vertical-align=middle) -->
+                                   		<div class="doughnut_cover">
                                         	<canvas id="doughnut2" style="height:210px; width:200px"></canvas>
                                         </div>
                                         <div class="data_number">
-                                    		<span class="data">174건</span>
+                                    		<!-- <span class="data">174건</span> -->
                                     	</div>
                                     </div>
                                     <div class="data_percent" id="doughnut2_data">
+                                    	<!--
                                     	<ul>
                                     		<li>20.81%</li>
                                     		<li>8.09%</li>
@@ -188,19 +188,21 @@
                                     		<li>20.81%</li>
                                     		<li>14.45%</li>
                                     	</ul>
+                                    	-->
                                     </div>
                                 </div>
                                 <div class="slick-slider__single d-flex">
                                     <p class="color-primary fa-lg mb-3 mt-5 ml-3" style="color: black">품종 보호 출원</p>
                                     <div class="data_relative">
-                                    	<div class="doughnut_cover"> <!-- 2021-10-19 AlpaDesign 자동으로 가운데로 오기위해 추가했습니다 (vertical-align=middle) -->
+                                    	<div class="doughnut_cover">
                                         	<canvas id="doughnut3" style="height:210px; width:200px"></canvas>
                                         </div>
                                         <div class="data_number">
-                                    		<span class="data">174건</span>
+                                    		<!-- <span class="data">174건</span> -->
                                     	</div>
                                     </div>
                                     <div class="data_percent" id="doughnut2_data">
+                                    	<!--
                                     	<ul>
                                     		<li>20.81%</li>
                                     		<li>8.09%</li>
@@ -213,17 +215,19 @@
                                     		<li>20.81%</li>
                                     		<li>14.45%</li>
                                     	</ul>
+                                    	-->
                                    	</div>
                                     <p class="color-primary fa-lg mb-3 mt-5 ml-3" style="color: black">품종 보호 등록</p>
                                     <div class="data_relative">
-                                    	<div class="doughnut_cover"> <!-- 2021-10-19 AlpaDesign 자동으로 가운데로 오기위해 추가했습니다 (vertical-align=middle) -->
+                                    	<div class="doughnut_cover">
                                         	<canvas id="doughnut4" style="height:210px; width:200px"></canvas>
                                         </div>
                                         <div class="data_number">
-                                    		<span class="data">174건</span>
+                                    		<!-- <span class="data">174건</span> -->
                                     	</div>
                                     </div>
                                         <div class="data_percent" id="doughnut2_data">
+                                        	<!--
 	                                    	<ul>
 	                                    		<li>20.81%</li>
 	                                    		<li>8.09%</li>
@@ -236,6 +240,7 @@
 	                                    		<li>20.81%</li>
 	                                    		<li>14.45%</li>
 	                                    	</ul>
+                                        	-->
                                     	</div>
                                 </div>
                             </div>
@@ -391,165 +396,50 @@
         }
     }  */
 
-   $(document).ready(function () {
-       SearchMarker(1);
-       SearchChart(1);
-   });
+	$(document).ready(function ()
+	{
+		// SearchMarker(1);
+		SelectChartBar();
+		SelectChart();
+	});
 
-   var inKorea = [];
-   var outKorea = [];
+    var inKorea = [];
+    var outKorea = [];
 
-   function SearchMarker(e) {
-       var data = {"sample_name": "고추"};
+	function SearchMarker(e)
+	{
+		var data = {"sample_name": "고추"};
+		
+		$.ajax(
+		{
+			url: 'selectOutcomeList',
+			method: 'POST',
+			dataType: 'json',
+			data: data,
+			success: function (result1) 
+			{
+				for (let i = 0; i < result1.sampleOutcome.length; i++) 
+				{
+					if (result1.sampleOutcome[i].sample_outcome_country == '국내') 
+					{
+						inKorea.push(result1.sampleOutcome[i].sample_outcome_place);
+					}
+					else if(result1.sampleOutcome[i].sample_outcome_country == '해외')
+					{
+						outKorea.push(result1.sampleOutcome[i].sample_outcome_place);
+					}
+				}
+      
+				searchArea();
+			}
+		});
+	}
 
-       $.ajax(
-           {
-               url: 'selectOutcomeList',
-               method: 'POST',
-               dataType: 'json',
-               data: data,
-               success: function (result1) {
-                   for (let i = 0; i < result1.sampleOutcome.length; i++) {
-                       if (result1.sampleOutcome[i].sample_outcome_country == '국내') {
-                           inKorea.push(result1.sampleOutcome[i].sample_outcome_place);
-                       } else if(result1.sampleOutcome[i].sample_outcome_country == '해외') {
-                           outKorea.push(result1.sampleOutcome[i].sample_outcome_place);
-                       }
-                   }
-
-                   searchArea();
-               }
-           });
-   }
-
-   let chartData1 = [];
-   let chartData2 = [];
-   let chartData3 = [];
-   let chartData4 = [];
-
-   function SearchChart(e) {
-
-       var data = {"breed_name": '고추'};
-
-       $.ajax(
-           {
-               url: 'searchChart',
-               method: 'POST',
-               dataType: 'json',
-               data: data,
-               success: function (result) {
-                   let count_go = 0;
-                   let count_dae = 0;
-                   let count_mel = 0;
-                   let count_mu = 0;
-                   let count_bae = 0;
-                   let count_su = 0;
-                   let count_ybae = 0;
-                   let count_yang = 0;
-                   let count_cham = 0;
-                   let count_to = 0;
-                   let count_go1 = 0;
-                   let count_dae1 = 0;
-                   let count_mel1 = 0;
-                   let count_mu1 = 0;
-                   let count_bae1 = 0;
-                   let count_su1 = 0;
-                   let count_ybae1 = 0;
-                   let count_yang1 = 0;
-                   let count_cham1 = 0;
-                   let count_to1 = 0;
-                   let count_go2 = 0;
-                   let count_dae2 = 0;
-                   let count_mel2 = 0;
-                   let count_mu2 = 0;
-                   let count_bae2 = 0;
-                   let count_su2 = 0;
-                   let count_ybae2 = 0;
-                   let count_yang2 = 0;
-                   let count_cham2 = 0;
-                   let count_to2 = 0;
-                   let count_go3 = 0;
-                   let count_dae3 = 0;
-                   let count_mel3 = 0;
-                   let count_mu3 = 0;
-                   let count_bae3 = 0;
-                   let count_su3 = 0;
-                   let count_ybae3 = 0;
-                   let count_yang3 = 0;
-                   let count_cham3 = 0;
-                   let count_to3 = 0;
-
-                   for(let i = 0; i < result.breed.length; i++) {
-                       if(result.breed[i].breed_name === '고추') {
-                           count_go++;
-                       } else if(result.breed[i].breed_name === '대파') {
-                           count_dae++;
-                       } else if(result.breed[i].breed_name === '멜론') {
-                           count_mel++;
-                       } else if(result.breed[i].breed_name === '무') {
-                           count_mu++;
-                       } else if(result.breed[i].breed_name === '배추') {
-                           count_bae++;
-                       } else if(result.breed[i].breed_name === '수박') {
-                           count_su++;
-                       } else if(result.breed[i].breed_name === '양배추') {
-                           count_ybae++;
-                       } else if(result.breed[i].breed_name === '양파') {
-                           count_yang++;
-                       } else if(result.breed[i].breed_name === '참외') {
-                           count_cham++;
-                       } else if(result.breed[i].breed_name === '토마토') {
-                           count_to++;
-                       }
-                   }
-
-                   let count_all = (count_go + count_dae + count_mel + count_mu + count_bae + count_su + count_ybae + count_yang + count_cham + count_to);
-
-                   chartData1.push(count_go);
-                   chartData1.push(count_dae);
-                   chartData1.push(count_mel);
-                   chartData1.push(count_mu);
-                   chartData1.push(count_bae);
-                   chartData1.push(count_su);
-                   chartData1.push(count_ybae);
-                   chartData1.push(count_yang);
-                   chartData1.push(count_cham);
-                   chartData1.push(count_to);
-
-                   $(".breed_count").text(count_all + "건");
-
-                   for(let i = 0; i < result.detail.length; i++) {
-                       if(result.detail[i].detail_title === '생산판매 (신고번호)') {
-                           count_go++;
-                       } else if(result.breed[i].breed_name === '대파') {
-                           count_dae++;
-                       } else if(result.breed[i].breed_name === '멜론') {
-                           count_mel++;
-                       } else if(result.breed[i].breed_name === '무') {
-                           count_mu++;
-                       } else if(result.breed[i].breed_name === '배추') {
-                           count_bae++;
-                       } else if(result.breed[i].breed_name === '수박') {
-                           count_su++;
-                       } else if(result.breed[i].breed_name === '양배추') {
-                           count_ybae++;
-                       } else if(result.breed[i].breed_name === '양파') {
-                           count_yang++;
-                       } else if(result.breed[i].breed_name === '참외') {
-                           count_cham++;
-                       } else if(result.breed[i].breed_name === '토마토') {
-                           count_to++;
-                       }
-                   }
-
-               }
-           });
-   }
-
-   /* 지도 검색 */
-   $("#modal-search").change(function() {
-       searchArea();
-   });
+	/* 지도 검색 */
+	$("#modal-search").change(function()
+	{
+		searchArea();
+	});
 
    function searchArea() {
 
@@ -620,271 +510,398 @@
        }
    }
 
-   function smoothZoom(map, max, cnt) {
-       if (cnt >= max) {
-           return;
-       } else {
-           z = google.maps.event.addListener(map, 'zoom_changed', function (event) {
-               google.maps.event.removeListener(z);
-               smoothZoom(map, max, cnt + 1);
-           });
-           setTimeout(function () {
-               map.setZoom(cnt)
-           }, 40);
-       }
-   }
+	function smoothZoom(map, max, cnt)
+	{
+		if(cnt >= max)
+		{
+			return;
+		}
+		else 
+		{
+			z = google.maps.event.addListener(map, 'zoom_changed',function(event)
+			{
+				google.maps.event.removeListener(z);
+				
+				smoothZoom(map, max, cnt + 1);
+			});
+			setTimeout(function ()
+			{
+				map.setZoom(cnt)
+			}, 40);
+		}
+	}
 
-    var ctx = $("#doughnut1").get(0).getContext('2d');
-    let doughnut1 = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: ["고추", "대파", "멜론", "무", "배추", "수박", "양배추", "양파", "참외", "토마토"],
-            datasets: [{
-            	label: "#",
-                data: chartData1,
-                backgroundColor: [
-                    'rgb(255, 155, 147)',
-                    'rgb(255, 207, 141)',
-                    'rgb(247, 235, 137)',
-                    'rgb(188, 227, 220)',
-                    'rgb(184, 229, 252)',
-                    'rgb(120, 210, 236)',
-                    'rgb(178, 162, 207)',
-                    'rgb(248, 184, 198)',
-                    'rgb(243, 216, 197)',
-                    'rgb(206, 187, 173)'
-                ],
-            }]
-        },
-        options: {
-        	responsive: false,
-            legend: {
-                position: "right",
-                labels: {
-                    fontColor: "black",
-                    usePointStyle: true,
-                    fontSize: 10,
-                    font: {
-                        lineHeight: 1,
-                    },
-                }
-            },
-        	cutoutPercentage: 80,
-        }
-    });
-    
-    var ctx = document.getElementById("doughnut2");
-    var doughnut2 = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: ["고추", "대파", "멜론", "무", "배추", "수박", "양배추", "양파", "참외", "토마토"],
-            datasets: [{
-                label: '#',
-                data: chartData2,
-                backgroundColor: [
-                    'rgb(255, 155, 147)',
-                    'rgb(255, 207, 141)',
-                    'rgb(247, 235, 137)',
-                    'rgb(188, 227, 220)',
-                    'rgb(184, 229, 252)',
-                    'rgb(120, 210, 236)',
-                    'rgb(178, 162, 207)',
-                    'rgb(248, 184, 198)',
-                    'rgb(243, 216, 197)',
-                    'rgb(206, 187, 173)'
-                ]
-            }]
-        },
-        options: {
-        	responsive: false,
-            legend: {
-                position: 'right',
-                labels: {
-                    fontColor: "black",
-                    usePointStyle: true,
-                    fontSize: 10,
-                    font: {
-                        lineHeight: 1,
-                    },
-                }
-            },
-            cutoutPercentage: 80,
-        }
-    });
+	function SelectChart()
+	{
+		$.ajax(
+		{
+			url: 'selectChart',
+			method: 'POST',
+			dataType: 'json',
+			data: data,
+			success: function(result) 
+			{
+				var chartData1 = [result.breed.crop_count_1, result.breed.crop_count_2, result.breed.crop_count_3, result.breed.crop_count_4, result.breed.crop_count_5, result.breed.crop_count_6, result.breed.crop_count_7, result.breed.crop_count_8, result.breed.crop_count_9, result.breed.crop_count_10];
+				var chartData2 = [result.sales.crop_count_1, result.sales.crop_count_2, result.sales.crop_count_3, result.sales.crop_count_4, result.sales.crop_count_5, result.sales.crop_count_6, result.sales.crop_count_7, result.sales.crop_count_8, result.sales.crop_count_9, result.sales.crop_count_10];
+				var chartData3 = [result.apply.crop_count_1, result.apply.crop_count_2, result.apply.crop_count_3, result.apply.crop_count_4, result.apply.crop_count_5, result.apply.crop_count_6, result.apply.crop_count_7, result.apply.crop_count_8, result.apply.crop_count_9, result.apply.crop_count_10];
+				var chartData4 = [result.protect.crop_count_1, result.protect.crop_count_2, result.protect.crop_count_3, result.protect.crop_count_4, result.protect.crop_count_5, result.protect.crop_count_6, result.protect.crop_count_7, result.protect.crop_count_8, result.protect.crop_count_9, result.protect.crop_count_10];
+				
+				console.log(chartData1)
+				for(var i = 1; i < 11; i++)
+				{
+				}
+				var ctx = $("#doughnut1").get(0).getContext('2d');
+				
+			    let doughnut1 = new Chart(ctx,
+			    {
+			    	type: 'doughnut',
+			    	data:
+			    	{
+			            labels: ["고추", "대파", "멜론", "무", "배추", "수박", "양배추", "양파", "참외", "토마토"],
+			            datasets: [
+			            {
+			            	label: "#",
+			                data: chartData1,
+			                backgroundColor:
+			                [
+			                    'rgb(255, 155, 147)',
+			                    'rgb(255, 207, 141)',
+			                    'rgb(247, 235, 137)',
+			                    'rgb(188, 227, 220)',
+			                    'rgb(184, 229, 252)',
+			                    'rgb(120, 210, 236)',
+			                    'rgb(178, 162, 207)',
+			                    'rgb(248, 184, 198)',
+			                    'rgb(243, 216, 197)',
+			                    'rgb(206, 187, 173)'
+			                ],
+			            }]
+			        },
+			        options:
+			        {
+			        	responsive: false,
+			            legend:
+			            {
+			                position: "right",
+			                labels: {
+			                    fontColor: "black",
+			                    usePointStyle: true,
+			                    fontSize: 10,
+			                    font: {
+			                        lineHeight: 1,
+			                    },
+			                }
+			            },
+			        	cutoutPercentage: 80,
+			        }
+			    });
+			    
+			    var ctx = document.getElementById("doughnut2");
+			    var doughnut2 = new Chart(ctx, {
+			        type: 'doughnut',
+			        data: {
+			            labels: ["고추", "대파", "멜론", "무", "배추", "수박", "양배추", "양파", "참외", "토마토"],
+			            datasets: [{
+			                label: '#',
+			                data: chartData2,
+			                backgroundColor: [
+			                    'rgb(255, 155, 147)',
+			                    'rgb(255, 207, 141)',
+			                    'rgb(247, 235, 137)',
+			                    'rgb(188, 227, 220)',
+			                    'rgb(184, 229, 252)',
+			                    'rgb(120, 210, 236)',
+			                    'rgb(178, 162, 207)',
+			                    'rgb(248, 184, 198)',
+			                    'rgb(243, 216, 197)',
+			                    'rgb(206, 187, 173)'
+			                ]
+			            }]
+			        },
+			        options: {
+			        	responsive: false,
+			            legend: {
+			                position: 'right',
+			                labels: {
+			                    fontColor: "black",
+			                    usePointStyle: true,
+			                    fontSize: 10,
+			                    font: {
+			                        lineHeight: 1,
+			                    },
+			                }
+			            },
+			            cutoutPercentage: 80,
+			        }
+			    });
 
-    var ctx = document.getElementById("doughnut3");
-    var doughnut3 = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: ["고추", "대파", "멜론", "무", "배추", "수박", "양배추", "양파", "참외", "토마토"],
-            datasets: [{
-                label: "#",
-                data: chartData3,
-                backgroundColor: [
-                    'rgb(255, 155, 147)',
-                    'rgb(255, 207, 141)',
-                    'rgb(247, 235, 137)',
-                    'rgb(188, 227, 220)',
-                    'rgb(184, 229, 252)',
-                    'rgb(120, 210, 236)',
-                    'rgb(178, 162, 207)',
-                    'rgb(248, 184, 198)',
-                    'rgb(243, 216, 197)',
-                    'rgb(206, 187, 173)'
-                ]
-            }]
-        },
-        options: {
-        	responsive: false,
-            legend: {
-                position: 'right',
-                labels: {
-                    fontColor: "black",
-                    usePointStyle: true,
-                    fontSize: 10,
-                    font: {
-                        lineHeight: 1,
-                    },
-                }
-            },
-            cutoutPercentage: 80,
-        }
-    });
+			    var ctx = document.getElementById("doughnut3");
+			    var doughnut3 = new Chart(ctx, {
+			        type: 'doughnut',
+			        data: {
+			            labels: ["고추", "대파", "멜론", "무", "배추", "수박", "양배추", "양파", "참외", "토마토"],
+			            datasets: [{
+			                label: "#",
+			                data: chartData3,
+			                backgroundColor: [
+			                    'rgb(255, 155, 147)',
+			                    'rgb(255, 207, 141)',
+			                    'rgb(247, 235, 137)',
+			                    'rgb(188, 227, 220)',
+			                    'rgb(184, 229, 252)',
+			                    'rgb(120, 210, 236)',
+			                    'rgb(178, 162, 207)',
+			                    'rgb(248, 184, 198)',
+			                    'rgb(243, 216, 197)',
+			                    'rgb(206, 187, 173)'
+			                ]
+			            }]
+			        },
+			        options: {
+			        	responsive: false,
+			            legend: {
+			                position: 'right',
+			                labels: {
+			                    fontColor: "black",
+			                    usePointStyle: true,
+			                    fontSize: 10,
+			                    font: {
+			                        lineHeight: 1,
+			                    },
+			                }
+			            },
+			            cutoutPercentage: 80,
+			        }
+			    });
 
-    var ctx = document.getElementById("doughnut4");
-    var doughnut4 = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: ["고추", "대파", "멜론", "무", "배추", "수박", "양배추", "양파", "참외", "토마토"],
-            datasets: [{
-                label: '#',
-                data: chartData4,
-                backgroundColor: [
-                    'rgb(255, 155, 147)',
-                    'rgb(255, 207, 141)',
-                    'rgb(247, 235, 137)',
-                    'rgb(188, 227, 220)',
-                    'rgb(184, 229, 252)',
-                    'rgb(120, 210, 236)',
-                    'rgb(178, 162, 207)',
-                    'rgb(248, 184, 198)',
-                    'rgb(243, 216, 197)',
-                    'rgb(206, 187, 173)'
-                ]
-            }]
-        },
-        options: {
-        	responsive: false,
-            legend: {
-                position: 'right',
-                labels: {
-                    fontColor: "black",
-                    usePointStyle: true,
-                    fontSize: 10,
-                    font: {
-                    lineHeight: 1,
-                    },
-                }
-            },
-            cutoutPercentage: 80,
-        }
-    });
+			    var ctx = document.getElementById("doughnut4");
+			    var doughnut4 = new Chart(ctx, {
+			        type: 'doughnut',
+			        data: {
+			            labels: ["고추", "대파", "멜론", "무", "배추", "수박", "양배추", "양파", "참외", "토마토"],
+			            datasets: [{
+			                label: '#',
+			                data: chartData4,
+			                backgroundColor: [
+			                    'rgb(255, 155, 147)',
+			                    'rgb(255, 207, 141)',
+			                    'rgb(247, 235, 137)',
+			                    'rgb(188, 227, 220)',
+			                    'rgb(184, 229, 252)',
+			                    'rgb(120, 210, 236)',
+			                    'rgb(178, 162, 207)',
+			                    'rgb(248, 184, 198)',
+			                    'rgb(243, 216, 197)',
+			                    'rgb(206, 187, 173)'
+			                ]
+			            }]
+			        },
+			        options: {
+			        	responsive: false,
+			            legend: {
+			                position: 'right',
+			                labels: {
+			                    fontColor: "black",
+			                    usePointStyle: true,
+			                    fontSize: 10,
+			                    font: {
+			                    lineHeight: 1,
+			                    },
+			                }
+			            },
+			            cutoutPercentage: 80,
+			        }
+			    });
+			}
+		});
+	}
 
-    var ctx = document.getElementById("bar1");
-    var bar1 = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ["2017", "2018", "2019", "2020", "2021"],
-            datasets: [
-                {
-                    label: '고추',
-                    data: [210, 315, 390, 70, 300],
-                    backgroundColor:
-                        'rgb(255, 155, 147)'
-                },
-                {
-                    label: '대파',
-                    data: [200, 400, 115, 500, 270],
-                    backgroundColor:
-                        'rgb(255, 207, 141)'
-
-                },
-                {
-                    label: '멜론',
-                    data: [35, 35, 60, 260, 300],
-                    backgroundColor:
-                        'rgb(247, 235, 137)'
-
-                },
-                {
-                    label: '무',
-                    data: [450, 430, 80, 210, 50],
-                    backgroundColor:
-                        'rgb(188, 227, 220)'
-
-                },
-                {
-                    label: '배추',
-                    data: [440, 60, 180, 290, 300],
-                    backgroundColor:
-                        'rgb(184, 229, 252)'
-
-                },
-                {
-                    label: '수박',
-                    data: [50, 80, 160, 470, 70],
-                    backgroundColor:
-                        'rgb(120, 210, 236)'
-
-                },
-                {
-                    label: '양배추',
-                    data: [480, 180, 230, 360, 20],
-                    backgroundColor:
-                        'rgb(178, 162, 207)'
-                },
-                {
-                    label: '양파',
-                    data: [460, 90, 400, 350, 330],
-                    backgroundColor:
-                        'rgb(248, 184, 198)'
-                },
-                {
-                    label: '참외',
-                    data: [450, 260, 330, 180, 410],
-                    backgroundColor:
-                        'rgb(243, 216, 197)'
-                },
-                {
-                    label: '토마토',
-                    data: [490, 280, 230, 400, 370],
-                    backgroundColor:
-                        'rgb(206, 187, 173)'
-                }
-            ]
-        },
-        options: {
-            scales: {
-                xAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }],
-                yAxes: [{
-                    ticks: {
-                        beginAtZero: true,
-                        stepSize: 100,
-                    }
-                }]
-            },
-            legend: {
-                position: 'top',
-                labels: {
-                    usePointStyle: true,
-                }
-            }
-        }
-    });
+    function SelectChartBar()
+    {
+		$.ajax(
+		{
+			url: 'selectChartBar',
+			method: 'POST',
+			dataType: 'json',
+			data: data,
+			success: function(result) 
+			{
+				var date = new Date();
+				var year = date.getYear() + 1896
+				var year_list = [];
+				var crop_1 = [];
+				var crop_2 = [];
+				var crop_3 = [];
+				var crop_4 = [];
+				var crop_5 = [];
+				var crop_6 = [];
+				var crop_7 = [];
+				var crop_8 = [];
+				var crop_9 = [];
+				var crop_10 = [];
+				
+				for(var i = 0; i < 5; i++)
+				{
+					year_list.push(year + i);
+					
+					var c1 = 0;
+					var c2 = 0;
+					var c3 = 0;
+					var c4 = 0;
+					var c5 = 0;
+					var c6 = 0;
+					var c7 = 0;
+					var c8 = 0;
+					var c9 = 0;
+					var c10 = 0;
+					
+					for(var j = 0; j < result[year + i].length; j++)
+					{
+						if(result[year + i][j].breed_name == "고추")
+						{
+							c1 = result[year + i][j].breed_count;
+						}
+						else if(result[year + i][j].breed_name == "대파")
+						{
+							c2 = result[year + i][j].breed_count;
+						}
+						else if(result[year + i][j].breed_name == "멜론")
+						{
+							c3 = result[year + i][j].breed_count;
+						}
+						else if(result[year + i][j].breed_name == "무")
+						{
+							c4 = result[year + i][j].breed_count;
+						}
+						else if(result[year + i][j].breed_name == "배추")
+						{
+							c5 = result[year + i][j].breed_count;
+						}
+						else if(result[year + i][j].breed_name == "수박")
+						{
+							c6 = result[year + i][j].breed_count;
+						}
+						else if(result[year + i][j].breed_name == "양배추")
+						{
+							c7 = result[year + i][j].breed_count;
+						}
+						else if(result[year + i][j].breed_name == "양파")
+						{
+							c8 = result[year + i][j].breed_count;
+						}
+						else if(result[year + i][j].breed_name == "참외")
+						{
+							c9 = result[year + i][j].breed_count;
+						}
+						else if(result[year + i][j].breed_name == "토마토")
+						{
+							c10 = result[year + i][j].breed_count;
+						}
+					}
+					
+					crop_1.push(c1);
+					crop_2.push(c2);
+					crop_3.push(c3);
+					crop_4.push(c4);
+					crop_5.push(c5);
+					crop_6.push(c6);
+					crop_7.push(c7);
+					crop_8.push(c8);
+					crop_9.push(c9);
+					crop_10.push(c10);
+				}
+				
+			    var ctx = document.getElementById("bar1");
+			    var bar1 = new Chart(ctx,
+			    {
+			        type: 'bar',
+			        data:
+			        {
+			            // labels: ["2017", "2018", "2019", "2020", "2021"],
+			            labels: year_list,
+			            datasets: [
+			                {
+			                    label: '고추',
+			                    data: crop_1,
+			                    backgroundColor:'rgb(255, 155, 147)'
+			                },
+			                {
+			                    label: '대파',
+			                    data: crop_2,
+			                    backgroundColor:'rgb(255, 207, 141)'
+			
+			                },
+			                {
+			                    label: '멜론',
+			                    data: crop_3,
+			                    backgroundColor:'rgb(247, 235, 137)'
+			
+			                },
+			                {
+			                    label: '무',
+			                    data: crop_4,
+			                    backgroundColor:'rgb(188, 227, 220)'
+			
+			                },
+			                {
+			                    label: '배추',
+			                    data: crop_5,
+			                    backgroundColor:'rgb(184, 229, 252)'
+			
+			                },
+			                {
+			                    label: '수박',
+			                    data: crop_6,
+			                    backgroundColor:'rgb(120, 210, 236)'
+			
+			                },
+			                {
+			                    label: '양배추',
+			                    data: crop_7,
+			                    backgroundColor:'rgb(178, 162, 207)'
+			                },
+			                {
+			                    label: '양파',
+			                    data: crop_8,
+			                    backgroundColor:'rgb(248, 184, 198)'
+			                },
+			                {
+			                    label: '참외',
+			                    data: crop_9,
+			                    backgroundColor:'rgb(243, 216, 197)'
+			                },
+			                {
+			                    label: '토마토',
+			                    data: crop_10,
+			                    backgroundColor:'rgb(206, 187, 173)'
+			                }
+			            ]
+			        },
+			        options: {
+			            scales: {
+			                xAxes: [{
+			                    ticks: {
+			                        beginAtZero: true
+			                    }
+			                }],
+			                yAxes: [{
+			                    ticks: {
+			                        beginAtZero: true,
+			                        stepSize: 100,
+			                    }
+			                }]
+			            },
+			            legend: {
+			                position: 'top',
+			                labels: {
+			                    usePointStyle: true,
+			                }
+			            }
+			        }
+			    });
+			}
+		});
+    }
 </script>
 
 </body>
