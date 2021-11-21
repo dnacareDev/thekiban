@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:with="user = ${#authentication.principal}">
 <head>
     <!-- 공통 헤더 -->
     <th:block th:include="/../fragments/header.html"></th:block>
@@ -480,10 +480,6 @@ input[type="checkbox"]{
 								<input type="button" class="btn btn-primary btn-sm" onclick="RunAnalysis();" value="분석실행">
 							</div>
 						</form>
-						<form action="runAnalysis" id="runAnalysis" method="POST" enctype="multipart/form-data">
-							<input type="text" id="method" name="method">
-							<input type="file" id="input_file" name="file">
-						</form>
 					</div>
 				</div>
 			</div>
@@ -537,6 +533,7 @@ input[type="checkbox"]{
 		}
 	}
 	
+	// 품종/원종 조회
 	function SearchTarget()
 	{
 		var name = $("#select_crop").val();
@@ -602,41 +599,6 @@ input[type="checkbox"]{
 		});
 	}
 	
-	function plusFunction(e, Arrays)
-	{
-		Arrays = [];
-		
-		if($(e).hasClass("right_plus") == true)
-		{
-			textLi = $(e).parent().parent().parent().prev().children().eq(1).children().children();
-			text_box = $(e).parent().parent().parent().next().children().eq(1).children();
-		}
-		else
-		{
-			textLi = $(e).parent().parent().parent().next().children().eq(1).children().children();
-			text_box = $(e).parent().parent().parent().prev().children().eq(1).children();
-		}
-		
-		textLi.each(function(idx, elem)
-		{
-			if($(elem).children().eq(0).is(":checked") == true)
-			{
-				Arrays.push($(elem).children().eq(1).text());
-				$(elem).remove();
-			}
-		});
-		
-		for(let i=0; i< Arrays.length; i++)
-		{
-			inner_html += "<li><input type='checkbox'><span>"+ Arrays[i]+"</span></li>";
-		}
-		
-		text_box.append(inner_html);
-		inner_html = "";
-		
-		CheckFunction();
-	}
-
 	function CheckFunction()
 	{
 		$('.text_box li').off('click').on('click', function(e)
@@ -656,9 +618,9 @@ input[type="checkbox"]{
 		});
 	}
 
+	// 높이 조절
 	function autoHeight()
 	{
-		/* 높이 조절 */
 		$(".box1 .text_box").each(function(idx, elem)
 		{
 			let box_height = $(elem).height();
@@ -666,6 +628,7 @@ input[type="checkbox"]{
 		});
 	}
 	
+	// 선택 이벤트
 	function PlusBtn(e)
 	{
 		if(e == 0)
@@ -718,15 +681,15 @@ input[type="checkbox"]{
 							if(result[i].detail_type == 0)
 							{
 								add_list += '<li>';
-								add_list += '<input type="checkbox" class="plus_trait">';
-								add_list += '<span class="trait_list">품종-' + result[i].detail_title + '</span>';
+								add_list += '<input type="checkbox" class="plus_trait" name="'+ result[i].detail_name + '" value="' + result[i].detail_id + '">';
+								add_list += '<span class="trait_list" name="' + (i + 1) + '">품종-' + result[i].detail_title + '</span>';
 								add_list += '</li>'; 
 							}
 							else
 							{
 								add_list += '<li>';
-								add_list += '<input type="checkbox" class="plus_trait">';
-								add_list += '<span class="trait_list">원종-' + result[i].detail_title + '</span>';
+								add_list += '<input type="checkbox" class="plus_trait" name="'+ result[i].detail_name + '" value="' + result[i].detail_id + '">';
+								add_list += '<span class="trait_list" name="' + (i + 1) + '">원종-' + result[i].detail_title + '</span>';
 								add_list += '</li>';
 							}
 						}
@@ -765,7 +728,7 @@ input[type="checkbox"]{
 		}
 		else if(e == 2)
 		{
-			if($(".minus_method").val() == "Trait View" && $(".minus_trait").length == 1)
+			if($(".minus_method").val() == "Trait View" && $(".minus_trait").length > 1)
 			{
 				return Alert("하나의 분석 형질만 선택 가능합니다.");
 			}
@@ -775,7 +738,10 @@ input[type="checkbox"]{
 				{
 					var target_add = "";
 					
-					target_add += '<li><input type="checkbox" class="minus_trait" value="' + $(this).val() + '"><span>' + $(this).next().text() + '</span></li>';
+					target_add += '<li>';
+					target_add += '<input type="checkbox" class="minus_trait" name="' + $(this)[0].getAttribute("name") + '" value="' + $(this).val() + '">';
+					target_add += '<span name="' + $(this)[0].nextElementSibling.getAttribute("name") + '">' + $(this).next().text() + '</span>';
+					target_add += '</li>';
 					
 					$(this).parent().remove();
 					$(".text_box6").append(target_add);
@@ -810,6 +776,21 @@ input[type="checkbox"]{
 				
 				$(this).parent().remove();
 				$(".text_box3").append(add_list);
+			})
+		}
+		else if(e == 2)
+		{
+			$(document).find("input:checkbox[class=minus_trait]:checked").each(function()
+			{
+				var add_list = "";
+				
+				add_list += '<li>';
+				add_list += '<input type="checkbox" class="plus_trait" name="' + $(this).attr("name") + '" value="' + $(this).val() + '">';
+				add_list += '<span class="trait_list" name="' + $(this).next().attr("name") + '">' + $(this).next().text() + '</span>';
+				add_list += '</li>';
+				
+				$(this).parent().remove();
+				$(".text_box5").append(add_list);
 			})
 		}
 		
@@ -854,10 +835,83 @@ input[type="checkbox"]{
 	
 	function RunAnalysis()
 	{
-		$(".plus_target").each(function()
+		if($(".minus_target").length == 0)
 		{
-			console.log(this);
+			return Alert("분석대상을 선택하세요.");
+		}
+		if($(".minus_method").length == 0)
+		{
+			return Alert("분석방법을 선택하세요.");
+		}
+		if($(".minus_method").val() == "Correlation" && $(".minus_trait").length < 1)
+		{
+			return Alert("하나 이상의 분석 형질을 선택하세요.");
+		}
+		if($(".minus_method").val() == "Trait View" && $(".minus_trait").length > 1)
+		{
+			return Alert("하나의 분석 형질만 선택 가능합니다.");
+		}
+		
+		var target_id = [];
+		var method = 0;
+		var trait_id = [];
+		var selected = $(".manage");
+		var detail_type = 0;
+		
+		for(var i = 0; i < selected.length; i++)
+		{
+			if(selected[i].checked == true)
+			{
+				if(selected[i].value == '품종관리')
+				{
+					detail_type = 0;
+				}
+				else
+				{
+					detail_type = 1;
+				}
+			}
+		}
+		
+		$(".minus_target").each(function()
+		{
+			target_id.push($(this).val());
+			console.log(this.nextElementSibling.innerHTML);
 		});
+		
+		$(".minus_method").each(function()
+		{
+			if(this.nextElementSibling.innerHTML == "Trait View")
+			{
+				method = 1;
+			}
+			console.log(this.nextElementSibling.innerHTML);
+		});
+		
+		$(".minus_trait").each(function()
+		{
+			trait_id.push(this.nextElementSibling.getAttribute("name"));
+			console.log(this.nextElementSibling.innerHTML + " : " + this.nextElementSibling.getAttribute("name"));
+		});
+		
+		var data = {"detail_name" : $("#select_crop").val(), "detail_type" : detail_type, "target_id" : target_id, "method" : method, "trait_id" : JSON.stringify(trait_id)};
+		console.log(data);
+		
+		$.ajax(
+		{
+			url : "runAnalysis",
+			method : "POST",
+			dataType : "JSON",
+			data : data,
+			success : function(result)
+			{
+				if(result == 0)
+				{
+					return Alert("분석이 실행되었습니다.")
+				}
+			}
+		});
+		
 		/*
 		var method = $(".minus_method").val();
 		

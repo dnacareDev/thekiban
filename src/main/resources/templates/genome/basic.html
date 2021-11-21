@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:with="user = ${#authentication.principal}">
 <head>
     <!-- 공통 헤더 -->
     <th:block th:include="/../fragments/header.html"></th:block>
@@ -669,6 +669,7 @@
                         <div class="card-extra mt-20 mr-20">
                             <div class="breadcrumb-main" style="float: left;">
                                 <h4 class="text-capitalize breadcrumb-title">원종 관리</h4>
+                                <input type="hidden" id="user_type" th:value="${user.user_type}">
                             </div>
                             <div class="action-btn d-flex justify-content-end">
                                 <div class="atbd-button-list d-flex flex-wrap">
@@ -1848,64 +1849,95 @@
     })
 
     // 원종 삭제
-    function DeleteBasic() {
-        if (tablechk === 0) {
-            var total_id = [];
-
-            var l = basicgrid.getCheckedRows().length;
-
-            for (let i = 0; i < l; i++) {
-                total_id.push(basicgrid.getCheckedRows()[i].basic_id)
-            }
-
-            var data = {'basic_id': total_id};
-
-            if (confirm("삭제하시겠습니까?") == true) {
-                $.ajax(
+    function DeleteBasic()
+    {
+    	var user_type = $("#user_type").val();
+    	
+    	if(user_type != 0)
+    	{
+    		return Alert("삭제 권한이 없습니다.");	
+    	}
+    	else
+    	{
+	        if(tablechk === 0)
+	        {
+	            var total_id = [];
+	
+	            var l = basicgrid.getCheckedRows().length;
+	
+	            for(let i = 0; i < l; i++)
+	            {
+	                total_id.push(basicgrid.getCheckedRows()[i].basic_id)
+	            }
+	
+	            var data = {'basic_id' : total_id};
+	
+	            if(confirm("삭제하시겠습니까?") == true)
+	            {
+	                $.ajax(
                     {
                         url: 'deleteBasic',
                         method: 'POST',
                         dataType: 'json',
                         data: data,
-                        success: function (result) {
-                            if (result == 0) {
-                            } else {
+                        success: function(result)
+                        {
+                            if (result == 0)
+                            {
+                            	return Alert("삭제에 실패하였습니다.");
+                            }
+                            else
+                            {
                                 location.reload();
                             }
                         }
                     });
-            } else {
-                false;
-            }
-        } else {
-            var total_id1 = [];
-
-            var l1 = remaingrid.getCheckedRows().length;
-
-            for (let i = 0; i < l1; i++) {
-                total_id1.push(remaingrid.getCheckedRows()[i].basic_remain_id)
-            }
-
-            var data1 = {'basic_remain_id': total_id1};
-
-            if (confirm("삭제하시겠습니까?") == true) {
-                $.ajax(
+	            }
+	            else
+	            {
+	            	return false;
+	            }
+	        }
+	        else
+	        {
+	            var total_id1 = [];
+	
+	            var l1 = remaingrid.getCheckedRows().length;
+	
+	            for (let i = 0; i < l1; i++)
+	            {
+	                total_id1.push(remaingrid.getCheckedRows()[i].basic_remain_id)
+	            }
+	
+	            var data1 = {'basic_remain_id' : total_id1};
+	
+	            if (confirm("삭제하시겠습니까?") == true)
+	            {
+	                $.ajax(
                     {
                         url: 'deleteBasicRemain',
                         method: 'POST',
                         dataType: 'json',
                         data: data1,
-                        success: function (result) {
-                            if (result == 0) {
-                            } else {
-                                location.reload()
+                        success: function (result)
+                        {
+                            if (result == 0)
+                            {
+                            	return Alert("삭제에 실패하였습니다.");
+                            }
+                            else
+                            {
+                                location.reload();
                             }
                         }
                     });
-            } else {
-
-            }
-        }
+	            }
+	            else
+	            {
+	            	return false;
+	            }
+	        }
+    	}
     }
 
     // 표시항목 버튼

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.thekiban.Entity.Basic;
 import com.thekiban.Entity.Breed;
 import com.thekiban.Entity.Detail;
+import com.thekiban.Entity.Standard;
 import com.thekiban.Mapper.AnalysisMapper;
 import com.thekiban.Service.AnalysisService;
 
@@ -36,5 +37,17 @@ public class AnalysisServiceImpl implements AnalysisService
 	public List<Detail> SelectTrait(String deatil_name, int detail_type)
 	{
 		return mapper.SelectTrait(deatil_name, detail_type);
+	}
+	
+	@Override
+	public List<Detail> SelectDetail(String detail_name, int detail_type)
+	{
+		return mapper.SelectDetail(detail_name, detail_type);
+	}
+
+	@Override
+	public List<Standard> SelectStandard(int[] target_id, int detail_type)
+	{
+		return mapper.SelectStandard(target_id, detail_type);
 	}
 }
