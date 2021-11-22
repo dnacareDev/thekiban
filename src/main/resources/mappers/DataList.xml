@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.thekiban.Mapper.DataListMapper">
 
+    <!-- 날짜 별로 그룹화 해서 가져오기 -->
     <select id="SelectDataList" resultType="DataList">
         SELECT *
         FROM dataList

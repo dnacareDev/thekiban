@@ -1067,42 +1067,18 @@
                                 <table class="table table2">
                                     <thead class="text-center">
                                     <tr>
-                                        <th style="cursor: pointer;"><span class="title">시교명</span><img
-                                            src="../assets/vendor_assets/img/title_icon.png"
-                                            alt="시교명"></th>
-                                        <th style="cursor: pointer;"><span class="title">종자번호(ID)</span><img
-                                            src="../assets/vendor_assets/img/title_icon.png"
-                                            alt="종자번호(ID)"></th>
-                                        <th style="cursor: pointer;"><span class="title">종자 보유량</span><img
-                                            src="../assets/vendor_assets/img/title_icon.png"
-                                            alt="종자 보유량"></th>
-                                        <th style="cursor: pointer;"><span class="title">입고량</span><img
-                                            src="../assets/vendor_assets/img/title_icon.png"
-                                            alt="입고량"></th>
-                                        <th style="cursor: pointer;"><span class="title">출고량</span><img
-                                            src="../assets/vendor_assets/img/title_icon.png"
-                                            alt="출고량"></th>
-                                        <th style="cursor: pointer;"><span class="title">재고량</span><img
-                                            src="../assets/vendor_assets/img/title_icon.png"
-                                            alt="재고량"></th>
-                                        <th style="cursor: pointer;"><span class="title">담당자</span><img
-                                            src="../assets/vendor_assets/img/title_icon.png"
-                                            alt="담당자"></th>
-                                        <th style="cursor: pointer;"><span class="title">인수자</span><img
-                                            src="../assets/vendor_assets/img/title_icon.png"
-                                            alt="인수자"></th>
-                                        <th style="cursor: pointer;"><span class="title">날짜</span><img
-                                            src="../assets/vendor_assets/img/title_icon.png"
-                                            alt="날짜"></th>
-                                        <th style="cursor: pointer;"><span class="title">시교종료일자</span><img
-                                            src="../assets/vendor_assets/img/title_icon.png"
-                                            alt="시교종료일자"></th>
-                                        <th style="cursor: pointer;"><span class="title">지역구분</span><img
-                                            src="../assets/vendor_assets/img/title_icon.png"
-                                            alt="지역구분"></th>
-                                        <th style="cursor: pointer;"><span class="title">대상 지역</span><img
-                                            src="../assets/vendor_assets/img/title_icon.png"
-                                            alt="지역구분"></th>
+                                        <th style="cursor: pointer;"><span class="title">시교명</span></th>
+                                        <th style="cursor: pointer;"><span class="title">종자번호(ID)</span></th>
+                                        <th style="cursor: pointer;"><span class="title">종자 보유량</span></th>
+                                        <th style="cursor: pointer;"><span class="title">입고량</span></th>
+                                        <th style="cursor: pointer;"><span class="title">출고량</span></th>
+                                        <th style="cursor: pointer;"><span class="title">재고량</span></th>
+                                        <th style="cursor: pointer;"><span class="title">담당자</span></th>
+                                        <th style="cursor: pointer;"><span class="title">인수자</span></th>
+                                        <th style="cursor: pointer;"><span class="title">날짜</span></th>
+                                        <th style="cursor: pointer;"><span class="title">시교종료일자</span></th>
+                                        <th style="cursor: pointer;"><span class="title">지역구분</span></th>
+                                        <th style="cursor: pointer;"><span class="title">대상 지역</span></th>
                                     </tr>
                                     </thead>
                                     <tbody class="text-center outcome_list">
@@ -1599,12 +1575,11 @@
 
                     // header
                     header_add += '<tr>';
-                    header_add += '<th></th>';
-                    header_add += '<th><span class="title">첨부파일</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="첨부파일"></th>';
-                    header_add += '<th><span class="title">특성상태</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="특성상태"></th>';
+                    header_add += '<th><span class="title">첨부파일</span></th>';
+                    header_add += '<th><span class="title">특성상태</span></th>';
 
                     for (var i = 0; i < result.display.length; i++) {
-                        header_add += '<th style="cursor: pointer;"><span class="title">' + result.display[i].detail_title + '</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="' + result.display[i].detail_title + '"></th>'
+                        header_add += '<th><span class="title">' + result.display[i].detail_title + '</span></th>'
                     }
 
                     header_add += '</tr>';
@@ -1612,7 +1587,6 @@
                     // body
                     for (var i = 0; i < result.breed.length; i++) {
                         add_list += '<tr>';
-                        add_list += '<td><input type="checkbox" name="RowCheck" value="' + result.breed[i].breed_id + '"></td>';
                         add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" onclick="FileBtn(' + result.breed[i].breed_id + ');"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
 
                         if (result.breed[i].standard_count == 0) {
