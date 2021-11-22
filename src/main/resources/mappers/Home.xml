@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thekiban.Mapper.HomeMapper">
+
+    <select id="SelectOutcomeList" resultType="SampleOutcome">
+        SELECT * FROM sampleOutcome
+    </select>
+
+    <select id="SearchOutcome" resultType="SampleOutcome">
+        SELECT * FROM sampleOutcome
+        <choose>
+            <when test="sample_name != 'none'">
+                WHERE sample_name = #{sample_name}
+                ORDER BY sample_outcome_id DESC
+            </when>
+        </choose>
+    </select>
+
+    <!-- 세부정보 조회 -->
+    <select id="SelectDetail" parameterType="String" resultType="Detail">
+        SELECT * FROM detail
+        WHERE detail_type = 0 AND detail_name = #{breed_name}
+    </select>
+
+    <!-- 품종 갯수 조회 -->
+    <select id="SelectBreedCount" resultType="int">
+        SELECT COUNT(*) FROM breed
+        <choose>
+            <when test="breed_name != 'none'">
+                WHERE breed_name = #{breed_name}
+            </when>
+        </choose>
+    </select>
+
+    <!-- 품종 검색 -->
+    <select id="SearchBreed" resultType="Breed">
+        SELECT *,
+        (SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE s.breed_id = b.breed_id AND d.detail_origin = 1 AND s.standard IS NOT NULL) AS standard_count
+        FROM breed b
+        <choose>
+            <when test="breed_name != 'none'">
+                WHERE b.breed_name = #{breed_name}
+            </when>
+        </choose>
+        ORDER BY b.breed_id DESC
+    </select>
+
+    <!-- 품종별 세부 정보 조회 -->
+    <select id="SearchBreedDetail" parameterType="String" resultType="Detail">
+        SELECT * FROM detail
+        WHERE detail_type = 0 AND detail_name = #{breed_name}
+    </select>
+
+    <!-- 표시항목 조회 -->
+    <select id="SelectDisplay" resultType="Display">
+        SELECT * FROM display dp
+                          LEFT JOIN detail dt ON dp.detail_id = dt.detail_id
+        WHERE dp.user_id = #{user_id} AND dp.breed_name = #{breed_name}
+    </select>
+
+    <!-- 품종별 정보값 조회 -->
+    <select id="SearchBreedStandard" resultType="Standard">
+        SELECT * FROM standard s
+        LEFT JOIN detail d ON s.detail_id = d.detail_id
+        LEFT JOIN display dp ON d.detail_id = dp.detail_id
+        WHERE s.breed_id = #{breed_id} AND dp.user_id = #{user_id}
+        <foreach collection="detail" item="item" open="AND (" close=")" separator="OR">
+            dp.detail_id = #{item.detail_id}
+        </foreach>
+    </select>
+
+
+</mapper>
