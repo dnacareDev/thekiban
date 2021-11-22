@@ -509,7 +509,7 @@ select{
 											
 <!-- 										</dd> -->
 <!-- 									</dl> -->
-									<select>
+									<select class="manage">
 										<option>품종관리</option>
 										<option>원종관리</option>
 									</select>
@@ -633,24 +633,13 @@ select{
 	});
 	
 	// 품종/원종 선택
-	function CheckManage(e)
+	$(".manage").change(function()
 	{
-		console.log($(e));
-		var chk = $(".manage");
+		SearchTarget();
 		
-		for(var i = 0; i < chk.length; i++)
-		{
-			if(chk[i] != e)
-			{
-				chk[i].checked = false;
-				
-				SearchTarget();
-				
-				$("#plus_target").empty();
-				$("#trait_list").empty();
-			}
-		}
-	}
+		$("#plus_target").empty();
+		$("#trait_list").empty();
+	})
 	
 	// 품종/원종 조회
 	function SearchTarget()
@@ -658,22 +647,16 @@ select{
 		var name = $("#select_crop").val();
 		var url = new URL(window.location).searchParams;
 		var total_id = url.get("total_id");
-		var selected = $(".manage");
+		var selected = $(".manage").val();
 		var type = 0;
 		
-		for(var i = 0; i < selected.length; i++)
+		if(selected == '품종관리')
 		{
-			if(selected[i].checked == true)
-			{
-				if(selected[i].value == '품종관리')
-				{
-					type = 1;
-				}
-				else
-				{
-					type = 2;
-				}
-			}
+			type = 1;
+		}
+		else
+		{
+			type = 2;
 		}
 		
 		var data = {"name" : name, "total_id" : total_id, "type" : type};
@@ -754,24 +737,18 @@ select{
 		{
 			$(document).find("input:checkbox[class=plus_target]:checked").each(function()
 			{
-				var selected = $(".manage");
+				var selected = $(".manage").val();
 				var detail_type = 0;
 				
 				var target_add = "";
 				
-				for(var i = 0; i < selected.length; i++)
+				if(selected == '품종관리')
 				{
-					if(selected[i].checked == true)
-					{
-						if(selected[i].value == '품종관리')
-						{
-							detail_type = 0;
-						}
-						else
-						{
-							detail_type = 1;
-						}
-					}
+					detail_type = 0;
+				}
+				else
+				{
+					detail_type = 1;
 				}
 				
 				target_add += '<li>';
@@ -972,29 +949,25 @@ select{
 		}
 		
 		var target_id = [];
+		var target_name = [];
 		var method = 0;
 		var trait_id = [];
-		var selected = $(".manage");
+		var selected = $(".manage").val();
 		var detail_type = 0;
 		
-		for(var i = 0; i < selected.length; i++)
+		if(selected == '품종관리')
 		{
-			if(selected[i].checked == true)
-			{
-				if(selected[i].value == '품종관리')
-				{
-					detail_type = 0;
-				}
-				else
-				{
-					detail_type = 1;
-				}
-			}
+			detail_type = 0;
+		}
+		else
+		{
+			detail_type = 1;
 		}
 		
 		$(".minus_target").each(function()
 		{
 			target_id.push($(this).val());
+			target_name.push(this.nextElementSibling.innerHTML);
 			console.log(this.nextElementSibling.innerHTML);
 		});
 		
@@ -1013,7 +986,7 @@ select{
 			console.log(this.nextElementSibling.innerHTML + " : " + this.nextElementSibling.getAttribute("name"));
 		});
 		
-		var data = {"detail_name" : $("#select_crop").val(), "detail_type" : detail_type, "target_id" : target_id, "method" : method, "trait_id" : JSON.stringify(trait_id)};
+		var data = {"detail_name" : $("#select_crop").val(), "detail_type" : detail_type, "target_id" : target_id, "target_name" : target_name, "method" : method, "trait_id" : JSON.stringify(trait_id)};
 		console.log(data)
 		
 		$.ajax(
