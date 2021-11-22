@@ -37,14 +37,19 @@ public class LabController
 	}
 	
 	@RequestMapping("/matrix")
-	public ModelAndView Analysis(ModelAndView mv)
+	public ModelAndView Analysis(ModelAndView mv, Authentication auth)
 	{
-		AnalysisFile analysis = service.SelectAnalysisFile();
+		User user = (User)auth.getPrincipal();
 		
-		String[] extension = analysis.getAnalysis_file().split("_");
+		AnalysisFile analysis = service.SelectAnalysisFile(user.getUser_id());
 		
-		mv.addObject("analysis", analysis);
-		mv.addObject("path", extension[0]);
+		if(analysis != null)
+		{
+			String[] extension = analysis.getAnalysis_file().split("_");
+			
+			mv.addObject("analysis", analysis);
+			mv.addObject("path", extension[0]);
+		}
 		
 		mv.setViewName("lab/matrix");
 		

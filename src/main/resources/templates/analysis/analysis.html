@@ -895,7 +895,7 @@ input[type="checkbox"]{
 		});
 		
 		var data = {"detail_name" : $("#select_crop").val(), "detail_type" : detail_type, "target_id" : target_id, "method" : method, "trait_id" : JSON.stringify(trait_id)};
-		console.log(data);
+		console.log(data)
 		
 		$.ajax(
 		{
@@ -911,27 +911,6 @@ input[type="checkbox"]{
 				}
 			}
 		});
-		
-		/*
-		var method = $(".minus_method").val();
-		
-		if(method == "Correlation")
-		{
-			$("#method").val(method);
-			
-			$("#runAnalysis").submit();
-		}
-		else if(method == "Trait View")
-		{
-			$("#method").val(method);
-			
-			$("#runAnalysis").submit();
-		}
-		else
-		{
-			return Alert("분석방법을 선택하세요.")
-		}
-		*/
 	}
 </script>
 </body>

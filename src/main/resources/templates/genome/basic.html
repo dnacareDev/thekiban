@@ -2518,77 +2518,87 @@
     var saveDetail_id = [];
     var saveStandard = [];
 
-    function insertRow() {
-        $("#saveRow").css("visibility", "");
-        $("#cancelRow").css("visibility", "");
+    function insertRow()
+    {
+    	var user_type = $("#user_type").val();
 
-        if(tablechk == 0){
-            var cnt = basicgrid.getRowCount();
-
-            const newRow = {
-                'basic_id': '',
-                '169': $("#CropSelect").val(),
-            };
-
-            basicgrid.prependRow(newRow);
-            basicgrid.check(cnt);
-
-            var data = [];
-
-            var data_in = {"basic_name": $("#CropSelect").val(), "offset": $("#offset").val()};
-
-            data.push(data_in);
-
-            $.ajax(
-                {
-                    url: 'insertBasic',
-                    method: 'POST',
-                    dataType: 'json',
-                    data: {
-                      "data" : JSON.stringify(data)
-                    },
-                    success: function (result) {
-                        if (result != null) {
-                            lastID = result.basic[0].basic_id;
-
-                            basicgrid.on('afterChange', (ev) => {
-                                for(let i = 0; i < ev.changes.length; i++) {
-                                    saveDetail_id.push(ev.changes[i].columnName);
-                                    saveStandard.push(ev.changes[i].value);
-                                }
-                            })
-                        }
-                    }
-                });
-        } else {
-            var cnt1 = remaingrid.getRowCount();
-
-            const newRow = {
-                basic_name: $("#CropSelect").val(),
-            };
-
-            remaingrid.prependRow(newRow);
-            remaingrid.check(cnt1);
-
-            var input_data1 = [];
-
-            input_data1.push(remaingrid.getCheckedRows()[0]);
-
-            $.ajax(
-                {
-                    url: 'insertBasicRemain',
-                    method: 'POST',
-                    dataType: 'json',
-                    data: {
-                        "input_data": JSON.stringify(input_data1)
-                    },
-                    success: function (result) {
-                        if (result != null) {
-                            lastID = result.basic_remain_id;
-                        }
-                    }
-                });
-        }
+    	if(user_type != 0 && user_type != 2)
+    	{
+    		return Alert("등록 권한이 없습니다.");	
+    	}
+    	else
+    	{
+	        $("#saveRow").css("visibility", "");
+	        $("#cancelRow").css("visibility", "");
+	
+	        if(tablechk == 0)
+	        {
+	            var cnt = basicgrid.getRowCount();
+	
+	            const newRow = {'basic_id' : '', '169' : $("#CropSelect").val()};
+	
+	            basicgrid.prependRow(newRow);
+	            basicgrid.check(cnt);
+	
+	            var data = [];
+	
+	            var data_in = {"basic_name" : $("#CropSelect").val(), "offset" : $("#offset").val()};
+	
+	            data.push(data_in);
+	
+	            $.ajax(
+	            {
+	                url: 'insertBasic',
+	                method: 'POST',
+	                dataType: 'json',
+	                data: {"data" : JSON.stringify(data)},
+	                success: function (result)
+	                {
+	                    if (result != null)
+	                    {
+	                        lastID = result.basic[0].basic_id;
+	
+	                        basicgrid.on('afterChange', (ev) =>
+	                        {
+	                            for(let i = 0; i < ev.changes.length; i++)
+	                            {
+	                                saveDetail_id.push(ev.changes[i].columnName);
+	                                saveStandard.push(ev.changes[i].value);
+	                            }
+	                        })
+	                    }
+	                }
+	            });
+	        }
+	        else
+	        {
+	            var cnt1 = remaingrid.getRowCount();
+	
+	            const newRow = {basic_name : $("#CropSelect").val()};
+	
+	            remaingrid.prependRow(newRow);
+	            remaingrid.check(cnt1);
+	
+	            var input_data1 = [];
+	
+	            input_data1.push(remaingrid.getCheckedRows()[0]);
+	
+	            $.ajax(
+	            {
+	                url: 'insertBasicRemain',
+	                method: 'POST',
+	                dataType: 'json',
+	                data: {"input_data": JSON.stringify(input_data1)},
+	                success: function (result)
+	                {
+	                    if (result != null)
+	                    {
+	                        lastID = result.basic_remain_id;
+	                    }
+	                }
+	            });
+	        }
+    	}
     }
 
     function saveRow() {

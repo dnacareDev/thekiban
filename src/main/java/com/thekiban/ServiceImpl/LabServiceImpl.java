@@ -15,9 +15,9 @@ public class LabServiceImpl implements LabService
 
 	// 분석 파일 조회
 	@Override
-	public AnalysisFile SelectAnalysisFile()
+	public AnalysisFile SelectAnalysisFile(int user_id)
 	{
-		return mapper.SelectAnalysisFile();
+		return mapper.SelectAnalysisFile(user_id);
 	}
 	
 	// 분석 파일 등록
