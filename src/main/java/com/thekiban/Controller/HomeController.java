@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.thekiban.Entity.SampleOutcome;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -74,6 +75,18 @@ public class HomeController
 			result.put((date.getYear() + 1899 + i), breed);
 		}
 		
+		return result;
+	}
+
+	@ResponseBody
+	@RequestMapping("selectOutcomeList")
+	public Map<String, Object> SelectOutcome() {
+		Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+		List<SampleOutcome> sampleOutcomes = service.SelectOutcomeList();
+
+		result.put("sampleOutcome", sampleOutcomes);
+
 		return result;
 	}
 }

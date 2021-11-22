@@ -2,6 +2,7 @@ package com.thekiban.ServiceImpl;
 
 import java.util.List;
 
+import com.thekiban.Entity.SampleOutcome;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,5 +42,10 @@ public class HomeServiceImpl implements HomeService
 	public List<Breed> SelectChartBar(String year)
 	{
 		return mapper.SelectChartBar(year);
+	}
+
+	@Override
+	public List<SampleOutcome> SelectOutcomeList() {
+		return mapper.SelectOutcomeList();
 	}
 }

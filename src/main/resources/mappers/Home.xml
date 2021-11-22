@@ -69,4 +69,10 @@
 		WHERE modify_date BETWEEN DATE_ADD(#{year}, INTERVAL -1 YEAR) AND #{year}
 		GROUP BY breed_name
 	</select>
+
+	<!-- -->
+	<select id="SelectOutcomeList" resultType="SampleOutcome">
+		SELECT *
+		FROM sampleOutcome
+	</select>
 </mapper>

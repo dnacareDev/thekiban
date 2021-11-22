@@ -2,6 +2,7 @@ package com.thekiban.Mapper;
 
 import java.util.List;
 
+import com.thekiban.Entity.SampleOutcome;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.thekiban.Entity.Breed;
@@ -17,4 +18,6 @@ public interface HomeMapper
 	ChartCount SelectChartProtect();
 
 	List<Breed> SelectChartBar(String year);
+
+	List<SampleOutcome> SelectOutcomeList();
 }
