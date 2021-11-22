@@ -84,7 +84,7 @@ public class AnalysisController
 	// 형질 분석
 	@ResponseBody
 	@RequestMapping("runAnalysis")
-	public int RunAnalysis(@RequestParam("detail_name") String detail_name, @RequestParam("detail_type") int detail_type, @RequestParam("target_id[]") int[] target_id, @RequestParam("method") int method, @RequestParam("trait_id") String trait_id)
+	public int RunAnalysis(@RequestParam("detail_name") String detail_name, @RequestParam("detail_type") int detail_type, @RequestParam("target_id[]") int[] target_id, @RequestParam("target_name[]") String[] target_name, @RequestParam("method") int method, @RequestParam("trait_id") String trait_id)
 	{
 		
 		List<Detail> detail = service.SelectDetail(detail_name, detail_type);
@@ -93,8 +93,6 @@ public class AnalysisController
 		Date date = new Date();
 		
         String date_name = (1900 + date.getYear()) + "" + (date.getMonth() + 1) + "" + date.getDate() + "" + date.getHours() + "" + date.getMinutes() + "" + date.getSeconds();
-//        String origin_name = file.getOriginalFilename();
-//        String file_name = date_name + "_" + origin_name;
         String file_name = date_name + "_phenotype_list.txt";
         
         String root = null;
@@ -132,40 +130,23 @@ public class AnalysisController
         	
         	for(int i = 0; i < detail.size(); i++)
     		{
-        		if(!(detail.get(i).getDetail_title().equals("작물")))
-        		{
-        			if(!detail.get(i).getDetail_title().equals("시교명 (ID)"))
-        			{
-        				writer.write("ch" + (i - 1));
-        				writer.write("\t");
-        			}
-        			else
-        			{
-        				writer.write("\t");
-        			}
-        		}
+        		writer.write("\t");
+        		writer.write("ch" + (i + 1));
     		}
         	
         	for(int i = 0; i < standard.size(); i++)
         	{
-        		if(i == 0)
-        		{
-        			
-        		}
-        		if(i == 1)
-        		{
-        			if(!standard.get(i).getStandard().isEmpty())
-        			{
-        				writer.write(standard.get(i).getStandard());
-        			}
-    				writer.write("\t");
-        		}
-        		else if(i % detail.size() == 0)
+        		if(i % detail.size() == 0)
         		{
         			writer.newLine();
+        			writer.write(target_name[i / detail.size()]);
+        			writer.write("\t");
+        			writer.write(standard.get(i).getStandard());
         		}
         		else
         		{
+        			writer.write("\t");
+        			
         			if(standard.get(i).getStandard() != (null))
         			{
         				if(!standard.get(i).getStandard().equals(""))
@@ -181,7 +162,6 @@ public class AnalysisController
         			{
         				writer.write("NaN");
         			}
-    				writer.write("\t");
         		}
         	}
 			
@@ -213,65 +193,6 @@ public class AnalysisController
         	
 			e.printStackTrace();
 		}
-        
-        /*
-        if(method.equals("Correlation"))
-        {
-        	String path = "/data/apache-tomcat-9.0.8/webapps/ROOT/kiban/resultfiles/r_plot/corrplot/" + date_name;
-        	
-        	File filePath = new File(path);
-        	
-        	if (!filePath.exists())
-        		filePath.mkdirs();
-        	
-        	Path fileLocation = Paths.get(path).toAbsolutePath().normalize();
-        	Path targetLocation = fileLocation.resolve(file_name);
-        	
-        	try
-        	{
-        		Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-        	}
-        	catch (IOException e)
-        	{
-        		System.out.println(e.getMessage());
-        		
-        		e.printStackTrace();
-        	}
-        	
-        	RunCorrlation runcorrlation = new RunCorrlation();
-        	runcorrlation.MakeCorrplot("c\\(2,4,8\\)", "/data/apache-tomcat-9.0.8/webapps/ROOT/kiban/resultfiles/", date_name);
-        }
-        else if(method.equals("Trait View"))
-        {
-        	String path = "/data/apache-tomcat-9.0.8/webapps/ROOT/kiban/resultfiles/r_plot/trait/" + date_name;
-        	
-        	File filePath = new File(path);
-        	
-        	if (!filePath.exists())
-        		filePath.mkdirs();
-        	
-        	Path fileLocation = Paths.get(path).toAbsolutePath().normalize();
-        	Path targetLocation = fileLocation.resolve(file_name);
-        	
-        	try
-        	{
-        		Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-        	}
-        	catch (IOException e)
-        	{
-        		System.out.println(e.getMessage());
-        		
-        		e.printStackTrace();
-        	}
-        	
-        	RunTrait runtrait = new RunTrait();
-        	runtrait.MakeTraitplot("c\\(4\\)", "/data/apache-tomcat-9.0.8/webapps/ROOT/kiban/resultfiles/", date_name);
-        }
-        
-        mv.setViewName("redirect:/analysis");
-        
-        return mv;
-        */
         
         return 0;
 	}
