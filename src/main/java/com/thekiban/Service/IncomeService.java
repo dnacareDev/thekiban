@@ -54,6 +54,9 @@ public interface IncomeService {
 
   // 재고관리 엑셀 등록
   int InsertOutcomeExcel(IncomeRemain incomeRemain);
+
+  // 도입자원 엑셀 목록 조회
+  List<Income> SearchIncomeExcel(String income_name);
   
   // 첨부파일 조회
   List<Uploads> SelectUploads(int[] income_id);

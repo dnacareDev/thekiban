@@ -2178,9 +2178,6 @@
                         data: result.basic,
                         rowHeaders: ['checkbox'],
                         editingEvent: 'click',
-                        columnOptions: {
-                            minWidth: 150
-                        },
                         columns: [],
                         pageOptions: {
                             perPage: limit,
@@ -2202,7 +2199,11 @@
                         var colName = result.display[i].detail_id;
                         headerName[i] = result.display[i].detail_id;
 
-                        arr = {'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'header': colHeader, 'name': colName};
+                        if(result.display[i].detail_spec == '기본 정보') {
+                            arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 180}
+                        } else {
+                            arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 500}
+                        }
 
                         headerArr.push(arr);
                     }
@@ -2294,7 +2295,11 @@
                         var colName = result.display[i].detail_id;
                         headerName[i] = result.display[i].detail_id;
 
-                        var arr = {'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'header': colHeader, 'name': colName};
+                        if(result.display[i].detail_spec == '기본 정보') {
+                            arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 180}
+                        } else {
+                            arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 500}
+                        }
 
                         headerArr.push(arr);
                     }

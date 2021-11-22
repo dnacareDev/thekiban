@@ -55,6 +55,9 @@ public interface IncomeMapper {
   // 재고관리 엑셀 등록
   int InsertRemainExcel(IncomeRemain incomeRemain);
 
+  // 도입자원 엑셀 목록 조회
+  List<Income> SearchIncomeExcel(@Param("income_name") String income_name);
+
   // 첨부파일 조회
   List<Uploads> SelectUploads(int[] income_id);
 

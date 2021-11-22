@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thekiban.Mapper.DataListMapper">
+
+    <select id="SelectDataList" resultType="DataList">
+        SELECT *
+        FROM dataList
+    </select>
+
+    <insert id="InsertDataList" parameterType="DataList">
+        INSERT INTO dataList
+        (datalist_id, datalist_type, datalist_date, target_id)
+        VALUES
+        (#{datalist_id}, #{datalist_type}, #{datalist_date}, #{target_id})
+    </insert>
+
+</mapper>
