@@ -733,9 +733,11 @@
                                     <button class="btn btn-lg btn-primary data_btn2" title="데이터 등록" onclick="openExcel()">
                                         <img src="../assets/vendor_assets/img/icon1.png" alt="">
                                     </button>
+                                    <!--
                                     <button type="button" class="btn btn-lg btn-primary data_btn1" title="엑셀 export" id="excelFileExport">
                                         <img src="../assets/vendor_assets/img/icon2.png" title="데이터 등록" alt="">
                                     </button>
+                                    -->
                                     <button class="btn btn-lg btn-primary data_btn2" title="표시항목 선택" onclick="DisplayBtn();">
                                         <img src="../assets/vendor_assets/img/icon3.png" alt="">
                                     </button>
@@ -1707,7 +1709,6 @@
 <!-- 공통 js -->
 <th:block th:include="/../fragments/commonjs.html"></th:block>
 <script type="text/javascript">
-
     function dataToggle(one, two) {
         $(one).modal("hide");
 
@@ -2453,32 +2454,46 @@
                     var before = null;
                     var after = null;
 
-                    breedgrid.on('afterChange', (ev) => {
-                        for (let i = 0; i < ev.changes.length; i++) {
-                            before = ev.changes[i].prevValue;
-                            after = ev.changes[i].value;
-
-                            if (after != before) {
-                                var breed_id = breedgrid.getRow(ev.changes[i].rowKey).breed_id;
-                                var detail_id = ev.changes[i].columnName;
-                                var standard = after;
-
-                                var data = {"breed_id": breed_id, "detail_id": detail_id, "standard": standard};
-
-                                $.ajax(
+                    breedgrid.on('afterChange', (ev) =>
+                    {
+                    	var user_type = $("#user_type").val();
+                    	
+                    	if(user_type != 0 && user_type != 2)
+                    	{
+                    		return Alert("수정 권한이 없습니다.");
+                    	}
+                    	else
+                    	{
+	                        for (let i = 0; i < ev.changes.length; i++)
+	                        {
+	                            before = ev.changes[i].prevValue;
+	                            after = ev.changes[i].value;
+	
+	                            if (after != before)
+	                            {
+	                                var breed_id = breedgrid.getRow(ev.changes[i].rowKey).breed_id;
+	                                var detail_id = ev.changes[i].columnName;
+	                                var standard = after;
+	
+	                                var data = {"breed_id": breed_id, "detail_id": detail_id, "standard": standard};
+	
+	                                $.ajax(
                                     {
                                         url: 'updateBreed',
                                         method: 'POST',
                                         dataType: 'json',
                                         data: data,
-                                        success: function (result) {
-                                            if (result == 0) {
+                                        success: function (result)
+                                        {
+                                            if (result == 0)
+                                            {
                                                 return Alert("수정에 실패하였습니다.")
                                             }
                                         }
                                     });
-                            }
-                        }
+	                            }
+	                        }
+                    	}
                     });
                 }
             });
@@ -2624,42 +2639,53 @@
     var saveDetail_id = [];
     var saveStandard = [];
 
-    function insertRow() {
-        $("#saveRow").css("visibility", "");
-        $("#cancelRow").css("visibility", "");
+	function insertRow()
+	{
+    	var user_type = $("#user_type").val();
 
-        var cnt = breedgrid.getRowCount();
-
-        const newRow = {
-            'breed_id': '',
-            '1': $("#CropSelect").val(),
-        };
-
-        breedgrid.prependRow(newRow);
-        breedgrid.check(cnt);
-
-        var data = {"breed_name": $("#CropSelect").val(), "offset": $("#offset").val()};
-
-        $.ajax(
-            {
-                url: 'insertBreed',
-                method: 'POST',
-                dataType: 'json',
-                data: data,
-                success: function (result) {
-                    if (result != null) {
-                        lastID = result.breed[0].breed_id;
-
-                        breedgrid.on('afterChange', (ev) => {
-                            for (let i = 0; i < ev.changes.length; i++) {
-                                saveDetail_id.push(ev.changes[i].columnName);
-                                saveStandard.push(ev.changes[i].value);
-                            }
-                        })
-                    }
-                }
-            });
-    }
+    	if(user_type != 0 && user_type != 2)
+    	{
+    		return Alert("등록 권한이 없습니다.");	
+    	}
+    	else
+    	{
+			$("#saveRow").css("visibility", "");
+			$("#cancelRow").css("visibility", "");
+	        
+			var cnt = breedgrid.getRowCount();
+	        
+			const newRow = {'breed_id' : '', '1' : $("#CropSelect").val()};
+	        
+			breedgrid.prependRow(newRow);
+			breedgrid.check(cnt);
+	        
+			var data = {"breed_name" : $("#CropSelect").val(), "offset" : $("#offset").val()};
+	        
+			$.ajax(
+			{
+				url: 'insertBreed',
+				method: 'POST',
+				dataType: 'json',
+				data: data,
+				success: function (result) 
+				{
+					if (result != null)
+					{
+						lastID = result.breed[0].breed_id;
+	                    
+						breedgrid.on('afterChange', (ev) =>
+						{
+							for (let i = 0; i < ev.changes.length; i++)
+							{
+								saveDetail_id.push(ev.changes[i].columnName);
+								saveStandard.push(ev.changes[i].value);
+							}
+						})
+					}
+				}
+			});
+    	}
+	}
 
     function saveRow() {
         var breed_id = lastID;

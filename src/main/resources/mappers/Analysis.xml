@@ -34,19 +34,20 @@
 	<!-- 분석 형질 조회 -->
 	<select id="SelectTrait" resultType="Detail">
 		SELECT * FROM detail
-		WHERE detail_name = #{detail_name} AND detail_title != '작물' AND detail_title != '시교명 (ID)' AND detail_type = #{detail_type}
+		WHERE detail_name = #{detail_name} AND detail_title != '작물' AND detail_title != '시교명 (ID)' AND detail_type = #{detail_type} AND detail_origin = 1
 	</select>
 	
 	<!--  -->
 	<select id="SelectDetail" resultType="Detail">
 		SELECT * FROM detail
-		WHERE detail_name = #{detail_name} AND detail_type = #{detail_type}
+		WHERE detail_name = #{detail_name} AND detail_type = #{detail_type} AND detail_origin = 1
 	</select>
 	
 	<!--  -->
 	<select id="SelectStandard" resultType="Standard">
-		SELECT * FROM standard
-		WHERE
+		SELECT * FROM standard s
+		LEFT JOIN detail d ON s.detail_id = d.detail_id
+		WHERE d.detail_origin = 1 AND
     	<foreach collection="target_id" item="item" open="(" close=")" separator="OR">
     		<choose>
     			<when test="detail_type == 0">
