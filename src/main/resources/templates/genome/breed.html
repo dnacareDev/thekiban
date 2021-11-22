@@ -627,6 +627,10 @@
             cursor: pointer;
         }
 
+        #breedGrid .tui-grid-body-area td[data-column-name='status'] {
+
+        }
+
         #saveRow {
             float: right;
             color: #fff;
@@ -644,41 +648,49 @@
             padding: 5px 10px;
             border-radius: 5px;
         }
-        .pop_cover_inner{
-        	padding-top: 30px;
+
+        .pop_cover_inner {
+            padding-top: 30px;
         }
-        
-        
+
+
         table {
-	border-collapse: collapse;
-	border-spacing: 0;
-}
-		#pop_data1 table thead tr{
-			border-top: 2px solid #aaa;
-			border-bottom: 2px solid #aaa;
-		}
-        #pop_data1 table thead th{
-        	border-left: 1px solid #eee;
-        	border-right: 1px solid #eee;
-        	color: #222;
-        	font-size: 13px;
+            border-collapse: collapse;
+            border-spacing: 0;
         }
-        #pop_data1 table thead th:first-child{
-        	border-left: none;
+
+        #pop_data1 table thead tr {
+            border-top: 2px solid #aaa;
+            border-bottom: 2px solid #aaa;
         }
-        #pop_data1 table thead th:last-child{
-        	border-right: none;
+
+        #pop_data1 table thead th {
+            border-left: 1px solid #eee;
+            border-right: 1px solid #eee;
+            color: #222;
+            font-size: 13px;
         }
-        #pop_data1 table tbody tr{
-			border-bottom: 1px solid #eee;
-		}
-        #pop_data1 table tbody td{
-        	background-color: #fff;
-        	color: #333;
-        	font-size: 13px;
+
+        #pop_data1 table thead th:first-child {
+            border-left: none;
         }
-        .plus_btn_submit1{
-        	display:none;
+
+        #pop_data1 table thead th:last-child {
+            border-right: none;
+        }
+
+        #pop_data1 table tbody tr {
+            border-bottom: 1px solid #eee;
+        }
+
+        #pop_data1 table tbody td {
+            background-color: #fff;
+            color: #333;
+            font-size: 13px;
+        }
+
+        .plus_btn_submit1 {
+            display: none;
         }
     </style>
 </head>
@@ -1588,53 +1600,53 @@
                             </table>
                         </div>
                         <div class="atbd-upload popAdd tab-pane fade" id="tab-horizontal-1-1" role="tabpanel" aria-labelledby="tab-horizontal-1-tab-1" style="overflow: auto;">
-                        	<div class="pop_cover_inner" style="padding-top: 0;">
-	                            <span class="sub_title">모계 계통명(ID)</span>
-	                            <div class="pop_top_content1" style="max-height:150px; overflow: auto;">
-	                                <table style="width: max-content; min-width: 100%;">
-	                                    <thead>
-	                                    <tr>
-	                                        <th><span class="title">작물</span></th>
-	                                        <th><span class="title">계통명(ID)</span></th>
-	                                        <th><span class="title">원소재 계통번호</span></th>
-	                                        <th><span class="title">원종 계통번호</span></th>
-	                                        <th><span class="title">B.N. 기준 년도</span></th>
-	                                        <th><span class="title">B.N. (교배번호)</span></th>
-	                                        <th><span class="title">종자번호(ID)</span></th>
-	                                        <th><span class="title">현 종자량(g)</span></th>
-	                                        <th><span class="title">천립중(g)</span></th>
-	                                        <th><span class="title">계통번호 부여일</span></th>
-	                                        <th><span class="title">비고</span></th>
-	                                    </tr>
-	                                    </thead>
-	                                    <tbody class="basic_mom" id="basic_list">
-	                                    </tbody>
-	                                </table>
-	                            </div>
+                            <div class="pop_cover_inner" style="padding-top: 0;">
+                                <span class="sub_title">모계 계통명(ID)</span>
+                                <div class="pop_top_content1" style="max-height:150px; overflow: auto;">
+                                    <table style="width: max-content; min-width: 100%;">
+                                        <thead>
+                                        <tr>
+                                            <th><span class="title">작물</span></th>
+                                            <th><span class="title">계통명(ID)</span></th>
+                                            <th><span class="title">원소재 계통번호</span></th>
+                                            <th><span class="title">원종 계통번호</span></th>
+                                            <th><span class="title">B.N. 기준 년도</span></th>
+                                            <th><span class="title">B.N. (교배번호)</span></th>
+                                            <th><span class="title">종자번호(ID)</span></th>
+                                            <th><span class="title">현 종자량(g)</span></th>
+                                            <th><span class="title">천립중(g)</span></th>
+                                            <th><span class="title">계통번호 부여일</span></th>
+                                            <th><span class="title">비고</span></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="basic_mom" id="basic_list">
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                             <div class="pop_cover_inner">
-	                            <span class="sub_title">부계 계통명(ID)</span>
-	                            <div class="pop_top_content2" style="max-height:150px; overflow: auto;">
-	                                <table style="width: max-content; min-width: 100%;">
-	                                    <thead>
-	                                    <tr>
-	                                        <th><span class="title">작물</span></th>
-	                                        <th><span class="title">계통명(ID)</span></th>
-	                                        <th><span class="title">원소재 계통번호</span></th>
-	                                        <th><span class="title">원종 계통번호</span></th>
-	                                        <th><span class="title">B.N. 기준 년도</span></th>
-	                                        <th><span class="title">B.N. (교배번호)</span></th>
-	                                        <th><span class="title">종자번호(ID)</span></th>
-	                                        <th><span class="title">현 종자량(g)</span></th>
-	                                        <th><span class="title">천립중(g)</span></th>
-	                                        <th><span class="title">계통번호 부여일</span></th>
-	                                        <th><span class="title">비고</span></th>
-	                                    </tr>
-	                                    </thead>
-	                                    <tbody class="basic_dad" id="basicD_list">
-	                                    </tbody>
-	                                </table>
-	                            </div>
+                                <span class="sub_title">부계 계통명(ID)</span>
+                                <div class="pop_top_content2" style="max-height:150px; overflow: auto;">
+                                    <table style="width: max-content; min-width: 100%;">
+                                        <thead>
+                                        <tr>
+                                            <th><span class="title">작물</span></th>
+                                            <th><span class="title">계통명(ID)</span></th>
+                                            <th><span class="title">원소재 계통번호</span></th>
+                                            <th><span class="title">원종 계통번호</span></th>
+                                            <th><span class="title">B.N. 기준 년도</span></th>
+                                            <th><span class="title">B.N. (교배번호)</span></th>
+                                            <th><span class="title">종자번호(ID)</span></th>
+                                            <th><span class="title">현 종자량(g)</span></th>
+                                            <th><span class="title">천립중(g)</span></th>
+                                            <th><span class="title">계통번호 부여일</span></th>
+                                            <th><span class="title">비고</span></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="basic_dad" id="basicD_list">
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -1849,53 +1861,41 @@
     })
 
     // 품종 삭제
-	function DeleteBreed()
-	{
-    	var user_type = $("#user_type").val();
+    function DeleteBreed() {
+        var user_type = $("#user_type").val();
 
-    	if(user_type != 0)
-    	{
-    		return Alert("삭제 권한이 없습니다.");	
-    	}
-    	else
-    	{
-    		var total_id = [];
-    		
-    		var l = breedgrid.getCheckedRows().length;
-    		
-    		for (let i = 0; i < l; i++)
-    		{
-    			total_id.push(breedgrid.getCheckedRows()[i].breed_id);
-    		}
-    		
-    		var data = {'breed_id': total_id};
-    		
-    		if(confirm("삭제하시겠습니까?") == true)
-    		{
-    			$.ajax(
-    			{
-    				url: 'deleteBreed',
-    				method: 'POST',
-    				dataType: 'json',
-    				data: data,
-    				success: function (result)
-    				{
-    					if(result == 0)
-    					{
-    						return Alert("삭제에 실패하였습니다.");
-    					}
-    					else
-    					{
-    						location.reload();
-    					}
-    				}
-    			});
-    		}
-    		else
-    		{
-    			return false;
-    		}
-    	}
+        if (user_type != 0) {
+            return Alert("삭제 권한이 없습니다.");
+        } else {
+            var total_id = [];
+
+            var l = breedgrid.getCheckedRows().length;
+
+            for (let i = 0; i < l; i++) {
+                total_id.push(breedgrid.getCheckedRows()[i].breed_id);
+            }
+
+            var data = {'breed_id': total_id};
+
+            if (confirm("삭제하시겠습니까?") == true) {
+                $.ajax(
+                    {
+                        url: 'deleteBreed',
+                        method: 'POST',
+                        dataType: 'json',
+                        data: data,
+                        success: function (result) {
+                            if (result == 0) {
+                                return Alert("삭제에 실패하였습니다.");
+                            } else {
+                                location.reload();
+                            }
+                        }
+                    });
+            } else {
+                return false;
+            }
+        }
     }
 
     /* 헤더 선택 */
@@ -2357,11 +2357,18 @@
                         }
                     });
 
-                    const headerArr = [{
-                        'header': '첨부파일',
-                        'name': 'file',
-                        'width': 100
-                    }];
+                    const headerArr = [
+                        {
+                            'header': '첨부파일',
+                            'name': 'file',
+                            'width': 100
+                        },
+                        {
+                            'header': '특성상태',
+                            'name': 'status',
+                            'width': 150
+                        }
+                    ];
 
                     var headerName = [];
 
@@ -2372,7 +2379,7 @@
 
                         var arr = {};
 
-                        if(result.display[i].detail_spec == '기본 정보') {
+                        if (result.display[i].detail_spec == '기본 정보') {
                             arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 180}
                         } else {
                             arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 500}
@@ -2389,6 +2396,12 @@
                         let rowArr = {};
 
                         rowArr = {'file': '<i class="bi bi-file-earmark-arrow-down"></i>', 'breed_id': result.breed[i].breed_id};
+
+                        if (result.breed[i].standard_count == 0) {
+                            rowArr['status'] = 'EMPTY';
+                        } else {
+                            rowArr['status'] = 'PROGRESS';
+                        }
 
                         for (var j = 0; j < result.breed[i].breed_standard.length; j++) {
                             var rowData = result.breed[i].breed_standard[j].standard;
@@ -2430,10 +2443,12 @@
                             var id = breedgrid.getRow(ev.rowKey).breed_id;
 
                             FileBtn(id);
+                        } else if (ev.targetType === 'cell' && ev.columnName === 'status') {
+                            var e_id = breedgrid.getRow(ev.rowKey).breed_id;
+
+                            EmptyBtn(e_id);
                         }
                     });
-
-                    breedgrid
 
                     var before = null;
                     var after = null;
@@ -2482,11 +2497,18 @@
                 dataType: 'json',
                 data: data,
                 success: function (result) {
-                    const headerArr = [{
-                        'header': '첨부파일',
-                        'name': 'file',
-                        'width': 100
-                    }];
+                    const headerArr = [
+                        {
+                            'header': '첨부파일',
+                            'name': 'file',
+                            'width': 100
+                        },
+                        {
+                            'header': '특성상태',
+                            'name': 'status',
+                            'width': 150
+                        }
+                    ];
 
                     var headerName = [];
 
@@ -2497,7 +2519,7 @@
 
                         var arr = {};
 
-                        if(result.display[i].detail_spec == '기본 정보') {
+                        if (result.display[i].detail_spec == '기본 정보') {
                             arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 180}
                         } else {
                             arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc'}
@@ -2514,6 +2536,12 @@
                         let rowArr = {};
 
                         rowArr = {'file': '<i class="bi bi-file-earmark-arrow-down"></i>', 'breed_id': result.breed[i].breed_id};
+
+                        if (result.breed[i].standard_count == 0) {
+                            rowArr['status'] = 'EMPTY';
+                        } else {
+                            rowArr['status'] = 'PROGRESS';
+                        }
 
                         for (var j = 0; j < result.breed[i].breed_standard.length; j++) {
                             var rowData = result.breed[i].breed_standard[j].standard;
@@ -2547,6 +2575,14 @@
 
                             SearchSample2(value_sample2);
                             SearchBasic2(value_mom2, value_dad2);
+                        } else if (ev.targetType === 'cell' && ev.columnName === 'file') {
+                            var id = breedgrid.getRow(ev.rowKey).breed_id;
+
+                            FileBtn(id);
+                        } else if (ev.targetType === 'cell' && ev.columnName === 'status') {
+                            var e_id = breedgrid.getRow(ev.rowKey).breed_id;
+
+                            EmptyBtn(e_id);
                         }
                     });
 

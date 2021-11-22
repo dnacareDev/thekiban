@@ -2190,11 +2190,18 @@
                         }
                     });
 
-                    const headerArr = [{
-                        'header': '첨부파일',
-                        'name': 'file',
-                        'width': 100
-                    }];
+                    const headerArr = [
+                        {
+                            'header': '첨부파일',
+                            'name': 'file',
+                            'width': 100
+                        },
+                        {
+                            'header': '특성상태',
+                            'name': 'status',
+                            'width': 150
+                        }
+                    ];
 
                     var headerName = [];
 
@@ -2223,6 +2230,12 @@
 
                         rowArr = {'file': '<i class="bi bi-file-earmark-arrow-down"></i>', 'basic_id': result.basic[i].basic_id};
 
+                        if (result.basic[i].standard_count == 0) {
+                            rowArr['status'] = 'EMPTY';
+                        } else {
+                            rowArr['status'] = 'PROGRESS';
+                        }
+
                         for (var j = 0; j < result.basic[i].basic_standard.length; j++) {
                             var rowData = result.basic[i].basic_standard[j].standard;
                             rowArr[headerName[j]] = rowData;
@@ -2238,6 +2251,10 @@
                             var value_sample = ev.nativeEvent.srcElement;
 
                             SearchBreed(value_sample);
+                        } else if (ev.targetType === 'cell' && ev.columnName === 'status') {
+                            var e_id = basicgrid.getRow(ev.rowKey).basic_id;
+
+                            EmptyBtn(e_id);
                         }
                     });
 
@@ -2288,11 +2305,18 @@
                 dataType: 'json',
                 data: data,
                 success: function (result) {
-                    const headerArr = [{
-                        'header': '첨부파일',
-                        'name': 'file',
-                        'width': 100
-                    }];
+                    const headerArr = [
+                        {
+                            'header': '첨부파일',
+                            'name': 'file',
+                            'width': 100
+                        },
+                        {
+                            'header': '특성상태',
+                            'name': 'status',
+                            'width': 150
+                        }
+                    ];
 
                     var headerName = [];
 
@@ -2319,6 +2343,12 @@
 
                         rowArr = {'file': '<i class="bi bi-file-earmark-arrow-down"></i>', 'basic_id': result.basic[i].basic_id};
 
+                        if (result.basic[i].standard_count == 0) {
+                            rowArr['status'] = 'EMPTY';
+                        } else {
+                            rowArr['status'] = 'PROGRESS';
+                        }
+
                         for (var j = 0; j < result.basic[i].basic_standard.length; j++) {
                             var rowData = result.basic[i].basic_standard[j].standard;
                             rowArr[headerName[j]] = rowData;
@@ -2334,6 +2364,10 @@
                             var value_sample = ev.nativeEvent.srcElement;
 
                             SearchBreed(value_sample);
+                        } else if (ev.targetType === 'cell' && ev.columnName === 'status') {
+                            var e_id = basicgrid.getRow(ev.rowKey).basic_id;
+
+                            EmptyBtn(e_id);
                         }
                     });
 
