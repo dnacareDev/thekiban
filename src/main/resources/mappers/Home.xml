@@ -1,73 +1,72 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.thekiban.Mapper.HomeMapper">
+	<!--  -->
+	<select id="SelectChartBreed" resultType="ChartCount">
+		SELECT
+		(SELECT COUNT(*) FROM breed WHERE breed_name = '고추') AS crop_count_1,
+		(SELECT COUNT(*) FROM breed WHERE breed_name = '대파') AS crop_count_2,
+		(SELECT COUNT(*) FROM breed WHERE breed_name = '멜론') AS crop_count_3,
+		(SELECT COUNT(*) FROM breed WHERE breed_name = '무') AS crop_count_4,
+		(SELECT COUNT(*) FROM breed WHERE breed_name = '배추') AS crop_count_5,
+		(SELECT COUNT(*) FROM breed WHERE breed_name = '수박') AS crop_count_6,
+		(SELECT COUNT(*) FROM breed WHERE breed_name = '양배추') AS crop_count_7,
+		(SELECT COUNT(*) FROM breed WHERE breed_name = '양파') AS crop_count_8,
+		(SELECT COUNT(*) FROM breed WHERE breed_name = '참외') AS crop_count_9,
+		(SELECT COUNT(*) FROM breed WHERE breed_name = '토마토') AS crop_count_10
+	</select>
 
-    <select id="SelectOutcomeList" resultType="SampleOutcome">
-        SELECT * FROM sampleOutcome
-    </select>
+	<!--  -->
+	<select id="SelectChartSales" resultType="ChartCount">
+		SELECT
+		(SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE d.detail_title = '생산판매 (신고번호)' AND s.standard != '-' AND s.standard != '' AND s.standard IS NOT NULL AND d.detail_name = '고추') AS crop_count_1,
+		(SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE d.detail_title = '생산판매 (신고번호)' AND s.standard != '-' AND s.standard != '' AND s.standard IS NOT NULL AND d.detail_name = '대파') AS crop_count_2,
+		(SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE d.detail_title = '생산판매 (신고번호)' AND s.standard != '-' AND s.standard != '' AND s.standard IS NOT NULL AND d.detail_name = '멜론') AS crop_count_3,
+		(SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE d.detail_title = '생산판매 (신고번호)' AND s.standard != '-' AND s.standard != '' AND s.standard IS NOT NULL AND d.detail_name = '무') AS crop_count_4,
+		(SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE d.detail_title = '생산판매 (신고번호)' AND s.standard != '-' AND s.standard != '' AND s.standard IS NOT NULL AND d.detail_name = '배추') AS crop_count_5,
+		(SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE d.detail_title = '생산판매 (신고번호)' AND s.standard != '-' AND s.standard != '' AND s.standard IS NOT NULL AND d.detail_name = '수박') AS crop_count_6,
+		(SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE d.detail_title = '생산판매 (신고번호)' AND s.standard != '-' AND s.standard != '' AND s.standard IS NOT NULL AND d.detail_name = '양배푸') AS crop_count_7,
+		(SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE d.detail_title = '생산판매 (신고번호)' AND s.standard != '-' AND s.standard != '' AND s.standard IS NOT NULL AND d.detail_name = '양파') AS crop_count_8,
+		(SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE d.detail_title = '생산판매 (신고번호)' AND s.standard != '-' AND s.standard != '' AND s.standard IS NOT NULL AND d.detail_name = '참외') AS crop_count_9,
+		(SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE d.detail_title = '생산판매 (신고번호)' AND s.standard != '-' AND s.standard != '' AND s.standard IS NOT NULL AND d.detail_name = '토마토') AS crop_count_10
+	</select>
 
-    <select id="SearchOutcome" resultType="SampleOutcome">
-        SELECT * FROM sampleOutcome
-        <choose>
-            <when test="sample_name != 'none'">
-                WHERE sample_name = #{sample_name}
-                ORDER BY sample_outcome_id DESC
-            </when>
-        </choose>
-    </select>
+	<!--  -->
+	<select id="SelectChartApply" resultType="ChartCount">
+		SELECT
+		(SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE d.detail_title = '보호출원 (출원번호)' AND s.standard != '-' AND s.standard != '' AND s.standard IS NOT NULL AND d.detail_name = '고추') AS crop_count_1,
+		(SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE d.detail_title = '보호출원 (출원번호)' AND s.standard != '-' AND s.standard != '' AND s.standard IS NOT NULL AND d.detail_name = '대파') AS crop_count_2,
+		(SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE d.detail_title = '보호출원 (출원번호)' AND s.standard != '-' AND s.standard != '' AND s.standard IS NOT NULL AND d.detail_name = '멜론') AS crop_count_3,
+		(SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE d.detail_title = '보호출원 (출원번호)' AND s.standard != '-' AND s.standard != '' AND s.standard IS NOT NULL AND d.detail_name = '무') AS crop_count_4,
+		(SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE d.detail_title = '보호출원 (출원번호)' AND s.standard != '-' AND s.standard != '' AND s.standard IS NOT NULL AND d.detail_name = '배추') AS crop_count_5,
+		(SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE d.detail_title = '보호출원 (출원번호)' AND s.standard != '-' AND s.standard != '' AND s.standard IS NOT NULL AND d.detail_name = '수박') AS crop_count_6,
+		(SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE d.detail_title = '보호출원 (출원번호)' AND s.standard != '-' AND s.standard != '' AND s.standard IS NOT NULL AND d.detail_name = '양배푸') AS crop_count_7,
+		(SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE d.detail_title = '보호출원 (출원번호)' AND s.standard != '-' AND s.standard != '' AND s.standard IS NOT NULL AND d.detail_name = '양파') AS crop_count_8,
+		(SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE d.detail_title = '보호출원 (출원번호)' AND s.standard != '-' AND s.standard != '' AND s.standard IS NOT NULL AND d.detail_name = '참외') AS crop_count_9,
+		(SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE d.detail_title = '보호출원 (출원번호)' AND s.standard != '-' AND s.standard != '' AND s.standard IS NOT NULL AND d.detail_name = '토마토') AS crop_count_10
+	</select>
 
-    <!-- 세부정보 조회 -->
-    <select id="SelectDetail" parameterType="String" resultType="Detail">
-        SELECT * FROM detail
-        WHERE detail_type = 0 AND detail_name = #{breed_name}
-    </select>
+	<!--  -->
+	<select id="SelectChartProtect" resultType="ChartCount">
+		SELECT
+		(SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE d.detail_title = '보호등록 (등록번호)' AND s.standard != '-' AND s.standard != '' AND s.standard IS NOT NULL AND d.detail_name = '고추') AS crop_count_1,
+		(SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE d.detail_title = '보호등록 (등록번호)' AND s.standard != '-' AND s.standard != '' AND s.standard IS NOT NULL AND d.detail_name = '대파') AS crop_count_2,
+		(SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE d.detail_title = '보호등록 (등록번호)' AND s.standard != '-' AND s.standard != '' AND s.standard IS NOT NULL AND d.detail_name = '멜론') AS crop_count_3,
+		(SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE d.detail_title = '보호등록 (등록번호)' AND s.standard != '-' AND s.standard != '' AND s.standard IS NOT NULL AND d.detail_name = '무') AS crop_count_4,
+		(SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE d.detail_title = '보호등록 (등록번호)' AND s.standard != '-' AND s.standard != '' AND s.standard IS NOT NULL AND d.detail_name = '배추') AS crop_count_5,
+		(SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE d.detail_title = '보호등록 (등록번호)' AND s.standard != '-' AND s.standard != '' AND s.standard IS NOT NULL AND d.detail_name = '수박') AS crop_count_6,
+		(SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE d.detail_title = '보호등록 (등록번호)' AND s.standard != '-' AND s.standard != '' AND s.standard IS NOT NULL AND d.detail_name = '양배푸') AS crop_count_7,
+		(SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE d.detail_title = '보호등록 (등록번호)' AND s.standard != '-' AND s.standard != '' AND s.standard IS NOT NULL AND d.detail_name = '양파') AS crop_count_8,
+		(SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE d.detail_title = '보호등록 (등록번호)' AND s.standard != '-' AND s.standard != '' AND s.standard IS NOT NULL AND d.detail_name = '참외') AS crop_count_9,
+		(SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE d.detail_title = '보호등록 (등록번호)' AND s.standard != '-' AND s.standard != '' AND s.standard IS NOT NULL AND d.detail_name = '토마토') AS crop_count_10
+	</select>
 
-    <!-- 품종 갯수 조회 -->
-    <select id="SelectBreedCount" resultType="int">
-        SELECT COUNT(*) FROM breed
-        <choose>
-            <when test="breed_name != 'none'">
-                WHERE breed_name = #{breed_name}
-            </when>
-        </choose>
-    </select>
-
-    <!-- 품종 검색 -->
-    <select id="SearchBreed" resultType="Breed">
-        SELECT *,
-        (SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE s.breed_id = b.breed_id AND d.detail_origin = 1 AND s.standard IS NOT NULL) AS standard_count
-        FROM breed b
-        <choose>
-            <when test="breed_name != 'none'">
-                WHERE b.breed_name = #{breed_name}
-            </when>
-        </choose>
-        ORDER BY b.breed_id DESC
-    </select>
-
-    <!-- 품종별 세부 정보 조회 -->
-    <select id="SearchBreedDetail" parameterType="String" resultType="Detail">
-        SELECT * FROM detail
-        WHERE detail_type = 0 AND detail_name = #{breed_name}
-    </select>
-
-    <!-- 표시항목 조회 -->
-    <select id="SelectDisplay" resultType="Display">
-        SELECT * FROM display dp
-                          LEFT JOIN detail dt ON dp.detail_id = dt.detail_id
-        WHERE dp.user_id = #{user_id} AND dp.breed_name = #{breed_name}
-    </select>
-
-    <!-- 품종별 정보값 조회 -->
-    <select id="SearchBreedStandard" resultType="Standard">
-        SELECT * FROM standard s
-        LEFT JOIN detail d ON s.detail_id = d.detail_id
-        LEFT JOIN display dp ON d.detail_id = dp.detail_id
-        WHERE s.breed_id = #{breed_id} AND dp.user_id = #{user_id}
-        <foreach collection="detail" item="item" open="AND (" close=")" separator="OR">
-            dp.detail_id = #{item.detail_id}
-        </foreach>
-    </select>
-
-
+	<!--  -->
+	<select id="SelectChartBar" parameterType="String" resultType="Breed">
+		SELECT *,
+		(SELECT COUNT(*) FROM breed b2 WHERE b1.breed_name = b2.breed_name AND modify_date BETWEEN DATE_ADD(#{year}, INTERVAL -1 YEAR) AND #{year}) AS breed_count
+		FROM breed b1
+		WHERE modify_date BETWEEN DATE_ADD(#{year}, INTERVAL -1 YEAR) AND #{year}
+		GROUP BY breed_name
+	</select>
 </mapper>

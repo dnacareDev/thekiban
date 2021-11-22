@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.thekiban.Entity.Basic;
 import com.thekiban.Entity.Breed;
 import com.thekiban.Entity.Detail;
+import com.thekiban.Entity.Standard;
 import com.thekiban.Mapper.AnalysisMapper;
 import com.thekiban.Service.AnalysisService;
 
@@ -19,21 +20,34 @@ public class AnalysisServiceImpl implements AnalysisService
 	
 	// 품종 조회
 	@Override
-	public List<Breed> SelectBreed(int[] total_id, int type)
+	public List<Breed> SelectBreed(String name, int[] total_id, int type)
 	{
-		return mapper.SelectBreed(total_id, type);
+		return mapper.SelectBreed(name, total_id, type);
 	}
 
 	// 원종 조회
 	@Override
-	public List<Basic> SelectBasic(int[] total_id, int type)
+	public List<Basic> SelectBasic(String name, int[] total_id, int type)
 	{
-		return mapper.SelectBasic(total_id, type);
+		return mapper.SelectBasic(name, total_id, type);
+	}
+
+	// 분석 형질 조회
+	@Override
+	public List<Detail> SelectTrait(String deatil_name, int detail_type)
+	{
+		return mapper.SelectTrait(deatil_name, detail_type);
+	}
+	
+	@Override
+	public List<Detail> SelectDetail(String detail_name, int detail_type)
+	{
+		return mapper.SelectDetail(detail_name, detail_type);
 	}
 
 	@Override
-	public List<Detail> SelectTrait(String deatil_name)
+	public List<Standard> SelectStandard(int[] target_id, int detail_type)
 	{
-		return mapper.SelectTrait(deatil_name);
+		return mapper.SelectStandard(target_id, detail_type);
 	}
 }

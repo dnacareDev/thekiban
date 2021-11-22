@@ -145,6 +145,24 @@
         ORDER BY income_remain_id DESC LIMIT 1;
     </update>
 
+    <!-- 엑셀파일 등록 -->
+    <insert id="InsertIncomeExcel" parameterType="Income">
+        INSERT INTO income
+        (income_id, income_code, income_name, income_kind, income_division, income_place, income_country, income_person, income_date, income_num, income_type, income_trait,
+        income_comment, create_date, modify_date)
+        VALUES
+        (#{income_id}, #{income_code}, #{income_name}, #{income_kind}, #{income_division}, #{income_place}, #{income_country}, #{income_person}, #{income_date}, #{income_num},
+        #{income_type}, #{income_trait}, #{income_comment}, NOW(), NOW())
+    </insert>
+
+    <!-- 재고관리 엑셀 등록 -->
+    <insert id="InsertRemainExcel" parameterType="IncomeRemain">
+        INSERT INTO incomeRemain
+        (income_remain_id, income_name, income_remain_num, income_remain_amount, income_remain_in, income_remain_out, income_remain_re, income_remain_person, income_remain_date)
+        VALUES
+        (#{income_remain_id}, #{income_name}, #{income_remain_num}, #{income_remain_amount}, #{income_remain_in}, #{income_remain_out}, #{income_remain_re}, #{income_remain_person}, #{income_remain_date})
+    </insert>
+
     <!-- 첨부파일 조회 -->
     <select id="SelectUploads" parameterType="java.util.ArrayList" resultType="Uploads">
         SELECT * FROM uploads u

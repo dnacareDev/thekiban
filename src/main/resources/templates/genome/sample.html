@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:with="user = ${#authentication.principal}">
 <head>
     <!-- 공통 헤더 -->
     <th:block th:include="/../fragments/header.html"></th:block>
@@ -618,6 +618,7 @@
                         <div class="card-extra mt-20 mr-20">
                             <div class="breadcrumb-main" style="float: left;">
                                 <h4 class="text-capitalize breadcrumb-title">시교 자원 관리</h4>
+                                <input type="hidden" id="user_type" th:value="${user.user_type}">
                             </div>
                             <div class="action-btn d-flex justify-content-end">
                                 <div class="atbd-button-list d-flex flex-wrap">
@@ -648,9 +649,6 @@
                                     <button class="btn btn-lg btn-primary data_btn2" title="데이터 등록" onclick="openExcel()">
                                         <img src="../assets/vendor_assets/img/icon1.png" alt="">
                                     </button>
-                                    <button type="button" class="btn btn-lg btn-primary data_btn1" title="엑셀 export" id="excelFileExport">
-                                        <img src="../assets/vendor_assets/img/icon2.png" title="데이터 등록" alt="">
-                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -669,9 +667,6 @@
                                         </button>
                                         <button class="btn btn-icon btn-light btn-circle" onclick="DeleteSample()">
                                             <span data-feather="trash-2"></span>
-                                        </button>
-                                        <button class="btn btn-icon btn-light btn-circle" id="data_check_submit" style="width:44.03px; height:42px;">
-                                            <img src="../assets/vendor_assets/img/check_tab.png" alt="check" style="width: 17px;margin-left: 4px;">
                                         </button>
                                     </div>
                                     <div class="col-4">
@@ -941,27 +936,13 @@
                                 </tr>
                                 </thead>
                                 <tbody id="uploadDate">
-                                <tr>
-                                    <td></td>
-                                    <td>2021-08-15</td>
-                                    <td>185</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>2021-08-15</td>
-                                    <td>185</td>
-                                </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer" style="border: none">
-                    <div class="col-4">
-                        <div class="row" style="justify-content: center;">
-                            <div id="pageNum1" style="text-align:center; margin: 2% 0 0 0;"></div>
-                        </div>
-                    </div>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
                 </div>
             </div>
         </div>
@@ -990,30 +971,16 @@
                                 </tr>
                                 </thead>
                                 <tbody id="uploadDate1">
-                                <tr>
-                                    <td></td>
-                                    <td>2021-08-15</td>
-                                    <td>185</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>2021-08-15</td>
-                                    <td>185</td>
-                                </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer" style="border: none">
-                    <div class="col-4">
-                        <div class="row" style="justify-content: center;">
-                            <div id="pageNum1" style="text-align:center; margin: 2% 0 0 0;"></div>
-                        </div>
-                    </div>
-                </div>
+                div class="modal-footer" style="border: none">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
             </div>
         </div>
+    </div>
     </div>
 
     <!-- 지도 -->
@@ -1290,7 +1257,6 @@
                     }
                     const obj = {...excel};
 
-                    // console.log(obj);
                     rowdata[k] = obj;
                 }
                 // $("#excel_data").empty();
@@ -1392,7 +1358,6 @@
                     }
                     const obj = {...excel};
 
-                    // console.log(obj);
                     rowdata[k] = obj;
                 }
                 // $("#excel_data1").empty();
@@ -1732,348 +1697,100 @@
             });
     }
 
-    // 시교자원 수정
-    $(document).on("focusout", ".updateInput", function () {
-        if (tablechk === 0) {
-            var sample_id = $(this).attr("data");
-            var sample_name = $(this).attr("name");
-            var sample_value = $(this).val();
-
-            var data = {"sample_id": sample_id, "sample_name": sample_name, "sample_value": sample_value};
-
-            $.ajax(
-                {
-                    url: 'updateSample',
-                    method: 'POST',
-                    dataType: 'json',
-                    data: data,
-                    success: function (result) {
-                        if (result == 0) {
-                            return Alert("수정에 실패하였습니다.")
-                        }
-                    }
-                });
-        } else {
-            var sample_outcome_id = $(this).attr("data");
-            var sample_outcome_name = $(this).attr("name");
-            var sample_outcome_value = $(this).val();
-
-            var data = {"sample_outcome_id": sample_outcome_id, "sample_outcome_name": sample_outcome_name, "sample_outcome_value": sample_outcome_value};
-
-            $.ajax(
-                {
-                    url: 'updateOutcome',
-                    method: 'POST',
-                    dataType: 'json',
-                    data: data,
-                    success: function (result) {
-                        if (result == 0) {
-                            return Alert("수정에 실패하였습니다.")
-                        }
-                    }
-                });
-        }
-
-    });
 
     // 시교자원 삭제
-    function DeleteSample() {
-        if (tablechk === 0) {
-            var total_id = [];
+    function DeleteSample()
+    {
+    	var user_type = $("#user_type").val();
 
-            var l = samplegrid.getCheckedRows().length;
-
-            for (let i = 0; i < l; i++) {
-                total_id.push(samplegrid.getCheckedRows()[i].sample_id)
-            }
-
-            console.log(samplegrid.getCheckedRows());
-
-            var data = {'sample_id': total_id};
-
-            if (confirm("삭제하시겠습니까?") == true) {
-                $.ajax(
+    	if(user_type != 0)
+    	{
+    		return Alert("삭제 권한이 없습니다.");	
+    	}
+    	else
+    	{
+	        if (tablechk === 0) 
+	        {
+	            var total_id = [];
+	
+	            var l = samplegrid.getCheckedRows().length;
+	
+	            for (let i = 0; i < l; i++) 
+	            {
+	                total_id.push(samplegrid.getCheckedRows()[i].sample_id)
+	            }
+	
+	            var data = {'sample_id' : total_id};
+	
+	            if (confirm("삭제하시겠습니까?") == true) 
+	            {
+	                $.ajax(
                     {
                         url: 'deleteSample',
                         method: 'POST',
                         dataType: 'json',
                         data: data,
-                        success: function (result) {
-                            if (result == 0) {
-                            } else {
+                        success: function (result) 
+                        {
+                            if (result == 0) 
+                            {
+                            	return Alert("삭제에 실패하였습니다.");
+                            } 
+                            else 
+                            {
                                 location.reload()
                             }
                         }
                     });
-            } else {
-
-            }
-        } else {
-            var total_id1 = [];
-
-            var l1 = outcomegrid.getCheckedRows().length;
-
-            for (let i = 0; i < l1; i++) {
-                total_id1.push(outcomegrid.getCheckedRows()[i].sample_outcome_id)
-            }
-
-            var data1 = {'sample_outcome_id': total_id1};
-
-            if (confirm("삭제하시겠습니까?") == true) {
-                $.ajax(
+	            } 
+	            else 
+	            {
+	            	return false;
+	            }
+	        } 
+	        else 
+	        {
+	            var total_id1 = [];
+	
+	            var l1 = outcomegrid.getCheckedRows().length;
+	
+	            for (let i = 0; i < l1; i++) 
+	            {
+	                total_id1.push(outcomegrid.getCheckedRows()[i].sample_outcome_id)
+	            }
+	
+	            var data1 = {'sample_outcome_id' : total_id1};
+	
+	            if (confirm("삭제하시겠습니까?") == true) 
+	            {
+	                $.ajax(
                     {
                         url: 'deleteOutcome',
                         method: 'POST',
                         dataType: 'json',
                         data: data1,
-                        success: function (result) {
-                            if (result == 0) {
-                            } else {
+                        success: function (result) 
+                        {
+                            if (result == 0) 
+                            {
+                            	return Alert("삭제에 실패하였습니다.");
+                            } 
+                            else 
+                            {
                                 location.reload()
                             }
                         }
                     });
-            } else {
-
-            }
-        }
+	            } 
+	            else 
+	            {
+	            	return false;
+	            }
+	        }
+    	}
     }
 
     // 시교자원 삭제
-
-    // 정렬
-    $(document).ready(function () {
-        $('#table1 th').each(function (column) {
-            $(this).click(function () {
-                if ($(this).is('.asc')) {
-                    $(this).removeClass('asc');
-                    $(this).addClass('desc');
-                    sortdir = -1;
-                } else {
-                    $(this).addClass('asc');
-                    $(this).removeClass('desc');
-                    sortdir = 1;
-                }
-                $(this).siblings().removeClass('asc');
-                $(this).siblings().removeClass('desc');
-
-                var rec = $('#table1').find('tbody>tr').get();
-
-                rec.sort(function (a, b) {
-                    var val1 = +($(a).children('input').eq(column).text());
-                    var val2 = +($(b).children('input').eq(column).text());
-
-                    if (isNaN(val1) && isNaN(val2)) {
-                        val1 = $(a).children('input').eq(column).text();
-                        val2 = $(b).children('input').eq(column).text();
-
-                        return (val1 < val2) ? -sortdir : (val1 > val2) ? sortdir : 0;
-                    } else {
-                        return (val1 < val2) ? -sortdir : (val1 > val2) ? sortdir : 0;
-                    }
-                });
-
-                $.each(rec, function (index, row) {
-                    $('#table1 tbody').append(row);
-                });
-            });
-        });
-
-        $('#table2 th').each(function (column) {
-            $(this).click(function () {
-                if ($(this).is('.asc')) {
-                    $(this).removeClass('asc');
-                    $(this).addClass('desc');
-                    sortdir = -1;
-                } else {
-                    $(this).addClass('asc');
-                    $(this).removeClass('desc');
-                    sortdir = 1;
-                }
-                $(this).siblings().removeClass('asc');
-                $(this).siblings().removeClass('desc');
-
-                var rec = $('#table2').find('tbody>tr').get();
-
-                rec.sort(function (a, b) {
-                    var val1 = +($(a).children('td').eq(column).text());
-                    var val2 = +($(b).children('td').eq(column).text());
-
-                    if (isNaN(val1) && isNaN(val2)) {
-                        val1 = $(a).children('td').eq(column).text();
-                        val2 = $(b).children('td').eq(column).text();
-
-                        return (val1 < val2) ? -sortdir : (val1 > val2) ? sortdir : 0;
-                    } else {
-                        return (val1 < val2) ? -sortdir : (val1 > val2) ? sortdir : 0;
-                    }
-                });
-
-                $.each(rec, function (index, row) {
-                    $('#table2 tbody').append(row);
-                });
-            });
-        });
-    });
-    // 정렬
-
-    // 데이터 수정
-
-    // 구글 맵 관련
-
-    /* row 추가 */
-    function addRow() {
-        if (tablechk === 0) {
-            var row_list = "";
-            row_list += '<tr id="row_data">';
-
-            row_list += '<form action="insertSample" id="rowForm" method="POST" enctype="multipart/form-data">';
-            row_list += '<input type="hidden" id="rowSample" name="rowSample">'
-            row_list += '<td><input type="checkbox" name="RowCheck"></td>';
-            row_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#insert_file"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
-            row_list += '<td><input type="text" class="rowInput" name="sample_name" value="' + $("#CropSelect option:selected").text() + '"></td>';
-            row_list += '<td><input type="text" class="rowInput" name="sample_code"></td>';
-            row_list += '<td><input type="text" class="rowInput" name="sample_country"></td>';
-            row_list += '<td><input type="text" class="rowInput" name="sample_type"></td>';
-            row_list += '<td><input type="text" class="rowInput" name="sample_mate"></td>';
-            row_list += '<td><input type="text" class="rowInput" name="sample_seed"></td>';
-            row_list += '<td><input type="text" class="rowInput" name="sample_amount"></td>';
-            row_list += '<td><input type="text" class="rowInput" name="sample_sprout"></td>';
-            row_list += '<td><input type="text" class="rowInput" name="sample_purity"></td>';
-            row_list += '<td><input type="text" class="rowInput" name="sample_comment"></td>';
-            row_list += '</form>';
-            row_list += '</tr>';
-
-            $("#sample_list").prepend(row_list);
-
-            var input_data = [];
-
-            var input_value = $("#CropSelect option:selected").text();
-
-            var input_name = {key: "sample_name", value: input_value};
-
-            input_data.push(input_name);
-
-            $.ajax(
-                {
-                    url: 'insertSample',
-                    method: 'POST',
-                    dataType: 'json',
-                    data: {
-                        "input_data": JSON.stringify(input_data)
-                    },
-                    success: function (result) {
-                        if (result != null) {
-                            $(".rowInput").focusout(function () {
-                                var data = [];
-
-                                var data_in = {key: "sample_id", value: result.sample_id}
-
-                                data.push(data_in);
-
-                                $("input[class=rowInput]").each(function (index, item) {
-                                    const key = $(this).attr('name');
-                                    var value = $(this).val();
-
-                                    var arr = {key: key, value: value};
-
-                                    data.push(arr);
-                                });
-
-                                $.ajax(
-                                    {
-                                        url: 'updateInsertSample',
-                                        method: 'POST',
-                                        dataType: 'json',
-                                        data: {
-                                            "data": JSON.stringify(data)
-                                        },
-                                        success: function (result) {
-
-                                        }
-                                    });
-                            })
-                        }
-                    }
-                });
-        } else {
-            var row_list1 = "";
-            row_list1 += '<tr id="row_data">';
-
-            row_list1 += '<form action="insertSampleOutcome" id="rowForm" method="POST" enctype="multipart/form-data">';
-            row_list1 += '<input type="hidden" id="rowSample1" name="rowSample1">'
-            row_list1 += '<td><input type="checkbox" name="RowCheck1"></td>';
-            row_list1 += '<td><input type="text" class="rowInput" name="sample_outcome_code"></td>';
-            row_list1 += '<td><input type="text" class="rowInput" name="sample_outcome_num"></td>';
-            row_list1 += '<td><input type="text" class="rowInput" name="sample_outcome_amount"></td>';
-            row_list1 += '<td><input type="text" class="rowInput" name="sample_outcome_in"></td>';
-            row_list1 += '<td><input type="text" class="rowInput" name="sample_outcome_out"></td>';
-            row_list1 += '<td><input type="text" class="rowInput" name="sample_outcome_remain"></td>';
-            row_list1 += '<td><input type="text" class="rowInput" name="sample_outcome_person"></td>';
-            row_list1 += '<td><input type="text" class="rowInput" name="sample_outcome_reciever"></td>';
-            row_list1 += '<td><input type="text" class="rowInput" name="sample_outcome_date"></td>';
-            row_list1 += '<td><input type="text" class="rowInput" name="sample_outcome_end"></td>';
-            row_list1 += '<td><input type="text" class="rowInput" name="sample_outcome_country"></td>';
-            row_list1 += '<td><input type="text" class="rowInput" name="sample_outcome_place"></td>';
-            row_list1 += '</form>';
-            row_list1 += '</tr>';
-
-            $("#sampleOutcome-list").prepend(row_list1);
-
-            var input_data1 = [];
-
-            var input_value1 = $("#CropSelect option:selected").text();
-
-            var input_name1 = {key: "sample_name", value: input_value1};
-
-            input_data1.push(input_name1);
-
-            $.ajax(
-                {
-                    url: 'insertSampleOutcome',
-                    method: 'POST',
-                    dataType: 'json',
-                    data: {
-                        "input_data": JSON.stringify(input_data1)
-                    },
-                    success: function (result) {
-                        if (result != null) {
-                            $(".rowInput").focusout(function () {
-                                var data = [];
-
-                                var data_in = {key: "sample_outcome_id", value: result.sample_outcome_id}
-
-                                data.push(data_in);
-
-                                $("input[class=rowInput]").each(function (index, item) {
-                                    const key = $(this).attr('name');
-                                    var value = $(this).val();
-
-                                    var arr = {key: key, value: value};
-
-                                    data.push(arr);
-                                });
-
-                                $.ajax(
-                                    {
-                                        url: 'updateInsertOutcome',
-                                        method: 'POST',
-                                        dataType: 'json',
-                                        data: {
-                                            "data": JSON.stringify(data)
-                                        },
-                                        success: function (result) {
-
-                                        }
-                                    });
-                            })
-                        }
-                    }
-                });
-        }
-    }
-
-    /* row 추가 */
 
     /* 엑셀 다운로드 */
     function s2ab(s) {
@@ -2167,7 +1884,6 @@
                 data: data,
                 success: function (result) {
                     $("#upload_id").val(e);
-                    // $(".sample_title").text("시교명 : " + result.sample.standard);
 
                     var file_list = $("#file_list");
                     var file_add = "";
@@ -2220,7 +1936,6 @@
     }
 
     /* 첨부파일 */
-
 
     // grid
     var samplegrid = null;
@@ -2339,38 +2054,64 @@
                             var value_breed = ev.nativeEvent.srcElement;
 
                             SearchBreed(value_breed);
+                        } else if (ev.targetType === 'cell' && ev.columnName === 'file') {
+                            var id = samplegrid.getRow(ev.rowKey).sample_id;
+
+                            FileBtn(id);
                         }
                     });
+
+                    const dataArr = [];
+
+                    for(let i = 0; i < result.sample.length; i++) {
+                        let rowArr = {
+                            'file': '<i class="bi bi-file-earmark-arrow-down"></i>',
+                            'sample_id': result.sample[i].sample_id,
+                            'sample_name': result.sample[i].sample_name,
+                            'sample_code': result.sample[i].sample_code,
+                            'sample_country': result.sample[i].sample_country,
+                            'sample_type': result.sample[i].sample_type,
+                            'sample_mate': result.sample[i].sample_mate,
+                            'sample_seed': result.sample[i].sample_seed,
+                            'sample_amount': result.sample[i].sample_amount,
+                            'sample_sprout': result.sample[i].sample_sprout,
+                            'sample_purity': result.sample[i].sample_purity,
+                            'sample_comment': result.sample[i].sample_comment
+                        }
+
+                        dataArr.push(rowArr);
+                    }
+
+                    samplegrid.resetData(dataArr);
 
                     var before = null;
                     var after = null;
 
-                    samplegrid.on('editingStart', (ev) => {
-                        before = ev.value;
-                    });
+                    samplegrid.on('afterChange', (ev) => {
+                        for (let i = 0; i < ev.changes.length; i++) {
+                            before = ev.changes[i].prevValue;
+                            after = ev.changes[i].value;
 
-                    samplegrid.on('editingFinish', (ev) => {
-                        after = ev.value;
+                            if (after != before) {
+                                var sample_id = samplegrid.getRow(ev.changes[i].rowKey).sample_id;
+                                var sample_name = ev.changes[i].columnName;
+                                var sample_value = after;
 
-                        if (after != before) {
-                            var sample_id = ev.instance.getRow(ev.rowKey).sample_id;
-                            var sample_name = ev.columnName;
-                            var sample_value = ev.value;
+                                var data = {"sample_id": sample_id, "sample_name": sample_name, "sample_value": sample_value};
 
-                            var data = {"sample_id": sample_id, "sample_name": sample_name, "sample_value": sample_value};
-
-                            $.ajax(
-                                {
-                                    url: 'updateSample',
-                                    method: 'POST',
-                                    dataType: 'json',
-                                    data: data,
-                                    success: function (result) {
-                                        if (result == 0) {
-                                            return Alert("수정에 실패하였습니다.")
+                                $.ajax(
+                                    {
+                                        url: 'updateSample',
+                                        method: 'POST',
+                                        dataType: 'json',
+                                        data: data,
+                                        success: function (result) {
+                                            if (result == 0) {
+                                                return Alert("수정에 실패하였습니다.")
+                                            }
                                         }
-                                    }
-                                });
+                                    });
+                            }
                         }
                     });
                 }
@@ -2391,7 +2132,28 @@
                 dataType: 'json',
                 data: data,
                 success: function (result) {
-                    samplegrid.resetData(result.sample);
+                    const dataArr = [];
+
+                    for(let i = 0; i < result.sample.length; i++) {
+                        let rowArr = {
+                            'file': '<i class="bi bi-file-earmark-arrow-down"></i>',
+                            'sample_id': result.sample[i].sample_id,
+                            'sample_name': result.sample[i].sample_name,
+                            'sample_code': result.sample[i].sample_code,
+                            'sample_country': result.sample[i].sample_country,
+                            'sample_type': result.sample[i].sample_type,
+                            'sample_mate': result.sample[i].sample_mate,
+                            'sample_seed': result.sample[i].sample_seed,
+                            'sample_amount': result.sample[i].sample_amount,
+                            'sample_sprout': result.sample[i].sample_sprout,
+                            'sample_purity': result.sample[i].sample_purity,
+                            'sample_comment': result.sample[i].sample_comment
+                        }
+
+                        dataArr.push(rowArr);
+                    }
+
+                    samplegrid.resetData(dataArr);
 
                     samplegrid.setPerPage(limit);
 
@@ -2404,38 +2166,43 @@
                             var value_breed = ev.nativeEvent.srcElement;
 
                             SearchBreed(value_breed);
+                        } else if (ev.targetType === 'cell' && ev.columnName === 'file') {
+                            var id = samplegrid.getRow(ev.rowKey).sample_id;
+
+                            FileBtn(id);
                         }
                     });
+
+                    samplegrid.setColumnValues('file', '<i class="bi bi-file-earmark-arrow-down"></i>');
 
                     var before = null;
                     var after = null;
 
-                    samplegrid.on('editingStart', (ev) => {
-                        before = ev.value;
-                    });
+                    samplegrid.on('afterChange', (ev) => {
+                        for (let i = 0; i < ev.changes.length; i++) {
+                            before = ev.changes[i].prevValue;
+                            after = ev.changes[i].value;
 
-                    samplegrid.on('editingFinish', (ev) => {
-                        after = ev.value;
+                            if (after != before) {
+                                var sample_id = samplegrid.getRow(ev.changes[i].rowKey).sample_id;
+                                var sample_name = ev.changes[i].columnName;
+                                var sample_value = after;
 
-                        if (after != before) {
-                            var sample_id = ev.instance.getRow(ev.rowKey).sample_id;
-                            var sample_name = ev.columnName;
-                            var sample_value = ev.value;
+                                var data = {"sample_id": sample_id, "sample_name": sample_name, "sample_value": sample_value};
 
-                            var data = {"sample_id": sample_id, "sample_name": sample_name, "sample_value": sample_value};
-
-                            $.ajax(
-                                {
-                                    url: 'updateSample',
-                                    method: 'POST',
-                                    dataType: 'json',
-                                    data: data,
-                                    success: function (result) {
-                                        if (result == 0) {
-                                            return Alert("수정에 실패하였습니다.")
+                                $.ajax(
+                                    {
+                                        url: 'updateSample',
+                                        method: 'POST',
+                                        dataType: 'json',
+                                        data: data,
+                                        success: function (result) {
+                                            if (result == 0) {
+                                                return Alert("수정에 실패하였습니다.")
+                                            }
                                         }
-                                    }
-                                });
+                                    });
+                            }
                         }
                     });
                 }
@@ -2559,39 +2326,38 @@
                     var before = null;
                     var after = null;
 
-                    outcomegrid.on('editingStart', (ev) => {
-                        before = ev.value;
-                    });
+                    outcomegrid.on('afterChange', (ev) => {
+                        for (let i = 0; i < ev.changes.length; i++) {
+                            before = ev.changes[i].prevValue;
+                            after = ev.changes[i].value;
 
-                    outcomegrid.on('editingFinish', (ev) => {
-                        after = ev.value;
+                            if (after != before) {
+                                var sample_outcome_id = outcomegrid.getRow(ev.changes[i].rowKey).sample_outcome_id
+                                var sample_outcome_name = ev.changes[i].columnName;
+                                var sample_outcome_value = after;
 
-                        if (after != before) {
-                            var sample_outcome_id = ev.instance.getRow(ev.rowKey).sample_outcome_id;
-                            var sample_outcome_name = ev.columnName;
-                            var sample_outcome_value = ev.value;
+                                var data = {"sample_outcome_id": sample_outcome_id, "sample_outcome_name": sample_outcome_name, "sample_outcome_value": sample_outcome_value};
 
-                            var data = {"sample_outcome_id": sample_outcome_id, "sample_outcome_name": sample_outcome_name, "sample_outcome_value": sample_outcome_value};
-
-                            $.ajax(
-                                {
-                                    url: 'updateOutcome',
-                                    method: 'POST',
-                                    dataType: 'json',
-                                    data: data,
-                                    success: function (result) {
-                                        if (result == 0) {
-                                            return Alert("수정에 실패하였습니다.")
+                                $.ajax(
+                                    {
+                                        url: 'updateOutcome',
+                                        method: 'POST',
+                                        dataType: 'json',
+                                        data: data,
+                                        success: function (result) {
+                                            if (result == 0) {
+                                                return Alert("수정에 실패하였습니다.")
+                                            }
                                         }
-                                    }
-                                });
+                                    });
+                            }
                         }
                     });
 
                     for (let i = 0; i < result1.sampleOutcome.length; i++) {
                         if (result1.sampleOutcome[i].sample_outcome_country == '국내') {
                             inKorea.push(result1.sampleOutcome[i].sample_outcome_place);
-                        } else if(result1.sampleOutcome[i].sample_outcome_country == '해외') {
+                        } else if (result1.sampleOutcome[i].sample_outcome_country == '해외') {
                             outKorea.push(result1.sampleOutcome[i].sample_outcome_place);
                         }
                     }
@@ -2631,39 +2397,38 @@
                     var before = null;
                     var after = null;
 
-                    outcomegrid.on('editingStart', (ev) => {
-                        before = ev.value;
-                    });
+                    outcomegrid.on('afterChange', (ev) => {
+                        for (let i = 0; i < ev.changes.length; i++) {
+                            before = ev.changes[i].prevValue;
+                            after = ev.changes[i].value;
 
-                    outcomegrid.on('editingFinish', (ev) => {
-                        after = ev.value;
+                            if (after != before) {
+                                var sample_outcome_id = outcomegrid.getRow(ev.changes[i].rowKey).sample_outcome_id
+                                var sample_outcome_name = ev.changes[i].columnName;
+                                var sample_outcome_value = after;
 
-                        if (after != before) {
-                            var sample_outcome_id = ev.instance.getRow(ev.rowKey).sample_outcome_id;
-                            var sample_outcome_name = ev.columnName;
-                            var sample_outcome_value = ev.value;
+                                var data = {"sample_outcome_id": sample_outcome_id, "sample_outcome_name": sample_outcome_name, "sample_outcome_value": sample_outcome_value};
 
-                            var data = {"sample_outcome_id": sample_outcome_id, "sample_outcome_name": sample_outcome_name, "sample_outcome_value": sample_outcome_value};
-
-                            $.ajax(
-                                {
-                                    url: 'updateOutcome',
-                                    method: 'POST',
-                                    dataType: 'json',
-                                    data: data,
-                                    success: function (result) {
-                                        if (result == 0) {
-                                            return Alert("수정에 실패하였습니다.")
+                                $.ajax(
+                                    {
+                                        url: 'updateOutcome',
+                                        method: 'POST',
+                                        dataType: 'json',
+                                        data: data,
+                                        success: function (result) {
+                                            if (result == 0) {
+                                                return Alert("수정에 실패하였습니다.")
+                                            }
                                         }
-                                    }
-                                });
+                                    });
+                            }
                         }
                     });
 
                     for (let i = 0; i < result1.sampleOutcome.length; i++) {
                         if (result1.sampleOutcome[i].sample_outcome_country == '국내') {
                             inKorea.push(result1.sampleOutcome[i].sample_outcome_place);
-                        } else if(result1.sampleOutcome[i].sample_outcome_country == '해외') {
+                        } else if (result1.sampleOutcome[i].sample_outcome_country == '해외') {
                             outKorea.push(result1.sampleOutcome[i].sample_outcome_place);
                         }
                     }
@@ -2771,8 +2536,6 @@
 
             data1.push(data_in1);
 
-            console.log(data1);
-
             $.ajax(
                 {
                     url: 'updateInsertOutcome',
@@ -2841,7 +2604,7 @@
 
 
     /* 지도 검색 */
-    $("#modal-search").change(function() {
+    $("#modal-search").change(function () {
         searchArea();
     });
 
@@ -2875,11 +2638,11 @@
         var koreaLocations = [];
         var globalLocations = [];
 
-        for(let i = 0; i < inKorea.length; i++) {
+        for (let i = 0; i < inKorea.length; i++) {
             koreaLocations.push(inKorea[i]);
         }
 
-        for(let o = 0; o < outKorea.length; o++) {
+        for (let o = 0; o < outKorea.length; o++) {
             globalLocations.push(outKorea[o]);
         }
 
@@ -2934,23 +2697,21 @@
         var info = [];
         var infoTag = [];
 
-        for(let i = 0; i < inKorea.length; i++) {
+        for (let i = 0; i < inKorea.length; i++) {
             info.push(inKorea[i]);
         }
 
-        for(let o = 0; o < outKorea.length; o++) {
+        for (let o = 0; o < outKorea.length; o++) {
             info.push(outKorea[o]);
         }
 
-        for(let i = 0; i < info.length; i++) {
+        for (let i = 0; i < info.length; i++) {
             var optionElement = document.createElement("option");
             optionElement.value = info[i];
             optionElement.innerText = info[i];
             infoTag.push(optionElement);
             sbox.append(infoTag[i]);
         }
-
-        console.log(infoTag);
     }
 </script>
 

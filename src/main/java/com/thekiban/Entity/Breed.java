@@ -18,6 +18,7 @@ public class Breed
 	private String breed_name;				// 작물명
 	private String create_date;				// 등록일
 	private String modify_date;				// 수정일
+	private int breed_count;
 	
 	private String standard;
 	private int standard_count;						// 세부정보 수

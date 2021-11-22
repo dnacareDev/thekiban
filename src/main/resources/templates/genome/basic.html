@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:with="user = ${#authentication.principal}">
 <head>
     <!-- 공통 헤더 -->
     <th:block th:include="/../fragments/header.html"></th:block>
@@ -669,6 +669,7 @@
                         <div class="card-extra mt-20 mr-20">
                             <div class="breadcrumb-main" style="float: left;">
                                 <h4 class="text-capitalize breadcrumb-title">원종 관리</h4>
+                                <input type="hidden" id="user_type" th:value="${user.user_type}">
                             </div>
                             <div class="action-btn d-flex justify-content-end">
                                 <div class="atbd-button-list d-flex flex-wrap">
@@ -1792,32 +1793,6 @@
         }
     }
 
-    /*    function moveFunction(f) {
-
-            for (let k = 0; k < navLi.length; k++) {
-                navLi[k].classList.remove("active");
-                contentLi[k].classList.remove("active");
-            }
-            let navW = navLi[f].offsetWidth;
-            navMove = navW * f;
-
-
-            let a = topBox.offsetWidth;
-            let b = nav.offsetWidth;
-            let c = b - a;
-            let d = c + 40 + "px";
-
-            if (navMove > c) {
-                nav.style.marginLeft = "-" + d;
-            } else {
-                nav.style.marginLeft = "-" + navMove + "px";
-            }
-
-            navLi[f].classList.add("active");
-            contentLi[f].classList.add("active");
-            contentLi[f].classList.add("show");
-        }*/
-
     /* form data to json */
     jQuery.fn.serializeObject = function () {
         var obj = null;
@@ -1855,80 +1830,114 @@
 
     // 원종 목록
     $(document).ready(function () {
+        SearchBasic(1);
         SearchBasicgrid(1);
         SearchBasicRemain(1);
     });
 
     $("#CropSelect").change(function () {
+        SearchBasic(1);
         OtherBasicgrid(1);
         OtherBasicRemain(1);
     })
 
     // 갯수 선택
     $("#limit").change(function () {
+        SearchBasic(1);
         OtherBasicgrid(1);
         OtherBasicRemain(1);
     })
 
     // 원종 삭제
-    function DeleteBasic() {
-        if (tablechk === 0) {
-            var total_id = [];
-
-            var l = basicgrid.getCheckedRows().length;
-
-            for (let i = 0; i < l; i++) {
-                total_id.push(basicgrid.getCheckedRows()[i].basic_id)
-            }
-
-            var data = {'basic_id': total_id};
-
-            if (confirm("삭제하시겠습니까?") == true) {
-                $.ajax(
+    function DeleteBasic()
+    {
+    	var user_type = $("#user_type").val();
+    	
+    	if(user_type != 0)
+    	{
+    		return Alert("삭제 권한이 없습니다.");	
+    	}
+    	else
+    	{
+	        if(tablechk === 0)
+	        {
+	            var total_id = [];
+	
+	            var l = basicgrid.getCheckedRows().length;
+	
+	            for(let i = 0; i < l; i++)
+	            {
+	                total_id.push(basicgrid.getCheckedRows()[i].basic_id)
+	            }
+	
+	            var data = {'basic_id' : total_id};
+	
+	            if(confirm("삭제하시겠습니까?") == true)
+	            {
+	                $.ajax(
                     {
                         url: 'deleteBasic',
                         method: 'POST',
                         dataType: 'json',
                         data: data,
-                        success: function (result) {
-                            if (result == 0) {
-                            } else {
+                        success: function(result)
+                        {
+                            if (result == 0)
+                            {
+                            	return Alert("삭제에 실패하였습니다.");
+                            }
+                            else
+                            {
                                 location.reload();
                             }
                         }
                     });
-            } else {
-                false;
-            }
-        } else {
-            var total_id1 = [];
-
-            var l1 = remaingrid.getCheckedRows().length;
-
-            for (let i = 0; i < l1; i++) {
-                total_id1.push(remaingrid.getCheckedRows()[i].basic_remain_id)
-            }
-
-            var data1 = {'basic_remain_id': total_id1};
-
-            if (confirm("삭제하시겠습니까?") == true) {
-                $.ajax(
+	            }
+	            else
+	            {
+	            	return false;
+	            }
+	        }
+	        else
+	        {
+	            var total_id1 = [];
+	
+	            var l1 = remaingrid.getCheckedRows().length;
+	
+	            for (let i = 0; i < l1; i++)
+	            {
+	                total_id1.push(remaingrid.getCheckedRows()[i].basic_remain_id)
+	            }
+	
+	            var data1 = {'basic_remain_id' : total_id1};
+	
+	            if (confirm("삭제하시겠습니까?") == true)
+	            {
+	                $.ajax(
                     {
                         url: 'deleteBasicRemain',
                         method: 'POST',
                         dataType: 'json',
                         data: data1,
-                        success: function (result) {
-                            if (result == 0) {
-                            } else {
-                                location.reload()
+                        success: function (result)
+                        {
+                            if (result == 0)
+                            {
+                            	return Alert("삭제에 실패하였습니다.");
+                            }
+                            else
+                            {
+                                location.reload();
                             }
                         }
                     });
-            } else {
-
-            }
-        }
+	            }
+	            else
+	            {
+	            	return false;
+	            }
+	        }
+    	}
     }
 
     // 표시항목 버튼
@@ -2030,14 +2039,19 @@
     }
 
     // 통합 분석
-    function AnalysisBtn() {
+    function AnalysisBtn()
+    {
         var total_id = [];
 
-        $("input:checkbox[name=RowCheck]:checked").each(function () {
-            total_id.push($(this).val());
-        });
+        var l = basicgrid.getCheckedRows().length;
 
-        if (total_id.length != 0) {
+        for(let i = 0; i < l; i++)
+        {
+            total_id.push(basicgrid.getCheckedRows()[i].basic_id)
+        }
+
+        if(total_id.length != 0)
+        {
             location.href = "/analysis?total_id=" + total_id + "&type=" + 2;
         }
     }
@@ -2200,7 +2214,7 @@
                     for (let i = 0; i < result.basic.length; i++) {
                         let rowArr = {};
 
-                        rowArr = {'file': '<div>f</div>', 'basic_id': result.basic[i].basic_id};
+                        rowArr = {'file': '<i class="bi bi-file-earmark-arrow-down"></i>', 'basic_id': result.basic[i].basic_id};
 
                         for (var j = 0; j < result.basic[i].basic_standard.length; j++) {
                             var rowData = result.basic[i].basic_standard[j].standard;
@@ -2292,7 +2306,7 @@
                     for (let i = 0; i < result.basic.length; i++) {
                         let rowArr = {};
 
-                        rowArr = {'file': '<div>f</div>', 'basic_id': result.basic[i].basic_id};
+                        rowArr = {'file': '<i class="bi bi-file-earmark-arrow-down"></i>', 'basic_id': result.basic[i].basic_id};
 
                         for (var j = 0; j < result.basic[i].basic_standard.length; j++) {
                             var rowData = result.basic[i].basic_standard[j].standard;
@@ -2959,6 +2973,162 @@
         }
 
         return data;
+    }
+
+    function SearchBasic(e) {
+        var basic_name = $("#CropSelect").val();
+        var limit = $("#limit").val();
+
+        var data = {"basic_name": basic_name, "page_num": e, "limit": limit};
+
+        $.ajax(
+            {
+                url: 'searchBasic',
+                method: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function (result) {
+                    var header_list = $("#header_list");
+                    var header_add = "";
+
+                    var basic_list = $("#basic_list");
+                    var add_list = "";
+
+                    var detail_list = $(".detail_list");
+                    var detail_list2 = $(".detail_list2");
+
+                    var display_list = $(".display_list");
+                    var display_add = "";
+
+                    var detail_add = "";
+                    var detail_add2 = "";
+
+                    var pageNum = $("#pageNum");
+                    var page_add = "";
+
+                    // header
+                    header_add += '<tr>';
+                    header_add += '<th></th>';
+                    header_add += '<th><span class="title">첨부파일</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="첨부파일"></th>';
+                    header_add += '<th><span class="title">특성상태</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="특성상태"></th>';
+
+                    for (var i = 0; i < result.display.length; i++) {
+                        header_add += '<th style="cursor: pointer;"><span class="title">' + result.display[i].detail_title + '</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="' + result.display[i].detail_title + '"></th>'
+                    }
+
+                    header_add += '</tr>';
+
+                    // body
+                    for (var i = 0; i < result.basic.length; i++) {
+                        add_list += '<tr>';
+                        add_list += '<td><input type="checkbox" name="RowCheck" value="' + result.basic[i].basic_id + '"></td>';
+                        add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" onclick="FileBtn(' + result.basic[i].basic_id + ');"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
+
+                        if (result.basic[i].standard_count == 0) {
+                            add_list += '<td onclick="EmptyBtn(' + result.basic[i].basic_id + ');" style="color : blue; cursor:pointer;">EMPTY</td>';
+                        } else {
+                            add_list += '<td onclick="EmptyBtn(' + result.basic[i].basic_id + ');" style="color : green; cursor:pointer;">PROGRESS</td>';
+                        }
+
+                        for (var j = 0; j < result.basic[i].basic_standard.length; j++) {
+                            add_list += '<td><input type="text" class="updateInput" data="' + result.basic[i].basic_id + '" name="' + result.basic[i].basic_standard[j].detail_id + '" value="' + result.basic[i].basic_standard[j].standard + '"></td>';
+                        }
+
+                        add_list += '</tr>';
+                    }
+
+                    // detail
+                    for (var i = 0; i < detail_list.length; i++) {
+                        detail_add = "";
+                        detail_add2 = "";
+                        display_add = "";
+
+                        for (var j = 0; j < result.detail.length; j++) {
+                            // 표시항목
+                            if (result.detail[j].detail_spec == detail_list.eq(i).attr("name")) {
+                                var check = true;
+
+                                for (var k = 0; k < result.display.length; k++) {
+                                    if (result.display[k].detail_id == result.detail[j].detail_id) {
+                                        check = false;
+
+                                        display_add += '<div data-id="' + result.detail[j].detail_id + '" class="list-group step">';
+                                        display_add += '<li class="list-group-item-sm list-group-item">';
+                                        display_add += '<div class="row">';
+                                        display_add += '<input type="checkbox" class="checkbox mr-2" name="mis_research">';
+                                        display_add += '<span class="research-title">' + result.detail[j].detail_title + '</span>';
+                                        display_add += '<input type="hidden" name="detail_id" value="' + result.detail[j].detail_id + '">';
+                                        display_add += '</div>';
+                                        display_add += '</li>';
+                                        display_add += '</div>';
+                                    }
+                                }
+
+                                if (check) {
+                                    detail_add += '<li>';
+                                    detail_add += '<input type="checkbox" class="check_box" name="chk_research" value="' + result.detail[j].detail_id + '">';
+                                    detail_add += '<div class="title">' + result.detail[j].detail_title + '</div>';
+                                    detail_add += '</li>';
+                                }
+                            }
+
+                            // 특성상태
+                            if (result.detail[j].detail_spec == detail_list.eq(i).attr("name")) {
+                                detail_add2 += '<li>';
+                                detail_add2 += '<div class="title">' + result.detail[j].detail_title + '</div>';
+                                detail_add2 += '<div class="input_text">';
+                                detail_add2 += '<input type="text" class="empty_list" name="standard">';
+                                detail_add2 += '<input type="hidden" name="detail_id" value="' + result.detail[j].detail_id + '"></div>';
+                                detail_add2 += '</div>';
+                                detail_add2 += '</li>';
+                            }
+                        }
+
+                        detail_list.eq(i).empty();
+                        detail_list.eq(i).append(detail_add);
+
+                        detail_list2.eq(i).empty();
+                        detail_list2.eq(i).append(detail_add2);
+
+                        display_list.eq(i).empty();
+                        display_list.eq(i).append(display_add);
+                    }
+
+                    // paging
+                    if (result.page_num == 1) {
+                        page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></button>';
+                    } else {
+                        page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchBasic(' + (result.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
+                    }
+
+                    for (var i = 0; i < result.end_page; i++) {
+                        if (result.page_num == (i + 1)) {
+                            page_add += '<button class="atbd-pagination__link active" onclick="SearchBasic(' + (i + 1) + ')">' + (i + 1) + '</button>';
+                        } else {
+                            page_add += '<button class="atbd-pagination__link" onclick="SearchBasic(' + (i + 1) + ')">' + (i + 1) + '</button>';
+                        }
+                    }
+
+                    if (result.page_num == result.end_page) {
+                        page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-right"></span></button>';
+                    } else {
+                        page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchBasic(' + (result.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
+                    }
+
+                    header_list.empty();
+                    header_list.append(header_add);
+
+                    basic_list.empty();
+                    basic_list.append(add_list);
+
+                    pageNum.empty();
+                    pageNum.append(page_add);
+
+                    $("#offset").val(result.offset);
+
+                    checkFunction()
+                }
+            });
     }
 </script>
 </body>

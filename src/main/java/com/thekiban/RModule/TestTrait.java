@@ -2,6 +2,7 @@ package com.thekiban.RModule;
 
 class  TestTrait
 {
+	/*
 	public static void main(String[] args) 
 	{
 		
@@ -14,4 +15,5 @@ class  TestTrait
 
 		System.out.println("success");
 	}
+	*/
 }

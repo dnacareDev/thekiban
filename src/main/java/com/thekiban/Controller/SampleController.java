@@ -349,7 +349,7 @@ public class SampleController {
 
         if (k.equals("작물")) {
           sample.setSample_name(obj.getString(k));
-        } else if (k.equals("시교명 (ID)")) {
+        } else if (k.equals("시교명(ID)")) {
           sample.setSample_code(obj.getString(k));
         } else if (k.equals("목표 지역")) {
           sample.setSample_country(obj.getString(k));
@@ -357,7 +357,7 @@ public class SampleController {
           sample.setSample_type(obj.getString(k));
         } else if (k.equals("교배번호")) {
           sample.setSample_mate(obj.getString(k));
-        } else if (k.equals("종자번호 (ID)")) {
+        } else if (k.equals("종자번호(ID)")) {
           sample.setSample_seed(obj.getString(k));
         } else if (k.equals("현 종자량(g)")) {
           sample.setSample_amount(Double.parseDouble(obj.getString(k)));
