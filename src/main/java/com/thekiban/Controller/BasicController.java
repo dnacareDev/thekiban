@@ -11,6 +11,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import com.thekiban.Entity.*;
+import com.thekiban.Service.BreedService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public class BasicController
 {
 	@Autowired
 	private BasicService service;
+
+	@Autowired
+	private BreedService breedService;
 	
 	@Autowired
 	private FileController fileController;
@@ -548,4 +552,43 @@ public class BasicController
 		return mv;
 	}
 
+	// 품종 검색
+	@ResponseBody
+	@RequestMapping("searchBreedListBasic")
+	public Map<String, Object> SearchBreed(Authentication auth, @RequestParam("breed_name") String breed_name, @RequestParam("page_num") int page_num, @RequestParam("limit") int limit)
+	{
+		Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+		User user = (User)auth.getPrincipal();
+
+		int count = breedService.SelectBreedCount(breed_name);
+
+		int offset = (page_num - 1) * limit;
+		int end_page = (count + limit - 1) / limit;
+
+		List<Breed> breed = breedService.SearchBreed(breed_name, offset, limit);								// 품종 검색
+		List<Detail> detail = breedService.SearchBreedDetail(breed_name);									// 품종 작물별 컬럼 조회
+		List<Display> display = breedService.SelectDisplay(user.getUser_id(), breed_name);					// 사용자별 품종 표시항목 조회
+
+		List<Standard> standard = new ArrayList<Standard>();
+
+		if(!detail.isEmpty())
+		{
+			for(int i = 0; i < breed.size(); i++)
+			{
+				standard = breedService.SearchBreedStandard(detail, user.getUser_id(), breed.get(i).getBreed_id());
+
+				breed.get(i).setBreed_standard(standard);
+			}
+		}
+
+		result.put("breed", breed);
+		result.put("detail", detail);
+		result.put("display", display);
+		result.put("page_num", page_num);
+		result.put("end_page", end_page);
+		result.put("offset", offset);
+
+		return result;
+	}
 }

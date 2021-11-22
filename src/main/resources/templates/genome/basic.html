@@ -703,9 +703,6 @@
                                     <button class="btn btn-lg btn-primary data_btn2" title="데이터 등록" onclick="openExcel()">
                                         <img src="../assets/vendor_assets/img/icon1.png" alt="">
                                     </button>
-                                    <button type="button" class="btn btn-lg btn-primary data_btn1" title="엑셀 export" id="excelFileExport">
-                                        <img src="../assets/vendor_assets/img/icon2.png" title="데이터 등록" alt="">
-                                    </button>
                                     <button class="btn btn-lg btn-primary data_btn2" title="표시항목 선택" onclick="DisplayBtn();">
                                         <img src="../assets/vendor_assets/img/icon3.png" alt="">
                                     </button>
@@ -1858,26 +1855,26 @@
     function DeleteBasic()
     {
     	var user_type = $("#user_type").val();
-    	
+
     	if(user_type != 0)
     	{
-    		return Alert("삭제 권한이 없습니다.");	
+    		return Alert("삭제 권한이 없습니다.");
     	}
     	else
     	{
 	        if(tablechk === 0)
 	        {
 	            var total_id = [];
-	
+
 	            var l = basicgrid.getCheckedRows().length;
-	
+
 	            for(let i = 0; i < l; i++)
 	            {
 	                total_id.push(basicgrid.getCheckedRows()[i].basic_id)
 	            }
-	
+
 	            var data = {'basic_id' : total_id};
-	
+
 	            if(confirm("삭제하시겠습니까?") == true)
 	            {
 	                $.ajax(
@@ -1907,16 +1904,16 @@
 	        else
 	        {
 	            var total_id1 = [];
-	
+
 	            var l1 = remaingrid.getCheckedRows().length;
-	
+
 	            for (let i = 0; i < l1; i++)
 	            {
 	                total_id1.push(remaingrid.getCheckedRows()[i].basic_remain_id)
 	            }
-	
+
 	            var data1 = {'basic_remain_id' : total_id1};
-	
+
 	            if (confirm("삭제하시겠습니까?") == true)
 	            {
 	                $.ajax(
@@ -2248,9 +2245,9 @@
 
                     basicgrid.on('click', (ev) => {
                         if (ev.targetType === 'cell' && ev.columnName === '2') {
-                            var value_sample = ev.nativeEvent.srcElement;
+                            var value_basic = ev.nativeEvent.srcElement;
 
-                            SearchBreed(value_sample);
+                            SearchBreed(value_basic);
                         } else if (ev.targetType === 'cell' && ev.columnName === 'status') {
                             var e_id = basicgrid.getRow(ev.rowKey).basic_id;
 
@@ -2569,28 +2566,28 @@
 
     	if(user_type != 0 && user_type != 2)
     	{
-    		return Alert("등록 권한이 없습니다.");	
+    		return Alert("등록 권한이 없습니다.");
     	}
     	else
     	{
 	        $("#saveRow").css("visibility", "");
 	        $("#cancelRow").css("visibility", "");
-	
+
 	        if(tablechk == 0)
 	        {
 	            var cnt = basicgrid.getRowCount();
-	
+
 	            const newRow = {'basic_id' : '', '169' : $("#CropSelect").val()};
-	
+
 	            basicgrid.prependRow(newRow);
 	            basicgrid.check(cnt);
-	
+
 	            var data = [];
-	
+
 	            var data_in = {"basic_name" : $("#CropSelect").val(), "offset" : $("#offset").val()};
-	
+
 	            data.push(data_in);
-	
+
 	            $.ajax(
 	            {
 	                url: 'insertBasic',
@@ -2602,7 +2599,7 @@
 	                    if (result != null)
 	                    {
 	                        lastID = result.basic[0].basic_id;
-	
+
 	                        basicgrid.on('afterChange', (ev) =>
 	                        {
 	                            for(let i = 0; i < ev.changes.length; i++)
@@ -2618,16 +2615,16 @@
 	        else
 	        {
 	            var cnt1 = remaingrid.getRowCount();
-	
+
 	            const newRow = {basic_name : $("#CropSelect").val()};
-	
+
 	            remaingrid.prependRow(newRow);
 	            remaingrid.check(cnt1);
-	
+
 	            var input_data1 = [];
-	
+
 	            input_data1.push(remaingrid.getCheckedRows()[0]);
-	
+
 	            $.ajax(
 	            {
 	                url: 'insertBasicRemain',
@@ -3183,6 +3180,136 @@
 
                     checkFunction()
                 }
+            });
+    }
+
+    // 계통명 팝업
+    function SearchBreed(e) {
+        $("#pop_breed").modal();
+
+        var breed_name = $("#CropSelect").val();
+
+        var data = {"breed_name": breed_name};
+
+        $.ajax(
+            {
+                url: 'searchBreedListBasic',
+                method: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function (result) {
+                    $(".breed_title").text("계통명 (ID) : " + e.innerText);
+
+                    var header_list = $("#header_list");
+                    var header_add = "";
+
+                    var breed_list = $("#breed_list");
+                    var add_list = "";
+
+                    var detail_list = $(".detail_list");
+                    var detail_list2 = $(".detail_list2");
+
+                    var display_list = $(".display_list");
+                    var display_add = "";
+
+                    var detail_add = "";
+                    var detail_add2 = "";
+
+                    // header
+                    header_add += '<tr>';
+                    header_add += '<th><span class="title">첨부파일</span></th>';
+                    header_add += '<th><span class="title">특성상태</span></th>';
+
+                    for (var i = 0; i < result.display.length; i++) {
+                        header_add += '<th><span class="title">' + result.display[i].detail_title + '</span></th>'
+                    }
+
+                    header_add += '</tr>';
+
+                    // body
+                    for (var i = 0; i < result.breed.length; i++) {
+                        add_list += '<tr>';
+                        add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" onclick="FileBtn(' + result.breed[i].breed_id + ');"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
+
+                        if (result.breed[i].standard_count == 0) {
+                            add_list += '<td style="color : blue; cursor:pointer;">EMPTY</td>';
+                        } else {
+                            add_list += '<td style="color : green; cursor:pointer;">PROGRESS</td>';
+                        }
+
+                        for (var j = 0; j < result.breed[i].breed_standard.length; j++) {
+                            add_list += '<td>' + result.breed[i].breed_standard[j].standard + '</td>';
+                        }
+
+                        add_list += '</tr>';
+                    }
+
+                    // detail
+                    for (var i = 0; i < detail_list.length; i++) {
+                        detail_add = "";
+                        detail_add2 = "";
+                        display_add = "";
+
+                        for (var j = 0; j < result.detail.length; j++) {
+                            // 표시항목
+                            if (result.detail[j].detail_spec == detail_list.eq(i).attr("name")) {
+                                var check = true;
+
+                                for (var k = 0; k < result.display.length; k++) {
+                                    if (result.display[k].detail_id == result.detail[j].detail_id) {
+                                        check = false;
+
+                                        display_add += '<div data-id="' + result.detail[j].detail_id + '" class="list-group step">';
+                                        display_add += '<li class="list-group-item-sm list-group-item">';
+                                        display_add += '<div class="row">';
+                                        display_add += '<input type="checkbox" class="checkbox mr-2" name="mis_research">';
+                                        display_add += '<span class="research-title">' + result.detail[j].detail_title + '</span>';
+                                        display_add += '<input type="hidden" name="detail_id" value="' + result.detail[j].detail_id + '">';
+                                        display_add += '</div>';
+                                        display_add += '</li>';
+                                        display_add += '</div>';
+                                    }
+                                }
+
+                                if (check) {
+                                    detail_add += '<li>';
+                                    detail_add += '<input type="checkbox" class="check_box" name="chk_research" value="' + result.detail[j].detail_id + '">';
+                                    detail_add += '<div class="title">' + result.detail[j].detail_title + '</div>';
+                                    detail_add += '</li>';
+                                }
+                            }
+
+                            // 특성상태
+                            if (result.detail[j].detail_spec == detail_list.eq(i).attr("name")) {
+                                detail_add2 += '<li>';
+                                detail_add2 += '<div class="title">' + result.detail[j].detail_title + '</div>';
+                                detail_add2 += '<div class="input_text">';
+                                detail_add2 += '<input type="text" class="empty_list" name="standard">';
+                                detail_add2 += '<input type="hidden" name="detail_id" value="' + result.detail[j].detail_id + '"></div>';
+                                detail_add2 += '</div>';
+                                detail_add2 += '</li>';
+                            }
+                        }
+
+                        detail_list.eq(i).empty();
+                        detail_list.eq(i).append(detail_add);
+
+                        detail_list2.eq(i).empty();
+                        detail_list2.eq(i).append(detail_add2);
+
+                        display_list.eq(i).empty();
+                        display_list.eq(i).append(display_add);
+                    }
+
+                    header_list.empty();
+                    header_list.append(header_add);
+
+                    breed_list.empty();
+                    breed_list.append(add_list);
+
+                    $("#offset").val(result.offset);
+                }
+
             });
     }
 </script>
