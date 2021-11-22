@@ -1,6 +1,7 @@
 package com.thekiban.Controller;
 
 import com.thekiban.Entity.*;
+import com.thekiban.Service.DataListService;
 import com.thekiban.Service.IncomeService;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.xml.crypto.Data;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -20,7 +22,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -30,6 +31,9 @@ public class IncomeController {
 
   @Autowired
   private IncomeService service;
+
+  @Autowired
+  private DataListService d_service;
 
   @Autowired
   private FileController fileController;
@@ -158,49 +162,49 @@ public class IncomeController {
 
     JSONObject obj = arr.getJSONObject(0);
 
-    if(!obj.isNull("income_code")) {
+    if (!obj.isNull("income_code")) {
       income.setIncome_code((String) obj.get("income_code"));
     } else {
       income.setIncome_code("");
     }
 
-    if(!obj.isNull("income_name")) {
+    if (!obj.isNull("income_name")) {
       income.setIncome_name((String) obj.get("income_name"));
     } else {
       income.setIncome_name("");
     }
 
-    if(!obj.isNull("income_kind")) {
+    if (!obj.isNull("income_kind")) {
       income.setIncome_kind((String) obj.get("income_kind"));
     } else {
       income.setIncome_kind("");
     }
 
-    if(!obj.isNull("income_division")) {
+    if (!obj.isNull("income_division")) {
       income.setIncome_division((String) obj.get("income_division"));
     } else {
       income.setIncome_division("");
     }
 
-    if(!obj.isNull("income_place")) {
+    if (!obj.isNull("income_place")) {
       income.setIncome_place((String) obj.get("income_place"));
     } else {
       income.setIncome_place("");
     }
 
-    if(!obj.isNull("income_country")) {
+    if (!obj.isNull("income_country")) {
       income.setIncome_country((String) obj.get("income_country"));
     } else {
       income.setIncome_country("");
     }
 
-    if(!obj.isNull("income_person")) {
+    if (!obj.isNull("income_person")) {
       income.setIncome_person((String) obj.get("income_person"));
     } else {
       income.setIncome_person("");
     }
 
-    if(!obj.isNull("income_date")) {
+    if (!obj.isNull("income_date")) {
       String date = (String) obj.get("income_date");
       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.KOREA);
       LocalDate ldate = LocalDate.parse(date, formatter);
@@ -210,7 +214,7 @@ public class IncomeController {
       income.setIncome_date(null);
     }
 
-    if(!obj.isNull("income_num")) {
+    if (!obj.isNull("income_num")) {
       String income_num = (String) obj.get("income_num");
       income_num = income_num.trim();
       income.setIncome_num(Integer.parseInt(income_num));
@@ -218,19 +222,19 @@ public class IncomeController {
       income.setIncome_num(0);
     }
 
-    if(!obj.isNull("income_type")) {
+    if (!obj.isNull("income_type")) {
       income.setIncome_type((String) obj.get("income_type"));
     } else {
       income.setIncome_type("");
     }
 
-    if(!obj.isNull("income_trait")) {
+    if (!obj.isNull("income_trait")) {
       income.setIncome_trait((String) obj.get("income_trait"));
     } else {
       income.setIncome_trait("");
     }
 
-    if(!obj.isNull("income_comment")) {
+    if (!obj.isNull("income_comment")) {
       income.setIncome_comment((String) obj.get("income_comment"));
     } else {
       income.setIncome_comment("");
@@ -248,19 +252,19 @@ public class IncomeController {
 
     JSONObject obj = arr.getJSONObject(0);
 
-    if(!obj.isNull("income_name")) {
+    if (!obj.isNull("income_name")) {
       incomeRemain.setIncome_name((String) obj.get("income_name"));
     } else {
       incomeRemain.setIncome_name("");
     }
 
-    if(!obj.isNull("income_remain_num")) {
+    if (!obj.isNull("income_remain_num")) {
       incomeRemain.setIncome_remain_num((String) obj.get("income_remain_num"));
     } else {
       incomeRemain.setIncome_remain_num("");
     }
 
-    if(!obj.isNull("income_remain_amount")) {
+    if (!obj.isNull("income_remain_amount")) {
       String income_remain_amount = (String) obj.get("income_remain_amount");
       income_remain_amount = income_remain_amount.trim();
       incomeRemain.setIncome_remain_amount(Integer.parseInt(income_remain_amount));
@@ -268,7 +272,7 @@ public class IncomeController {
       incomeRemain.setIncome_remain_amount(0);
     }
 
-    if(!obj.isNull("income_remain_in")) {
+    if (!obj.isNull("income_remain_in")) {
       String income_remain_in = (String) obj.get("income_remain_in");
       income_remain_in = income_remain_in.trim();
       incomeRemain.setIncome_remain_in(Integer.parseInt(income_remain_in));
@@ -276,7 +280,7 @@ public class IncomeController {
       incomeRemain.setIncome_remain_in(0);
     }
 
-    if(!obj.isNull("income_remain_out")) {
+    if (!obj.isNull("income_remain_out")) {
       String income_remain_out = (String) obj.get("income_remain_out");
       income_remain_out = income_remain_out.trim();
       incomeRemain.setIncome_remain_out(Integer.parseInt(income_remain_out));
@@ -284,7 +288,7 @@ public class IncomeController {
       incomeRemain.setIncome_remain_out(0);
     }
 
-    if(!obj.isNull("income_remain_re")) {
+    if (!obj.isNull("income_remain_re")) {
       String income_remain_re = (String) obj.get("income_remain_re");
       income_remain_re = income_remain_re.trim();
       incomeRemain.setIncome_remain_re(Integer.parseInt(income_remain_re));
@@ -292,13 +296,13 @@ public class IncomeController {
       incomeRemain.setIncome_remain_re(0);
     }
 
-    if(!obj.isNull("income_remain_person")) {
+    if (!obj.isNull("income_remain_person")) {
       incomeRemain.setIncome_remain_person((String) obj.get("income_remain_person"));
     } else {
       incomeRemain.setIncome_remain_person("");
     }
 
-    if(!obj.isNull("income_remain_date")) {
+    if (!obj.isNull("income_remain_date")) {
       incomeRemain.setIncome_remain_date((String) obj.get("income_remain_date"));
     } else {
       incomeRemain.setIncome_remain_date("");
@@ -312,8 +316,7 @@ public class IncomeController {
   // 시교자원 수정
   @ResponseBody
   @RequestMapping("updateIncome")
-  public int UpdateIncome(@RequestParam("income_id") int income_id, @RequestParam("income_name") String income_name, @RequestParam("income_value") String income_value)
-  {
+  public int UpdateIncome(@RequestParam("income_id") int income_id, @RequestParam("income_name") String income_name, @RequestParam("income_value") String income_value) {
     int result = service.UpdateIncome(income_id, income_name, income_value);
 
     return result;
@@ -321,16 +324,16 @@ public class IncomeController {
 
   @ResponseBody
   @RequestMapping("updateRemain")
-  public int UpdateRemain(@RequestParam("income_remain_id") int income_remain_id, @RequestParam("income_remain_name") String income_remain_name, @RequestParam("income_remain_value") String income_remain_value)
-  {
+  public int UpdateRemain(@RequestParam("income_remain_id") int income_remain_id, @RequestParam("income_remain_name") String income_remain_name, @RequestParam("income_remain_value") String income_remain_value) {
     int result = service.UpdateRemain(income_remain_id, income_remain_name, income_remain_value);
 
     return result;
   }
 
   // 엑셀 등록
+  @ResponseBody
   @RequestMapping("excelIncome")
-  public ModelAndView excelUpload(ModelAndView mv, @ModelAttribute Income income, @RequestParam("excel_list") String excel_list) {
+  public int excelUpload(ModelAndView mv, @ModelAttribute Income income, @RequestParam("excel_list") String excel_list) {
     JSONArray arr = new JSONArray(excel_list);
 
     for (int i = arr.length() - 1; i > -1; i--) {
@@ -373,16 +376,64 @@ public class IncomeController {
       service.InsertIncomeExcel(income);
     }
 
-    mv.setViewName("redirect:/income");
+//    mv.setViewName("redirect:/income");
 
-    return mv;
+    return 1;
+  }
+
+  @ResponseBody
+  @RequestMapping("insertDataList")
+  public DataList InsertDataList(@ModelAttribute DataList dataList, @RequestParam("listData") String listData) {
+    JSONArray arr = new JSONArray(listData);
+
+    JSONObject obj = arr.getJSONObject(0);
+
+    List<Income> income = service.SearchIncomeExcel(obj.getString("income_name"));
+
+    for (int i = 0; i < income.size(); i++) {
+      if(Objects.equals(income.get(i).getCreate_date(), obj.getString("datalist_date"))) {
+        dataList.setDatalist_type(obj.getString("datalist_type"));
+        dataList.setDatalist_date(obj.getString("datalist_date"));
+        dataList.setTarget_id(income.get(i).getIncome_id());
+      } else {
+        continue;
+      }
+
+      d_service.InsertDataList(dataList);
+    }
+
+    return dataList;
+  }
+
+  // 리스트 조회
+  @ResponseBody
+  @RequestMapping("selectDataList")
+  public Map<String, Object> SelectDataList(@RequestParam("datalist_type") String datalist_type) {
+    Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+    List<DataList> dataList = d_service.SelectDataList("datalist_type");
+
+    result.put("dataList", dataList);
+
+    return result;
+  }
+
+  @ResponseBody
+  @RequestMapping("searchIncomeExcel")
+  public Map<String, Object> SearchIncomeExcel(@RequestParam("income_name") String income_name) {
+    Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+    List<Income> Income = service.SearchIncomeExcel(income_name);
+
+    result.put("income", Income);
+
+    return result;
   }
 
   // 첨부 파일 조회
   @ResponseBody
   @RequestMapping("selectIncomeFile")
-  public Map<String, Object> SelectIncomeFile(@RequestParam("income_id") int income_id)
-  {
+  public Map<String, Object> SelectIncomeFile(@RequestParam("income_id") int income_id) {
     Map<String, Object> result = new LinkedHashMap<String, Object>();
 
     List<IncomeFile> income_file = service.SelectIncomeFile(income_id);
@@ -394,8 +445,7 @@ public class IncomeController {
 
   // 첨부파일 등록
   @RequestMapping("insertIncomeFile")
-  public ModelAndView InsertIncomeFile(ModelAndView mv, @ModelAttribute IncomeFile income_file, @RequestParam("file") MultipartFile file) throws IOException
-  {
+  public ModelAndView InsertIncomeFile(ModelAndView mv, @ModelAttribute IncomeFile income_file, @RequestParam("file") MultipartFile file) throws IOException {
     String[] extension = file.getOriginalFilename().split("\\.");
 
     String file_name = fileController.ChangeFileName(extension[1]);
@@ -429,19 +479,14 @@ public class IncomeController {
 
   // 첨부파일 수정
   @RequestMapping("updateIncomeFile")
-  public ModelAndView UpdateIncomeFile(ModelAndView mv, @ModelAttribute IncomeFile income_file, @RequestParam("file") MultipartFile file) throws IOException
-  {
-    if(file.isEmpty())
-    {
+  public ModelAndView UpdateIncomeFile(ModelAndView mv, @ModelAttribute IncomeFile income_file, @RequestParam("file") MultipartFile file) throws IOException {
+    if (file.isEmpty()) {
       int update_file = service.UpdateIncomeFile(income_file);
-    }
-    else
-    {
+    } else {
       String delete_path = "upload/" + income_file.getUploads_file();
       File origin_file = new File(delete_path);
 
-      if(origin_file.delete())
-      {
+      if (origin_file.delete()) {
         String[] extension = file.getOriginalFilename().split("\\.");
 
         String file_name = fileController.ChangeFileName(extension[1]);
