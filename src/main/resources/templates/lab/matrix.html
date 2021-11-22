@@ -80,6 +80,14 @@
         	background-color: #fff;
         	margin-top: 15px;
         }
+        .main-content .container-fluid {
+		    max-width: 100%;
+		    padding: 50px;
+		}
+		.card{
+			padding: 50px;
+			box-shadow:0 3px 20px 3px rgb(0 0 0 / 7%);
+		}
     </style>
 </head>
 <body class="layout-light top-menu overlayScroll">
@@ -89,8 +97,14 @@
 <th:block th:include="/../fragments/topbar.html"></th:block>
 
 <main class="main-content">
-	<div class="container">
-		<h1 class="title">Digital Lab > MABC Tools > Analysis Tool</h1>
+<!-- 	<div class="container"> -->
+	<div class="container-fluid">
+		<div class="row">
+		<div class="col-lg-12 mb-30">
+		    <div class="card"><!-- <div class="container card"> -->
+	    	<div class="breadcrumb-main" style="float: left;">
+                <h4 class="text-capitalize breadcrumb-title">Data 관리</h4>
+            </div>
 		<div class="contents">
 			<form action="insertMatrix" id="insertFile" method="POST" enctype="multipart/form-data">
 				<input type="text" class="text">
@@ -122,7 +136,11 @@
         		<!-- <img th:src="|http://112.169.63.197:8883/common/r/result/${path}/${path}_distancematrix.png|"> -->
         	</div>
 		</div>
-	</div>
+		</div>
+		</div>
+		</div>
+		</div>
+<!-- 	</div> -->
 </main>
 <script>
 	let n=0
