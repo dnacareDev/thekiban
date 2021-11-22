@@ -163,6 +163,15 @@
         (#{income_remain_id}, #{income_name}, #{income_remain_num}, #{income_remain_amount}, #{income_remain_in}, #{income_remain_out}, #{income_remain_re}, #{income_remain_person}, #{income_remain_date})
     </insert>
 
+    <select id="SearchIncomeExcel" resultType="Income">
+        SELECT * FROM income
+        <choose>
+            <when test="income_name != 'none'">
+                WHERE income_name = #{income_name}
+            </when>
+        </choose>
+    </select>
+
     <!-- 첨부파일 조회 -->
     <select id="SelectUploads" parameterType="java.util.ArrayList" resultType="Uploads">
         SELECT * FROM uploads u

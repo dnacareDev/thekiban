@@ -86,7 +86,7 @@ public class AnalysisController
 	@RequestMapping("runAnalysis")
 	public int RunAnalysis(@RequestParam("detail_name") String detail_name, @RequestParam("detail_type") int detail_type, @RequestParam("target_id[]") int[] target_id, @RequestParam("method") int method, @RequestParam("trait_id") String trait_id)
 	{
-		/*
+		
 		List<Detail> detail = service.SelectDetail(detail_name, detail_type);
 		List<Standard> standard = service.SelectStandard(target_id, detail_type);
 		

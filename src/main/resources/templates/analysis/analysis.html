@@ -47,8 +47,9 @@ body {
 }
 h6.title{
 	display:block;
-	font-size: 20px;
+	font-size: 18px;
 	padding: 20px 0;
+	font-weight: 500;
 }
 input[type="text"] {
     width: 100%;
@@ -65,16 +66,16 @@ input[type="text"] {
     border-radius: 10px;
 	overflow:auto;
 	background-color: #fff;
-	min-height: 500px;
-	max-height: 500px;
+	min-height: 300px;
+	max-height: 300px;
 }
 .text_box.text_box3{
 	min-height: auto;
 }
 .text_box.text_box2,
 .text_box.text_box6{
-	min-height: 550px;
-	max-height: 550px;
+	min-height: 350px;
+	max-height: 350px;
 }
 .text_box.text_box4{
 	min-height: 68px;
@@ -342,10 +343,10 @@ input[type="checkbox"]{
 	float: left;
 	
 }
-.selectType select{
+select{
 	display: block;
     width: 100%;
-    height: 44px;
+    height: 52px;
     border-radius: 5px;
     padding: 0 20px;
     border-color: #ddd;
@@ -359,8 +360,102 @@ input[type="checkbox"]{
 	display: inline-block;
 	padding-top: 10px;
 } 
-.cover_top{
-	padding-top: 50px;
+
+
+.selectBox{
+	width: 200px;
+}
+.selectBox dl{
+	position:relative;
+}
+.selectBox dt{
+	width: 100%;
+	cursor:pointer;
+	color: #222;
+	border: 1px solid #D9D9D9;
+	border-radius: 5px;
+	padding: 10px;
+	background-color:#fff;
+}
+.selectBox dt span.ar{
+	float:right;
+	position: relative;
+}
+
+.selectBox dt span.ar::before{
+	display:block;
+	position: absolute;
+	content:"";
+	width: 10px;
+	height: 2px;
+	right:11px;
+	top:11px;
+	transform: rotate(45deg);
+	transition: transform 0.3s;
+	background-color: #B2B2B2;
+	border-radius: 5px;
+}
+.selectBox dt span.ar::after{
+	display:block;
+	position: absolute;
+	content:"";
+	width: 10px;
+	height: 2px;
+	right: 5px;
+	top:11px;
+	transform: rotate(-45deg);
+	transition: transform 0.3s;
+	background-color: #B2B2B2;
+	border-radius: 5px;
+}
+.selectBox dt.active span.ar::before{
+	transform: rotate(-45deg);
+}
+.selectBox dt.active span.ar::after{
+	transform: rotate(45deg);
+}
+.selectBox dd{
+	display:none;
+	position:absolute;
+	width: 100%;
+	top: 50px;
+	background-color: #fff;
+	max-height: 300px;
+	overflow: auto;
+	z-index:99999;
+	border: 1px solid #D9D9D9;
+	border-top: none;
+	border-radius: 0 0 5px 5px;
+}
+.selectBox dt.active dd{
+	border-bottom: none;
+}
+.selectBox dt.active{
+	border-radius: 5px 5px 0 0;
+}
+.selectBox dd ul li{
+	width: 100%;
+	cursor: pointer;
+	padding: 10px;
+	border-bottom: 1px solid #eaeaea;
+}
+.selectBox dd ul li:last-child{
+	border-bottom: none;
+}
+.selectBox dd ul li:hover{
+	background-color: #A4C2E3;
+	color: #fff;
+}
+.selectBox dd ul li.active{
+	background-color: #163692;
+	color: #fff;
+}
+.selectBox dt span.choi{
+	display: inline-block;
+    width: 150px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 </style>
 </head>
@@ -371,11 +466,14 @@ input[type="checkbox"]{
 <!-- 공통 topbar -->
 <th:block th:include="/../fragments/topbar.html"></th:block>
 <main class="main-content">
-<div class="contents" style="background-color: #FFFFFF;">
+<div class="contents" style="background-color:#FCFCFC;">
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-lg-12 mb-30">
-				<div class="card">
+				<div class="card" style="background-color: #fff !important; box-shadow: 0 3px 20px 3px rgb(0 0 0 / 7%)">
+					<div class="breadcrumb-main" style="float: left; padding: 1.56rem;">
+                        <h4 class="text-capitalize breadcrumb-title">통합분석</h4>
+                    </div>
 					<div class="container clearfix">
 						<form action="" method="post">
 							<div class="cover_top">
@@ -394,17 +492,37 @@ input[type="checkbox"]{
 									</select>
 								</div>
 								<input type="hidden" id="type" th:value="${type}">
-								<div class="checkbox_top">
-									<ul>
-										<li>
-											<input type="checkbox" class="manage" value="품종관리" onclick="CheckManage(this);" style="display:inline" th:checked="${type != 2}">
-											<span>품종관리</span>
-										</li>
-										<li>
-											<input type="checkbox" class="manage" value="원종관리" onclick="CheckManage(this);" style="display:inline" th:checked="${type == 2}">
-											<span>원종관리</span>
-										</li>
-									</ul>
+								<div class="checkbox_top selectBox">
+<!-- 									<dl> -->
+<!-- 										<dt><span class="choi">품종관리</span><span class="ar"></span></dt> -->
+<!-- 										<dd> -->
+<!-- 											<ul> -->
+<!-- 												<li> -->
+<!-- 													<input type="checkbox" class="manage" value="품종관리" style="display:inline" th:checked="${type != 2}"> -->
+<!-- 													<span>품종관리</span> -->
+<!-- 												</li> -->
+<!-- 												<li> -->
+<!-- 													<input type="checkbox" class="manage" value="원종관리" style="display:inline" th:checked="${type == 2}"> -->
+<!-- 													<span>원종관리</span> -->
+<!-- 												</li> -->
+<!-- 											</ul> -->
+											
+<!-- 										</dd> -->
+<!-- 									</dl> -->
+									<select>
+										<option>품종관리</option>
+										<option>원종관리</option>
+									</select>
+<!-- 									<ul> -->
+<!-- 										<li> -->
+<!-- 											<input type="checkbox" class="manage" value="품종관리" onclick="CheckManage(this);" style="display:inline" th:checked="${type != 2}"> -->
+<!-- 											<span>품종관리</span> -->
+<!-- 										</li> -->
+<!-- 										<li> -->
+<!-- 											<input type="checkbox" class="manage" value="원종관리" onclick="CheckManage(this);" style="display:inline" th:checked="${type == 2}"> -->
+<!-- 											<span>원종관리</span> -->
+<!-- 										</li> -->
+<!-- 									</ul> -->
 								</div>
 							</div>
 							<div class="contents clearfix" style="clear:both">
@@ -517,6 +635,7 @@ input[type="checkbox"]{
 	// 품종/원종 선택
 	function CheckManage(e)
 	{
+		console.log($(e));
 		var chk = $(".manage");
 		
 		for(var i = 0; i < chk.length; i++)
@@ -912,6 +1031,26 @@ input[type="checkbox"]{
 			}
 		});
 	}
+	
+	$(".selectBox dt").off().on("click", function(){
+		$(".selectBox dd").stop().slideToggle(300);
+		$(this).toggleClass("active");
+	});
+
+	let str = "";
+	$(".selectBox dd li").click(function(e){
+		$(".selectBox dd li input[type='checkbox']");
+		$(".selectBox dt").removeClass("active");
+	    $(".selectBox dd li").removeClass("active");
+	    $(this).addClass("active");
+	    $(this).children().eq(0).prop("checked", true);
+	    $(this).children().eq(0).attr('onclick', "CheckManage(this);");
+	    
+	    str = $(this).children().text();
+	    $(".selectBox dt span.choi").text(str);
+	    $(".selectBox dd").slideUp(300);
+	    
+	});
 </script>
 </body>
 </html>

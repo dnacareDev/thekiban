@@ -554,6 +554,36 @@
             padding: 5px 10px;
             border-radius: 5px;
         }
+        #pop_remain table thead tr{
+			border-top: 2px solid #aaa;
+			border-bottom: 2px solid #aaa;
+		}
+        #pop_remain table thead th{
+        	border-left: 1px solid #eee;
+        	border-right: 1px solid #eee;
+        	color: #222;
+        	font-size: 13px;
+        }
+        #pop_remain table thead th:first-child{
+        	border-left: none;
+        }
+        #pop_remain table thead th:last-child{
+        	border-right: none;
+        }
+        #pop_remain table tbody tr{
+			border-bottom: 1px solid #eee;
+		}
+        #pop_remain table tbody td{
+        	background-color: #fff;
+        	color: #333;
+        	font-size: 13px;
+        }
+        .plus_btn_submit1{
+        	display:none;
+        }
+        .bg-white .row{
+        	padding-top: 0;
+        }
     </style>
 
 </head>
@@ -873,30 +903,14 @@
                                 <table class="table table2">
                                     <thead class="text-center">
                                     <tr>
-                                        <th style="cursor: pointer;"><span class="title">순번</span><img
-                                            src="../assets/vendor_assets/img/title_icon.png"
-                                            alt="순번"></th>
-                                        <th style="cursor: pointer;"><span class="title">도입번호(ID)</span><img
-                                            src="../assets/vendor_assets/img/title_icon.png"
-                                            alt="도입번호(ID)"></th>
-                                        <th style="cursor: pointer;"><span class="title">종자 보유량</span><img
-                                            src="../assets/vendor_assets/img/title_icon.png"
-                                            alt="종자 보유량"></th>
-                                        <th style="cursor: pointer;"><span class="title">입고량</span><img
-                                            src="../assets/vendor_assets/img/title_icon.png"
-                                            alt="입고량"></th>
-                                        <th style="cursor: pointer;"><span class="title">출고량</span><img
-                                            src="../assets/vendor_assets/img/title_icon.png"
-                                            alt="출고량"></th>
-                                        <th style="cursor: pointer;"><span class="title">재고량</span><img
-                                            src="../assets/vendor_assets/img/title_icon.png"
-                                            alt="재고량"></th>
-                                        <th style="cursor: pointer;"><span class="title">담당자</span><img
-                                            src="../assets/vendor_assets/img/title_icon.png"
-                                            alt="담당자"></th>
-                                        <th style="cursor: pointer;"><span class="title">일자</span><img
-                                            src="../assets/vendor_assets/img/title_icon.png"
-                                            alt="일자"></th>
+                                        <th style="cursor: pointer;"><span class="title">순번</span></th>
+                                        <th style="cursor: pointer;"><span class="title">도입번호(ID)</span></th>
+                                        <th style="cursor: pointer;"><span class="title">종자 보유량</span></th>
+                                        <th style="cursor: pointer;"><span class="title">입고량</span></th>
+                                        <th style="cursor: pointer;"><span class="title">출고량</span></th>
+                                        <th style="cursor: pointer;"><span class="title">재고량</span></th>
+                                        <th style="cursor: pointer;"><span class="title">담당자</span></th>
+                                        <th style="cursor: pointer;"><span class="title">일자</span></th>
                                     </tr>
                                     </thead>
                                     <tbody class="text-center remain_list">
@@ -979,6 +993,8 @@
         excelExportCommon(event, handleExcelDataAll);
     }
 
+    let rowDataL = 0;
+
     function excelExportCommon(event, callback) {
         var input = event.target;
         var reader = new FileReader();
@@ -998,6 +1014,8 @@
             var keys = Object.values(rowdata[0]);
 
             var html = "";
+
+            rowDataL = rowdata.length;
 
             // table 생성
             for (var i = 0; i < rowdata.length; i++) {
@@ -1078,10 +1096,6 @@
 
             $("#excel_data").empty();
             $("#excel_data").append(html);
-
-            var jsonObj = tableToJson(document.getElementById("excel_data"));
-
-            $("#excel_list").val(JSON.stringify(jsonObj));
         };
 
         reader.readAsBinaryString(input.files[0]);
@@ -1092,20 +1106,42 @@
         if (tablechk === 0) {
             $("#data_upload2").modal();
 
-            var income_name = $("#CropSelect").val();
-
-            var data = {"income_name": income_name}
+            let data = {"datalist_type": 'income'};
 
             $.ajax(
                 {
-                    url: '',
+                    url: 'selectDataList',
                     method: 'POST',
                     dataType: 'json',
                     data: data,
                     success: function (result) {
+                        var data_list = $("#dataExcel_list");
+                        var data_add = "";
 
+                        let count = 0;
+
+                        console.log(result);
+
+                        for (var i = 0; i < result.dataList.length; i++) {
+                            let date = result.dataList[0].datalist_date;
+
+                            if(result.dataList[i].datalist_date = date) {
+                                count++;
+                            }
+
+                        }
+
+                        data_add += '<tr>';
+                        data_add += '<td>' + 1 + '</td>';
+                        data_add += '<td>' + result.dataList[0].datalist_date + '</td>';
+                        data_add += '<td>' + count + '</td>';
+                        data_add += '</tr>';
+
+                        data_list.empty();
+                        data_list.append(data_add);
                     }
-                })
+                });
+
         } else {
             $("#data_upload12").modal();
         }
@@ -1113,6 +1149,7 @@
 
     /* 엑셀 등록 창 */
 
+    let now = null;
     /* 엑셀 입력 */
     function InsertExcel() {
         if (tablechk === 0) {
@@ -1127,7 +1164,42 @@
                 data.push(arr);
             });
 
-            $("#excelForm").submit();
+            var jsonObj = tableToJson(document.getElementById("excel_data"));
+
+            $.ajax(
+                {
+                    url: 'excelIncome',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        "excel_list": JSON.stringify(jsonObj)
+                    },
+                    success: function (result) {
+                        now = new Date(+ new Date() + 3240 * 10000).toISOString().replace("T", " ").replace(/\..*/, '');
+
+                        let listData = [];
+
+                        let income_name = $("#CropSelect").val();
+
+                        let lData = {"datalist_type": 'income', "datalist_date": now, "income_name" : income_name};
+
+                        listData.push(lData);
+
+                        $.ajax(
+                            {
+                                url: 'insertDataList',
+                                method: 'POST',
+                                dataType: 'json',
+                                data: {
+                                    "listData": JSON.stringify(listData)
+                                },
+                                success: function (result) {
+                                    location.reload();
+                                }
+                            })
+                    }
+                }
+            )
         } else {
             var data1 = [];
 
@@ -1140,7 +1212,42 @@
                 data1.push(arr);
             });
 
-            $("#excelForm1").submit();
+            var jsonObj = tableToJson(document.getElementById("excel_data"));
+
+            $.ajax(
+                {
+                    url: 'excelIncome',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        "excel_list": JSON.stringify(jsonObj)
+                    },
+                    success: function (result) {
+                        now = new Date(+ new Date() + 3240 * 10000).toISOString().replace("T", " ").replace(/\..*/, '');
+
+                        let listData = [];
+
+                        let income_name = $("#CropSelect").val();
+
+                        let lData = {"datalist_type": 'income_outcome', "datalist_date": now, "income_name" : income_name};
+
+                        listData.push(lData);
+
+                        $.ajax(
+                            {
+                                url: 'insertDataList',
+                                method: 'POST',
+                                dataType: 'json',
+                                data: {
+                                    "listData": JSON.stringify(listData)
+                                },
+                                success: function (result) {
+                                    location.reload();
+                                }
+                            })
+                    }
+                }
+            )
         }
     }
 
@@ -1514,7 +1621,8 @@
                         columns: [
                             {
                                 header: '첨부파일',
-                                name: 'file'
+                                name: 'file',
+                                width: 100
                             },
                             {
                                 header: '작물',
