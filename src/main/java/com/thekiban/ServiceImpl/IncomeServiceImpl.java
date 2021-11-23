@@ -104,7 +104,7 @@ public class IncomeServiceImpl implements IncomeService {
   }
 
   @Override
-  public int InsertOutcomeExcel(IncomeRemain incomeRemain) {
+  public int InsertRemainExcel(IncomeRemain incomeRemain) {
     return mapper.InsertRemainExcel(incomeRemain);
   }
 

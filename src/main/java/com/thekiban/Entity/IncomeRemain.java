@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @ToString
@@ -17,6 +19,6 @@ public class IncomeRemain {
   private int income_remain_out;
   private int income_remain_re;
   private String income_remain_person;
-  private String income_remain_date;
+  private LocalDate income_remain_date;
 
 }

@@ -601,39 +601,47 @@
             padding: 5px 10px;
             border-radius: 5px;
         }
-        
-        #pop_breed table thead tr, #pop_seed table thead tr{
-			border-top: 2px solid #aaa;
-			border-bottom: 2px solid #aaa;
-		}
-        #pop_breed table thead th, #pop_seed table thead th{
-        	border-left: 1px solid #eee;
-        	border-right: 1px solid #eee;
-        	color: #222;
-        	font-size: 13px;
+
+        #pop_breed table thead tr, #pop_seed table thead tr {
+            border-top: 2px solid #aaa;
+            border-bottom: 2px solid #aaa;
         }
-        #pop_breed table thead th:first-child, #pop_seed table thead th:first-child{
-        	border-left: none;
+
+        #pop_breed table thead th, #pop_seed table thead th {
+            border-left: 1px solid #eee;
+            border-right: 1px solid #eee;
+            color: #222;
+            font-size: 13px;
         }
-        #pop_breed table thead th:last-child, #pop_seed table thead th:last-child{
-        	border-right: none;
+
+        #pop_breed table thead th:first-child, #pop_seed table thead th:first-child {
+            border-left: none;
         }
-        #pop_breed table tbody tr, #pop_seed table tbody tr{
-			border-bottom: 1px solid #eee;
-		}
-        #pop_breed table tbody td, #pop_seed table tbody td{
-        	background-color: #fff;
-        	color: #333;
-        	font-size: 13px;
+
+        #pop_breed table thead th:last-child, #pop_seed table thead th:last-child {
+            border-right: none;
         }
-        #pop_seed table tbody td{
-        	padding: 12px 12px;
+
+        #pop_breed table tbody tr, #pop_seed table tbody tr {
+            border-bottom: 1px solid #eee;
         }
-        .plus_btn_submit1{
-        	display:none;
+
+        #pop_breed table tbody td, #pop_seed table tbody td {
+            background-color: #fff;
+            color: #333;
+            font-size: 13px;
         }
-        .bg-white .row{
-        	padding-top: 0;
+
+        #pop_seed table tbody td {
+            padding: 12px 12px;
+        }
+
+        .plus_btn_submit1 {
+            display: none;
+        }
+
+        .bg-white .row {
+            padding-top: 0;
         }
     </style>
 </head>
@@ -1010,11 +1018,11 @@
                         </div>
                     </div>
                 </div>
-                div class="modal-footer" style="border: none">
-                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
+                <div class="modal-footer" style="border: none">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
+                </div>
             </div>
         </div>
-    </div>
     </div>
 
     <!-- 지도 -->
@@ -1396,7 +1404,7 @@
                         var data_list = $("#uploadDate");
                         var data_add = "";
 
-                        for (var i = 0; i < result.dataGroup.length; i++) {
+                        for (var i = result.dataGroup.length - 1; i > -1; i--) {
                             data_add += '<tr>';
                             data_add += '<td>' + (i + 1) + '</td>';
                             data_add += '<td>' + result.dataGroup[i].datalist_date + '</td>';
@@ -1423,7 +1431,7 @@
                         var data_list = $("#uploadDate1");
                         var data_add = "";
 
-                        for (var i = 0; i < result.dataGroup.length; i++) {
+                        for (var i = result.dataGroup.length - 1; i > -1; i--) {
                             data_add += '<tr>';
                             data_add += '<td>' + (i + 1) + '</td>';
                             data_add += '<td>' + result.dataGroup[i].datalist_date + '</td>';
@@ -1441,6 +1449,7 @@
     /* 엑셀 등록 창 */
 
     let now = null;
+
     /* 엑셀 입력 */
     function InsertExcel() {
         if (tablechk === 0) {
@@ -1466,13 +1475,13 @@
                         "excel_list": JSON.stringify(jsonObj)
                     },
                     success: function (result) {
-                        now = new Date(+ new Date() + 3240 * 10000).toISOString().split("T")[0];
+                        now = new Date(+new Date() + 3240 * 10000).toISOString().split("T")[0];
 
                         let listData = [];
 
                         let sample_name = $("#CropSelect").val();
 
-                        let lData = {"datalist_type": 'sample', "datalist_date": now, "sample_name" : sample_name};
+                        let lData = {"datalist_type": 'sample', "datalist_date": now, "sample_name": sample_name};
 
                         listData.push(lData);
 
@@ -1514,13 +1523,13 @@
                         "excel_list": JSON.stringify(jsonObj)
                     },
                     success: function (result) {
-                        now = new Date(+ new Date() + 3240 * 10000).toISOString().split("T")[0];
+                        now = new Date(+new Date() + 3240 * 10000).toISOString().split("T")[0];
 
                         let listData = [];
 
                         let sample_name = $("#CropSelect").val();
 
-                        let lData = {"datalist_type": 'sample_outcome', "datalist_date": now, "sample_name" : sample_name};
+                        let lData = {"datalist_type": 'sample_outcome', "datalist_date": now, "sample_name": sample_name};
 
                         listData.push(lData);
 
@@ -1825,95 +1834,72 @@
 
 
     // 시교자원 삭제
-    function DeleteSample()
-    {
-    	var user_type = $("#user_type").val();
+    function DeleteSample() {
+        var user_type = $("#user_type").val();
 
-    	if(user_type != 0)
-    	{
-    		return Alert("삭제 권한이 없습니다.");	
-    	}
-    	else
-    	{
-	        if (tablechk === 0) 
-	        {
-	            var total_id = [];
-	
-	            var l = samplegrid.getCheckedRows().length;
-	
-	            for (let i = 0; i < l; i++) 
-	            {
-	                total_id.push(samplegrid.getCheckedRows()[i].sample_id)
-	            }
-	
-	            var data = {'sample_id' : total_id};
-	
-	            if (confirm("삭제하시겠습니까?") == true) 
-	            {
-	                $.ajax(
-                    {
-                        url: 'deleteSample',
-                        method: 'POST',
-                        dataType: 'json',
-                        data: data,
-                        success: function (result) 
+        if (user_type != 0) {
+            return Alert("삭제 권한이 없습니다.");
+        } else {
+            if (tablechk === 0) {
+                var total_id = [];
+
+                var l = samplegrid.getCheckedRows().length;
+
+                for (let i = 0; i < l; i++) {
+                    total_id.push(samplegrid.getCheckedRows()[i].sample_id)
+                }
+
+                var data = {'sample_id': total_id};
+
+                if (confirm("삭제하시겠습니까?") == true) {
+                    $.ajax(
                         {
-                            if (result == 0) 
-                            {
-                            	return Alert("삭제에 실패하였습니다.");
-                            } 
-                            else 
-                            {
-                                location.reload()
+                            url: 'deleteSample',
+                            method: 'POST',
+                            dataType: 'json',
+                            data: data,
+                            success: function (result) {
+                                if (result == 0) {
+                                    return Alert("삭제에 실패하였습니다.");
+                                } else {
+                                    location.reload()
+                                }
                             }
-                        }
-                    });
-	            } 
-	            else 
-	            {
-	            	return false;
-	            }
-	        } 
-	        else 
-	        {
-	            var total_id1 = [];
-	
-	            var l1 = outcomegrid.getCheckedRows().length;
-	
-	            for (let i = 0; i < l1; i++) 
-	            {
-	                total_id1.push(outcomegrid.getCheckedRows()[i].sample_outcome_id)
-	            }
-	
-	            var data1 = {'sample_outcome_id' : total_id1};
-	
-	            if (confirm("삭제하시겠습니까?") == true) 
-	            {
-	                $.ajax(
-                    {
-                        url: 'deleteOutcome',
-                        method: 'POST',
-                        dataType: 'json',
-                        data: data1,
-                        success: function (result) 
+                        });
+                } else {
+                    return false;
+                }
+            } else {
+                var total_id1 = [];
+
+                var l1 = outcomegrid.getCheckedRows().length;
+
+                for (let i = 0; i < l1; i++) {
+                    total_id1.push(outcomegrid.getCheckedRows()[i].sample_outcome_id)
+                }
+
+                var data1 = {'sample_outcome_id': total_id1};
+
+                if (confirm("삭제하시겠습니까?") == true) {
+                    $.ajax(
                         {
-                            if (result == 0) 
-                            {
-                            	return Alert("삭제에 실패하였습니다.");
-                            } 
-                            else 
-                            {
-                                location.reload()
+                            url: 'deleteOutcome',
+                            method: 'POST',
+                            dataType: 'json',
+                            data: data1,
+                            success: function (result) {
+                                if (result == 0) {
+                                    return Alert("삭제에 실패하였습니다.");
+                                } else {
+                                    location.reload()
+                                }
                             }
-                        }
-                    });
-	            } 
-	            else 
-	            {
-	            	return false;
-	            }
-	        }
-    	}
+                        });
+                } else {
+                    return false;
+                }
+            }
+        }
     }
 
     // 시교자원 삭제
@@ -2190,7 +2176,7 @@
 
                     const dataArr = [];
 
-                    for(let i = 0; i < result.sample.length; i++) {
+                    for (let i = 0; i < result.sample.length; i++) {
                         let rowArr = {
                             'file': '<i class="bi bi-file-earmark-arrow-down"></i>',
                             'sample_id': result.sample[i].sample_id,
@@ -2226,7 +2212,7 @@
 
                                 var data = {"sample_id": sample_id, "sample_name": sample_name, "sample_value": sample_value};
 
-                                if(sample_id != null) {
+                                if (sample_id != null) {
                                     $.ajax(
                                         {
                                             url: 'updateSample',
@@ -2263,7 +2249,7 @@
                 success: function (result) {
                     const dataArr = [];
 
-                    for(let i = 0; i < result.sample.length; i++) {
+                    for (let i = 0; i < result.sample.length; i++) {
                         let rowArr = {
                             'file': '<i class="bi bi-file-earmark-arrow-down"></i>',
                             'sample_id': result.sample[i].sample_id,
@@ -2319,18 +2305,20 @@
 
                                 var data = {"sample_id": sample_id, "sample_name": sample_name, "sample_value": sample_value};
 
-                                $.ajax(
-                                    {
-                                        url: 'updateSample',
-                                        method: 'POST',
-                                        dataType: 'json',
-                                        data: data,
-                                        success: function (result) {
-                                            if (result == 0) {
-                                                return Alert("수정에 실패하였습니다.")
+                                if (sample_id != null) {
+                                    $.ajax(
+                                        {
+                                            url: 'updateSample',
+                                            method: 'POST',
+                                            dataType: 'json',
+                                            data: data,
+                                            success: function (result) {
+                                                if (result == 0) {
+                                                    return Alert("수정에 실패하였습니다.")
+                                                }
                                             }
-                                        }
-                                    });
+                                        });
+                                }
                             }
                         }
                     });
@@ -2467,18 +2455,20 @@
 
                                 var data = {"sample_outcome_id": sample_outcome_id, "sample_outcome_name": sample_outcome_name, "sample_outcome_value": sample_outcome_value};
 
-                                $.ajax(
-                                    {
-                                        url: 'updateOutcome',
-                                        method: 'POST',
-                                        dataType: 'json',
-                                        data: data,
-                                        success: function (result) {
-                                            if (result == 0) {
-                                                return Alert("수정에 실패하였습니다.")
+                                if (sample_outcome_id != null) {
+                                    $.ajax(
+                                        {
+                                            url: 'updateOutcome',
+                                            method: 'POST',
+                                            dataType: 'json',
+                                            data: data,
+                                            success: function (result) {
+                                                if (result == 0) {
+                                                    return Alert("수정에 실패하였습니다.")
+                                                }
                                             }
-                                        }
-                                    });
+                                        });
+                                }
                             }
                         }
                     });
@@ -2538,18 +2528,20 @@
 
                                 var data = {"sample_outcome_id": sample_outcome_id, "sample_outcome_name": sample_outcome_name, "sample_outcome_value": sample_outcome_value};
 
-                                $.ajax(
-                                    {
-                                        url: 'updateOutcome',
-                                        method: 'POST',
-                                        dataType: 'json',
-                                        data: data,
-                                        success: function (result) {
-                                            if (result == 0) {
-                                                return Alert("수정에 실패하였습니다.")
+                                if (sample_outcome_id != null) {
+                                    $.ajax(
+                                        {
+                                            url: 'updateOutcome',
+                                            method: 'POST',
+                                            dataType: 'json',
+                                            data: data,
+                                            success: function (result) {
+                                                if (result == 0) {
+                                                    return Alert("수정에 실패하였습니다.")
+                                                }
                                             }
-                                        }
-                                    });
+                                        });
+                                }
                             }
                         }
                     });
@@ -2569,9 +2561,6 @@
             });
     }
 
-    var lastID = 0;
-    let input_data = [];
-
     function insertRow() {
         $(".plus_btn_submit1").css("display", "block");
 
@@ -2584,20 +2573,6 @@
 
             samplegrid.prependRow(newRow);
             samplegrid.check(cnt);
-
-            input_data.push({'key': 'sample_name', 'value': $("#CropSelect").val()});
-
-            samplegrid.on('afterChange', (ev) => {
-                for(let i = 0; i < ev.changes.length; i++) {
-                    let key = ev.changes[i].columnName;
-                    let value = ev.changes[i].value;
-
-                    let data = {'key': key, 'value': value};
-
-                    input_data.push(data);
-                }
-            });
-
         } else {
             var cnt1 = outcomegrid.getRowCount();
 
@@ -2607,8 +2582,31 @@
 
             outcomegrid.prependRow(newRow);
             outcomegrid.check(cnt1);
+        }
+    }
 
-            var input_data1 = [];
+    function saveRow() {
+        if (tablechk === 0) {
+            let input_data = [];
+
+            input_data.push(samplegrid.getCheckedRows()[0]);
+
+            $.ajax(
+                {
+                    url: 'insertSample',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        "input_data": JSON.stringify(input_data)
+                    },
+                    success: function (result) {
+                        if (result != null) {
+                            location.reload();
+                        }
+                    }
+                });
+        } else {
+            let input_data1 = [];
 
             input_data1.push(outcomegrid.getCheckedRows()[0]);
 
@@ -2622,49 +2620,6 @@
                     },
                     success: function (result) {
                         if (result != null) {
-                            lastID = result.sample_outcome_id;
-                        }
-                    }
-                });
-        }
-    }
-
-    function saveRow() {
-        if (tablechk === 0) {
-            $.ajax(
-                {
-                    url: 'insertSample',
-                    method: 'POST',
-                    dataType: 'json',
-                    data: {
-                        "input_data": JSON.stringify(input_data)
-                    },
-                    success: function (result) {
-                        if (result != null) {
-                            console.log(result);
-                            // location.reload();
-                        }
-                    }
-                });
-        } else {
-            var data1 = [];
-
-            var data_in1 = outcomegrid.getCheckedRows()[0];
-
-            data1.push(data_in1);
-
-            $.ajax(
-                {
-                    url: 'updateInsertOutcome',
-                    method: 'POST',
-                    dataType: 'json',
-                    data: {
-                        "data": JSON.stringify(data1)
-                    },
-                    success: function (result) {
-                        if (result == 0) {
-                            return Alert("저장에 실패하였습니다.");
-                        } else {
                             location.reload();
                         }
                     }
@@ -2674,45 +2629,9 @@
 
     function cancelRow() {
         if (tablechk === 0) {
-            var total_id = [];
-
-            total_id.push(lastID);
-
-            var data = {'sample_id': total_id};
-
-            $.ajax(
-                {
-                    url: 'deleteSample',
-                    method: 'POST',
-                    dataType: 'json',
-                    data: data,
-                    success: function (result) {
-                        if (result == 0) {
-                        } else {
-                            OtherSample(1);
-                        }
-                    }
-                });
+            samplegrid.removeCheckedRows();
         } else {
-            var total_id1 = [];
-
-            total_id1.push(lastID);
-
-            var data1 = {'sample_outcome_id': total_id1};
-
-            $.ajax(
-                {
-                    url: 'deleteSample',
-                    method: 'POST',
-                    dataType: 'json',
-                    data: data1,
-                    success: function (result) {
-                        if (result == 0) {
-                        } else {
-                            OtherOutcome(1);
-                        }
-                    }
-                });
+            outcomegrid.removeCheckedRows();
         }
 
         $(".plus_btn_submit1").css("display", "none");

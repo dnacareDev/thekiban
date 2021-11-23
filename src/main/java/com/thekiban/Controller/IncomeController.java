@@ -14,14 +14,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.xml.crypto.Data;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -49,116 +47,8 @@ public class IncomeController {
 
   @ResponseBody
   @RequestMapping("insertIncome")
-  public Income InsertIncome(@ModelAttribute Income income, @RequestParam("input_data") String input_data) {
+  public int InsertIncome(@ModelAttribute Income income, @RequestParam("input_data") String input_data) {
     JSONArray arr = new JSONArray(input_data);
-
-    JSONObject obj = arr.getJSONObject(0);
-
-    String value = (String) obj.get("income_name");
-
-    income.setIncome_name(value);
-
-    service.InsertIncome(income);
-
-    return income;
-  }
-
-  @ResponseBody
-  @RequestMapping("insertIncomeRemain")
-  public IncomeRemain InsertIncomeRemain(@ModelAttribute IncomeRemain incomeRemain, @RequestParam("input_data") String input_data) {
-    JSONArray arr = new JSONArray(input_data);
-
-    JSONObject obj = arr.getJSONObject(0);
-
-    String value = (String) obj.get("income_name");
-
-    incomeRemain.setIncome_name(value);
-
-    service.InsertIncomeRemain(incomeRemain);
-
-    return incomeRemain;
-  }
-
-  // 도입자원 검색
-  @ResponseBody
-  @RequestMapping("searchIncome")
-  public Map<String, Object> SearchIncome(@RequestParam("income_name") String income_name, @RequestParam("page_num") int page_num, @RequestParam("limit") int limit) {
-    Map<String, Object> result = new LinkedHashMap<String, Object>();
-
-    int count = service.SelectIncomeCount(income_name);
-
-    int offset = (page_num - 1) * limit;
-    int end_page = (count + limit - 1) / limit;
-
-    List<Income> Income = service.SearchIncome(income_name, offset, limit);
-
-    result.put("income", Income);
-    result.put("page_num", page_num);
-    result.put("end_page", end_page);
-    result.put("offset", offset);
-
-    return result;
-  }
-
-  // 자원재고 검색
-  @ResponseBody
-  @RequestMapping("searchRemain")
-  public Map<String, Object> SearchRemain(@RequestParam("income_name") String income_name, @RequestParam("page_num") int page_num, @RequestParam("limit") int limit) {
-    Map<String, Object> result = new LinkedHashMap<String, Object>();
-
-    int count = service.SelectRemainCount(income_name);
-
-    int offset = (page_num - 1) * limit;
-    int end_page = (count + limit - 1) / limit;
-
-    List<IncomeRemain> IncomeRemain = service.SearchRemain(income_name, offset, limit);
-
-    result.put("incomeRemain", IncomeRemain);
-    result.put("page_num", page_num);
-    result.put("end_page", end_page);
-    result.put("offset", offset);
-
-    return result;
-  }
-
-  // 재고 팝업
-  @ResponseBody
-  @RequestMapping("searchIncomeRemain")
-  public Map<String, Object> SearchIncomeRemain(@RequestParam("income_name") String income_name) {
-    Map<String, Object> result = new LinkedHashMap<String, Object>();
-
-    int count = service.SelectRemainCount(income_name);
-
-    List<IncomeRemain> IncomeRemain = service.SearchIncomeRemain(income_name);
-
-    result.put("incomeRemain", IncomeRemain);
-
-    return result;
-  }
-
-  // 도입자원 삭제
-  @ResponseBody
-  @RequestMapping("deleteIncome")
-  public int DeleteIncome(@RequestParam("income_id[]") int[] income_id) {
-    service.DeleteIncome(income_id);
-
-    return 1;
-  }
-
-  // 재고관리 삭제
-  @ResponseBody
-  @RequestMapping("deleteRemain")
-  public int DeleteRemain(@RequestParam("income_remain_id[]") int[] income_remain_id) {
-    service.DeleteRemain(income_remain_id);
-
-    return 1;
-  }
-
-  // 도입자원 수정
-  @ResponseBody
-  @RequestMapping("updateInsertIncome")
-  public int UpdateInsertIncome(ModelAndView mv, @ModelAttribute Income income, @RequestParam(value = "update_list", required = false) String update_list, @RequestParam("data") String data) throws ParseException {
-    JSONArray arr = new JSONArray(data);
 
     JSONObject obj = arr.getJSONObject(0);
 
@@ -240,15 +130,15 @@ public class IncomeController {
       income.setIncome_comment("");
     }
 
-    int result = service.UpdateInsertIncome(income);
+    int result = service.InsertIncome(income);
 
     return result;
   }
 
   @ResponseBody
-  @RequestMapping("updateInsertRemain")
-  public int UpdateInsertRemain(ModelAndView mv, @ModelAttribute IncomeRemain incomeRemain, @RequestParam("data") String data) {
-    JSONArray arr = new JSONArray(data);
+  @RequestMapping("insertIncomeRemain")
+  public int InsertIncomeRemain(@ModelAttribute IncomeRemain incomeRemain, @RequestParam("input_data") String input_data) {
+    JSONArray arr = new JSONArray(input_data);
 
     JSONObject obj = arr.getJSONObject(0);
 
@@ -303,14 +193,93 @@ public class IncomeController {
     }
 
     if (!obj.isNull("income_remain_date")) {
-      incomeRemain.setIncome_remain_date((String) obj.get("income_remain_date"));
+      String date = (String) obj.get("income_remain_date");
+      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.KOREA);
+      LocalDate ldate = LocalDate.parse(date, formatter);
+
+      incomeRemain.setIncome_remain_date(ldate);
     } else {
-      incomeRemain.setIncome_remain_date("");
+      incomeRemain.setIncome_remain_date(null);
     }
 
-    int result = service.UpdateInsertRemain(incomeRemain);
+    int result = service.InsertIncomeRemain(incomeRemain);
 
     return result;
+  }
+
+  // 도입자원 검색
+  @ResponseBody
+  @RequestMapping("searchIncome")
+  public Map<String, Object> SearchIncome(@RequestParam("income_name") String income_name, @RequestParam("page_num") int page_num, @RequestParam("limit") int limit) {
+    Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+    int count = service.SelectIncomeCount(income_name);
+
+    int offset = (page_num - 1) * limit;
+    int end_page = (count + limit - 1) / limit;
+
+    List<Income> Income = service.SearchIncome(income_name, offset, limit);
+
+    result.put("income", Income);
+    result.put("page_num", page_num);
+    result.put("end_page", end_page);
+    result.put("offset", offset);
+
+    return result;
+  }
+
+  // 자원재고 검색
+  @ResponseBody
+  @RequestMapping("searchRemain")
+  public Map<String, Object> SearchRemain(@RequestParam("income_name") String income_name, @RequestParam("page_num") int page_num, @RequestParam("limit") int limit) {
+    Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+    int count = service.SelectRemainCount(income_name);
+
+    int offset = (page_num - 1) * limit;
+    int end_page = (count + limit - 1) / limit;
+
+    List<IncomeRemain> IncomeRemain = service.SearchRemain(income_name, offset, limit);
+
+    result.put("incomeRemain", IncomeRemain);
+    result.put("page_num", page_num);
+    result.put("end_page", end_page);
+    result.put("offset", offset);
+
+    return result;
+  }
+
+  // 재고 팝업
+  @ResponseBody
+  @RequestMapping("searchIncomeRemain")
+  public Map<String, Object> SearchIncomeRemain(@RequestParam("income_name") String income_name) {
+    Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+    int count = service.SelectRemainCount(income_name);
+
+    List<IncomeRemain> IncomeRemain = service.SearchIncomeRemain(income_name);
+
+    result.put("incomeRemain", IncomeRemain);
+
+    return result;
+  }
+
+  // 도입자원 삭제
+  @ResponseBody
+  @RequestMapping("deleteIncome")
+  public int DeleteIncome(@RequestParam("income_id[]") int[] income_id) {
+    service.DeleteIncome(income_id);
+
+    return 1;
+  }
+
+  // 재고관리 삭제
+  @ResponseBody
+  @RequestMapping("deleteRemain")
+  public int DeleteRemain(@RequestParam("income_remain_id[]") int[] income_remain_id) {
+    service.DeleteRemain(income_remain_id);
+
+    return 1;
   }
 
   // 시교자원 수정
@@ -376,9 +345,47 @@ public class IncomeController {
       service.InsertIncomeExcel(income);
     }
 
-//    mv.setViewName("redirect:/income");
-
     return 1;
+  }
+
+  @RequestMapping("excelIncomeRemain")
+  public ModelAndView remainExcelUpload(ModelAndView mv, @ModelAttribute IncomeRemain incomeRemain, @RequestParam("excel_list") String excel_list) {
+    JSONArray arr = new JSONArray(excel_list);
+
+    for (int i = arr.length() - 1; i > -1; i--) {
+
+      JSONObject obj = arr.getJSONObject(i);
+
+      Set<String> key = obj.keySet();
+
+      for (String k : key) {
+
+        if (k.equals("도입번호(ID)")) {
+          incomeRemain.setIncome_remain_num(obj.getString(k));
+        } else if (k.equals("종자 보유량")) {
+          incomeRemain.setIncome_remain_amount(Integer.parseInt(obj.getString(k)));
+        } else if (k.equals("입고량")) {
+          incomeRemain.setIncome_remain_in(Integer.parseInt(obj.getString(k)));
+        } else if (k.equals("출고량")) {
+          incomeRemain.setIncome_remain_out(Integer.parseInt(obj.getString(k)));
+        } else if (k.equals("재고량")) {
+          incomeRemain.setIncome_remain_re(Integer.parseInt(obj.getString(k)));
+        } else if (k.equals("담당자")) {
+          incomeRemain.setIncome_remain_person(obj.getString(k));
+        } else if (k.equals("일자")) {
+          String date = (String) obj.get("sample_outcome_date");
+          DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.KOREA);
+          LocalDate ldate = LocalDate.parse(date, formatter);
+
+          incomeRemain.setIncome_remain_date(ldate);
+        }
+      }
+
+      service.InsertRemainExcel(incomeRemain);
+    }
+    mv.setViewName("redirect:/sample");
+
+    return mv;
   }
 
   @ResponseBody

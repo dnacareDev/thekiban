@@ -21,6 +21,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 // 시교자원
@@ -48,54 +50,184 @@ public class SampleController {
   // 시교자원 입력
   @ResponseBody
   @RequestMapping("insertSample")
-  public Sample InsertSample(@ModelAttribute Sample sample, @RequestParam("input_data") String input_data) {
-    JSONArray arr = new JSONArray(input_data);
-
-    for (int i = 0; i < arr.length(); i++) {
-
-      JSONObject obj = arr.getJSONObject(i);
-
-      if (obj.get("key") == "sample_name") {
-        sample.setSample_name(obj.getString("value"));
-      } else if (obj.get("key") == "sample_code") {
-        sample.setSample_code(obj.getString("value"));
-      } else if (obj.get("key") == "sample_country") {
-        sample.setSample_country(obj.getString("value"));
-      } else if (obj.get("key") == "sample_type") {
-        sample.setSample_type(obj.getString("value"));
-      } else if (obj.get("key") == "sample_mate") {
-        sample.setSample_mate(obj.getString("value"));
-      } else if (obj.get("key") == "sample_seed") {
-        sample.setSample_seed(obj.getString("value"));
-      } else if (obj.get("key") == "sample_amount") {
-        sample.setSample_amount(Double.parseDouble(obj.getString("value")));
-      } else if (obj.get("key") == "sample_sprout") {
-        sample.setSample_sprout(Integer.parseInt(obj.getString("value")));
-      } else if (obj.get("key") == "sample_purity") {
-        sample.setSample_purity(Integer.parseInt(obj.getString("value")));
-      } else if (obj.get("key") == "sample_comment") {
-        sample.setSample_comment(obj.getString("value"));
-      }
-
-    }
-
-    return sample;
-  }
-
-  @ResponseBody
-  @RequestMapping("insertSampleOutcome")
-  public SampleOutcome InsertSampleOutcome(@ModelAttribute SampleOutcome sampleOutcome, @RequestParam("input_data") String input_data) {
+  public int InsertSample(@ModelAttribute Sample sample, @RequestParam("input_data") String input_data) {
     JSONArray arr = new JSONArray(input_data);
 
     JSONObject obj = arr.getJSONObject(0);
 
-    String value = (String) obj.get("sample_name");
+    if (!obj.isNull("sample_code")) {
+      sample.setSample_code((String) obj.get("sample_code"));
+    } else {
+      sample.setSample_code("");
+    }
 
-    sampleOutcome.setSample_name(value);
+    if (!obj.isNull("sample_name")) {
+      sample.setSample_name((String) obj.get("sample_name"));
+    } else {
+      sample.setSample_name("");
+    }
 
-    service.InsertSampleOutcome(sampleOutcome);
+    if (!obj.isNull("sample_country")) {
+      sample.setSample_country((String) obj.get("sample_country"));
+    } else {
+      sample.setSample_country("");
+    }
 
-    return sampleOutcome;
+    if (!obj.isNull("sample_type")) {
+      sample.setSample_type((String) obj.get("sample_type"));
+    } else {
+      sample.setSample_type("");
+    }
+
+    if (!obj.isNull("sample_mate")) {
+      sample.setSample_mate((String) obj.get("sample_mate"));
+    } else {
+      sample.setSample_mate("");
+    }
+
+    if (!obj.isNull("sample_seed")) {
+      sample.setSample_seed((String) obj.get("sample_seed"));
+    } else {
+      sample.setSample_seed("");
+    }
+
+    if (!obj.isNull("sample_amount")) {
+      sample.setSample_amount(Double.parseDouble((String) obj.get("sample_amount")));
+    } else {
+      sample.setSample_amount(0);
+    }
+
+    if (!obj.isNull("sample_sprout")) {
+      String sample_sprout = (String) obj.get("sample_sprout");
+      sample_sprout = sample_sprout.trim();
+      sample.setSample_sprout(Integer.parseInt(sample_sprout));
+    } else {
+      sample.setSample_sprout(0);
+    }
+
+    if (!obj.isNull("sample_purity")) {
+      String sample_purity = (String) obj.get("sample_sprout");
+      sample_purity = sample_purity.trim();
+      sample.setSample_purity(Integer.parseInt(sample_purity));
+    } else {
+      sample.setSample_purity(0);
+    }
+
+    if (!obj.isNull("sample_comment")) {
+      sample.setSample_comment((String) obj.get("sample_comment"));
+    } else {
+      sample.setSample_comment("");
+    }
+
+    int result = service.InsertSample(sample);
+
+    return result;
+  }
+
+  @ResponseBody
+  @RequestMapping("insertSampleOutcome")
+  public int InsertSampleOutcome(@ModelAttribute SampleOutcome sampleOutcome, @RequestParam("input_data") String input_data) {
+    JSONArray arr = new JSONArray(input_data);
+
+    JSONObject obj = arr.getJSONObject(0);
+
+    if (!obj.isNull("sample_outcome_code")) {
+      sampleOutcome.setSample_outcome_code((String) obj.get("sample_outcome_code"));
+    } else {
+      sampleOutcome.setSample_outcome_code("");
+    }
+
+    if (!obj.isNull("sample_name")) {
+      sampleOutcome.setSample_name((String) obj.get("sample_name"));
+    } else {
+      sampleOutcome.setSample_name("");
+    }
+
+    if (!obj.isNull("sample_outcome_num")) {
+      sampleOutcome.setSample_outcome_num((String) obj.get("sample_outcome_num"));
+    } else {
+      sampleOutcome.setSample_outcome_num("");
+    }
+
+    if (!obj.isNull("sample_outcome_amount")) {
+      String sample_outcome_amount = (String) obj.get("sample_outcome_amount");
+      sample_outcome_amount = sample_outcome_amount.trim();
+      sampleOutcome.setSample_outcome_amount(Integer.parseInt(sample_outcome_amount));
+    } else {
+      sampleOutcome.setSample_outcome_amount(0);
+    }
+
+    if (!obj.isNull("sample_outcome_in")) {
+      String sample_outcome_in = (String) obj.get("sample_outcome_in");
+      sample_outcome_in = sample_outcome_in.trim();
+      sampleOutcome.setSample_outcome_in(Integer.parseInt(sample_outcome_in));
+    } else {
+      sampleOutcome.setSample_outcome_in(0);
+    }
+
+    if (!obj.isNull("sample_outcome_out")) {
+      String sample_outcome_out = (String) obj.get("sample_outcome_out");
+      sample_outcome_out = sample_outcome_out.trim();
+      sampleOutcome.setSample_outcome_out(Integer.parseInt(sample_outcome_out));
+    } else {
+      sampleOutcome.setSample_outcome_out(0);
+    }
+
+    if (!obj.isNull("sample_outcome_remain")) {
+      String sample_outcome_remain = (String) obj.get("sample_outcome_remain");
+      sample_outcome_remain = sample_outcome_remain.trim();
+      sampleOutcome.setSample_outcome_remain(Integer.parseInt(sample_outcome_remain));
+    } else {
+      sampleOutcome.setSample_outcome_remain(0);
+    }
+
+    if (!obj.isNull("sample_outcome_person")) {
+      sampleOutcome.setSample_outcome_person((String) obj.get("sample_outcome_person"));
+    } else {
+      sampleOutcome.setSample_outcome_person("");
+    }
+
+    if (!obj.isNull("sample_outcome_reciever")) {
+      sampleOutcome.setSample_outcome_reciever((String) obj.get("sample_outcome_reciever"));
+    } else {
+      sampleOutcome.setSample_outcome_reciever("");
+    }
+
+    if (!obj.isNull("sample_outcome_date")) {
+      String date = (String) obj.get("sample_outcome_date");
+      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.KOREA);
+      LocalDate ldate = LocalDate.parse(date, formatter);
+
+      sampleOutcome.setSample_outcome_date(ldate);
+    } else {
+      sampleOutcome.setSample_outcome_date(null);
+    }
+
+    if (!obj.isNull("sample_outcome_end")) {
+      String date = (String) obj.get("sample_outcome_end");
+      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.KOREA);
+      LocalDate ldate = LocalDate.parse(date, formatter);
+
+      sampleOutcome.setSample_outcome_end(ldate);
+    } else {
+      sampleOutcome.setSample_outcome_end(null);
+    }
+
+    if (!obj.isNull("sample_outcome_country")) {
+      sampleOutcome.setSample_outcome_country((String) obj.get("sample_outcome_country"));
+    } else {
+      sampleOutcome.setSample_outcome_country("");
+    }
+
+    if (!obj.isNull("sample_outcome_place")) {
+      sampleOutcome.setSample_outcome_place((String) obj.get("sample_outcome_place"));
+    } else {
+      sampleOutcome.setSample_outcome_place("");
+    }
+
+    int result = service.InsertSampleOutcome(sampleOutcome);
+
+    return result;
   }
 
   // 시교자원 검색
@@ -167,180 +299,6 @@ public class SampleController {
     service.DeleteOutcome(sample_outcome_id);
 
     return 1;
-  }
-
-  @ResponseBody
-  @RequestMapping("updateInsertSample")
-  public int UpdateInsertSample(ModelAndView mv, @ModelAttribute Sample sample, @RequestParam(value = "update_list", required = false) String update_list, @RequestParam("data") String data) {
-    JSONArray arr = new JSONArray(data);
-
-    JSONObject obj = arr.getJSONObject(0);
-
-    if (!obj.isNull("sample_code")) {
-      sample.setSample_code((String) obj.get("sample_code"));
-    } else {
-      sample.setSample_code("");
-    }
-
-    if (!obj.isNull("sample_name")) {
-      sample.setSample_name((String) obj.get("sample_name"));
-    } else {
-      sample.setSample_name("");
-    }
-
-    if (!obj.isNull("sample_country")) {
-      sample.setSample_country((String) obj.get("sample_country"));
-    } else {
-      sample.setSample_country("");
-    }
-
-    if (!obj.isNull("sample_type")) {
-      sample.setSample_type((String) obj.get("sample_type"));
-    } else {
-      sample.setSample_type("");
-    }
-
-    if (!obj.isNull("sample_mate")) {
-      sample.setSample_mate((String) obj.get("sample_mate"));
-    } else {
-      sample.setSample_mate("");
-    }
-
-    if (!obj.isNull("sample_seed")) {
-      sample.setSample_seed((String) obj.get("sample_seed"));
-    } else {
-      sample.setSample_seed("");
-    }
-
-    if (!obj.isNull("sample_amount")) {
-      sample.setSample_amount(Double.parseDouble((String) obj.get("sample_amount")));
-    } else {
-      sample.setSample_amount(0);
-    }
-
-    if (!obj.isNull("sample_sprout")) {
-      String sample_sprout = (String) obj.get("sample_sprout");
-      sample_sprout = sample_sprout.trim();
-      sample.setSample_sprout(Integer.parseInt(sample_sprout));
-    } else {
-      sample.setSample_sprout(0);
-    }
-
-    if (!obj.isNull("sample_purity")) {
-      String sample_purity = (String) obj.get("sample_sprout");
-      sample_purity = sample_purity.trim();
-      sample.setSample_purity(Integer.parseInt(sample_purity));
-    } else {
-      sample.setSample_purity(0);
-    }
-
-    if (!obj.isNull("sample_comment")) {
-      sample.setSample_comment((String) obj.get("sample_comment"));
-    } else {
-      sample.setSample_comment("");
-    }
-
-    int result = service.UpdateInsertSample(sample);
-
-    return result;
-  }
-
-  @ResponseBody
-  @RequestMapping("updateInsertOutcome")
-  public int UpdateInsertOutcome(@ModelAttribute SampleOutcome sampleOutcome, @RequestParam("data") String data) {
-    JSONArray arr = new JSONArray(data);
-
-    JSONObject obj = arr.getJSONObject(0);
-
-    if (!obj.isNull("sample_outcome_code")) {
-      sampleOutcome.setSample_outcome_code((String) obj.get("sample_outcome_code"));
-    } else {
-      sampleOutcome.setSample_outcome_code("");
-    }
-
-    if (!obj.isNull("sample_name")) {
-      sampleOutcome.setSample_name((String) obj.get("sample_name"));
-    } else {
-      sampleOutcome.setSample_name("");
-    }
-
-    if (!obj.isNull("sample_outcome_num")) {
-      sampleOutcome.setSample_outcome_num((String) obj.get("sample_outcome_num"));
-    } else {
-      sampleOutcome.setSample_outcome_num("");
-    }
-
-    if (!obj.isNull("sample_outcome_amount")) {
-      String sample_outcome_amount = (String) obj.get("sample_outcome_amount");
-      sample_outcome_amount = sample_outcome_amount.trim();
-      sampleOutcome.setSample_outcome_amount(Integer.parseInt(sample_outcome_amount));
-    } else {
-      sampleOutcome.setSample_outcome_amount(0);
-    }
-
-    if (!obj.isNull("sample_outcome_in")) {
-      String sample_outcome_in = (String) obj.get("sample_outcome_in");
-      sample_outcome_in = sample_outcome_in.trim();
-      sampleOutcome.setSample_outcome_in(Integer.parseInt(sample_outcome_in));
-    } else {
-      sampleOutcome.setSample_outcome_in(0);
-    }
-
-    if (!obj.isNull("sample_outcome_out")) {
-      String sample_outcome_out = (String) obj.get("sample_outcome_out");
-      sample_outcome_out = sample_outcome_out.trim();
-      sampleOutcome.setSample_outcome_out(Integer.parseInt(sample_outcome_out));
-    } else {
-      sampleOutcome.setSample_outcome_out(0);
-    }
-
-    if (!obj.isNull("sample_outcome_remain")) {
-      String sample_outcome_remain = (String) obj.get("sample_outcome_remain");
-      sample_outcome_remain = sample_outcome_remain.trim();
-      sampleOutcome.setSample_outcome_remain(Integer.parseInt(sample_outcome_remain));
-    } else {
-      sampleOutcome.setSample_outcome_remain(0);
-    }
-
-    if (!obj.isNull("sample_outcome_person")) {
-      sampleOutcome.setSample_outcome_person((String) obj.get("sample_outcome_person"));
-    } else {
-      sampleOutcome.setSample_outcome_person("");
-    }
-
-    if (!obj.isNull("sample_outcome_reciever")) {
-      sampleOutcome.setSample_outcome_reciever((String) obj.get("sample_outcome_reciever"));
-    } else {
-      sampleOutcome.setSample_outcome_reciever("");
-    }
-
-    if (!obj.isNull("sample_outcome_date")) {
-      sampleOutcome.setSample_outcome_date((String) obj.get("sample_outcome_date"));
-    } else {
-      sampleOutcome.setSample_outcome_date("");
-    }
-
-    if (!obj.isNull("sample_outcome_end")) {
-      sampleOutcome.setSample_outcome_end((String) obj.get("sample_outcome_end"));
-    } else {
-      sampleOutcome.setSample_outcome_end("");
-    }
-
-    if (!obj.isNull("sample_outcome_country")) {
-      sampleOutcome.setSample_outcome_country((String) obj.get("sample_outcome_country"));
-    } else {
-      sampleOutcome.setSample_outcome_country("");
-    }
-
-    if (!obj.isNull("sample_outcome_place")) {
-      sampleOutcome.setSample_outcome_place((String) obj.get("sample_outcome_place"));
-    } else {
-      sampleOutcome.setSample_outcome_place("");
-    }
-
-    int result = service.UpdateInsertOutcome(sampleOutcome);
-
-    return result;
   }
 
   // 시교자원 수정
@@ -434,9 +392,17 @@ public class SampleController {
         } else if (k.equals("인수자")) {
           sampleOutcome.setSample_outcome_reciever(obj.getString(k));
         } else if (k.equals("일자")) {
-          sampleOutcome.setSample_outcome_date(obj.getString(k));
+          String date = (String) obj.get("sample_outcome_date");
+          DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.KOREA);
+          LocalDate ldate = LocalDate.parse(date, formatter);
+
+          sampleOutcome.setSample_outcome_date(ldate);
         } else if (k.equals("시교 종료 일자")) {
-          sampleOutcome.setSample_outcome_end(obj.getString(k));
+          String date = (String) obj.get("sample_outcome_end");
+          DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.KOREA);
+          LocalDate ldate = LocalDate.parse(date, formatter);
+
+          sampleOutcome.setSample_outcome_end(ldate);
         } else if (k.equals("지역 구분")) {
           sampleOutcome.setSample_outcome_country(obj.getString(k));
         } else if (k.equals("대상 지역")) {

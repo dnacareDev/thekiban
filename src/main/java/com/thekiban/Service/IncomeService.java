@@ -53,7 +53,7 @@ public interface IncomeService {
   int InsertIncomeExcel(Income income);
 
   // 재고관리 엑셀 등록
-  int InsertOutcomeExcel(IncomeRemain incomeRemain);
+  int InsertRemainExcel(IncomeRemain incomeRemain);
 
   // 도입자원 엑셀 목록 조회
   List<Income> SearchIncomeExcel(String income_name);

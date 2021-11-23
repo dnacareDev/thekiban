@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @ToString
@@ -19,8 +21,8 @@ public class SampleOutcome {
   private int sample_outcome_remain;
   private String sample_outcome_person;
   private String sample_outcome_reciever;
-  private String sample_outcome_date;
-  private String sample_outcome_end;
+  private LocalDate sample_outcome_date;
+  private LocalDate sample_outcome_end;
   private String sample_outcome_country;
   private String sample_outcome_place;
 
