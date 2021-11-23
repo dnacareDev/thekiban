@@ -391,7 +391,7 @@ public class IncomeController {
     List<Income> income = service.SearchIncomeExcel(obj.getString("income_name"));
 
     for (int i = 0; i < income.size(); i++) {
-      if(Objects.equals(income.get(i).getCreate_date(), obj.getString("datalist_date"))) {
+      if(Objects.equals(income.get(i).getCreate_date().split(" ")[0], obj.getString("datalist_date"))) {
         dataList.setDatalist_type(obj.getString("datalist_type"));
         dataList.setDatalist_date(obj.getString("datalist_date"));
         dataList.setTarget_id(income.get(i).getIncome_id());
@@ -405,15 +405,14 @@ public class IncomeController {
     return dataList;
   }
 
-  // 리스트 조회
   @ResponseBody
-  @RequestMapping("selectDataList")
-  public Map<String, Object> SelectDataList(@RequestParam("datalist_type") String datalist_type) {
+  @RequestMapping("selectDateGroup")
+  public Map<String, Object> SelectDateGroup(@RequestParam("datalist_type") String datalist_type) {
     Map<String, Object> result = new LinkedHashMap<String, Object>();
 
-    List<DataList> dataList = d_service.SelectDataList("datalist_type");
+    List<Map<String, String>> dataGroup = d_service.SelectDateGroup(datalist_type);
 
-    result.put("dataList", dataList);
+    result.put("dataGroup", dataGroup);
 
     return result;
   }

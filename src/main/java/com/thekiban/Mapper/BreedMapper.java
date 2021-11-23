@@ -116,4 +116,7 @@ public interface BreedMapper
 	int InsertExcel(List<Standard> standards);
 
 	List<Detail> SelectDetail();
+
+	List<Breed> SearchBreedList(@Param("breed_name") String breed_name);
+
 }

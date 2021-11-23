@@ -99,4 +99,5 @@ public interface BasicMapper
 	int InsertBasicExcel(List<Standard> standards);
 
 	int InsertRemainExcel(BasicRemain basicRemain);
+
 }

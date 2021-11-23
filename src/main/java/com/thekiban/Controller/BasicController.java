@@ -555,7 +555,7 @@ public class BasicController
 	// 품종 검색
 	@ResponseBody
 	@RequestMapping("searchBreedListBasic")
-	public Map<String, Object> SearchBreed(Authentication auth, @RequestParam("breed_name") String breed_name, @RequestParam("page_num") int page_num, @RequestParam("limit") int limit)
+	public Map<String, Object> SearchBreed(Authentication auth, @RequestParam("breed_name") String breed_name)
 	{
 		Map<String, Object> result = new LinkedHashMap<String, Object>();
 
@@ -563,10 +563,7 @@ public class BasicController
 
 		int count = breedService.SelectBreedCount(breed_name);
 
-		int offset = (page_num - 1) * limit;
-		int end_page = (count + limit - 1) / limit;
-
-		List<Breed> breed = breedService.SearchBreed(breed_name, offset, limit);								// 품종 검색
+		List<Breed> breed = breedService.SearchBreedList(breed_name);								// 품종 검색
 		List<Detail> detail = breedService.SearchBreedDetail(breed_name);									// 품종 작물별 컬럼 조회
 		List<Display> display = breedService.SelectDisplay(user.getUser_id(), breed_name);					// 사용자별 품종 표시항목 조회
 
@@ -585,9 +582,6 @@ public class BasicController
 		result.put("breed", breed);
 		result.put("detail", detail);
 		result.put("display", display);
-		result.put("page_num", page_num);
-		result.put("end_page", end_page);
-		result.put("offset", offset);
 
 		return result;
 	}

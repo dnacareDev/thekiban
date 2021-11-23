@@ -636,6 +636,11 @@
             cursor: pointer;
         }
 
+        #basicGrid .tui-grid-body-area td[data-column-name='status']:first-line {
+            color: #007bff;
+            cursor: pointer;
+        }
+
         #saveRow {
             float: right;
             color: #fff;
@@ -2228,9 +2233,10 @@
                         rowArr = {'file': '<i class="bi bi-file-earmark-arrow-down"></i>', 'basic_id': result.basic[i].basic_id};
 
                         if (result.basic[i].standard_count == 0) {
-                            rowArr['status'] = 'EMPTY';
+                            rowArr['status'] = '<span style="color:red">EMPTY</span>';
+
                         } else {
-                            rowArr['status'] = 'PROGRESS';
+                            rowArr['status'] = '<span style="color:blue">PROGRESS</span>';
                         }
 
                         for (var j = 0; j < result.basic[i].basic_standard.length; j++) {
@@ -2244,7 +2250,7 @@
                     basicgrid.resetData(dataArr);
 
                     basicgrid.on('click', (ev) => {
-                        if (ev.targetType === 'cell' && ev.columnName === '2') {
+                        if (ev.targetType === 'cell' && ev.columnName === '170') {
                             var value_basic = ev.nativeEvent.srcElement;
 
                             SearchBreed(value_basic);
@@ -2341,9 +2347,10 @@
                         rowArr = {'file': '<i class="bi bi-file-earmark-arrow-down"></i>', 'basic_id': result.basic[i].basic_id};
 
                         if (result.basic[i].standard_count == 0) {
-                            rowArr['status'] = 'EMPTY';
+                            rowArr['status'] = '<span style="color:red">EMPTY</span>';
+
                         } else {
-                            rowArr['status'] = 'PROGRESS';
+                            rowArr['status'] = '<span style="color:blue">PROGRESS</span>';
                         }
 
                         for (var j = 0; j < result.basic[i].basic_standard.length; j++) {
@@ -2357,7 +2364,7 @@
                     basicgrid.resetData(dataArr);
 
                     basicgrid.on('click', (ev) => {
-                        if (ev.targetType === 'cell' && ev.columnName === '2') {
+                        if (ev.targetType === 'cell' && ev.columnName === '170') {
                             var value_sample = ev.nativeEvent.srcElement;
 
                             SearchBreed(value_sample);
@@ -3200,10 +3207,10 @@
                 success: function (result) {
                     $(".breed_title").text("계통명 (ID) : " + e.innerText);
 
-                    var header_list = $("#header_list");
+                    var header_list = $("#breed_header_list");
                     var header_add = "";
 
-                    var breed_list = $("#breed_list");
+                    var breed_list = $("#breed_breed_list");
                     var add_list = "";
 
                     var detail_list = $(".detail_list");

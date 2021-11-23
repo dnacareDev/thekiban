@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class DataListServiceImpl implements DataListService {
@@ -22,5 +23,10 @@ public class DataListServiceImpl implements DataListService {
   @Override
   public int InsertDataList(DataList dataList) {
     return mapper.InsertDataList(dataList);
+  }
+
+  @Override
+  public List<Map<String, String>> SelectDateGroup(String datalist_type) {
+    return mapper.SelectDateGroup(datalist_type);
   }
 }

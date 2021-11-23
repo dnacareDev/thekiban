@@ -687,8 +687,8 @@
                             </div>
                         </div>
                         <div class='card-extra mt-10 mb-10 mr-20 plus_btn_submit1'>
-                            <button type='button' id="cancelRow" onclick="cancelRow()" style="visibility: hidden;">취소</button>
-                            <button type='button' id="saveRow" onclick="saveRow()" style="visibility: hidden;">저장</button>
+                            <button type='button' id="cancelRow" onclick="cancelRow()">취소</button>
+                            <button type='button' id="saveRow" onclick="saveRow()">저장</button>
                         </div>
                         <div class="card-body" style="padding-top: 0;">
                             <div class="bg-white">
@@ -1370,12 +1370,9 @@
 
                     rowdata[k] = obj;
                 }
-                // $("#excel_data1").empty();
+
+                $("#excel_data1").empty();
                 $("#excel_data1").append(html);
-
-                var jsonObj = tableToJson(document.getElementById("excel_data1"));
-
-                $("#excel_list1").val(JSON.stringify(jsonObj));
             };
 
             reader1.readAsBinaryString(input1.files[0]);
@@ -1386,13 +1383,64 @@
     function openExcel() {
         if (tablechk === 0) {
             $("#data_upload2").modal();
+
+            let data = {"datalist_type": 'sample'};
+
+            $.ajax(
+                {
+                    url: 'selectSampleDateGroup',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: data,
+                    success: function (result) {
+                        var data_list = $("#uploadDate");
+                        var data_add = "";
+
+                        for (var i = 0; i < result.dataGroup.length; i++) {
+                            data_add += '<tr>';
+                            data_add += '<td>' + (i + 1) + '</td>';
+                            data_add += '<td>' + result.dataGroup[i].datalist_date + '</td>';
+                            data_add += '<td>' + result.dataGroup[i].cnt + '</td>';
+                            data_add += '</tr>';
+                        }
+
+                        data_list.empty();
+                        data_list.append(data_add);
+                    }
+                });
         } else {
             $("#data_upload12").modal();
+
+            let data = {"datalist_type": 'sample_outcome'};
+
+            $.ajax(
+                {
+                    url: 'selectDateGroup',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: data,
+                    success: function (result) {
+                        var data_list = $("#uploadDate1");
+                        var data_add = "";
+
+                        for (var i = 0; i < result.dataGroup.length; i++) {
+                            data_add += '<tr>';
+                            data_add += '<td>' + (i + 1) + '</td>';
+                            data_add += '<td>' + result.dataGroup[i].datalist_date + '</td>';
+                            data_add += '<td>' + result.dataGroup[i].cnt + '</td>';
+                            data_add += '</tr>';
+                        }
+
+                        data_list.empty();
+                        data_list.append(data_add);
+                    }
+                });
         }
     }
 
     /* 엑셀 등록 창 */
 
+    let now = null;
     /* 엑셀 입력 */
     function InsertExcel() {
         if (tablechk === 0) {
@@ -1407,7 +1455,42 @@
                 data.push(arr);
             });
 
-            $("#excelForm").submit();
+            var jsonObj = tableToJson(document.getElementById("excel_data"));
+
+            $.ajax(
+                {
+                    url: 'excelSample',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        "excel_list": JSON.stringify(jsonObj)
+                    },
+                    success: function (result) {
+                        now = new Date(+ new Date() + 3240 * 10000).toISOString().split("T")[0];
+
+                        let listData = [];
+
+                        let sample_name = $("#CropSelect").val();
+
+                        let lData = {"datalist_type": 'sample', "datalist_date": now, "sample_name" : sample_name};
+
+                        listData.push(lData);
+
+                        $.ajax(
+                            {
+                                url: 'insertSampleDataList',
+                                method: 'POST',
+                                dataType: 'json',
+                                data: {
+                                    "listData": JSON.stringify(listData)
+                                },
+                                success: function (result) {
+                                    location.reload();
+                                }
+                            })
+                    }
+                }
+            )
         } else {
             var data1 = [];
 
@@ -1420,7 +1503,42 @@
                 data1.push(arr);
             });
 
-            $("#excelForm1").submit();
+            var jsonObj = tableToJson(document.getElementById("excel_data"));
+
+            $.ajax(
+                {
+                    url: 'excelIncome',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        "excel_list": JSON.stringify(jsonObj)
+                    },
+                    success: function (result) {
+                        now = new Date(+ new Date() + 3240 * 10000).toISOString().split("T")[0];
+
+                        let listData = [];
+
+                        let sample_name = $("#CropSelect").val();
+
+                        let lData = {"datalist_type": 'sample_outcome', "datalist_date": now, "sample_name" : sample_name};
+
+                        listData.push(lData);
+
+                        $.ajax(
+                            {
+                                url: 'insertDataList',
+                                method: 'POST',
+                                dataType: 'json',
+                                data: {
+                                    "listData": JSON.stringify(listData)
+                                },
+                                success: function (result) {
+                                    location.reload();
+                                }
+                            })
+                    }
+                }
+            )
         }
     }
 
@@ -2108,18 +2226,20 @@
 
                                 var data = {"sample_id": sample_id, "sample_name": sample_name, "sample_value": sample_value};
 
-                                $.ajax(
-                                    {
-                                        url: 'updateSample',
-                                        method: 'POST',
-                                        dataType: 'json',
-                                        data: data,
-                                        success: function (result) {
-                                            if (result == 0) {
-                                                return Alert("수정에 실패하였습니다.")
+                                if(sample_id != null) {
+                                    $.ajax(
+                                        {
+                                            url: 'updateSample',
+                                            method: 'POST',
+                                            dataType: 'json',
+                                            data: data,
+                                            success: function (result) {
+                                                if (result == 0) {
+                                                    return Alert("수정에 실패하였습니다.")
+                                                }
                                             }
-                                        }
-                                    });
+                                        });
+                                }
                             }
                         }
                     });
@@ -2450,10 +2570,10 @@
     }
 
     var lastID = 0;
+    let input_data = [];
 
     function insertRow() {
-        $("#saveRow").css("visibility", "");
-        $("#cancelRow").css("visibility", "");
+        $(".plus_btn_submit1").css("display", "block");
 
         if (tablechk === 0) {
             var cnt = samplegrid.getRowCount();
@@ -2465,24 +2585,19 @@
             samplegrid.prependRow(newRow);
             samplegrid.check(cnt);
 
-            var input_data = [];
+            input_data.push({'key': 'sample_name', 'value': $("#CropSelect").val()});
 
-            input_data.push(samplegrid.getCheckedRows()[0]);
+            samplegrid.on('afterChange', (ev) => {
+                for(let i = 0; i < ev.changes.length; i++) {
+                    let key = ev.changes[i].columnName;
+                    let value = ev.changes[i].value;
 
-            $.ajax(
-                {
-                    url: 'insertSample',
-                    method: 'POST',
-                    dataType: 'json',
-                    data: {
-                        "input_data": JSON.stringify(input_data)
-                    },
-                    success: function (result) {
-                        if (result != null) {
-                            lastID = result.sample_id;
-                        }
-                    }
-                });
+                    let data = {'key': key, 'value': value};
+
+                    input_data.push(data);
+                }
+            });
+
         } else {
             var cnt1 = outcomegrid.getRowCount();
 
@@ -2516,25 +2631,18 @@
 
     function saveRow() {
         if (tablechk === 0) {
-            var data = [];
-
-            var data_in = samplegrid.getCheckedRows()[0];
-
-            data.push(data_in);
-
             $.ajax(
                 {
-                    url: 'updateInsertSample',
+                    url: 'insertSample',
                     method: 'POST',
                     dataType: 'json',
                     data: {
-                        "data": JSON.stringify(data)
+                        "input_data": JSON.stringify(input_data)
                     },
                     success: function (result) {
-                        if (result == 0) {
-                            return Alert("저장에 실패하였습니다.");
-                        } else {
-                            location.reload();
+                        if (result != null) {
+                            console.log(result);
+                            // location.reload();
                         }
                     }
                 });
@@ -2607,8 +2715,7 @@
                 });
         }
 
-        $("#saveRow").css("visibility", "hidden");
-        $("#cancelRow").css("visibility", "hidden");
+        $(".plus_btn_submit1").css("display", "none");
     }
 
 

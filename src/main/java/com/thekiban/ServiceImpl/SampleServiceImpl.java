@@ -180,4 +180,9 @@ public class SampleServiceImpl implements SampleService {
   {
     return mapper.SearchBreedStandard(detail, user_id, breed_id);
   }
+
+  @Override
+  public List<Sample> SearchSampleExcel(String sample_name) {
+    return mapper.SearchSampleExcel(sample_name);
+  }
 }

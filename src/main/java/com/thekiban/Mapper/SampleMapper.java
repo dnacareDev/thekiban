@@ -96,5 +96,8 @@ public interface SampleMapper {
   // 품종별 정보값 조회
   List<Standard> SearchBreedStandard(@Param("detail") List<Detail> detail, @Param("user_id") int user_id, @Param("breed_id") int breed_id);
 
+  List<Sample> SearchSampleExcel(@Param("sample_name") String sample_name);
+
+
 }
 

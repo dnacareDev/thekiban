@@ -1,6 +1,7 @@
 package com.thekiban.Service;
 
 import com.thekiban.Entity.*;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -92,5 +93,8 @@ public interface SampleService {
 
   // 품종별 정보값 조회
   List<Standard> SearchBreedStandard(List<Detail> detail, int user_id, int breed_id);
+
+  List<Sample> SearchSampleExcel(String sample_name);
+
 
 }

@@ -2394,9 +2394,10 @@
                         rowArr = {'file': '<i class="bi bi-file-earmark-arrow-down"></i>', 'breed_id': result.breed[i].breed_id};
 
                         if (result.breed[i].standard_count == 0) {
-                            rowArr['status'] = 'EMPTY';
+                            rowArr['status'] = '<span style="color:red">EMPTY</span>';
+
                         } else {
-                            rowArr['status'] = 'PROGRESS';
+                            rowArr['status'] = '<span style="color:blue">PROGRESS</span>';
                         }
 
                         for (var j = 0; j < result.breed[i].breed_standard.length; j++) {
@@ -2547,10 +2548,11 @@
 
                         rowArr = {'file': '<i class="bi bi-file-earmark-arrow-down"></i>', 'breed_id': result.breed[i].breed_id};
 
-                        if (result.breed[i].standard_count == 0) {
-                            rowArr['status'] = 'EMPTY';
+                        if (result.basic[i].standard_count == 0) {
+                            rowArr['status'] = '<span style="color:red">EMPTY</span>';
+
                         } else {
-                            rowArr['status'] = 'PROGRESS';
+                            rowArr['status'] = '<span style="color:blue">PROGRESS</span>';
                         }
 
                         for (var j = 0; j < result.breed[i].breed_standard.length; j++) {

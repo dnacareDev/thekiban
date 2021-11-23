@@ -113,4 +113,7 @@ public interface BreedService
 
 	List<Detail> SelectDetail();
 
+	List<Breed> SearchBreedList(String breed_name);
+
+
 }

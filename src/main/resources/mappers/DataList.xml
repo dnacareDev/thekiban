@@ -15,4 +15,9 @@
         (#{datalist_id}, #{datalist_type}, #{datalist_date}, #{target_id})
     </insert>
 
+    <select id="SelectDateGroup" resultType="hashmap">
+        SELECT datalist_type, datalist_date, COUNT(target_id) AS cnt FROM dataList
+        WHERE datalist_type = #{datalist_type}
+        GROUP BY datalist_date
+    </select>
 </mapper>

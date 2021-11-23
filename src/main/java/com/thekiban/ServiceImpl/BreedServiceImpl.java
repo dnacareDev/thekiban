@@ -243,4 +243,9 @@ public class BreedServiceImpl implements BreedService
 	public List<Detail> SelectDetail() {
 		return mapper.SelectDetail();
 	}
+
+	@Override
+	public List<Breed> SearchBreedList(String breed_name) {
+		return mapper.SearchBreedList(breed_name);
+	}
 }

@@ -944,7 +944,7 @@
         }, 5);
     }
 
-    function moveFunction(f) {
+   /* function moveFunction(f) {
 
         for (let k = 0; k < navLi.length; k++) {
             navLi[k].classList.remove("active");
@@ -968,7 +968,7 @@
         navLi[f].classList.add("active");
         contentLi[f].classList.add("active");
         contentLi[f].classList.add("show");
-    }
+    }*/
 
     /* 엑셀 업로드 버튼 */
     function filesFunction() {
@@ -1110,7 +1110,7 @@
 
             $.ajax(
                 {
-                    url: 'selectDataList',
+                    url: 'selectDateGroup',
                     method: 'POST',
                     dataType: 'json',
                     data: data,
@@ -1118,32 +1118,45 @@
                         var data_list = $("#dataExcel_list");
                         var data_add = "";
 
-                        let count = 0;
-
-                        console.log(result);
-
-                        for (var i = 0; i < result.dataList.length; i++) {
-                            let date = result.dataList[0].datalist_date;
-
-                            if(result.dataList[i].datalist_date = date) {
-                                count++;
-                            }
-
+                        for (var i = 0; i < result.dataGroup.length; i++) {
+                            data_add += '<tr>';
+                            data_add += '<td>' + (i + 1) + '</td>';
+                            data_add += '<td>' + result.dataGroup[i].datalist_date + '</td>';
+                            data_add += '<td>' + result.dataGroup[i].cnt + '</td>';
+                            data_add += '</tr>';
                         }
-
-                        data_add += '<tr>';
-                        data_add += '<td>' + 1 + '</td>';
-                        data_add += '<td>' + result.dataList[0].datalist_date + '</td>';
-                        data_add += '<td>' + count + '</td>';
-                        data_add += '</tr>';
 
                         data_list.empty();
                         data_list.append(data_add);
                     }
                 });
-
         } else {
             $("#data_upload12").modal();
+
+            let data = {"datalist_type": 'income_outcome'};
+
+            $.ajax(
+                {
+                    url: 'selectDateGroup',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: data,
+                    success: function (result) {
+                        var data_list = $("#dataExcel_list");
+                        var data_add = "";
+
+                        for (var i = 0; i < result.dataGroup.length; i++) {
+                            data_add += '<tr>';
+                            data_add += '<td>' + (i + 1) + '</td>';
+                            data_add += '<td>' + result.dataGroup[i].datalist_date + '</td>';
+                            data_add += '<td>' + result.dataGroup[i].cnt + '</td>';
+                            data_add += '</tr>';
+                        }
+
+                        data_list.empty();
+                        data_list.append(data_add);
+                    }
+                });
         }
     }
 
