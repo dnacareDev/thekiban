@@ -715,13 +715,13 @@
                             </div>
                         </div>
                         <div class='card-extra mt-10 mb-10 mr-20 plus_btn_submit1'>
-                            <button type='button' id="cancelRow" onclick="cancelRow()" style="visibility: hidden;">취소</button>
-                            <button type='button' id="saveRow" onclick="saveRow()" style="visibility: hidden;">저장</button>
+                            <button type='button' id="cancelRow" onclick="cancelRow()">취소</button>
+                            <button type='button' id="saveRow" onclick="saveRow()">저장</button>
                         </div>
                         <div class="card-body" style="padding-top: 0;">
                             <div class="bg-white">
                                 <div id="basicGrid"></div>
-                                <div id="remainGrid" style="visibility: hidden; height: 0;"></div>
+                                <div id="basicRemainGrid" style="visibility: hidden; height: 0;"></div>
                                 <div class="row">
                                     <div class="col-4" id="btn1">
                                         <button class="btn btn-icon btn-light btn-circle" onclick="insertRow()">
@@ -1910,11 +1910,11 @@
 	        {
 	            var total_id1 = [];
 
-	            var l1 = remaingrid.getCheckedRows().length;
+	            var l1 = basicRemainGrid.getCheckedRows().length;
 
 	            for (let i = 0; i < l1; i++)
 	            {
-	                total_id1.push(remaingrid.getCheckedRows()[i].basic_remain_id)
+	                total_id1.push(basicRemainGrid.getCheckedRows()[i].basic_remain_id)
 	            }
 
 	            var data1 = {'basic_remain_id' : total_id1};
@@ -2155,13 +2155,13 @@
     $("#basicTable1").click(function () {
         tablechk = 0;
         $("#basicGrid").css("display", "block");
-        $("#remainGrid").css("display", "none");
+        $("#basicRemainGrid").css("display", "none");
     })
 
     $("#basicTable2").click(function () {
         tablechk = 1;
         $("#basicGrid").css("display", "none");
-        $("#remainGrid").css({"display": "block", "visibility": "", "height": "auto"});
+        $("#basicRemainGrid").css({"display": "block", "visibility": "", "height": "auto"});
     })
 
     var basicgrid = null;
@@ -2276,18 +2276,20 @@
 
                                 var data = {"basic_id": basic_id, "detail_id": detail_id, "standard": standard};
 
-                                $.ajax(
-                                    {
-                                        url: 'updateBasic',
-                                        method: 'POST',
-                                        dataType: 'json',
-                                        data: data,
-                                        success: function (result) {
-                                            if (result == 0) {
-                                                return Alert("수정에 실패하였습니다.")
+                                if(basic_id != null) {
+                                    $.ajax(
+                                        {
+                                            url: 'updateBasic',
+                                            method: 'POST',
+                                            dataType: 'json',
+                                            data: data,
+                                            success: function (result) {
+                                                if (result == 0) {
+                                                    return Alert("수정에 실패하였습니다.")
+                                                }
                                             }
-                                        }
-                                    });
+                                        });
+                                }
                             }
                         }
                     });
@@ -2390,18 +2392,20 @@
 
                                 var data = {"basic_id": basic_id, "detail_id": detail_id, "standard": standard};
 
-                                $.ajax(
-                                    {
-                                        url: 'updateBasic',
-                                        method: 'POST',
-                                        dataType: 'json',
-                                        data: data,
-                                        success: function (result) {
-                                            if (result == 0) {
-                                                return Alert("수정에 실패하였습니다.")
+                                if(basic_id != null) {
+                                    $.ajax(
+                                        {
+                                            url: 'updateBasic',
+                                            method: 'POST',
+                                            dataType: 'json',
+                                            data: data,
+                                            success: function (result) {
+                                                if (result == 0) {
+                                                    return Alert("수정에 실패하였습니다.")
+                                                }
                                             }
-                                        }
-                                    });
+                                        });
+                                }
                             }
                         }
                     });
@@ -2422,8 +2426,8 @@
                 dataType: 'json',
                 data: data1,
                 success: function (result1) {
-                    remaingrid = new tui.Grid({
-                        el: document.getElementById('remainGrid'),
+                    basicRemainGrid = new tui.Grid({
+                        el: document.getElementById('basicRemainGrid'),
                         scrollX: false,
                         scrollY: false,
                         data: result1.basicRemain,
@@ -2482,31 +2486,31 @@
                     var before = null;
                     var after = null;
 
-                    remaingrid.on('afterChange', (ev) => {
+                    basicRemainGrid.on('afterChange', (ev) => {
                         before = ev.changes[0].prevValue;
                         after = ev.changes[0].value;
 
                         if (after != before) {
-                            var basic_remain_id = remaingrid.getRow(ev.changes[0].rowKey).basic_remain_id;
+                            var basic_remain_id = basicRemainGrid.getRow(ev.changes[0].rowKey).basic_remain_id;
                             var basic_remain_name = ev.changes[0].columnName;
                             var basic_remain_value = after;
 
-                            console.log(remaingrid.getRow(ev.changes[0].rowKey));
-
                             var data = {"basic_remain_id": basic_remain_id, "basic_remain_name": basic_remain_name, "basic_remain_value": basic_remain_value};
 
-                            $.ajax(
-                                {
-                                    url: 'updateBasicRemain',
-                                    method: 'POST',
-                                    dataType: 'json',
-                                    data: data,
-                                    success: function (result) {
-                                        if (result == 0) {
-                                            return Alert("수정에 실패하였습니다.")
+                            if(basic_remain_id != null) {
+                                $.ajax(
+                                    {
+                                        url: 'updateBasicRemain',
+                                        method: 'POST',
+                                        dataType: 'json',
+                                        data: data,
+                                        success: function (result) {
+                                            if (result == 0) {
+                                                return Alert("수정에 실패하였습니다.")
+                                            }
                                         }
-                                    }
-                                });
+                                    });
+                            }
                         }
                     });
 
@@ -2527,36 +2531,38 @@
                 dataType: 'json',
                 data: data1,
                 success: function (result1) {
-                    remaingrid.resetData(result1.basicRemain);
+                    basicRemainGrid.resetData(result1.basicRemain);
 
-                    remaingrid.setPerPage(limit1);
+                    basicRemainGrid.setPerPage(limit1);
 
                     var before = null;
                     var after = null;
 
-                    remaingrid.on('afterChange', (ev) => {
+                    basicRemainGrid.on('afterChange', (ev) => {
                         before = ev.changes[0].prevValue;
                         after = ev.changes[0].value;
 
                         if(after != before) {
-                            var basic_remain_id = remaingrid.getRow(ev.changes[0].rowKey).basic_remain_id;
+                            var basic_remain_id = basicRemainGrid.getRow(ev.changes[0].rowKey).basic_remain_id;
                             var basic_remain_name = ev.changes[0].columnName;
                             var basic_remain_value = after;
 
                             var data = {"basic_remain_id": basic_remain_id, "basic_remain_name": basic_remain_name, "basic_remain_value": basic_remain_value};
 
-                            $.ajax(
-                                {
-                                    url: 'updateBasicRemain',
-                                    method: 'POST',
-                                    dataType: 'json',
-                                    data: data,
-                                    success: function (result) {
-                                        if (result == 0) {
-                                            return Alert("수정에 실패하였습니다.")
+                            if(basic_remain_id != null) {
+                                $.ajax(
+                                    {
+                                        url: 'updateBasicRemain',
+                                        method: 'POST',
+                                        dataType: 'json',
+                                        data: data,
+                                        success: function (result) {
+                                            if (result == 0) {
+                                                return Alert("수정에 실패하였습니다.")
+                                            }
                                         }
-                                    }
-                                });
+                                    });
+                            }
                         }
                     });
                 }
@@ -2577,60 +2583,29 @@
     	}
     	else
     	{
-	        $("#saveRow").css("visibility", "");
-	        $("#cancelRow").css("visibility", "");
+            $(".plus_btn_submit1").css("display", "block");
 
-	        if(tablechk == 0)
+            if(tablechk == 0)
 	        {
 	            var cnt = basicgrid.getRowCount();
 
-	            const newRow = {'basic_id' : '', '169' : $("#CropSelect").val()};
+	            const newRow = {'169': $("#CropSelect").val()};
 
 	            basicgrid.prependRow(newRow);
 	            basicgrid.check(cnt);
-
-	            var data = [];
-
-	            var data_in = {"basic_name" : $("#CropSelect").val(), "offset" : $("#offset").val()};
-
-	            data.push(data_in);
-
-	            $.ajax(
-	            {
-	                url: 'insertBasic',
-	                method: 'POST',
-	                dataType: 'json',
-	                data: {"data" : JSON.stringify(data)},
-	                success: function (result)
-	                {
-	                    if (result != null)
-	                    {
-	                        lastID = result.basic[0].basic_id;
-
-	                        basicgrid.on('afterChange', (ev) =>
-	                        {
-	                            for(let i = 0; i < ev.changes.length; i++)
-	                            {
-	                                saveDetail_id.push(ev.changes[i].columnName);
-	                                saveStandard.push(ev.changes[i].value);
-	                            }
-	                        })
-	                    }
-	                }
-	            });
 	        }
 	        else
 	        {
-	            var cnt1 = remaingrid.getRowCount();
+	            var cnt1 = basicRemainGrid.getRowCount();
 
 	            const newRow = {basic_name : $("#CropSelect").val()};
 
-	            remaingrid.prependRow(newRow);
-	            remaingrid.check(cnt1);
+                basicRemainGrid.prependRow(newRow);
+                basicRemainGrid.check(cnt1);
 
 	            var input_data1 = [];
 
-	            input_data1.push(remaingrid.getCheckedRows()[0]);
+	            input_data1.push(basicRemainGrid.getCheckedRows()[0]);
 
 	            $.ajax(
 	            {
@@ -2652,34 +2627,29 @@
 
     function saveRow() {
         if(tablechk == 0) {
-            var basic_id = lastID;
+            let input_data = [];
 
-            var data = [];
-
-            var data_in = {"basic_id": basic_id, "detail_id": saveDetail_id, "standard": saveStandard};
-
-            data.push(data_in);
+            input_data.push(basicgrid.getCheckedRows()[0]);
 
             $.ajax(
                 {
-                    url: 'updateAllBasic',
+                    url: 'insertBasic',
                     method: 'POST',
                     dataType: 'json',
                     data: {
-                        "data": JSON.stringify(data)
+                        "input_data" : JSON.stringify(input_data)
                     },
-                    success: function (result) {
-                        if (result == 0) {
-                            return Alert("저장에 실패하였습니다.");
-                        } else {
-                            location.reload();
+                    success: function (result)
+                    {
+                        if(result != null) {
+                            console.log(result);
                         }
                     }
                 });
         } else {
             var data1 = [];
 
-            var data_in1 = remaingrid.getCheckedRows()[0];
+            var data_in1 = basicRemainGrid.getCheckedRows()[0];
 
             data1.push(data_in1);
 
@@ -2704,28 +2674,13 @@
     }
 
     function cancelRow() {
-        var total_id = [];
+        if (tablechk === 0) {
+            basicgrid.removeCheckedRows();
+        } else {
+            basicRemainGrid.removeCheckedRows();
+        }
 
-        total_id.push(lastID);
-
-        var data = {'basic_id': total_id};
-
-        $.ajax(
-            {
-                url: 'deleteBasic',
-                method: 'POST',
-                dataType: 'json',
-                data: data,
-                success: function (result) {
-                    if (result == 0) {
-                    } else {
-                        OtherBasicgrid(1);
-                    }
-                }
-            });
-
-        $("#saveRow").css("visibility", "hidden");
-        $("#cancelRow").css("visibility", "hidden");
+        $(".plus_btn_submit1").css("display", "none");
     }
 
     /* 엑셀 업로드 버튼 */
@@ -2948,12 +2903,8 @@
                     // console.log(obj);
                     rowdata[k] = obj;
                 }
-                // $("#excel_data1").empty();
+                $("#excel_data1").empty();
                 $("#excel_data1").append(html);
-
-                var jsonObj = tableToJson(document.getElementById("excel_data1"));
-
-                $("#excel_list1").val(JSON.stringify(jsonObj));
             };
 
             reader1.readAsBinaryString(input1.files[0]);
@@ -2969,6 +2920,8 @@
         }
     }
     /* 엑셀 등록 창 */
+
+    let now = null;
 
     /* 엑셀 입력 */
     function InsertExcel() {
@@ -2992,7 +2945,43 @@
             }
 
             $("#excel_list").val(JSON.stringify(total_arr));
-            $("#excelForm").submit();
+
+            $.ajax(
+                {
+                    url: 'excelBasic',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        "excel_list": JSON.stringify(total_arr)
+                    },
+                    success: function (result) {
+                        now = new Date(+new Date() + 3240 * 10000).toISOString().split("T")[0];
+
+                        let listData = [];
+
+                        let income_name = $("#CropSelect").val();
+
+                        let lData = {"datalist_type": 'basic', "datalist_date": now, "income_name": income_name};
+
+                        listData.push(lData);
+
+                        $.ajax(
+                            {
+                                url: 'insertDataList',
+                                method: 'POST',
+                                dataType: 'json',
+                                data: {
+                                    "listData": JSON.stringify(listData)
+                                },
+                                success: function (result) {
+                                    location.reload();
+                                }
+                            })
+                    }
+                }
+            )
+
+
         } else {
             var data1 = [];
 

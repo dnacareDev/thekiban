@@ -12,6 +12,7 @@ import java.util.*;
 
 import com.thekiban.Entity.*;
 import com.thekiban.Service.BreedService;
+import com.thekiban.Service.DataListService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,10 @@ public class BasicController
 
 	@Autowired
 	private BreedService breedService;
-	
+
+	@Autowired
+	private DataListService d_service;
+
 	@Autowired
 	private FileController fileController;
 	
@@ -110,9 +114,9 @@ public class BasicController
 	// 원종 등록
 	@ResponseBody
 	@RequestMapping("insertBasic")
-	public Map<String, Object> InsertBasic(@RequestParam("data") String data)
+	public Map<String, Object> InsertBasic(@RequestParam("input_data") String input_data)
 	{
-		JSONArray arr = new JSONArray(data);
+		JSONArray arr = new JSONArray(input_data);
 
 		JSONObject obj = new JSONObject();
 
@@ -120,8 +124,7 @@ public class BasicController
 			obj = arr.getJSONObject(i);
 		}
 
-		String basic_name = obj.getString("basic_name");
-		int offset = 0;
+		String basic_name = obj.getString("169");
 
 		Map<String, Object> result = new LinkedHashMap<String, Object>();
 
@@ -133,7 +136,7 @@ public class BasicController
 		int insert_basic = service.InsertBasic(basic);
 		int insert_standard = service.InsertStandard(basic.getBasic_id(), basic_name, detail);
 
-		List<Basic> basic_list = service.SelectBasicAll(basic_name, offset);
+		List<Basic> basic_list = service.SelectBasicAll(basic_name);
 
 		List<Standard> standard = new ArrayList<Standard>();
 
@@ -146,6 +149,8 @@ public class BasicController
 				basic_list.get(i).setBasic_standard(standard);
 			}
 		}
+
+		System.out.println(basic_list);
 
 		result.put("basic", basic_list);
 		result.put("new_basic", basic);
@@ -184,9 +189,9 @@ public class BasicController
 	// 원종 수정
 	@ResponseBody
 	@RequestMapping("updateAllBasic")
-	public int UpdateAllBasic(@RequestParam("data") String data)
+	public int UpdateAllBasic(@RequestParam("input_data") String input_data)
 	{
-		JSONArray arr = new JSONArray(data);
+		JSONArray arr = new JSONArray(input_data);
 
 		System.out.println(arr);
 
@@ -196,40 +201,41 @@ public class BasicController
 			obj = arr.getJSONObject(i);
 		}
 
-		int basic_id = obj.getInt("basic_id");
-
-		JSONArray detail_id = obj.getJSONArray("detail_id");
-
-		JSONArray standard = obj.getJSONArray("standard");
-
-		List<Standard> list = new ArrayList<Standard>();
-
-		Standard item = new Standard();
+//		int basic_id = obj.getInt("basic_id");
+//
+//		JSONArray detail_id = obj.getJSONArray("detail_id");
+//
+//		JSONArray standard = obj.getJSONArray("standard");
+//
+//		List<Standard> list = new ArrayList<Standard>();
+//
+//		Standard item = new Standard();
+//
+//		for(int i = 0; i < detail_id.length(); i++)
+//		{
+//			item = new Standard();
+//
+//			if(standard.get(i).equals(""))
+//			{
+//				item.setBasic_id(basic_id);
+//				item.setDetail_id(detail_id.getInt(i));
+//				item.setStandard(null);
+//
+//				list.add(item);
+//			}
+//			else
+//			{
+//				item.setBasic_id(basic_id);
+//				item.setDetail_id(detail_id.getInt(i));
+//				item.setStandard((String)standard.get(i));
+//
+//				list.add(item);
+//			}
+//		}
 		
-		for(int i = 0; i < detail_id.length(); i++)
-		{
-			item = new Standard();
-			
-			if(standard.get(i).equals(""))
-			{
-				item.setBasic_id(basic_id);
-				item.setDetail_id(detail_id.getInt(i));
-				item.setStandard(null);
-				
-				list.add(item);
-			}
-			else
-			{
-				item.setBasic_id(basic_id);
-				item.setDetail_id(detail_id.getInt(i));
-				item.setStandard((String)standard.get(i));
-				
-				list.add(item);
-			}
-		}
-		
-		int result = service.UpdateAllBasic(list);
-		
+//		int result = service.UpdateAllBasic(list);
+		int result = 0;
+
 		return result;
 	}
 
@@ -479,6 +485,8 @@ public class BasicController
 
 		JSONArray arr = new JSONArray(excel_list);
 
+		System.out.println(arr);
+
 		List<Standard> standards = new ArrayList<Standard>();
 
 		for(int i = 0; i < arr.length(); i++)
@@ -550,6 +558,54 @@ public class BasicController
 		mv.setViewName("redirect:/basic");
 
 		return mv;
+	}
+
+	@ResponseBody
+	@RequestMapping("insertDataList")
+	public DataList InsertDataList(@ModelAttribute DataList dataList, @RequestParam("listData") String listData) {
+		JSONArray arr = new JSONArray(listData);
+
+		JSONObject obj = arr.getJSONObject(0);
+
+		List<Basic> basic = service.SearchBasicExcel(obj.getString("basic_name"));
+
+		for (int i = 0; i < basic.size(); i++) {
+			if(Objects.equals(basic.get(i).getCreate_date().split(" ")[0], obj.getString("datalist_date"))) {
+				dataList.setDatalist_type(obj.getString("datalist_type"));
+				dataList.setDatalist_date(obj.getString("datalist_date"));
+				dataList.setTarget_id(basic.get(i).getBasic_id());
+			} else {
+				continue;
+			}
+
+			d_service.InsertDataList(dataList);
+		}
+
+		return dataList;
+	}
+
+	@ResponseBody
+	@RequestMapping("selectDateGroup")
+	public Map<String, Object> SelectDateGroup(@RequestParam("datalist_type") String datalist_type) {
+		Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+		List<Map<String, String>> dataGroup = d_service.SelectDateGroup(datalist_type);
+
+		result.put("dataGroup", dataGroup);
+
+		return result;
+	}
+
+	@ResponseBody
+	@RequestMapping("searchBasicExcel")
+	public Map<String, Object> SearchBasicExcel(@RequestParam("basic_name") String basic_name) {
+		Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+		List<Basic> basic = service.SearchBasicExcel(basic_name);
+
+		result.put("basic", basic);
+
+		return result;
 	}
 
 	// 품종 검색

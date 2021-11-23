@@ -378,6 +378,8 @@ public class BreedController
 
 		JSONArray arr = new JSONArray(excel_list);
 
+		System.out.println(arr);
+
 		List<Standard> standards = new ArrayList<Standard>();
 
 		for(int i = 0; i < arr.length(); i++)

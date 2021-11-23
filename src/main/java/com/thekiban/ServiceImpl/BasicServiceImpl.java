@@ -87,9 +87,9 @@ public class BasicServiceImpl implements BasicService
 	
 	// 원종별 전체 조회
 	@Override
-	public List<Basic> SelectBasicAll(String basic_name, int offset)
+	public List<Basic> SelectBasicAll(String basic_name)
 	{
-		return mapper.SelectBasicAll(basic_name, offset);
+		return mapper.SelectBasicAll(basic_name);
 	}
 	
 	// 원종별 정보 전체 조회
@@ -227,5 +227,10 @@ public class BasicServiceImpl implements BasicService
 	@Override
 	public int InsertRemainExcel(BasicRemain basicRemain) {
 		return mapper.InsertRemainExcel(basicRemain);
+	}
+
+	@Override
+	public List<Basic> SearchBasicExcel(String basic_name) {
+		return mapper.SearchBasicExcel(basic_name);
 	}
 }

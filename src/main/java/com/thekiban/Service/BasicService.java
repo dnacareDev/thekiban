@@ -38,7 +38,7 @@ public interface BasicService
 	int InsertStandard(int basic_id, String basic_name, List<Detail> detail);
 
 	// 원종 전체 조회
-	List<Basic> SelectBasicAll(String basic_name, int offset);
+	List<Basic> SelectBasicAll(String basic_name);
 	
 	// 원종별 정보 전체 조회
 	List<Standard> SelectBasicStandard(int basic_id);
@@ -96,4 +96,7 @@ public interface BasicService
 	int InsertBasicExcel(List<Standard> standards);
 
 	int InsertRemainExcel(BasicRemain basicRemain);
+
+	List<Basic> SearchBasicExcel(String basic_name);
+
 }

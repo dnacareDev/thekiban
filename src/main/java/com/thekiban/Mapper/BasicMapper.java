@@ -40,7 +40,7 @@ public interface BasicMapper
 	int InsertStandard(@Param("basic_id") int basic_id, @Param("basic_name") String basic_name, @Param("detail") List<Detail> detail);
 	
 	// 원종별 전체 조회
-	List<Basic> SelectBasicAll(@Param("basic_name") String basic_name, @Param("offset") int offset);
+	List<Basic> SelectBasicAll(@Param("basic_name") String basic_name);
 	
 	// 원종별 정보 전체 조회
 	List<Standard> SelectBasicStandard(int basic_id);
@@ -99,5 +99,8 @@ public interface BasicMapper
 	int InsertBasicExcel(List<Standard> standards);
 
 	int InsertRemainExcel(BasicRemain basicRemain);
+
+	List<Basic> SearchBasicExcel(@Param("basic_name") String basic_name);
+
 
 }

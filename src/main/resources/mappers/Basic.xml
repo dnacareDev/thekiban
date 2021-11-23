@@ -136,6 +136,18 @@
                 #{basic_remain_out}, #{basic_remain_re}, #{basic_remain_person}, #{basic_remain_date})
     </insert>
 
+    <select id="SearchBasicExcel" resultType="Basic">
+        SELECT *,
+        (SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE s.basic_id = b.basic_id AND d.detail_origin = 1 AND s.standard IS NOT NULL) AS
+        standard_count
+        FROM basic b
+        <choose>
+            <when test="basic_name != 'none'">
+                WHERE b.basic_name = #{basic_name}
+            </when>
+        </choose>
+    </select>
+
     <!-- 재고 등록 -->
     <insert id="InsertRemain" parameterType="BasicRemain">
         INSERT INTO basicRemain
@@ -160,7 +172,6 @@
         FROM basic b
         WHERE b.basic_name = #{basic_name}
         ORDER BY b.basic_id DESC
-            LIMIT #{offset}, 10
     </select>
 
     <!-- 원종별 정보 전체 조회 -->
