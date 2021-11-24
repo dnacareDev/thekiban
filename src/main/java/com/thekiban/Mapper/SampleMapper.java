@@ -27,7 +27,9 @@ public interface SampleMapper {
 
   // 시교자원 검색
   List<Sample> SearchSample(@Param("sample_name") String sample_name, @Param("offset") int offset, @Param("limit") int limit);
-  
+
+  List<Sample> SearchSampleTest(@Param("sample_name") String sample_name);
+
   // 수출자원 검색
   List<SampleOutcome> SearchOutcome(@Param("sample_name") String sample_name, @Param("offset") int offset, @Param("limit") int limit);
 

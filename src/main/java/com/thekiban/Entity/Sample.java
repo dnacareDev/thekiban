@@ -1,5 +1,6 @@
 package com.thekiban.Entity;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.*;
 
 @Getter

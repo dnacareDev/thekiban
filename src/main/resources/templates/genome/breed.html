@@ -2338,8 +2338,10 @@
                         rowHeaders: ['checkbox'],
                         editingEvent: 'click',
                         columns: [],
+                        pagination: true,
                         pageOptions: {
-                            perPage: limit,
+                            useClient: true,
+                            perPage: limit
                         }
                     });
 
@@ -2399,6 +2401,8 @@
                     }
 
                     breedgrid.resetData(dataArr);
+
+                    breedgrid.setPerPage(limit);
 
                     breedgrid.on('check', (ev) => {
                         breedgrid.getRow(ev.rowKey).breed_id;
@@ -2509,9 +2513,7 @@
 
                     for (let i = 0; i < result.display.length; i++) {
                         var colHeader = result.display[i].detail_title;
-                        console.log(colHeader);
                         var colName = result.display[i].detail_id;
-                        console.log(colName);
                         headerName[i] = result.display[i].detail_id;
 
                         var arr = {};
@@ -2519,7 +2521,7 @@
                         if (result.display[i].detail_spec == '기본 정보') {
                             arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 180}
                         } else {
-                            arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc'}
+                            arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 500}
                         }
 
                         headerArr.push(arr);
@@ -2550,6 +2552,8 @@
                     }
 
                     breedgrid.resetData(dataArr);
+
+                    breedgrid.setPerPage(limit);
 
                     breedgrid.on('click', (ev) => {
                         if (ev.targetType === 'cell' && ev.columnName === '2') {

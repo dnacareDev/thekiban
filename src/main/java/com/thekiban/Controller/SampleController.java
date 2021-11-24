@@ -1,5 +1,7 @@
 package com.thekiban.Controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thekiban.Entity.*;
 import com.thekiban.Service.DataListService;
 import com.thekiban.Service.SampleService;
@@ -21,6 +23,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -235,6 +238,7 @@ public class SampleController {
   @RequestMapping("searchSample")
   public Map<String, Object> SearchSample(@RequestParam("sample_name") String sample_name, @RequestParam("page_num") int page_num, @RequestParam("limit") int limit) {
     Map<String, Object> result = new LinkedHashMap<String, Object>();
+    Map<String, Object> result1 = new LinkedHashMap<String, Object>();
 
     int count = service.SelectSampleCount(sample_name);
 
@@ -249,6 +253,30 @@ public class SampleController {
     result.put("offset", offset);
 
     return result;
+  }
+
+  @ResponseBody
+  @RequestMapping("searchSample1")
+  public Map<String, Object> SearchSample1(@RequestParam("sample_name") String sample_name, @RequestParam("limit") int limit) {
+    Map<String, Object> result1 = new LinkedHashMap<String, Object>();
+
+    int count = service.SelectSampleCount(sample_name);
+
+    List<Sample> Sample = service.SearchSampleTest(sample_name);
+
+    result1.put("result", true);
+
+    Map<String, Object> paging = new LinkedHashMap<String, Object>();
+//    paging.put("page", 1);
+    paging.put("totalCount", count);
+
+    Map<String, Object> data_in = new LinkedHashMap<String, Object>();
+    data_in.put("contents", Sample);
+    data_in.put("pagination", paging);
+
+    result1.put("data", data_in);
+
+    return result1;
   }
 
   // 수출자원 검색
@@ -585,4 +613,6 @@ public class SampleController {
 
     return result;
   }
+
+
 }
