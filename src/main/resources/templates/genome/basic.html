@@ -658,11 +658,13 @@
             padding: 5px 10px;
             border-radius: 5px;
         }
-        .plus_btn_submit1{
-        	display:none;
+
+        .plus_btn_submit1 {
+            display: none;
         }
-        .bg-white .row{
-        	padding-top: 0;
+
+        .bg-white .row {
+            padding-top: 0;
         }
     </style>
 </head>
@@ -1829,95 +1831,72 @@
     })
 
     // 원종 삭제
-    function DeleteBasic()
-    {
-    	var user_type = $("#user_type").val();
+    function DeleteBasic() {
+        var user_type = $("#user_type").val();
 
-    	if(user_type != 0)
-    	{
-    		return Alert("삭제 권한이 없습니다.");
-    	}
-    	else
-    	{
-	        if(tablechk === 0)
-	        {
-	            var total_id = [];
+        if (user_type != 0) {
+            return Alert("삭제 권한이 없습니다.");
+        } else {
+            if (tablechk === 0) {
+                var total_id = [];
 
-	            var l = basicgrid.getCheckedRows().length;
+                var l = basicgrid.getCheckedRows().length;
 
-	            for(let i = 0; i < l; i++)
-	            {
-	                total_id.push(basicgrid.getCheckedRows()[i].basic_id)
-	            }
+                for (let i = 0; i < l; i++) {
+                    total_id.push(basicgrid.getCheckedRows()[i].basic_id)
+                }
 
-	            var data = {'basic_id' : total_id};
+                var data = {'basic_id': total_id};
 
-	            if(confirm("삭제하시겠습니까?") == true)
-	            {
-	                $.ajax(
-                    {
-                        url: 'deleteBasic',
-                        method: 'POST',
-                        dataType: 'json',
-                        data: data,
-                        success: function(result)
+                if (confirm("삭제하시겠습니까?") == true) {
+                    $.ajax(
                         {
-                            if (result == 0)
-                            {
-                            	return Alert("삭제에 실패하였습니다.");
+                            url: 'deleteBasic',
+                            method: 'POST',
+                            dataType: 'json',
+                            data: data,
+                            success: function (result) {
+                                if (result == 0) {
+                                    return Alert("삭제에 실패하였습니다.");
+                                } else {
+                                    location.reload();
+                                }
                             }
-                            else
-                            {
-                                location.reload();
-                            }
-                        }
-                    });
-	            }
-	            else
-	            {
-	            	return false;
-	            }
-	        }
-	        else
-	        {
-	            var total_id1 = [];
+                        });
+                } else {
+                    return false;
+                }
+            } else {
+                var total_id1 = [];
 
-	            var l1 = basicRemainGrid.getCheckedRows().length;
+                var l1 = basicRemainGrid.getCheckedRows().length;
 
-	            for (let i = 0; i < l1; i++)
-	            {
-	                total_id1.push(basicRemainGrid.getCheckedRows()[i].basic_remain_id)
-	            }
+                for (let i = 0; i < l1; i++) {
+                    total_id1.push(basicRemainGrid.getCheckedRows()[i].basic_remain_id)
+                }
 
-	            var data1 = {'basic_remain_id' : total_id1};
+                var data1 = {'basic_remain_id': total_id1};
 
-	            if (confirm("삭제하시겠습니까?") == true)
-	            {
-	                $.ajax(
-                    {
-                        url: 'deleteBasicRemain',
-                        method: 'POST',
-                        dataType: 'json',
-                        data: data1,
-                        success: function (result)
+                if (confirm("삭제하시겠습니까?") == true) {
+                    $.ajax(
                         {
-                            if (result == 0)
-                            {
-                            	return Alert("삭제에 실패하였습니다.");
+                            url: 'deleteBasicRemain',
+                            method: 'POST',
+                            dataType: 'json',
+                            data: data1,
+                            success: function (result) {
+                                if (result == 0) {
+                                    return Alert("삭제에 실패하였습니다.");
+                                } else {
+                                    location.reload();
+                                }
                             }
-                            else
-                            {
-                                location.reload();
-                            }
-                        }
-                    });
-	            }
-	            else
-	            {
-	            	return false;
-	            }
-	        }
-    	}
+                        });
+                } else {
+                    return false;
+                }
+            }
+        }
     }
 
     // 표시항목 버튼
@@ -2019,19 +1998,16 @@
     }
 
     // 통합 분석
-    function AnalysisBtn()
-    {
+    function AnalysisBtn() {
         var total_id = [];
 
         var l = basicgrid.getCheckedRows().length;
 
-        for(let i = 0; i < l; i++)
-        {
+        for (let i = 0; i < l; i++) {
             total_id.push(basicgrid.getCheckedRows()[i].basic_id)
         }
 
-        if(total_id.length != 0)
-        {
+        if (total_id.length != 0) {
             location.href = "/analysis?total_id=" + total_id + "&type=" + 2;
         }
     }
@@ -2186,7 +2162,7 @@
                         var colName = result.display[i].detail_id;
                         headerName[i] = result.display[i].detail_id;
 
-                        if(result.display[i].detail_spec == '기본 정보') {
+                        if (result.display[i].detail_spec == '기본 정보') {
                             arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 180}
                         } else {
                             arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 500}
@@ -2237,7 +2213,7 @@
                     var after = null;
 
                     basicgrid.on('afterChange', (ev) => {
-                        for(let i = 0; i < ev.changes.length; i++) {
+                        for (let i = 0; i < ev.changes.length; i++) {
                             before = ev.changes[i].prevValue;
                             after = ev.changes[i].value;
 
@@ -2248,7 +2224,7 @@
 
                                 var data = {"basic_id": basic_id, "detail_id": detail_id, "standard": standard};
 
-                                if(basic_id != null) {
+                                if (basic_id != null) {
                                     $.ajax(
                                         {
                                             url: 'updateBasic',
@@ -2302,7 +2278,7 @@
                         var colName = result.display[i].detail_id;
                         headerName[i] = result.display[i].detail_id;
 
-                        if(result.display[i].detail_spec == '기본 정보') {
+                        if (result.display[i].detail_spec == '기본 정보') {
                             arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 180}
                         } else {
                             arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 500}
@@ -2353,7 +2329,7 @@
                     var after = null;
 
                     basicgrid.on('afterChange', (ev) => {
-                        for(let i = 0; i < ev.changes.length; i++) {
+                        for (let i = 0; i < ev.changes.length; i++) {
                             before = ev.changes[i].prevValue;
                             after = ev.changes[i].value;
 
@@ -2364,7 +2340,7 @@
 
                                 var data = {"basic_id": basic_id, "detail_id": detail_id, "standard": standard};
 
-                                if(basic_id != null) {
+                                if (basic_id != null) {
                                     $.ajax(
                                         {
                                             url: 'updateBasic',
@@ -2469,7 +2445,7 @@
 
                             var data = {"basic_remain_id": basic_remain_id, "basic_remain_name": basic_remain_name, "basic_remain_value": basic_remain_value};
 
-                            if(basic_remain_id != null) {
+                            if (basic_remain_id != null) {
                                 $.ajax(
                                     {
                                         url: 'updateBasicRemain',
@@ -2514,14 +2490,14 @@
                         before = ev.changes[0].prevValue;
                         after = ev.changes[0].value;
 
-                        if(after != before) {
+                        if (after != before) {
                             var basic_remain_id = basicRemainGrid.getRow(ev.changes[0].rowKey).basic_remain_id;
                             var basic_remain_name = ev.changes[0].columnName;
                             var basic_remain_value = after;
 
                             var data = {"basic_remain_id": basic_remain_id, "basic_remain_name": basic_remain_name, "basic_remain_value": basic_remain_value};
 
-                            if(basic_remain_id != null) {
+                            if (basic_remain_id != null) {
                                 $.ajax(
                                     {
                                         url: 'updateBasicRemain',
@@ -2545,60 +2521,51 @@
     var saveDetail_id = [];
     var saveStandard = [];
 
-    function insertRow()
-    {
-    	var user_type = $("#user_type").val();
+    function insertRow() {
+        var user_type = $("#user_type").val();
 
-    	if(user_type != 0 && user_type != 2)
-    	{
-    		return Alert("등록 권한이 없습니다.");
-    	}
-    	else
-    	{
+        if (user_type != 0 && user_type != 2) {
+            return Alert("등록 권한이 없습니다.");
+        } else {
             $(".plus_btn_submit1").css("display", "block");
 
-            if(tablechk == 0)
-	        {
-	            var cnt = basicgrid.getRowCount();
+            if (tablechk == 0) {
+                var cnt = basicgrid.getRowCount();
 
-	            const newRow = {'169': $("#CropSelect").val()};
+                const newRow = {'169': $("#CropSelect").val()};
 
-	            basicgrid.prependRow(newRow);
-	            basicgrid.check(cnt);
-	        }
-	        else
-	        {
-	            var cnt1 = basicRemainGrid.getRowCount();
+                basicgrid.prependRow(newRow);
+                basicgrid.check(cnt);
+            } else {
+                var cnt1 = basicRemainGrid.getRowCount();
 
-	            const newRow = {basic_name : $("#CropSelect").val()};
+                const newRow = {basic_name: $("#CropSelect").val()};
 
                 basicRemainGrid.prependRow(newRow);
                 basicRemainGrid.check(cnt1);
 
-	            var input_data1 = [];
+                var input_data1 = [];
 
-	            input_data1.push(basicRemainGrid.getCheckedRows()[0]);
+                input_data1.push(basicRemainGrid.getCheckedRows()[0]);
 
-	            $.ajax(
-	            {
-	                url: 'insertBasicRemain',
-	                method: 'POST',
-	                dataType: 'json',
-	                data: {"input_data": JSON.stringify(input_data1)},
-	                success: function (result)
-	                {
-	                    if (result != null)
-	                    {
-	                        lastID = result.basic_remain_id;
-	                    }
-	                }
-	            });
-	        }
-    	}
+                $.ajax(
+                    {
+                        url: 'insertBasicRemain',
+                        method: 'POST',
+                        dataType: 'json',
+                        data: {"input_data": JSON.stringify(input_data1)},
+                        success: function (result) {
+                            if (result != null) {
+                                lastID = result.basic_remain_id;
+                            }
+                        }
+                    });
+            }
+        }
     }
 
     function saveRow() {
-        if(tablechk == 0) {
+        if (tablechk == 0) {
             let input_data = [];
 
             input_data.push(basicgrid.getCheckedRows()[0]);
@@ -2609,11 +2576,10 @@
                     method: 'POST',
                     dataType: 'json',
                     data: {
-                        "input_data" : JSON.stringify(input_data)
+                        "input_data": JSON.stringify(input_data)
                     },
-                    success: function (result)
-                    {
-                        if(result != null) {
+                    success: function (result) {
+                        if (result != null) {
                             console.log(result);
                         }
                     }
@@ -2634,7 +2600,7 @@
                         "data": JSON.stringify(data1)
                     },
                     success: function (result) {
-                        if(result == 0) {
+                        if (result == 0) {
                             return Alert("저장에 실패하였습니다.");
                         } else {
                             location.reload();
@@ -2722,7 +2688,7 @@
                         html += "</thead>";
                     } else if (i !== 1) {
                         html += "<tbody class='text-center'>";
-                        html += "<tr  class='excel_tr'>";
+                        html += "<tr class='excel_tr'>";
 
                         var tmp = Object.keys(rowdata[1]);
                         var j = 0;
@@ -2730,10 +2696,18 @@
                         $.each(rowdata[i], function (idx, value) {
                             // 공백처리
                             if (idx == tmp[j]) {
-
-                                html += "<td class='excel'><span>" + value + "</span></td>";
-                                j++;
-
+                                if (idx === "__EMPTY_9") {
+                                    if(value == "-") {
+                                        html += "<td class='excel'><span>" + value + "</span></td>";
+                                        j++;
+                                    } else {
+                                        html += "<td class='excel'><span>" + excelDateToJSDate(value) + "</span></td>";
+                                        j++
+                                    }
+                                } else {
+                                    html += "<td class='excel'><span>" + value + "</span></td>";
+                                    j++;
+                                }
                             } else {
                                 var idx_str = idx.replace(/[^0-9]/g, '');
                                 var tmp_str = tmp[j].replace(/[^0-9]/g, '');
@@ -2745,8 +2719,18 @@
                                     html += "<td><span> </span></td>";
                                 }
 
-                                html += "<td class='excel'><span>" + value + "</span></td>";
-                                j++;
+                                if (idx === "__EMPTY_9") {
+                                    if(value == "-") {
+                                        html += "<td class='excel'><span>" + value + "</span></td>";
+                                        j++;
+                                    } else {
+                                        html += "<td class='excel'><span>" + excelDateToJSDate(value) + "</span></td>";
+                                        j++
+                                    }
+                                } else {
+                                    html += "<td class='excel'><span>" + value + "</span></td>";
+                                    j++;
+                                }
 
                                 j = idx_str;
                                 j++;
@@ -2828,10 +2812,12 @@
                         $.each(rowdata[i], function (idx, value) {
                             // 공백처리
                             if (idx == tmp[j]) {
-
-                                html += "<td class='excel'><span>" + value + "</span></td>";
-                                j++;
-
+                                if (idx === "__EMPTY_9") {
+                                    html += "<td class='excel'><span>" + excelDateToJSDate(value) + "</span></td>";
+                                } else {
+                                    html += "<td class='excel'><span>" + value + "</span></td>";
+                                    j++;
+                                }
                             } else {
                                 var idx_str = idx.replace(/[^0-9]/g, '');
                                 var tmp_str = tmp[j].replace(/[^0-9]/g, '');
@@ -2843,8 +2829,12 @@
                                     html += "<td><span> </span></td>";
                                 }
 
-                                html += "<td class='excel'><span>" + value + "</span></td>";
-                                j++;
+                                if (idx === "__EMPTY_9") {
+                                    html += "<td class='excel'><span>" + excelDateToJSDate(value) + "</span></td>";
+                                } else {
+                                    html += "<td class='excel'><span>" + value + "</span></td>";
+                                    j++;
+                                }
 
                                 j = idx_str;
                                 j++;
@@ -2875,6 +2865,7 @@
                     // console.log(obj);
                     rowdata[k] = obj;
                 }
+
                 $("#excel_data1").empty();
                 $("#excel_data1").append(html);
             };
@@ -2885,13 +2876,25 @@
 
     // date to string
     function excelDateToJSDate(excelDate) {
-        var date = new Date(Math.round((excelDate - (25567 + 2)) * 86400 * 1000));
-        return date.toISOString().split('T')[0];
+        var date = new Date(Math.round((excelDate - (25567 + 2)) * 86400 * 1000)),
+            m = '' + (date.getMonth() + 1),
+            d = '' + date.getDate(),
+            y = date.getFullYear();
+
+        if (m.length < 2) {
+            m = '0' + m;
+        }
+
+        if (d.length < 2) {
+            d = '0' + d;
+        }
+
+        return [y, m, d].join('-');
     }
 
     /* 엑셀 등록 창 */
     function openExcel() {
-        if(tablechk == 0) {
+        if (tablechk == 0) {
             $("#data_upload2").modal();
 
             let data = {"datalist_type": 'basic'};
@@ -2922,6 +2925,7 @@
             $("#data_upload21").modal();
         }
     }
+
     /* 엑셀 등록 창 */
 
     let now = null;
@@ -2933,14 +2937,12 @@
 
             var total_arr = [];
             var excel_arr = [];
-            for(var i = 0; i < excel_list.length; i++)
-            {
+            for (var i = 0; i < excel_list.length; i++) {
                 excel_arr = [];
 
                 var items = $(".excel_tr")[i].childNodes;
 
-                for(var j = 0; j < items.length; j++)
-                {
+                for (var j = 0; j < items.length; j++) {
                     excel_arr.push(items[j].innerText);
                 }
 
@@ -3001,6 +3003,7 @@
             $("#excelForm1").submit();
         }
     }
+
     /* 엑셀 코드 */
 
     // table to json
@@ -3025,13 +3028,6 @@
         }
 
         return data;
-    }
-
-    // date to string
-    function excelDateToJSDate(excelDate) {
-        var date = new Date(Math.round((excelDate - (25567 + 2)) * 86400 * 1000));
-        var converted_date = date.toISOString().split('T')[0];
-        return converted_date;
     }
 
     function SearchBasic(e) {
