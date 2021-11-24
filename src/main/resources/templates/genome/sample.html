@@ -1368,7 +1368,9 @@
                     for (var n = 0; n < keys.length; n++) {
                         if (chk[n] == undefined) {
                             excel[n] = {key: keys[n], value: " "};
-                        } else if (keys[n] === "도입연월일") {
+                        } else if (keys[n] === "일자") {
+                            excel[n] = {key: keys[n], value: excelDateToJSDate(chk[n])};
+                        } else if (keys[n] === "시교 종료 일자") {
                             excel[n] = {key: keys[n], value: excelDateToJSDate(chk[n])};
                         } else {
                             excel[n] = {key: keys[n], value: "" + chk[n]};
@@ -1576,8 +1578,14 @@
 
         return data;
     }
-
     // table to json
+
+    // date to string
+    function excelDateToJSDate(excelDate) {
+        var date = new Date(Math.round((excelDate - (25567 + 2)) * 86400 * 1000));
+        var converted_date = date.toISOString().split('T')[0];
+        return converted_date;
+    }
 
     /* form data to json */
     jQuery.fn.serializeObject = function () {

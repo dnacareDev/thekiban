@@ -99,7 +99,18 @@
                     (#{item.detail_id}, #{item.breed_id}, #{item.standard})
         </foreach>
     </insert>
-    
+
+    <select id="SearchBreedExcel" resultType="Breed">
+        SELECT *,
+        (SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE s.breed_id = b.breed_id AND d.detail_origin = 1 AND s.standard IS NOT NULL) AS standard_count
+        FROM breed b
+        <choose>
+            <when test="breed_name != 'none'">
+                WHERE b.breed_name = #{breed_name}
+            </when>
+        </choose>
+    </select>
+
     <!-- 품종별 전체 조회 -->
     <select id="SelectBreedAll" resultType="Breed">
     	SELECT *,

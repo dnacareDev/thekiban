@@ -1304,12 +1304,12 @@
         </div>
     </div>
 
-    <!-- 데이터 목록 창 -->
+    <!-- 품종관리 데이터 목록 창 -->
     <div class="modal-basic modal fade show pop7" id="data_upload2" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white ">
                 <div class="modal-header" style="border: none">
-                    <h6 class="modal-title">시교자원관리 > 데이터 등록</h6>
+                    <h6 class="modal-title">품종관리 > 데이터 등록</h6>
                 </div>
                 <div class="modal-body">
                     <div class="form-group mb-0">
@@ -1327,38 +1327,24 @@
                                 </tr>
                                 </thead>
                                 <tbody id="uploadDate">
-                                <tr>
-                                    <td></td>
-                                    <td>2021-08-15</td>
-                                    <td>185</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>2021-08-15</td>
-                                    <td>185</td>
-                                </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer" style="border: none">
-                    <div class="col-4">
-                        <div class="row" style="justify-content: center;">
-                            <div id="pageNum1" style="text-align:center; margin: 2% 0 0 0;"></div>
-                        </div>
-                    </div>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- 데이터 등록 모달창 -->
+    <!-- 품종관리 데이터 등록 모달창 -->
     <div class="modal-basic modal fade show pop5" id="data_upload" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white ">
                 <div class="modal-header" style="border: none">
-                    <h6 class="modal-title">시교자원관리 > 데이터 등록</h6>
+                    <h6 class="modal-title">품종관리 > 데이터 등록</h6>
                 </div>
                 <div class="modal-body">
                     <div class="form-group mb-0">
@@ -1375,13 +1361,21 @@
                                     <thead>
                                     <th><span class="title">작물</span></th>
                                     <th><span class="title">시교명(ID)</span></th>
-                                    <th><span class="title">목표 지역</span></th>
-                                    <th><span class="title">구분</span></th>
-                                    <th><span class="title">교배번호</span></th>
-                                    <th><span class="title">종자번호(ID)</span></th>
-                                    <th><span class="title">현 종자량(g)</span></th>
-                                    <th><span class="title">기내 발아율(%)</span></th>
-                                    <th><span class="title">기내 순도율(%)</span></th>
+                                    <th><span class="title">품종명</span></th>
+                                    <th><span class="title">모계 계통명(ID)</span></th>
+                                    <th><span class="title">부계 계통명(ID)</span></th>
+                                    <th><span class="title">생산판매 (신고번호)</span></th>
+                                    <th><span class="title">생산판매 (신고일자)</span></th>
+                                    <th><span class="title">보호출원 (출원번호)</span></th>
+                                    <th><span class="title">보호출원 (출원일자)</span></th>
+                                    <th><span class="title">보호등록 (등록번호)</span></th>
+                                    <th><span class="title">보호등록 (등록일자)</span></th>
+                                    <th><span class="title">미등록 (현지 상업화)</span></th>
+                                    <th><span class="title">목표 시장</span></th>
+                                    <th><span class="title">형태 구분1</span></th>
+                                    <th><span class="title">형태 구분2</span></th>
+                                    <th><span class="title">작물 타입1</span></th>
+                                    <th><span class="title">작물 타입2</span></th>
                                     <th><span class="title">비고</span></th>
                                     </thead>
                                     <tbody>
@@ -1393,7 +1387,7 @@
                 </div>
                 <div class="modal-footer" style="border: none">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" onclick="dataToggle('#data_upload', '#data_upload2');">취소</button>
-                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" onclick="dataToggle('#data_upload1', '#data_upload2'); InsertExcel();">등록</button>
+                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" onclick="dataToggle('#data_upload', '#data_upload2'); InsertExcel();">등록</button>
                 </div>
             </div>
         </div>
@@ -1681,15 +1675,6 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>asdasd</td>
-                                    <td>asdasd</td>
-                                    <td>asdasd</td>
-                                    <td>asdasd</td>
-                                    <td>asdasd</td>
-                                    <td>asdasd</td>
-                                    <td>asdasd</td>
-                                </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -2119,7 +2104,7 @@
                     var add_list = "";
 
                     for (var i = 0; i < result.sample.length; i++) {
-                        if (result.sample[i].sample_code === e.innerText) {
+                        if (result.sample[i].sample_code === e) {
                             add_list += '<tr>';
                             add_list += '<td>' + result.sample[i].sample_name + '</td>';
                             add_list += '<td>' + result.sample[i].sample_code + '</td>';
@@ -2162,7 +2147,7 @@
                     var add_list = "";
 
                     for (var i = 0; i < result.sample.length; i++) {
-                        if (result.sample[i].sample_code === e.innerText) {
+                        if (result.sample[i].sample_code === e) {
                             add_list += '<tr>';
                             add_list += '<td>' + result.sample[i].sample_name + '</td>';
                             add_list += '<td>' + result.sample[i].sample_code + '</td>';
@@ -2839,7 +2824,11 @@
                 for (var n = 0; n < keys.length; n++) {
                     if (chk[n] == undefined) {
                         excel[n] = {key: keys[n], value: " "};
-                    } else if (keys[n] === "도입연월일") {
+                    } else if (keys[n] === "생산판매 (신고일자)") {
+                        excel[n] = {key: keys[n], value: excelDateToJSDate(chk[n])};
+                    } else if (keys[n] === "보호출원 (출원일자)") {
+                        excel[n] = {key: keys[n], value: excelDateToJSDate(chk[n])};
+                    } else if (keys[n] === "보호등록 (등록일자)") {
                         excel[n] = {key: keys[n], value: excelDateToJSDate(chk[n])};
                     } else {
                         excel[n] = {key: keys[n], value: "" + chk[n]};
@@ -2860,6 +2849,31 @@
     /* 엑셀 등록 창 */
     function openExcel() {
         $("#data_upload2").modal();
+
+        let data = {"datalist_type": 'breed'};
+
+        $.ajax(
+            {
+                url: 'selectBreedDateGroup',
+                method: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function (result) {
+                    var data_list = $("#uploadDate");
+                    var data_add = "";
+
+                    for (var i = result.dataGroup.length - 1; i > -1; i--) {
+                        data_add += '<tr>';
+                        data_add += '<td>' + (i + 1) + '</td>';
+                        data_add += '<td>' + result.dataGroup[i].datalist_date + '</td>';
+                        data_add += '<td>' + result.dataGroup[i].cnt + '</td>';
+                        data_add += '</tr>';
+                    }
+
+                    data_list.empty();
+                    data_list.append(data_add);
+                }
+            });
     }
 
     /* 엑셀 등록 창 */
@@ -2883,7 +2897,42 @@
         }
 
         $("#excel_list").val(JSON.stringify(total_arr));
-        $("#excelForm").submit();
+
+        $.ajax(
+            {
+                url: 'excelBreed',
+                method: 'POST',
+                dataType: 'json',
+                data: {
+                    "excel_list": JSON.stringify(total_arr)
+                },
+                success: function (result) {
+
+                    now = new Date(+new Date() + 3240 * 10000).toISOString().split("T")[0];
+
+                    let listData = [];
+
+                    let breed_name = $("#CropSelect").val();
+
+                    let lData = {"datalist_type": 'breed', "datalist_date": now, "breed_name": breed_name};
+
+                    listData.push(lData);
+
+                    $.ajax(
+                        {
+                            url: 'insertBreedDataList',
+                            method: 'POST',
+                            dataType: 'json',
+                            data: {
+                                "listData": JSON.stringify(listData)
+                            },
+                            success: function (result) {
+                                location.reload();
+                            }
+                        })
+                }
+            }
+        )
     }
 
     /* 엑셀 코드 */
@@ -2911,8 +2960,14 @@
 
         return data;
     }
-
     // table to json
+
+    // date to string
+    function excelDateToJSDate(excelDate) {
+        var date = new Date(Math.round((excelDate - (25567 + 2)) * 86400 * 1000));
+        var converted_date = date.toISOString().split('T')[0];
+        return converted_date;
+    }
 
     function SearchBreed(e) {
         var breed_name = $("#CropSelect").val();

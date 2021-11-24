@@ -2,6 +2,7 @@ package com.thekiban.Controller;
 
 import com.thekiban.Entity.*;
 import com.thekiban.Service.BreedService;
+import com.thekiban.Service.DataListService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,16 +21,16 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class BreedController
 {
 	@Autowired
 	private BreedService service;
+
+	@Autowired
+	private DataListService d_service;
 	
 	@Autowired
 	private FileController fileController;
@@ -373,12 +374,11 @@ public class BreedController
 		return result;
 	}
 
+	@ResponseBody
 	@RequestMapping("excelBreed")
-	public ModelAndView excelUpload(ModelAndView mv, @RequestParam("excel_list") String excel_list) {
+	public int excelUpload(ModelAndView mv, @RequestParam("excel_list") String excel_list) {
 
 		JSONArray arr = new JSONArray(excel_list);
-
-		System.out.println(arr);
 
 		List<Standard> standards = new ArrayList<Standard>();
 
@@ -406,11 +406,57 @@ public class BreedController
 			}
 		}
 
-		int standard_result = service.InsertExcel(standards);
+		service.InsertExcel(standards);
 
-		mv.setViewName("redirect:/breed");
+		return 1;
+	}
 
-		return mv;
+	@ResponseBody
+	@RequestMapping("insertBreedDataList")
+	public DataList InsertDataList(@ModelAttribute DataList dataList, @RequestParam("listData") String listData) {
+		JSONArray arr = new JSONArray(listData);
+
+		JSONObject obj = arr.getJSONObject(0);
+
+		List<Breed> breed = service.SearchBreedExcel(obj.getString("breed_name"));
+
+		for (int i = 0; i < breed.size(); i++) {
+			if(Objects.equals(breed.get(i).getCreate_date().split(" ")[0], obj.getString("datalist_date"))) {
+				dataList.setDatalist_type(obj.getString("datalist_type"));
+				dataList.setDatalist_date(obj.getString("datalist_date"));
+				dataList.setTarget_id(breed.get(i).getBreed_id());
+			} else {
+				continue;
+			}
+
+			d_service.InsertDataList(dataList);
+		}
+
+		return dataList;
+	}
+
+	@ResponseBody
+	@RequestMapping("selectBreedDateGroup")
+	public Map<String, Object> SelectDateGroup(@RequestParam("datalist_type") String datalist_type) {
+		Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+		List<Map<String, String>> dataGroup = d_service.SelectDateGroup(datalist_type);
+
+		result.put("dataGroup", dataGroup);
+
+		return result;
+	}
+
+	@ResponseBody
+	@RequestMapping("searchBreedExcel")
+	public Map<String, Object> SearchBreedExcel(@RequestParam("breed_name") String breed_name) {
+		Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+		List<Breed> breed = service.SearchBreedExcel(breed_name);
+
+		result.put("breed", breed);
+
+		return result;
 	}
 
 }
