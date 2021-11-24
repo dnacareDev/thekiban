@@ -114,49 +114,39 @@ public class BasicController
 	// 원종 등록
 	@ResponseBody
 	@RequestMapping("insertBasic")
-	public Map<String, Object> InsertBasic(@RequestParam("input_data") String input_data)
+	public int InsertBasic(@RequestParam("data") String data)
 	{
-		JSONArray arr = new JSONArray(input_data);
+		JSONArray arr = new JSONArray(data);
 
-		JSONObject obj = new JSONObject();
+		List<Standard> standards = new ArrayList<Standard>();
 
-		for(int i = 0; i < arr.length(); i++){
-			obj = arr.getJSONObject(i);
-		}
+		JSONObject item = arr.getJSONObject(0);
 
-		String basic_name = obj.getString("169");
+		String basic_name = item.getString("standard");
 
-		Map<String, Object> result = new LinkedHashMap<String, Object>();
+		List<Detail> detail = service.SearchBasicDetail(basic_name);
 
 		Basic basic = new Basic();
 		basic.setBasic_name(basic_name);
 
-		List<Detail> detail = service.SearchBasicDetail(basic_name);
-
-		int insert_basic = service.InsertBasic(basic);
+		int basic_result = service.InsertBasic(basic);
 		int insert_standard = service.InsertStandard(basic.getBasic_id(), basic_name, detail);
 
-		List<Basic> basic_list = service.SelectBasicAll(basic_name);
+		for (int i = 0; i < arr.length(); i++) {
+			JSONObject item_list = arr.getJSONObject(i);
 
-		List<Standard> standard = new ArrayList<Standard>();
+			Standard standard = new Standard();
 
-		if(!basic_list.isEmpty())
-		{
-			for(int i = 0; i < basic_list.size(); i++)
-			{
-				standard = service.SelectBasicStandard(basic_list.get(i).getBasic_id());
+			standard.setBasic_id(basic.getBasic_id());
+			standard.setDetail_id(item_list.getInt("detail_id"));
+			standard.setStandard(item_list.getString("standard"));
 
-				basic_list.get(i).setBasic_standard(standard);
-			}
+			standards.add(standard);
 		}
 
-		System.out.println(basic_list);
+		service.UpdateAllBasic(standards);
 
-		result.put("basic", basic_list);
-		result.put("new_basic", basic);
-		result.put("detail", detail);
-
-		return result;
+		return 1;
 	}
 
 	// 재고 등록
@@ -193,48 +183,46 @@ public class BasicController
 	{
 		JSONArray arr = new JSONArray(input_data);
 
-		System.out.println(arr);
-
 		JSONObject obj = new JSONObject();
 
 		for (int i = 0; i < arr.length(); i++) {
 			obj = arr.getJSONObject(i);
 		}
 
-//		int basic_id = obj.getInt("basic_id");
-//
-//		JSONArray detail_id = obj.getJSONArray("detail_id");
-//
-//		JSONArray standard = obj.getJSONArray("standard");
-//
-//		List<Standard> list = new ArrayList<Standard>();
-//
-//		Standard item = new Standard();
-//
-//		for(int i = 0; i < detail_id.length(); i++)
-//		{
-//			item = new Standard();
-//
-//			if(standard.get(i).equals(""))
-//			{
-//				item.setBasic_id(basic_id);
-//				item.setDetail_id(detail_id.getInt(i));
-//				item.setStandard(null);
-//
-//				list.add(item);
-//			}
-//			else
-//			{
-//				item.setBasic_id(basic_id);
-//				item.setDetail_id(detail_id.getInt(i));
-//				item.setStandard((String)standard.get(i));
-//
-//				list.add(item);
-//			}
-//		}
+		int basic_id = obj.getInt("basic_id");
+
+		JSONArray detail_id = obj.getJSONArray("detail_id");
+
+		JSONArray standard = obj.getJSONArray("standard");
+
+		List<Standard> list = new ArrayList<Standard>();
+
+		Standard item = new Standard();
+
+		for(int i = 0; i < detail_id.length(); i++)
+		{
+			item = new Standard();
+
+			if(standard.get(i).equals(""))
+			{
+				item.setBasic_id(basic_id);
+				item.setDetail_id(detail_id.getInt(i));
+				item.setStandard(null);
+
+				list.add(item);
+			}
+			else
+			{
+				item.setBasic_id(basic_id);
+				item.setDetail_id(detail_id.getInt(i));
+				item.setStandard((String)standard.get(i));
+
+				list.add(item);
+			}
+		}
 		
-//		int result = service.UpdateAllBasic(list);
-		int result = 0;
+		int result = service.UpdateAllBasic(list);
+//		int result = 0;
 
 		return result;
 	}
