@@ -161,49 +161,42 @@ public class BreedController {
   }
 
   // 품종 수정
-  @ResponseBody
   @RequestMapping("updateAllBreed")
-  public int UpdateAllBreed(@RequestParam("data") String data) {
-    JSONArray arr = new JSONArray(data);
-
-    JSONObject obj = new JSONObject();
-
-    for (int i = 0; i < arr.length(); i++) {
-      obj = arr.getJSONObject(i);
-    }
-
-    int breed_id = obj.getInt("breed_id");
-
-    JSONArray detail_id = obj.getJSONArray("detail_id");
-
-    JSONArray standard = obj.getJSONArray("standard");
+  public ModelAndView UpdateAllBreed(ModelAndView mv, @RequestParam("breed_id") int breed_id, @RequestParam("detail_id") int[] detail_id, @RequestParam("standard") String[] standard)
+  {
+    int result = 0;
 
     List<Standard> list = new ArrayList<Standard>();
 
     Standard item = new Standard();
 
-    for (int i = 0; i < detail_id.length(); i++) {
+    for(int i = 0; i < detail_id.length; i++)
+    {
       item = new Standard();
 
-      if (standard.get(i).equals("")) {
+      if(standard[i].equals(""))
+      {
         item.setBreed_id(breed_id);
-        item.setDetail_id(detail_id.getInt(i));
+        item.setDetail_id(detail_id[i]);
         item.setStandard(null);
 
         list.add(item);
-      } else {
+      }
+      else
+      {
         item.setBreed_id(breed_id);
-        item.setDetail_id(detail_id.getInt(i));
-        item.setStandard((String) standard.get(i));
+        item.setDetail_id(detail_id[i]);
+        item.setStandard(standard[i]);
 
         list.add(item);
       }
     }
 
-    int result = service.UpdateAllBreed(list);
-//		int result = 1;
+    result = service.UpdateAllBreed(list);
 
-    return result;
+    mv.setViewName("redirect:/breed");
+
+    return mv;
   }
 
   // 표시항목 조회

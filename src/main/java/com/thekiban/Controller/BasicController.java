@@ -176,9 +176,9 @@ public class BasicController
 		return result;
 	}
 	
-	// 원종 수정
+	/*// 원종 수정
 	@ResponseBody
-	@RequestMapping("updateAllBasic")
+	@RequestMapping("updateAllBasic1")
 	public int UpdateAllBasic(@RequestParam("input_data") String input_data)
 	{
 		JSONArray arr = new JSONArray(input_data);
@@ -225,6 +225,44 @@ public class BasicController
 //		int result = 0;
 
 		return result;
+	}*/
+
+	@RequestMapping("updateAllBasic")
+	public ModelAndView UpdateAllBasic(ModelAndView mv, @RequestParam("basic_id") int basic_id, @RequestParam("detail_id") int[] detail_id, @RequestParam("standard") String[] standard)
+	{
+		int result = 0;
+
+		List<Standard> list = new ArrayList<Standard>();
+
+		Standard item = new Standard();
+
+		for(int i = 0; i < detail_id.length; i++)
+		{
+			item = new Standard();
+
+			if(standard[i].equals(""))
+			{
+				item.setBasic_id(basic_id);
+				item.setDetail_id(detail_id[i]);
+				item.setStandard(null);
+
+				list.add(item);
+			}
+			else
+			{
+				item.setBasic_id(basic_id);
+				item.setDetail_id(detail_id[i]);
+				item.setStandard(standard[i]);
+
+				list.add(item);
+			}
+		}
+
+		result = service.UpdateAllBasic(list);
+
+		mv.setViewName("redirect:/basic");
+
+		return mv;
 	}
 
 	// 재고 수정
