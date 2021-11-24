@@ -248,4 +248,9 @@ public class BreedServiceImpl implements BreedService
 	public List<Breed> SearchBreedList(String breed_name) {
 		return mapper.SearchBreedList(breed_name);
 	}
+
+	@Override
+	public List<Breed> SearchBreedExcel(String breed_name) {
+		return mapper.SearchBreedExcel(breed_name);
+	}
 }

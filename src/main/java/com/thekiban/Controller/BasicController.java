@@ -480,12 +480,11 @@ public class BasicController
 		return mv;
 	}
 
+	@ResponseBody
 	@RequestMapping("excelBasic")
-	public ModelAndView excelUpload(ModelAndView mv, @RequestParam("excel_list") String excel_list) {
+	public int excelUpload(ModelAndView mv, @RequestParam("excel_list") String excel_list) {
 
 		JSONArray arr = new JSONArray(excel_list);
-
-		System.out.println(arr);
 
 		List<Standard> standards = new ArrayList<Standard>();
 
@@ -513,11 +512,9 @@ public class BasicController
 			}
 		}
 
-		int standard_result = service.InsertBasicExcel(standards);
+		service.InsertBasicExcel(standards);
 
-		mv.setViewName("redirect:/basic");
-
-		return mv;
+		return 1;
 	}
 
 	@RequestMapping("excelRemain")
@@ -561,7 +558,7 @@ public class BasicController
 	}
 
 	@ResponseBody
-	@RequestMapping("insertDataList")
+	@RequestMapping("insertBasicDataList")
 	public DataList InsertDataList(@ModelAttribute DataList dataList, @RequestParam("listData") String listData) {
 		JSONArray arr = new JSONArray(listData);
 
@@ -585,7 +582,7 @@ public class BasicController
 	}
 
 	@ResponseBody
-	@RequestMapping("selectDateGroup")
+	@RequestMapping("selectBasicDateGroup")
 	public Map<String, Object> SelectDateGroup(@RequestParam("datalist_type") String datalist_type) {
 		Map<String, Object> result = new LinkedHashMap<String, Object>();
 

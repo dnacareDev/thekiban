@@ -115,5 +115,7 @@ public interface BreedService
 
 	List<Breed> SearchBreedList(String breed_name);
 
+	List<Breed> SearchBreedExcel(String breed_name);
+
 
 }

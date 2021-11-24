@@ -119,4 +119,7 @@ public interface BreedMapper
 
 	List<Breed> SearchBreedList(@Param("breed_name") String breed_name);
 
+	List<Breed> SearchBreedExcel(@Param("breed_name") String breed_name);
+
+
 }

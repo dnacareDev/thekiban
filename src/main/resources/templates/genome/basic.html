@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:with="user = ${#authentication.principal}">
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org" th:with="user = ${#authentication.principal}">
 <head>
     <!-- 공통 헤더 -->
     <th:block th:include="/../fragments/header.html"></th:block>
@@ -1559,27 +1559,13 @@
                                 </tr>
                                 </thead>
                                 <tbody id="uploadDate">
-                                <tr>
-                                    <td></td>
-                                    <td>2021-08-15</td>
-                                    <td>185</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>2021-08-15</td>
-                                    <td>185</td>
-                                </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer" style="border: none">
-                    <div class="col-4">
-                        <div class="row" style="justify-content: center;">
-                            <div id="pageNum1" style="text-align:center; margin: 2% 0 0 0;"></div>
-                        </div>
-                    </div>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
                 </div>
             </div>
         </div>
@@ -1636,7 +1622,7 @@
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white ">
                 <div class="modal-header" style="border: none">
-                    <h6 class="modal-title">원종관리 > 데이터 등록</h6>
+                    <h6 class="modal-title">원종재고관리 > 데이터 등록</h6>
                 </div>
                 <div class="modal-body">
                     <div class="form-group mb-0">
@@ -1653,28 +1639,14 @@
                                     <th>데이터수</th>
                                 </tr>
                                 </thead>
-                                <tbody id="uploadDate">
-                                <tr>
-                                    <td></td>
-                                    <td>2021-08-15</td>
-                                    <td>185</td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>2021-08-15</td>
-                                    <td>185</td>
-                                </tr>
+                                <tbody id="uploadDate1">
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer" style="border: none">
-                    <div class="col-4">
-                        <div class="row" style="justify-content: center;">
-                            <div id="pageNum1" style="text-align:center; margin: 2% 0 0 0;"></div>
-                        </div>
-                    </div>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
                 </div>
             </div>
         </div>
@@ -1685,7 +1657,7 @@
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white ">
                 <div class="modal-header" style="border: none">
-                    <h6 class="modal-title">원종관리 > 데이터 등록</h6>
+                    <h6 class="modal-title">원종재고관리 > 데이터 등록</h6>
                 </div>
                 <div class="modal-body">
                     <div class="form-group mb-0">
@@ -2794,7 +2766,7 @@
                     for (var n = 0; n < keys.length; n++) {
                         if (chk[n] == undefined) {
                             excel[n] = {key: keys[n], value: " "};
-                        } else if (keys[n] === "도입연월일") {
+                        } else if (keys[n] === "계통번호 부여일") {
                             excel[n] = {key: keys[n], value: excelDateToJSDate(chk[n])};
                         } else {
                             excel[n] = {key: keys[n], value: "" + chk[n]};
@@ -2892,7 +2864,7 @@
                     for (var n = 0; n < keys.length; n++) {
                         if (chk[n] == undefined) {
                             excel[n] = {key: keys[n], value: " "};
-                        } else if (keys[n] === "도입연월일") {
+                        } else if (keys[n] === "일자") {
                             excel[n] = {key: keys[n], value: excelDateToJSDate(chk[n])};
                         } else {
                             excel[n] = {key: keys[n], value: "" + chk[n]};
@@ -2911,10 +2883,41 @@
         }
     }
 
+    // date to string
+    function excelDateToJSDate(excelDate) {
+        var date = new Date(Math.round((excelDate - (25567 + 2)) * 86400 * 1000));
+        return date.toISOString().split('T')[0];
+    }
+
     /* 엑셀 등록 창 */
     function openExcel() {
         if(tablechk == 0) {
             $("#data_upload2").modal();
+
+            let data = {"datalist_type": 'basic'};
+
+            $.ajax(
+                {
+                    url: 'selectBasicDateGroup',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: data,
+                    success: function (result) {
+                        var data_list = $("#uploadDate");
+                        var data_add = "";
+
+                        for (var i = result.dataGroup.length - 1; i > -1; i--) {
+                            data_add += '<tr>';
+                            data_add += '<td>' + (i + 1) + '</td>';
+                            data_add += '<td>' + result.dataGroup[i].datalist_date + '</td>';
+                            data_add += '<td>' + result.dataGroup[i].cnt + '</td>';
+                            data_add += '</tr>';
+                        }
+
+                        data_list.empty();
+                        data_list.append(data_add);
+                    }
+                });
         } else {
             $("#data_upload21").modal();
         }
@@ -2955,19 +2958,20 @@
                         "excel_list": JSON.stringify(total_arr)
                     },
                     success: function (result) {
+
                         now = new Date(+new Date() + 3240 * 10000).toISOString().split("T")[0];
 
                         let listData = [];
 
-                        let income_name = $("#CropSelect").val();
+                        let basic_name = $("#CropSelect").val();
 
-                        let lData = {"datalist_type": 'basic', "datalist_date": now, "income_name": income_name};
+                        let lData = {"datalist_type": 'basic', "datalist_date": now, "basic_name": basic_name};
 
                         listData.push(lData);
 
                         $.ajax(
                             {
-                                url: 'insertDataList',
+                                url: 'insertBasicDataList',
                                 method: 'POST',
                                 dataType: 'json',
                                 data: {
@@ -3021,6 +3025,13 @@
         }
 
         return data;
+    }
+
+    // date to string
+    function excelDateToJSDate(excelDate) {
+        var date = new Date(Math.round((excelDate - (25567 + 2)) * 86400 * 1000));
+        var converted_date = date.toISOString().split('T')[0];
+        return converted_date;
     }
 
     function SearchBasic(e) {
