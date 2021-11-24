@@ -190,8 +190,6 @@
         }
 
 
-
-
         #data_upload2 .modal-body .form-group {
             justify-content: flex-start;
         }
@@ -595,11 +593,12 @@
         .bg-white .row {
             padding-top: 0;
         }
-        
+
         #data_upload .modal-body .form-group, #data_upload11 .modal-body .form-group {
             justify-content: flex-start;
         }
-        #data_upload12 .form-group button, #data_upload2 .form-group button, #basic_file .form-group button, #data_upload11 .form-group button, #data_upload21 .form-group button{
+
+        #data_upload12 .form-group button, #data_upload2 .form-group button, #basic_file .form-group button, #data_upload11 .form-group button, #data_upload21 .form-group button {
             height: 45px;
             padding: 0 20px;
             background-color: #217566;
@@ -609,11 +608,11 @@
             margin-left: 10px;
         }
 
-        #data_upload2 .form-group button, #basic_file .form-group button,  #data_upload21 .form-group button {
+        #data_upload2 .form-group button, #basic_file .form-group button, #data_upload21 .form-group button {
             margin-left: 0;
         }
 
-        #data_upload12 .form-group input[type=text], #data_upload2 .form-group input[type=text], #basic_file .form-group input[type=text],  #data_upload21 .form-group input[type=text], #data_upload11 .form-group input[type=text] {
+        #data_upload12 .form-group input[type=text], #data_upload2 .form-group input[type=text], #basic_file .form-group input[type=text], #data_upload21 .form-group input[type=text], #data_upload11 .form-group input[type=text] {
             flex: 0 0 30%;
             cursor: pointer;
         }
@@ -623,19 +622,20 @@
             background-size: 15px;
             color: #B2B2B2;
         }
+
         #data_upload12 .atbd-upload, #data_upload2 .atbd-upload, #data_upload21 .atbd-upload, #data_upload11 .atbd-upload {
             width: 100%;
             height: 300px;
             overflow: auto;
         }
 
-        #data_upload12 .atbd-upload table,  #data_upload11 .atbd-upload table {
+        #data_upload12 .atbd-upload table, #data_upload11 .atbd-upload table {
             width: max-content;
             border: none;
-            min-width:100%;
+            min-width: 100%;
         }
 
-        #data_upload2 .atbd-upload table, #data_upload21 .atbd-upload table{
+        #data_upload2 .atbd-upload table, #data_upload21 .atbd-upload table {
             width: 100%;
         }
 
@@ -648,7 +648,7 @@
             border-bottom: 1px solid #E8EEF2;
         }
 
-        #data_upload12 .atbd-upload table thead th, #data_upload2 .atbd-upload table thead th,  #data_upload21 .atbd-upload table thead th, #data_upload11 .atbd-upload table thead th {
+        #data_upload12 .atbd-upload table thead th, #data_upload2 .atbd-upload table thead th, #data_upload21 .atbd-upload table thead th, #data_upload11 .atbd-upload table thead th {
             background-color: #F7F7F8;
             color: #222222;
             font-size: 16px;
@@ -1184,44 +1184,44 @@
         </div>
     </div>
 
-        <!-- 도입번호 팝업 -->
-        <div class="modal-basic modal fade show pop7" id="pop_remain" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-md" role="document">
-                <div class="modal-content modal-bg-white">
-                    <div class="modal-header" style="border: none">
-                        <h6 class="modal-title">도입자원재고관리</h6>
-                        <span class="remain_title"></span>
-                    </div>
-                    <div class="modal-body">
-                        <div>
-                            <div class="atbd-upload">
-                                <div class="table-responsive">
-                                    <table class="table table2">
-                                        <thead class="text-center">
-                                        <tr>
-                                            <th style="cursor: pointer;"><span class="title">순번</span></th>
-                                            <th style="cursor: pointer;"><span class="title">도입번호(ID)</span></th>
-                                            <th style="cursor: pointer;"><span class="title">종자 보유량</span></th>
-                                            <th style="cursor: pointer;"><span class="title">입고량</span></th>
-                                            <th style="cursor: pointer;"><span class="title">출고량</span></th>
-                                            <th style="cursor: pointer;"><span class="title">재고량</span></th>
-                                            <th style="cursor: pointer;"><span class="title">담당자</span></th>
-                                            <th style="cursor: pointer;"><span class="title">일자</span></th>
-                                        </tr>
-                                        </thead>
-                                        <tbody class="text-center remain_list">
-                                        </tbody>
-                                    </table>
-                                </div>
+    <!-- 도입번호 팝업 -->
+    <div class="modal-basic modal fade show pop7" id="pop_remain" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content modal-bg-white">
+                <div class="modal-header" style="border: none">
+                    <h6 class="modal-title">도입자원재고관리</h6>
+                    <span class="remain_title"></span>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="atbd-upload">
+                            <div class="table-responsive">
+                                <table class="table table2">
+                                    <thead class="text-center">
+                                    <tr>
+                                        <th style="cursor: pointer;"><span class="title">순번</span></th>
+                                        <th style="cursor: pointer;"><span class="title">도입번호(ID)</span></th>
+                                        <th style="cursor: pointer;"><span class="title">종자 보유량</span></th>
+                                        <th style="cursor: pointer;"><span class="title">입고량</span></th>
+                                        <th style="cursor: pointer;"><span class="title">출고량</span></th>
+                                        <th style="cursor: pointer;"><span class="title">재고량</span></th>
+                                        <th style="cursor: pointer;"><span class="title">담당자</span></th>
+                                        <th style="cursor: pointer;"><span class="title">일자</span></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="text-center remain_list">
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer" style="border: none">
-                    </div>
+                </div>
+                <div class="modal-footer" style="border: none">
                 </div>
             </div>
         </div>
-        <!-- modal end -->
+    </div>
+    <!-- modal end -->
 </main>
 
 <!-- 공통 하단 -->
@@ -1399,60 +1399,66 @@
 
     /* 엑셀 등록 창 */
     function openExcel() {
-        if (tablechk === 0) {
-            $("#data_upload1").modal();
+        var user_type = $("#user_type").val();
 
-            let data = {"datalist_type": 'income'};
-
-            $.ajax(
-                {
-                    url: 'selectDateGroup',
-                    method: 'POST',
-                    dataType: 'json',
-                    data: data,
-                    success: function (result) {
-                        var data_list = $("#dataExcel_list");
-                        var data_add = "";
-
-                        for (var i = result.dataGroup.length - 1; i > -1; i--) {
-                            data_add += '<tr>';
-                            data_add += '<td>' + (i + 1) + '</td>';
-                            data_add += '<td>' + result.dataGroup[i].datalist_date + '</td>';
-                            data_add += '<td>' + result.dataGroup[i].cnt + '</td>';
-                            data_add += '</tr>';
-                        }
-
-                        data_list.empty();
-                        data_list.append(data_add);
-                    }
-                });
+        if (user_type != 0 && user_type != 2) {
+            return Alert("등록 권한이 없습니다.");
         } else {
-            $("#data_upload12").modal();
+            if (tablechk === 0) {
+                $("#data_upload1").modal();
 
-            let data = {"datalist_type": 'income_outcome'};
+                let data = {"datalist_type": 'income'};
 
-            $.ajax(
-                {
-                    url: 'selectDateGroup',
-                    method: 'POST',
-                    dataType: 'json',
-                    data: data,
-                    success: function (result) {
-                        var data_list = $("#dataExcel_list");
-                        var data_add = "";
+                $.ajax(
+                    {
+                        url: 'selectDateGroup',
+                        method: 'POST',
+                        dataType: 'json',
+                        data: data,
+                        success: function (result) {
+                            var data_list = $("#dataExcel_list");
+                            var data_add = "";
 
-                        for (var i = result.dataGroup.length - 1; i > -1; i--) {
-                            data_add += '<tr>';
-                            data_add += '<td>' + (i + 1) + '</td>';
-                            data_add += '<td>' + result.dataGroup[i].datalist_date + '</td>';
-                            data_add += '<td>' + result.dataGroup[i].cnt + '</td>';
-                            data_add += '</tr>';
+                            for (var i = result.dataGroup.length - 1; i > -1; i--) {
+                                data_add += '<tr>';
+                                data_add += '<td>' + (i + 1) + '</td>';
+                                data_add += '<td>' + result.dataGroup[i].datalist_date + '</td>';
+                                data_add += '<td>' + result.dataGroup[i].cnt + '</td>';
+                                data_add += '</tr>';
+                            }
+
+                            data_list.empty();
+                            data_list.append(data_add);
                         }
+                    });
+            } else {
+                $("#data_upload12").modal();
 
-                        data_list.empty();
-                        data_list.append(data_add);
-                    }
-                });
+                let data = {"datalist_type": 'income_outcome'};
+
+                $.ajax(
+                    {
+                        url: 'selectDateGroup',
+                        method: 'POST',
+                        dataType: 'json',
+                        data: data,
+                        success: function (result) {
+                            var data_list = $("#dataExcel_list");
+                            var data_add = "";
+
+                            for (var i = result.dataGroup.length - 1; i > -1; i--) {
+                                data_add += '<tr>';
+                                data_add += '<td>' + (i + 1) + '</td>';
+                                data_add += '<td>' + result.dataGroup[i].datalist_date + '</td>';
+                                data_add += '<td>' + result.dataGroup[i].cnt + '</td>';
+                                data_add += '</tr>';
+                            }
+
+                            data_list.empty();
+                            data_list.append(data_add);
+                        }
+                    });
+            }
         }
     }
 
@@ -2044,30 +2050,37 @@
                     var after = null;
 
                     incomegrid.on('afterChange', (ev) => {
-                        for (let i = 0; i < ev.changes.length; i++) {
-                            before = ev.changes[i].prevValue;
-                            after = ev.changes[i].value;
+                        var user_type = $("#user_type").val();
 
-                            if (after != before) {
-                                var income_id = incomegrid.getRow(ev.changes[i].rowKey).income_id;
-                                var income_name = ev.changes[i].columnName;
-                                var income_value = after;
+                        if (user_type != 0 && user_type != 2) {
+                            return Alert("수정 권한이 없습니다.");
+                            location.reload();
+                        } else {
+                            for (let i = 0; i < ev.changes.length; i++) {
+                                before = ev.changes[i].prevValue;
+                                after = ev.changes[i].value;
 
-                                var data = {"income_id": income_id, "income_name": income_name, "income_value": income_value};
+                                if (after != before) {
+                                    var income_id = incomegrid.getRow(ev.changes[i].rowKey).income_id;
+                                    var income_name = ev.changes[i].columnName;
+                                    var income_value = after;
 
-                                if (income_id != null) {
-                                    $.ajax(
-                                        {
-                                            url: 'updateIncome',
-                                            method: 'POST',
-                                            dataType: 'json',
-                                            data: data,
-                                            success: function (result) {
-                                                if (result == 0) {
-                                                    return Alert("수정에 실패하였습니다.")
+                                    var data = {"income_id": income_id, "income_name": income_name, "income_value": income_value};
+
+                                    if (income_id != null) {
+                                        $.ajax(
+                                            {
+                                                url: 'updateIncome',
+                                                method: 'POST',
+                                                dataType: 'json',
+                                                data: data,
+                                                success: function (result) {
+                                                    if (result == 0) {
+                                                        return Alert("수정에 실패하였습니다.")
+                                                    }
                                                 }
-                                            }
-                                        });
+                                            });
+                                    }
                                 }
                             }
                         }
@@ -2135,30 +2148,37 @@
                     var after = null;
 
                     incomegrid.on('afterChange', (ev) => {
-                        for (let i = 0; i < ev.changes.length; i++) {
-                            before = ev.changes[i].prevValue;
-                            after = ev.changes[i].value;
+                        var user_type = $("#user_type").val();
 
-                            if (after != before) {
-                                var income_id = incomegrid.getRow(ev.changes[i].rowKey).income_id;
-                                var income_name = ev.changes[i].columnName;
-                                var income_value = after;
+                        if (user_type != 0 && user_type != 2) {
+                            return Alert("수정 권한이 없습니다.");
+                            location.reload();
+                        } else {
+                            for (let i = 0; i < ev.changes.length; i++) {
+                                before = ev.changes[i].prevValue;
+                                after = ev.changes[i].value;
 
-                                var data = {"income_id": income_id, "income_name": income_name, "income_value": income_value};
+                                if (after != before) {
+                                    var income_id = incomegrid.getRow(ev.changes[i].rowKey).income_id;
+                                    var income_name = ev.changes[i].columnName;
+                                    var income_value = after;
 
-                                if (income_id != null) {
-                                    $.ajax(
-                                        {
-                                            url: 'updateIncome',
-                                            method: 'POST',
-                                            dataType: 'json',
-                                            data: data,
-                                            success: function (result) {
-                                                if (result == 0) {
-                                                    return Alert("수정에 실패하였습니다.")
+                                    var data = {"income_id": income_id, "income_name": income_name, "income_value": income_value};
+
+                                    if (income_id != null) {
+                                        $.ajax(
+                                            {
+                                                url: 'updateIncome',
+                                                method: 'POST',
+                                                dataType: 'json',
+                                                data: data,
+                                                success: function (result) {
+                                                    if (result == 0) {
+                                                        return Alert("수정에 실패하였습니다.")
+                                                    }
                                                 }
-                                            }
-                                        });
+                                            });
+                                    }
                                 }
                             }
                         }
@@ -2242,30 +2262,37 @@
                     var after = null;
 
                     remaingrid.on('afterChange', (ev) => {
-                        for (let i = 0; i < ev.changes.length; i++) {
-                            before = ev.changes[i].prevValue;
-                            after = ev.changes[i].value;
+                        var user_type = $("#user_type").val();
 
-                            if (after != before) {
-                                var income_remain_id = remaingrid.getRow(ev.changes[i].rowKey).income_remain_id
-                                var income_remain_name = ev.changes[i].columnName;
-                                var income_remain_value = after;
+                        if (user_type != 0 && user_type != 2) {
+                            return Alert("수정 권한이 없습니다.");
+                            location.reload();
+                        } else {
+                            for (let i = 0; i < ev.changes.length; i++) {
+                                before = ev.changes[i].prevValue;
+                                after = ev.changes[i].value;
 
-                                var data = {"income_remain_id": income_remain_id, "income_remain_name": income_remain_name, "income_remain_value": income_remain_value};
+                                if (after != before) {
+                                    var income_remain_id = remaingrid.getRow(ev.changes[i].rowKey).income_remain_id
+                                    var income_remain_name = ev.changes[i].columnName;
+                                    var income_remain_value = after;
 
-                                if (income_remain_id != null) {
-                                    $.ajax(
-                                        {
-                                            url: 'updateRemain',
-                                            method: 'POST',
-                                            dataType: 'json',
-                                            data: data,
-                                            success: function (result) {
-                                                if (result == 0) {
-                                                    return Alert("수정에 실패하였습니다.")
+                                    var data = {"income_remain_id": income_remain_id, "income_remain_name": income_remain_name, "income_remain_value": income_remain_value};
+
+                                    if (income_remain_id != null) {
+                                        $.ajax(
+                                            {
+                                                url: 'updateRemain',
+                                                method: 'POST',
+                                                dataType: 'json',
+                                                data: data,
+                                                success: function (result) {
+                                                    if (result == 0) {
+                                                        return Alert("수정에 실패하였습니다.")
+                                                    }
                                                 }
-                                            }
-                                        });
+                                            });
+                                    }
                                 }
                             }
                         }
@@ -2296,30 +2323,37 @@
                     var after = null;
 
                     remaingrid.on('afterChange', (ev) => {
-                        for (let i = 0; i < ev.changes.length; i++) {
-                            before = ev.changes[i].prevValue;
-                            after = ev.changes[i].value;
+                        var user_type = $("#user_type").val();
 
-                            if (after != before) {
-                                var income_remain_id = remaingrid.getRow(ev.changes[i].rowKey).income_remain_id
-                                var income_remain_name = ev.changes[i].columnName;
-                                var income_remain_value = after;
+                        if (user_type != 0 && user_type != 2) {
+                            return Alert("수정 권한이 없습니다.");
+                            location.reload();
+                        } else {
+                            for (let i = 0; i < ev.changes.length; i++) {
+                                before = ev.changes[i].prevValue;
+                                after = ev.changes[i].value;
 
-                                var data = {"income_remain_id": income_remain_id, "income_remain_name": income_remain_name, "income_remain_value": income_remain_value};
+                                if (after != before) {
+                                    var income_remain_id = remaingrid.getRow(ev.changes[i].rowKey).income_remain_id
+                                    var income_remain_name = ev.changes[i].columnName;
+                                    var income_remain_value = after;
 
-                                if (income_remain_id != null) {
-                                    $.ajax(
-                                        {
-                                            url: 'updateRemain',
-                                            method: 'POST',
-                                            dataType: 'json',
-                                            data: data,
-                                            success: function (result) {
-                                                if (result == 0) {
-                                                    return Alert("수정에 실패하였습니다.")
+                                    var data = {"income_remain_id": income_remain_id, "income_remain_name": income_remain_name, "income_remain_value": income_remain_value};
+
+                                    if (income_remain_id != null) {
+                                        $.ajax(
+                                            {
+                                                url: 'updateRemain',
+                                                method: 'POST',
+                                                dataType: 'json',
+                                                data: data,
+                                                success: function (result) {
+                                                    if (result == 0) {
+                                                        return Alert("수정에 실패하였습니다.")
+                                                    }
                                                 }
-                                            }
-                                        });
+                                            });
+                                    }
                                 }
                             }
                         }
@@ -2329,26 +2363,32 @@
     }
 
     function insertRow() {
-        $(".plus_btn_submit1").css("display", "block");
+        var user_type = $("#user_type").val();
 
-        if (tablechk === 0) {
-            var cnt = incomegrid.getRowCount();
-
-            const newRow = {
-                income_name: $("#CropSelect").val(),
-            };
-
-            incomegrid.prependRow(newRow);
-            incomegrid.check(cnt);
+        if (user_type != 0 && user_type != 2) {
+            return Alert("등록 권한이 없습니다.");
         } else {
-            var cnt1 = remaingrid.getRowCount();
+            $(".plus_btn_submit1").css("display", "block");
 
-            const newRow = {
-                income_name: $("#CropSelect").val(),
-            };
+            if (tablechk === 0) {
+                var cnt = incomegrid.getRowCount();
 
-            remaingrid.prependRow(newRow);
-            remaingrid.check(cnt1);
+                const newRow = {
+                    income_name: $("#CropSelect").val(),
+                };
+
+                incomegrid.prependRow(newRow);
+                incomegrid.check(cnt);
+            } else {
+                var cnt1 = remaingrid.getRowCount();
+
+                const newRow = {
+                    income_name: $("#CropSelect").val(),
+                };
+
+                remaingrid.prependRow(newRow);
+                remaingrid.check(cnt1);
+            }
         }
     }
 

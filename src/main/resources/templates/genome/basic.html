@@ -277,7 +277,8 @@
         #data_upload .modal-body .form-group, #data_upload11 .modal-body .form-group {
             justify-content: flex-start;
         }
-        #data_upload .form-group button, #data_upload2 .form-group button, #basic_file .form-group button, #data_upload11 .form-group button, #data_upload21 .form-group button{
+
+        #data_upload .form-group button, #data_upload2 .form-group button, #basic_file .form-group button, #data_upload11 .form-group button, #data_upload21 .form-group button {
             height: 45px;
             padding: 0 20px;
             background-color: #217566;
@@ -287,11 +288,11 @@
             margin-left: 10px;
         }
 
-        #data_upload2 .form-group button, #basic_file .form-group button,  #data_upload21 .form-group button {
+        #data_upload2 .form-group button, #basic_file .form-group button, #data_upload21 .form-group button {
             margin-left: 0;
         }
 
-        #data_upload .form-group input[type=text], #data_upload2 .form-group input[type=text], #basic_file .form-group input[type=text],  #data_upload21 .form-group input[type=text], #data_upload11 .form-group input[type=text] {
+        #data_upload .form-group input[type=text], #data_upload2 .form-group input[type=text], #basic_file .form-group input[type=text], #data_upload21 .form-group input[type=text], #data_upload11 .form-group input[type=text] {
             flex: 0 0 30%;
             cursor: pointer;
         }
@@ -301,18 +302,19 @@
             background-size: 15px;
             color: #B2B2B2;
         }
+
         #data_upload .atbd-upload, #data_upload2 .atbd-upload, #data_upload21 .atbd-upload, #data_upload11 .atbd-upload {
             width: 100%;
             height: 300px;
             overflow: auto;
         }
 
-        #data_upload .atbd-upload table,  #data_upload11 .atbd-upload table {
+        #data_upload .atbd-upload table, #data_upload11 .atbd-upload table {
             min-width: max-content;
             border: none;
         }
 
-        #data_upload2 .atbd-upload table, #data_upload21 .atbd-upload table{
+        #data_upload2 .atbd-upload table, #data_upload21 .atbd-upload table {
             width: 100%;
         }
 
@@ -325,7 +327,7 @@
             border-bottom: 1px solid #E8EEF2;
         }
 
-        #data_upload .atbd-upload table thead th, #data_upload2 .atbd-upload table thead th,  #data_upload21 .atbd-upload table thead th, #data_upload11 .atbd-upload table thead th {
+        #data_upload .atbd-upload table thead th, #data_upload2 .atbd-upload table thead th, #data_upload21 .atbd-upload table thead th, #data_upload11 .atbd-upload table thead th {
             background-color: #F7F7F8;
             color: #222222;
             font-size: 16px;
@@ -862,7 +864,7 @@
                             <div class="atbd-upload">
                                 <div class="atbd-upload__button">
                                     <a href="" class="btn btn-lg btn-outline-lighten btn-upload" id="file_download">
-                                        <span data-feather="upload"></span>
+                                        <span data-feather="download"></span>
                                         <span id="uploads_origin_file"></span>
                                     </a>
                                     <input type="hidden" id="uploads_file" name="uploads_file">
@@ -2211,30 +2213,37 @@
                     var after = null;
 
                     basicgrid.on('afterChange', (ev) => {
-                        for (let i = 0; i < ev.changes.length; i++) {
-                            before = ev.changes[i].prevValue;
-                            after = ev.changes[i].value;
+                        var user_type = $("#user_type").val();
 
-                            if (after != before) {
-                                var basic_id = basicgrid.getRow(ev.changes[i].rowKey).basic_id;
-                                var detail_id = ev.changes[i].columnName;
-                                var standard = after;
+                        if (user_type != 0 && user_type != 2) {
+                            return Alert("수정 권한이 없습니다.");
+                            location.reload();
+                        } else {
+                            for (let i = 0; i < ev.changes.length; i++) {
+                                before = ev.changes[i].prevValue;
+                                after = ev.changes[i].value;
 
-                                var data = {"basic_id": basic_id, "detail_id": detail_id, "standard": standard};
+                                if (after != before) {
+                                    var basic_id = basicgrid.getRow(ev.changes[i].rowKey).basic_id;
+                                    var detail_id = ev.changes[i].columnName;
+                                    var standard = after;
 
-                                if (basic_id != null) {
-                                    $.ajax(
-                                        {
-                                            url: 'updateBasic',
-                                            method: 'POST',
-                                            dataType: 'json',
-                                            data: data,
-                                            success: function (result) {
-                                                if (result == 0) {
-                                                    return Alert("수정에 실패하였습니다.")
+                                    var data = {"basic_id": basic_id, "detail_id": detail_id, "standard": standard};
+
+                                    if (basic_id != null) {
+                                        $.ajax(
+                                            {
+                                                url: 'updateBasic',
+                                                method: 'POST',
+                                                dataType: 'json',
+                                                data: data,
+                                                success: function (result) {
+                                                    if (result == 0) {
+                                                        return Alert("수정에 실패하였습니다.")
+                                                    }
                                                 }
-                                            }
-                                        });
+                                            });
+                                    }
                                 }
                             }
                         }
@@ -2327,30 +2336,37 @@
                     var after = null;
 
                     basicgrid.on('afterChange', (ev) => {
-                        for (let i = 0; i < ev.changes.length; i++) {
-                            before = ev.changes[i].prevValue;
-                            after = ev.changes[i].value;
+                        var user_type = $("#user_type").val();
 
-                            if (after != before) {
-                                var basic_id = basicgrid.getRow(ev.changes[i].rowKey).basic_id;
-                                var detail_id = ev.changes[i].columnName;
-                                var standard = after;
+                        if (user_type != 0 && user_type != 2) {
+                            return Alert("수정 권한이 없습니다.");
+                            location.reload();
+                        } else {
+                            for (let i = 0; i < ev.changes.length; i++) {
+                                before = ev.changes[i].prevValue;
+                                after = ev.changes[i].value;
 
-                                var data = {"basic_id": basic_id, "detail_id": detail_id, "standard": standard};
+                                if (after != before) {
+                                    var basic_id = basicgrid.getRow(ev.changes[i].rowKey).basic_id;
+                                    var detail_id = ev.changes[i].columnName;
+                                    var standard = after;
 
-                                if (basic_id != null) {
-                                    $.ajax(
-                                        {
-                                            url: 'updateBasic',
-                                            method: 'POST',
-                                            dataType: 'json',
-                                            data: data,
-                                            success: function (result) {
-                                                if (result == 0) {
-                                                    return Alert("수정에 실패하였습니다.")
+                                    var data = {"basic_id": basic_id, "detail_id": detail_id, "standard": standard};
+
+                                    if (basic_id != null) {
+                                        $.ajax(
+                                            {
+                                                url: 'updateBasic',
+                                                method: 'POST',
+                                                dataType: 'json',
+                                                data: data,
+                                                success: function (result) {
+                                                    if (result == 0) {
+                                                        return Alert("수정에 실패하였습니다.")
+                                                    }
                                                 }
-                                            }
-                                        });
+                                            });
+                                    }
                                 }
                             }
                         }
@@ -2433,33 +2449,41 @@
                     var after = null;
 
                     basicRemainGrid.on('afterChange', (ev) => {
-                        before = ev.changes[0].prevValue;
-                        after = ev.changes[0].value;
+                        var user_type = $("#user_type").val();
 
-                        if (after != before) {
-                            var basic_remain_id = basicRemainGrid.getRow(ev.changes[0].rowKey).basic_remain_id;
-                            var basic_remain_name = ev.changes[0].columnName;
-                            var basic_remain_value = after;
+                        if (user_type != 0 && user_type != 2) {
+                            return Alert("수정 권한이 없습니다.");
+                            location.reload();
+                        } else {
+                            for (let i = 0; i < ev.changes.length; i++) {
+                                before = ev.changes[i].prevValue;
+                                after = ev.changes[i].value;
 
-                            var data = {"basic_remain_id": basic_remain_id, "basic_remain_name": basic_remain_name, "basic_remain_value": basic_remain_value};
+                                if (after != before) {
+                                    var basic_remain_id = basicRemainGrid.getRow(ev.changes[i].rowKey).basic_remain_id;
+                                    var basic_remain_name = ev.changes[i].columnName;
+                                    var basic_remain_value = after;
 
-                            if (basic_remain_id != null) {
-                                $.ajax(
-                                    {
-                                        url: 'updateBasicRemain',
-                                        method: 'POST',
-                                        dataType: 'json',
-                                        data: data,
-                                        success: function (result) {
-                                            if (result == 0) {
-                                                return Alert("수정에 실패하였습니다.")
-                                            }
-                                        }
-                                    });
+                                    var data = {"basic_remain_id": basic_remain_id, "basic_remain_name": basic_remain_name, "basic_remain_value": basic_remain_value};
+
+                                    if (basic_remain_id != null) {
+                                        $.ajax(
+                                            {
+                                                url: 'updateBasicRemain',
+                                                method: 'POST',
+                                                dataType: 'json',
+                                                data: data,
+                                                success: function (result) {
+                                                    if (result == 0) {
+                                                        return Alert("수정에 실패하였습니다.")
+                                                    }
+                                                }
+                                            });
+                                    }
+                                }
                             }
                         }
                     });
-
                 }
             });
     }
@@ -2485,29 +2509,38 @@
                     var after = null;
 
                     basicRemainGrid.on('afterChange', (ev) => {
-                        before = ev.changes[0].prevValue;
-                        after = ev.changes[0].value;
+                        var user_type = $("#user_type").val();
 
-                        if (after != before) {
-                            var basic_remain_id = basicRemainGrid.getRow(ev.changes[0].rowKey).basic_remain_id;
-                            var basic_remain_name = ev.changes[0].columnName;
-                            var basic_remain_value = after;
+                        if (user_type != 0 && user_type != 2) {
+                            return Alert("수정 권한이 없습니다.");
+                            location.reload();
+                        } else {
+                            for (let i = 0; i < ev.changes.length; i++) {
+                                before = ev.changes[i].prevValue;
+                                after = ev.changes[i].value;
 
-                            var data = {"basic_remain_id": basic_remain_id, "basic_remain_name": basic_remain_name, "basic_remain_value": basic_remain_value};
+                                if (after != before) {
+                                    var basic_remain_id = basicRemainGrid.getRow(ev.changes[i].rowKey).basic_remain_id;
+                                    var basic_remain_name = ev.changes[i].columnName;
+                                    var basic_remain_value = after;
 
-                            if (basic_remain_id != null) {
-                                $.ajax(
-                                    {
-                                        url: 'updateBasicRemain',
-                                        method: 'POST',
-                                        dataType: 'json',
-                                        data: data,
-                                        success: function (result) {
-                                            if (result == 0) {
-                                                return Alert("수정에 실패하였습니다.")
-                                            }
-                                        }
-                                    });
+                                    var data = {"basic_remain_id": basic_remain_id, "basic_remain_name": basic_remain_name, "basic_remain_value": basic_remain_value};
+
+                                    if (basic_remain_id != null) {
+                                        $.ajax(
+                                            {
+                                                url: 'updateBasicRemain',
+                                                method: 'POST',
+                                                dataType: 'json',
+                                                data: data,
+                                                success: function (result) {
+                                                    if (result == 0) {
+                                                        return Alert("수정에 실패하였습니다.")
+                                                    }
+                                                }
+                                            });
+                                    }
+                                }
                             }
                         }
                     });
@@ -2700,7 +2733,7 @@
                             // 공백처리
                             if (idx == tmp[j]) {
                                 if (idx === "__EMPTY_9") {
-                                    if(value == "-") {
+                                    if (value == "-") {
                                         html += "<td class='excel'><span>" + value + "</span></td>";
                                         j++;
                                     } else {
@@ -2723,7 +2756,7 @@
                                 }
 
                                 if (idx === "__EMPTY_9") {
-                                    if(value == "-") {
+                                    if (value == "-") {
                                         html += "<td class='excel'><span>" + value + "</span></td>";
                                         j++;
                                     } else {
@@ -2897,35 +2930,41 @@
 
     /* 엑셀 등록 창 */
     function openExcel() {
-        if (tablechk == 0) {
-            $("#data_upload2").modal();
+        var user_type = $("#user_type").val();
 
-            let data = {"datalist_type": 'basic'};
-
-            $.ajax(
-                {
-                    url: 'selectBasicDateGroup',
-                    method: 'POST',
-                    dataType: 'json',
-                    data: data,
-                    success: function (result) {
-                        var data_list = $("#uploadDate");
-                        var data_add = "";
-
-                        for (var i = result.dataGroup.length - 1; i > -1; i--) {
-                            data_add += '<tr>';
-                            data_add += '<td>' + (i + 1) + '</td>';
-                            data_add += '<td>' + result.dataGroup[i].datalist_date + '</td>';
-                            data_add += '<td>' + result.dataGroup[i].cnt + '</td>';
-                            data_add += '</tr>';
-                        }
-
-                        data_list.empty();
-                        data_list.append(data_add);
-                    }
-                });
+        if (user_type != 0 && user_type != 2) {
+            return Alert("등록 권한이 없습니다.");
         } else {
-            $("#data_upload21").modal();
+            if (tablechk == 0) {
+                $("#data_upload2").modal();
+
+                let data = {"datalist_type": 'basic'};
+
+                $.ajax(
+                    {
+                        url: 'selectBasicDateGroup',
+                        method: 'POST',
+                        dataType: 'json',
+                        data: data,
+                        success: function (result) {
+                            var data_list = $("#uploadDate");
+                            var data_add = "";
+
+                            for (var i = result.dataGroup.length - 1; i > -1; i--) {
+                                data_add += '<tr>';
+                                data_add += '<td>' + (i + 1) + '</td>';
+                                data_add += '<td>' + result.dataGroup[i].datalist_date + '</td>';
+                                data_add += '<td>' + result.dataGroup[i].cnt + '</td>';
+                                data_add += '</tr>';
+                            }
+
+                            data_list.empty();
+                            data_list.append(data_add);
+                        }
+                    });
+            } else {
+                $("#data_upload21").modal();
+            }
         }
     }
 

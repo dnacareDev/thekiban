@@ -688,6 +688,7 @@
             color: #333;
             font-size: 13px;
         }
+
         .plus_btn_submit1 {
             display: none;
         }
@@ -872,7 +873,7 @@
                             <div class="atbd-upload">
                                 <div class="atbd-upload__button">
                                     <a href="" class="btn btn-lg btn-outline-lighten btn-upload" id="file_download">
-                                        <span data-feather="upload"></span>
+                                        <span data-feather="download"></span>
                                         <span id="uploads_origin_file"></span>
                                     </a>
                                     <input type="hidden" id="uploads_file" name="uploads_file">
@@ -2434,48 +2435,40 @@
                     var before = null;
                     var after = null;
 
-                    breedgrid.on('afterChange', (ev) =>
-                    {
-                    	var user_type = $("#user_type").val();
-                    	
-                    	if(user_type != 0 && user_type != 2)
-                    	{
-                    		return Alert("수정 권한이 없습니다.");
-                    	}
-                    	else
-                    	{
-	                        for (let i = 0; i < ev.changes.length; i++)
-	                        {
-	                            before = ev.changes[i].prevValue;
-	                            after = ev.changes[i].value;
-	
-	                            if (after != before)
-	                            {
-	                                var breed_id = breedgrid.getRow(ev.changes[i].rowKey).breed_id;
-	                                var detail_id = ev.changes[i].columnName;
-	                                var standard = after;
-	
-	                                var data = {"breed_id": breed_id, "detail_id": detail_id, "standard": standard};
+                    breedgrid.on('afterChange', (ev) => {
+                        var user_type = $("#user_type").val();
 
-                                    if(breed_id != null) {
+                        if (user_type != 0 && user_type != 2) {
+                            return Alert("수정 권한이 없습니다.");
+                        } else {
+                            for (let i = 0; i < ev.changes.length; i++) {
+                                before = ev.changes[i].prevValue;
+                                after = ev.changes[i].value;
+
+                                if (after != before) {
+                                    var breed_id = breedgrid.getRow(ev.changes[i].rowKey).breed_id;
+                                    var detail_id = ev.changes[i].columnName;
+                                    var standard = after;
+
+                                    var data = {"breed_id": breed_id, "detail_id": detail_id, "standard": standard};
+
+                                    if (breed_id != null) {
                                         $.ajax(
                                             {
                                                 url: 'updateBreed',
                                                 method: 'POST',
                                                 dataType: 'json',
                                                 data: data,
-                                                success: function (result)
-                                                {
-                                                    if (result == 0)
-                                                    {
+                                                success: function (result) {
+                                                    if (result == 0) {
                                                         return Alert("수정에 실패하였습니다.")
                                                     }
                                                 }
                                             });
                                     }
-	                            }
-	                        }
-                    	}
+                                }
+                            }
+                        }
                     });
                 }
             });
@@ -2590,32 +2583,37 @@
                     var after = null;
 
                     breedgrid.on('afterChange', (ev) => {
-                        for (let i = 0; i < ev.changes.length; i++) {
-                            before = ev.changes[i].prevValue;
-                            after = ev.changes[i].value;
+                        var user_type = $("#user_type").val();
 
-                            if (after != before) {
-                                var breed_id = breedgrid.getRow(ev.changes[i].rowKey).breed_id;
-                                var detail_id = ev.changes[i].columnName;
-                                var standard = after;
+                        if (user_type != 0 && user_type != 2) {
+                            return Alert("수정 권한이 없습니다.");
+                            location.reload();
+                        } else {
+                            for (let i = 0; i < ev.changes.length; i++) {
+                                before = ev.changes[i].prevValue;
+                                after = ev.changes[i].value;
 
-                                var data = {"breed_id": breed_id, "detail_id": detail_id, "standard": standard};
+                                if (after != before) {
+                                    var breed_id = breedgrid.getRow(ev.changes[i].rowKey).breed_id;
+                                    var detail_id = ev.changes[i].columnName;
+                                    var standard = after;
 
-                                if(breed_id != null) {
-                                    $.ajax(
-                                        {
-                                            url: 'updateBreed',
-                                            method: 'POST',
-                                            dataType: 'json',
-                                            data: data,
-                                            success: function (result)
+                                    var data = {"breed_id": breed_id, "detail_id": detail_id, "standard": standard};
+
+                                    if (breed_id != null) {
+                                        $.ajax(
                                             {
-                                                if (result == 0)
-                                                {
-                                                    return Alert("수정에 실패하였습니다.")
+                                                url: 'updateBreed',
+                                                method: 'POST',
+                                                dataType: 'json',
+                                                data: data,
+                                                success: function (result) {
+                                                    if (result == 0) {
+                                                        return Alert("수정에 실패하였습니다.")
+                                                    }
                                                 }
-                                            }
-                                        });
+                                            });
+                                    }
                                 }
                             }
                         }
@@ -2628,32 +2626,28 @@
     var saveStandard = [];
     let breedData = [];
 
-	function insertRow()
-	{
-    	var user_type = $("#user_type").val();
+    function insertRow() {
+        var user_type = $("#user_type").val();
 
-    	if(user_type != 0 && user_type != 2)
-    	{
-    		return Alert("등록 권한이 없습니다.");	
-    	}
-    	else
-    	{
+        if (user_type != 0 && user_type != 2) {
+            return Alert("등록 권한이 없습니다.");
+        } else {
             $(".plus_btn_submit1").css("display", "block");
-	        
-			var cnt = breedgrid.getRowCount();
-	        
-			const newRow = {'breed_id' : null, '1' : $("#CropSelect").val()};
-	        
-			breedgrid.prependRow(newRow);
-			breedgrid.check(cnt);
+
+            var cnt = breedgrid.getRowCount();
+
+            const newRow = {'breed_id': null, '1': $("#CropSelect").val()};
+
+            breedgrid.prependRow(newRow);
+            breedgrid.check(cnt);
 
             breedData.push({'detail_id': 1, 'standard': $("#CropSelect").val()})
 
             breedgrid.on('afterChange', (ev) => {
                 breedData.push({"detail_id": ev.changes[0].columnName, "standard": ev.changes[0].value})
             });
-    	}
-	}
+        }
+    }
 
     function saveRow() {
 
@@ -2749,7 +2743,7 @@
                         // 공백처리
                         if (idx == tmp[j]) {
                             if (idx === "__EMPTY_6" || idx === "__EMPTY_8" || idx === "__EMPTY_10") {
-                                if(value == "-") {
+                                if (value == "-") {
                                     html += "<td class='excel'><span>" + value + "</span></td>";
                                     j++;
                                 } else {
@@ -2773,7 +2767,7 @@
                             }
 
                             if (idx === "__EMPTY_6" || idx === "__EMPTY_8" || idx === "__EMPTY_10") {
-                                if(value == "-") {
+                                if (value == "-") {
                                     html += "<td class='excel'><span>" + value + "</span></td>";
                                     j++;
                                 } else {
@@ -2827,32 +2821,39 @@
 
     /* 엑셀 등록 창 */
     function openExcel() {
-        $("#data_upload2").modal();
+        var user_type = $("#user_type").val();
 
-        let data = {"datalist_type": 'breed'};
+        if (user_type != 0 && user_type != 2) {
+            return Alert("등록 권한이 없습니다.");
+        } else {
+            $("#data_upload2").modal();
 
-        $.ajax(
-            {
-                url: 'selectBreedDateGroup',
-                method: 'POST',
-                dataType: 'json',
-                data: data,
-                success: function (result) {
-                    var data_list = $("#uploadDate");
-                    var data_add = "";
+            let data = {"datalist_type": 'breed'};
 
-                    for (var i = result.dataGroup.length - 1; i > -1; i--) {
-                        data_add += '<tr>';
-                        data_add += '<td>' + (i + 1) + '</td>';
-                        data_add += '<td>' + result.dataGroup[i].datalist_date + '</td>';
-                        data_add += '<td>' + result.dataGroup[i].cnt + '</td>';
-                        data_add += '</tr>';
+            $.ajax(
+                {
+                    url: 'selectBreedDateGroup',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: data,
+                    success: function (result) {
+                        var data_list = $("#uploadDate");
+                        var data_add = "";
+
+                        for (var i = result.dataGroup.length - 1; i > -1; i--) {
+                            data_add += '<tr>';
+                            data_add += '<td>' + (i + 1) + '</td>';
+                            data_add += '<td>' + result.dataGroup[i].datalist_date + '</td>';
+                            data_add += '<td>' + result.dataGroup[i].cnt + '</td>';
+                            data_add += '</tr>';
+                        }
+
+                        data_list.empty();
+                        data_list.append(data_add);
                     }
+                });
 
-                    data_list.empty();
-                    data_list.append(data_add);
-                }
-            });
+        }
     }
 
     /* 엑셀 등록 창 */
@@ -2939,6 +2940,7 @@
 
         return data;
     }
+
     // table to json
 
     // date to string

@@ -643,11 +643,9 @@
         .bg-white .row {
             padding-top: 0;
         }
-        
-        
-        
-        
-         #data_upload12 .form-group button, #data_upload2 .form-group button, #basic_file .form-group button, #data_upload11 .form-group button, #data_upload21 .form-group button{
+
+
+        #data_upload12 .form-group button, #data_upload2 .form-group button, #basic_file .form-group button, #data_upload11 .form-group button, #data_upload21 .form-group button {
             height: 45px;
             padding: 0 20px;
             background-color: #217566;
@@ -657,11 +655,11 @@
             margin-left: 10px;
         }
 
-        #data_upload2 .form-group button, #basic_file .form-group button,  #data_upload21 .form-group button {
+        #data_upload2 .form-group button, #basic_file .form-group button, #data_upload21 .form-group button {
             margin-left: 0;
         }
 
-        #data_upload12 .form-group input[type=text], #data_upload2 .form-group input[type=text], #basic_file .form-group input[type=text],  #data_upload21 .form-group input[type=text], #data_upload11 .form-group input[type=text] {
+        #data_upload12 .form-group input[type=text], #data_upload2 .form-group input[type=text], #basic_file .form-group input[type=text], #data_upload21 .form-group input[type=text], #data_upload11 .form-group input[type=text] {
             flex: 0 0 30%;
             cursor: pointer;
         }
@@ -671,19 +669,20 @@
             background-size: 15px;
             color: #B2B2B2;
         }
+
         #data_upload12 .atbd-upload, #data_upload2 .atbd-upload, #data_upload21 .atbd-upload, #data_upload11 .atbd-upload {
             width: 100%;
             height: 300px;
             overflow: auto;
         }
 
-        #data_upload12 .atbd-upload table,  #data_upload11 .atbd-upload table {
+        #data_upload12 .atbd-upload table, #data_upload11 .atbd-upload table {
             width: max-content;
             border: none;
-            min-width:100%;
+            min-width: 100%;
         }
 
-        #data_upload2 .atbd-upload table, #data_upload21 .atbd-upload table{
+        #data_upload2 .atbd-upload table, #data_upload21 .atbd-upload table {
             width: 100%;
         }
 
@@ -696,7 +695,7 @@
             border-bottom: 1px solid #E8EEF2;
         }
 
-        #data_upload12 .atbd-upload table thead th, #data_upload2 .atbd-upload table thead th,  #data_upload21 .atbd-upload table thead th, #data_upload11 .atbd-upload table thead th {
+        #data_upload12 .atbd-upload table thead th, #data_upload2 .atbd-upload table thead th, #data_upload21 .atbd-upload table thead th, #data_upload11 .atbd-upload table thead th {
             background-color: #F7F7F8;
             color: #222222;
             font-size: 16px;
@@ -1597,60 +1596,66 @@
 
     /* 엑셀 등록 창 */
     function openExcel() {
-        if (tablechk === 0) {
-            $("#data_upload2").modal();
+        var user_type = $("#user_type").val();
 
-            let data = {"datalist_type": 'sample'};
-
-            $.ajax(
-                {
-                    url: 'selectSampleDateGroup',
-                    method: 'POST',
-                    dataType: 'json',
-                    data: data,
-                    success: function (result) {
-                        var data_list = $("#uploadDate");
-                        var data_add = "";
-
-                        for (var i = result.dataGroup.length - 1; i > -1; i--) {
-                            data_add += '<tr>';
-                            data_add += '<td>' + (i + 1) + '</td>';
-                            data_add += '<td>' + result.dataGroup[i].datalist_date + '</td>';
-                            data_add += '<td>' + result.dataGroup[i].cnt + '</td>';
-                            data_add += '</tr>';
-                        }
-
-                        data_list.empty();
-                        data_list.append(data_add);
-                    }
-                });
+        if (user_type != 0 && user_type != 2) {
+            return Alert("등록 권한이 없습니다.");
         } else {
-            $("#data_upload12").modal();
+            if (tablechk === 0) {
+                $("#data_upload2").modal();
 
-            let data = {"datalist_type": 'sample_outcome'};
+                let data = {"datalist_type": 'sample'};
 
-            $.ajax(
-                {
-                    url: 'selectDateGroup',
-                    method: 'POST',
-                    dataType: 'json',
-                    data: data,
-                    success: function (result) {
-                        var data_list = $("#uploadDate1");
-                        var data_add = "";
+                $.ajax(
+                    {
+                        url: 'selectSampleDateGroup',
+                        method: 'POST',
+                        dataType: 'json',
+                        data: data,
+                        success: function (result) {
+                            var data_list = $("#uploadDate");
+                            var data_add = "";
 
-                        for (var i = result.dataGroup.length - 1; i > -1; i--) {
-                            data_add += '<tr>';
-                            data_add += '<td>' + (i + 1) + '</td>';
-                            data_add += '<td>' + result.dataGroup[i].datalist_date + '</td>';
-                            data_add += '<td>' + result.dataGroup[i].cnt + '</td>';
-                            data_add += '</tr>';
+                            for (var i = result.dataGroup.length - 1; i > -1; i--) {
+                                data_add += '<tr>';
+                                data_add += '<td>' + (i + 1) + '</td>';
+                                data_add += '<td>' + result.dataGroup[i].datalist_date + '</td>';
+                                data_add += '<td>' + result.dataGroup[i].cnt + '</td>';
+                                data_add += '</tr>';
+                            }
+
+                            data_list.empty();
+                            data_list.append(data_add);
                         }
+                    });
+            } else {
+                $("#data_upload12").modal();
 
-                        data_list.empty();
-                        data_list.append(data_add);
-                    }
-                });
+                let data = {"datalist_type": 'sample_outcome'};
+
+                $.ajax(
+                    {
+                        url: 'selectDateGroup',
+                        method: 'POST',
+                        dataType: 'json',
+                        data: data,
+                        success: function (result) {
+                            var data_list = $("#uploadDate1");
+                            var data_add = "";
+
+                            for (var i = result.dataGroup.length - 1; i > -1; i--) {
+                                data_add += '<tr>';
+                                data_add += '<td>' + (i + 1) + '</td>';
+                                data_add += '<td>' + result.dataGroup[i].datalist_date + '</td>';
+                                data_add += '<td>' + result.dataGroup[i].cnt + '</td>';
+                                data_add += '</tr>';
+                            }
+
+                            data_list.empty();
+                            data_list.append(data_add);
+                        }
+                    });
+            }
         }
     }
 
@@ -1784,6 +1789,7 @@
 
         return data;
     }
+
     // table to json
 
     // date to string
@@ -2118,84 +2124,6 @@
 
     // 시교자원 삭제
 
-    /* 엑셀 다운로드 */
-    function s2ab(s) {
-        var buf = new ArrayBuffer(s.length); //convert s to arrayBuffer
-        var view = new Uint8Array(buf);  //create uint8array as viewer
-        for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF; //convert to octet
-        return buf;
-    }
-
-    function exportExcel() {
-        if (tablechk === 0) {
-            // step 1. workbook 생성
-            var wb = XLSX.utils.book_new();
-
-            // step 2. 시트 만들기
-            var newWorksheet = excelHandler.getWorksheet();
-
-            // step 3. workbook에 새로만든 워크시트에 이름을 주고 붙인다.
-            XLSX.utils.book_append_sheet(wb, newWorksheet, excelHandler.getSheetName());
-
-            // step 4. 엑셀 파일 만들기
-            var wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
-
-            // step 5. 엑셀 파일 내보내기
-            saveAs(new Blob([s2ab(wbout)], {type: "application/octet-stream"}), excelHandler.getExcelFileName());
-        } else {
-            // step 1. workbook 생성
-            var wb1 = XLSX.utils.book_new();
-
-            // step 2. 시트 만들기
-            var newWorksheet1 = excelHandler1.getWorksheet();
-
-            // step 3. workbook에 새로만든 워크시트에 이름을 주고 붙인다.
-            XLSX.utils.book_append_sheet(wb1, newWorksheet1, excelHandler1.getSheetName());
-
-            // step 4. 엑셀 파일 만들기
-            var wbOut1 = XLSX.write(wb1, {bookType: 'xlsx', type: 'binary'});
-
-            // step 5. 엑셀 파일 내보내기
-            saveAs(new Blob([s2ab(wbOut1)], {type: "application/octet-stream"}), excelHandler1.getExcelFileName());
-        }
-
-    }
-
-    $("#excelFileExport").click(function () {
-        exportExcel();
-    });
-
-    var excelHandler = {
-        getExcelFileName: function () {
-            return '시교자원관리.xlsx';
-        },
-        getSheetName: function () {
-            return '시교자원관리';
-        },
-        getExcelData: function () {
-            return document.getElementById('table1');
-        },
-        getWorksheet: function () {
-            return XLSX.utils.table_to_sheet(this.getExcelData());
-        }
-    }
-
-    var excelHandler1 = {
-        getExcelFileName: function () {
-            return '시교수출관리.xlsx';
-        },
-        getSheetName: function () {
-            return '시교수출관리';
-        },
-        getExcelData: function () {
-            return document.getElementById('table2');
-        },
-        getWorksheet: function () {
-            return XLSX.utils.table_to_sheet(this.getExcelData());
-        }
-    }
-    /* 엑셀 다운로드 */
-
     /* 첨부파일 */
     function FileBtn(e) {
         $("#sample_file").modal("show");
@@ -2415,30 +2343,37 @@
                     var after = null;
 
                     samplegrid.on('afterChange', (ev) => {
-                        for (let i = 0; i < ev.changes.length; i++) {
-                            before = ev.changes[i].prevValue;
-                            after = ev.changes[i].value;
+                        var user_type = $("#user_type").val();
 
-                            if (after != before) {
-                                var sample_id = samplegrid.getRow(ev.changes[i].rowKey).sample_id;
-                                var sample_name = ev.changes[i].columnName;
-                                var sample_value = after;
+                        if (user_type != 0 && user_type != 2) {
+                            return Alert("수정 권한이 없습니다.");
+                            location.reload();
+                        } else {
+                            for (let i = 0; i < ev.changes.length; i++) {
+                                before = ev.changes[i].prevValue;
+                                after = ev.changes[i].value;
 
-                                var data = {"sample_id": sample_id, "sample_name": sample_name, "sample_value": sample_value};
+                                if (after != before) {
+                                    var sample_id = samplegrid.getRow(ev.changes[i].rowKey).sample_id;
+                                    var sample_name = ev.changes[i].columnName;
+                                    var sample_value = after;
 
-                                if (sample_id != null) {
-                                    $.ajax(
-                                        {
-                                            url: 'updateSample',
-                                            method: 'POST',
-                                            dataType: 'json',
-                                            data: data,
-                                            success: function (result) {
-                                                if (result == 0) {
-                                                    return Alert("수정에 실패하였습니다.")
+                                    var data = {"sample_id": sample_id, "sample_name": sample_name, "sample_value": sample_value};
+
+                                    if (sample_id != null) {
+                                        $.ajax(
+                                            {
+                                                url: 'updateSample',
+                                                method: 'POST',
+                                                dataType: 'json',
+                                                data: data,
+                                                success: function (result) {
+                                                    if (result == 0) {
+                                                        return Alert("수정에 실패하였습니다.")
+                                                    }
                                                 }
-                                            }
-                                        });
+                                            });
+                                    }
                                 }
                             }
                         }
@@ -2508,30 +2443,37 @@
                     var after = null;
 
                     samplegrid.on('afterChange', (ev) => {
-                        for (let i = 0; i < ev.changes.length; i++) {
-                            before = ev.changes[i].prevValue;
-                            after = ev.changes[i].value;
+                        var user_type = $("#user_type").val();
 
-                            if (after != before) {
-                                var sample_id = samplegrid.getRow(ev.changes[i].rowKey).sample_id;
-                                var sample_name = ev.changes[i].columnName;
-                                var sample_value = after;
+                        if (user_type != 0 && user_type != 2) {
+                            return Alert("수정 권한이 없습니다.");
+                            location.reload();
+                        } else {
+                            for (let i = 0; i < ev.changes.length; i++) {
+                                before = ev.changes[i].prevValue;
+                                after = ev.changes[i].value;
 
-                                var data = {"sample_id": sample_id, "sample_name": sample_name, "sample_value": sample_value};
+                                if (after != before) {
+                                    var sample_id = samplegrid.getRow(ev.changes[i].rowKey).sample_id;
+                                    var sample_name = ev.changes[i].columnName;
+                                    var sample_value = after;
 
-                                if (sample_id != null) {
-                                    $.ajax(
-                                        {
-                                            url: 'updateSample',
-                                            method: 'POST',
-                                            dataType: 'json',
-                                            data: data,
-                                            success: function (result) {
-                                                if (result == 0) {
-                                                    return Alert("수정에 실패하였습니다.")
+                                    var data = {"sample_id": sample_id, "sample_name": sample_name, "sample_value": sample_value};
+
+                                    if (sample_id != null) {
+                                        $.ajax(
+                                            {
+                                                url: 'updateSample',
+                                                method: 'POST',
+                                                dataType: 'json',
+                                                data: data,
+                                                success: function (result) {
+                                                    if (result == 0) {
+                                                        return Alert("수정에 실패하였습니다.")
+                                                    }
                                                 }
-                                            }
-                                        });
+                                            });
+                                    }
                                 }
                             }
                         }
@@ -2658,30 +2600,37 @@
                     var after = null;
 
                     outcomegrid.on('afterChange', (ev) => {
-                        for (let i = 0; i < ev.changes.length; i++) {
-                            before = ev.changes[i].prevValue;
-                            after = ev.changes[i].value;
+                        var user_type = $("#user_type").val();
 
-                            if (after != before) {
-                                var sample_outcome_id = outcomegrid.getRow(ev.changes[i].rowKey).sample_outcome_id
-                                var sample_outcome_name = ev.changes[i].columnName;
-                                var sample_outcome_value = after;
+                        if (user_type != 0 && user_type != 2) {
+                            return Alert("수정 권한이 없습니다.");
+                            location.reload();
+                        } else {
+                            for (let i = 0; i < ev.changes.length; i++) {
+                                before = ev.changes[i].prevValue;
+                                after = ev.changes[i].value;
 
-                                var data = {"sample_outcome_id": sample_outcome_id, "sample_outcome_name": sample_outcome_name, "sample_outcome_value": sample_outcome_value};
+                                if (after != before) {
+                                    var sample_outcome_id = outcomegrid.getRow(ev.changes[i].rowKey).sample_outcome_id
+                                    var sample_outcome_name = ev.changes[i].columnName;
+                                    var sample_outcome_value = after;
 
-                                if (sample_outcome_id != null) {
-                                    $.ajax(
-                                        {
-                                            url: 'updateOutcome',
-                                            method: 'POST',
-                                            dataType: 'json',
-                                            data: data,
-                                            success: function (result) {
-                                                if (result == 0) {
-                                                    return Alert("수정에 실패하였습니다.")
+                                    var data = {"sample_outcome_id": sample_outcome_id, "sample_outcome_name": sample_outcome_name, "sample_outcome_value": sample_outcome_value};
+
+                                    if (sample_outcome_id != null) {
+                                        $.ajax(
+                                            {
+                                                url: 'updateOutcome',
+                                                method: 'POST',
+                                                dataType: 'json',
+                                                data: data,
+                                                success: function (result) {
+                                                    if (result == 0) {
+                                                        return Alert("수정에 실패하였습니다.")
+                                                    }
                                                 }
-                                            }
-                                        });
+                                            });
+                                    }
                                 }
                             }
                         }
@@ -2731,30 +2680,37 @@
                     var after = null;
 
                     outcomegrid.on('afterChange', (ev) => {
-                        for (let i = 0; i < ev.changes.length; i++) {
-                            before = ev.changes[i].prevValue;
-                            after = ev.changes[i].value;
+                        var user_type = $("#user_type").val();
 
-                            if (after != before) {
-                                var sample_outcome_id = outcomegrid.getRow(ev.changes[i].rowKey).sample_outcome_id
-                                var sample_outcome_name = ev.changes[i].columnName;
-                                var sample_outcome_value = after;
+                        if (user_type != 0 && user_type != 2) {
+                            return Alert("수정 권한이 없습니다.");
+                            location.reload();
+                        } else {
+                            for (let i = 0; i < ev.changes.length; i++) {
+                                before = ev.changes[i].prevValue;
+                                after = ev.changes[i].value;
 
-                                var data = {"sample_outcome_id": sample_outcome_id, "sample_outcome_name": sample_outcome_name, "sample_outcome_value": sample_outcome_value};
+                                if (after != before) {
+                                    var sample_outcome_id = outcomegrid.getRow(ev.changes[i].rowKey).sample_outcome_id
+                                    var sample_outcome_name = ev.changes[i].columnName;
+                                    var sample_outcome_value = after;
 
-                                if (sample_outcome_id != null) {
-                                    $.ajax(
-                                        {
-                                            url: 'updateOutcome',
-                                            method: 'POST',
-                                            dataType: 'json',
-                                            data: data,
-                                            success: function (result) {
-                                                if (result == 0) {
-                                                    return Alert("수정에 실패하였습니다.")
+                                    var data = {"sample_outcome_id": sample_outcome_id, "sample_outcome_name": sample_outcome_name, "sample_outcome_value": sample_outcome_value};
+
+                                    if (sample_outcome_id != null) {
+                                        $.ajax(
+                                            {
+                                                url: 'updateOutcome',
+                                                method: 'POST',
+                                                dataType: 'json',
+                                                data: data,
+                                                success: function (result) {
+                                                    if (result == 0) {
+                                                        return Alert("수정에 실패하였습니다.")
+                                                    }
                                                 }
-                                            }
-                                        });
+                                            });
+                                    }
                                 }
                             }
                         }
@@ -2776,26 +2732,32 @@
     }
 
     function insertRow() {
-        $(".plus_btn_submit1").css("display", "block");
+        var user_type = $("#user_type").val();
 
-        if (tablechk === 0) {
-            var cnt = samplegrid.getRowCount();
-
-            const newRow = {
-                sample_name: $("#CropSelect").val(),
-            };
-
-            samplegrid.prependRow(newRow);
-            samplegrid.check(cnt);
+        if (user_type != 0 && user_type != 2) {
+            return Alert("등록 권한이 없습니다.");
         } else {
-            var cnt1 = outcomegrid.getRowCount();
+            $(".plus_btn_submit1").css("display", "block");
 
-            const newRow = {
-                sample_name: $("#CropSelect").val(),
-            };
+            if (tablechk === 0) {
+                var cnt = samplegrid.getRowCount();
 
-            outcomegrid.prependRow(newRow);
-            outcomegrid.check(cnt1);
+                const newRow = {
+                    sample_name: $("#CropSelect").val(),
+                };
+
+                samplegrid.prependRow(newRow);
+                samplegrid.check(cnt);
+            } else {
+                var cnt1 = outcomegrid.getRowCount();
+
+                const newRow = {
+                    sample_name: $("#CropSelect").val(),
+                };
+
+                outcomegrid.prependRow(newRow);
+                outcomegrid.check(cnt1);
+            }
         }
     }
 
