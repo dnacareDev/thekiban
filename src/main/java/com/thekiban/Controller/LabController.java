@@ -36,6 +36,7 @@ public class LabController
 		return mv;
 	}
 	
+	// analysis tool 페이지
 	@RequestMapping("/matrix")
 	public ModelAndView Analysis(ModelAndView mv, Authentication auth)
 	{
@@ -56,6 +57,7 @@ public class LabController
 		return mv;
 	}
 	
+	// analysis tool 분석 실행
 	@RequestMapping("/insertMatrix")
 	public ModelAndView InsertMatrix(ModelAndView mv, Authentication auth, @RequestParam("file") MultipartFile file) throws IOException
 	{
@@ -66,6 +68,8 @@ public class LabController
         String date_name = (1900 + date.getYear()) + "" + (date.getMonth() + 1) + "" + date.getDate() + "" + date.getHours() + "" + date.getMinutes() + "" + date.getSeconds();
         String origin_name = file.getOriginalFilename();
         String file_name = date_name + "_" + origin_name;
+        
+        System.out.println(file.getOriginalFilename());
         
         String path = "/data/apache-tomcat-9.0.8/webapps/ROOT/common/r/result/" + date_name;
         

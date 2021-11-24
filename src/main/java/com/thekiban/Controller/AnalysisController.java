@@ -84,9 +84,9 @@ public class AnalysisController
 	// 형질 분석
 	@ResponseBody
 	@RequestMapping("runAnalysis")
-	public int RunAnalysis(@RequestParam("detail_name") String detail_name, @RequestParam("detail_type") int detail_type, @RequestParam("target_id[]") int[] target_id, @RequestParam("target_name[]") String[] target_name, @RequestParam("method") int method, @RequestParam("trait_id") String trait_id)
+	public String RunAnalysis(@RequestParam("detail_name") String detail_name, @RequestParam("detail_type") int detail_type, @RequestParam("target_id[]") int[] target_id, @RequestParam("target_name[]") String[] target_name, @RequestParam("method") int method, @RequestParam("trait_id") String trait_id)
 	{
-		int result = 0;
+		String result = null;
 		
 		List<Detail> detail = service.SelectDetail(detail_name, detail_type);
 		List<Standard> standard = service.SelectStandard(target_id, detail_type);
@@ -100,7 +100,6 @@ public class AnalysisController
         File path = null;
         File file = null;
         
-        /*
         if(method == 0)
         {
         	root = "/data/apache-tomcat-9.0.8/webapps/ROOT/kiban/resultfiles/r_plot/corrplot/" + date_name;
@@ -176,7 +175,7 @@ public class AnalysisController
         	String trait = trait_id.replace("[", "");
         	trait = trait.replace("]", "");
         	trait = trait.replace("\"", "");
-        	
+        	System.out.println(trait);
             if(method == 0)
             {
             	RunCorrlation runcorrlation = new RunCorrlation();
@@ -195,28 +194,30 @@ public class AnalysisController
         	
 			e.printStackTrace();
 		}
-		*/
         
         boolean check = false;
         
         if(method == 0)
         {
-//        	File chk_file = new File("/data/apache-tomcat-9.0.8/webapps/ROOT/kiban/resultfiles/r_plot/corrplot/" + date_name + "/" + date_name + "_corrplot.png");
-        	File chk_file = new File("/data/apache-tomcat-9.0.8/webapps/ROOT/kiban/resultfiles/r_plot/corrplot2021111917490/2021111917490_corrplot.png");
+        	File chk_file = new File("/data/apache-tomcat-9.0.8/webapps/ROOT/kiban/resultfiles/r_plot/corrplot/" + date_name + "/" + date_name + "_corrplot.png");
         	
         	check = chk_file.exists();
+        	
+        	if(check)
+        	{
+        		result = "/kiban/resultfiles/r_plot/corrplot/" + date_name + "/" + date_name + "_corrplot.png";
+        	}
         }
         else
         {
-//        	File chk_file = new File("/data/apache-tomcat-9.0.8/webapps/ROOT/kiban/resultfiles/r_plot/trait/" + date_name + "/" + date_name + "_traitplot.png");
-        	File chk_file = new File("/data/apache-tomcat-9.0.8/webapps/ROOT/kiban/resultfiles/r_plot/trait/2021112222148/2021112222148_traitplot.png");
+        	File chk_file = new File("/data/apache-tomcat-9.0.8/webapps/ROOT/kiban/resultfiles/r_plot/trait/" + date_name + "/" + date_name + "_traitplot.png");
         	
         	check = chk_file.exists();
-        }
-        
-        if(check)
-        {
-        	result = 1;
+        	
+        	if(check)
+        	{
+        		result = "/kiban/resultfiles/r_plot/trait/" + date_name + "/" + date_name + "_traitplot.png";
+        	}
         }
         
         return result;

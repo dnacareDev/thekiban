@@ -487,7 +487,7 @@ select{
 	
 }
 #pop .container{
-	max-width: 700px;
+	max-width: 1000px;
 	margin:0 auto;
 	background-color: #fff;
 	border-radius: 8px;
@@ -703,12 +703,13 @@ select{
 			<div class="container clearfix">
 				<div class="title clearfix">
 					<div class="download">
-						<a href=""><img src="../assets/vendor_assets/img/upload.png">DownLoad</a>
+						<a href="" download="" id="result_file"><img src="../assets/vendor_assets/img/arrow_bottom.png">DownLoad</a>
 					</div>
-					<div class="close"><span></span></div>
+					<div class="close" onclick="closeModal();"><span></span></div>
 				</div>
 				<div class="content">
-					<img src="../img/login_images/the_kiban_login.png" alt="view">
+					<!-- <img src="../assets/vendor_assets/img/2021112222148_traitplot.png" alt="view"> -->
+					<img src="" alt="view" id="result_view">
 				</div>
 			</div>
 		</div>
@@ -1058,10 +1059,6 @@ select{
 			return Alert("하나의 분석 형질만 선택 가능합니다.");
 		}
 		
-		showModal();
-		
-		
-		
 		var target_id = [];
 		var target_name = [];
 		var method = 0;
@@ -1082,7 +1079,6 @@ select{
 		{
 			target_id.push($(this).val());
 			target_name.push(this.nextElementSibling.innerHTML);
-			console.log(this.nextElementSibling.innerHTML);
 		});
 		
 		$(".minus_method").each(function()
@@ -1091,44 +1087,53 @@ select{
 			{
 				method = 1;
 			}
-			console.log(this.nextElementSibling.innerHTML);
 		});
 		
 		$(".minus_trait").each(function()
 		{
 			trait_id.push(this.nextElementSibling.getAttribute("name"));
-			console.log(this.nextElementSibling.innerHTML + " : " + this.nextElementSibling.getAttribute("name"));
 		});
 		
 		var data = {"detail_name" : $("#select_crop").val(), "detail_type" : detail_type, "target_id" : target_id, "target_name" : target_name, "method" : method, "trait_id" : JSON.stringify(trait_id)};
-		console.log(data)
 		
 		$.ajax(
 		{
 			url : "runAnalysis",
 			method : "POST",
-			dataType : "JSON",
+			dataType : "text",
 			data : data,
 			success : function(result)
 			{
-				if(result == 0)
+				console.log(result);
+				if(result == "")
 				{
-					return Alert("분석이 실행되었습니다.")
+					return Alert("분석에 실패하였습니다.")
+				}
+				else
+				{
+					$("#result_view").attr("src", result);
+					$("#result_file").attr("href", result);
+					
+					showModal();
 				}
 			}
 		});
 	}
 	
-	$(".selectBox dt").off().on("click", function(){
+	$(".selectBox dt").off().on("click", function()
+	{
 		$(".selectBox dd").stop().slideToggle(300);
 		$(this).toggleClass("active");
 	});
 
 	let str = "";
-	$(".selectBox dd li").click(function(e){
+	
+	$(".selectBox dd li").click(function(e)
+	{
 		$(".selectBox dd li input[type='checkbox']");
 		$(".selectBox dt").removeClass("active");
 	    $(".selectBox dd li").removeClass("active");
+	    
 	    $(this).addClass("active");
 	    $(this).children().eq(0).prop("checked", true);
 	    $(this).children().eq(0).attr('onclick', "CheckManage(this);");
@@ -1136,17 +1141,17 @@ select{
 	    str = $(this).children().text();
 	    $(".selectBox dt span.choi").text(str);
 	    $(".selectBox dd").slideUp(300);
-	    
 	});
-	function showModal(){
-		$(".submit_btn").click(function(){
-			$("#pop, .dim").show();
-		});
-		$("#pop .container .title .close").click(function(){
-			$("#pop, .dim").hide();
-		});
+	
+	function showModal()
+	{
+		$("#pop, .dim").show();
 	}
 	
+	function closeModal()
+	{
+		$("#pop, .dim").hide();
+	}
 </script>
 </body>
 </html>
