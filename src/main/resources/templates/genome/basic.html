@@ -1998,16 +1998,19 @@
     }
 
     // 통합 분석
-    function AnalysisBtn() {
+    function AnalysisBtn()
+    {
         var total_id = [];
 
         var l = basicgrid.getCheckedRows().length;
 
-        for (let i = 0; i < l; i++) {
+        for(let i = 0; i < l; i++)
+        {
             total_id.push(basicgrid.getCheckedRows()[i].basic_id)
         }
 
-        if (total_id.length != 0) {
+        if(total_id.length != 0)
+        {
             location.href = "/analysis?total_id=" + total_id + "&type=" + 2;
         }
     }
