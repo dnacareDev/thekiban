@@ -2518,8 +2518,8 @@
     }
 
     var lastID = 0;
-    var saveDetail_id = [];
     var saveStandard = [];
+    let basicData = [];
 
     function insertRow() {
         var user_type = $("#user_type").val();
@@ -2532,10 +2532,16 @@
             if (tablechk == 0) {
                 var cnt = basicgrid.getRowCount();
 
-                const newRow = {'169': $("#CropSelect").val()};
+                const newRow = {'basic_id': null, '169': $("#CropSelect").val()};
 
                 basicgrid.prependRow(newRow);
                 basicgrid.check(cnt);
+
+                basicData.push({'detail_id': 169, 'standard': $("#CropSelect").val()})
+
+                basicgrid.on('afterChange', (ev) => {
+                    basicData.push({"detail_id": ev.changes[0].columnName, "standard": ev.changes[0].value})
+                });
             } else {
                 var cnt1 = basicRemainGrid.getRowCount();
 
@@ -2566,9 +2572,6 @@
 
     function saveRow() {
         if (tablechk == 0) {
-            let input_data = [];
-
-            input_data.push(basicgrid.getCheckedRows()[0]);
 
             $.ajax(
                 {
@@ -2576,11 +2579,13 @@
                     method: 'POST',
                     dataType: 'json',
                     data: {
-                        "input_data": JSON.stringify(input_data)
+                        "data": JSON.stringify(basicData)
                     },
                     success: function (result) {
-                        if (result != null) {
-                            console.log(result);
+                        if (result == 0) {
+                            return Alert("저장에 실패하였습니다.");
+                        } else {
+                            location.reload();
                         }
                     }
                 });
