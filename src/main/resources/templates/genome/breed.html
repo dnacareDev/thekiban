@@ -628,7 +628,7 @@
         }
 
         #breedGrid .tui-grid-body-area td[data-column-name='status'] {
-
+            cursor: pointer;
         }
 
         #saveRow {
@@ -2649,7 +2649,9 @@
             breedData.push({'detail_id': 1, 'standard': $("#CropSelect").val()})
 
             breedgrid.on('afterChange', (ev) => {
-                breedData.push({"detail_id": ev.changes[0].columnName, "standard": ev.changes[0].value})
+                for (let i = 0; i < ev.changes.length; i++) {
+                    breedData.push({"detail_id": ev.changes[i].columnName, "standard": ev.changes[i].value})
+                }
             });
         }
     }
