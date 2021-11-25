@@ -3147,14 +3147,12 @@
                             var basic_list = $("#basicBody");
                             var add_list = "";
 
-                            console.log(result.display);
-
                             let len = Object.keys(result.basic).length;
 
                             header_add += '<tr>';
 
-                            for (var i = 0; i < result.display.length; i++) {
-                                header_add += '<th>' + result.display[i].detail_title + '</th>'
+                            for (var i = 0; i < result.detail.length; i++) {
+                                header_add += '<th>' + result.detail[i].detail_title + '</th>'
                             }
 
                             header_add += '</tr>';

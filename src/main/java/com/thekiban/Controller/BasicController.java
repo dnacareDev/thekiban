@@ -622,8 +622,7 @@ public class BasicController
 		User user = (User) auth.getPrincipal();
 
 		List<Integer> basic_id = d_service.SelectTarget(datalist_date, "basic");
-
-		List<Display> display = service.SelectDisplay(user.getUser_id(), basic_name);
+		List<Detail> detail = service.SearchBasicDetail(basic_name);
 
 		Map<Integer, Object> Basic = new LinkedHashMap<Integer, Object>();
 
@@ -632,7 +631,7 @@ public class BasicController
 		}
 
 		result.put("basic", Basic);
-		result.put("display", display);
+		result.put("detail", detail);
 
 		return result;
 	}

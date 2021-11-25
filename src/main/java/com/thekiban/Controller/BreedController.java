@@ -468,8 +468,7 @@ public class BreedController {
     User user = (User) auth.getPrincipal();
 
     List<Integer> breed_id = d_service.SelectTarget(datalist_date, "breed");
-
-    List<Display> display = service.SelectDisplay(user.getUser_id(), breed_name);
+    List<Detail> detail = service.SearchBreedDetail(breed_name);
 
     Map<Integer, Object> Breed = new LinkedHashMap<Integer, Object>();
 
@@ -478,7 +477,7 @@ public class BreedController {
     }
 
     result.put("breed", Breed);
-    result.put("display", display);
+    result.put("detail", detail);
 
     return result;
   }
