@@ -49,6 +49,11 @@ public class SampleServiceImpl implements SampleService {
     return mapper.SearchSample(sample_name, offset, limit);
   }
 
+  @Override
+  public List<Sample> SearchSampleTest(String sample_name) {
+    return mapper.SearchSampleTest(sample_name);
+  }
+
   // 수출자원 검색
   @Override
   public List<SampleOutcome> SearchOutcome(String sample_name, int offset, int limit) {

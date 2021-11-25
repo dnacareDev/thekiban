@@ -636,8 +636,7 @@
             cursor: pointer;
         }
 
-        #basicGrid .tui-grid-body-area td[data-column-name='status']:first-line {
-            color: #007bff;
+        #basicGrid .tui-grid-body-area td[data-column-name='status'] {
             cursor: pointer;
         }
 
@@ -888,7 +887,7 @@
                     <div class="modal-footer" style="border: none">
                         <input type="hidden" id="basic_file_id" name="basic_file_id">
                         <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
-                        <button type="submit" class="btn btn-primary btn-sm">수정</button>
+                        <button type="submit" class="btn btn-primary btn-sm" onclick="ModifyBtn()">수정</button>
                     </div>
                 </form>
             </div>
@@ -2139,6 +2138,7 @@
                         editingEvent: 'click',
                         columns: [],
                         pageOptions: {
+                            useClient: true,
                             perPage: limit,
                         }
                     });
@@ -2322,6 +2322,8 @@
                     }
 
                     basicgrid.resetData(dataArr);
+
+                    basicgrid.setPerPage(limit);
 
                     basicgrid.on('click', (ev) => {
                         if (ev.targetType === 'cell' && ev.columnName === '170') {
@@ -2574,7 +2576,9 @@
                 basicData.push({'detail_id': 169, 'standard': $("#CropSelect").val()})
 
                 basicgrid.on('afterChange', (ev) => {
-                    basicData.push({"detail_id": ev.changes[0].columnName, "standard": ev.changes[0].value})
+                    for (let i = 0; i < ev.changes.length; i++) {
+                        basicData.push({"detail_id": ev.changes[i].columnName, "standard": ev.changes[i].value})
+                    }
                 });
             } else {
                 var cnt1 = basicRemainGrid.getRowCount();

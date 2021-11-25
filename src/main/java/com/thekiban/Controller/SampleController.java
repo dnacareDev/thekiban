@@ -1,5 +1,7 @@
 package com.thekiban.Controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thekiban.Entity.*;
 import com.thekiban.Service.DataListService;
 import com.thekiban.Service.SampleService;
@@ -21,6 +23,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -241,7 +244,7 @@ public class SampleController {
     int offset = (page_num - 1) * limit;
     int end_page = (count + limit - 1) / limit;
 
-    List<Sample> Sample = service.SearchSample(sample_name, offset, limit);
+    List<Sample> Sample = service.SearchSampleTest(sample_name);
 
     result.put("sample", Sample);
     result.put("page_num", page_num);
@@ -262,7 +265,7 @@ public class SampleController {
     int offset = (page_num - 1) * limit;
     int end_page = (count + limit - 1) / limit;
 
-    List<SampleOutcome> SampleOutcome = service.SearchOutcome(sample_name, offset, limit);
+    List<SampleOutcome> SampleOutcome = service.SearchSeed(sample_name);
 
     result1.put("sampleOutcome", SampleOutcome);
     result1.put("page_num", page_num);
@@ -585,4 +588,6 @@ public class SampleController {
 
     return result;
   }
+
+
 }

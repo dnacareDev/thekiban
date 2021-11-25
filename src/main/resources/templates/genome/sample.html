@@ -643,7 +643,7 @@
         .bg-white .row {
             padding-top: 0;
         }
-        
+
          #data_upload12 .form-group button, #data_upload2 .form-group button, #basic_file .form-group button, #data_upload1 .form-group button, #data_upload21 .form-group button{
             height: 45px;
             padding: 0 20px;
@@ -903,6 +903,7 @@
                         </div>
                         <div class="card-body" style="padding-top: 0;">
                             <div class="bg-white">
+                                <div id="grid"></div>
                                 <div id="sampleGrid"></div>
                                 <div id="outcomeGrid" style="visibility: hidden; height: 0;"></div>
                                 <div class="row">
@@ -2294,7 +2295,8 @@
                             }
                         ],
                         pageOptions: {
-                            perPage: limit,
+                            useClient: true,
+                            perPage: limit
                         }
                     });
 
@@ -2582,7 +2584,7 @@
                             }
                         ],
                         pageOptions: {
-                            perPage: limit1,
+                            perPage: limit
                         }
                     });
 

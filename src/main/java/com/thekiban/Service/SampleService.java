@@ -25,6 +25,8 @@ public interface SampleService {
   // 시교자원 검색
   List<Sample> SearchSample(String sample_name, int offset, int limit);
 
+  List<Sample> SearchSampleTest(String sample_name);
+
   // 수출자원 검색
   List<SampleOutcome> SearchOutcome(String sample_name, int offset, int limit);
 

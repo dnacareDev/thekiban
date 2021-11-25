@@ -58,6 +58,16 @@
         LIMIT #{offset}, #{limit}
     </select>
 
+    <select id="SearchSampleTest" resultType="Sample">
+        SELECT * FROM sample
+        <choose>
+            <when test="sample_name != 'none'">
+                WHERE sample_name = #{sample_name}
+                ORDER BY sample_id DESC
+            </when>
+        </choose>
+    </select>
+
     <!-- 출고자원 개수 -->
     <select id="SelectOutcomeCount" parameterType="String" resultType="int">
         SELECT COUNT(*) FROM sampleOutcome

@@ -20,6 +20,9 @@ public interface BreedMapper
 	// 품종 검색
 	List<Breed> SearchBreed(@Param("breed_name") String breed_name, @Param("offset") int offset, @Param("limit") int limit);
 
+	// 품종 검색
+	List<Breed> SearchBreedTest(@Param("breed_name") String breed_name);
+
 	// 품종별 세부 정보 조회
 	List<Detail> SearchBreedDetail(String breed_name);
 

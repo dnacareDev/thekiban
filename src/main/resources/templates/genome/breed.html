@@ -71,7 +71,7 @@
         }
 
         #grid .content_1, #grid3 .content_1 {
-            padding-top: 50px;
+            padding-top: 20px;
         }
 
         .content_1 .title {
@@ -628,7 +628,7 @@
         }
 
         #breedGrid .tui-grid-body-area td[data-column-name='status'] {
-
+            cursor: pointer;
         }
 
         #saveRow {
@@ -743,7 +743,7 @@
                             <button type='button' id="cancelRow" onclick="cancelRow()">취소</button>
                             <button type='button' id="saveRow" onclick="saveRow()">저장</button>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" style="padding-top: 0">
                             <div class="bg-white">
                                 <div id="breedGrid"></div>
                                 <div class="row" style="padding-top: 0;">
@@ -897,7 +897,7 @@
                     <div class="modal-footer" style="border: none">
                         <input type="hidden" id="breed_file_id" name="breed_file_id">
                         <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
-                        <button type="submit" class="btn btn-primary btn-sm">수정</button>
+                        <button type="submit" class="btn btn-primary btn-sm" onclick="ModifyBtn()">수정</button>
                     </div>
                 </form>
             </div>
@@ -2338,8 +2338,10 @@
                         rowHeaders: ['checkbox'],
                         editingEvent: 'click',
                         columns: [],
+                        pagination: true,
                         pageOptions: {
-                            perPage: limit,
+                            useClient: true,
+                            perPage: limit
                         }
                     });
 
@@ -2399,6 +2401,8 @@
                     }
 
                     breedgrid.resetData(dataArr);
+
+                    breedgrid.setPerPage(limit);
 
                     breedgrid.on('check', (ev) => {
                         breedgrid.getRow(ev.rowKey).breed_id;
@@ -2509,9 +2513,7 @@
 
                     for (let i = 0; i < result.display.length; i++) {
                         var colHeader = result.display[i].detail_title;
-                        console.log(colHeader);
                         var colName = result.display[i].detail_id;
-                        console.log(colName);
                         headerName[i] = result.display[i].detail_id;
 
                         var arr = {};
@@ -2519,7 +2521,7 @@
                         if (result.display[i].detail_spec == '기본 정보') {
                             arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 180}
                         } else {
-                            arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc'}
+                            arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 500}
                         }
 
                         headerArr.push(arr);
@@ -2550,6 +2552,8 @@
                     }
 
                     breedgrid.resetData(dataArr);
+
+                    breedgrid.setPerPage(limit);
 
                     breedgrid.on('click', (ev) => {
                         if (ev.targetType === 'cell' && ev.columnName === '2') {
@@ -2649,7 +2653,9 @@
             breedData.push({'detail_id': 1, 'standard': $("#CropSelect").val()})
 
             breedgrid.on('afterChange', (ev) => {
-                breedData.push({"detail_id": ev.changes[0].columnName, "standard": ev.changes[0].value})
+                for (let i = 0; i < ev.changes.length; i++) {
+                    breedData.push({"detail_id": ev.changes[i].columnName, "standard": ev.changes[i].value})
+                }
             });
         }
     }
