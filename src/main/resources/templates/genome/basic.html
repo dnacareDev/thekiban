@@ -684,12 +684,21 @@
             overflow: hidden;
         }
 
+        /*
         .atbd-upload {
             width: 100%;
             height: 600px;
             overflow: scroll;
         }
-
+        */
+        
+        #file_grid
+        {
+            width: 100%;
+            height: 600px;
+            overflow: scroll;
+        }
+        
         #excelForm {
             overflow-y: scroll;
         }
@@ -746,7 +755,7 @@
             font-size: 13px;
             padding: 10px;
         }
-
+        #file_modal{height: 655px;}
     </style>
 </head>
 <body class="layout-light top-menu overlayScroll">
@@ -873,7 +882,7 @@
     <!-- 첨부파일 등록창 -->
     <div class="modal-basic modal fade show pop1" id="insert_file" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
-            <div class="modal-content modal-bg-white">
+            <div class="modal-content modal-bg-white" id="file_modal">
                 <div class="modal-header" style="border: none">
                     <h6 class="modal-title">원종관리 > 첨부파일</h6>
                 </div>
@@ -1717,7 +1726,7 @@
                     <div>
                         <form action="excelBasic" id="excelForm" method="POST" enctype="multipart/form-data">
                             <input type="hidden" id="excel_list" name="excel_list">
-                            <div class="atbd-upload">
+                            <div class="atbd-upload" id="file_grid">
                                 <table id="excel_data">
                                     <thead id="basicHead">
                                     <th><span class="title">작물</span></th>
