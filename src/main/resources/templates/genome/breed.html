@@ -713,6 +713,9 @@
         #excelForm {
             overflow-y: scroll;
         }
+        #excel_data {min-width: 9000px; }
+        #excel_data th {min-width: 54px;}
+        #excel_data th, #excel_data td {font-size: 12px;}
     </style>
 </head>
 <body class="layout-light top-menu overlayScroll">
@@ -2968,8 +2971,8 @@
                 data: data,
                 success: function (result) {
                     if (result != null) {
-                        $("#data_upload3").modal("show");
                         $("#data_upload2").modal("hide");
+                        $("#data_upload3").modal("show");
 
                         var header_list = $("#breedHead");
                         var header_add = "";
