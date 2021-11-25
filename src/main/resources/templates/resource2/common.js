@@ -504,9 +504,9 @@ const _gridData = [
 
 
 
-
-
 var grid, grid2;
+var grid1;
+
 window.onload = function() {
     grid = new tui.Grid({
         el: document.getElementById('sampleGrid'),
@@ -691,7 +691,109 @@ window.onload = function() {
             perPage: 10
         },
     });
-    
+
+    grid1 = new tui.Grid({
+        el: document.getElementById('grid'),
+        scrollX: false,
+        scrollY: false,
+        minBodyHeight: 30,
+        data: {
+            contentType: 'application/json',
+            api: {
+                readData: {
+                    url: 'searchSample1',
+                    method: 'GET',
+                    initParams: {"sample_name": sample_name, "page_num": e, "limit": limit}
+                },
+                initialRequest: false,
+            }
+        },
+        rowHeaders: ['checkbox'],
+        pageOptions: {
+            perPage: 10,
+        },
+        columns: [
+            {
+                header: '첨부파일',
+                name: 'file',
+                width: 100
+            },
+            {
+                header: '작물',
+                name: 'sample_name',
+                editor: 'text',
+                sortable: true,
+                sortingType: 'asc'
+            },
+            {
+                header: '시교명(ID)',
+                name: 'sample_code',
+                editor: 'text',
+                sortable: true,
+                sortingType: 'asc',
+                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
+            },
+            {
+                header: '목표 지역',
+                name: 'sample_country',
+                editor: 'text',
+                sortable: true,
+                sortingType: 'asc'
+            },
+            {
+                header: '구분',
+                name: 'sample_type',
+                editor: 'text',
+                sortable: true,
+                sortingType: 'asc'
+            },
+            {
+                header: '교배번호',
+                name: 'sample_mate',
+                editor: 'text',
+                sortable: true,
+                sortingType: 'asc'
+            },
+            {
+                header: '종자번호(ID)',
+                name: 'sample_seed',
+                editor: 'text',
+                sortable: true,
+                sortingType: 'asc'
+            },
+            {
+                header: '현 종자량(g)',
+                name: 'sample_amount',
+                editor: 'text',
+                filter: 'number',
+                sortable: true,
+                sortingType: 'asc'
+            },
+            {
+                header: '기내 발아율(%)',
+                name: 'sample_sprout',
+                editor: 'text',
+                filter: 'number',
+                sortable: true,
+                sortingType: 'asc'
+            },
+            {
+                header: '기내 순도율(%)',
+                name: 'sample_purity',
+                editor: 'text',
+                filter: 'number',
+                sortable: true,
+                sortingType: 'asc'
+            },
+            {
+                header: '비고',
+                name: 'sample_comment',
+                editor: 'text',
+                sortable: true,
+                sortingType: 'asc'
+            }
+        ]
+    });
 
     // table 탭메뉴
     const tabTableBtn = document.querySelectorAll('.atbd-button-list > .btn-group > .btn');

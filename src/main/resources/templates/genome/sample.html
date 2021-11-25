@@ -643,7 +643,7 @@
         .bg-white .row {
             padding-top: 0;
         }
-        
+
          #data_upload12 .form-group button, #data_upload2 .form-group button, #basic_file .form-group button, #data_upload1 .form-group button, #data_upload21 .form-group button{
             height: 45px;
             padding: 0 20px;
@@ -1842,7 +1842,6 @@
     $(document).ready(function () {
         SearchSample(1);
         SearchOutcome(1);
-        SearchSample1(1);
     });
 
     $("#CropSelect").change(function () {
@@ -1854,7 +1853,6 @@
     $("#limit").change(function () {
         OtherSample(1);
         OtherOutcome(1);
-        SearchSample2(1);
     })
 
     function selectAll(selectAll) {
@@ -2297,7 +2295,8 @@
                             }
                         ],
                         pageOptions: {
-                            perPage: limit,
+                            useClient: true,
+                            perPage: limit
                         }
                     });
 
@@ -2381,140 +2380,6 @@
                     });
                 }
             });
-
-    }
-
-    function SearchSample1(e) {
-        var sample_name = $("#CropSelect").val();
-        var limit = $("#limit").val();
-
-        const dataSource = {
-            api: {
-                readData: {
-                    url: 'searchSample1',
-                    method: 'GET',
-                    initParams: {"sample_name": sample_name, "limit": limit}
-                },
-                initialRequest: true
-            }
-        }
-
-        grid = new tui.Grid({
-            el: document.getElementById('grid'),
-            scrollX: false,
-            scrollY: false,
-            minBodyHeight: 30,
-            data: dataSource,
-            rowHeaders: ['checkbox'],
-            pageOptions: {
-                perPage: 5,
-            },
-            columns: [
-                {
-                    header: '첨부파일',
-                    name: 'file',
-                    width: 100
-                },
-                {
-                    header: '작물',
-                    name: 'sample_name',
-                    editor: 'text',
-                    sortable: true,
-                    sortingType: 'asc'
-                },
-                {
-                    header: '시교명(ID)',
-                    name: 'sample_code',
-                    editor: 'text',
-                    sortable: true,
-                    sortingType: 'asc',
-                    filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
-                },
-                {
-                    header: '목표 지역',
-                    name: 'sample_country',
-                    editor: 'text',
-                    sortable: true,
-                    sortingType: 'asc'
-                },
-                {
-                    header: '구분',
-                    name: 'sample_type',
-                    editor: 'text',
-                    sortable: true,
-                    sortingType: 'asc'
-                },
-                {
-                    header: '교배번호',
-                    name: 'sample_mate',
-                    editor: 'text',
-                    sortable: true,
-                    sortingType: 'asc'
-                },
-                {
-                    header: '종자번호(ID)',
-                    name: 'sample_seed',
-                    editor: 'text',
-                    sortable: true,
-                    sortingType: 'asc'
-                },
-                {
-                    header: '현 종자량(g)',
-                    name: 'sample_amount',
-                    editor: 'text',
-                    filter: 'number',
-                    sortable: true,
-                    sortingType: 'asc'
-                },
-                {
-                    header: '기내 발아율(%)',
-                    name: 'sample_sprout',
-                    editor: 'text',
-                    filter: 'number',
-                    sortable: true,
-                    sortingType: 'asc'
-                },
-                {
-                    header: '기내 순도율(%)',
-                    name: 'sample_purity',
-                    editor: 'text',
-                    filter: 'number',
-                    sortable: true,
-                    sortingType: 'asc'
-                },
-                {
-                    header: '비고',
-                    name: 'sample_comment',
-                    editor: 'text',
-                    sortable: true,
-                    sortingType: 'asc'
-                }
-            ]
-        });
-
-        grid.setColumnValues('file', '<i class="bi bi-file-earmark-arrow-down"></i>');
-
-        grid.resetData(dataSource);
-    }
-
-    function SearchSample2(e) {
-        var sample_name = $("#CropSelect").val();
-        var limit = $("#limit").val();
-
-        const dataSource = {
-            api: {
-                readData: {
-                    url: 'searchSample1',
-                    method: 'GET',
-                    initParams: {"sample_name": sample_name, "limit": limit}
-                },
-                initialRequest: true
-            }
-        }
-
-        grid.setColumnValues('file', '<i class="bi bi-file-earmark-arrow-down"></i>');
-
-        grid.resetData(dataSource)
 
     }
 
@@ -2719,7 +2584,7 @@
                             }
                         ],
                         pageOptions: {
-                            perPage: limit1,
+                            perPage: limit
                         }
                     });
 

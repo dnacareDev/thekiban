@@ -2138,6 +2138,7 @@
                         editingEvent: 'click',
                         columns: [],
                         pageOptions: {
+                            useClient: true,
                             perPage: limit,
                         }
                     });
@@ -2321,6 +2322,8 @@
                     }
 
                     basicgrid.resetData(dataArr);
+
+                    basicgrid.setPerPage(limit);
 
                     basicgrid.on('click', (ev) => {
                         if (ev.targetType === 'cell' && ev.columnName === '170') {
