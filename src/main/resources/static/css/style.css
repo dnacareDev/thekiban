@@ -23196,14 +23196,16 @@ table.table-rounded tbody tr td:last-child {
   position: absolute;
   left: 0;
   bottom: 0;
-  padding: 24px 0 24px 280px;
+  padding: 15px 0 15px 280px;
   width: 100%;
   background: #fff;
   transition: all 0.3s ease;
   z-index: 1;
   box-shadow: rgba(146, 153, 184, 0.05) 0px -5px 10px;
 }
-
+.footer_utills{
+	padding: 0 15px 15px 15px !important;
+}
 @media only screen and (max-width: 991px) {
   .footer-wrapper {
     padding: 14px 0 14px 8px;
@@ -25197,6 +25199,7 @@ table.table-rounded tbody tr td:last-child {
     margin-top: 0px;
     margin-bottom: 25px;
   }
+
   .chat-box {
     padding: 19px 0;
   }

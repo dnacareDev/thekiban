@@ -190,4 +190,14 @@ public class SampleServiceImpl implements SampleService {
   public List<Sample> SearchSampleExcel(String sample_name) {
     return mapper.SearchSampleExcel(sample_name);
   }
+
+  @Override
+  public List<Sample> SelectSampleExcel(int sample_id) {
+    return mapper.SelectSampleExcel(sample_id);
+  }
+
+  @Override
+  public List<SampleOutcome> SelectSampleOutcomeExcel(int sample_outcome_id) {
+    return mapper.SelectSampleOutcomeExcel(sample_outcome_id);
+  }
 }

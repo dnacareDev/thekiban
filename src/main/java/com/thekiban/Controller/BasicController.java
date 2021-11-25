@@ -65,7 +65,7 @@ public class BasicController
 		int offset = (page_num - 1) * limit;
 		int end_page = (count + limit - 1) / limit;
 		
-		List<Basic> basic = service.SearchBasic(basic_name, offset, limit);						// 원종 검색
+		List<Basic> basic = service.SearchBasicExcel(basic_name);						// 원종 검색
 		List<Detail> detail = service.SearchBasicDetail(basic_name);							// 원종 작물별 컬럼 조회
 		List<Display> display = service.SelectDisplay(user.getUser_id(), basic_name);			// 사용자별 원종 표시항목 조회
 		
@@ -175,57 +175,6 @@ public class BasicController
 		
 		return result;
 	}
-	
-	/*// 원종 수정
-	@ResponseBody
-	@RequestMapping("updateAllBasic1")
-	public int UpdateAllBasic(@RequestParam("input_data") String input_data)
-	{
-		JSONArray arr = new JSONArray(input_data);
-
-		JSONObject obj = new JSONObject();
-
-		for (int i = 0; i < arr.length(); i++) {
-			obj = arr.getJSONObject(i);
-		}
-
-		int basic_id = obj.getInt("basic_id");
-
-		JSONArray detail_id = obj.getJSONArray("detail_id");
-
-		JSONArray standard = obj.getJSONArray("standard");
-
-		List<Standard> list = new ArrayList<Standard>();
-
-		Standard item = new Standard();
-
-		for(int i = 0; i < detail_id.length(); i++)
-		{
-			item = new Standard();
-
-			if(standard.get(i).equals(""))
-			{
-				item.setBasic_id(basic_id);
-				item.setDetail_id(detail_id.getInt(i));
-				item.setStandard(null);
-
-				list.add(item);
-			}
-			else
-			{
-				item.setBasic_id(basic_id);
-				item.setDetail_id(detail_id.getInt(i));
-				item.setStandard((String)standard.get(i));
-
-				list.add(item);
-			}
-		}
-		
-		int result = service.UpdateAllBasic(list);
-//		int result = 0;
-
-		return result;
-	}*/
 
 	@RequestMapping("updateAllBasic")
 	public ModelAndView UpdateAllBasic(ModelAndView mv, @RequestParam("basic_id") int basic_id, @RequestParam("detail_id") int[] detail_id, @RequestParam("standard") String[] standard)
@@ -661,6 +610,47 @@ public class BasicController
 		result.put("breed", breed);
 		result.put("detail", detail);
 		result.put("display", display);
+
+		return result;
+	}
+
+	@ResponseBody
+	@RequestMapping("searchTargetBasic")
+	public Map<String, Object> SearchTarget(Authentication auth, @RequestParam("datalist_date") String datalist_date, @RequestParam("basic_name") String basic_name) {
+		Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+		User user = (User) auth.getPrincipal();
+
+		List<Integer> basic_id = d_service.SelectTarget(datalist_date, "basic");
+
+		List<Display> display = service.SelectDisplay(user.getUser_id(), basic_name);
+
+		Map<Integer, Object> Basic = new LinkedHashMap<Integer, Object>();
+
+		for(int i = 0; i < basic_id.size(); i++) {
+			Basic.put(i, service.SelectBasicExcel(basic_id.get(i)));
+		}
+
+		result.put("basic", Basic);
+		result.put("display", display);
+
+		return result;
+	}
+
+	@ResponseBody
+	@RequestMapping("searchTargetBRemain")
+	public Map<String, Object> SearchTarget(@RequestParam("datalist_date") String datalist_date) {
+		Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+		List<Integer> basic_remain_id = d_service.SelectTarget(datalist_date, "basic_remain");
+
+		Map<Integer, Object> Sample = new LinkedHashMap<Integer, Object>();
+
+		for(int i = 0; i < basic_remain_id.size(); i++) {
+			Sample.put(i, service.SelectBRemainExcel(basic_remain_id.get(i)));
+		}
+
+		result.put("sample", Sample);
 
 		return result;
 	}

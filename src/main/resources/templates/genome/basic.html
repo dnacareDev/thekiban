@@ -20,7 +20,9 @@
             text-align: center;
             font-weight: initial;
         }
-
+		.header-top{
+			z-index: 99;
+		}
         th, tbody tr {
             background-color: white;
         }
@@ -709,7 +711,7 @@
                                     <button class="btn btn-lg btn-primary data_btn2" title="데이터 등록" onclick="openExcel()">
                                         <img src="../assets/vendor_assets/img/icon1.png" alt="">
                                     </button>
-                                    <button class="btn btn-lg btn-primary data_btn2" title="표시항목 선택" onclick="DisplayBtn();">
+                                    <button class="btn btn-lg btn-primary data_btn2" title="표시항목 선택" onclick="DisplayBtn();" id="displayBtn">
                                         <img src="../assets/vendor_assets/img/icon3.png" alt="">
                                     </button>
                                 </div>
@@ -1618,6 +1620,52 @@
         </div>
     </div>
 
+    <!-- 데이터 확인 모달창 -->
+    <div class="modal-basic modal fade show pop5" id="data_upload3" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content modal-bg-white ">
+                <div class="modal-header" style="border: none">
+                    <h6 class="modal-title">원종관리 > 데이터 등록</h6>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group mb-0">
+                        <input type="text" class="form-control form-control-lg" placeholder="Click to Upload">
+                        <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none">
+                        <button onclick="filesFunction()">불러오기</button>
+                        <input type="file" name="" id="file_data_upload" style="display: none;">
+                    </div>
+                    <div>
+                        <form action="excelBasic" id="excelForm" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" id="excel_list" name="excel_list">
+                            <div class="atbd-upload">
+                                <table id="excel_data">
+                                    <thead id="basicHead">
+                                    <th><span class="title">작물</span></th>
+                                    <th><span class="title">시교명(ID)</span></th>
+                                    <th><span class="title">목표 지역</span></th>
+                                    <th><span class="title">구분</span></th>
+                                    <th><span class="title">교배번호</span></th>
+                                    <th><span class="title">종자번호(ID)</span></th>
+                                    <th><span class="title">현 종자량(g)</span></th>
+                                    <th><span class="title">기내 발아율(%)</span></th>
+                                    <th><span class="title">기내 순도율(%)</span></th>
+                                    <th><span class="title">비고</span></th>
+                                    </thead>
+                                    <tbody id="basicBody">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border: none">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" onclick="dataToggle('#data_upload', '#data_upload2');">취소</button>
+                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" onclick="dataToggle('#data_upload', '#data_upload2'); InsertExcel();">등록</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- 재고관리 목록 창 -->
     <div class="modal-basic modal fade show pop7" id="data_upload21" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
@@ -1706,73 +1754,96 @@
 <th:block th:include="/../fragments/commonjs.html"></th:block>
 
 <script type="text/javascript">
-    function dataToggle(one, two) {
-        $(one).modal("hide");
+let c =0;
+function dataToggle(one, two) {
+    $(one).modal("hide");
 
-        setTimeout(function () {
-            $(two).modal("show");
-        }, 5);
-    }
+    setTimeout(function () {
+        $(two).modal("show");
+    }, 5);
+}
 
-    let topBox = document.getElementsByClassName("top_box");
-    let navN = 0; //선택된 변수
+$(function () {
+    $("#grid2 .content_1 li").click(function (e) {
+        $(this).toggleClass("checked");
 
-    for (let k = 0; k < topBox.length; k++) {
-        let [nav, prev, next] = topBox[k].children;
-        let navLi = nav.children;
-        let navMove = 0;
-
-        let content = document.getElementsByClassName("tab-content")[k];
-        let contentLi = content.children;
-
-        navLi[navN].classList.add("active");
-
-        for (let i = 0; i < navLi.length; i++) {
-            navLi[i].idx = i;
-
-            navLi[i].addEventListener("click", function (e) {
-                navN = e.currentTarget.idx;
-                moveFunction(navN);
-            });
+        if ($(this).hasClass("checked") == true) {
+            $(this).children().eq(0).prop("checked", true);
+        } else {
+            $(this).children().eq(0).prop("checked", false);
         }
+    });
 
-        let list = navLi.length;
+    $("#grid2 .top_box li").click(function () {
+        $("#grid2 .content_1 li").each(function (i, e) {
+            if ($(e).children().eq(0).is(":checked") == true) {
+                $(e).removeClass("checked");
+                $(e).children().eq(0).prop("checked", false);
+            }
+        })
+    });
+})
 
-        next.addEventListener("click", function (e) {
-            (navN < list - 1) ? navN += 1 : navN = list - 1;
+let topBox = document.getElementsByClassName("top_box");
+let navN = 0; //선택된 변수
+
+for (let k = 0; k < topBox.length; k++) {
+    let [nav, prev, next] = topBox[k].children;
+    let navLi = nav.children;
+    
+
+    let content = document.getElementsByClassName("tab-content")[k];
+    let contentLi = content.children;
+
+    navLi[navN].classList.add("active");
+
+    for (let i = 0; i < navLi.length; i++) {
+        navLi[i].idx = i;
+
+        navLi[i].addEventListener("click", function (e) {
+            navN = e.currentTarget.idx;
             moveFunction(navN);
         });
-
-        prev.addEventListener("click", function (e) {
-            (navN > 0) ? navN -= 1 : navN = 0;
-            moveFunction(navN);
-        });
-
-        function moveFunction(f) {
-            for (let h = 0; h < navLi.length; h++) {
-                navLi[h].classList.remove("active");
-                contentLi[h].classList.remove("active");
-            }
-
-
-            let navW = navLi[f].offsetWidth;
-            navMove = navW * f;
-            let a = topBox[k].offsetWidth;
-            let b = nav.offsetWidth;
-            let c = b - a;
-            let d = c + 40 + "px";
-
-            if (navMove > c) {
-                nav.style.marginLeft = "-" + d;
-            } else {
-                nav.style.marginLeft = "-" + navMove + "px";
-            }
-
-            navLi[f].classList.add("active");
-            contentLi[f].classList.add("active");
-            contentLi[f].classList.add("show");
-        }
     }
+
+    let list = navLi.length;
+
+    next.addEventListener("click", function (e) {
+        (navN < list - 1) ? navN += 1 : navN = list - 1;
+        moveFunction(navN);
+    });
+
+    prev.addEventListener("click", function (e) {
+        (navN > 0) ? navN -= 1 : navN = 0;
+        moveFunction(navN);
+    });
+
+    function moveFunction(f) {
+    	let navMove = 0;
+        for (let h = 0; h < navLi.length; h++) {
+            navLi[h].classList.remove("active");
+            contentLi[h].classList.remove("active");
+        }
+
+
+       
+        let a = topBox[k].offsetWidth;
+        let b = nav.offsetWidth;
+        c = b - a;
+        let d = c + 40 + "px";
+        (f == 0) ? navMove += navLi[f].offsetLeft : navMove += navLi[f].offsetLeft -50;
+        
+        if (navMove > c) {
+            nav.style.marginLeft = "-" + d;
+        } else {
+            nav.style.marginLeft = "-" + navMove + "px";
+        }
+
+        navLi[f].classList.add("active");
+        contentLi[f].classList.add("active");
+        contentLi[f].classList.add("show");
+    }
+}
 
     /* form data to json */
     jQuery.fn.serializeObject = function () {
@@ -1900,10 +1971,14 @@
 
     // 표시항목 버튼
     function DisplayBtn() {
-        $("#display_title").text("원종관리 > " + $("#CropSelect").val());
-        $("#display_name").val($("#CropSelect").val());
+        if (tablechk == 0) {
+            $("#display_title").text("원종관리 > " + $("#CropSelect").val());
+            $("#display_name").val($("#CropSelect").val());
 
-        $("#grid2").modal("show");
+            $("#grid2").modal("show");
+        } else {
+            Alert("사용할 수 없는 기능입니다.")
+        }
     }
 
     // 특성상태 버튼
@@ -1997,20 +2072,21 @@
     }
 
     // 통합 분석
-    function AnalysisBtn()
-    {
-        var total_id = [];
+    function AnalysisBtn() {
+        if (tablechk == 0) {
+            var total_id = [];
 
-        var l = basicgrid.getCheckedRows().length;
+            var l = basicgrid.getCheckedRows().length;
 
-        for(let i = 0; i < l; i++)
-        {
-            total_id.push(basicgrid.getCheckedRows()[i].basic_id)
-        }
+            for (let i = 0; i < l; i++) {
+                total_id.push(basicgrid.getCheckedRows()[i].basic_id)
+            }
 
-        if(total_id.length != 0)
-        {
-            location.href = "/analysis?total_id=" + total_id + "&type=" + 2;
+            if (total_id.length != 0) {
+                location.href = "/analysis?total_id=" + total_id + "&type=" + 2;
+            }
+        } else {
+            Alert("사용할 수 없는 기능입니다.")
         }
     }
 
@@ -2165,10 +2241,12 @@
                         var colName = result.display[i].detail_id;
                         headerName[i] = result.display[i].detail_id;
 
+                        var filter = {type: 'text', showApplyBtn: true, showClearBtn: true};
+
                         if (result.display[i].detail_spec == '기본 정보') {
-                            arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 180}
+                            arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 180, 'filter': filter}
                         } else {
-                            arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 500}
+                            arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 500, 'filter': filter}
                         }
 
                         headerArr.push(arr);
@@ -2288,10 +2366,14 @@
                         var colName = result.display[i].detail_id;
                         headerName[i] = result.display[i].detail_id;
 
+                        var arr = {};
+
+                        var filter = {type: 'text', showApplyBtn: true, showClearBtn: true};
+
                         if (result.display[i].detail_spec == '기본 정보') {
-                            arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 180}
+                            arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 180, 'filter': filter}
                         } else {
-                            arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 500}
+                            arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 500, 'filter': filter}
                         }
 
                         headerArr.push(arr);
@@ -2404,44 +2486,49 @@
                                 header: '도입번호(ID)',
                                 name: 'basic_remain_num',
                                 editor: 'text',
-                                sortable: true
+                                sortable: true,
+                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
                             },
                             {
                                 header: '종자 보유량',
                                 name: 'basic_remain_amount',
                                 editor: 'text',
-                                sortable: true
+                                sortable: true,
+                                filter: 'number'
                             },
                             {
                                 header: '입고량',
                                 name: 'basic_remain_in',
                                 editor: 'text',
-                                sortable: true
+                                sortable: true,
+                                filter: 'number'
                             },
                             {
                                 header: '출고량',
                                 name: 'basic_remain_out',
                                 editor: 'text',
-                                sortable: true
+                                sortable: true,
+                                filter: 'number'
                             },
                             {
                                 header: '재고량',
                                 name: 'basic_remain_re',
                                 editor: 'text',
-                                sortable: true
+                                sortable: true,
+                                filter: 'number'
                             },
                             {
                                 header: '담당자',
                                 name: 'basic_remain_person',
                                 editor: 'text',
-                                filter: 'number',
+                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true},
                                 sortable: true
                             },
                             {
                                 header: '일자',
                                 name: 'basic_remain_date',
                                 editor: 'text',
-                                filter: 'number',
+                                filter: 'date',
                                 sortable: true
                             }
                         ],
@@ -2958,9 +3045,18 @@
                             var data_add = "";
 
                             for (var i = result.dataGroup.length - 1; i > -1; i--) {
+                                let date = result.dataGroup[i].datalist_date;
+
+                                var resultArr = date.split('-');
+                                var resultDate = "";
+
+                                for (var j = 0; j < resultArr.length; j++) {
+                                    resultDate += resultArr[j];
+                                }
+
                                 data_add += '<tr>';
                                 data_add += '<td>' + (i + 1) + '</td>';
-                                data_add += '<td>' + result.dataGroup[i].datalist_date + '</td>';
+                                data_add += '<td><button onclick="ModifyDataBtn(' + resultDate + ')" style="border:0px; color:blue; background: white;">' + result.dataGroup[i].datalist_date + '</button></td>';
                                 data_add += '<td>' + result.dataGroup[i].cnt + '</td>';
                                 data_add += '</tr>';
                             }
@@ -2976,6 +3072,104 @@
     }
 
     /* 엑셀 등록 창 */
+
+    function ModifyDataBtn(e) {
+        if(tablechk == 0) {
+            let s = String(e);
+            s = s.replace(/(\d{4})(\d{2})(\d{2})/g, '$1-$2-$3');
+
+            var data = {"datalist_date": s, "basic_name": $("#CropSelect").val()};
+
+            $.ajax(
+                {
+                    url: 'searchTargetBasic',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: data,
+                    success: function (result) {
+                        if (result != null) {
+                            $("#data_upload3").modal("show");
+                            $("#data_upload2").modal("hide");
+
+                            var header_list = $("#basicHead");
+                            var header_add = "";
+                            var basic_list = $("#basicBody");
+                            var add_list = "";
+
+                            console.log(result.display);
+
+                            let len = Object.keys(result.basic).length;
+
+                            header_add += '<tr>';
+
+                            for (var i = 0; i < result.display.length; i++) {
+                                header_add += '<th>' + result.display[i].detail_title + '</th>'
+                            }
+
+                            header_add += '</tr>';
+
+                            for (var i = 0; i < len; i++) {
+                                add_list += '<tr>';
+
+                                for (var j = 0; j < result.basic[i].length; j++) {
+                                    add_list += '<td>' + result.basic[i][j].standard + '</td>';
+                                }
+
+                                add_list += '</tr>';
+                            }
+
+                            header_list.empty();
+                            header_list.append(header_add);
+
+                            basic_list.empty();
+                            basic_list.append(add_list);
+                        }
+                    }
+                }
+            );
+        } else {
+            let s = String(e);
+            s = s.replace(/(\d{4})(\d{2})(\d{2})/g, '$1-$2-$3');
+
+            var data = {"datalist_date": s};
+
+            $.ajax(
+                {
+                    url: 'searchTargetBRemain',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: data,
+                    success: function (result) {
+                        if(result != null) {
+                            $("#data_upload13").modal("show");
+                            $("#data_upload2").modal("hide");
+
+                            var basic_remain_list = $("#remainBody");
+                            var add_list = "";
+
+                            let len = Object.keys(result.basic_remain).length;
+
+                            for (var i = 0; i < len; i++) {
+                                add_list += '<tr>';
+                                add_list += '<td>' + result.basic_remain[i][0].basic_remain_num + '</td>';
+                                add_list += '<td>' + result.basic_remain[i][0].basic_remain_amount + '</td>';
+                                add_list += '<td>' + result.basic_remain[i][0].basic_remain_in + '</td>';
+                                add_list += '<td>' + result.basic_remain[i][0].basic_remain_out + '</td>';
+                                add_list += '<td>' + result.basic_remain[i][0].basic_remain_re + '</td>';
+                                add_list += '<td>' + result.basic_remain[i][0].basic_remain_person + '</td>';
+                                add_list += '<td>' + result.basic_remain[i][0].basic_remain_date + '</td>';
+                                add_list += '</tr>';
+                            }
+
+                            basic_remain_list.empty();
+                            basic_remain_list.append(add_list);
+                        }
+                    }
+                }
+            );
+        }
+
+    }
 
     let now = null;
 
@@ -3035,8 +3229,6 @@
                     }
                 }
             )
-
-
         } else {
             var data1 = [];
 
@@ -3269,8 +3461,6 @@
 
                     // header
                     header_add += '<tr>';
-                    header_add += '<th><span class="title">첨부파일</span></th>';
-                    header_add += '<th><span class="title">특성상태</span></th>';
 
                     for (var i = 0; i < result.display.length; i++) {
                         header_add += '<th><span class="title">' + result.display[i].detail_title + '</span></th>'
@@ -3281,13 +3471,6 @@
                     // body
                     for (var i = 0; i < result.breed.length; i++) {
                         add_list += '<tr>';
-                        add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" onclick="FileBtn(' + result.breed[i].breed_id + ');"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
-
-                        if (result.breed[i].standard_count == 0) {
-                            add_list += '<td style="color : blue; cursor:pointer;">EMPTY</td>';
-                        } else {
-                            add_list += '<td style="color : green; cursor:pointer;">PROGRESS</td>';
-                        }
 
                         for (var j = 0; j < result.breed[i].breed_standard.length; j++) {
                             add_list += '<td>' + result.breed[i].breed_standard[j].standard + '</td>';

@@ -18160,12 +18160,69 @@ to {
 }
 
 [id*="pop_data"] .modal-body li a{
-	padding: 5px 0 !important;
+	padding: 10.5px 0 !important;
 }
 h4{
 	font-size: 18px;
 }
 .breadcrumb-main{
 	margin: 0 !important;
+	margin-top: 10px !important;
+	margin-bottom: 20px !important;
+}
+.d-flex select.form-control{
+	width: 100px !important;
+	font-size: 14px !important;
+}
+#CropSelect{
+	width: 150px !important;
+}
+.main-content .card-extra .atbd-button-group button{
+	height: 42px !important;
+}
+.modal-header{
+	padding-top: 25px !important;
+}
+.modal-header h6{
+	font-size: 18px !important;
+}
+.modal-body{
+	padding-top: 20px !important;
+}
+.main-content .atbd-tab .nav-item:not(:last-child){
+	margin-left:10px !important;
+}
+#grid .content_1 li, #grid3 .content_1 li, .content_title li, .modal-basic .atbd-tab .nav-link{
+	font-size: 14px !important;
+}
+.content_1 .input_text input[type="text"]{
+	
+	padding: 0 15px !important;
+}
+.main-content .fade .top_box span.next, .main-content .fade .top_box span.prev{
+	background-color: rgba(255,255,255, .2) !important;
+}
+.main-content .fade .top_box span.next::before, .main-content .fade .top_box span.next::after, .main-content .fade .top_box span.prev::before, .main-content .fade .top_box span.prev::after{
+	width: 13px !important;
+	top: 14px !important;
+}
+.main-content .fade .top_box span.next::after, .main-content .fade .top_box span.prev::after{
+	top: 23px !important;
+}
+#grid .content_1, #grid3 .content_1{
+	padding-top: 15px !important;
+}
+.main-content .atbd-tab .nav-item:first-child a{
+	margin-left: 13px;
+}
+.modal-header .sample_title{
+	font-size: 14px !important;
+}
+.main-content .modal-body .form-group{
+	
+	padding-bottom:5px !important;
+}
+.main-content .card-extra .justify-content-end .atbd-button-list .data_btn2 img{
+	width: 22px;
 }
 /*# sourceMappingURL=maps/bootstrap.css.map */

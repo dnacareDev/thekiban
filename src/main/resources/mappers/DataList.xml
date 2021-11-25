@@ -2,7 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.thekiban.Mapper.DataListMapper">
 
-    <!-- 날짜 별로 그룹화 해서 가져오기 -->
     <select id="SelectDataList" resultType="DataList">
         SELECT *
         FROM dataList
@@ -15,9 +14,20 @@
         (#{datalist_id}, #{datalist_type}, #{datalist_date}, #{target_id})
     </insert>
 
+    <!-- 날짜 별로 그룹화 해서 가져오기 -->
     <select id="SelectDateGroup" resultType="hashmap">
         SELECT datalist_type, datalist_date, COUNT(target_id) AS cnt FROM dataList
         WHERE datalist_type = #{datalist_type}
         GROUP BY datalist_date
+    </select>
+
+    <select id="SelectTarget" resultType="int">
+        SELECT target_id FROM dataList
+        WHERE datalist_date = #{datalist_date} AND datalist_type = #{datalist_type}
+    </select>
+
+    <select id="SelectTargetCount" parameterType="String" resultType="int">
+        SELECT COUNT(target_id) FROM dataList
+        WHERE datalist_date = #{datalist_date}
     </select>
 </mapper>
