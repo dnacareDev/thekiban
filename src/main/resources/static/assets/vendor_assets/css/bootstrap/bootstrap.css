@@ -18159,5 +18159,13 @@ to {
 
 }
 
-
+[id*="pop_data"] .modal-body li a{
+	padding: 5px 0 !important;
+}
+h4{
+	font-size: 18px;
+}
+.breadcrumb-main{
+	margin: 0 !important;
+}
 /*# sourceMappingURL=maps/bootstrap.css.map */
