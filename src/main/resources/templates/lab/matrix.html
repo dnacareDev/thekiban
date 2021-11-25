@@ -51,15 +51,15 @@
         	text-decoration: underline;
         }
         .data_file{
-        	border: 1px solid #ddd;
+        	/*border: 1px solid #ddd;*/
         	background-color: #fff;
         }
         
         .data_file .top_menu_bar{
         	width:100%;
-        	text-align:center;
+        	text-align:left;
         	padding: 15px 0 0 0;
-        	border-bottom: 1px solid #EDF6F1;
+        	/*border-bottom: 1px solid #EDF6F1;*/
         }
         .data_file .top_menu_bar li{
         	display:inline-block;
@@ -77,7 +77,9 @@
         	display:none;
         	text-align:center;
         	background-color: #fff;
-        	margin-top: 15px;
+        	padding: 50px 0;
+   			margin-top: 0;
+   			border: 1px solid #EDF6F1;
         }
         .main-content .container-fluid {
 		    max-width: 100%;
@@ -106,7 +108,7 @@
             </div>
 		<div class="contents" style="background-color: #fff">
 			<form action="insertMatrix" id="insertFile" method="POST" enctype="multipart/form-data" class="clearfix" style="margin-top:15px;">
-				<button type="button" class="submit" onclick="fileds();" style="margin-left: 0; width: 74%;background-color: #fff; border: 1px solid #D9D9D9; color:#B2B2B2; font-size:14px;text-align:left; padding: 0 15px"><i class="bi bi-upload" style="margin-right:5px; font-size:14px;vertical-align:middle"></i><span style="vertical-align:middle">Click to Upload</span></button>
+				<button type="button" class="submit" onclick="fileds();" style="margin-left: 0; width: 74%;background-color: #fff; border: 1px solid #D9D9D9; color:#B2B2B2; font-size:14px;text-align:left; padding: 0 15px"><i class="bi bi-upload" style="margin-right:5px; font-size:14px;vertical-align:middle"></i><span style="vertical-align:middle; font-weight:500;">Click to Upload</span></button>
 				<button type="submit" class="submit">분석실행</button>
 				<input type="file" id="filed" name="file">
 				<div class="downLoad_cover" style="float:left; margin-left:10px; width: calc((32% - 20px)/2); text-align: center;">

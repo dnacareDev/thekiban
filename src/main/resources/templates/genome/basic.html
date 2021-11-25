@@ -1708,73 +1708,96 @@
 <th:block th:include="/../fragments/commonjs.html"></th:block>
 
 <script type="text/javascript">
-    function dataToggle(one, two) {
-        $(one).modal("hide");
+let c =0;
+function dataToggle(one, two) {
+    $(one).modal("hide");
 
-        setTimeout(function () {
-            $(two).modal("show");
-        }, 5);
-    }
+    setTimeout(function () {
+        $(two).modal("show");
+    }, 5);
+}
 
-    let topBox = document.getElementsByClassName("top_box");
-    let navN = 0; //선택된 변수
+$(function () {
+    $("#grid2 .content_1 li").click(function (e) {
+        $(this).toggleClass("checked");
 
-    for (let k = 0; k < topBox.length; k++) {
-        let [nav, prev, next] = topBox[k].children;
-        let navLi = nav.children;
-        let navMove = 0;
-
-        let content = document.getElementsByClassName("tab-content")[k];
-        let contentLi = content.children;
-
-        navLi[navN].classList.add("active");
-
-        for (let i = 0; i < navLi.length; i++) {
-            navLi[i].idx = i;
-
-            navLi[i].addEventListener("click", function (e) {
-                navN = e.currentTarget.idx;
-                moveFunction(navN);
-            });
+        if ($(this).hasClass("checked") == true) {
+            $(this).children().eq(0).prop("checked", true);
+        } else {
+            $(this).children().eq(0).prop("checked", false);
         }
+    });
 
-        let list = navLi.length;
+    $("#grid2 .top_box li").click(function () {
+        $("#grid2 .content_1 li").each(function (i, e) {
+            if ($(e).children().eq(0).is(":checked") == true) {
+                $(e).removeClass("checked");
+                $(e).children().eq(0).prop("checked", false);
+            }
+        })
+    });
+})
 
-        next.addEventListener("click", function (e) {
-            (navN < list - 1) ? navN += 1 : navN = list - 1;
+let topBox = document.getElementsByClassName("top_box");
+let navN = 0; //선택된 변수
+
+for (let k = 0; k < topBox.length; k++) {
+    let [nav, prev, next] = topBox[k].children;
+    let navLi = nav.children;
+    
+
+    let content = document.getElementsByClassName("tab-content")[k];
+    let contentLi = content.children;
+
+    navLi[navN].classList.add("active");
+
+    for (let i = 0; i < navLi.length; i++) {
+        navLi[i].idx = i;
+
+        navLi[i].addEventListener("click", function (e) {
+            navN = e.currentTarget.idx;
             moveFunction(navN);
         });
-
-        prev.addEventListener("click", function (e) {
-            (navN > 0) ? navN -= 1 : navN = 0;
-            moveFunction(navN);
-        });
-
-        function moveFunction(f) {
-            for (let h = 0; h < navLi.length; h++) {
-                navLi[h].classList.remove("active");
-                contentLi[h].classList.remove("active");
-            }
-
-
-            let navW = navLi[f].offsetWidth;
-            navMove = navW * f;
-            let a = topBox[k].offsetWidth;
-            let b = nav.offsetWidth;
-            let c = b - a;
-            let d = c + 40 + "px";
-
-            if (navMove > c) {
-                nav.style.marginLeft = "-" + d;
-            } else {
-                nav.style.marginLeft = "-" + navMove + "px";
-            }
-
-            navLi[f].classList.add("active");
-            contentLi[f].classList.add("active");
-            contentLi[f].classList.add("show");
-        }
     }
+
+    let list = navLi.length;
+
+    next.addEventListener("click", function (e) {
+        (navN < list - 1) ? navN += 1 : navN = list - 1;
+        moveFunction(navN);
+    });
+
+    prev.addEventListener("click", function (e) {
+        (navN > 0) ? navN -= 1 : navN = 0;
+        moveFunction(navN);
+    });
+
+    function moveFunction(f) {
+    	let navMove = 0;
+        for (let h = 0; h < navLi.length; h++) {
+            navLi[h].classList.remove("active");
+            contentLi[h].classList.remove("active");
+        }
+
+
+       
+        let a = topBox[k].offsetWidth;
+        let b = nav.offsetWidth;
+        c = b - a;
+        let d = c + 40 + "px";
+        (f == 0) ? navMove += navLi[f].offsetLeft : navMove += navLi[f].offsetLeft -50;
+        
+        if (navMove > c) {
+            nav.style.marginLeft = "-" + d;
+        } else {
+            nav.style.marginLeft = "-" + navMove + "px";
+        }
+
+        navLi[f].classList.add("active");
+        contentLi[f].classList.add("active");
+        contentLi[f].classList.add("show");
+    }
+}
 
     /* form data to json */
     jQuery.fn.serializeObject = function () {
