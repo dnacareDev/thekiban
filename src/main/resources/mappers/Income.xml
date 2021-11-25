@@ -244,4 +244,15 @@
             modify_date         = NOW()
         WHERE income_file_id = #{income_file_id}
     </update>
+
+    <select id="SelectIncomeExcel" resultType="Income">
+        SELECT * FROM income
+        WHERE income_id = #{income_id}
+    </select>
+
+    <select id="SelectIncomeRemainExcel" resultType="IncomeRemain">
+        SELECT * FROM incomeRemain
+        WHERE income_remain_id = #{income_remain_id}
+    </select>
+
 </mapper>

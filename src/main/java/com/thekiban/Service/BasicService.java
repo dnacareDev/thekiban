@@ -99,4 +99,8 @@ public interface BasicService
 
 	List<Basic> SearchBasicExcel(String basic_name);
 
+	List<Basic> SelectBasicExcel(int basic_id);
+
+	List<BasicRemain> SelectBRemainExcel(int basic_remain_id);
+
 }

@@ -153,5 +153,13 @@ public class IncomeServiceImpl implements IncomeService {
     return mapper.UpdateIncomeUpload(upload);
   }
 
+  @Override
+  public List<Income> SelectIncomeExcel(int income_id) {
+    return mapper.SelectIncomeExcel(income_id);
+  }
 
+  @Override
+  public List<IncomeRemain> SelectIncomeRemainExcel(int income_remain_id) {
+    return mapper.SelectIncomeRemainExcel(income_remain_id);
+  }
 }

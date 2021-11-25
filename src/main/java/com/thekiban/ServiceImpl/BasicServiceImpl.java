@@ -233,4 +233,14 @@ public class BasicServiceImpl implements BasicService
 	public List<Basic> SearchBasicExcel(String basic_name) {
 		return mapper.SearchBasicExcel(basic_name);
 	}
+
+	@Override
+	public List<Basic> SelectBasicExcel(int basic_id) {
+		return mapper.SelectBasicExcel(basic_id);
+	}
+
+	@Override
+	public List<BasicRemain> SelectBRemainExcel(int basic_remain_id) {
+		return mapper.SelectBRemainExcel(basic_remain_id);
+	}
 }

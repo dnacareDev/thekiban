@@ -469,6 +469,41 @@ public class SampleController {
     return result;
   }
 
+  @ResponseBody
+  @RequestMapping("searchTarget")
+  public Map<String, Object> SearchTarget(@RequestParam("datalist_date") String datalist_date) {
+    Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+    List<Integer> sample_id = d_service.SelectTarget(datalist_date, "sample");
+
+    Map<Integer, Object> Sample = new LinkedHashMap<Integer, Object>();
+
+    for(int i = 0; i < sample_id.size(); i++) {
+      Sample.put(i, service.SelectSampleExcel(sample_id.get(i)));
+    }
+
+    result.put("sample", Sample);
+
+    return result;
+  }
+
+  @ResponseBody
+  @RequestMapping("searchTargetOutcome")
+  public Map<String, Object> SearchTargetOutcome(@RequestParam("datalist_date") String datalist_date) {
+    Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+    List<Integer> sample_outcome_id = d_service.SelectTarget(datalist_date, "sample");
+
+    Map<Integer, Object> Sample = new LinkedHashMap<Integer, Object>();
+
+    for(int i = 0; i < sample_outcome_id.size(); i++) {
+      Sample.put(i, service.SelectSampleExcel(sample_outcome_id.get(i)));
+    }
+
+    result.put("sample", Sample);
+
+    return result;
+  }
 
   // 첨부 파일 조회
   @ResponseBody

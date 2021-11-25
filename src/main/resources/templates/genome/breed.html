@@ -692,6 +692,27 @@
         .plus_btn_submit1 {
             display: none;
         }
+
+        .modal-dialog {
+            height: 90vh;
+        }
+        .modal-content {
+            height: 100%;
+        }
+        .modal-body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        .atbd-upload {
+            width: 100%;
+            height: 100%;
+            overflow: scroll;
+
+        }
+        #excelForm {
+            overflow-y: scroll;
+        }
     </style>
 </head>
 <body class="layout-light top-menu overlayScroll">
@@ -1393,6 +1414,61 @@
         </div>
     </div>
 
+    <!-- 품종관리 데이터 확인 모달창 -->
+    <div class="modal-basic modal fade show pop5" id="data_upload3" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content modal-bg-white ">
+                <div class="modal-header" style="border: none">
+                    <h6 class="modal-title">품종관리 > 데이터 등록</h6>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group mb-0">
+                        <input type="text" class="form-control form-control-lg" placeholder="Click to Upload">
+                        <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none">
+                        <button onclick="filesFunction()" class="btn btn-primary btn-sm">불러오기</button>
+                        <input type="file" name="" id="file_data_upload" style="display: none;">
+                    </div>
+                    <div>
+                        <form action="excelBreed" id="excelForm" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" id="excel_list" name="excel_list">
+                            <div class="atbd-upload">
+                                <table id="excel_data">
+                                    <thead id="breedHead">
+                                    <th><span class="title">작물</span></th>
+                                    <th><span class="title">시교명(ID)</span></th>
+                                    <th><span class="title">품종명</span></th>
+                                    <th><span class="title">모계 계통명(ID)</span></th>
+                                    <th><span class="title">부계 계통명(ID)</span></th>
+                                    <th><span class="title">생산판매 (신고번호)</span></th>
+                                    <th><span class="title">생산판매 (신고일자)</span></th>
+                                    <th><span class="title">보호출원 (출원번호)</span></th>
+                                    <th><span class="title">보호출원 (출원일자)</span></th>
+                                    <th><span class="title">보호등록 (등록번호)</span></th>
+                                    <th><span class="title">보호등록 (등록일자)</span></th>
+                                    <th><span class="title">미등록 (현지 상업화)</span></th>
+                                    <th><span class="title">목표 시장</span></th>
+                                    <th><span class="title">형태 구분1</span></th>
+                                    <th><span class="title">형태 구분2</span></th>
+                                    <th><span class="title">작물 타입1</span></th>
+                                    <th><span class="title">작물 타입2</span></th>
+                                    <th><span class="title">비고</span></th>
+                                    </thead>
+                                    <tbody id="breedBody">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border: none">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" onclick="dataToggle('#data_upload3', '#data_upload2');">취소</button>
+                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" onclick="dataToggle('#data_upload3', '#data_upload2'); InsertExcel();">등록</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
     <!-- 등록정보 수정 모달창 -->
     <div class="modal-basic modal fade show pop6" id="grid3" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
@@ -1945,21 +2021,18 @@
     }
 
     // 통합 분석
-    function AnalysisBtn()
-    {
-    	var crop = $("#CropSelect").val();
-    	
+    function AnalysisBtn() {
+        var crop = $("#CropSelect").val();
+
         var total_id = [];
 
         var l = breedgrid.getCheckedRows().length;
 
-        for(let i = 0; i < l; i++)
-        {
+        for (let i = 0; i < l; i++) {
             total_id.push(breedgrid.getCheckedRows()[i].breed_id)
         }
 
-        if(total_id.length != 0)
-        {
+        if (total_id.length != 0) {
             location.href = "/analysis?crop=" + crop + "&total_id=" + total_id + "&type=" + 1;
         }
     }
@@ -2338,7 +2411,6 @@
                         rowHeaders: ['checkbox'],
                         editingEvent: 'click',
                         columns: [],
-                        pagination: true,
                         pageOptions: {
                             useClient: true,
                             perPage: limit
@@ -2367,10 +2439,12 @@
 
                         var arr = {};
 
+                        var filter = {type: 'text', showApplyBtn: true, showClearBtn: true};
+
                         if (result.display[i].detail_spec == '기본 정보') {
-                            arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 180}
+                            arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 180, 'filter': filter}
                         } else {
-                            arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 500}
+                            arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 500, 'filter': filter}
                         }
 
                         headerArr.push(arr);
@@ -2401,8 +2475,6 @@
                     }
 
                     breedgrid.resetData(dataArr);
-
-                    breedgrid.setPerPage(limit);
 
                     breedgrid.on('check', (ev) => {
                         breedgrid.getRow(ev.rowKey).breed_id;
@@ -2518,10 +2590,12 @@
 
                         var arr = {};
 
+                        var filter = {type: 'text', showApplyBtn: true, showClearBtn: true};
+
                         if (result.display[i].detail_spec == '기본 정보') {
-                            arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 180}
+                            arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 180, 'filter': filter}
                         } else {
-                            arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 500}
+                            arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 500, 'filter': filter}
                         }
 
                         headerArr.push(arr);
@@ -2536,7 +2610,7 @@
 
                         rowArr = {'file': '<i class="bi bi-file-earmark-arrow-down"></i>', 'breed_id': result.breed[i].breed_id};
 
-                        if (result.basic[i].standard_count == 0) {
+                        if (result.breed[i].standard_count == 0) {
                             rowArr['status'] = '<span style="color:red">EMPTY</span>';
 
                         } else {
@@ -2852,9 +2926,18 @@
                         var data_add = "";
 
                         for (var i = result.dataGroup.length - 1; i > -1; i--) {
+                            let date = result.dataGroup[i].datalist_date;
+
+                            var resultArr = date.split('-');
+                            var resultDate = "";
+
+                            for (var j = 0; j < resultArr.length; j++) {
+                                resultDate += resultArr[j];
+                            }
+
                             data_add += '<tr>';
                             data_add += '<td>' + (i + 1) + '</td>';
-                            data_add += '<td>' + result.dataGroup[i].datalist_date + '</td>';
+                            data_add += '<td><button onclick="ModifyDataBtn(' + resultDate + ')" style="border:0px; color:blue; background: white;">' + result.dataGroup[i].datalist_date + '</button></td>';
                             data_add += '<td>' + result.dataGroup[i].cnt + '</td>';
                             data_add += '</tr>';
                         }
@@ -2868,6 +2951,61 @@
     }
 
     /* 엑셀 등록 창 */
+
+    function ModifyDataBtn(e) {
+        let s = String(e);
+        s = s.replace(/(\d{4})(\d{2})(\d{2})/g, '$1-$2-$3');
+
+        var data = {"datalist_date": s, "breed_name": $("#CropSelect").val()};
+
+        $.ajax(
+            {
+                url: 'searchTargetBreed',
+                method: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function (result) {
+                    if (result != null) {
+                        $("#data_upload3").modal("show");
+                        $("#data_upload2").modal("hide");
+
+                        var header_list = $("#breedHead");
+                        var header_add = "";
+                        var breed_list = $("#breedBody");
+                        var add_list = "";
+
+                        let len = Object.keys(result.breed).length;
+
+                        header_add += '<tr>';
+
+                        for (var i = 0; i < result.display.length; i++) {
+                            header_add += '<th class="breedHead">' + result.display[i].detail_title + '</th>'
+                        }
+
+                        header_add += '</tr>';
+
+                        for (var i = 0; i < len; i++) {
+                            add_list += '<tr>';
+
+                            for (var j = 0; j < result.breed[i].length; j++) {
+                                add_list += '<td>' + result.breed[i][j].standard + '</td>';
+                            }
+
+                            add_list += '</tr>';
+                        }
+
+                        header_list.empty();
+                        header_list.append(header_add);
+
+                        breed_list.empty();
+                        breed_list.append(add_list);
+                    }
+                }
+            }
+        );
+    }
+
+    let now = null;
 
     /* 엑셀 입력 */
     function InsertExcel() {

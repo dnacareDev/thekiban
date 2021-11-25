@@ -271,6 +271,16 @@
         </choose>
     </select>
 
+    <select id="SelectSampleExcel" resultType="Sample">
+        SELECT * FROM sample
+        WHERE sample_id = #{sample_id}
+    </select>
+
+    <select id="SelectSampleOutcomeExcel" resultType="SampleOutcome">
+        SELECT * FROM sampleOutcome
+        WHERE sample_outcome_id = #{sample_outcome_id}
+    </select>
+
     <!-- 품종 검색 -->
     <select id="SearchBreed" resultType="Breed">
         SELECT *,

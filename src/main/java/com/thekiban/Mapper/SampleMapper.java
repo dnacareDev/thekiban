@@ -100,6 +100,8 @@ public interface SampleMapper {
 
   List<Sample> SearchSampleExcel(@Param("sample_name") String sample_name);
 
+  List<Sample> SelectSampleExcel(int sample_id);
 
+  List<SampleOutcome> SelectSampleOutcomeExcel(int sample_outcome_id);
 }
 
