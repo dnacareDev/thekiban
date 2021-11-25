@@ -597,7 +597,8 @@
         #data_upload .modal-body .form-group, #data_upload11 .modal-body .form-group {
             justify-content: flex-start;
         }
-        #data_upload12 .form-group button, #data_upload2 .form-group button, #basic_file .form-group button, #data_upload11 .form-group button, #data_upload21 .form-group button, #data_upload1 .form-group button{
+
+        #data_upload12 .form-group button, #data_upload2 .form-group button, #basic_file .form-group button, #data_upload11 .form-group button, #data_upload21 .form-group button, #data_upload1 .form-group button {
             height: 45px;
             padding: 0 20px;
             background-color: #217566;
@@ -607,7 +608,7 @@
             margin-left: 10px;
         }
 
-        #data_upload2 .form-group button, #basic_file .form-group button,  #data_upload21 .form-group button, #data_upload1 .form-group button {
+        #data_upload2 .form-group button, #basic_file .form-group button, #data_upload21 .form-group button, #data_upload1 .form-group button {
             margin-left: 0;
         }
 
@@ -621,13 +622,14 @@
             background-size: 15px;
             color: #B2B2B2;
         }
+
         #data_upload12 .atbd-upload, #data_upload2 .atbd-upload, #data_upload21 .atbd-upload, #data_upload11 .atbd-upload, #data_upload1 .atbd-upload {
             width: 100%;
             height: 300px;
             overflow: auto;
         }
 
-        #data_upload12 .atbd-upload table,  #data_upload11 .atbd-upload table, #data_upload1 .atbd-upload table {
+        #data_upload12 .atbd-upload table, #data_upload11 .atbd-upload table, #data_upload1 .atbd-upload table {
             width: max-content;
             border: none;
             min-width: 100%;
@@ -646,7 +648,7 @@
             border-bottom: 1px solid #E8EEF2;
         }
 
-        #data_upload12 .atbd-upload table thead th, #data_upload2 .atbd-upload table thead th,  #data_upload21 .atbd-upload table thead th, #data_upload1 .atbd-upload table thead th {
+        #data_upload12 .atbd-upload table thead th, #data_upload2 .atbd-upload table thead th, #data_upload21 .atbd-upload table thead th, #data_upload1 .atbd-upload table thead th {
             background-color: #F7F7F8;
             color: #222222;
             font-size: 16px;
@@ -2003,7 +2005,8 @@
                             }
                         ],
                         pageOptions: {
-                            perPage: limit,
+                            useClient: true,
+                            perPage: limit
                         }
                     });
 
@@ -2252,7 +2255,7 @@
                             }
                         ],
                         pageOptions: {
-                            perPage: limit1,
+                            perPage: limit
                         }
                     });
 

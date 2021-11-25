@@ -55,7 +55,7 @@ public class BreedController {
     int offset = (page_num - 1) * limit;
     int end_page = (count + limit - 1) / limit;
 
-    List<Breed> breed = service.SearchBreed(breed_name, offset, limit);                // 품종 검색
+    List<Breed> breed = service.SearchBreedTest(breed_name);                // 품종 검색
     List<Detail> detail = service.SearchBreedDetail(breed_name);                  // 품종 작물별 컬럼 조회
     List<Display> display = service.SelectDisplay(user.getUser_id(), breed_name);          // 사용자별 품종 표시항목 조회
 
