@@ -71,7 +71,7 @@
         }
 
         #grid .content_1, #grid3 .content_1 {
-            padding-top: 50px;
+            padding-top: 20px;
         }
 
         .content_1 .title {
@@ -764,7 +764,7 @@
                             <button type='button' id="cancelRow" onclick="cancelRow()">취소</button>
                             <button type='button' id="saveRow" onclick="saveRow()">저장</button>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" style="padding-top: 0">
                             <div class="bg-white">
                                 <div id="breedGrid"></div>
                                 <div class="row" style="padding-top: 0;">
@@ -1765,6 +1765,7 @@
 <!-- 공통 js -->
 <th:block th:include="/../fragments/commonjs.html"></th:block>
 <script type="text/javascript">
+	let c =0;
     function dataToggle(one, two) {
         $(one).modal("hide");
 
@@ -1800,7 +1801,7 @@
     for (let k = 0; k < topBox.length; k++) {
         let [nav, prev, next] = topBox[k].children;
         let navLi = nav.children;
-        let navMove = 0;
+        
 
         let content = document.getElementsByClassName("tab-content")[k];
         let contentLi = content.children;
@@ -1829,19 +1830,20 @@
         });
 
         function moveFunction(f) {
+        	let navMove = 0;
             for (let h = 0; h < navLi.length; h++) {
                 navLi[h].classList.remove("active");
                 contentLi[h].classList.remove("active");
             }
 
 
-            let navW = navLi[f].offsetWidth;
-            navMove = navW * f;
+           
             let a = topBox[k].offsetWidth;
             let b = nav.offsetWidth;
-            let c = b - a;
+            c = b - a;
             let d = c + 40 + "px";
-
+            (f == 0) ? navMove += navLi[f].offsetLeft : navMove += navLi[f].offsetLeft -50;
+            
             if (navMove > c) {
                 nav.style.marginLeft = "-" + d;
             } else {
