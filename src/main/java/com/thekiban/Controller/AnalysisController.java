@@ -35,7 +35,7 @@ public class AnalysisController
 	
 	// 통합 분석 페이지
 	@RequestMapping("/analysis")
-	public ModelAndView Analysis(ModelAndView mv, @RequestParam("crop") String crop, @RequestParam(required = false, value = "total_id") int[] total_id, @RequestParam(defaultValue = "0", value = "type") int type)
+	public ModelAndView Analysis(ModelAndView mv, @RequestParam(required = false, value = "crop") String crop, @RequestParam(required = false, value = "total_id") int[] total_id, @RequestParam(defaultValue = "0", value = "type") int type)
 	{
 		mv.addObject("crop", crop);
 		mv.addObject("total_id", total_id);
