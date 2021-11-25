@@ -696,26 +696,43 @@
         .modal-dialog {
             height: 90vh;
         }
+
         .modal-content {
             height: 100%;
         }
+
         .modal-body {
             width: 100%;
             height: 100%;
             overflow: hidden;
         }
+
         .atbd-upload {
             width: 100%;
             height: 100%;
             overflow: scroll;
 
         }
+
         #excelForm {
             overflow-y: scroll;
         }
-        #excel_data {min-width: 9000px; }
-        #excel_data th {min-width: 54px;}
-        #excel_data th, #excel_data td {font-size: 12px;}
+
+        #excel_data {
+            min-width: 9000px;
+        }
+
+        #excel_data th {
+            min-width: 54px;
+        }
+
+        #excel_data th, #excel_data td {
+            font-size: 12px;
+        }
+
+        .tui-grid-cell {
+            background-color: white;
+        }
     </style>
 </head>
 <body class="layout-light top-menu overlayScroll">
@@ -1768,7 +1785,8 @@
 <!-- 공통 js -->
 <th:block th:include="/../fragments/commonjs.html"></th:block>
 <script type="text/javascript">
-	let c =0;
+    let c = 0;
+
     function dataToggle(one, two) {
         $(one).modal("hide");
 
@@ -1804,7 +1822,7 @@
     for (let k = 0; k < topBox.length; k++) {
         let [nav, prev, next] = topBox[k].children;
         let navLi = nav.children;
-        
+
 
         let content = document.getElementsByClassName("tab-content")[k];
         let contentLi = content.children;
@@ -1833,20 +1851,19 @@
         });
 
         function moveFunction(f) {
-        	let navMove = 0;
+            let navMove = 0;
             for (let h = 0; h < navLi.length; h++) {
                 navLi[h].classList.remove("active");
                 contentLi[h].classList.remove("active");
             }
 
 
-           
             let a = topBox[k].offsetWidth;
             let b = nav.offsetWidth;
             c = b - a;
             let d = c + 40 + "px";
-            (f == 0) ? navMove += navLi[f].offsetLeft : navMove += navLi[f].offsetLeft -50;
-            
+            (f == 0) ? navMove += navLi[f].offsetLeft : navMove += navLi[f].offsetLeft - 50;
+
             if (navMove > c) {
                 nav.style.marginLeft = "-" + d;
             } else {
@@ -2426,12 +2443,12 @@
                         {
                             'header': '첨부파일',
                             'name': 'file',
-                            'width': 100
+                            'width': 100,
                         },
                         {
                             'header': '특성상태',
                             'name': 'status',
-                            'width': 150
+                            'width': 150,
                         }
                     ];
 
@@ -2577,12 +2594,12 @@
                         {
                             'header': '첨부파일',
                             'name': 'file',
-                            'width': 100
+                            'width': 100,
                         },
                         {
                             'header': '특성상태',
                             'name': 'status',
-                            'width': 150
+                            'width': 150,
                         }
                     ];
 

@@ -20,9 +20,11 @@
             text-align: center;
             font-weight: initial;
         }
-		.header-top{
-			z-index: 99;
-		}
+
+        .header-top {
+            z-index: 99;
+        }
+
         th, tbody tr {
             background-color: white;
         }
@@ -667,6 +669,48 @@
         .bg-white .row {
             padding-top: 0;
         }
+
+        .modal-dialog {
+            height: 90vh;
+        }
+
+        .modal-content {
+            height: 100%;
+        }
+
+        .modal-body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .atbd-upload {
+            width: 100%;
+            height: 100%;
+            overflow: scroll;
+
+        }
+
+        #excelForm {
+            overflow-y: scroll;
+        }
+
+        #excel_data {
+            min-width: 9000px;
+        }
+
+        #excel_data th {
+            min-width: 54px;
+        }
+
+        #excel_data th, #excel_data td {
+            font-size: 12px;
+        }
+
+        .tui-grid-cell {
+            background-color: white;
+        }
+
     </style>
 </head>
 <body class="layout-light top-menu overlayScroll">
@@ -1754,96 +1798,96 @@
 <th:block th:include="/../fragments/commonjs.html"></th:block>
 
 <script type="text/javascript">
-let c =0;
-function dataToggle(one, two) {
-    $(one).modal("hide");
+    let c = 0;
 
-    setTimeout(function () {
-        $(two).modal("show");
-    }, 5);
-}
+    function dataToggle(one, two) {
+        $(one).modal("hide");
 
-$(function () {
-    $("#grid2 .content_1 li").click(function (e) {
-        $(this).toggleClass("checked");
+        setTimeout(function () {
+            $(two).modal("show");
+        }, 5);
+    }
 
-        if ($(this).hasClass("checked") == true) {
-            $(this).children().eq(0).prop("checked", true);
-        } else {
-            $(this).children().eq(0).prop("checked", false);
-        }
-    });
+    $(function () {
+        $("#grid2 .content_1 li").click(function (e) {
+            $(this).toggleClass("checked");
 
-    $("#grid2 .top_box li").click(function () {
-        $("#grid2 .content_1 li").each(function (i, e) {
-            if ($(e).children().eq(0).is(":checked") == true) {
-                $(e).removeClass("checked");
-                $(e).children().eq(0).prop("checked", false);
+            if ($(this).hasClass("checked") == true) {
+                $(this).children().eq(0).prop("checked", true);
+            } else {
+                $(this).children().eq(0).prop("checked", false);
             }
-        })
-    });
-})
+        });
 
-let topBox = document.getElementsByClassName("top_box");
-let navN = 0; //선택된 변수
+        $("#grid2 .top_box li").click(function () {
+            $("#grid2 .content_1 li").each(function (i, e) {
+                if ($(e).children().eq(0).is(":checked") == true) {
+                    $(e).removeClass("checked");
+                    $(e).children().eq(0).prop("checked", false);
+                }
+            })
+        });
+    })
 
-for (let k = 0; k < topBox.length; k++) {
-    let [nav, prev, next] = topBox[k].children;
-    let navLi = nav.children;
-    
+    let topBox = document.getElementsByClassName("top_box");
+    let navN = 0; //선택된 변수
 
-    let content = document.getElementsByClassName("tab-content")[k];
-    let contentLi = content.children;
+    for (let k = 0; k < topBox.length; k++) {
+        let [nav, prev, next] = topBox[k].children;
+        let navLi = nav.children;
 
-    navLi[navN].classList.add("active");
 
-    for (let i = 0; i < navLi.length; i++) {
-        navLi[i].idx = i;
+        let content = document.getElementsByClassName("tab-content")[k];
+        let contentLi = content.children;
 
-        navLi[i].addEventListener("click", function (e) {
-            navN = e.currentTarget.idx;
+        navLi[navN].classList.add("active");
+
+        for (let i = 0; i < navLi.length; i++) {
+            navLi[i].idx = i;
+
+            navLi[i].addEventListener("click", function (e) {
+                navN = e.currentTarget.idx;
+                moveFunction(navN);
+            });
+        }
+
+        let list = navLi.length;
+
+        next.addEventListener("click", function (e) {
+            (navN < list - 1) ? navN += 1 : navN = list - 1;
             moveFunction(navN);
         });
-    }
 
-    let list = navLi.length;
+        prev.addEventListener("click", function (e) {
+            (navN > 0) ? navN -= 1 : navN = 0;
+            moveFunction(navN);
+        });
 
-    next.addEventListener("click", function (e) {
-        (navN < list - 1) ? navN += 1 : navN = list - 1;
-        moveFunction(navN);
-    });
+        function moveFunction(f) {
+            let navMove = 0;
+            for (let h = 0; h < navLi.length; h++) {
+                navLi[h].classList.remove("active");
+                contentLi[h].classList.remove("active");
+            }
 
-    prev.addEventListener("click", function (e) {
-        (navN > 0) ? navN -= 1 : navN = 0;
-        moveFunction(navN);
-    });
 
-    function moveFunction(f) {
-    	let navMove = 0;
-        for (let h = 0; h < navLi.length; h++) {
-            navLi[h].classList.remove("active");
-            contentLi[h].classList.remove("active");
+            let a = topBox[k].offsetWidth;
+            let b = nav.offsetWidth;
+            c = b - a;
+            let d = c + 40 + "px";
+            (f == 0) ? navMove += navLi[f].offsetLeft : navMove += navLi[f].offsetLeft - 50;
+
+            if (navMove > c) {
+                nav.style.marginLeft = "-" + d;
+            } else {
+                nav.style.marginLeft = "-" + navMove + "px";
+            }
+
+            navLi[f].classList.add("active");
+            contentLi[f].classList.add("active");
+            contentLi[f].classList.add("show");
         }
-
-
-       
-        let a = topBox[k].offsetWidth;
-        let b = nav.offsetWidth;
-        c = b - a;
-        let d = c + 40 + "px";
-        (f == 0) ? navMove += navLi[f].offsetLeft : navMove += navLi[f].offsetLeft -50;
-        
-        if (navMove > c) {
-            nav.style.marginLeft = "-" + d;
-        } else {
-            nav.style.marginLeft = "-" + navMove + "px";
-        }
-
-        navLi[f].classList.add("active");
-        contentLi[f].classList.add("active");
-        contentLi[f].classList.add("show");
     }
-}
 
     /* form data to json */
     jQuery.fn.serializeObject = function () {
@@ -2223,15 +2267,14 @@ for (let k = 0; k < topBox.length; k++) {
                         {
                             'header': '첨부파일',
                             'name': 'file',
-                            'width': 100
+                            'width': 100,
                         },
                         {
                             'header': '특성상태',
                             'name': 'status',
-                            'width': 150
+                            'width': 150,
                         }
                     ];
-
                     var headerName = [];
 
                     var arr = {};
@@ -2287,6 +2330,10 @@ for (let k = 0; k < topBox.length; k++) {
                             var e_id = basicgrid.getRow(ev.rowKey).basic_id;
 
                             EmptyBtn(e_id);
+                        } else if (ev.targetType === 'cell' && ev.columnName === 'file') {
+                            var id = basicgrid.getRow(ev.rowKey).basic_id;
+
+                            FileBtn(id);
                         }
                     });
 
@@ -2350,12 +2397,12 @@ for (let k = 0; k < topBox.length; k++) {
                         {
                             'header': '첨부파일',
                             'name': 'file',
-                            'width': 100
+                            'width': 100,
                         },
                         {
                             'header': '특성상태',
                             'name': 'status',
-                            'width': 150
+                            'width': 150,
                         }
                     ];
 
@@ -2416,6 +2463,10 @@ for (let k = 0; k < topBox.length; k++) {
                             var e_id = basicgrid.getRow(ev.rowKey).basic_id;
 
                             EmptyBtn(e_id);
+                        } else if (ev.targetType === 'cell' && ev.columnName === 'file') {
+                            var id = basicgrid.getRow(ev.rowKey).basic_id;
+
+                            FileBtn(id);
                         }
                     });
 
@@ -3074,7 +3125,7 @@ for (let k = 0; k < topBox.length; k++) {
     /* 엑셀 등록 창 */
 
     function ModifyDataBtn(e) {
-        if(tablechk == 0) {
+        if (tablechk == 0) {
             let s = String(e);
             s = s.replace(/(\d{4})(\d{2})(\d{2})/g, '$1-$2-$3');
 
@@ -3140,7 +3191,7 @@ for (let k = 0; k < topBox.length; k++) {
                     dataType: 'json',
                     data: data,
                     success: function (result) {
-                        if(result != null) {
+                        if (result != null) {
                             $("#data_upload13").modal("show");
                             $("#data_upload2").modal("hide");
 
