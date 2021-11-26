@@ -4,7 +4,7 @@
 	<!-- 분석 파일 조회 -->
 	<select id="SelectAnalysisFile" parameterType="int" resultType="AnalysisFile">
 		SELECT * FROM analysis_file
-		WHERE user_id = #{user_id}
+		WHERE user_id = #{user_id} AND analysis_type = #{analysis_type} 
 		ORDER BY analysis_file_id DESC
 		LIMIT 1
 	</select>
@@ -12,8 +12,8 @@
 	<!-- 분석 파일 등록 -->
 	<insert id="InsertAnalysisFile" parameterType="AnalysisFile">
 		INSERT INTO analysis_file
-		(user_id, analysis_file, analysis_origin_file, create_date, modify_date)
+		(user_id, analysis_type, analysis_file, analysis_origin_file, create_date, modify_date)
 		VALUES
-		(#{user_id}, #{analysis_file}, #{analysis_origin_file}, NOW(), NOW())
+		(#{user_id}, #{analysis_type}, #{analysis_file}, #{analysis_origin_file}, NOW(), NOW())
 	</insert>
 </mapper>

@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.thekiban.Entity.AnalysisFile;
 import com.thekiban.Entity.User;
 import com.thekiban.RModule.RunEtcR;
+import com.thekiban.RModule.RunGetLength;
 import com.thekiban.Service.LabService;
 
 @Controller
@@ -29,11 +30,65 @@ public class LabController
 	private LabService service;
 	
 	@RequestMapping("/mabc")
-	public ModelAndView getDataManage(ModelAndView mv)
+	public ModelAndView getDataManage(ModelAndView mv, Authentication auth)
 	{
+		User user = (User)auth.getPrincipal();
+		
+		int analysis_type = 0;
+		
+		AnalysisFile analysis = service.SelectAnalysisFile(user.getUser_id(), analysis_type);
+		
+		
+		if(analysis != null)
+		{
+			analysis.setAnalysis_file("/common/r/result/" + analysis.getAnalysis_file());
+		}
+		
+		mv.addObject("analysis", analysis);
 		mv.setViewName("lab/mabc");
 
 		return mv;
+	}
+	
+	@ResponseBody
+	@RequestMapping("/insertMarker")
+	public String InsertMarker(Authentication auth, @RequestParam("file") MultipartFile file) throws IOException
+	{
+		User user = (User)auth.getPrincipal();
+		
+		Date date = new Date();
+		String date_name = (1900 + date.getYear()) + "" + (date.getMonth() + 1) + "" + date.getDate() + "" + date.getHours() + "" + date.getMinutes() + "" + date.getSeconds();
+		
+		String[] file_extension = file.getOriginalFilename().split("\\.");
+		String file_name = date_name + "." + file_extension[1];
+		
+		String path = "/data/apache-tomcat-9.0.8/webapps/ROOT/common/r/result/" + date_name;
+		
+		File filePath = new File(path);
+		
+		if (!filePath.exists())
+			filePath.mkdirs();
+		
+       	Path fileLocation = Paths.get(path).toAbsolutePath().normalize();
+       	Path targetLocation = fileLocation.resolve(file_name);
+		
+       	Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+			
+       	AnalysisFile analysis = new AnalysisFile();
+       	analysis.setUser_id(user.getUser_id());
+       	analysis.setAnalysis_type(0);
+       	analysis.setAnalysis_file(date_name + "/length.len");
+       	analysis.setAnalysis_origin_file(file.getOriginalFilename());
+       	
+       	int insert = service.InsertAnalysisFile(analysis);
+       	
+		RunGetLength rungetlength = new RunGetLength();
+		
+		rungetlength.MakeRunGetLength(date_name, file_name);
+		
+		String result = "/common/r/result/" + date_name + "/lengh.len";
+		
+       	return result;
 	}
 	
 	// analysis tool 페이지
@@ -42,7 +97,9 @@ public class LabController
 	{
 		User user = (User)auth.getPrincipal();
 		
-		AnalysisFile analysis = service.SelectAnalysisFile(user.getUser_id());
+		int analysis_type = 1;
+		
+		AnalysisFile analysis = service.SelectAnalysisFile(user.getUser_id(), analysis_type);
 		
 		if(analysis != null)
 		{
@@ -83,6 +140,7 @@ public class LabController
        	
        	AnalysisFile analysis = new AnalysisFile();
        	analysis.setUser_id(user.getUser_id());
+       	analysis.setAnalysis_type(1);
        	analysis.setAnalysis_file(file_name);
        	analysis.setAnalysis_origin_file(origin_name);
        	
@@ -92,29 +150,6 @@ public class LabController
        	runetcr.MakeRunEtcR(date_name, file_name);
 		
 		mv.setViewName("redirect:/matrix");
-		
-		return mv;
-	}
-	
-	@RequestMapping("testfile")
-	public ModelAndView testfile(ModelAndView mv, @RequestParam("file") MultipartFile file)
-	{
-		System.out.println(file);
-		Date date = new Date();
-		
-        String date_name = (1900 + date.getYear()) + "" + (date.getMonth() + 1) + "" + date.getDate() + "" + date.getHours() + "" + date.getMinutes() + "" + date.getSeconds();
-
-        String origin_name = file.getOriginalFilename();
-        String file_name = date_name + "_" + origin_name;
-        
-        String path = "/data/apache-tomcat-9.0.8/webapps/ROOT/common/r/result/test" + file_name;
-        
-        File filePath = new File(path);
-        
-        if (!filePath.exists())
-        	filePath.mkdirs();
-		
-        mv.setViewName("redirect:/mabc");
 		
 		return mv;
 	}

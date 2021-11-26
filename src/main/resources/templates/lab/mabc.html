@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:with="user = ${#authentication.principal}">
 <head>
-      <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 
     <!-- 공통 헤더 -->
     <th:block th:include="/../fragments/header.html"></th:block>
@@ -427,6 +427,70 @@
     max-width: 100%;
     padding: 50px;
 }
+
+        .load_wrap {display: none;}
+        .load_wrap.on {display: flex; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 9999999999; background-color: rgba(0, 0, 0, 0.3); justify-content: center; align-items: center;}
+
+        .load_wrap .load {background-color: #fff; width: 220px; height: 90px; text-align: center; padding: 15px; border-radius: 6px;}
+        .load_wrap .load > h2 {font-size: 17px; font-weight: bold; color: #666;}
+
+        .loader,
+        .loader:before,
+        .loader:after {
+        border-radius: 50%;
+        width: 1.3em;
+        height: 1.3em;
+        -webkit-animation-fill-mode: both;
+        animation-fill-mode: both;
+        -webkit-animation: load7 1.8s infinite ease-in-out;
+        animation: load7 1.8s infinite ease-in-out;
+        }
+        .loader {
+        color: #397FF4;
+        font-size: 10px;
+        margin: -10px auto 0;
+        position: relative;
+        text-indent: -9999em;
+        -webkit-transform: translateZ(0);
+        -ms-transform: translateZ(0);
+        transform: translateZ(0);
+        -webkit-animation-delay: -0.16s;
+        animation-delay: -0.16s;
+        }
+        .loader:before,
+        .loader:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        }
+        .loader:before {
+        left: -2.2em;
+        -webkit-animation-delay: -0.32s;
+        animation-delay: -0.32s;
+        }
+        .loader:after {
+        left: 2.2em;
+        }
+        @-webkit-keyframes load7 {
+        0%,
+        80%,
+        100% {
+            box-shadow: 0 2.5em 0 -1.3em;
+        }
+        40% {
+            box-shadow: 0 2.5em 0 0;
+        }
+        }
+        @keyframes load7 {
+        0%,
+        80%,
+        100% {
+            box-shadow: 0 2.5em 0 -1.3em;
+        }
+        40% {
+            box-shadow: 0 2.5em 0 0;
+        }
+        }
     </style>
 </head>
 <body class="layout-light top-menu overlayScroll">
@@ -435,77 +499,135 @@
 <!-- 공통 topbar -->
 <th:block th:include="/../fragments/topbar.html"></th:block>
 <main class="main-content">
-	<div class="container-fluid">
-	<div class="row">
-	<div class="col-lg-12 mb-30">
-	    <div class="card"><!-- <div class="container card"> -->
-	    	<div class="breadcrumb-main" style="float: left;">
-                <h4 class="text-capitalize breadcrumb-title">Data 관리</h4>
-            </div>
-	        	<!--
-	        	<form action="testfile" method="POST" enctype="multipart/form-data">
-		        	<input type="file" name="file">
-		        	<input type="submit" value="test">
-		        </form>
-		        -->
-	        <div class="contents clearfix" style="max-width: 1300px; background-color:#fff; padding: 15px 0 0 0">
-	        	<form action="" method="">
-		        	<input type="text" class="text pcText" readonly>
-		        	<input type="file" onchange="onChangeLen()" class="addMabcFile submitLen" id="len_file" style="display:none;">
-		            <button type="button" class="submit" onclick="document.querySelector('.submitLen').click()">파일첨부</button>
-		            <input type="file" id="filed1" style="display: none;">
-		            <input type="text" class="text pcText" readonly>
-		            <input id="input-file" type="file"  class="addMabcFile submitMABC" onchange="readExcel()" style="display:none;">
-		            <button type="button" class="submit" onclick="document.querySelector('.submitMABC').click()">파일첨부</button>
-		            <button type="button" class="submit" onclick="onClickRun()" >분석실행</button>
-					<input type="file" id="filed2" style="display: none;">
-	        	</form>
-	        </div>
-	        <div class="data_file" style="overflow: auto; height: 750px;">
-	        	<section class="data_table_section">
-	                <div class="mab_chr_wrap">
-	                    <div class="mab_chr_wrap_left">
-	                        <div class="btn_all_box">
-	                            <div class="chr_btn_wrap">
-	                            </div>
-	                            <div class="chr_select_wrap">
-	                                <p>개체명순</p>
-	                                <select class="chrSelectBox" onchange="onChangeChrSort()">
-	                                    <option disabled selected>정렬선택</option>
-	                                </select>
-	                                <div class="commonBtn allchr" onclick="onClickAllChr(this)">All chromosome</div>
-	                            </div>
-	                        </div>
-	                    </div>
-	                    <div class="mab_chr_wrap_right">
-	                    </div>
-	                </div>
+
+
+	<!-- 여기다가 len 경로 넣어주세요 -->
+	<th:block th:if="${analysis != null}">
+		<div style="display:none;" class="serverLen" th:text="${analysis.analysis_file}"></div>
+	</th:block>
+	<th:block th:if="${analysis == null}">
+		<div style="display:none;" class="serverLen"></div>
+	</th:block>
 	
-	                <!-- 그래프 -->
-	                <div class="table_page_wrap">
-	                    <div class="visualWrapPosition">
-	                        <div class="visualWrap">
-	                            <div class="tableWrap">
-	                                <div class="tableContent">
-	                                    <table id="table" class="table">
-	                                    </table>
-	                                </div>
-	                            </div>
-	                            <div class="graphContainer">
-	                                <div class="graphWrap">
-	                                </div>
-	                            </div>
-	                        </div>
-	                    </div>
-	                </div>
-	            </section>
-	        </div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-lg-12 mb-30">
+				<div class="card">
+					<div class="breadcrumb-main" style="float: left;">
+						<h4 class="text-capitalize breadcrumb-title">Data 관리</h4>
+					</div>
+					<div class="contents clearfix" style="max-width: 1300px; background-color:#fff; padding: 15px 0 0 0">
+							<div style="display:flex; flex-direction:column;">
+								<div style="margin-bottom:20px;">
+									<form action="" method="POST" id="insert_form">
+										<th:block th:if="${analysis != null}">
+											<input type="text" class="text pcText" readonly th:value="${analysis.analysis_origin_file}">
+										</th:block>
+										<th:block th:if="${analysis == null}">
+											<input type="text" class="text pcText" readonly>
+										</th:block>
+										<input type="file" class="addMabcFile submitLen" id="len_file" name="file" onchange="onChangeLen()" style="display:none;">
+										<button type="button" class="submit" onclick="document.querySelector('.submitLen').click()">fasta 첨부</button>
+										<button type="button" class="submit" onclick="InsertMarker()" >파일 변환</button>
+										<input type="file" id="filed1" name="filed1" style="display: none;">
+									</form>
+								</div>
+								<div>
+									<input type="text" class="text pcText" readonly>
+									<input id="input-file" type="file"  class="addMabcFile submitMABC" onchange="readExcel()" style="display:none;">
+									<button type="button" class="submit" onclick="document.querySelector('.submitMABC').click()">marker 첨부</button>
+									<button type="button" class="submit" onclick="onClickRun()" >분석 실행</button>
+									<input type="file" id="filed2" style="display: none;">
+								</div>
+							</div>
+					</div>
+					<div class="data_file" style="overflow: auto; height: 750px;">
+						<section class="data_table_section">
+							<div class="mab_chr_wrap">
+								<div class="mab_chr_wrap_left">
+									<div class="btn_all_box">
+										<div class="chr_btn_wrap"></div>
+										<div class="chr_select_wrap">
+											<p>개체명순</p>
+											<select class="chrSelectBox" onchange="onChangeChrSort()">
+												<option disabled selected>정렬선택</option>
+											</select>
+											<div class="commonBtn allchr" onclick="onClickAllChr(this)">All chromosome</div>
+										</div>
+									</div>
+								</div>
+								<div class="mab_chr_wrap_right"></div>
+							</div>
+							
+							<!-- 그래프 -->
+							<div class="table_page_wrap">
+								<div class="visualWrapPosition">
+									<div class="visualWrap">
+										<div class="tableWrap">
+											<div class="tableContent">
+												<table id="table" class="table"></table>
+											</div>
+										</div>
+										<div class="graphContainer">
+											<div class="graphWrap"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</section>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="load_wrap">
+	    <div class="load">
+	        <h2>잠시만 기다려주세요</h2>
+	        <div class="loader"></div>
 	    </div>
-    </div>
-    </div>
-    </div>
+	</div>
 </main>
-<script>
+<script type="text/javascript">
+	function InsertMarker()
+	{
+		var data = new FormData($("#insert_form")[0]);
+		
+		var loading = document.querySelector('.load_wrap');
+		
+		loading.classList.add('on');
+		
+		$.ajax(
+		{
+			url : "insertMarker",
+			type : "POST",
+			data : data,
+			cache : false,
+			contentType : false,
+			processData : false,
+			success : function(result)
+			{
+				loading.classList.remove('on');
+				
+				document.querySelector(".serverLen").innerText = result;
+				
+				setTimeout(function(){
+					readLenFile();					
+				}, 10)
+			},
+			error : function(e)
+			{
+				console.log(e);
+				
+				loading.classList.remove('on');
+			}
+		})
+	}
+
+
+
+
+
 //------------------------------------------------------
 //그래프
 //------------------------------------------------------
@@ -522,39 +644,48 @@ var lengthData = [];
 
 //# . 0 Len 파일 읽기
 function onChangeLen(e){
-var input = event.target;
-var fileForm = input.files[0].name.split(".")[1];
-
-document.querySelectorAll(".pcText")[0].value = input.files[0].name
-
-
-if(fileForm !== "len"){
-alert(".len 파일이 아닙니다.");
-event.target.value = null;
-return
-};
-
-var reader = new FileReader();
-reader.onload = function () {
-var data = reader.result;
-
-var newLengthData = data.replace(/(\r\n|\n|\r)/gm, "-");
-newLengthData = newLengthData.split("-");
-lengthData = [];
-for(var i = 0 ; i < newLengthData.length ; i++){
-if(!newLengthData[i]){continue}
-var lengthEl = newLengthData[i].split(" ");
-if(lengthEl[0].substr(0, 3) == "Chr"){
-lengthData.push(lengthEl[1]);
-}
-}
-};
-reader.readAsBinaryString(input.files[0]);
+	var input = event.target;
+	
+	var fileForm = input.files[0].name.split(".")[1];
+	
+	document.querySelectorAll(".pcText")[0].value = input.files[0].name
+	
+	
+	/*
+	if(fileForm !== "len"){
+	alert(".len 파일이 아닙니다.");
+	event.target.value = null;
+	return
+	};
+	*/
+	
+	var reader = new FileReader();
+	reader.onload = function () {
+	var data = reader.result;
+	
+	var newLengthData = data.replace(/(\r\n|\n|\r)/gm, "-");
+	newLengthData = newLengthData.split("-");
+	lengthData = [];
+	for(var i = 0 ; i < newLengthData.length ; i++){
+		if(!newLengthData[i]){continue}
+			var lengthEl = newLengthData[i].split(" ");
+			if(lengthEl[0].substr(0, 3) == "Chr"){
+				lengthData.push(lengthEl[1]);
+			}
+		}
+	};
+	reader.readAsBinaryString(input.files[0]);
 
 }
 
 //# . 1 엑셀 data 가져오기
 function readExcel() {
+	
+	if(lengthData.length == 0){
+		alert("파일변환을 먼저 해주세요");
+		return;
+	}
+	
 var input = event.target;
 var reader = new FileReader();
 reader.onload = function () {
@@ -1476,6 +1607,42 @@ function onClickRun(){
 function fileds(e){
     $(e).trigger("click");
 }
+
+function readLenFile()
+{
+    var file = document.querySelector(".serverLen").innerText;
+    if(!file){return};
+
+    var rawFile = new XMLHttpRequest();
+    rawFile.open("GET", file, true);
+    rawFile.onreadystatechange = function ()
+    {
+        if(rawFile.readyState === 4)
+        {
+            if(rawFile.status === 200 || rawFile.status == 0)
+            {
+                var allText = rawFile.responseText;
+
+                
+            	var newLengthData = allText.replace(/(\r\n|\n|\r)/gm, "-");
+            	newLengthData = newLengthData.split("-");
+            	lengthData = [];
+            	for(var i = 0 ; i < newLengthData.length ; i++){
+            		if(!newLengthData[i]){continue}
+            			var lengthEl = newLengthData[i].split(" ");
+            			if(lengthEl[0].substr(0, 3) == "Chr"){
+            				lengthData.push(lengthEl[1]);
+           				}
+            		};
+            	}
+            
+            
+        }
+    }
+    rawFile.send(null);
+}
+
+
 </script>
 <!-- 공통 하단 -->
  <th:block th:include="/../fragments/footer.html"></th:block> 

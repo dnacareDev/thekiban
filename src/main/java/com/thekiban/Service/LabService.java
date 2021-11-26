@@ -5,7 +5,7 @@ import com.thekiban.Entity.AnalysisFile;
 public interface LabService
 {
 	// 분석 파일 조회
-	AnalysisFile SelectAnalysisFile(int user_id);
+	AnalysisFile SelectAnalysisFile(int user_id, int analysis_type);
 	
 	// 분석 파일 등록
 	int InsertAnalysisFile(AnalysisFile analysis);

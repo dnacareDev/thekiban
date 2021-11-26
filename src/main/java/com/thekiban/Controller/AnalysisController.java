@@ -133,7 +133,7 @@ public class AnalysisController
         	for(int i = 0; i < detail.size(); i++)
     		{
         		writer.write("\t");
-        		writer.write("ch" + (i + 1));
+        		writer.write("PH" + (i + 1));
     		}
         	
         	for(int i = 0; i < standard.size(); i++)
@@ -176,7 +176,7 @@ public class AnalysisController
         	String trait = trait_id.replace("[", "");
         	trait = trait.replace("]", "");
         	trait = trait.replace("\"", "");
-        	System.out.println(trait);
+        	
             if(method == 0)
             {
             	RunCorrlation runcorrlation = new RunCorrlation();
@@ -185,7 +185,7 @@ public class AnalysisController
             else
             {
             	RunTrait runtrait = new RunTrait();
-            	runtrait.MakeTraitplot("c\\("+ trait + "\\)", "/data/apache-tomcat-9.0.8/webapps/ROOT/kiban/resultfiles/", date_name);
+            	runtrait.MakeTraitplot(trait, "/data/apache-tomcat-9.0.8/webapps/ROOT/kiban/resultfiles/", date_name);
             }
 		}
         catch

@@ -40,14 +40,14 @@
 	<!--  -->
 	<select id="SelectDetail" resultType="Detail">
 		SELECT * FROM detail
-		WHERE detail_name = #{detail_name} AND detail_type = #{detail_type} AND detail_origin = 1
+		WHERE detail_name = #{detail_name} AND detail_type = #{detail_type} AND detail_origin = 1 AND detail_spec != '마커 정보'
 	</select>
 	
 	<!--  -->
 	<select id="SelectStandard" resultType="Standard">
 		SELECT * FROM standard s
 		LEFT JOIN detail d ON s.detail_id = d.detail_id
-		WHERE d.detail_origin = 1 AND
+		WHERE d.detail_origin = 1  AND detail_spec != '마커 정보' AND
     	<foreach collection="target_id" item="item" open="(" close=")" separator="OR">
     		<choose>
     			<when test="detail_type == 0">

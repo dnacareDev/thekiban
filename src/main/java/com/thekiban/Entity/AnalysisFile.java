@@ -14,6 +14,7 @@ public class AnalysisFile
 {
 	private int analysis_file_id;
 	private int user_id;
+	private int analysis_type;
 	private String analysis_file;
 	private String analysis_origin_file;
 	private String create_date;
