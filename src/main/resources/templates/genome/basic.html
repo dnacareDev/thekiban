@@ -642,7 +642,7 @@
             cursor: pointer;
         }
 
-        #basicGrid .tui-grid-body-area td[data-column-name='status'] {
+        #basicGrid .tui-grid-body-area td[data-column-name='status'], #basicGrid .tui-grid-body-area td[data-column-name='file'] {
             cursor: pointer;
         }
 
@@ -2440,6 +2440,22 @@
                 dataType: 'json',
                 data: data,
                 success: function (result) {
+                    basicgrid.destroy();
+
+                    basicgrid = new tui.Grid({
+                        el: document.getElementById('basicGrid'),
+                        scrollX: true,
+                        scrollY: false,
+                        data: result.basic,
+                        rowHeaders: ['checkbox'],
+                        editingEvent: 'click',
+                        columns: [],
+                        pageOptions: {
+                            useClient: true,
+                            perPage: limit,
+                        }
+                    });
+
                     const headerArr = [
                         {
                             'header': '첨부파일',
