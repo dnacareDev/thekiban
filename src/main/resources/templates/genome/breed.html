@@ -1929,14 +1929,16 @@
 
     // 작물 선택
     $("#CropSelect").change(function () {
+        breedgrid.destroy();
+
         SearchBreed(1);
-        OtherBreedgrid(1);
     })
 
     // 갯수 선택
     $("#limit").change(function () {
+        breedgrid.destroy();
+
         SearchBreed(1);
-        OtherBreedgrid(1);
     })
 
     // 품종 삭제
@@ -2543,172 +2545,6 @@
 
                         if (user_type != 0 && user_type != 2) {
                             return Alert("수정 권한이 없습니다.");
-                        } else {
-                            for (let i = 0; i < ev.changes.length; i++) {
-                                before = ev.changes[i].prevValue;
-                                after = ev.changes[i].value;
-
-                                if (after != before) {
-                                    var breed_id = breedgrid.getRow(ev.changes[i].rowKey).breed_id;
-                                    var detail_id = ev.changes[i].columnName;
-                                    var standard = after;
-
-                                    var data = {"breed_id": breed_id, "detail_id": detail_id, "standard": standard};
-
-                                    if (breed_id != null) {
-                                        $.ajax(
-                                            {
-                                                url: 'updateBreed',
-                                                method: 'POST',
-                                                dataType: 'json',
-                                                data: data,
-                                                success: function (result) {
-                                                    if (result == 0) {
-                                                        return Alert("수정에 실패하였습니다.")
-                                                    }
-                                                }
-                                            });
-                                    }
-                                }
-                            }
-                        }
-                    });
-                }
-            });
-    }
-
-    function OtherBreedgrid(e) {
-        var breed_name = $("#CropSelect").val();
-        var limit = $("#limit").val();
-
-        var data = {"breed_name": breed_name, "page_num": e, "limit": limit};
-
-        $.ajax(
-            {
-                url: 'searchBreed',
-                method: 'POST',
-                dataType: 'json',
-                data: data,
-                success: function (result) {
-                    breedgrid.destroy();
-
-                    breedgrid = new tui.Grid({
-                        el: document.getElementById('breedGrid'),
-                        scrollX: true,
-                        scrollY: false,
-                        data: result.breed,
-                        rowHeaders: ['checkbox'],
-                        editingEvent: 'click',
-                        columns: [],
-                        pageOptions: {
-                            useClient: true,
-                            perPage: limit
-                        }
-                    });
-
-                    const headerArr = [
-                        {
-                            'header': '첨부파일',
-                            'name': 'file',
-                            'width': 100,
-                        },
-                        {
-                            'header': '특성상태',
-                            'name': 'status',
-                            'width': 150,
-                        }
-                    ];
-
-                    var headerName = [];
-
-                    for (let i = 0; i < result.display.length; i++) {
-                        var colHeader = result.display[i].detail_title;
-                        var colName = result.display[i].detail_id;
-                        headerName[i] = result.display[i].detail_id;
-
-                        var arr = {};
-
-                        var filter = {type: 'text', showApplyBtn: true, showClearBtn: true};
-
-                        if (result.display[i].detail_spec == '기본 정보') {
-                            arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 180, 'filter': filter}
-                        } else {
-                            arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 500, 'filter': filter}
-                        }
-
-                        headerArr.push(arr);
-                    }
-
-                    breedgrid.setColumns(headerArr);
-
-                    const dataArr = [];
-
-                    for (let i = 0; i < result.breed.length; i++) {
-                        let rowArr = {};
-
-                        rowArr = {'file': '<i class="bi bi-file-earmark-arrow-down"></i>', 'breed_id': result.breed[i].breed_id};
-
-                        if (result.breed[i].standard_count == 0) {
-                            rowArr['status'] = '<span style="color:red">EMPTY</span>';
-
-                        } else {
-                            rowArr['status'] = '<span style="color:blue">PROGRESS</span>';
-                        }
-
-                        for (var j = 0; j < result.breed[i].breed_standard.length; j++) {
-                            var rowData = result.breed[i].breed_standard[j].standard;
-                            rowArr[headerName[j]] = rowData;
-                        }
-
-                        dataArr.push(rowArr);
-                    }
-
-                    breedgrid.resetData(dataArr);
-
-                    breedgrid.setPerPage(limit);
-
-                    breedgrid.on('click', (ev) => {
-                        if (ev.targetType === 'cell' && ev.columnName === '2') {
-                            var value_sample = ev.nativeEvent.srcElement;
-                            var value_mom = breedgrid.getRow(ev.rowKey)[4];
-                            var value_dad = breedgrid.getRow(ev.rowKey)[5];
-
-                            SearchSample(value_sample);
-                            SearchBasic(value_mom, value_dad);
-                        } else if (ev.targetType === 'cell' && ev.columnName === '4') {
-                            var value_sample1 = breedgrid.getRow(ev.rowKey)[2];
-                            var value_mom1 = ev.nativeEvent.srcElement;
-                            var value_dad1 = breedgrid.getRow(ev.rowKey)[5];
-
-                            SearchSample1(value_sample1);
-                            SearchBasic1(value_mom1, value_dad1);
-                        } else if (ev.targetType === 'cell' && ev.columnName === '5') {
-                            var value_sample2 = breedgrid.getRow(ev.rowKey)[2];
-                            var value_mom2 = breedgrid.getRow(ev.rowKey)[4];
-                            var value_dad2 = ev.nativeEvent.srcElement;
-
-                            SearchSample2(value_sample2);
-                            SearchBasic2(value_mom2, value_dad2);
-                        } else if (ev.targetType === 'cell' && ev.columnName === 'file') {
-                            var id = breedgrid.getRow(ev.rowKey).breed_id;
-
-                            FileBtn(id);
-                        } else if (ev.targetType === 'cell' && ev.columnName === 'status') {
-                            var e_id = breedgrid.getRow(ev.rowKey).breed_id;
-
-                            EmptyBtn(e_id);
-                        }
-                    });
-
-                    var before = null;
-                    var after = null;
-
-                    breedgrid.on('afterChange', (ev) => {
-                        var user_type = $("#user_type").val();
-
-                        if (user_type != 0 && user_type != 2) {
-                            return Alert("수정 권한이 없습니다.");
-                            location.reload();
                         } else {
                             for (let i = 0; i < ev.changes.length; i++) {
                                 before = ev.changes[i].prevValue;

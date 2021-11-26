@@ -904,7 +904,7 @@
                         <div class="card-body" style="padding-top: 0;">
                             <div class="bg-white">
                                 <div id="incomeGrid"></div>
-                                <div id="remainGrid" style="visibility: hidden; height: 0;"></div>
+                                <div id="remainGrid"></div>
 
                                 <div class="row">
                                     <div class="col-4">
@@ -1865,36 +1865,49 @@
 
     const thisBtn = document.querySelector('#modal_open');
 
+    /* 도입자원 재고관리 테이블 구분 */
     var tablechk = 0;
 
     $("#incomeTable1").click(function () {
         tablechk = 0;
+        remaingrid.destroy();
+        SearchIncome(1);
     })
 
     $("#incomeTable2").click(function () {
         tablechk = 1;
+        incomegrid.destroy();
+        SearchRemain(1);
     })
+    /* 도입자원 재고관리 테이블 구분 */
 
     // DB 데이터 출력
     $(document).ready(function () {
         SearchIncome(1);
-        SearchRemain(1);
     });
 
     $("#CropSelect").change(function () {
         if (tablechk == 0) {
-            OtherIncome(1);
+            incomegrid.destroy();
+
+            SearchIncome(1);
         } else {
-            OtherRemain(1);
+            remaingrid.destroy();
+
+            SearchRemain(1);
         }
     })
 
     // 갯수 선택
     $("#limit").change(function () {
         if (tablechk == 0) {
-            OtherIncome(1);
+            incomegrid.destroy();
+
+            SearchIncome(1);
         } else {
-            OtherRemain(1);
+            remaingrid.destroy();
+
+            SearchRemain(1);
         }
     })
 
@@ -2102,21 +2115,7 @@
         });
     }
 
-    /* 도입자원 재고관리 테이블 구분 */
-    var tablechk = 0;
 
-    $("#incomeTable1").click(function () {
-        tablechk = 0;
-        $("#incomeGrid").css("display", "block");
-        $("#remainGrid").css("display", "none");
-    })
-
-    $("#incomeTable2").click(function () {
-        tablechk = 1;
-        $("#incomeGrid").css("display", "none");
-        $("#remainGrid").css({"display": "block", "visibility": "", "height": "auto"});
-    })
-    /* 도입자원 재고관리 테이블 구분 */
 
     // grid
     var incomegrid = null;
@@ -2250,8 +2249,6 @@
                         }
                     });
 
-                    incomegrid.off('dblclick');
-
                     incomegrid.on('click', (ev) => {
                         if (ev.targetType === 'cell' && ev.columnName === 'income_code') {
                             var value_seed = ev.nativeEvent.srcElement;
@@ -2288,221 +2285,6 @@
                     }
 
                     incomegrid.resetData(dataArr);
-
-                    var before = null;
-                    var after = null;
-
-                    incomegrid.on('afterChange', (ev) => {
-                        var user_type = $("#user_type").val();
-
-                        if (user_type != 0 && user_type != 2) {
-                            return Alert("수정 권한이 없습니다.");
-                            location.reload();
-                        } else {
-                            for (let i = 0; i < ev.changes.length; i++) {
-                                before = ev.changes[i].prevValue;
-                                after = ev.changes[i].value;
-
-                                if (after != before) {
-                                    var income_id = incomegrid.getRow(ev.changes[i].rowKey).income_id;
-                                    var income_name = ev.changes[i].columnName;
-                                    var income_value = after;
-
-                                    var data = {"income_id": income_id, "income_name": income_name, "income_value": income_value};
-
-                                    if (income_id != null) {
-                                        $.ajax(
-                                            {
-                                                url: 'updateIncome',
-                                                method: 'POST',
-                                                dataType: 'json',
-                                                data: data,
-                                                success: function (result) {
-                                                    if (result == 0) {
-                                                        return Alert("수정에 실패하였습니다.")
-                                                    }
-                                                }
-                                            });
-                                    }
-                                }
-                            }
-                        }
-                    });
-                }
-            });
-
-    }
-
-    function OtherIncome(e) {
-        var income_name = $("#CropSelect").val();
-        var limit = $("#limit").val();
-
-        var data = {"income_name": income_name, "page_num": e, "limit": limit};
-
-        $.ajax(
-            {
-                url: 'searchIncome',
-                method: 'POST',
-                dataType: 'json',
-                data: data,
-                success: function (result) {
-                    incomegrid.destroy();
-
-                    incomegrid = new tui.Grid({
-                        el: document.getElementById('incomeGrid'),
-                        scrollX: false,
-                        scrollY: false,
-                        data: result.income,
-                        rowHeaders: ['checkbox'],
-                        columns: [
-                            {
-                                header: '첨부파일',
-                                name: 'file',
-                                width: 100,
-                            },
-                            {
-                                header: '작물',
-                                name: 'income_name',
-                                editor: 'text',
-                                sortable: true,
-                                sortingType: 'asc'
-                            },
-                            {
-                                header: '도입번호 (ID)',
-                                name: 'income_code',
-                                editor: 'text',
-                                sortable: true,
-                                sortingType: 'asc',
-                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
-                            },
-                            {
-                                header: '품종명',
-                                name: 'income_kind',
-                                editor: 'text',
-                                sortable: true,
-                                sortingType: 'asc',
-                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
-
-                            },
-                            {
-                                header: '구분',
-                                name: 'income_division',
-                                editor: 'text',
-                                sortable: true,
-                                sortingType: 'asc',
-                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
-                            },
-                            {
-                                header: '도입처',
-                                name: 'income_place',
-                                editor: 'text',
-                                sortable: true,
-                                sortingType: 'asc',
-                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
-                            },
-                            {
-                                header: '도입국가',
-                                name: 'income_country',
-                                editor: 'text',
-                                sortable: true,
-                                sortingType: 'asc',
-                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
-                            },
-                            {
-                                header: '도입자',
-                                name: 'income_person',
-                                editor: 'text',
-                                sortable: true,
-                                sortingType: 'asc',
-                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
-                            },
-                            {
-                                header: '도입연월일',
-                                name: 'income_date',
-                                editor: 'text',
-                                filter: 'date',
-                                sortable: true,
-                                sortingType: 'asc'
-                            },
-                            {
-                                header: '현 종자량',
-                                name: 'income_num',
-                                editor: 'text',
-                                sortable: true,
-                                sortingType: 'asc',
-                                filter: 'number',
-                            },
-                            {
-                                header: '타입',
-                                name: 'income_type',
-                                editor: 'text',
-                                sortable: true,
-                                sortingType: 'asc',
-                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
-                            },
-                            {
-                                header: '주요 특성',
-                                name: 'income_trait',
-                                editor: 'text',
-                                sortable: true,
-                                sortingType: 'asc',
-                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
-                            },
-                            {
-                                header: '비고',
-                                name: 'income_comment',
-                                editor: 'text',
-                                sortable: true,
-                                sortingType: 'asc',
-                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
-                            }
-                        ],
-                        pageOptions: {
-                            useClient: true,
-                            perPage: limit
-                        }
-                    });
-
-                    const dataArr = [];
-
-                    for (let i = 0; i < result.income.length; i++) {
-                        let rowArr = {
-                            'file': '<i class="bi bi-file-earmark-arrow-down"></i>',
-                            'income_id': result.income[i].income_id,
-                            'income_name': result.income[i].income_name,
-                            'income_code': result.income[i].income_code,
-                            'income_kind': result.income[i].income_kind,
-                            'income_division': result.income[i].income_division,
-                            'income_place': result.income[i].income_place,
-                            'income_country': result.income[i].income_country,
-                            'income_person': result.income[i].income_person,
-                            'income_date': result.income[i].income_date,
-                            'income_num': result.income[i].income_num,
-                            'income_type': result.income[i].income_type,
-                            'income_trait': result.income[i].income_trait,
-                            'income_comment': result.income[i].income_comment,
-                        }
-
-                        dataArr.push(rowArr);
-                    }
-
-                    incomegrid.resetData(dataArr);
-
-                    incomegrid.setPerPage(limit);
-
-                    incomegrid.on('click', (ev) => {
-                        if (ev.targetType === 'cell' && ev.columnName === 'income_code') {
-                            var value_seed = ev.nativeEvent.srcElement;
-
-                            SearchRemainPop(value_seed);
-                        } else if (ev.targetType === 'cell' && ev.columnName === 'file') {
-                            var id = incomegrid.getRow(ev.rowKey).income_id;
-
-                            FileBtn(id);
-                        }
-                    });
-
-                    incomegrid.setColumnValues('file', '<i class="bi bi-file-earmark-arrow-down"></i>');
 
                     var before = null;
                     var after = null;
@@ -2619,9 +2401,28 @@
                             }
                         ],
                         pageOptions: {
-                            perPage: limit
+                            useClient: true,
+                            perPage: limit1
                         }
                     });
+
+                    const dataArr = [];
+
+                    for (let i = 0; i < result.incomeRemain.length; i++) {
+                        let rowArr = {
+                            'income_remain_num': result.incomeRemain[i].income_remain_num,
+                            'income_remain_amount': result.incomeRemain[i].income_remain_amount,
+                            'income_remain_in': result.incomeRemain[i].income_remain_in,
+                            'income_remain_out': result.incomeRemain[i].income_remain_out,
+                            'income_remain_re': result.incomeRemain[i].income_remain_re,
+                            'income_remain_person': result.incomeRemain[i].income_remain_person,
+                            'income_remain_date': result.incomeRemain[i].income_remain_date
+                        }
+
+                        dataArr.push(rowArr);
+                    }
+
+                    remaingrid.resetData(dataArr);
 
                     var before = null;
                     var after = null;
@@ -2663,66 +2464,6 @@
                         }
                     });
 
-                }
-            });
-    }
-
-    function OtherRemain(e) {
-        var income_name1 = $("#CropSelect").val();
-        var limit1 = $("#limit").val();
-
-        var data1 = {"income_name": income_name1, "page_num": e, "limit": limit1};
-
-        $.ajax(
-            {
-                url: 'searchRemain',
-                method: 'POST',
-                dataType: 'json',
-                data: data1,
-                success: function (result1) {
-                    remaingrid.resetData(result1.incomeRemain);
-
-                    remaingrid.setPerPage(limit1);
-
-                    var before = null;
-                    var after = null;
-
-                    remaingrid.on('afterChange', (ev) => {
-                        var user_type = $("#user_type").val();
-
-                        if (user_type != 0 && user_type != 2) {
-                            return Alert("수정 권한이 없습니다.");
-                            location.reload();
-                        } else {
-                            for (let i = 0; i < ev.changes.length; i++) {
-                                before = ev.changes[i].prevValue;
-                                after = ev.changes[i].value;
-
-                                if (after != before) {
-                                    var income_remain_id = remaingrid.getRow(ev.changes[i].rowKey).income_remain_id
-                                    var income_remain_name = ev.changes[i].columnName;
-                                    var income_remain_value = after;
-
-                                    var data = {"income_remain_id": income_remain_id, "income_remain_name": income_remain_name, "income_remain_value": income_remain_value};
-
-                                    if (income_remain_id != null) {
-                                        $.ajax(
-                                            {
-                                                url: 'updateRemain',
-                                                method: 'POST',
-                                                dataType: 'json',
-                                                data: data,
-                                                success: function (result) {
-                                                    if (result == 0) {
-                                                        return Alert("수정에 실패하였습니다.")
-                                                    }
-                                                }
-                                            });
-                                    }
-                                }
-                            }
-                        }
-                    });
                 }
             });
     }

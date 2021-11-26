@@ -691,14 +691,13 @@
             overflow: scroll;
         }
         */
-        
-        #file_grid
-        {
+
+        #file_grid {
             width: 100%;
             height: 600px;
             overflow: scroll;
         }
-        
+
         #excelForm {
             overflow-y: scroll;
         }
@@ -718,10 +717,8 @@
         .tui-grid-cell {
             background-color: white;
         }
-        
-        
-        
-        
+
+
         #pop_breed table thead tr {
             border-top: 2px solid #aaa;
             border-bottom: 2px solid #aaa;
@@ -755,7 +752,10 @@
             font-size: 13px;
             padding: 10px;
         }
-        #file_modal{height: 655px;}
+
+        #file_modal {
+            height: 655px;
+        }
     </style>
 </head>
 <body class="layout-light top-menu overlayScroll">
@@ -813,7 +813,7 @@
                         <div class="card-body" style="padding-top: 0;">
                             <div class="bg-white">
                                 <div id="basicGrid"></div>
-                                <div id="basicRemainGrid" style="visibility: hidden; height: 0;"></div>
+                                <div id="basicRemainGrid"></div>
                                 <div class="row">
                                     <div class="col-4" id="btn1">
                                         <button class="btn btn-icon btn-light btn-circle" onclick="insertRow()">
@@ -1963,30 +1963,49 @@
 
     $("#basicTable1").click(function () {
         tablechk = 0;
+        basicRemainGrid.destroy();
+        SearchBasicgrid(1);
     })
 
     $("#basicTable2").click(function () {
         tablechk = 1;
+        basicgrid.destroy();
+        SearchBasicRemain(1);
     })
 
     // 원종 목록
     $(document).ready(function () {
         SearchBasic(1);
         SearchBasicgrid(1);
-        SearchBasicRemain(1);
     });
 
     $("#CropSelect").change(function () {
         SearchBasic(1);
-        OtherBasicgrid(1);
-        OtherBasicRemain(1);
+
+        if (tablechk == 0) {
+            basicgrid.destroy();
+
+            SearchBasicgrid(1);
+        } else {
+            basicRemainGrid.destroy();
+
+            SearchBasicRemain(1);
+        }
     })
 
     // 갯수 선택
     $("#limit").change(function () {
         SearchBasic(1);
-        OtherBasicgrid(1);
-        OtherBasicRemain(1);
+
+        if (tablechk == 0) {
+            basicgrid.destroy();
+
+            SearchBasicgrid(1);
+        } else {
+            basicRemainGrid.destroy();
+
+            SearchBasicRemain(1);
+        }
     })
 
     // 원종 삭제
@@ -2425,155 +2444,6 @@
             });
     }
 
-    function OtherBasicgrid(e) {
-        var basic_name = $("#CropSelect").val();
-        var limit = $("#limit").val();
-
-        var data = {"basic_name": basic_name, "page_num": e, "limit": limit};
-
-        $.ajax(
-            {
-                url: 'searchBasic',
-                method: 'POST',
-                dataType: 'json',
-                data: data,
-                success: function (result) {
-                    basicgrid.destroy();
-
-                    basicgrid = new tui.Grid({
-                        el: document.getElementById('basicGrid'),
-                        scrollX: true,
-                        scrollY: false,
-                        data: result.basic,
-                        rowHeaders: ['checkbox'],
-                        editingEvent: 'click',
-                        columns: [],
-                        pageOptions: {
-                            useClient: true,
-                            perPage: limit,
-                        }
-                    });
-
-                    const headerArr = [
-                        {
-                            'header': '첨부파일',
-                            'name': 'file',
-                            'width': 100,
-                        },
-                        {
-                            'header': '특성상태',
-                            'name': 'status',
-                            'width': 150,
-                        }
-                    ];
-
-                    var headerName = [];
-
-                    for (let i = 0; i < result.display.length; i++) {
-                        var colHeader = result.display[i].detail_title;
-                        var colName = result.display[i].detail_id;
-                        headerName[i] = result.display[i].detail_id;
-
-                        var arr = {};
-
-                        var filter = {type: 'text', showApplyBtn: true, showClearBtn: true};
-
-                        if (result.display[i].detail_spec == '기본 정보') {
-                            arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 180, 'filter': filter}
-                        } else {
-                            arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 500, 'filter': filter}
-                        }
-
-                        headerArr.push(arr);
-                    }
-
-                    basicgrid.setColumns(headerArr);
-
-                    const dataArr = [];
-
-                    for (let i = 0; i < result.basic.length; i++) {
-                        let rowArr = {};
-
-                        rowArr = {'file': '<i class="bi bi-file-earmark-arrow-down"></i>', 'basic_id': result.basic[i].basic_id};
-
-                        if (result.basic[i].standard_count == 0) {
-                            rowArr['status'] = '<span style="color:red">EMPTY</span>';
-
-                        } else {
-                            rowArr['status'] = '<span style="color:blue">PROGRESS</span>';
-                        }
-
-                        for (var j = 0; j < result.basic[i].basic_standard.length; j++) {
-                            var rowData = result.basic[i].basic_standard[j].standard;
-                            rowArr[headerName[j]] = rowData;
-                        }
-
-                        dataArr.push(rowArr);
-                    }
-
-                    basicgrid.resetData(dataArr);
-
-                    basicgrid.setPerPage(limit);
-
-                    basicgrid.on('click', (ev) => {
-                        if (ev.targetType === 'cell' && ev.columnName === '170') {
-                            var value_sample = ev.nativeEvent.srcElement;
-
-                            SearchBreed(value_sample);
-                        } else if (ev.targetType === 'cell' && ev.columnName === 'status') {
-                            var e_id = basicgrid.getRow(ev.rowKey).basic_id;
-
-                            EmptyBtn(e_id);
-                        } else if (ev.targetType === 'cell' && ev.columnName === 'file') {
-                            var id = basicgrid.getRow(ev.rowKey).basic_id;
-
-                            FileBtn(id);
-                        }
-                    });
-
-                    var before = null;
-                    var after = null;
-
-                    basicgrid.on('afterChange', (ev) => {
-                        var user_type = $("#user_type").val();
-
-                        if (user_type != 0 && user_type != 2) {
-                            return Alert("수정 권한이 없습니다.");
-                            location.reload();
-                        } else {
-                            for (let i = 0; i < ev.changes.length; i++) {
-                                before = ev.changes[i].prevValue;
-                                after = ev.changes[i].value;
-
-                                if (after != before) {
-                                    var basic_id = basicgrid.getRow(ev.changes[i].rowKey).basic_id;
-                                    var detail_id = ev.changes[i].columnName;
-                                    var standard = after;
-
-                                    var data = {"basic_id": basic_id, "detail_id": detail_id, "standard": standard};
-
-                                    if (basic_id != null) {
-                                        $.ajax(
-                                            {
-                                                url: 'updateBasic',
-                                                method: 'POST',
-                                                dataType: 'json',
-                                                data: data,
-                                                success: function (result) {
-                                                    if (result == 0) {
-                                                        return Alert("수정에 실패하였습니다.")
-                                                    }
-                                                }
-                                            });
-                                    }
-                                }
-                            }
-                        }
-                    });
-                }
-            });
-    }
-
     function SearchBasicRemain(e) {
         var basic_name1 = $("#CropSelect").val();
         var limit1 = $("#limit").val();
@@ -2645,69 +2515,28 @@
                             }
                         ],
                         pageOptions: {
-                            perPage: limit1,
+                            useClient: true,
+                            perPage: limit1
                         }
                     });
 
-                    var before = null;
-                    var after = null;
+                    const dataArr = [];
 
-                    basicRemainGrid.on('afterChange', (ev) => {
-                        var user_type = $("#user_type").val();
-
-                        if (user_type != 0 && user_type != 2) {
-                            return Alert("수정 권한이 없습니다.");
-                            location.reload();
-                        } else {
-                            for (let i = 0; i < ev.changes.length; i++) {
-                                before = ev.changes[i].prevValue;
-                                after = ev.changes[i].value;
-
-                                if (after != before) {
-                                    var basic_remain_id = basicRemainGrid.getRow(ev.changes[i].rowKey).basic_remain_id;
-                                    var basic_remain_name = ev.changes[i].columnName;
-                                    var basic_remain_value = after;
-
-                                    var data = {"basic_remain_id": basic_remain_id, "basic_remain_name": basic_remain_name, "basic_remain_value": basic_remain_value};
-
-                                    if (basic_remain_id != null) {
-                                        $.ajax(
-                                            {
-                                                url: 'updateBasicRemain',
-                                                method: 'POST',
-                                                dataType: 'json',
-                                                data: data,
-                                                success: function (result) {
-                                                    if (result == 0) {
-                                                        return Alert("수정에 실패하였습니다.")
-                                                    }
-                                                }
-                                            });
-                                    }
-                                }
-                            }
+                    for (let i = 0; i < result.basicRemain.length; i++) {
+                        let rowArr = {
+                            'basic_remain_num': result.basicRemain[i].basic_remain_num,
+                            'basic_remain_amount': result.basicRemain[i].basic_remain_amount,
+                            'basic_remain_in': result.basicRemain[i].basic_remain_in,
+                            'basic_remain_out': result.basicRemain[i].basic_remain_out,
+                            'basic_remain_re': result.basicRemain[i].basic_remain_re,
+                            'basic_remain_person': result.basicRemain[i].basic_remain_person,
+                            'basic_remain_date': result.basicRemain[i].basic_remain_date
                         }
-                    });
-                }
-            });
-    }
 
-    function OtherBasicRemain(e) {
-        var basic_name1 = $("#CropSelect").val();
-        var limit1 = $("#limit").val();
+                        dataArr.push(rowArr);
+                    }
 
-        var data1 = {"basic_name": basic_name1, "page_num": e, "limit": limit1};
-
-        $.ajax(
-            {
-                url: 'searchBasicRemain',
-                method: 'POST',
-                dataType: 'json',
-                data: data1,
-                success: function (result1) {
-                    basicRemainGrid.resetData(result1.basicRemain);
-
-                    basicRemainGrid.setPerPage(limit1);
+                    basicRemainGrid.resetData(dataArr);
 
                     var before = null;
                     var after = null;

@@ -946,7 +946,7 @@
                             <div class="bg-white">
                                 <div id="grid"></div>
                                 <div id="sampleGrid"></div>
-                                <div id="outcomeGrid" style="visibility: hidden; height: 0;"></div>
+                                <div id="outcomeGrid"></div>
                                 <div class="row">
                                     <div class="col-4">
                                         <button class="btn btn-icon btn-light btn-circle" onclick="insertRow()">
@@ -2073,37 +2073,44 @@
 
     $("#sampleTable1").click(function () {
         tablechk = 0;
-        $("#sampleGrid").css("display", "block");
-        $("#outcomeGrid").css("display", "none");
+        outcomegrid.destroy();
+        SearchSample(1);
     })
 
     $("#sampleTable2").click(function () {
         tablechk = 1;
-        $("#sampleGrid").css("display", "none");
-        $("#outcomeGrid").css({"display": "block", "visibility": "", "height": "auto"});
+        samplegrid.destroy();
+        SearchOutcome(1);
     })
     /* 시교자원 수출관리 테이블 구분 */
 
     // DB에 저장된 데이터 읽어와서 테이블에 보여줌
     $(document).ready(function () {
         SearchSample(1);
-        SearchOutcome(1);
     });
 
     $("#CropSelect").change(function () {
         if(tablechk == 0) {
-            OtherSample(1);
+            samplegrid.destroy();
+
+            SearchSample(1);
         } else {
-            OtherOutcome(1);
+            outcomegrid.destroy();
+
+            SearchOutcome(1);
         }
     })
 
     // 갯수 선택
     $("#limit").change(function () {
         if(tablechk == 0) {
-            OtherSample(1);
+            samplegrid.destroy();
+
+            SearchSample(1);
         } else {
-            OtherOutcome(1);
+            outcomegrid.destroy();
+
+            SearchOutcome(1);
         }
     })
 
@@ -2548,10 +2555,6 @@
                         }
                     });
 
-                    samplegrid.on('dblclick', (ev) => {
-                        samplegrid.cancelEditing();
-                    })
-
                     samplegrid.on('click', (ev) => {
                         if (ev.targetType === 'cell' && ev.columnName === 'sample_seed') {
                             var value_seed = ev.nativeEvent.srcElement;
@@ -2590,206 +2593,6 @@
                     }
 
                     samplegrid.resetData(dataArr);
-
-                    var before = null;
-                    var after = null;
-
-                    samplegrid.on('afterChange', (ev) => {
-                        var user_type = $("#user_type").val();
-
-                        if (user_type != 0 && user_type != 2) {
-                            return Alert("수정 권한이 없습니다.");
-                            location.reload();
-                        } else {
-                            for (let i = 0; i < ev.changes.length; i++) {
-                                before = ev.changes[i].prevValue;
-                                after = ev.changes[i].value;
-
-                                if (after != before) {
-                                    var sample_id = samplegrid.getRow(ev.changes[i].rowKey).sample_id;
-                                    var sample_name = ev.changes[i].columnName;
-                                    var sample_value = after;
-
-                                    var data = {"sample_id": sample_id, "sample_name": sample_name, "sample_value": sample_value};
-
-                                    if (sample_id != null) {
-                                        $.ajax(
-                                            {
-                                                url: 'updateSample',
-                                                method: 'POST',
-                                                dataType: 'json',
-                                                data: data,
-                                                success: function (result) {
-                                                    if (result == 0) {
-                                                        return Alert("수정에 실패하였습니다.")
-                                                    }
-                                                }
-                                            });
-                                    }
-                                }
-                            }
-                        }
-                    });
-                }
-            });
-
-    }
-
-    function OtherSample(e) {
-        var sample_name = $("#CropSelect").val();
-        var limit = $("#limit").val();
-
-        var data = {"sample_name": sample_name, "page_num": e, "limit": limit};
-
-        $.ajax(
-            {
-                url: 'searchSample',
-                method: 'POST',
-                dataType: 'json',
-                data: data,
-                success: function (result) {
-                    samplegrid.destroy();
-
-                    samplegrid = new tui.Grid({
-                        el: document.getElementById('sampleGrid'),
-                        scrollX: false,
-                        scrollY: false,
-                        data: result.sample,
-                        rowHeaders: ['checkbox'],
-                        columns: [
-                            {
-                                header: '첨부파일',
-                                name: 'file',
-                                width: 100,
-                            },
-                            {
-                                header: '작물',
-                                name: 'sample_name',
-                                editor: 'text',
-                                sortable: true,
-                                sortingType: 'asc'
-                            },
-                            {
-                                header: '시교명(ID)',
-                                name: 'sample_code',
-                                editor: 'text',
-                                sortable: true,
-                                sortingType: 'asc',
-                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
-                            },
-                            {
-                                header: '목표 지역',
-                                name: 'sample_country',
-                                editor: 'text',
-                                sortable: true,
-                                sortingType: 'asc',
-                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
-                            },
-                            {
-                                header: '구분',
-                                name: 'sample_type',
-                                editor: 'text',
-                                sortable: true,
-                                sortingType: 'asc',
-                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
-                            },
-                            {
-                                header: '교배번호',
-                                name: 'sample_mate',
-                                editor: 'text',
-                                sortable: true,
-                                sortingType: 'asc',
-                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
-                            },
-                            {
-                                header: '종자번호(ID)',
-                                name: 'sample_seed',
-                                editor: 'text',
-                                sortable: true,
-                                sortingType: 'asc',
-                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
-                            },
-                            {
-                                header: '현 종자량(g)',
-                                name: 'sample_amount',
-                                editor: 'text',
-                                filter: 'number',
-                                sortable: true,
-                                sortingType: 'asc'
-                            },
-                            {
-                                header: '기내 발아율(%)',
-                                name: 'sample_sprout',
-                                editor: 'text',
-                                filter: 'number',
-                                sortable: true,
-                                sortingType: 'asc'
-                            },
-                            {
-                                header: '기내 순도율(%)',
-                                name: 'sample_purity',
-                                editor: 'text',
-                                filter: 'number',
-                                sortable: true,
-                                sortingType: 'asc'
-                            },
-                            {
-                                header: '비고',
-                                name: 'sample_comment',
-                                editor: 'text',
-                                sortable: true,
-                                sortingType: 'asc',
-                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
-                            }
-                        ],
-                        pageOptions: {
-                            useClient: true,
-                            perPage: limit
-                        }
-                    });
-
-                    const dataArr = [];
-
-                    for (let i = 0; i < result.sample.length; i++) {
-                        let rowArr = {
-                            'file': '<i class="bi bi-file-earmark-arrow-down"></i>',
-                            'sample_id': result.sample[i].sample_id,
-                            'sample_name': result.sample[i].sample_name,
-                            'sample_code': result.sample[i].sample_code,
-                            'sample_country': result.sample[i].sample_country,
-                            'sample_type': result.sample[i].sample_type,
-                            'sample_mate': result.sample[i].sample_mate,
-                            'sample_seed': result.sample[i].sample_seed,
-                            'sample_amount': result.sample[i].sample_amount,
-                            'sample_sprout': result.sample[i].sample_sprout,
-                            'sample_purity': result.sample[i].sample_purity,
-                            'sample_comment': result.sample[i].sample_comment
-                        }
-
-                        dataArr.push(rowArr);
-                    }
-
-                    samplegrid.resetData(dataArr);
-
-                    samplegrid.setPerPage(limit);
-
-                    samplegrid.on('click', (ev) => {
-                        if (ev.targetType === 'cell' && ev.columnName === 'sample_seed') {
-                            var value_seed = ev.nativeEvent.srcElement;
-
-                            SearchSeed(value_seed);
-                        } else if (ev.targetType === 'cell' && ev.columnName === 'sample_code') {
-                            var value_breed = ev.nativeEvent.srcElement;
-
-                            SearchBreed(value_breed);
-                        } else if (ev.targetType === 'cell' && ev.columnName === 'file') {
-                            var id = samplegrid.getRow(ev.rowKey).sample_id;
-
-                            FileBtn(id);
-                        }
-                    });
-
-                    samplegrid.setColumnValues('file', '<i class="bi bi-file-earmark-arrow-down"></i>');
 
                     var before = null;
                     var after = null;
@@ -2944,9 +2747,33 @@
                             }
                         ],
                         pageOptions: {
-                            perPage: limit
+                            useClient: true,
+                            perPage: limit1
                         }
                     });
+
+                    const dataArr = [];
+
+                    for (let i = 0; i < result.sampleOutcome.length; i++) {
+                        let rowArr = {
+                            'sample_outcome_code': result.sampleOutcome[i].sample_outcome_code,
+                            'sample_outcome_num': result.sampleOutcome[i].sample_outcome_num,
+                            'sample_outcome_amount': result.sampleOutcome[i].sample_outcome_amount,
+                            'sample_outcome_in': result.sampleOutcome[i].sample_outcome_in,
+                            'sample_outcome_out': result.sampleOutcome[i].sample_outcome_out,
+                            'sample_outcome_remain': result.sampleOutcome[i].sample_outcome_remain,
+                            'sample_outcome_person': result.sampleOutcome[i].sample_outcome_person,
+                            'sample_outcome_reciever': result.sampleOutcome[i].sample_outcome_reciever,
+                            'sample_outcome_date': result.sampleOutcome[i].sample_outcome_date,
+                            'sample_outcome_end': result.sampleOutcome[i].sample_outcome_end,
+                            'sample_outcome_country': result.sampleOutcome[i].sample_outcome_country,
+                            'sample_outcome_place': result.sampleOutcome[i].sample_outcome_place
+                        }
+
+                        dataArr.push(rowArr);
+                    }
+
+                    outcomegrid.resetData(dataArr);
 
                     outcomegrid.on('click', (ev) => {
                         if (ev.targetType === 'cell' && ev.columnName === 'sample_outcome_num') {
@@ -3011,85 +2838,6 @@
             });
     }
 
-    function OtherOutcome(e) {
-        var sample_name1 = $("#CropSelect").val();
-        var limit1 = $("#limit").val();
-
-        var data1 = {"sample_name": sample_name1, "page_num": e, "limit": limit1};
-
-        $.ajax(
-            {
-                url: 'searchOutcome',
-                method: 'POST',
-                dataType: 'json',
-                data: data1,
-                success: function (result1) {
-                    outcomegrid.resetData(result1.sampleOutcome);
-
-                    outcomegrid.setPerPage(limit1);
-
-                    outcomegrid.on('click', (ev) => {
-                        if (ev.targetType === 'cell' && ev.columnName === 'sample_outcome_num') {
-                            var value = ev.nativeEvent.srcElement;
-
-                            SearchSeed(value);
-                        }
-                    });
-
-                    var before = null;
-                    var after = null;
-
-                    outcomegrid.on('afterChange', (ev) => {
-                        var user_type = $("#user_type").val();
-
-                        if (user_type != 0 && user_type != 2) {
-                            return Alert("수정 권한이 없습니다.");
-                            location.reload();
-                        } else {
-                            for (let i = 0; i < ev.changes.length; i++) {
-                                before = ev.changes[i].prevValue;
-                                after = ev.changes[i].value;
-
-                                if (after != before) {
-                                    var sample_outcome_id = outcomegrid.getRow(ev.changes[i].rowKey).sample_outcome_id
-                                    var sample_outcome_name = ev.changes[i].columnName;
-                                    var sample_outcome_value = after;
-
-                                    var data = {"sample_outcome_id": sample_outcome_id, "sample_outcome_name": sample_outcome_name, "sample_outcome_value": sample_outcome_value};
-
-                                    if (sample_outcome_id != null) {
-                                        $.ajax(
-                                            {
-                                                url: 'updateOutcome',
-                                                method: 'POST',
-                                                dataType: 'json',
-                                                data: data,
-                                                success: function (result) {
-                                                    if (result == 0) {
-                                                        return Alert("수정에 실패하였습니다.")
-                                                    }
-                                                }
-                                            });
-                                    }
-                                }
-                            }
-                        }
-                    });
-
-                    for (let i = 0; i < result1.sampleOutcome.length; i++) {
-                        if (result1.sampleOutcome[i].sample_outcome_country == '국내') {
-                            inKorea.push(result1.sampleOutcome[i].sample_outcome_place);
-                        } else if (result1.sampleOutcome[i].sample_outcome_country == '해외') {
-                            outKorea.push(result1.sampleOutcome[i].sample_outcome_place);
-                        }
-                    }
-
-                    searchArea();
-
-                    makeSelect();
-                }
-            });
-    }
 
     function insertRow() {
         var user_type = $("#user_type").val();
