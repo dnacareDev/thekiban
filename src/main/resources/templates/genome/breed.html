@@ -627,7 +627,7 @@
             cursor: pointer;
         }
 
-        #breedGrid .tui-grid-body-area td[data-column-name='status'] {
+        #breedGrid .tui-grid-body-area td[data-column-name='status'], #breedGrid .tui-grid-body-area td[data-column-name='file'] {
             cursor: pointer;
         }
 
@@ -2590,6 +2590,22 @@
                 dataType: 'json',
                 data: data,
                 success: function (result) {
+                    breedgrid.destroy();
+
+                    breedgrid = new tui.Grid({
+                        el: document.getElementById('breedGrid'),
+                        scrollX: true,
+                        scrollY: false,
+                        data: result.breed,
+                        rowHeaders: ['checkbox'],
+                        editingEvent: 'click',
+                        columns: [],
+                        pageOptions: {
+                            useClient: true,
+                            perPage: limit
+                        }
+                    });
+
                     const headerArr = [
                         {
                             'header': '첨부파일',

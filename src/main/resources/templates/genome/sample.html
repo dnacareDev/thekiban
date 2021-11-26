@@ -578,6 +578,10 @@
             cursor: pointer;
         }
 
+        #sampleGrid .tui-grid-body-area td[data-column-name='file'] {
+            cursor: pointer;
+        }
+
         #outcomeGrid .tui-grid-body-area td[data-column-name='sample_outcome_num'] {
             color: mediumblue;
             text-decoration: underline;
@@ -849,8 +853,6 @@
         .tui-grid-cell {
             background-color: white;
         }
-        
-        
 
 		#pop_breed table thead tr {
             border-top: 2px solid #aaa;
@@ -2089,14 +2091,20 @@
     });
 
     $("#CropSelect").change(function () {
-        OtherSample(1);
-        OtherOutcome(1);
+        if(tablechk == 0) {
+            OtherSample(1);
+        } else {
+            OtherOutcome(1);
+        }
     })
 
     // 갯수 선택
     $("#limit").change(function () {
-        OtherSample(1);
-        OtherOutcome(1);
+        if(tablechk == 0) {
+            OtherSample(1);
+        } else {
+            OtherOutcome(1);
+        }
     })
 
     function selectAll(selectAll) {
@@ -2640,6 +2648,106 @@
                 dataType: 'json',
                 data: data,
                 success: function (result) {
+                    samplegrid.destroy();
+
+                    samplegrid = new tui.Grid({
+                        el: document.getElementById('sampleGrid'),
+                        scrollX: false,
+                        scrollY: false,
+                        data: result.sample,
+                        rowHeaders: ['checkbox'],
+                        columns: [
+                            {
+                                header: '첨부파일',
+                                name: 'file',
+                                width: 100,
+                            },
+                            {
+                                header: '작물',
+                                name: 'sample_name',
+                                editor: 'text',
+                                sortable: true,
+                                sortingType: 'asc'
+                            },
+                            {
+                                header: '시교명(ID)',
+                                name: 'sample_code',
+                                editor: 'text',
+                                sortable: true,
+                                sortingType: 'asc',
+                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
+                            },
+                            {
+                                header: '목표 지역',
+                                name: 'sample_country',
+                                editor: 'text',
+                                sortable: true,
+                                sortingType: 'asc',
+                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
+                            },
+                            {
+                                header: '구분',
+                                name: 'sample_type',
+                                editor: 'text',
+                                sortable: true,
+                                sortingType: 'asc',
+                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
+                            },
+                            {
+                                header: '교배번호',
+                                name: 'sample_mate',
+                                editor: 'text',
+                                sortable: true,
+                                sortingType: 'asc',
+                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
+                            },
+                            {
+                                header: '종자번호(ID)',
+                                name: 'sample_seed',
+                                editor: 'text',
+                                sortable: true,
+                                sortingType: 'asc',
+                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
+                            },
+                            {
+                                header: '현 종자량(g)',
+                                name: 'sample_amount',
+                                editor: 'text',
+                                filter: 'number',
+                                sortable: true,
+                                sortingType: 'asc'
+                            },
+                            {
+                                header: '기내 발아율(%)',
+                                name: 'sample_sprout',
+                                editor: 'text',
+                                filter: 'number',
+                                sortable: true,
+                                sortingType: 'asc'
+                            },
+                            {
+                                header: '기내 순도율(%)',
+                                name: 'sample_purity',
+                                editor: 'text',
+                                filter: 'number',
+                                sortable: true,
+                                sortingType: 'asc'
+                            },
+                            {
+                                header: '비고',
+                                name: 'sample_comment',
+                                editor: 'text',
+                                sortable: true,
+                                sortingType: 'asc',
+                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
+                            }
+                        ],
+                        pageOptions: {
+                            useClient: true,
+                            perPage: limit
+                        }
+                    });
+
                     const dataArr = [];
 
                     for (let i = 0; i < result.sample.length; i++) {

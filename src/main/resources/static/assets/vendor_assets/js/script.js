@@ -17,7 +17,6 @@ window.addEventListener("load",function(){
 		btn[i].addEventListener("click", function(e){
 			n = e.currentTarget.idx;
 			for(let k=0; k<btn.length; k++){
-				console.log(btn[n]);
 				btn[k].classList.remove("btn-active");
 				//content_table[k].classList.remove("table_active");
 			}

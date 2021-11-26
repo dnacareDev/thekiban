@@ -534,6 +534,10 @@
             cursor: pointer;
         }
 
+        #incomeGrid .tui-grid-body-area td[data-column-name='file'] {
+            cursor: pointer;
+        }
+
         #saveRow {
             float: right;
             color: #fff;
@@ -801,8 +805,8 @@
         .tui-grid-cell {
             background-color: white;
         }
-        
-        
+
+
         #pop_remain table thead tr {
             border-top: 2px solid #aaa;
             border-bottom: 2px solid #aaa;
@@ -950,7 +954,7 @@
                     </div>
                 </div>
                 <div class="modal-footer" style="border: none">
-                	<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
                 </div>
             </div>
         </div>
@@ -1591,10 +1595,11 @@
             }
         }
     }
+
     /* 엑셀 등록 창 */
 
     function ModifyDataBtn(e) {
-        if(tablechk == 0) {
+        if (tablechk == 0) {
             let s = String(e);
             s = s.replace(/(\d{4})(\d{2})(\d{2})/g, '$1-$2-$3');
 
@@ -1607,7 +1612,7 @@
                     dataType: 'json',
                     data: data,
                     success: function (result) {
-                        if(result != null) {
+                        if (result != null) {
                             $("#data_upload3").modal("show");
                             $("#data_upload1").modal("hide");
 
@@ -1652,7 +1657,7 @@
                     dataType: 'json',
                     data: data,
                     success: function (result) {
-                        if(result != null) {
+                        if (result != null) {
                             $("#data_upload23").modal("show");
                             $("#data_upload12").modal("hide");
 
@@ -1877,14 +1882,20 @@
     });
 
     $("#CropSelect").change(function () {
-        OtherIncome(1);
-        OtherRemain(1);
+        if (tablechk == 0) {
+            OtherIncome(1);
+        } else {
+            OtherRemain(1);
+        }
     })
 
     // 갯수 선택
     $("#limit").change(function () {
-        OtherIncome(1);
-        OtherRemain(1);
+        if (tablechk == 0) {
+            OtherIncome(1);
+        } else {
+            OtherRemain(1);
+        }
     })
 
     var emptyEls;
@@ -2335,6 +2346,123 @@
                 dataType: 'json',
                 data: data,
                 success: function (result) {
+                    incomegrid.destroy();
+
+                    incomegrid = new tui.Grid({
+                        el: document.getElementById('incomeGrid'),
+                        scrollX: false,
+                        scrollY: false,
+                        data: result.income,
+                        rowHeaders: ['checkbox'],
+                        columns: [
+                            {
+                                header: '첨부파일',
+                                name: 'file',
+                                width: 100,
+                            },
+                            {
+                                header: '작물',
+                                name: 'income_name',
+                                editor: 'text',
+                                sortable: true,
+                                sortingType: 'asc'
+                            },
+                            {
+                                header: '도입번호 (ID)',
+                                name: 'income_code',
+                                editor: 'text',
+                                sortable: true,
+                                sortingType: 'asc',
+                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
+                            },
+                            {
+                                header: '품종명',
+                                name: 'income_kind',
+                                editor: 'text',
+                                sortable: true,
+                                sortingType: 'asc',
+                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
+
+                            },
+                            {
+                                header: '구분',
+                                name: 'income_division',
+                                editor: 'text',
+                                sortable: true,
+                                sortingType: 'asc',
+                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
+                            },
+                            {
+                                header: '도입처',
+                                name: 'income_place',
+                                editor: 'text',
+                                sortable: true,
+                                sortingType: 'asc',
+                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
+                            },
+                            {
+                                header: '도입국가',
+                                name: 'income_country',
+                                editor: 'text',
+                                sortable: true,
+                                sortingType: 'asc',
+                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
+                            },
+                            {
+                                header: '도입자',
+                                name: 'income_person',
+                                editor: 'text',
+                                sortable: true,
+                                sortingType: 'asc',
+                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
+                            },
+                            {
+                                header: '도입연월일',
+                                name: 'income_date',
+                                editor: 'text',
+                                filter: 'date',
+                                sortable: true,
+                                sortingType: 'asc'
+                            },
+                            {
+                                header: '현 종자량',
+                                name: 'income_num',
+                                editor: 'text',
+                                sortable: true,
+                                sortingType: 'asc',
+                                filter: 'number',
+                            },
+                            {
+                                header: '타입',
+                                name: 'income_type',
+                                editor: 'text',
+                                sortable: true,
+                                sortingType: 'asc',
+                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
+                            },
+                            {
+                                header: '주요 특성',
+                                name: 'income_trait',
+                                editor: 'text',
+                                sortable: true,
+                                sortingType: 'asc',
+                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
+                            },
+                            {
+                                header: '비고',
+                                name: 'income_comment',
+                                editor: 'text',
+                                sortable: true,
+                                sortingType: 'asc',
+                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
+                            }
+                        ],
+                        pageOptions: {
+                            useClient: true,
+                            perPage: limit
+                        }
+                    });
+
                     const dataArr = [];
 
                     for (let i = 0; i < result.income.length; i++) {
