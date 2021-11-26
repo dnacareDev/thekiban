@@ -460,4 +460,26 @@ public class BreedController {
     return result;
   }
 
+  @ResponseBody
+  @RequestMapping("searchTargetBreed")
+  public Map<String, Object> SearchTarget(Authentication auth, @RequestParam("datalist_date") String datalist_date, @RequestParam("breed_name") String breed_name) {
+    Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+    User user = (User) auth.getPrincipal();
+
+    List<Integer> breed_id = d_service.SelectTarget(datalist_date, "breed");
+    List<Detail> detail = service.SearchBreedDetail(breed_name);
+
+    Map<Integer, Object> Breed = new LinkedHashMap<Integer, Object>();
+
+    for(int i = 0; i < breed_id.size(); i++) {
+      Breed.put(i, service.SelectBreedExcel(breed_id.get(i)));
+    }
+
+    result.put("breed", Breed);
+    result.put("detail", detail);
+
+    return result;
+  }
+
 }

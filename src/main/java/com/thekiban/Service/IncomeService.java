@@ -82,4 +82,9 @@ public interface IncomeService {
   // 첨부파일 수정
   int UpdateIncomeUpload(Uploads upload);
 
+  List<Income> SelectIncomeExcel(int income_id);
+
+  List<IncomeRemain> SelectIncomeRemainExcel(int income_remain_id);
+
+
 }

@@ -29,4 +29,14 @@ public class DataListServiceImpl implements DataListService {
   public List<Map<String, String>> SelectDateGroup(String datalist_type) {
     return mapper.SelectDateGroup(datalist_type);
   }
+
+  @Override
+  public  List<Integer> SelectTarget(String datalist_date, String datalist_type) {
+    return mapper.SelectTarget(datalist_date, datalist_type);
+  }
+
+  @Override
+  public int SelectTargetCount(String datalist_date) {
+    return mapper.SelectTargetCount(datalist_date);
+  }
 }

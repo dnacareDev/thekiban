@@ -69,8 +69,6 @@ public class LabController
         String origin_name = file.getOriginalFilename();
         String file_name = date_name + "_" + origin_name;
         
-        System.out.println(file.getOriginalFilename());
-        
         String path = "/data/apache-tomcat-9.0.8/webapps/ROOT/common/r/result/" + date_name;
         
         File filePath = new File(path);
@@ -94,6 +92,29 @@ public class LabController
        	runetcr.MakeRunEtcR(date_name, file_name);
 		
 		mv.setViewName("redirect:/matrix");
+		
+		return mv;
+	}
+	
+	@RequestMapping("testfile")
+	public ModelAndView testfile(ModelAndView mv, @RequestParam("file") MultipartFile file)
+	{
+		System.out.println(file);
+		Date date = new Date();
+		
+        String date_name = (1900 + date.getYear()) + "" + (date.getMonth() + 1) + "" + date.getDate() + "" + date.getHours() + "" + date.getMinutes() + "" + date.getSeconds();
+
+        String origin_name = file.getOriginalFilename();
+        String file_name = date_name + "_" + origin_name;
+        
+        String path = "/data/apache-tomcat-9.0.8/webapps/ROOT/common/r/result/test" + file_name;
+        
+        File filePath = new File(path);
+        
+        if (!filePath.exists())
+        	filePath.mkdirs();
+		
+        mv.setViewName("redirect:/mabc");
 		
 		return mv;
 	}

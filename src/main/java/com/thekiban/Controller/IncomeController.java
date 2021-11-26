@@ -218,7 +218,7 @@ public class IncomeController {
     int offset = (page_num - 1) * limit;
     int end_page = (count + limit - 1) / limit;
 
-    List<Income> Income = service.SearchIncome(income_name, offset, limit);
+    List<Income> Income = service.SearchIncomeExcel(income_name);
 
     result.put("income", Income);
     result.put("page_num", page_num);
@@ -522,5 +522,41 @@ public class IncomeController {
     mv.setViewName("redirect:/income");
 
     return mv;
+  }
+
+  @ResponseBody
+  @RequestMapping("searchTargetIncome")
+  public Map<String, Object> SearchTarget(@RequestParam("datalist_date") String datalist_date) {
+    Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+    List<Integer> income_id = d_service.SelectTarget(datalist_date, "income");
+
+    Map<Integer, Object> Income = new LinkedHashMap<Integer, Object>();
+
+    for(int i = 0; i < income_id.size(); i++) {
+      Income.put(i, service.SelectIncomeExcel(income_id.get(i)));
+    }
+
+    result.put("income", Income);
+
+    return result;
+  }
+
+  @ResponseBody
+  @RequestMapping("searchTargetIncomeRemain")
+  public Map<String, Object> SearchTargetRemain(@RequestParam("datalist_date") String datalist_date) {
+    Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+    List<Integer> income_remain_id = d_service.SelectTarget(datalist_date, "income_remain");
+
+    Map<Integer, Object> IncomeRemain = new LinkedHashMap<Integer, Object>();
+
+    for(int i = 0; i < income_remain_id.size(); i++) {
+      IncomeRemain.put(i, service.SelectIncomeRemainExcel(income_remain_id.get(i)));
+    }
+
+    result.put("incomeRemain", IncomeRemain);
+
+    return result;
   }
 }

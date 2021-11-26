@@ -346,4 +346,14 @@
             modify_date         = NOW()
         WHERE basic_file_id = #{basic_file_id}
     </update>
+
+    <select id="SelectBasicExcel" resultType="Basic">
+        SELECT * FROM standard
+        WHERE basic_id = #{basic_id}
+    </select>
+
+    <select id="SelectBRemainExcel" resultType="BasicRemain">
+        SELECT * FROM basicRemain
+        WHERE basic_remain_id = #{basic_remain_id}
+    </select>
 </mapper>

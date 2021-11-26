@@ -177,10 +177,6 @@
             padding: 50px;
         }
 
-        .bg-white > .row {
-            padding-top: 50px;
-        }
-
         .table th, .table td {
             vertical-align: middle;
         }
@@ -689,7 +685,7 @@
         }
 
         .bg-white > .row {
-            padding-top: 50px;
+            padding-top: 0px;
         }
 
         .table th, .table td {
@@ -800,6 +796,45 @@
             text-align: left;
             text-indent: 20px;
             font-size: 14px;
+        }
+
+        .tui-grid-cell {
+            background-color: white;
+        }
+        
+        
+        #pop_remain table thead tr {
+            border-top: 2px solid #aaa;
+            border-bottom: 2px solid #aaa;
+        }
+
+        #pop_remain table thead th {
+            border-left: 1px solid #eee;
+            border-right: 1px solid #eee;
+            border-bottom: 2px solid #E5E9F2;
+            color: #222;
+            font-size: 13px;
+            padding: 10px;
+        }
+
+        #pop_remain table thead th:first-child {
+            border-left: none;
+        }
+
+        #pop_remain table thead th:last-child {
+            border-right: none;
+        }
+
+        #pop_remain table tbody tr {
+            border-bottom: 1px solid #eee;
+        }
+
+        #pop_remain table tbody td {
+            background-color: #fff;
+            border-bottom: 2px solid #E5E9F2;
+            color: #333;
+            font-size: 13px;
+            padding: 10px;
         }
     </style>
 
@@ -915,9 +950,7 @@
                     </div>
                 </div>
                 <div class="modal-footer" style="border: none">
-                    <div class="col-4">
-                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
-                    </div>
+                	<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
                 </div>
             </div>
         </div>
@@ -938,9 +971,11 @@
                         </div>
                         <div class="form-group mb-0">
                             <textarea name="income_file_contents" style="resize:none;"></textarea>
+                            <!--
                             <div class="img_wrap">
                                 <img id="img"/>
                             </div>
+                            -->
                         </div>
                         <div>
                             <div class="atbd-upload">
@@ -1066,6 +1101,54 @@
         </div>
     </div>
 
+    <!-- 도입자원 데이터 확인 모달창 -->
+    <div class="modal-basic modal fade show pop5" id="data_upload3" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content modal-bg-white ">
+                <div class="modal-header" style="border: none">
+                    <h6 class="modal-title">도입자원관리 > 데이터 등록</h6>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group mb-0">
+                        <input type="text" class="form-control form-control-lg" placeholder="Click to Upload">
+                        <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none">
+                        <button onclick="filesFunction()">불러오기</button>
+                        <input type="file" name="" id="file_data_upload" style="display: none;">
+                    </div>
+                    <div>
+                        <form action="excelIncome" id="excelForm" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" id="excel_list" name="excel_list">
+                            <div class="atbd-upload">
+                                <table id="excel_data">
+                                    <thead>
+                                    <th><span class="title">작물</span></th>
+                                    <th><span class="title">도입번호(ID)</span></th>
+                                    <th><span class="title">품종명</span></th>
+                                    <th><span class="title">구분</span></th>
+                                    <th><span class="title">도입처</span></th>
+                                    <th><span class="title">도입국가</span></th>
+                                    <th><span class="title">도입자</span></th>
+                                    <th><span class="title">도입연월일</span></th>
+                                    <th><span class="title">현 종자량</span></th>
+                                    <th><span class="title">타입</span></th>
+                                    <th><span class="title">주요 특성</span></th>
+                                    <th><span class="title">비고</span></th>
+                                    </thead>
+                                    <tbody id="incomeBody">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border: none">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" onclick="dataToggle('#data_upload3', '#data_upload1');">취소</button>
+                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" onclick="dataToggle('#data_upload3', '#data_upload1'); InsertExcel();">등록</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- 도입자원 데이터 목록 창 -->
     <div class="modal-basic modal fade show pop7" id="data_upload1" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
@@ -1121,18 +1204,13 @@
                             <div class="atbd-upload">
                                 <table id="excel_data1">
                                     <thead>
-                                    <th><span class="title">작물</span></th>
                                     <th><span class="title">도입번호(ID)</span></th>
-                                    <th><span class="title">품종명</span></th>
-                                    <th><span class="title">구분</span></th>
-                                    <th><span class="title">도입처</span></th>
-                                    <th><span class="title">도입국가</span></th>
-                                    <th><span class="title">도입자</span></th>
-                                    <th><span class="title">도입연월일</span></th>
-                                    <th><span class="title">현 종자량</span></th>
-                                    <th><span class="title">타입</span></th>
-                                    <th><span class="title">주요 특성</span></th>
-                                    <th><span class="title">비고</span></th>
+                                    <th><span class="title">종자 보유량</span></th>
+                                    <th><span class="title">입고량</span></th>
+                                    <th><span class="title">출고량</span></th>
+                                    <th><span class="title">재고량</span></th>
+                                    <th><span class="title">담당자</span></th>
+                                    <th><span class="title">일자</span></th>
                                     </thead>
                                     <tbody>
                                     </tbody>
@@ -1144,6 +1222,49 @@
                 <div class="modal-footer" style="border: none">
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" onclick="dataToggle('#data_upload2', '#data_upload12');">취소</button>
                     <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" onclick="dataToggle('#data_upload2', '#data_upload12'); InsertExcel();">등록</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 도입자원재고 데이터 확인 모달창 -->
+    <div class="modal-basic modal fade show pop5" id="data_upload23" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content modal-bg-white ">
+                <div class="modal-header" style="border: none">
+                    <h6 class="modal-title">도입자원재고관리 > 데이터 등록</h6>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group mb-0">
+                        <input type="text" class="form-control form-control-lg" placeholder="Click to Upload">
+                        <input type="file" id="excelFile1" onchange="excelExport(event)" style="display: none">
+                        <button onclick="filesFunction()">불러오기</button>
+                        <input type="file" name="" id="file_data_upload1" style="display: none;">
+                    </div>
+                    <div>
+                        <form action="excelRemain" id="excelForm1" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" id="excel_list1" name="excel_list">
+                            <div class="atbd-upload">
+                                <table id="excel_data1">
+                                    <thead>
+                                    <th><span class="title">도입번호(ID)</span></th>
+                                    <th><span class="title">종자 보유량</span></th>
+                                    <th><span class="title">입고량</span></th>
+                                    <th><span class="title">출고량</span></th>
+                                    <th><span class="title">재고량</span></th>
+                                    <th><span class="title">담당자</span></th>
+                                    <th><span class="title">일자</span></th>
+                                    </thead>
+                                    <tbody id="remainBody">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border: none">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" onclick="dataToggle('#data_upload23', '#data_upload12');">취소</button>
+                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" onclick="dataToggle('#data_upload23', '#data_upload12'); InsertExcel();">등록</button>
                 </div>
             </div>
         </div>
@@ -1420,9 +1541,18 @@
                             var data_add = "";
 
                             for (var i = result.dataGroup.length - 1; i > -1; i--) {
+                                let date = result.dataGroup[i].datalist_date;
+
+                                var resultArr = date.split('-');
+                                var resultDate = "";
+
+                                for (var j = 0; j < resultArr.length; j++) {
+                                    resultDate += resultArr[j];
+                                }
+
                                 data_add += '<tr>';
                                 data_add += '<td>' + (i + 1) + '</td>';
-                                data_add += '<td>' + result.dataGroup[i].datalist_date + '</td>';
+                                data_add += '<td><button onclick="ModifyDataBtn(' + resultDate + ')" style="border:0px; color:blue; background: white;">' + result.dataGroup[i].datalist_date + '</button></td>';
                                 data_add += '<td>' + result.dataGroup[i].cnt + '</td>';
                                 data_add += '</tr>';
                             }
@@ -1434,7 +1564,7 @@
             } else {
                 $("#data_upload12").modal();
 
-                let data = {"datalist_type": 'income_outcome'};
+                let data = {"datalist_type": 'income_remain'};
 
                 $.ajax(
                     {
@@ -1449,7 +1579,7 @@
                             for (var i = result.dataGroup.length - 1; i > -1; i--) {
                                 data_add += '<tr>';
                                 data_add += '<td>' + (i + 1) + '</td>';
-                                data_add += '<td>' + result.dataGroup[i].datalist_date + '</td>';
+                                data_add += '<td><button onclick="ModifyDataBtn(' + resultDate + ')" style="border:0px; color:blue; background: white;">' + result.dataGroup[i].datalist_date + '</button></td>';
                                 data_add += '<td>' + result.dataGroup[i].cnt + '</td>';
                                 data_add += '</tr>';
                             }
@@ -1461,8 +1591,97 @@
             }
         }
     }
-
     /* 엑셀 등록 창 */
+
+    function ModifyDataBtn(e) {
+        if(tablechk == 0) {
+            let s = String(e);
+            s = s.replace(/(\d{4})(\d{2})(\d{2})/g, '$1-$2-$3');
+
+            var data = {"datalist_date": s};
+
+            $.ajax(
+                {
+                    url: 'searchTargetIncome',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: data,
+                    success: function (result) {
+                        if(result != null) {
+                            $("#data_upload3").modal("show");
+                            $("#data_upload1").modal("hide");
+
+                            var income_list = $("#incomeBody");
+                            var add_list = "";
+
+                            let len = Object.keys(result.income).length;
+
+                            for (var i = 0; i < len; i++) {
+                                add_list += '<tr>';
+                                add_list += '<td>' + result.income[i][0].income_name + '</td>';
+                                add_list += '<td>' + result.income[i][0].income_code + '</td>';
+                                add_list += '<td>' + result.income[i][0].income_kind + '</td>';
+                                add_list += '<td>' + result.income[i][0].income_division + '</td>';
+                                add_list += '<td>' + result.income[i][0].income_place + '</td>';
+                                add_list += '<td>' + result.income[i][0].income_country + '</td>';
+                                add_list += '<td>' + result.income[i][0].income_person + '</td>';
+                                add_list += '<td>' + result.income[i][0].income_date + '</td>';
+                                add_list += '<td>' + result.income[i][0].income_num + '</td>';
+                                add_list += '<td>' + result.income[i][0].income_type + '</td>';
+                                add_list += '<td>' + result.income[i][0].income_trait + '</td>';
+                                add_list += '<td>' + result.income[i][0].income_comment + '</td>';
+                                add_list += '</tr>';
+                            }
+
+                            income_list.empty();
+                            income_list.append(add_list);
+                        }
+                    }
+                }
+            );
+        } else {
+            let s = String(e);
+            s = s.replace(/(\d{4})(\d{2})(\d{2})/g, '$1-$2-$3');
+
+            var data = {"datalist_date": s};
+
+            $.ajax(
+                {
+                    url: 'searchTargetIncomeRemain',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: data,
+                    success: function (result) {
+                        if(result != null) {
+                            $("#data_upload23").modal("show");
+                            $("#data_upload12").modal("hide");
+
+                            var Income_remain_list = $("#remainBody");
+                            var add_list = "";
+
+                            let len = Object.keys(result.income_remain).length;
+
+                            for (var i = 0; i < len; i++) {
+                                add_list += '<tr>';
+                                add_list += '<td>' + result.income_remain[i][0].income_remain_num + '</td>';
+                                add_list += '<td>' + result.income_remain[i][0].income_remain_amount + '</td>';
+                                add_list += '<td>' + result.income_remain[i][0].income_remain_in + '</td>';
+                                add_list += '<td>' + result.income_remain[i][0].income_remain_out + '</td>';
+                                add_list += '<td>' + result.income_remain[i][0].income_remain_re + '</td>';
+                                add_list += '<td>' + result.income_remain[i][0].income_remain_person + '</td>';
+                                add_list += '<td>' + result.income_remain[i][0].income_remain_date + '</td>';
+                                add_list += '</tr>';
+                            }
+
+                            Income_remain_list.empty();
+                            Income_remain_list.append(add_list);
+                        }
+                    }
+                }
+            );
+        }
+
+    }
 
     let now = null;
 
@@ -1915,7 +2134,7 @@
                             {
                                 header: '첨부파일',
                                 name: 'file',
-                                width: 100
+                                width: 100,
                             },
                             {
                                 header: '작물',
@@ -1937,41 +2156,47 @@
                                 name: 'income_kind',
                                 editor: 'text',
                                 sortable: true,
-                                sortingType: 'asc'
+                                sortingType: 'asc',
+                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
+
                             },
                             {
                                 header: '구분',
                                 name: 'income_division',
                                 editor: 'text',
                                 sortable: true,
-                                sortingType: 'asc'
+                                sortingType: 'asc',
+                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
                             },
                             {
                                 header: '도입처',
                                 name: 'income_place',
                                 editor: 'text',
                                 sortable: true,
-                                sortingType: 'asc'
+                                sortingType: 'asc',
+                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
                             },
                             {
                                 header: '도입국가',
                                 name: 'income_country',
                                 editor: 'text',
                                 sortable: true,
-                                sortingType: 'asc'
+                                sortingType: 'asc',
+                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
                             },
                             {
                                 header: '도입자',
                                 name: 'income_person',
                                 editor: 'text',
                                 sortable: true,
-                                sortingType: 'asc'
+                                sortingType: 'asc',
+                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
                             },
                             {
                                 header: '도입연월일',
                                 name: 'income_date',
                                 editor: 'text',
-                                filter: 'number',
+                                filter: 'date',
                                 sortable: true,
                                 sortingType: 'asc'
                             },
@@ -1980,28 +2205,32 @@
                                 name: 'income_num',
                                 editor: 'text',
                                 sortable: true,
-                                sortingType: 'asc'
+                                sortingType: 'asc',
+                                filter: 'number',
                             },
                             {
                                 header: '타입',
                                 name: 'income_type',
                                 editor: 'text',
                                 sortable: true,
-                                sortingType: 'asc'
+                                sortingType: 'asc',
+                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
                             },
                             {
                                 header: '주요 특성',
                                 name: 'income_trait',
                                 editor: 'text',
                                 sortable: true,
-                                sortingType: 'asc'
+                                sortingType: 'asc',
+                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
                             },
                             {
                                 header: '비고',
                                 name: 'income_comment',
                                 editor: 'text',
                                 sortable: true,
-                                sortingType: 'asc'
+                                sortingType: 'asc',
+                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
                             }
                         ],
                         pageOptions: {
@@ -2009,6 +2238,8 @@
                             perPage: limit
                         }
                     });
+
+                    incomegrid.off('dblclick');
 
                     incomegrid.on('click', (ev) => {
                         if (ev.targetType === 'cell' && ev.columnName === 'income_code') {
@@ -2213,45 +2444,50 @@
                                 header: '도입번호(ID)',
                                 name: 'income_remain_num',
                                 editor: 'text',
-                                sortable: true
+                                sortable: true,
+                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
                             },
                             {
                                 header: '종자 보유량',
                                 name: 'income_remain_amount',
                                 editor: 'text',
-                                sortable: true
+                                sortable: true,
+                                filter: 'number'
                             },
                             {
                                 header: '입고량',
                                 name: 'income_remain_in',
                                 editor: 'text',
-                                sortable: true
+                                sortable: true,
+                                filter: 'number'
                             },
                             {
                                 header: '출고량',
                                 name: 'income_remain_out',
                                 editor: 'text',
-                                sortable: true
+                                sortable: true,
+                                filter: 'number'
                             },
                             {
                                 header: '재고량',
                                 name: 'income_remain_re',
                                 editor: 'text',
-                                sortable: true
+                                sortable: true,
+                                filter: 'number'
                             },
                             {
                                 header: '담당자',
                                 name: 'income_remain_person',
                                 editor: 'text',
-                                filter: 'number',
-                                sortable: true
+                                sortable: true,
+                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
                             },
                             {
                                 header: '일자',
                                 name: 'income_remain_date',
                                 editor: 'text',
-                                filter: 'number',
-                                sortable: true
+                                sortable: true,
+                                filter: 'date'
                             }
                         ],
                         pageOptions: {
