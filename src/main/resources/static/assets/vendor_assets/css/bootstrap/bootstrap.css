@@ -18220,9 +18220,23 @@ h4{
 }
 .main-content .modal-body .form-group{
 	
-	padding-bottom:5px !important;
+	padding-bottom:10px !important;
 }
 .main-content .card-extra .justify-content-end .atbd-button-list .data_btn2 img{
 	width: 22px;
+}
+[id*="data_upload"] .atbd-upload table thead th, [id*="data_upload"] .atbd-upload table tbody td{
+	
+	font-size: 14px !important;
+}
+#grid .content_1 li{
+	font-size: 14px !important;
+}
+[class*="pop_top_content"]{
+	margin-top: 8px;
+	max-height: 300px !important;
+}
+[id*="grid"].color-dark.align-center{
+	font-size:16px !important;
 }
 /*# sourceMappingURL=maps/bootstrap.css.map */

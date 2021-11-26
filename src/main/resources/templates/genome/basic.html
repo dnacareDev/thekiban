@@ -93,7 +93,6 @@
             display: inline-block;
             width: 80%;
             color: #222222;
-            font-size: 16px;
         }
 
         .pop1 .modal-dialog textarea {
@@ -133,7 +132,6 @@
             display: inline-block;
             width: 80%;
             color: #222222;
-            font-size: 16px;
         }
 
         #gen-messege {
@@ -352,7 +350,9 @@
             vertical-align: middle;
             font-size: 14px
         }
-
+ 		#grid2 .tab-content .row .list-group {
+            font-size:14px;
+        }
         #basic_list th {
             font-size: 16px
         }
@@ -758,6 +758,9 @@
             padding: 10px;
         }
         #file_modal{height: 655px;}
+        [id*="grid"] .color-dark.align-center{
+			font-size:16px !important;
+		}
     </style>
 </head>
 <body class="layout-light top-menu overlayScroll">
@@ -1050,7 +1053,7 @@
                                                             <div class="card-body">
                                                                 <div class="row">
                                                                     <div class="col-lg-12">
-                                                                        <span class="color-dark align-center" style="font-size: 20px;">표시항목 설정</span>
+                                                                        <span class="color-dark align-center" style="font-size: 16px;">표시항목 설정</span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row mt-4" style="justify-content: center; align-items: center;">
@@ -1673,8 +1676,7 @@
                     <h6 class="modal-title">원종관리 > 데이터 등록</h6>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group mb-0">
-                        <input type="text" class="form-control form-control-lg" placeholder="Click to Upload">
+                    <div class="form-group mb-0" style="justify-content: end;">
                         <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none">
                         <button onclick="filesFunction()" class="btn btn-primary btn-sm">불러오기</button>
                         <input type="file" name="" id="file_data_upload" style="display: none;">
@@ -1719,8 +1721,7 @@
                     <h6 class="modal-title">원종관리 > 데이터 등록</h6>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group mb-0">
-                        <input type="text" class="form-control form-control-lg" placeholder="Click to Upload">
+                    <div class="form-group mb-0" style="justify-content: end">
                         <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none">
                         <button onclick="filesFunction()" class="btn btn-primary btn-sm">불러오기</button>
                         <input type="file" name="" id="file_data_upload" style="display: none;">
@@ -1800,8 +1801,7 @@
                     <h6 class="modal-title">원종재고관리 > 데이터 등록</h6>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group mb-0">
-                        <input type="text" class="form-control form-control-lg" placeholder="Click to Upload">
+                    <div class="form-group mb-0" style="justify-content: end">
                         <input type="file" id="excelFile1" onchange="excelExport(event)" style="display: none">
                         <button onclick="filesFunction()" class="btn btn-primary btn-sm">불러오기</button>
                         <input type="file" name="" id="file_data_upload1" style="display: none;">
