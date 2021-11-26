@@ -213,11 +213,26 @@
         .box_center li {
             margin-bottom: 20px;
         }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
 
         /* alpa 수정 2021-11-05 */
         .box_center .buttonLi button {
-            width: 32px;
-            height: 32px;
+            width:28px;
+			height:28px;
             border: 2px solid #217566;
             background-color: transparent;
             border-radius: 50%;
@@ -232,27 +247,27 @@
         }
 
         .box_center .buttonLi button span::before {
-            content: "";
-            display: block;
-            position: absolute;
-            top: -1px;
-            left: 0;
-            width: 2px;
-            height: 10px;
-            background-color: #217566;
-            transform: rotate(45deg);
+            content:"";
+			display:block;
+			position:absolute;
+			top:-1px;
+			left:0;
+			width:2px;
+			height: 8px;
+			background-color: #217566;
+			transform: rotate(45deg);
         }
 
         .box_center .buttonLi button span::after {
-            content: "";
-            display: block;
-            position: absolute;
-            top: -7px;
-            left: 0;
-            width: 2px;
-            height: 10px;
-            background-color: #217566;
-            transform: rotate(-45deg);
+           	content:"";
+			display:block;
+			position:absolute;
+			top:-6px;
+			left:0;
+			width:2px;
+			height: 8px;
+			background-color: #217566;
+			transform: rotate(-45deg);
         }
 
         .box_center .buttonLi button span.left_btn::before {
@@ -272,13 +287,14 @@
 
         #grid2 .tab-content .row .list-group {
             width: 100%;
+            font-size:14px;
             margin: 0 !important;
         }
 
         #grid2 .tab-content .row .detail_list li:hover,
         #grid2 .tab-content .row .display_list li:hover {
             background-color: #EDF6F1;
-        }
+        } 
 
         #grid2 .tab-content .row .detail_list li.active,
         #grid2 .tab-content .row .display_list li.active {
@@ -379,7 +395,7 @@
 
         #data_upload .atbd-upload, #data_upload2 .atbd-upload {
             width: 100%;
-            height: 300px;
+            min-height: 600px;
             overflow: auto;
         }
 
@@ -713,7 +729,8 @@
         }
 
         #excel_data {
-            min-width: 9000px;
+            min-width:100%;
+            width: max-content;
         }
 
         #excel_data th {
@@ -733,6 +750,9 @@
             overflow: scroll;
         }
         #file_modal{height: 655px;}
+        [id*="grid"] .color-dark.align-center{
+			font-size:16px !important;
+		}
     </style>
 </head>
 <body class="layout-light top-menu overlayScroll">
@@ -1009,7 +1029,7 @@
                                                             <div class="card-body">
                                                                 <div class="row">
                                                                     <div class="col-lg-12">
-                                                                        <span class="color-dark align-center" style="font-size: 20px;">표시항목 설정</span>
+                                                                        <span class="color-dark align-center" style="font-size: 16px;">표시항목 설정</span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row mt-4" style="justify-content: center; align-items: center;">
@@ -1057,7 +1077,7 @@
                                                             <div class="card-body">
                                                                 <div class="row">
                                                                     <div class="col-lg-12">
-                                                                        <span class="color-dark align-center" style="font-size: 20px;">표시항목 설정</span>
+                                                                        <span class="color-dark align-center" style="font-size: 16px;">표시항목 설정</span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row mt-4" style="justify-content: center;align-items: center;">
@@ -1105,7 +1125,7 @@
                                                             <div class="card-body">
                                                                 <div class="row">
                                                                     <div class="col-lg-12">
-                                                                        <span class="color-dark align-center" style="font-size: 20px;">표시항목 설정</span>
+                                                                        <span class="color-dark align-center" style="font-size: 16px;">표시항목 설정</span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row mt-4" style="justify-content: center;align-items: center;">
@@ -1388,8 +1408,7 @@
                     <h6 class="modal-title">품종관리 > 데이터 등록</h6>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group mb-0">
-                        <input type="text" class="form-control form-control-lg" placeholder="Click to Upload">
+                    <div class="form-group mb-0" style="justify-content:end">
                         <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none">
                         <button onclick="filesFunction()" class="btn btn-primary btn-sm">불러오기</button>
                         <input type="file" name="" id="file_data_upload" style="display: none;">
@@ -1442,8 +1461,7 @@
                     <h6 class="modal-title">품종관리 > 데이터 등록</h6>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group mb-0">
-                        <input type="text" class="form-control form-control-lg" placeholder="Click to Upload">
+                    <div class="form-group mb-0" style="justify-content:end">
                         <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none">
                         <button onclick="filesFunction()" class="btn btn-primary btn-sm">불러오기</button>
                         <input type="file" name="" id="file_data_upload" style="display: none;">

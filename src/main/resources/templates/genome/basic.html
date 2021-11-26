@@ -336,7 +336,9 @@
             color: #222222;
             font-size: 16px;
         }
-
+		#data_upload2 .atbd-upload table thead th, #data_upload2 .atbd-upload table tbody td{
+			font-size: 14px;
+		}
         #data_upload .atbd-upload table tbody td, #data_upload2 .atbd-upload table tbody td, #data_upload21 .atbd-upload table tbody td, #data_upload11 .atbd-upload table tbody td {
             background-color: #fff;
             color: #666666;
@@ -350,7 +352,9 @@
             vertical-align: middle;
             font-size: 14px
         }
-
+ 		#grid2 .tab-content .row .list-group {
+            font-size:14px;
+        }
         #basic_list th {
             font-size: 16px
         }
@@ -752,6 +756,10 @@
             font-size: 13px;
             padding: 10px;
         }
+        #file_modal{height: 655px;}
+        [id*="grid"] .color-dark.align-center{
+			font-size:16px !important;
+		}
 
         #file_modal {
             height: 655px;
@@ -1048,7 +1056,7 @@
                                                             <div class="card-body">
                                                                 <div class="row">
                                                                     <div class="col-lg-12">
-                                                                        <span class="color-dark align-center" style="font-size: 20px;">표시항목 설정</span>
+                                                                        <span class="color-dark align-center" style="font-size: 16px;">표시항목 설정</span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row mt-4" style="justify-content: center; align-items: center;">
@@ -1671,8 +1679,7 @@
                     <h6 class="modal-title">원종관리 > 데이터 등록</h6>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group mb-0">
-                        <input type="text" class="form-control form-control-lg" placeholder="Click to Upload">
+                    <div class="form-group mb-0" style="justify-content: end;">
                         <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none">
                         <button onclick="filesFunction()" class="btn btn-primary btn-sm">불러오기</button>
                         <input type="file" name="" id="file_data_upload" style="display: none;">
@@ -1717,8 +1724,7 @@
                     <h6 class="modal-title">원종관리 > 데이터 등록</h6>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group mb-0">
-                        <input type="text" class="form-control form-control-lg" placeholder="Click to Upload">
+                    <div class="form-group mb-0" style="justify-content: end">
                         <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none">
                         <button onclick="filesFunction()" class="btn btn-primary btn-sm">불러오기</button>
                         <input type="file" name="" id="file_data_upload" style="display: none;">
@@ -1798,8 +1804,7 @@
                     <h6 class="modal-title">원종재고관리 > 데이터 등록</h6>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group mb-0">
-                        <input type="text" class="form-control form-control-lg" placeholder="Click to Upload">
+                    <div class="form-group mb-0" style="justify-content: end">
                         <input type="file" id="excelFile1" onchange="excelExport(event)" style="display: none">
                         <button onclick="filesFunction()" class="btn btn-primary btn-sm">불러오기</button>
                         <input type="file" name="" id="file_data_upload1" style="display: none;">
@@ -2390,6 +2395,155 @@
                             var value_basic = ev.nativeEvent.srcElement;
 
                             SearchBreed(value_basic);
+                        } else if (ev.targetType === 'cell' && ev.columnName === 'status') {
+                            var e_id = basicgrid.getRow(ev.rowKey).basic_id;
+
+                            EmptyBtn(e_id);
+                        } else if (ev.targetType === 'cell' && ev.columnName === 'file') {
+                            var id = basicgrid.getRow(ev.rowKey).basic_id;
+
+                            FileBtn(id);
+                        }
+                    });
+
+                    var before = null;
+                    var after = null;
+
+                    basicgrid.on('afterChange', (ev) => {
+                        var user_type = $("#user_type").val();
+
+                        if (user_type != 0 && user_type != 2) {
+                            return Alert("수정 권한이 없습니다.");
+                            location.reload();
+                        } else {
+                            for (let i = 0; i < ev.changes.length; i++) {
+                                before = ev.changes[i].prevValue;
+                                after = ev.changes[i].value;
+
+                                if (after != before) {
+                                    var basic_id = basicgrid.getRow(ev.changes[i].rowKey).basic_id;
+                                    var detail_id = ev.changes[i].columnName;
+                                    var standard = after;
+
+                                    var data = {"basic_id": basic_id, "detail_id": detail_id, "standard": standard};
+
+                                    if (basic_id != null) {
+                                        $.ajax(
+                                            {
+                                                url: 'updateBasic',
+                                                method: 'POST',
+                                                dataType: 'json',
+                                                data: data,
+                                                success: function (result) {
+                                                    if (result == 0) {
+                                                        return Alert("수정에 실패하였습니다.")
+                                                    }
+                                                }
+                                            });
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+            });
+    }
+
+    function OtherBasicgrid(e) {
+        var basic_name = $("#CropSelect").val();
+        var limit = $("#limit").val();
+
+        var data = {"basic_name": basic_name, "page_num": e, "limit": limit};
+
+        $.ajax(
+            {
+                url: 'searchBasic',
+                method: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function (result) {
+                    basicgrid.destroy();
+
+                    basicgrid = new tui.Grid({
+                        el: document.getElementById('basicGrid'),
+                        scrollX: true,
+                        scrollY: false,
+                        data: result.basic,
+                        rowHeaders: ['checkbox'],
+                        editingEvent: 'click',
+                        columns: [],
+                        pageOptions: {
+                            useClient: true,
+                            perPage: limit,
+                        }
+                    });
+
+                    const headerArr = [
+                        {
+                            'header': '첨부파일',
+                            'name': 'file',
+                            'width': 100,
+                        },
+                        {
+                            'header': '특성상태',
+                            'name': 'status',
+                            'width': 150,
+                        }
+                    ];
+
+                    var headerName = [];
+
+                    for (let i = 0; i < result.display.length; i++) {
+                        var colHeader = result.display[i].detail_title;
+                        var colName = result.display[i].detail_id;
+                        headerName[i] = result.display[i].detail_id;
+
+                        var arr = {};
+
+                        var filter = {type: 'text', showApplyBtn: true, showClearBtn: true};
+
+                        if (result.display[i].detail_spec == '기본 정보') {
+                            arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 180, 'filter': filter}
+                        } else {
+                            arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 500, 'filter': filter}
+                        }
+
+                        headerArr.push(arr);
+                    }
+
+                    basicgrid.setColumns(headerArr);
+
+                    const dataArr = [];
+
+                    for (let i = 0; i < result.basic.length; i++) {
+                        let rowArr = {};
+
+                        rowArr = {'file': '<i class="bi bi-file-earmark-arrow-down"></i>', 'basic_id': result.basic[i].basic_id};
+
+                        if (result.basic[i].standard_count == 0) {
+                            rowArr['status'] = '<span style="color:red">EMPTY</span>';
+
+                        } else {
+                            rowArr['status'] = '<span style="color:blue">PROGRESS</span>';
+                        }
+
+                        for (var j = 0; j < result.basic[i].basic_standard.length; j++) {
+                            var rowData = result.basic[i].basic_standard[j].standard;
+                            rowArr[headerName[j]] = rowData;
+                        }
+
+                        dataArr.push(rowArr);
+                    }
+
+                    basicgrid.resetData(dataArr);
+
+                    basicgrid.setPerPage(limit);
+
+                    basicgrid.on('click', (ev) => {
+                        if (ev.targetType === 'cell' && ev.columnName === '170') {
+                            var value_sample = ev.nativeEvent.srcElement;
+
+                            SearchBreed(value_sample);
                         } else if (ev.targetType === 'cell' && ev.columnName === 'status') {
                             var e_id = basicgrid.getRow(ev.rowKey).basic_id;
 
