@@ -638,7 +638,7 @@
             background-color: #FCFCFC;
         }
 
-        #basicGrid .tui-grid-body-area td[data-column-name='170'] {
+        #basicGrid .tui-grid-body-area td[data-column-name='170'], #basicGrid .tui-grid-body-area td[data-column-name='336'], #basicGrid .tui-grid-body-area td[data-column-name='517'], #basicGrid .tui-grid-body-area td[data-column-name='692'], #basicGrid .tui-grid-body-area td[data-column-name='834'], #basicGrid .tui-grid-body-area td[data-column-name='999'], #basicGrid .tui-grid-body-area td[data-column-name='1169'], #basicGrid .tui-grid-body-area td[data-column-name='1337'], #basicGrid .tui-grid-body-area td[data-column-name='1511'], #basicGrid .tui-grid-body-area td[data-column-name='1722'] {
             color: mediumblue;
             text-decoration: underline;
             cursor: pointer;
@@ -2391,159 +2391,10 @@
                     basicgrid.resetData(dataArr);
 
                     basicgrid.on('click', (ev) => {
-                        if (ev.targetType === 'cell' && ev.columnName === '170') {
+                        if (ev.targetType === 'cell' && (ev.columnName === '170' || ev.columnName === '336' || ev.columnName === '517' || ev.columnName === '692' || ev.columnName === '834' || ev.columnName === '999' || ev.columnName === '1169' || ev.columnName === '1337' || ev.columnName === '1511' || ev.columnName === '1722')) {
                             var value_basic = ev.nativeEvent.srcElement;
 
                             SearchBreed(value_basic);
-                        } else if (ev.targetType === 'cell' && ev.columnName === 'status') {
-                            var e_id = basicgrid.getRow(ev.rowKey).basic_id;
-
-                            EmptyBtn(e_id);
-                        } else if (ev.targetType === 'cell' && ev.columnName === 'file') {
-                            var id = basicgrid.getRow(ev.rowKey).basic_id;
-
-                            FileBtn(id);
-                        }
-                    });
-
-                    var before = null;
-                    var after = null;
-
-                    basicgrid.on('afterChange', (ev) => {
-                        var user_type = $("#user_type").val();
-
-                        if (user_type != 0 && user_type != 2) {
-                            return Alert("수정 권한이 없습니다.");
-                            location.reload();
-                        } else {
-                            for (let i = 0; i < ev.changes.length; i++) {
-                                before = ev.changes[i].prevValue;
-                                after = ev.changes[i].value;
-
-                                if (after != before) {
-                                    var basic_id = basicgrid.getRow(ev.changes[i].rowKey).basic_id;
-                                    var detail_id = ev.changes[i].columnName;
-                                    var standard = after;
-
-                                    var data = {"basic_id": basic_id, "detail_id": detail_id, "standard": standard};
-
-                                    if (basic_id != null) {
-                                        $.ajax(
-                                            {
-                                                url: 'updateBasic',
-                                                method: 'POST',
-                                                dataType: 'json',
-                                                data: data,
-                                                success: function (result) {
-                                                    if (result == 0) {
-                                                        return Alert("수정에 실패하였습니다.")
-                                                    }
-                                                }
-                                            });
-                                    }
-                                }
-                            }
-                        }
-                    });
-                }
-            });
-    }
-
-    function OtherBasicgrid(e) {
-        var basic_name = $("#CropSelect").val();
-        var limit = $("#limit").val();
-
-        var data = {"basic_name": basic_name, "page_num": e, "limit": limit};
-
-        $.ajax(
-            {
-                url: 'searchBasic',
-                method: 'POST',
-                dataType: 'json',
-                data: data,
-                success: function (result) {
-                    basicgrid.destroy();
-
-                    basicgrid = new tui.Grid({
-                        el: document.getElementById('basicGrid'),
-                        scrollX: true,
-                        scrollY: false,
-                        data: result.basic,
-                        rowHeaders: ['checkbox'],
-                        editingEvent: 'click',
-                        columns: [],
-                        pageOptions: {
-                            useClient: true,
-                            perPage: limit,
-                        }
-                    });
-
-                    const headerArr = [
-                        {
-                            'header': '첨부파일',
-                            'name': 'file',
-                            'width': 100,
-                        },
-                        {
-                            'header': '특성상태',
-                            'name': 'status',
-                            'width': 150,
-                        }
-                    ];
-
-                    var headerName = [];
-
-                    for (let i = 0; i < result.display.length; i++) {
-                        var colHeader = result.display[i].detail_title;
-                        var colName = result.display[i].detail_id;
-                        headerName[i] = result.display[i].detail_id;
-
-                        var arr = {};
-
-                        var filter = {type: 'text', showApplyBtn: true, showClearBtn: true};
-
-                        if (result.display[i].detail_spec == '기본 정보') {
-                            arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 180, 'filter': filter}
-                        } else {
-                            arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 500, 'filter': filter}
-                        }
-
-                        headerArr.push(arr);
-                    }
-
-                    basicgrid.setColumns(headerArr);
-
-                    const dataArr = [];
-
-                    for (let i = 0; i < result.basic.length; i++) {
-                        let rowArr = {};
-
-                        rowArr = {'file': '<i class="bi bi-file-earmark-arrow-down"></i>', 'basic_id': result.basic[i].basic_id};
-
-                        if (result.basic[i].standard_count == 0) {
-                            rowArr['status'] = '<span style="color:red">EMPTY</span>';
-
-                        } else {
-                            rowArr['status'] = '<span style="color:blue">PROGRESS</span>';
-                        }
-
-                        for (var j = 0; j < result.basic[i].basic_standard.length; j++) {
-                            var rowData = result.basic[i].basic_standard[j].standard;
-                            rowArr[headerName[j]] = rowData;
-                        }
-
-                        dataArr.push(rowArr);
-                    }
-
-                    basicgrid.resetData(dataArr);
-
-                    basicgrid.setPerPage(limit);
-
-                    basicgrid.on('click', (ev) => {
-                        if (ev.targetType === 'cell' && ev.columnName === '170') {
-                            var value_sample = ev.nativeEvent.srcElement;
-
-                            SearchBreed(value_sample);
                         } else if (ev.targetType === 'cell' && ev.columnName === 'status') {
                             var e_id = basicgrid.getRow(ev.rowKey).basic_id;
 
@@ -3441,23 +3292,31 @@
                                     if (result.display[k].detail_id == result.detail[j].detail_id) {
                                         check = false;
 
-                                        display_add += '<div data-id="' + result.detail[j].detail_id + '" class="list-group step">';
-                                        display_add += '<li class="list-group-item-sm list-group-item">';
-                                        display_add += '<div class="row">';
-                                        display_add += '<input type="checkbox" class="checkbox mr-2" name="mis_research">';
-                                        display_add += '<span class="research-title">' + result.detail[j].detail_title + '</span>';
-                                        display_add += '<input type="hidden" name="detail_id" value="' + result.detail[j].detail_id + '">';
-                                        display_add += '</div>';
-                                        display_add += '</li>';
-                                        display_add += '</div>';
+                                        if (result.detail[j].detail_title == "첨부파일 관리") {
+                                            continue;
+                                        } else {
+                                            display_add += '<div data-id="' + result.detail[j].detail_id + '" class="list-group step">';
+                                            display_add += '<li class="list-group-item-sm list-group-item">';
+                                            display_add += '<div class="row">';
+                                            display_add += '<input type="checkbox" class="checkbox mr-2" name="mis_research">';
+                                            display_add += '<span class="research-title">' + result.detail[j].detail_title + '</span>';
+                                            display_add += '<input type="hidden" name="detail_id" value="' + result.detail[j].detail_id + '">';
+                                            display_add += '</div>';
+                                            display_add += '</li>';
+                                            display_add += '</div>';
+                                        }
                                     }
                                 }
 
                                 if (check) {
-                                    detail_add += '<li>';
-                                    detail_add += '<input type="checkbox" class="check_box" name="chk_research" value="' + result.detail[j].detail_id + '">';
-                                    detail_add += '<div class="title">' + result.detail[j].detail_title + '</div>';
-                                    detail_add += '</li>';
+                                    if (result.detail[j].detail_title == "첨부파일 관리") {
+                                        continue;
+                                    } else {
+                                        detail_add += '<li>';
+                                        detail_add += '<input type="checkbox" class="check_box" name="chk_research" value="' + result.detail[j].detail_id + '">';
+                                        detail_add += '<div class="title">' + result.detail[j].detail_title + '</div>';
+                                        detail_add += '</li>';
+                                    }
                                 }
                             }
 

@@ -185,9 +185,9 @@
     </select>
     
     <!-- 표시항목 삭제 -->
-    <delete id="DeleteDisplay" parameterType="int">
+    <delete id="DeleteDisplay">
     	DELETE FROM display
-    	WHERE user_id = #{user_id} AND display_type = 0
+    	WHERE user_id = #{user_id} AND display_type = 0 AND breed_name = #{breed_name}
     </delete>
     
     <!-- 첨부파일 내용 삭제 -->

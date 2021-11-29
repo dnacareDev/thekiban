@@ -65,7 +65,7 @@ public interface BasicMapper
 	int[] DeleteStandard(int[] basic_id);
 
 	// 표시항목 삭제
-	int DeleteDisplay(int user_id);
+	int DeleteDisplay(@Param("user_id") int user_id, @Param("basic_name") String basic_name);
 
 	// 첨부파일 내용 삭제
 	int DeleteFile(int[] basic_id);

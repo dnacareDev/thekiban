@@ -350,7 +350,7 @@ public class BasicController
 	{
 		User user = (User)auth.getPrincipal();
 		
-		int delete = service.DeleteDisplay(user.getUser_id());
+		int delete = service.DeleteDisplay(user.getUser_id(), basic_name);
 		int insert = service.InsertDisplay(user.getUser_id(), basic_name, detail_id);
 		
 		mv.setViewName("redirect:/basic");

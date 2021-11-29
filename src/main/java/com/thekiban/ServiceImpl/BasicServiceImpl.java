@@ -146,9 +146,9 @@ public class BasicServiceImpl implements BasicService
 
 	// 표시항목 삭제
 	@Override
-	public int DeleteDisplay(int user_id)
+	public int DeleteDisplay(int user_id, String basic_name)
 	{
-		return mapper.DeleteDisplay(user_id);
+		return mapper.DeleteDisplay(user_id, basic_name);
 	}
 	
 	// 첨부파일 내용 삭제

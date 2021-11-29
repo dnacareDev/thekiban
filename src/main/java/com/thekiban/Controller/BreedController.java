@@ -237,7 +237,7 @@ public class BreedController {
   public ModelAndView InsertBreedDisplay(ModelAndView mv, Authentication auth, @RequestParam("breed_name") String breed_name, @RequestParam(required = false, value = "detail_id") int[] detail_id) {
     User user = (User) auth.getPrincipal();
 
-    int delete = service.DeleteDisplay(user.getUser_id());
+    int delete = service.DeleteDisplay(user.getUser_id(), breed_name);
     int insert = service.InsertDisplay(user.getUser_id(), breed_name, detail_id);
 
     mv.setViewName("redirect:/breed");

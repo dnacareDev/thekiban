@@ -62,7 +62,7 @@ public interface BasicService
 	int[] DeleteStandard(int[] basic_id);
 
 	// 표시항목 삭제
-	int DeleteDisplay(int user_id);
+	int DeleteDisplay(int user_id, String basic_name);
 
 	// 첨부파일 내용 삭제
 	int DeleteFile(int[] basic_id);

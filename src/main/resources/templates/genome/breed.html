@@ -637,7 +637,7 @@
             background-color: #FCFCFC;
         }
 
-        #breedGrid .tui-grid-body-area td[data-column-name='2'], #breedGrid .tui-grid-body-area td[data-column-name='4'], #breedGrid .tui-grid-body-area td[data-column-name='5'] {
+        #breedGrid .tui-grid-body-area td[data-column-name='2'], #breedGrid .tui-grid-body-area td[data-column-name='4'], #breedGrid .tui-grid-body-area td[data-column-name='5'], #breedGrid .tui-grid-body-area td[data-column-name='277'], #breedGrid .tui-grid-body-area td[data-column-name='388'], #breedGrid .tui-grid-body-area td[data-column-name='626'], #breedGrid .tui-grid-body-area td[data-column-name='749'], #breedGrid .tui-grid-body-area td[data-column-name='912'], #breedGrid .tui-grid-body-area td[data-column-name='1076'], #breedGrid .tui-grid-body-area td[data-column-name='1254'], #breedGrid .tui-grid-body-area td[data-column-name='1412'], #breedGrid .tui-grid-body-area td[data-column-name='1599'] {
             color: mediumblue;
             text-decoration: underline;
             cursor: pointer;
@@ -1950,6 +1950,7 @@
         breedgrid.destroy();
 
         SearchBreed(1);
+        SearchBreedgrid(1);
     })
 
     // 갯수 선택
@@ -1957,6 +1958,7 @@
         breedgrid.destroy();
 
         SearchBreed(1);
+        SearchBreedgrid(1);
     })
 
     // 품종 삭제
@@ -2523,7 +2525,7 @@
                     })
 
                     breedgrid.on('click', (ev) => {
-                        if (ev.targetType === 'cell' && ev.columnName === '2') {
+                        if (ev.targetType === 'cell' && (ev.columnName === '2' || ev.columnName === '277' || ev.columnName === '388' || ev.columnName === '626' || ev.columnName === '749' || ev.columnName === '912' || ev.columnName === '1076' || ev.columnName === '1254' || ev.columnName === '1412' || ev.columnName === '1599')) {
                             var value_sample = ev.nativeEvent.srcElement;
                             var value_mom = breedgrid.getRow(ev.rowKey)[4];
                             var value_dad = breedgrid.getRow(ev.rowKey)[5];

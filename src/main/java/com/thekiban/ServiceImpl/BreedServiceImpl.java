@@ -121,9 +121,9 @@ public class BreedServiceImpl implements BreedService
 
 	// 표시항목 삭제
 	@Override
-	public int DeleteDisplay(int user_id)
+	public int DeleteDisplay(int user_id, String breed_name)
 	{
-		return mapper.DeleteDisplay(user_id);
+		return mapper.DeleteDisplay(user_id, breed_name);
 	}
 
 	// 첨부파일 내용 삭제

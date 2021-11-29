@@ -55,7 +55,7 @@ public interface BreedService
 	int[] DeleteStandard(int[] breed_id);
 
 	// 표시항목 삭제
-	int DeleteDisplay(int user_id);
+	int DeleteDisplay(int user_id, String breed_name);
 
 	// 첨부파일 내용 삭제
 	int DeleteFile(int[] breed_id);
