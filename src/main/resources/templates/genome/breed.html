@@ -876,7 +876,7 @@
                     <div class="modal-body">
                         <div class="form-group mb-0">
                             <span>제목</span>
-                            <input type="text" class="form-control form-control-lg inputText" name="breed_file_title">
+                            <input type="text" class="form-control form-control-lg inputText file_title" name="breed_file_title">
                         </div>
                         <div class="form-group mb-0">
                             <textarea name="breed_file_contents" style="resize:none;"></textarea>
@@ -2124,9 +2124,12 @@
 
     function InsertFile() {
         var file = $("#upload_file");
+        var title = $(".file_title");
 
         if (file.val() == "") {
-            return Alert("파일을 선택해주세요.");
+            Alert1("파일을 선택해주세요.");
+        } else if (title.val() == "") {
+            Alert1("제목을 입력하세요.");
         } else {
             $("#insertFile").submit();
         }
@@ -2661,7 +2664,6 @@
 
         eventList.initEvent("click");
         filesBtn.dispatchEvent(eventList);
-
     }
 
     /* 엑셀 업로드 목록창 */

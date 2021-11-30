@@ -171,6 +171,19 @@
 		});
 		return false;
 	}
+
+    function Alert1(text){ //popup
+
+        $("#alert").show();
+        $(".dim").show();
+        $("#alert .title_text").text(text);
+
+        $("#alert button").click(function(){
+            $("#alert, .dim").hide();
+        });
+
+        return false;
+    }
 		
 </script>
     
