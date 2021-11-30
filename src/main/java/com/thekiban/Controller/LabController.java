@@ -77,7 +77,7 @@ public class LabController
        	AnalysisFile analysis = new AnalysisFile();
        	analysis.setUser_id(user.getUser_id());
        	analysis.setAnalysis_type(0);
-       	analysis.setAnalysis_file(date_name + "/length.len");
+       	analysis.setAnalysis_file(date_name + "/lengh.len");
        	analysis.setAnalysis_origin_file(file.getOriginalFilename());
        	
        	int insert = service.InsertAnalysisFile(analysis);
