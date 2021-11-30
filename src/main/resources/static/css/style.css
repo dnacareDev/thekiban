@@ -3500,7 +3500,7 @@ ul {
 }
 
 .top-menu .contents {
-  padding-left: 20px;
+  /*padding-left: 20px;*/
 }
 
 @media only screen and (max-width: 991px) {
@@ -25241,7 +25241,7 @@ table {
           display: none;
         }
         .main-content{
-        	padding: 77px 0 50px 0;
+        	padding: 77px 0 0 0;
         }
         .main-content .contents .container-fluid{
         	max-width: 1280px;

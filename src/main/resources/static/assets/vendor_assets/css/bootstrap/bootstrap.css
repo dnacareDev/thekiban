@@ -18239,4 +18239,10 @@ h4{
 [id*="grid"].color-dark.align-center{
 	font-size:16px !important;
 }
+.main-content .contents .container-fluid{
+	background-color: #f4f5f7 !important;
+	padding-top:30px !important;
+	padding-bottom:30px !important;
+}
+
 /*# sourceMappingURL=maps/bootstrap.css.map */
