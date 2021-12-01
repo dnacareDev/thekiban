@@ -4912,8 +4912,10 @@ ul {
 }
 
 .strikingDash-top-menu ul li > ul li a:hover, .strikingDash-top-menu ul li > ul li a.active {
-  background-color: rgba(95, 99, 242, 0.06);
+  background-color:#EDF6F1;
   padding-left: 40px;
+  color: #217566 !important;
+  font-weight:700 !important;
 }
 
 .strikingDash-top-menu ul li > ul li:hover .subMenu {

@@ -638,6 +638,16 @@ select{
             box-shadow: 0 2.5em 0 0;
         }
         }
+        
+        
+        .contents .button{
+        	height: 300px;
+        	margin-top: 53px;
+        }
+        .contentsNot .button{
+       		height: 68px;
+        	margin-top: 8px;
+        }
 </style>
 </head>
 
@@ -701,7 +711,7 @@ select{
 									</div>
 								</div>   
 							</div>
-							<div class="contents clearfix">
+							<div class="contents contentsNot clearfix">
 								<h6 class="title" style="padding: 20px 0 7px 0">분석방법</h6>
 								<div class="box box3">
 									<input type="hidden">
@@ -903,14 +913,14 @@ select{
 	}
 
 	// 높이 조절
-	function autoHeight()
+	/*function autoHeight()
 	{
 		$(".box1 .text_box").each(function(idx, elem)
 		{
 			let box_height = $(elem).height();
 			$(elem).parent().next().css({"height" : $(elem).parent().height(), "padding-top": 0});
 		});
-	}
+	}*/
 	
 	// 선택 이벤트
 	function PlusBtn(e)
