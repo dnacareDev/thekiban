@@ -27,10 +27,10 @@
         INSERT INTO sampleOutcome
         (sample_outcome_id, sample_name, sample_outcome_code, sample_outcome_num, sample_outcome_amount, sample_outcome_in, sample_outcome_out, sample_outcome_remain,
         sample_outcome_person,
-        sample_outcome_reciever, sample_outcome_date, sample_outcome_end, sample_outcome_country, sample_outcome_place)
+        sample_outcome_reciever, sample_outcome_date, sample_outcome_end, sample_outcome_country, sample_outcome_place, create_date, modify_date)
         VALUES (#{sample_outcome_id}, #{sample_name}, #{sample_outcome_code}, #{sample_outcome_num}, #{sample_outcome_amount}, #{sample_outcome_in},
         #{sample_outcome_out}, #{sample_outcome_remain}, #{sample_outcome_person}, #{sample_outcome_reciever}, #{sample_outcome_date},
-        #{sample_outcome_end}, #{sample_outcome_country}, #{sample_outcome_place})
+        #{sample_outcome_end}, #{sample_outcome_country}, #{sample_outcome_place}, NOW(), NOW())
         <selectKey resultType="int" keyProperty="sample_outcome_id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
@@ -163,8 +163,9 @@
             sample_outcome_date     = #{sample_outcome_date},
             sample_outcome_end      = #{sample_outcome_end},
             sample_outcome_country  = #{sample_outcome_country},
-            sample_outcome_place    = #{sample_outcome_place}
-        ORDER BY sample_outcome_id DESC LIMIT 1;
+            sample_outcome_place    = #{sample_outcome_place},
+            modify_date    = NOW()
+            ORDER BY sample_outcome_id DESC LIMIT 1;
     </update>
 
     <!-- 엑셀파일 등록 -->
@@ -181,11 +182,11 @@
     <!-- 수출관리 엑셀 등록 -->
     <insert id="InsertOutcomeExcel" parameterType="SampleOutcome">
         INSERT INTO sampleOutcome
-        (sample_outcome_id, sample_outcome_code, sample_outcome_num, sample_outcome_amount, sample_outcome_in, sample_outcome_out, sample_outcome_remain, sample_outcome_person,
-         sample_outcome_reciever, sample_outcome_date, sample_outcome_end, sample_outcome_country, sample_outcome_place)
-        VALUES (#{sample_outcome_id}, #{sample_outcome_code}, #{sample_outcome_num}, #{sample_outcome_amount}, #{sample_outcome_in},
+        (sample_outcome_id, sample_name, sample_outcome_code, sample_outcome_num, sample_outcome_amount, sample_outcome_in, sample_outcome_out, sample_outcome_remain, sample_outcome_person,
+         sample_outcome_reciever, sample_outcome_date, sample_outcome_end, sample_outcome_country, sample_outcome_place, create_date, modify_date)
+        VALUES (#{sample_outcome_id}, #{sample_name}, #{sample_outcome_code}, #{sample_outcome_num}, #{sample_outcome_amount}, #{sample_outcome_in},
                 #{sample_outcome_out}, #{sample_outcome_remain}, #{sample_outcome_person}, #{sample_outcome_reciever}, #{sample_outcome_date},
-                #{sample_outcome_end}, #{sample_outcome_country}, #{sample_outcome_place})
+                #{sample_outcome_end}, #{sample_outcome_country}, #{sample_outcome_place}, NOW(), NOW())
     </insert>
 
     <!-- 첨부파일 조회 -->
@@ -325,6 +326,15 @@
 
     <select id="SearchSampleExcel" resultType="sample">
         SELECT * FROM sample
+        <choose>
+            <when test="sample_name != 'none'">
+                WHERE sample_name = #{sample_name}
+            </when>
+        </choose>
+    </select>
+
+    <select id="SearchOutcomeExcel" resultType="sampleOutcome">
+        SELECT * FROM sampleOutcome
         <choose>
             <when test="sample_name != 'none'">
                 WHERE sample_name = #{sample_name}

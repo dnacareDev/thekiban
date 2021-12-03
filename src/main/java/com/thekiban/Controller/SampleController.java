@@ -366,9 +366,12 @@ public class SampleController {
     return 1;
   }
 
+  @ResponseBody
   @RequestMapping("excelOutcome")
-  public ModelAndView outComeExcelUpload(ModelAndView mv, @ModelAttribute SampleOutcome sampleOutcome, @RequestParam("excel_list") String excel_list) {
+  public int outComeExcelUpload(ModelAndView mv, @ModelAttribute SampleOutcome sampleOutcome, @RequestParam("excel_list") String excel_list) {
     JSONArray arr = new JSONArray(excel_list);
+
+    System.out.println(arr);
 
     for (int i = arr.length() - 1; i > -1; i--) {
 
@@ -395,13 +398,13 @@ public class SampleController {
         } else if (k.equals("인수자")) {
           sampleOutcome.setSample_outcome_reciever(obj.getString(k));
         } else if (k.equals("일자")) {
-          String date = (String) obj.get("sample_outcome_date");
+          String date = obj.getString(k);
           DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.KOREA);
           LocalDate ldate = LocalDate.parse(date, formatter);
 
           sampleOutcome.setSample_outcome_date(ldate);
         } else if (k.equals("시교 종료 일자")) {
-          String date = (String) obj.get("sample_outcome_end");
+          String date = obj.getString(k);
           DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.KOREA);
           LocalDate ldate = LocalDate.parse(date, formatter);
 
@@ -410,14 +413,15 @@ public class SampleController {
           sampleOutcome.setSample_outcome_country(obj.getString(k));
         } else if (k.equals("대상 지역")) {
           sampleOutcome.setSample_outcome_place(obj.getString(k));
+        } else if (k.equals("작물")) {
+          sampleOutcome.setSample_name(obj.getString(k));
         }
       }
 
       service.InsertOutcomeExcel(sampleOutcome);
     }
-    mv.setViewName("redirect:/sample");
 
-    return mv;
+    return 1;
   }
 
   @ResponseBody
@@ -435,6 +439,31 @@ public class SampleController {
         dataList.setDatalist_type(obj.getString("datalist_type"));
         dataList.setDatalist_date(obj.getString("datalist_date"));
         dataList.setTarget_id(sample.get(i).getSample_id());
+      } else {
+        continue;
+      }
+
+      d_service.InsertDataList(dataList);
+    }
+
+    return dataList;
+  }
+
+  @ResponseBody
+  @RequestMapping("insertOutcomeDataList")
+  public DataList InsertOutcomeDataList(@ModelAttribute DataList dataList, @RequestParam("listData") String listData) {
+    JSONArray arr = new JSONArray(listData);
+
+    JSONObject obj = arr.getJSONObject(0);
+
+    List<SampleOutcome> sampleOutcomes = service.SearchOutcomeExcel(obj.getString("sample_name"));
+
+    for (int i = 0; i < sampleOutcomes.size(); i++) {
+
+      if (Objects.equals(sampleOutcomes.get(i).getCreate_date().split(" ")[0], obj.getString("datalist_date"))) {
+        dataList.setDatalist_type(obj.getString("datalist_type"));
+        dataList.setDatalist_date(obj.getString("datalist_date"));
+        dataList.setTarget_id(sampleOutcomes.get(i).getSample_outcome_id());
       } else {
         continue;
       }
@@ -478,7 +507,7 @@ public class SampleController {
 
     Map<Integer, Object> Sample = new LinkedHashMap<Integer, Object>();
 
-    for(int i = 0; i < sample_id.size(); i++) {
+    for (int i = 0; i < sample_id.size(); i++) {
       Sample.put(i, service.SelectSampleExcel(sample_id.get(i)));
     }
 
@@ -492,15 +521,15 @@ public class SampleController {
   public Map<String, Object> SearchTargetOutcome(@RequestParam("datalist_date") String datalist_date) {
     Map<String, Object> result = new LinkedHashMap<String, Object>();
 
-    List<Integer> sample_outcome_id = d_service.SelectTarget(datalist_date, "sample");
+    List<Integer> sample_outcome_id = d_service.SelectTarget(datalist_date, "sample_outcome");
 
-    Map<Integer, Object> Sample = new LinkedHashMap<Integer, Object>();
+    Map<Integer, Object> SampleOutcome = new LinkedHashMap<Integer, Object>();
 
-    for(int i = 0; i < sample_outcome_id.size(); i++) {
-      Sample.put(i, service.SelectSampleExcel(sample_outcome_id.get(i)));
+    for (int i = 0; i < sample_outcome_id.size(); i++) {
+      SampleOutcome.put(i, service.SelectSampleOutcomeExcel(sample_outcome_id.get(i)));
     }
 
-    result.put("sample", Sample);
+    result.put("sample_outcome", SampleOutcome);
 
     return result;
   }

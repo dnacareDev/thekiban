@@ -1533,7 +1533,7 @@
                 var fileData = reader.result;
                 var wb = XLSX.read(fileData, {type: 'binary'});
                 var sheetNameList = wb.SheetNames; // 시트 이름 목록 가져오기
-                var fourthSheetName = sheetNameList[3]; // 네번째 시트명
+                var fourthSheetName = sheetNameList[0]; // 네번째 시트명
                 var fourthSheet = wb.Sheets[fourthSheetName]; // 네번째 시트
                 callback(fourthSheet);
 
@@ -1630,23 +1630,18 @@
                 var wb = XLSX.read(fileData, {type: 'binary'});
                 var sheetNameList = wb.SheetNames; // 시트 이름 목록 가져오기
 
-                var sheetName_ten = sheetNameList[10]; // 네번째 시트명
-                var sheetName_ele = sheetNameList[11];
+                var sheetName_ten = sheetNameList[0]; // 네번째 시트명
                 var tenSheet = wb.Sheets[sheetName_ten]; // 네번째 시트
-                var eleSheet = wb.Sheets[sheetName_ele];
                 callback(tenSheet);
-                callback(eleSheet);
 
                 delete tenSheet.A1;
-                delete eleSheet.A1;
                 var rowdata = XLSX.utils.sheet_to_json(tenSheet);
-                rowdata.push(...XLSX.utils.sheet_to_json(eleSheet));
 
                 var keys = Object.values(rowdata[0]);
 
                 var html = "";
 
-                for (var i = 1; i < rowdata.length; i++) {
+                for (var i = 0; i < rowdata.length; i++) {
                     if (i === 0) {
                         html += "<thead class='text-center'>";
                         html += "<tr>";
@@ -1667,9 +1662,13 @@
                         $.each(rowdata[i], function (idx, value) {
                             // 공백처리
                             if (idx == tmp[j]) {
-
-                                html += "<td class='excel'><span>" + value + "</span></td>";
-                                j++;
+                                if(idx == "__EMPTY_8" || idx == "__EMPTY_9") {
+                                    html += "<td class='excel'><span>" + excelDateToJSDate(value) + "</span></td>";
+                                    j++;
+                                } else {
+                                    html += "<td class='excel'><span>" + value + "</span></td>";
+                                    j++;
+                                }
 
                             } else {
                                 var idx_str = idx.replace(/[^0-9]/g, '');
@@ -1682,8 +1681,13 @@
                                     html += "<td><span> </span></td>";
                                 }
 
-                                html += "<td class='excel'><span>" + value + "</span></td>";
-                                j++;
+                                if(idx == "__EMPTY_8" || idx == "__EMPTY_9") {
+                                    html += "<td class='excel'><span>" + excelDateToJSDate(value) + "</span></td>";
+                                    j++;
+                                } else {
+                                    html += "<td class='excel'><span>" + value + "</span></td>";
+                                    j++;
+                                }
 
                                 j = idx_str;
                                 j++;
@@ -1868,7 +1872,7 @@
                     success: function (result) {
                         if(result != null) {
                             $("#data_upload13").modal("show");
-                            $("#data_upload2").modal("hide");
+                            $("#data_upload12").modal("hide");
 
                             var sample_list = $("#outcomeBody");
                             var add_list = "";
@@ -1966,11 +1970,17 @@
                 data1.push(arr);
             });
 
-            var jsonObj = tableToJson(document.getElementById("excel_data"));
+            var jsonObj = tableToJson(document.getElementById("excel_data1"));
+
+            console.log(jsonObj);
+
+            for(let i = 0; i < jsonObj.length; i++) {
+                jsonObj[i]["작물"] = $("#CropSelect").val();
+            }
 
             $.ajax(
                 {
-                    url: 'excelIncome',
+                    url: 'excelOutcome',
                     method: 'POST',
                     dataType: 'json',
                     data: {
@@ -1989,7 +1999,7 @@
 
                         $.ajax(
                             {
-                                url: 'insertDataList',
+                                url: 'insertOutcomeDataList',
                                 method: 'POST',
                                 dataType: 'json',
                                 data: {
@@ -2035,9 +2045,20 @@
 
     // date to string
     function excelDateToJSDate(excelDate) {
-        var date = new Date(Math.round((excelDate - (25567 + 2)) * 86400 * 1000));
-        var converted_date = date.toISOString().split('T')[0];
-        return converted_date;
+        var date = new Date(Math.round((excelDate - (25567 + 2)) * 86400 * 1000)),
+            m = '' + (date.getMonth() + 1),
+            d = '' + date.getDate(),
+            y = date.getFullYear();
+
+        if (m.length < 2) {
+            m = '0' + m;
+        }
+
+        if (d.length < 2) {
+            d = '0' + d;
+        }
+
+        return [y, m, d].join('-');
     }
 
     /* form data to json */

@@ -1361,32 +1361,6 @@
         }, 5);
     }
 
-    /* function moveFunction(f) {
-
-         for (let k = 0; k < navLi.length; k++) {
-             navLi[k].classList.remove("active");
-             contentLi[k].classList.remove("active");
-         }
-         let navW = navLi[f].offsetWidth;
-         navMove = navW * f;
-
-
-         let a = topBox.offsetWidth;
-         let b = nav.offsetWidth;
-         let c = b - a;
-         let d = c + 40 + "px";
-
-         if (navMove > c) {
-             nav.style.marginLeft = "-" + d;
-         } else {
-             nav.style.marginLeft = "-" + navMove + "px";
-         }
-
-         navLi[f].classList.add("active");
-         contentLi[f].classList.add("active");
-         contentLi[f].classList.add("show");
-     }*/
-
     /* 엑셀 업로드 버튼 */
     function filesFunction() {
         let filesBtn = document.getElementById("excelFile");
@@ -1413,109 +1387,205 @@
     let rowDataL = 0;
 
     function excelExportCommon(event, callback) {
-        var input = event.target;
-        var reader = new FileReader();
+        if(tablechk == 0) {
+            var input = event.target;
+            var reader = new FileReader();
 
-        reader.onload = function () {
-            var fileData = reader.result;
-            var wb = XLSX.read(fileData, {type: 'binary'});
-            var sheetNameList = wb.SheetNames; // 시트 이름 목록 가져오기
-            var thirdSheetName = sheetNameList[2]; // 세번째 시트명
-            var thirdSheet = wb.Sheets[thirdSheetName]; // 세번째 시트
-            callback(thirdSheet);
+            reader.onload = function () {
+                var fileData = reader.result;
+                var wb = XLSX.read(fileData, {type: 'binary'});
+                var sheetNameList = wb.SheetNames; // 시트 이름 목록 가져오기
+                var thirdSheetName = sheetNameList[2]; // 세번째 시트명
+                var thirdSheet = wb.Sheets[thirdSheetName]; // 세번째 시트
+                callback(thirdSheet);
 
-            delete thirdSheet.A1;
-            delete thirdSheet.A2;
-            var rowdata = XLSX.utils.sheet_to_json(thirdSheet);
+                delete thirdSheet.A1;
+                delete thirdSheet.A2;
+                var rowdata = XLSX.utils.sheet_to_json(thirdSheet);
 
-            var keys = Object.values(rowdata[0]);
+                var keys = Object.values(rowdata[0]);
 
-            var html = "";
+                var html = "";
 
-            rowDataL = rowdata.length;
+                rowDataL = rowdata.length;
 
-            // table 생성
-            for (var i = 0; i < rowdata.length; i++) {
-                if (i === 0) {
-                    html += "<thead class='text-center'>";
-                    html += "<tr>";
+                // table 생성
+                for (var i = 0; i < rowdata.length; i++) {
+                    if (i === 0) {
+                        html += "<thead class='text-center'>";
+                        html += "<tr>";
 
-                    $.each(rowdata[0], function (idx, value) {
-                        html += "<th><span class='excel-title'>" + value + "</span></th>";
-                    })
+                        $.each(rowdata[0], function (idx, value) {
+                            html += "<th><span class='excel-title'>" + value + "</span></th>";
+                        })
 
-                    html += "</tr>";
-                    html += "</thead>";
-                } else if (i !== 0) {
-                    html += "<tbody class='text-center'>";
-                    html += "<tr>";
+                        html += "</tr>";
+                        html += "</thead>";
+                    } else if (i !== 0) {
+                        html += "<tbody class='text-center'>";
+                        html += "<tr>";
 
-                    var tmp = Object.keys(rowdata[0]);
-                    var j = 0;
+                        var tmp = Object.keys(rowdata[0]);
+                        var j = 0;
 
-                    $.each(rowdata[i], function (idx, value) {
-                        // 공백처리
-                        if (idx == tmp[j]) {
-                            if (idx === "__EMPTY_7") {
-                                html += "<td class='excel'><span>" + excelDateToJSDate(value) + "</span></td>";
-                                j++;
+                        $.each(rowdata[i], function (idx, value) {
+                            // 공백처리
+                            if (idx == tmp[j]) {
+                                if (idx === "__EMPTY_7") {
+                                    html += "<td class='excel'><span>" + excelDateToJSDate(value) + "</span></td>";
+                                    j++;
+                                } else {
+                                    html += "<td class='excel'><span>" + value + "</span></td>";
+                                    j++;
+                                }
                             } else {
-                                html += "<td class='excel'><span>" + value + "</span></td>";
+                                var idx_str = idx.replace(/[^0-9]/g, '');
+                                var tmp_str = tmp[j].replace(/[^0-9]/g, '');
+
+                                var gap = idx_str - tmp_str;
+
+                                while (gap > 0) {
+                                    gap--;
+                                    html += "<td><span> </span></td>";
+                                }
+
+                                if (idx === "__EMPTY_7") {
+                                    html += "<td class='excel'><span>" + excelDateToJSDate(value) + "</span></td>";
+                                    j++;
+                                } else {
+                                    html += "<td class='excel'><span>" + value + "</span></td>";
+                                    j++;
+                                }
+
+                                j = idx_str;
                                 j++;
                             }
-                        } else {
-                            var idx_str = idx.replace(/[^0-9]/g, '');
-                            var tmp_str = tmp[j].replace(/[^0-9]/g, '');
+                        });
 
-                            var gap = idx_str - tmp_str;
-
-                            while (gap > 0) {
-                                gap--;
-                                html += "<td><span> </span></td>";
-                            }
-
-                            if (idx === "__EMPTY_7") {
-                                html += "<td class='excel'><span>" + excelDateToJSDate(value) + "</span></td>";
-                                j++;
-                            } else {
-                                html += "<td class='excel'><span>" + value + "</span></td>";
-                                j++;
-                            }
-
-                            j = idx_str;
-                            j++;
-                        }
-                    });
-
-                    html += "</tr>";
-                    html += "</tbody>";
-                }
-            }
-
-            var excel = [];
-
-            for (var k = 1; k < rowdata.length; k++) {
-                var chk = Object.values(rowdata[k]);
-
-                for (var n = 0; n < keys.length; n++) {
-                    if (chk[n] == undefined) {
-                        excel[n] = {key: keys[n], value: " "};
-                    } else if (keys[n] === "도입연월일") {
-                        excel[n] = {key: keys[n], value: excelDateToJSDate(chk[n])};
-                    } else {
-                        excel[n] = {key: keys[n], value: "" + chk[n]};
+                        html += "</tr>";
+                        html += "</tbody>";
                     }
                 }
-                const obj = {...excel};
 
-                rowdata[k] = obj;
-            }
+                var excel = [];
 
-            $("#excel_data").empty();
-            $("#excel_data").append(html);
-        };
+                for (var k = 1; k < rowdata.length; k++) {
+                    var chk = Object.values(rowdata[k]);
 
-        reader.readAsBinaryString(input.files[0]);
+                    for (var n = 0; n < keys.length; n++) {
+                        if (chk[n] == undefined) {
+                            excel[n] = {key: keys[n], value: " "};
+                        } else if (keys[n] === "도입연월일") {
+                            excel[n] = {key: keys[n], value: excelDateToJSDate(chk[n])};
+                        } else {
+                            excel[n] = {key: keys[n], value: "" + chk[n]};
+                        }
+                    }
+                    const obj = {...excel};
+
+                    rowdata[k] = obj;
+                }
+
+                $("#excel_data").empty();
+                $("#excel_data").append(html);
+            };
+
+            reader.readAsBinaryString(input.files[0]);
+        } else {
+            var input1 = event.target;
+            var reader1 = new FileReader();
+
+            reader1.onload = function () {
+                var fileData = reader1.result;
+                var wb = XLSX.read(fileData, {type: 'binary'});
+                var sheetNameList = wb.SheetNames; // 시트 이름 목록 가져오기
+
+                var sheetName_ten = sheetNameList[0]; // 네번째 시트명
+                var tenSheet = wb.Sheets[sheetName_ten]; // 네번째 시트
+                callback(tenSheet);
+
+                delete tenSheet.A1;
+                var rowdata = XLSX.utils.sheet_to_json(tenSheet);
+
+                var keys = Object.values(rowdata[0]);
+
+                var html = "";
+
+                for (var i = 0; i < rowdata.length; i++) {
+                    if (i === 0) {
+                        html += "<thead class='text-center'>";
+                        html += "<tr>";
+
+                        $.each(rowdata[0], function (idx, value) {
+                            html += "<th><span class='excel-title'>" + value + "</span></th>";
+                        })
+
+                        html += "</tr>";
+                        html += "</thead>";
+                    } else if (i !== 0) {
+                        html += "<tbody class='text-center'>";
+                        html += "<tr>";
+
+                        var tmp = Object.keys(rowdata[0]);
+                        var j = 0;
+
+                        $.each(rowdata[i], function (idx, value) {
+                            // 공백처리
+                            if (idx == tmp[j]) {
+
+                                html += "<td class='excel'><span>" + value + "</span></td>";
+                                j++;
+
+                            } else {
+                                var idx_str = idx.replace(/[^0-9]/g, '');
+                                var tmp_str = tmp[j].replace(/[^0-9]/g, '');
+
+                                var gap = idx_str - tmp_str;
+
+                                while (gap > 0) {
+                                    gap--;
+                                    html += "<td><span> </span></td>";
+                                }
+
+                                html += "<td class='excel'><span>" + value + "</span></td>";
+                                j++;
+
+                                j = idx_str;
+                                j++;
+                            }
+                        });
+
+                        html += "</tr>";
+                        html += "</tbody>";
+                    }
+                }
+
+                var excel = [];
+
+                for (var k = 1; k < rowdata.length; k++) {
+                    var chk = Object.values(rowdata[k]);
+
+                    for (var n = 0; n < keys.length; n++) {
+                        if (chk[n] == undefined) {
+                            excel[n] = {key: keys[n], value: " "};
+                        } else if (keys[n] === "일자") {
+                            excel[n] = {key: keys[n], value: excelDateToJSDate(chk[n])};
+                        } else {
+                            excel[n] = {key: keys[n], value: "" + chk[n]};
+                        }
+                    }
+                    const obj = {...excel};
+
+                    rowdata[k] = obj;
+                }
+
+                $("#excel_data1").empty();
+                $("#excel_data1").append(html);
+            };
+
+            reader1.readAsBinaryString(input1.files[0]);
+        }
+
     }
 
     /* 엑셀 등록 창 */
@@ -1815,9 +1885,20 @@
 
     // date to string
     function excelDateToJSDate(excelDate) {
-        var date = new Date(Math.round((excelDate - (25567 + 2)) * 86400 * 1000));
-        var converted_date = date.toISOString().split('T')[0];
-        return converted_date;
+        var date = new Date(Math.round((excelDate - (25567 + 2)) * 86400 * 1000)),
+            m = '' + (date.getMonth() + 1),
+            d = '' + date.getDate(),
+            y = date.getFullYear();
+
+        if (m.length < 2) {
+            m = '0' + m;
+        }
+
+        if (d.length < 2) {
+            d = '0' + d;
+        }
+
+        return [y, m, d].join('-');
     }
 
     /* form data to json */

@@ -98,6 +98,8 @@ public interface SampleService {
 
   List<Sample> SearchSampleExcel(String sample_name);
 
+  List<SampleOutcome> SearchOutcomeExcel(String sample_name);
+
   List<Sample> SelectSampleExcel(int sample_id);
 
   List<SampleOutcome> SelectSampleOutcomeExcel(int sample_outcome_id);

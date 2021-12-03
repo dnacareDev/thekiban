@@ -25,5 +25,7 @@ public class SampleOutcome {
   private LocalDate sample_outcome_end;
   private String sample_outcome_country;
   private String sample_outcome_place;
+  private String create_date;
+  private String modify_date;
 
 }
