@@ -102,6 +102,8 @@ public interface BasicMapper
 
 	List<Basic> SearchBasicExcel(@Param("basic_name") String basic_name);
 
+	List<BasicRemain> SearchBasicRemainExcel(@Param("basic_name") String basic_name);
+
 	List<Basic> SelectBasicExcel(int basic_id);
 
 	List<BasicRemain> SelectBRemainExcel(int basic_remain_id);

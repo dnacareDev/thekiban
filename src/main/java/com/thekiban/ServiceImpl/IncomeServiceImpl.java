@@ -114,6 +114,11 @@ public class IncomeServiceImpl implements IncomeService {
   }
 
   @Override
+  public List<IncomeRemain> SearchIncomeRemainExcel(String income_name) {
+    return mapper.SearchIncomeRemainExcel(income_name);
+  }
+
+  @Override
   public List<Uploads> SelectUploads(int[] income_id) {
     return mapper.SelectUploads(income_id);
   }

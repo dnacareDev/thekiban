@@ -20,5 +20,7 @@ public class IncomeRemain {
   private int income_remain_re;
   private String income_remain_person;
   private LocalDate income_remain_date;
+  private String create_date;
+  private String modify_date;
 
 }

@@ -57,7 +57,9 @@ public interface IncomeService {
 
   // 도입자원 엑셀 목록 조회
   List<Income> SearchIncomeExcel(String income_name);
-  
+
+  List<IncomeRemain> SearchIncomeRemainExcel(String income_name);
+
   // 첨부파일 조회
   List<Uploads> SelectUploads(int[] income_id);
 

@@ -492,8 +492,9 @@ public class BasicController
 		return 1;
 	}
 
+	@ResponseBody
 	@RequestMapping("excelRemain")
-	public ModelAndView remainExcelUpload(ModelAndView mv, @ModelAttribute BasicRemain basicRemain, @RequestParam("excel_list") String excel_list) {
+	public int remainExcelUpload(ModelAndView mv, @ModelAttribute BasicRemain basicRemain, @RequestParam("excel_list") String excel_list) {
 		JSONArray arr = new JSONArray(excel_list);
 
 		for (int i = arr.length() - 1; i > -1; i--) {
@@ -522,14 +523,15 @@ public class BasicController
 					LocalDate ldate1 = LocalDate.parse(date, formatter);
 
 					basicRemain.setBasic_remain_date(ldate1);
+				} else if (k.equals("작물")) {
+					basicRemain.setBasic_name(obj.getString(k));
 				}
 			}
 
 			service.InsertRemainExcel(basicRemain);
 		}
-		mv.setViewName("redirect:/basic");
 
-		return mv;
+		return 1;
 	}
 
 	@ResponseBody
@@ -557,8 +559,44 @@ public class BasicController
 	}
 
 	@ResponseBody
+	@RequestMapping("insertBRemainDataList")
+	public DataList InsertBRemainDataList(@ModelAttribute DataList dataList, @RequestParam("listData") String listData) {
+		JSONArray arr = new JSONArray(listData);
+
+		JSONObject obj = arr.getJSONObject(0);
+
+		List<BasicRemain> basicRemains = service.SearchBasicRemainExcel(obj.getString("basic_name"));
+
+		for (int i = 0; i < basicRemains.size(); i++) {
+			if(Objects.equals(basicRemains.get(i).getCreate_date().split(" ")[0], obj.getString("datalist_date"))) {
+				dataList.setDatalist_type(obj.getString("datalist_type"));
+				dataList.setDatalist_date(obj.getString("datalist_date"));
+				dataList.setTarget_id(basicRemains.get(i).getBasic_remain_id());
+			} else {
+				continue;
+			}
+
+			d_service.InsertDataList(dataList);
+		}
+
+		return dataList;
+	}
+
+	@ResponseBody
 	@RequestMapping("selectBasicDateGroup")
 	public Map<String, Object> SelectDateGroup(@RequestParam("datalist_type") String datalist_type) {
+		Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+		List<Map<String, String>> dataGroup = d_service.SelectDateGroup(datalist_type);
+
+		result.put("dataGroup", dataGroup);
+
+		return result;
+	}
+
+	@ResponseBody
+	@RequestMapping("selectBasicRemainDateGroup")
+	public Map<String, Object> SelectRemainDateGroup(@RequestParam("datalist_type") String datalist_type) {
 		Map<String, Object> result = new LinkedHashMap<String, Object>();
 
 		List<Map<String, String>> dataGroup = d_service.SelectDateGroup(datalist_type);
@@ -643,13 +681,13 @@ public class BasicController
 
 		List<Integer> basic_remain_id = d_service.SelectTarget(datalist_date, "basic_remain");
 
-		Map<Integer, Object> Sample = new LinkedHashMap<Integer, Object>();
+		Map<Integer, Object> BasicRemain = new LinkedHashMap<Integer, Object>();
 
 		for(int i = 0; i < basic_remain_id.size(); i++) {
-			Sample.put(i, service.SelectBRemainExcel(basic_remain_id.get(i)));
+			BasicRemain.put(i, service.SelectBRemainExcel(basic_remain_id.get(i)));
 		}
 
-		result.put("sample", Sample);
+		result.put("basic_remain", BasicRemain);
 
 		return result;
 	}

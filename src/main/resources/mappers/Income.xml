@@ -23,9 +23,9 @@
 
     <insert id="InsertIncomeRemain" parameterType="IncomeRemain">
         INSERT INTO incomeRemain
-        (income_remain_id, income_name, income_remain_num, income_remain_amount, income_remain_in, income_remain_out, income_remain_re, income_remain_person, income_remain_date)
+        (income_remain_id, income_name, income_remain_num, income_remain_amount, income_remain_in, income_remain_out, income_remain_re, income_remain_person, income_remain_date, create_date, modify_date)
         VALUES
-        (#{income_remain_id}, #{income_name}, #{income_remain_num}, #{income_remain_amount}, #{income_remain_in}, #{income_remain_out}, #{income_remain_re}, #{income_remain_person}, #{income_remain_date})
+        (#{income_remain_id}, #{income_name}, #{income_remain_num}, #{income_remain_amount}, #{income_remain_in}, #{income_remain_out}, #{income_remain_re}, #{income_remain_person}, #{income_remain_date}, NOW(), NOW())
         <selectKey resultType="int" keyProperty="income_remain_id" order="AFTER">
             SELECT LAST_INSERT_ID()
         </selectKey>
@@ -158,13 +158,22 @@
     <!-- 재고관리 엑셀 등록 -->
     <insert id="InsertRemainExcel" parameterType="IncomeRemain">
         INSERT INTO incomeRemain
-        (income_remain_id, income_name, income_remain_num, income_remain_amount, income_remain_in, income_remain_out, income_remain_re, income_remain_person, income_remain_date)
+        (income_remain_id, income_name, income_remain_num, income_remain_amount, income_remain_in, income_remain_out, income_remain_re, income_remain_person, income_remain_date, create_date, modify_date)
         VALUES
-        (#{income_remain_id}, #{income_name}, #{income_remain_num}, #{income_remain_amount}, #{income_remain_in}, #{income_remain_out}, #{income_remain_re}, #{income_remain_person}, #{income_remain_date})
+        (#{income_remain_id}, #{income_name}, #{income_remain_num}, #{income_remain_amount}, #{income_remain_in}, #{income_remain_out}, #{income_remain_re}, #{income_remain_person}, #{income_remain_date}, NOW(), NOW())
     </insert>
 
     <select id="SearchIncomeExcel" resultType="Income">
         SELECT * FROM income
+        <choose>
+            <when test="income_name != 'none'">
+                WHERE income_name = #{income_name}
+            </when>
+        </choose>
+    </select>
+
+    <select id="SearchIncomeRemainExcel" resultType="IncomeRemain">
+        SELECT * FROM incomeRemain
         <choose>
             <when test="income_name != 'none'">
                 WHERE income_name = #{income_name}

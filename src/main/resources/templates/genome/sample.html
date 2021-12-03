@@ -1972,8 +1972,6 @@
 
             var jsonObj = tableToJson(document.getElementById("excel_data1"));
 
-            console.log(jsonObj);
-
             for(let i = 0; i < jsonObj.length; i++) {
                 jsonObj[i]["작물"] = $("#CropSelect").val();
             }
@@ -2617,6 +2615,10 @@
                     var before = null;
                     var after = null;
 
+                    samplegrid.on('dblclick', (ev) => {
+                        ev.stop();
+                    })
+
                     samplegrid.on('afterChange', (ev) => {
                         var user_type = $("#user_type").val();
 
@@ -2774,26 +2776,30 @@
 
                     const dataArr = [];
 
-                    for (let i = 0; i < result.sampleOutcome.length; i++) {
+                    for (let i = 0; i < result1.sampleOutcome.length; i++) {
                         let rowArr = {
-                            'sample_outcome_code': result.sampleOutcome[i].sample_outcome_code,
-                            'sample_outcome_num': result.sampleOutcome[i].sample_outcome_num,
-                            'sample_outcome_amount': result.sampleOutcome[i].sample_outcome_amount,
-                            'sample_outcome_in': result.sampleOutcome[i].sample_outcome_in,
-                            'sample_outcome_out': result.sampleOutcome[i].sample_outcome_out,
-                            'sample_outcome_remain': result.sampleOutcome[i].sample_outcome_remain,
-                            'sample_outcome_person': result.sampleOutcome[i].sample_outcome_person,
-                            'sample_outcome_reciever': result.sampleOutcome[i].sample_outcome_reciever,
-                            'sample_outcome_date': result.sampleOutcome[i].sample_outcome_date,
-                            'sample_outcome_end': result.sampleOutcome[i].sample_outcome_end,
-                            'sample_outcome_country': result.sampleOutcome[i].sample_outcome_country,
-                            'sample_outcome_place': result.sampleOutcome[i].sample_outcome_place
+                            'sample_outcome_code': result1.sampleOutcome[i].sample_outcome_code,
+                            'sample_outcome_num': result1.sampleOutcome[i].sample_outcome_num,
+                            'sample_outcome_amount': result1.sampleOutcome[i].sample_outcome_amount,
+                            'sample_outcome_in': result1.sampleOutcome[i].sample_outcome_in,
+                            'sample_outcome_out': result1.sampleOutcome[i].sample_outcome_out,
+                            'sample_outcome_remain': result1.sampleOutcome[i].sample_outcome_remain,
+                            'sample_outcome_person': result1.sampleOutcome[i].sample_outcome_person,
+                            'sample_outcome_reciever': result1.sampleOutcome[i].sample_outcome_reciever,
+                            'sample_outcome_date': result1.sampleOutcome[i].sample_outcome_date,
+                            'sample_outcome_end': result1.sampleOutcome[i].sample_outcome_end,
+                            'sample_outcome_country': result1.sampleOutcome[i].sample_outcome_country,
+                            'sample_outcome_place': result1.sampleOutcome[i].sample_outcome_place
                         }
 
                         dataArr.push(rowArr);
                     }
 
                     outcomegrid.resetData(dataArr);
+
+                    outcomegrid.on('dblclick', (ev) => {
+                        ev.stop();
+                    })
 
                     outcomegrid.on('click', (ev) => {
                         if (ev.targetType === 'cell' && ev.columnName === 'sample_outcome_num') {

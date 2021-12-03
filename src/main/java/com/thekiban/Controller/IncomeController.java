@@ -348,9 +348,12 @@ public class IncomeController {
     return 1;
   }
 
+  @ResponseBody
   @RequestMapping("excelIncomeRemain")
-  public ModelAndView remainExcelUpload(ModelAndView mv, @ModelAttribute IncomeRemain incomeRemain, @RequestParam("excel_list") String excel_list) {
+  public int remainExcelUpload(ModelAndView mv, @ModelAttribute IncomeRemain incomeRemain, @RequestParam("excel_list") String excel_list) {
     JSONArray arr = new JSONArray(excel_list);
+
+    System.out.println(arr);
 
     for (int i = arr.length() - 1; i > -1; i--) {
 
@@ -360,7 +363,7 @@ public class IncomeController {
 
       for (String k : key) {
 
-        if (k.equals("도입번호(ID)")) {
+        if (k.equals("도입번호 (ID)")) {
           incomeRemain.setIncome_remain_num(obj.getString(k));
         } else if (k.equals("종자 보유량")) {
           incomeRemain.setIncome_remain_amount(Integer.parseInt(obj.getString(k)));
@@ -373,19 +376,20 @@ public class IncomeController {
         } else if (k.equals("담당자")) {
           incomeRemain.setIncome_remain_person(obj.getString(k));
         } else if (k.equals("일자")) {
-          String date = (String) obj.get("sample_outcome_date");
+          String date = obj.getString(k);
           DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.KOREA);
           LocalDate ldate = LocalDate.parse(date, formatter);
 
           incomeRemain.setIncome_remain_date(ldate);
+        } else if (k.equals("작물")) {
+          incomeRemain.setIncome_name(obj.getString(k));
         }
       }
 
       service.InsertRemainExcel(incomeRemain);
     }
-    mv.setViewName("redirect:/sample");
 
-    return mv;
+    return 1;
   }
 
   @ResponseBody
@@ -402,6 +406,30 @@ public class IncomeController {
         dataList.setDatalist_type(obj.getString("datalist_type"));
         dataList.setDatalist_date(obj.getString("datalist_date"));
         dataList.setTarget_id(income.get(i).getIncome_id());
+      } else {
+        continue;
+      }
+
+      d_service.InsertDataList(dataList);
+    }
+
+    return dataList;
+  }
+
+  @ResponseBody
+  @RequestMapping("insertRemainDataList")
+  public DataList InsertRemainDataList(@ModelAttribute DataList dataList, @RequestParam("listData") String listData) {
+    JSONArray arr = new JSONArray(listData);
+
+    JSONObject obj = arr.getJSONObject(0);
+
+    List<IncomeRemain> incomeRemains = service.SearchIncomeRemainExcel(obj.getString("income_name"));
+
+    for (int i = 0; i < incomeRemains.size(); i++) {
+      if(Objects.equals(incomeRemains.get(i).getCreate_date().split(" ")[0], obj.getString("datalist_date"))) {
+        dataList.setDatalist_type(obj.getString("datalist_type"));
+        dataList.setDatalist_date(obj.getString("datalist_date"));
+        dataList.setTarget_id(incomeRemains.get(i).getIncome_remain_id());
       } else {
         continue;
       }

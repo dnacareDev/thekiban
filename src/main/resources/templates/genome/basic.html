@@ -1815,16 +1815,13 @@
                             <div class="atbd-upload">
                                 <table id="excel_data1">
                                     <thead>
-                                    <th><span class="title">작물</span></th>
-                                    <th><span class="title">시교명(ID)</span></th>
-                                    <th><span class="title">목표 지역</span></th>
-                                    <th><span class="title">구분</span></th>
-                                    <th><span class="title">교배번호</span></th>
-                                    <th><span class="title">종자번호(ID)</span></th>
-                                    <th><span class="title">현 종자량(g)</span></th>
-                                    <th><span class="title">기내 발아율(%)</span></th>
-                                    <th><span class="title">기내 순도율(%)</span></th>
-                                    <th><span class="title">비고</span></th>
+                                    <th><span class="title">도입번호(ID)</span></th>
+                                    <th><span class="title">종자 보유량</span></th>
+                                    <th><span class="title">입고량</span></th>
+                                    <th><span class="title">출고량</span></th>
+                                    <th><span class="title">재고량</span></th>
+                                    <th><span class="title">담당자</span></th>
+                                    <th><span class="title">일자</span></th>
                                     </thead>
                                     <tbody>
                                     </tbody>
@@ -1841,6 +1838,47 @@
         </div>
     </div>
 
+    <!-- 재고관리 확인 모달창 -->
+    <div class="modal-basic modal fade show pop5" id="data_upload22" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content modal-bg-white ">
+                <div class="modal-header" style="border: none">
+                    <h6 class="modal-title">원종재고관리 > 데이터 등록</h6>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group mb-0" style="justify-content: end">
+                        <input type="file" id="excelFile1" onchange="excelExport(event)" style="display: none">
+                        <button onclick="filesFunction()" class="btn btn-primary btn-sm">불러오기</button>
+                        <input type="file" name="" id="file_data_upload1" style="display: none;">
+                    </div>
+                    <div>
+                        <form action="excelRemain" id="excelForm1" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" id="excel_list1" name="excel_list">
+                            <div class="atbd-upload">
+                                <table id="excel_data1">
+                                    <thead>
+                                    <th><span class="title">도입번호(ID)</span></th>
+                                    <th><span class="title">종자 보유량</span></th>
+                                    <th><span class="title">입고량</span></th>
+                                    <th><span class="title">출고량</span></th>
+                                    <th><span class="title">재고량</span></th>
+                                    <th><span class="title">담당자</span></th>
+                                    <th><span class="title">일자</span></th>
+                                    </thead>
+                                    <tbody id="remainBody">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border: none">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal" onclick="dataToggle('#data_upload11', '#data_upload21');">취소</button>
+                    <button type="button" class="btn btn-primary btn-sm" data-dismiss="modal" onclick="dataToggle('#data_upload11', '#data_upload21'); InsertExcel();">등록</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 <!-- 공통 하단 -->
 <th:block th:include="/../fragments/footer.html"></th:block>
@@ -2530,15 +2568,15 @@
 
                     const dataArr = [];
 
-                    for (let i = 0; i < result.basicRemain.length; i++) {
+                    for (let i = 0; i < result1.basicRemain.length; i++) {
                         let rowArr = {
-                            'basic_remain_num': result.basicRemain[i].basic_remain_num,
-                            'basic_remain_amount': result.basicRemain[i].basic_remain_amount,
-                            'basic_remain_in': result.basicRemain[i].basic_remain_in,
-                            'basic_remain_out': result.basicRemain[i].basic_remain_out,
-                            'basic_remain_re': result.basicRemain[i].basic_remain_re,
-                            'basic_remain_person': result.basicRemain[i].basic_remain_person,
-                            'basic_remain_date': result.basicRemain[i].basic_remain_date
+                            'basic_remain_num': result1.basicRemain[i].basic_remain_num,
+                            'basic_remain_amount': result1.basicRemain[i].basic_remain_amount,
+                            'basic_remain_in': result1.basicRemain[i].basic_remain_in,
+                            'basic_remain_out': result1.basicRemain[i].basic_remain_out,
+                            'basic_remain_re': result1.basicRemain[i].basic_remain_re,
+                            'basic_remain_person': result1.basicRemain[i].basic_remain_person,
+                            'basic_remain_date': result1.basicRemain[i].basic_remain_date
                         }
 
                         dataArr.push(rowArr);
@@ -2548,6 +2586,10 @@
 
                     var before = null;
                     var after = null;
+
+                    basicRemainGrid.on('dblclick', (ev) => {
+                        ev.stop();
+                    })
 
                     basicRemainGrid.on('afterChange', (ev) => {
                         var user_type = $("#user_type").val();
@@ -2742,7 +2784,7 @@
                 var fileData = reader.result;
                 var wb = XLSX.read(fileData, {type: 'binary'});
                 var sheetNameList = wb.SheetNames; // 시트 이름 목록 가져오기
-                var secondSheetName = sheetNameList[1]; // 두번째 시트명
+                var secondSheetName = sheetNameList[0]; // 두번째 시트명
                 var secondSheet = wb.Sheets[secondSheetName]; // 두번째 시트
                 callback(secondSheet);
 
@@ -2750,7 +2792,7 @@
                 delete secondSheet.A2;
                 var rowdata = XLSX.utils.sheet_to_json(secondSheet);
 
-                var keys = Object.values(rowdata[1]);
+                var keys = Object.values(rowdata[0]);
 
                 var html = "";
 
@@ -2854,23 +2896,18 @@
                 var wb = XLSX.read(fileData, {type: 'binary'});
                 var sheetNameList = wb.SheetNames; // 시트 이름 목록 가져오기
 
-                var sheetName_ten = sheetNameList[10]; // 네번째 시트명
-                var sheetName_ele = sheetNameList[11];
+                var sheetName_ten = sheetNameList[0]; // 네번째 시트명
                 var tenSheet = wb.Sheets[sheetName_ten]; // 네번째 시트
-                var eleSheet = wb.Sheets[sheetName_ele];
                 callback(tenSheet);
-                callback(eleSheet);
 
                 delete tenSheet.A1;
-                delete eleSheet.A1;
                 var rowdata = XLSX.utils.sheet_to_json(tenSheet);
-                rowdata.push(...XLSX.utils.sheet_to_json(eleSheet));
 
                 var keys = Object.values(rowdata[0]);
 
                 var html = "";
 
-                for (var i = 1; i < rowdata.length; i++) {
+                for (var i = 0; i < rowdata.length; i++) {
                     if (i === 0) {
                         html += "<thead class='text-center'>";
                         html += "<tr>";
@@ -2891,7 +2928,7 @@
                         $.each(rowdata[i], function (idx, value) {
                             // 공백처리
                             if (idx == tmp[j]) {
-                                if (idx === "__EMPTY_9") {
+                                if (idx === "__EMPTY_6") {
                                     html += "<td class='excel'><span>" + excelDateToJSDate(value) + "</span></td>";
                                 } else {
                                     html += "<td class='excel'><span>" + value + "</span></td>";
@@ -2908,7 +2945,7 @@
                                     html += "<td><span> </span></td>";
                                 }
 
-                                if (idx === "__EMPTY_9") {
+                                if (idx === "__EMPTY_6") {
                                     html += "<td class='excel'><span>" + excelDateToJSDate(value) + "</span></td>";
                                 } else {
                                     html += "<td class='excel'><span>" + value + "</span></td>";
@@ -3016,6 +3053,41 @@
                     });
             } else {
                 $("#data_upload21").modal();
+
+                let data = {"datalist_type": 'basic_remain'};
+
+                $.ajax(
+                    {
+                        url: 'selectBasicRemainDateGroup',
+                        method: 'POST',
+                        dataType: 'json',
+                        data: data,
+                        success: function (result) {
+                            var data_list = $("#uploadDate1");
+                            var data_add = "";
+
+                            for (var i = result.dataGroup.length - 1; i > -1; i--) {
+                                let date = result.dataGroup[i].datalist_date;
+
+                                var resultArr = date.split('-');
+                                var resultDate = "";
+
+                                for (var j = 0; j < resultArr.length; j++) {
+                                    resultDate += resultArr[j];
+                                }
+
+                                data_add += '<tr>';
+                                data_add += '<td>' + (i + 1) + '</td>';
+                                data_add += '<td><button onclick="ModifyDataBtn(' + resultDate + ')" style="border:0px; color:blue; background: white;">' + result.dataGroup[i].datalist_date + '</button></td>';
+                                data_add += '<td>' + result.dataGroup[i].cnt + '</td>';
+                                data_add += '</tr>';
+                            }
+
+                            data_list.empty();
+                            data_list.append(data_add);
+                        }
+                    }
+                );
             }
         }
     }
@@ -3088,8 +3160,8 @@
                     data: data,
                     success: function (result) {
                         if (result != null) {
-                            $("#data_upload13").modal("show");
-                            $("#data_upload2").modal("hide");
+                            $("#data_upload22").modal("show");
+                            $("#data_upload21").modal("hide");
 
                             var basic_remain_list = $("#remainBody");
                             var add_list = "";
@@ -3188,7 +3260,46 @@
                 data1.push(arr);
             });
 
-            $("#excelForm1").submit();
+            var jsonObj = tableToJson(document.getElementById("excel_data1"));
+
+            for(let i = 0; i < jsonObj.length; i++) {
+                jsonObj[i]["작물"] = $("#CropSelect").val();
+            }
+
+            $.ajax(
+                {
+                    url: 'excelRemain',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        "excel_list": JSON.stringify(jsonObj)
+                    },
+                    success: function (result) {
+                        now = new Date(+new Date() + 3240 * 10000).toISOString().split("T")[0];
+
+                        let listData = [];
+
+                        let basic_name = $("#CropSelect").val();
+
+                        let lData = {"datalist_type": 'basic_remain', "datalist_date": now, "basic_name": basic_name};
+
+                        listData.push(lData);
+
+                        $.ajax(
+                            {
+                                url: 'insertBRemainDataList',
+                                method: 'POST',
+                                dataType: 'json',
+                                data: {
+                                    "listData": JSON.stringify(listData)
+                                },
+                                success: function (result) {
+                                    location.reload();
+                                }
+                            })
+                    }
+                }
+            )
         }
     }
 

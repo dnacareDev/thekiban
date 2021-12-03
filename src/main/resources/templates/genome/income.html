@@ -1200,7 +1200,7 @@
                         <input type="file" name="" id="file_data_upload1" style="display: none;">
                     </div>
                     <div>
-                        <form action="excelRemain" id="excelForm1" method="POST" enctype="multipart/form-data">
+                        <form action="excelIncomeRemain" id="excelForm1" method="POST" enctype="multipart/form-data">
                             <input type="hidden" id="excel_list1" name="excel_list">
                             <div class="atbd-upload">
                                 <table id="excel_data1">
@@ -1242,7 +1242,7 @@
                         <input type="file" name="" id="file_data_upload1" style="display: none;">
                     </div>
                     <div>
-                        <form action="excelRemain" id="excelForm1" method="POST" enctype="multipart/form-data">
+                        <form action="excelIncomeRemain" id="excelForm1" method="POST" enctype="multipart/form-data">
                             <input type="hidden" id="excel_list1" name="excel_list">
                             <div class="atbd-upload">
                                 <table id="excel_data1">
@@ -1507,6 +1507,8 @@
                 delete tenSheet.A1;
                 var rowdata = XLSX.utils.sheet_to_json(tenSheet);
 
+                console.log(rowdata);
+
                 var keys = Object.values(rowdata[0]);
 
                 var html = "";
@@ -1532,10 +1534,13 @@
                         $.each(rowdata[i], function (idx, value) {
                             // 공백처리
                             if (idx == tmp[j]) {
-
-                                html += "<td class='excel'><span>" + value + "</span></td>";
-                                j++;
-
+                                if(idx == "__EMPTY_6") {
+                                    html += "<td class='excel'><span>" + excelDateToJSDate(value) + "</span></td>";
+                                    j++;
+                                } else {
+                                    html += "<td class='excel'><span>" + value + "</span></td>";
+                                    j++;
+                                }
                             } else {
                                 var idx_str = idx.replace(/[^0-9]/g, '');
                                 var tmp_str = tmp[j].replace(/[^0-9]/g, '');
@@ -1547,8 +1552,13 @@
                                     html += "<td><span> </span></td>";
                                 }
 
-                                html += "<td class='excel'><span>" + value + "</span></td>";
-                                j++;
+                                if(idx == "__EMPTY_6") {
+                                    html += "<td class='excel'><span>" + excelDateToJSDate(value) + "</span></td>";
+                                    j++;
+                                } else {
+                                    html += "<td class='excel'><span>" + value + "</span></td>";
+                                    j++;
+                                }
 
                                 j = idx_str;
                                 j++;
@@ -1643,10 +1653,19 @@
                         dataType: 'json',
                         data: data,
                         success: function (result) {
-                            var data_list = $("#dataExcel_list");
+                            var data_list = $("#uploadDate1");
                             var data_add = "";
 
                             for (var i = result.dataGroup.length - 1; i > -1; i--) {
+                                let date = result.dataGroup[i].datalist_date;
+
+                                var resultArr = date.split('-');
+                                var resultDate = "";
+
+                                for (var j = 0; j < resultArr.length; j++) {
+                                    resultDate += resultArr[j];
+                                }
+
                                 data_add += '<tr>';
                                 data_add += '<td>' + (i + 1) + '</td>';
                                 data_add += '<td><button onclick="ModifyDataBtn(' + resultDate + ')" style="border:0px; color:blue; background: white;">' + result.dataGroup[i].datalist_date + '</button></td>';
@@ -1730,17 +1749,17 @@
                             var Income_remain_list = $("#remainBody");
                             var add_list = "";
 
-                            let len = Object.keys(result.income_remain).length;
+                            let len = Object.keys(result.incomeRemain).length;
 
                             for (var i = 0; i < len; i++) {
                                 add_list += '<tr>';
-                                add_list += '<td>' + result.income_remain[i][0].income_remain_num + '</td>';
-                                add_list += '<td>' + result.income_remain[i][0].income_remain_amount + '</td>';
-                                add_list += '<td>' + result.income_remain[i][0].income_remain_in + '</td>';
-                                add_list += '<td>' + result.income_remain[i][0].income_remain_out + '</td>';
-                                add_list += '<td>' + result.income_remain[i][0].income_remain_re + '</td>';
-                                add_list += '<td>' + result.income_remain[i][0].income_remain_person + '</td>';
-                                add_list += '<td>' + result.income_remain[i][0].income_remain_date + '</td>';
+                                add_list += '<td>' + result.incomeRemain[i][0].income_remain_num + '</td>';
+                                add_list += '<td>' + result.incomeRemain[i][0].income_remain_amount + '</td>';
+                                add_list += '<td>' + result.incomeRemain[i][0].income_remain_in + '</td>';
+                                add_list += '<td>' + result.incomeRemain[i][0].income_remain_out + '</td>';
+                                add_list += '<td>' + result.incomeRemain[i][0].income_remain_re + '</td>';
+                                add_list += '<td>' + result.incomeRemain[i][0].income_remain_person + '</td>';
+                                add_list += '<td>' + result.incomeRemain[i][0].income_remain_date + '</td>';
                                 add_list += '</tr>';
                             }
 
@@ -1818,7 +1837,11 @@
                 data1.push(arr);
             });
 
-            var jsonObj = tableToJson(document.getElementById("excel_data"));
+            var jsonObj = tableToJson(document.getElementById("excel_data1"));
+
+            for(let i = 0; i < jsonObj.length; i++) {
+                jsonObj[i]["작물"] = $("#CropSelect").val();
+            }
 
             $.ajax(
                 {
@@ -1835,13 +1858,13 @@
 
                         let income_name = $("#CropSelect").val();
 
-                        let lData = {"datalist_type": 'income_outcome', "datalist_date": now, "income_name": income_name};
+                        let lData = {"datalist_type": 'income_remain', "datalist_date": now, "income_name": income_name};
 
                         listData.push(lData);
 
                         $.ajax(
                             {
-                                url: 'insertDataList',
+                                url: 'insertRemainDataList',
                                 method: 'POST',
                                 dataType: 'json',
                                 data: {
@@ -2369,6 +2392,10 @@
                     var before = null;
                     var after = null;
 
+                    incomegrid.on('dblclick', (ev) => {
+                        ev.stop();
+                    })
+
                     incomegrid.on('afterChange', (ev) => {
                         var user_type = $("#user_type").val();
 
@@ -2488,15 +2515,15 @@
 
                     const dataArr = [];
 
-                    for (let i = 0; i < result.incomeRemain.length; i++) {
+                    for (let i = 0; i < result1.incomeRemain.length; i++) {
                         let rowArr = {
-                            'income_remain_num': result.incomeRemain[i].income_remain_num,
-                            'income_remain_amount': result.incomeRemain[i].income_remain_amount,
-                            'income_remain_in': result.incomeRemain[i].income_remain_in,
-                            'income_remain_out': result.incomeRemain[i].income_remain_out,
-                            'income_remain_re': result.incomeRemain[i].income_remain_re,
-                            'income_remain_person': result.incomeRemain[i].income_remain_person,
-                            'income_remain_date': result.incomeRemain[i].income_remain_date
+                            'income_remain_num': result1.incomeRemain[i].income_remain_num,
+                            'income_remain_amount': result1.incomeRemain[i].income_remain_amount,
+                            'income_remain_in': result1.incomeRemain[i].income_remain_in,
+                            'income_remain_out': result1.incomeRemain[i].income_remain_out,
+                            'income_remain_re': result1.incomeRemain[i].income_remain_re,
+                            'income_remain_person': result1.incomeRemain[i].income_remain_person,
+                            'income_remain_date': result1.incomeRemain[i].income_remain_date
                         }
 
                         dataArr.push(rowArr);
@@ -2506,6 +2533,10 @@
 
                     var before = null;
                     var after = null;
+
+                    remaingrid.on('dblclick', (ev) => {
+                        ev.stop();
+                    })
 
                     remaingrid.on('afterChange', (ev) => {
                         var user_type = $("#user_type").val();

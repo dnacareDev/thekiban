@@ -20,5 +20,7 @@ public class BasicRemain {
   private int basic_remain_re;
   private String basic_remain_person;
   private LocalDate basic_remain_date;
+  private String create_date;
+  private String modify_date;
 
 }
