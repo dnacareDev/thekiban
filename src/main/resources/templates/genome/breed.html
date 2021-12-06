@@ -1029,7 +1029,7 @@
         </div>
     </div>
 
-    <!-- 출력 헤더 선택 모달창 -->
+    <!-- 표시 헤더 선택 모달창 -->
     <div class="modal-basic modal fade show pop2" id="grid2" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
             <form action="insertBreedDisplay" method="POST" enctype="multipart/form-data">
@@ -1439,7 +1439,7 @@
                 <div class="modal-body">
                     <div class="form-group mb-0">
                         <button onclick="dataToggle('#data_upload2', '#data_upload');">데이터 등록</button>
-                        <button>등록서식 다운로드</button>
+                        <button type="button" onclick="testbtn()">등록서식 다운로드</button>
                     </div>
                     <div>
                         <div class="atbd-upload">
@@ -1473,7 +1473,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group mb-0" style="justify-content:end">
-                        <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none">
+                        <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
                         <button onclick="filesFunction()" class="btn btn-primary btn-sm">불러오기</button>
                         <input type="file" name="" id="file_data_upload" style="display: none;">
                     </div>
@@ -1526,7 +1526,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group mb-0" style="justify-content:end">
-                        <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none">
+                        <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
                         <button onclick="filesFunction()" class="btn btn-primary btn-sm">불러오기</button>
                         <input type="file" name="" id="file_data_upload" style="display: none;">
                     </div>
@@ -1874,6 +1874,11 @@
 <!-- 공통 js -->
 <th:block th:include="/../fragments/commonjs.html"></th:block>
 <script type="text/javascript">
+
+    function testbtn() {
+        location.href='/excelTemplate/' + $("#CropSelect").val() + '_품종관리.xlsx'
+    }
+
     let c = 0;
 
     function dataToggle(one, two) {
@@ -2219,6 +2224,12 @@
         $("#breed_file").modal("hide");
         $("#modify_file").modal("show");
     }
+
+    function tempDown() {
+        var e = $("#CropSelect").val();
+        location.href='/excelTemplate/' + e + '_품종관리';
+    }
+
 
     function CheckFunction() {
         // 박스안 리스트 클릭시 체크박스 체크

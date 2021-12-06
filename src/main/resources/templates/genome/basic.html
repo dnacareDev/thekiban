@@ -1710,7 +1710,7 @@
                 <div class="modal-body">
                     <div class="form-group mb-0">
                         <button onclick="dataToggle('#data_upload2', '#data_upload');">데이터 등록</button>
-                        <button>등록서식 다운로드</button>
+                        <button type="button" onclick="testbtn()">등록서식 다운로드</button>
                     </div>
                     <div>
                         <div class="atbd-upload">
@@ -1744,7 +1744,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group mb-0" style="justify-content: end;">
-                        <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none">
+                        <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
                         <button onclick="filesFunction()" class="btn btn-primary btn-sm">불러오기</button>
                         <input type="file" name="" id="file_data_upload" style="display: none;">
                     </div>
@@ -1789,7 +1789,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group mb-0" style="justify-content: end">
-                        <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none">
+                        <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
                         <button onclick="filesFunction()" class="btn btn-primary btn-sm">불러오기</button>
                         <input type="file" name="" id="file_data_upload" style="display: none;">
                     </div>
@@ -1835,7 +1835,7 @@
                 <div class="modal-body">
                     <div class="form-group mb-0">
                         <button onclick="dataToggle('#data_upload21', '#data_upload11');">데이터 등록</button>
-                        <button>등록서식 다운로드</button>
+                        <button type="button" onclick="location.href='/excelTemplate/원종재고관리.xlsx'">등록서식 다운로드</button>
                     </div>
                     <div>
                         <div class="atbd-upload">
@@ -1869,7 +1869,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group mb-0" style="justify-content: end">
-                        <input type="file" id="excelFile1" onchange="excelExport(event)" style="display: none">
+                        <input type="file" id="excelFile1" onchange="excelExport(event)" style="display: none" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
                         <button onclick="filesFunction()" class="btn btn-primary btn-sm">불러오기</button>
                         <input type="file" name="" id="file_data_upload1" style="display: none;">
                     </div>
@@ -1911,7 +1911,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group mb-0" style="justify-content: end">
-                        <input type="file" id="excelFile1" onchange="excelExport(event)" style="display: none">
+                        <input type="file" id="excelFile1" onchange="excelExport(event)" style="display: none" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
                         <button onclick="filesFunction()" class="btn btn-primary btn-sm">불러오기</button>
                         <input type="file" name="" id="file_data_upload1" style="display: none;">
                     </div>
@@ -1957,6 +1957,10 @@
 <th:block th:include="/../fragments/commonjs.html"></th:block>
 
 <script type="text/javascript">
+    function testbtn() {
+        location.href='/excelTemplate/' + $("#CropSelect").val() + '_원종관리.xlsx'
+    }
+
     let c = 0;
 
     function dataToggle(one, two) {
@@ -2573,6 +2577,10 @@
 
         var data1 = {"basic_name": basic_name1, "page_num": e, "limit": limit1};
 
+        var loading = document.querySelector('.load_wrap');
+
+        loading.classList.add('on');
+
         $.ajax(
             {
                 url: 'searchBasicRemain',
@@ -2704,6 +2712,9 @@
                             }
                         }
                     });
+
+                    loading.classList.remove('on');
+
                 }
             });
     }
