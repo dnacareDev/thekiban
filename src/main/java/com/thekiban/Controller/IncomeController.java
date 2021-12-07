@@ -485,7 +485,7 @@ public class IncomeController {
     String file_name = fileController.ChangeFileName(extension[1]);
     String origin_file_name = file.getOriginalFilename();
 
-    String path = "upload";
+    String path = "src/main/webapp/upload";
 
     File filePath = new File(path);
 
