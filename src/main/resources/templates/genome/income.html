@@ -1067,7 +1067,7 @@
         </div>
     </div>
 
-    <!-- 등록된 첨부파일 -->
+    <!-- 첨부파일 수정창 -->
     <div class="modal-basic modal fade show pop1" id="modify_file" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white ">
@@ -1075,7 +1075,7 @@
                     <h6 class="modal-title">시교자원관리 > 첨부파일</h6>
                     <span class="income_title"></span>
                 </div>
-                <form action="updateIncomeFile" id="insertFile" method="POST" enctype="multipart/form-data">
+                <form action="updateIncomeFile" id="modifyFile" method="POST" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="form-group mb-0">
                             <span>제목</span>
@@ -1083,6 +1083,9 @@
                         </div>
                         <div class="form-group mb-0">
                             <textarea id="income_file_contents" name="income_file_contents" style="resize:none;"></textarea>
+                            <div class="image-container">
+                                <img style="width: 500px;" id="preview-image">
+                            </div>
                         </div>
                         <div>
                             <div class="atbd-upload">
@@ -1108,8 +1111,8 @@
                     </div>
                     <div class="modal-footer" style="border: none">
                         <input type="hidden" id="income_file_id" name="income_file_id">
-                        <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
-                        <button type="button" class="btn btn-primary btn-sm">수정</button>
+                        <button type="button" class="btn btn-secondary btn-sm" onclick="dataToggle('#modify_file', '#income_file')">취소</button>
+                        <button type="button" class="btn btn-primary btn-sm" onclick="modifyFile()">수정</button>
                     </div>
                 </form>
             </div>
@@ -2248,6 +2251,10 @@
         }
     }
 
+    function modifyFile() {
+        $("#modifyFile").submit();
+    }
+
     function ModifyBtn(e) {
         var files = JSON.parse($("#file_" + e).val());
 
@@ -2257,6 +2264,10 @@
         $("#uploads_origin_file").text(files.uploads_origin_file);
         $("#uploads_file").val(files.uploads_file);
         $("#file_download").attr("href", "downloadFile?uploads_file=" + files.uploads_file);
+
+        let ele = $("#uploads_file").val(files.uploads_file)[0].defaultValue;
+
+        imgView(ele);
 
         $("#income_file").modal("hide");
         $("#modify_file").modal("show");
@@ -2737,6 +2748,14 @@
         }
 
         $(".plus_btn_submit1").css("display", "none");
+    }
+
+    function imgView(e) {
+        var fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/;
+
+        if(e.match(fileForm)) {
+            document.getElementById("preview-image").src = '/upload/' + e;
+        }
     }
 </script>
 </body>

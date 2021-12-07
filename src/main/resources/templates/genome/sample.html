@@ -1127,7 +1127,7 @@
                     <h6 class="modal-title">시교자원관리 > 첨부파일</h6>
                     <span class="sample_title"></span>
                 </div>
-                <form action="updateSampleFile" id="insertFile" method="POST" enctype="multipart/form-data">
+                <form action="updateSampleFile" id="modifyFile" method="POST" enctype="multipart/form-data">
                     <div class="modal-body">
                         <div class="form-group mb-0">
                             <span>제목</span>
@@ -1135,6 +1135,9 @@
                         </div>
                         <div class="form-group mb-0">
                             <textarea id="sample_file_contents" name="sample_file_contents" style="resize:none;"></textarea>
+                            <div class="image-container">
+                                <img style="width: 500px;" id="preview-image">
+                            </div>
                         </div>
                         <div>
                             <div class="atbd-upload">
@@ -1161,7 +1164,7 @@
                     <div class="modal-footer" style="border: none">
                         <input type="hidden" id="sample_file_id" name="sample_file_id">
                         <button type="button" class="btn btn-secondary btn-sm" onclick="dataToggle('#modify_file', '#sample_file');">취소</button>
-                        <button type="button" class="btn btn-primary btn-sm" onclick="dataToggle('#modify_file', '#sample_file');">수정</button>
+                        <button type="button" class="btn btn-primary btn-sm" onclick="modifyFile()">수정</button>
                     </div>
                 </form>
             </div>
@@ -2511,6 +2514,10 @@
         }
     }
 
+    function modifyFile() {
+        $("#modifyFile").submit();
+    }
+
     function ModifyBtn(e) {
         var files = JSON.parse($("#file_" + e).val());
 
@@ -2520,6 +2527,10 @@
         $("#uploads_origin_file").text(files.uploads_origin_file);
         $("#uploads_file").val(files.uploads_file);
         $("#file_download").attr("href", "downloadFile?uploads_file=" + files.uploads_file);
+
+        let ele = $("#uploads_file").val(files.uploads_file)[0].defaultValue;
+
+        imgView(ele);
 
         $("#sample_file").modal("hide");
         $("#modify_file").modal("show");
@@ -3137,6 +3148,14 @@
             optionElement.innerText = info[i];
             infoTag.push(optionElement);
             sbox.append(infoTag[i]);
+        }
+    }
+
+    function imgView(e) {
+        var fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/;
+
+        if(e.match(fileForm)) {
+            document.getElementById("preview-image").src = '/upload/' + e;
         }
     }
 </script>
