@@ -1,350 +1,339 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:with="user = ${#authentication.principal}">
 <style>
-	.top-menu .menu-text {font-size: 14px}
-	.top-menu .feather {margin-right: 8px}
+    .top-menu .menu-text {
+        font-size: 14px
+    }
 
-	input[type="text"]:focus{
-		border:1px solid #222;
-	}
-	.main-content .form-group{
-		display: flex;
-		flex-direction: row;
-		justify-content: space-between;
-		padding-bottom:10px;
-		align-items: center;
-  	}
-  	.main-content .form-group span {
-  		flex: 0 0 30%;
-  		color: #222222;
-  	}
-  	.main-content .form-group input[type=text]{
-  		flex: 0 0 70%;
-  	}
-  	#passwordCh1,#passwordCh2{
-  		border: 1px solid #e3e6ef;
-  	}
-  	
-  	#checking_password.active #passwordCh1,
-  	#checking_password.active #passwordCh2{
-  		border: 1px solid red;
-  	}
-  	#checking_password.active .passwordM{
-  		display: block;
-  	} 
-  	.passwordM{
-  		display:none;
-  	}
-  	.top-menu li{
-  		cursor: pointer;
-  	}
-  	.strikingDash-top-menu > ul > li{
-  		margin-right: 40px !important;
-  	}
-  	.strikingDash-top-menu > ul > li:first-child{
-  		padding:0;
-  	}
-  	.strikingDash-top-menu ul li.has-subMenu > a:before{
-  		right: -20px;
-  	}
-  	
+    .top-menu .feather {
+        margin-right: 8px
+    }
+
+    input[type="text"]:focus {
+        border: 1px solid #222;
+    }
+
+    .main-content .form-group {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding-bottom: 10px;
+        align-items: center;
+    }
+
+    .main-content .form-group span {
+        flex: 0 0 30%;
+        color: #222222;
+    }
+
+    .main-content .form-group input[type=text] {
+        flex: 0 0 70%;
+    }
+
+    #passwordCh1, #passwordCh2 {
+        border: 1px solid #e3e6ef;
+    }
+
+    #checking_password.active #passwordCh1,
+    #checking_password.active #passwordCh2 {
+        border: 1px solid red;
+    }
+
+    #checking_password.active .passwordM {
+        display: block;
+    }
+
+    .passwordM {
+        display: none;
+    }
+
+    .top-menu li {
+        cursor: pointer;
+    }
+
+    .strikingDash-top-menu > ul > li {
+        margin-right: 40px !important;
+    }
+
+    .strikingDash-top-menu > ul > li:first-child {
+        padding: 0;
+    }
+
+    .strikingDash-top-menu ul li.has-subMenu > a:before {
+        right: -20px;
+    }
+
 </style>
-	<header class="header-top">
-		<nav class="navbar navbar-light">
-			<div class="navbar-left">
-				<a class="navbar-brand" href="/home">
-					<img src="../assets/vendor_assets/img/logo.png" alt="logo">
-				</a>
-				<div class="top-menu">
-					<div class="strikingDash-top-menu position-relative">
-						<input type="hidden" id="user_type" th:value="${user.user_type}">
-						<ul>
-							<li>
-								<a href="/home" id="home">
-									<span data-feather="home" class="nav-icon"></span>
-									<span class="menu-text">홈</span>
-								</a>
-							</li>
-							<li class="has-subMenu">
-								<a class="">
-									<span data-feather="sun" class="nav-icon"></span>
-									<span class="menu-text">유전자원관리</span>
-								</a>
-								<ul class="subMenu">
-									<li>
-										<!-- <a href="/breed">품종 관리</a> -->
-										<a onclick="genetic(0);">품종 관리</a>
-									</li>
-									<li>
-										<!-- <a href="/basic">원종 관리</a> -->
-										<a onclick="genetic(1);">원종 관리</a>
-									</li>
-									<li>
-										<!-- <a href="/income">도입자원 관리</a> -->
-										<a onclick="genetic(2);">도입자원 관리</a>
-									</li>
-									<li>
-										<!-- <a href="/sample">시교 자원 관리</a> -->
-										<a onclick="genetic(3);">시교 자원 관리</a>
-									</li>
-									<li>
-										<!-- <a href="/analysis">통합 분석</a> -->
-										<a onclick="genetic(4);">통합 분석</a>
-									</li>
-								</ul>
-							</li>
-							<li class="has-subMenu">
-								<a class="">
-									<span data-feather="calendar" class="nav-icon"></span>
-									<span class="menu-text">Digital Lab</span>
-								</a>
-								<ul class="atbd-menu menu-top menu-vertical subMenu">
-									<li class="atbd-menu__item">
-										<a class="atbd-menu__link" href="">
-											<span class="atbd-menu__text">MABC Tools</span>
-										</a>
-										<ul class="atbd-submenu">
-											<li class="atbd-menu__item">
-												<ul class="atbd-submenu-item">
-													<li>
-														<!-- <a href="">Design tool</a> -->
-														<a onclick="research(0);">Design tool</a>
-													</li>
-													<li>
-														<!-- <a href="mabc">Data 관리</a> -->
-														<a onclick="research(1);">Data 관리</a>
-													</li>
-													<li>
-														<!-- <a href="matrix">Analysis tool</a> -->
-														<a onclick="research(2);">Analysis tool</a>
-													</li>
-												</ul>
-											</li>
-										</ul>
-									</li>
-									<li class="atbd-menu__item">
-										<a class="atbd-menu__link" href="">
-											<span class="atbd-menu__text">Genome browser</span>
-										</a>
-										<ul class="atbd-submenu">
-											<li class="atbd-menu__item">
-												<ul class="atbd-submenu-item">
-													<li>
-														<!-- <a href="">Genome Data</a> -->
-														<a onclick="research(3);">Genome Data</a>
-													</li>
-													<li>
-														<!-- <a href="">Marker Information</a> -->
-														<a onclick="research(4);">Marker Information</a>
-													</li>
-													<li>
-														<!-- <a href="">QTL Information</a> -->
-														<a onclick="research(5);">QTL Information</a>
-													</li>
-												</ul>
-											</li>
-										</ul>
-									</li>
-									<li class="atbd-menu__item">
-										<!-- <a class="atbd-menu__link" href=""> -->
-										<a class="atbd-menu__link" onclick="research(6);">
-											<span class="atbd-menu__text">GWAS</span>
-										</a>
-									</li>
-								</ul>
-							</li>
-							<li>
-								<a href="" class="">
-									<span data-feather="list" class="nav-icon"></span>
-									<span class="menu-text">Digital Field</span>
-								</a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-			<div class="navbar-right">
-				<ul class="navbar-right__menu">
-					<li class="nav-search d-none">
-						<a href="" class="search-toggle">
-							<!-- <i class="la la-search"></i> -->
-							<i class="la la-times"></i>
-						</a>
-						<form action="/" class="search-form-topMenu">
-							<span class="search-icon" data-feather="search"></span>
-							<input class="form-control mr-sm-2 box-shadow-none" type="search" placeholder="Search..." aria-label="Search">
-						</form>
-					</li>
-					<li class="nav-author">
-						<div class="dropdown-custom">
-							<a href="javascript:" class="nav-item-toggle">
-								<img src="/img/author-nav.jpg" alt="" class="rounded-circle">
-							</a>
-							<div class="dropdown-wrapper">
-								<div class="nav-author__info">
-									<div class="author-img">
-										<img src="/img/author-nav.jpg" alt="" class="rounded-circle">
-									</div>
-									<div>
-										<h6 th:text="${user.user_name}"></h6>
-										<!-- <span>UI Designer</span> -->
-									</div>
-								</div>
-								<div class="nav-author__options">
-									<ul>
-										<li>
-											<a onclick="return modalShow('#settings');"><span data-feather="settings"></span> Settings</a>
-										</li>
-									</ul>
-									<a href="/logout" class="nav-author__signout"><span data-feather="log-out"></span> Sign Out</a>
-								</div>
-							</div>
-						</div>
-					</li>
-				</ul>
-				<div class="navbar-right__mobileAction d-md-none">
-					<a href="" class="btn-search">
-						<span data-feather="search"></span>
-						<span data-feather="x"></span>
-					</a>
-					<a href="#none" class="btn-author-action">
-						<span data-feather="more-vertical"></span>
-					</a>
-				</div>
-			</div>
-		</nav>
-	</header>
-	<div class="modal-basic modal fade show pop1" id="settings" tabindex="-1" role="dialog" aria-hidden="true">
-		<div class="modal-dialog modal-md" role="document">
-			<div class="modal-content modal-bg-white" style="width: 750px;">
-				<div class="modal-header" style="border: none">
-					<h6 class="modal-title">비밀번호 변경</h6>
-				</div>
-				<div class="modal-body clearfix" id="checking_password">
-					<span class="passwordM" style=" color: red; font-size: 10px; text-align: center;">비밀번호가 다릅니다 다시 확인해주세요</span>
-					<div class="form-group mb-0 clearfix" style="padding: 10px 0;">
-						<span style="vertical-align: middle;">변경할 비밀번호</span>
-						<input id="passwordCh1" type="password" name="" style="width: 70%; float: right; margin-left: 10px; border-radius: 5px;height:45px;">
-					</div>
-					<div class="form-group mb-0 clearfix" style="clear: both;">
-						<span style="vertical-align: middle;">비밀번호 확인</span>
-						<input id="passwordCh2" type="password" name="" style="width: 70%; float: right; margin-left: 10px; border-radius: 5px;height:45px;">
-					</div>
-				</div>
-				<div class="modal-footer clearfix" style="border: none; clear:both;">
-					<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
-					<input type="submit" class="btn btn-primary btn-sm" value="저장" onclick="UpdateBtn();">
-				</div>
-			</div>
-		</div>
-	</div>
-    <script>
-    	function modalShow(e)
-    	{
-    		$(e).modal("show");
-    	}
-    	
-    	function UpdateBtn()
-    	{
-    		if($("#passwordCh1").val() !== $("#passwordCh2").val())
-    		{
-    			$("#checking_password").addClass("active");
-    			
-    			return false;
-    		}
-    		else
-    		{
-    			var data = {"user_password" : $("#passwordCh1").val()};
-    			
-    	        $.ajax(
-    	        {
-    	        	url: 'updatePassword',
-    	        	method: 'POST',
-    	        	dataType: 'json',
-    	        	data: data,
-    	        	success: function(result)
-    	        	{
-    	        		if(result != 0)
-    	        		{
-    	        			location.reload();
-    	        		}
-    	        	}
-    	        });
-    		}
-    	}
-    	
-    	function genetic(e)
-    	{
-    		var user_type = $("#user_type").val();
+<header class="header-top">
+    <nav class="navbar navbar-light">
+        <div class="navbar-left">
+            <a class="navbar-brand" href="/home">
+                <img src="../assets/vendor_assets/img/logo.png" alt="logo">
+            </a>
+            <div class="top-menu">
+                <div class="strikingDash-top-menu position-relative">
+                    <input type="hidden" id="user_type" th:value="${user.user_type}">
+                    <ul>
+                        <li>
+                            <a href="/home" id="home">
+                                <span data-feather="home" class="nav-icon"></span>
+                                <span class="menu-text">홈</span>
+                            </a>
+                        </li>
+                        <li class="has-subMenu">
+                            <a class="">
+                                <span data-feather="sun" class="nav-icon"></span>
+                                <span class="menu-text">유전자원관리</span>
+                            </a>
+                            <ul class="subMenu">
+                                <li>
+                                    <!-- <a href="/breed">품종 관리</a> -->
+                                    <a onclick="genetic(0);">품종 관리</a>
+                                </li>
+                                <li>
+                                    <!-- <a href="/basic">원종 관리</a> -->
+                                    <a onclick="genetic(1);">원종 관리</a>
+                                </li>
+                                <li>
+                                    <!-- <a href="/income">도입자원 관리</a> -->
+                                    <a onclick="genetic(2);">도입자원 관리</a>
+                                </li>
+                                <li>
+                                    <!-- <a href="/sample">시교 자원 관리</a> -->
+                                    <a onclick="genetic(3);">시교 자원 관리</a>
+                                </li>
+                                <li>
+                                    <!-- <a href="/analysis">통합 분석</a> -->
+                                    <a onclick="genetic(4);">통합 분석</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="has-subMenu">
+                            <a class="">
+                                <span data-feather="calendar" class="nav-icon"></span>
+                                <span class="menu-text">Digital Lab</span>
+                            </a>
+                            <ul class="atbd-menu menu-top menu-vertical subMenu">
+                                <li class="atbd-menu__item">
+                                    <a class="atbd-menu__link" href="">
+                                        <span class="atbd-menu__text">MABC Tools</span>
+                                    </a>
+                                    <ul class="atbd-submenu">
+                                        <li class="atbd-menu__item">
+                                            <ul class="atbd-submenu-item">
+                                                <li>
+                                                    <!-- <a href="">Design tool</a> -->
+                                                    <a onclick="research(0);">Design tool</a>
+                                                </li>
+                                                <li>
+                                                    <!-- <a href="mabc">Data 관리</a> -->
+                                                    <a onclick="research(1);">Data 관리</a>
+                                                </li>
+                                                <li>
+                                                    <!-- <a href="matrix">Analysis tool</a> -->
+                                                    <a onclick="research(2);">Analysis tool</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="atbd-menu__item">
+                                    <a class="atbd-menu__link" href="">
+                                        <span class="atbd-menu__text">Genome browser</span>
+                                    </a>
+                                    <ul class="atbd-submenu">
+                                        <li class="atbd-menu__item">
+                                            <ul class="atbd-submenu-item">
+                                                <li>
+                                                    <!-- <a href="">Genome Data</a> -->
+                                                    <a onclick="research(3);">Genome Data</a>
+                                                </li>
+                                                <li>
+                                                    <!-- <a href="">Marker Information</a> -->
+                                                    <a onclick="research(4);">Marker Information</a>
+                                                </li>
+                                                <li>
+                                                    <!-- <a href="">QTL Information</a> -->
+                                                    <a onclick="research(5);">QTL Information</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="atbd-menu__item">
+                                    <!-- <a class="atbd-menu__link" href=""> -->
+                                    <a class="atbd-menu__link" onclick="research(6);">
+                                        <span class="atbd-menu__text">GWAS</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="" class="" onclick="digitalField()">
+                                <span data-feather="list" class="nav-icon"></span>
+                                <span class="menu-text">Digital Field</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="navbar-right">
+            <ul class="navbar-right__menu">
+                <li class="nav-search d-none">
+                    <a href="" class="search-toggle">
+                        <!-- <i class="la la-search"></i> -->
+                        <i class="la la-times"></i>
+                    </a>
+                    <form action="/" class="search-form-topMenu">
+                        <span class="search-icon" data-feather="search"></span>
+                        <input class="form-control mr-sm-2 box-shadow-none" type="search" placeholder="Search..." aria-label="Search">
+                    </form>
+                </li>
+                <li class="nav-author">
+                    <div class="dropdown-custom">
+                        <a href="javascript:" class="nav-item-toggle">
+                            <img src="/img/author-nav.jpg" alt="" class="rounded-circle">
+                        </a>
+                        <div class="dropdown-wrapper">
+                            <div class="nav-author__info">
+                                <div class="author-img">
+                                    <img src="/img/author-nav.jpg" alt="" class="rounded-circle">
+                                </div>
+                                <div>
+                                    <h6 th:text="${user.user_name}"></h6>
+                                    <!-- <span>UI Designer</span> -->
+                                </div>
+                            </div>
+                            <div class="nav-author__options">
+                                <ul>
+                                    <li>
+                                        <a onclick="return modalShow('#settings');"><span data-feather="settings"></span> Settings</a>
+                                    </li>
+                                </ul>
+                                <a href="/logout" class="nav-author__signout"><span data-feather="log-out"></span> Sign Out</a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="navbar-right__mobileAction d-md-none">
+                <a href="" class="btn-search">
+                    <span data-feather="search"></span>
+                    <span data-feather="x"></span>
+                </a>
+                <a href="#none" class="btn-author-action">
+                    <span data-feather="more-vertical"></span>
+                </a>
+            </div>
+        </div>
+    </nav>
+</header>
+<div class="modal-basic modal fade show pop1" id="settings" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content modal-bg-white" style="width: 750px;">
+            <div class="modal-header" style="border: none">
+                <h6 class="modal-title">비밀번호 변경</h6>
+            </div>
+            <div class="modal-body clearfix" id="checking_password">
+                <span class="passwordM" style=" color: red; font-size: 10px; text-align: center;">비밀번호가 다릅니다 다시 확인해주세요</span>
+                <div class="form-group mb-0 clearfix" style="padding: 10px 0;">
+                    <span style="vertical-align: middle;">변경할 비밀번호</span>
+                    <input id="passwordCh1" type="password" name="" style="width: 70%; float: right; margin-left: 10px; border-radius: 5px;height:45px;">
+                </div>
+                <div class="form-group mb-0 clearfix" style="clear: both;">
+                    <span style="vertical-align: middle;">비밀번호 확인</span>
+                    <input id="passwordCh2" type="password" name="" style="width: 70%; float: right; margin-left: 10px; border-radius: 5px;height:45px;">
+                </div>
+            </div>
+            <div class="modal-footer clearfix" style="border: none; clear:both;">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
+                <input type="submit" class="btn btn-primary btn-sm" value="저장" onclick="UpdateBtn();">
+            </div>
+        </div>
+    </div>
+</div>
 
-    		if(user_type == 3)
-    		{
-    			return Alert("접근 권한이 없습니다.");
-    		}
-    		else
-    		{
-    			if(e == 0)
-    			{
-		    		location.href = "/breed";
-    			}
-    			else if(e == 1)
-    			{
-		    		location.href = "/basic";
-    			}
-    			else if(e == 2)
-    			{
-		    		location.href = "/income";
-    			}
-    			else if(e == 3)
-    			{
-		    		location.href = "/sample";
-    			}
-    			else if(e == 4)
-    			{
-		    		location.href = "/analysis";
-    			}
-    		}
-    	}
-    	
-    	function research(e)
-    	{
-    		var user_type = $("#user_type").val();
-    		
-    		if(user_type == 2)
-    		{
-    			return Alert("접근 권한이 없습니다.");
-    		}
-    		else
-    		{
-    			if(e == 0)
-    			{
-		    		location.href = "";
-    			}
-    			else if(e == 1)
-    			{
-		    		location.href = "/mabc";
-    			}
-    			else if(e == 2)
-    			{
-		    		location.href = "/matrix";
-    			}
-    			else if(e == 3)
-    			{
-		    		location.href = "";
-    			}
-    			else if(e == 4)
-    			{
-		    		location.href = "";
-    			}
-    			else if(e == 5)
-    			{
-		    		location.href = "";
-    			}
-    			else if(e == 6)
-    			{
-		    		location.href = "";
-    			}
-    		}
-    	}
-    </script>
+<th:block th:include="/../fragments/commonjs.html"></th:block>
+
+<script>
+    function modalShow(e) {
+        $(e).modal("show");
+    }
+
+    function UpdateBtn() {
+        if ($("#passwordCh1").val() !== $("#passwordCh2").val()) {
+            $("#checking_password").addClass("active");
+
+            return false;
+        } else {
+            var data = {"user_password": $("#passwordCh1").val()};
+
+            $.ajax(
+                {
+                    url: 'updatePassword',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: data,
+                    success: function (result) {
+                        if (result != 0) {
+                            location.reload();
+                        }
+                    }
+                });
+        }
+    }
+
+    function genetic(e) {
+        var user_type = $("#user_type").val();
+
+        if (user_type == 3) {
+            return Alert("접근 권한이 없습니다.");
+        } else {
+            if (e == 0) {
+                location.href = "/breed";
+            } else if (e == 1) {
+                location.href = "/basic";
+            } else if (e == 2) {
+                location.href = "/income";
+            } else if (e == 3) {
+                location.href = "/sample";
+            } else if (e == 4) {
+                location.href = "/analysis";
+            }
+        }
+    }
+
+    function research(e) {
+        var user_type = $("#user_type").val();
+
+        if (user_type == 2) {
+            return Alert("접근 권한이 없습니다.");
+        } else {
+            if (e == 0) {
+                Alert1("준비 중입니다.");
+                location.href = "";
+            } else if (e == 1) {
+                location.href = "/mabc";
+            } else if (e == 2) {
+                location.href = "/matrix";
+            } else if (e == 3) {
+                location.href = "";
+            } else if (e == 4) {
+                Alert1("준비 중입니다.");
+                location.href = "";
+            } else if (e == 5) {
+                Alert1("준비 중입니다.");
+                location.href = "";
+            } else if (e == 6) {
+                Alert1("준비 중입니다.");
+                location.href = "";
+            }
+        }
+    }
+
+    function digitalField() {
+        Alert1("준비 중입니다.");
+    }
+</script>
 </html>
