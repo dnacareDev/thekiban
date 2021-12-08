@@ -268,7 +268,8 @@ public class BreedController {
     String file_name = fileController.ChangeFileName(extension[1]);
     String origin_file_name = file.getOriginalFilename();
 
-    String path = "src/main/webapp/upload";
+//    String path = "src/main/webapp/upload";
+    String path = "/data/apache-tomcat-9.0.8/webapps/ROOT/upload/";
 
     File filePath = new File(path);
 
@@ -300,7 +301,8 @@ public class BreedController {
     if (file.isEmpty()) {
       int update_file = service.UpdateBreedFile(breed_file);
     } else {
-      String delete_path = "upload/" + breed_file.getUploads_file();
+//      String delete_path = "upload/" + breed_file.getUploads_file();
+      String delete_path = "/data/apache-tomcat-9.0.8/webapps/ROOT/upload/" + breed_file.getUploads_file();
       File origin_file = new File(delete_path);
 
       if (origin_file.delete()) {

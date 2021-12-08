@@ -1142,7 +1142,7 @@
                         <div>
                             <div class="atbd-upload">
                                 <div class="atbd-upload__button">
-                                    <a href="" class="btn btn-lg btn-outline-lighten btn-upload" id="file_download">
+                                    <a href="" class="btn btn-lg btn-outline-lighten btn-upload" id="file_download" download>
                                         <span data-feather="upload"></span>
                                         <span id="uploads_origin_file"></span>
                                     </a>
@@ -1365,7 +1365,8 @@
                 <div class="modal-body">
                     <div class="form-group mb-0">
                         <button onclick="dataToggle('#data_upload2', '#data_upload');">데이터 등록</button>
-                        <button type="button" onclick="location.href='/excelTemplate/시교자원관리.xlsx'">등록서식 다운로드</button>
+                        <!-- <button type="button" onclick="location.href='/excelTemplate/시교자원관리.xlsx'">등록서식 다운로드</button> -->
+                        <button type="button" onclick="location.href='excelTemplate/sampleTemplate.xlsx'">등록서식 다운로드</button>
                     </div>
                     <div>
                         <div class="atbd-upload">
@@ -2526,7 +2527,7 @@
         $("#sample_file_contents").val(files.sample_file_contents);
         $("#uploads_origin_file").text(files.uploads_origin_file);
         $("#uploads_file").val(files.uploads_file);
-        $("#file_download").attr("href", "downloadFile?uploads_file=" + files.uploads_file);
+        $("#file_download").attr("href", "upload/" + files.uploads_file);
 
         let ele = $("#uploads_file").val(files.uploads_file)[0].defaultValue;
 

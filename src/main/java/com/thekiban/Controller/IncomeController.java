@@ -485,7 +485,8 @@ public class IncomeController {
     String file_name = fileController.ChangeFileName(extension[1]);
     String origin_file_name = file.getOriginalFilename();
 
-    String path = "src/main/webapp/upload";
+//    String path = "src/main/webapp/upload";
+    String path = "/data/apache-tomcat-9.0.8/webapps/ROOT/upload";
 
     File filePath = new File(path);
 
@@ -513,11 +514,16 @@ public class IncomeController {
 
   // 첨부파일 수정
   @RequestMapping("updateIncomeFile")
-  public ModelAndView UpdateIncomeFile(ModelAndView mv, @ModelAttribute IncomeFile income_file, @RequestParam("file") MultipartFile file) throws IOException {
-    if (file.isEmpty()) {
-      int update_file = service.UpdateIncomeFile(income_file);
-    } else {
-      String delete_path = "upload/" + income_file.getUploads_file();
+  public ModelAndView UpdateIncomeFile(ModelAndView mv, @ModelAttribute IncomeFile income_file, @RequestParam("file") MultipartFile file) throws IOException
+  {
+	  if (file.isEmpty())
+	  {
+		  int update_file = service.UpdateIncomeFile(income_file);
+	  }
+	  else
+	  {
+//		  String delete_path = "upload/" + income_file.getUploads_file();
+		  String delete_path = "/data/apache-tomcat-9.0.8/webapps/ROOT/upload/" + income_file.getUploads_file();
       File origin_file = new File(delete_path);
 
       if (origin_file.delete()) {
@@ -526,7 +532,8 @@ public class IncomeController {
         String file_name = fileController.ChangeFileName(extension[1]);
         String origin_file_name = file.getOriginalFilename();
 
-        String path = "upload";
+//        String path = "upload";
+        String path = "/data/apache-tomcat-9.0.8/webapps/ROOT/upload";
 
         File filePath = new File(path);
 

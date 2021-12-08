@@ -61,7 +61,8 @@ public class FileController
 	@RequestMapping("downloadTemp")
 	public ResponseEntity<Object> DownloadTemp(@RequestParam("excelTemp") String excelTemp)
 	{
-		String path = "excel_template/" + excelTemp;
+//		String path = "excel_template/" + excelTemp;
+		String path = "excelTemplate/" + excelTemp;
 
 		try
 		{

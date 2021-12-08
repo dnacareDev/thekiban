@@ -1022,7 +1022,7 @@
                         <div>
                             <div class="atbd-upload">
                                 <div class="atbd-upload__button">
-                                    <a href="" class="btn btn-lg btn-outline-lighten btn-upload" id="file_download">
+                                    <a href="" class="btn btn-lg btn-outline-lighten btn-upload" id="file_download" download>
                                         <span data-feather="download"></span>
                                         <span id="uploads_origin_file"></span>
                                     </a>
@@ -2379,7 +2379,7 @@
         $("#basic_file_contents").val(files.basic_file_contents);
         $("#uploads_origin_file").text(files.uploads_origin_file);
         $("#uploads_file").val(files.uploads_file);
-        $("#file_download").attr("href", "downloadFile?uploads_file=" + files.uploads_file);
+        $("#file_download").attr("href", "upload/" + files.uploads_file);
 
         let ele = $("#uploads_file").val(files.uploads_file)[0].defaultValue;
 

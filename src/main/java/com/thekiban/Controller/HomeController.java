@@ -80,7 +80,8 @@ public class HomeController
 
 	@ResponseBody
 	@RequestMapping("selectOutcomeList")
-	public Map<String, Object> SelectOutcome() {
+	public Map<String, Object> SelectOutcome()
+	{
 		Map<String, Object> result = new LinkedHashMap<String, Object>();
 
 		List<SampleOutcome> sampleOutcomes = service.SelectOutcomeList();
