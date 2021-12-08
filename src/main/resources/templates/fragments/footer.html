@@ -137,9 +137,9 @@
 	<div class="footer-top">
 		<div class="footer_utills">
    			<ul>
-   				<li><a href="">개인정보처리방침</a></li>
-   				<li><a href="">이메일무단수집거부</a></li>
-   				<li><a href="">이용약관</a></li>
+   				<li><a href="" onclick="footerData();">개인정보처리방침</a></li>
+   				<li><a href="" onclick="footerData();">이메일무단수집거부</a></li>
+   				<li><a href="" onclick="footerData();">이용약관</a></li>
    			</ul>
    		</div>
 	</div>
@@ -169,11 +169,11 @@
                 <div class="footer-menu text-right">
                     <div class="dropdown dropdown-click">
                         <div class="btn-group dropleft">
-                            <button class="btn btn-outline-lighten dropdown-toggle-split btn-sm footer_btn1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >패밀리 사이트</button>
-                            <button type="button" class="btn btn-outline-lighten btn-sm dropdown-toggle-split footer_btn2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <button class="btn btn-outline-lighten dropdown-toggle-split btn-sm footer_btn1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="footerData();">패밀리 사이트</button>
+                            <button type="button" class="btn btn-outline-lighten btn-sm dropdown-toggle-split footer_btn2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="footerData();">
                                 <span data-feather=chevron-down></span>
                             </button>
-                            <div class="dropdown-default dropdown-menu">
+                            <!--<div class="dropdown-default dropdown-menu">
                                 <a class="dropdown-item" href="https://www.norooholdings.com/" target="_blank">노루홀딩스</a>
                                 <a class="dropdown-item" href="https://www.noroopaint.com/kor/index.asp" target="_blank">노루페인트</a>
                                 <a class="dropdown-item" href="http://www.norooholdings.co.kr/" target="_blank">노루케미칼</a>
@@ -185,7 +185,7 @@
                                 <a class="dropdown-item" href="https://colormate-shop.imweb.me/" target="_blank">칼라메이트</a>
                                 <a class="dropdown-item" href="http://deers-seda.co.kr/" target="_blank">(주)세다</a>
                                 <a class="dropdown-item" href="http://www.norookiban.com/" target="_blank">노리기반</a>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                 </div>
@@ -207,5 +207,13 @@
 </div>
 <div class="overlay-dark-sidebar"></div>
 <div class="customizer-overlay"></div>
+
+<th:block th:include="/../fragments/commonjs.html"></th:block>
+
+<script>
+    function footerData() {
+        Alert1("준비 중입니다.");
+    }
+</script>
 
 </html>
