@@ -336,9 +336,11 @@
             color: #222222;
             font-size: 16px;
         }
-		#data_upload2 .atbd-upload table thead th, #data_upload2 .atbd-upload table tbody td{
-			font-size: 14px;
-		}
+
+        #data_upload2 .atbd-upload table thead th, #data_upload2 .atbd-upload table tbody td {
+            font-size: 14px;
+        }
+
         #data_upload .atbd-upload table tbody td, #data_upload2 .atbd-upload table tbody td, #data_upload21 .atbd-upload table tbody td, #data_upload11 .atbd-upload table tbody td {
             background-color: #fff;
             color: #666666;
@@ -352,9 +354,11 @@
             vertical-align: middle;
             font-size: 14px
         }
- 		#grid2 .tab-content .row .list-group {
-            font-size:14px;
+
+        #grid2 .tab-content .row .list-group {
+            font-size: 14px;
         }
+
         #basic_list th {
             font-size: 16px
         }
@@ -756,20 +760,50 @@
             font-size: 13px;
             padding: 10px;
         }
-        #file_modal{height: 655px;}
-        [id*="grid"] .color-dark.align-center{
-			font-size:16px !important;
-		}
 
         #file_modal {
             height: 655px;
         }
 
-        .load_wrap {display: none;}
-        .load_wrap.on {display: flex; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 9999999999; background-color: rgba(0, 0, 0, 0.3); justify-content: center; align-items: center;}
+        [id*="grid"] .color-dark.align-center {
+            font-size: 16px !important;
+        }
 
-        .load_wrap .load {background-color: #fff; width: 220px; height: 90px; text-align: center; padding: 15px; border-radius: 6px;}
-        .load_wrap .load > h2 {font-size: 17px; font-weight: bold; color: #666;}
+        #file_modal {
+            height: 655px;
+        }
+
+        .load_wrap {
+            display: none;
+        }
+
+        .load_wrap.on {
+            display: flex;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 9999999999;
+            background-color: rgba(0, 0, 0, 0.3);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .load_wrap .load {
+            background-color: #fff;
+            width: 220px;
+            height: 90px;
+            text-align: center;
+            padding: 15px;
+            border-radius: 6px;
+        }
+
+        .load_wrap .load > h2 {
+            font-size: 17px;
+            font-weight: bold;
+            color: #666;
+        }
 
         .loader,
         .loader:before,
@@ -782,6 +816,7 @@
             -webkit-animation: load7 1.8s infinite ease-in-out;
             animation: load7 1.8s infinite ease-in-out;
         }
+
         .loader {
             color: #397FF4;
             font-size: 10px;
@@ -794,20 +829,24 @@
             -webkit-animation-delay: -0.16s;
             animation-delay: -0.16s;
         }
+
         .loader:before,
         .loader:after {
             content: '';
             position: absolute;
             top: 0;
         }
+
         .loader:before {
             left: -2.2em;
             -webkit-animation-delay: -0.32s;
             animation-delay: -0.32s;
         }
+
         .loader:after {
             left: 2.2em;
         }
+
         @-webkit-keyframes load7 {
             0%,
             80%,
@@ -818,6 +857,7 @@
                 box-shadow: 0 2.5em 0 0;
             }
         }
+
         @keyframes load7 {
             0%,
             80%,
@@ -1741,7 +1781,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group mb-0" style="justify-content: end;">
-                        <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                        <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none"
+                               accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
                         <button onclick="filesFunction()" class="btn btn-primary btn-sm">불러오기</button>
                         <input type="file" name="" id="file_data_upload" style="display: none;">
                     </div>
@@ -1786,7 +1827,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group mb-0" style="justify-content: end">
-                        <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                        <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none"
+                               accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
                         <button onclick="filesFunction()" class="btn btn-primary btn-sm">불러오기</button>
                         <input type="file" name="" id="file_data_upload" style="display: none;">
                     </div>
@@ -1832,7 +1874,7 @@
                 <div class="modal-body">
                     <div class="form-group mb-0">
                         <button onclick="dataToggle('#data_upload21', '#data_upload11');">데이터 등록</button>
-                        <button type="button" onclick="location.href='/excelTemplate/원종재고관리.xlsx'">등록서식 다운로드</button>
+                        <button type="button" onclick="location.href='/excelTemplate/basicRemainTemplate.xlsx'">등록서식 다운로드</button>
                     </div>
                     <div>
                         <div class="atbd-upload">
@@ -1866,7 +1908,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group mb-0" style="justify-content: end">
-                        <input type="file" id="excelFile1" onchange="excelExport(event)" style="display: none" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                        <input type="file" id="excelFile1" onchange="excelExport(event)" style="display: none"
+                               accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
                         <button onclick="filesFunction()" class="btn btn-primary btn-sm">불러오기</button>
                         <input type="file" name="" id="file_data_upload1" style="display: none;">
                     </div>
@@ -1908,7 +1951,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group mb-0" style="justify-content: end">
-                        <input type="file" id="excelFile1" onchange="excelExport(event)" style="display: none" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                        <input type="file" id="excelFile1" onchange="excelExport(event)" style="display: none"
+                               accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
                         <button onclick="filesFunction()" class="btn btn-primary btn-sm">불러오기</button>
                         <input type="file" name="" id="file_data_upload1" style="display: none;">
                     </div>
@@ -1954,8 +1998,31 @@
 <th:block th:include="/../fragments/commonjs.html"></th:block>
 
 <script type="text/javascript">
+
     function testbtn() {
-        location.href='/excelTemplate/' + $("#CropSelect").val() + '_원종관리.xlsx'
+        let crop = $("#CropSelect").val();
+
+        if (crop == "고추") {
+            location.href = '/excelTemplate/pepperBasicTemplate.xlsx'
+        } else if (crop == "대파") {
+            location.href = '/excelTemplate/greenOnionBasicTemplate.xlsx'
+        } else if (crop == "멜론") {
+            location.href = '/excelTemplate/melonBasicTemplate.xlsx'
+        } else if (crop == "무") {
+            location.href = '/excelTemplate/radishBasicTemplate.xlsx'
+        } else if (crop == "배추") {
+            location.href = '/excelTemplate/napaCabbageBasicTemplate.xlsx'
+        } else if (crop == "수박") {
+            location.href = '/excelTemplate/watermelonBasicTemplate.xlsx'
+        } else if (crop == "양배추") {
+            location.href = '/excelTemplate/cabbageBasicTemplate.xlsx'
+        } else if (crop == "양파") {
+            location.href = '/excelTemplate/onionBasicTemplate.xlsx'
+        } else if (crop == "참외") {
+            location.href = '/excelTemplate/koreanMelonBasicTemplate.xlsx'
+        } else if (crop == "토마토") {
+            location.href = '/excelTemplate/tomatoBasicTemplate.xlsx'
+        }
     }
 
     let c = 0;
@@ -3355,7 +3422,7 @@
 
             var jsonObj = tableToJson(document.getElementById("excel_data1"));
 
-            for(let i = 0; i < jsonObj.length; i++) {
+            for (let i = 0; i < jsonObj.length; i++) {
                 jsonObj[i]["작물"] = $("#CropSelect").val();
             }
 
@@ -3710,7 +3777,7 @@
     function imgView(e) {
         var fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/;
 
-        if(e.match(fileForm)) {
+        if (e.match(fileForm)) {
             document.getElementById("preview-image").src = '/upload/' + e;
         }
     }

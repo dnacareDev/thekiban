@@ -213,26 +213,12 @@
         .box_center li {
             margin-bottom: 20px;
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
 
         /* alpa 수정 2021-11-05 */
         .box_center .buttonLi button {
-            width:28px;
-			height:28px;
+            width: 28px;
+            height: 28px;
             border: 2px solid #217566;
             background-color: transparent;
             border-radius: 50%;
@@ -247,27 +233,27 @@
         }
 
         .box_center .buttonLi button span::before {
-            content:"";
-			display:block;
-			position:absolute;
-			top:-1px;
-			left:0;
-			width:2px;
-			height: 8px;
-			background-color: #217566;
-			transform: rotate(45deg);
+            content: "";
+            display: block;
+            position: absolute;
+            top: -1px;
+            left: 0;
+            width: 2px;
+            height: 8px;
+            background-color: #217566;
+            transform: rotate(45deg);
         }
 
         .box_center .buttonLi button span::after {
-           	content:"";
-			display:block;
-			position:absolute;
-			top:-6px;
-			left:0;
-			width:2px;
-			height: 8px;
-			background-color: #217566;
-			transform: rotate(-45deg);
+            content: "";
+            display: block;
+            position: absolute;
+            top: -6px;
+            left: 0;
+            width: 2px;
+            height: 8px;
+            background-color: #217566;
+            transform: rotate(-45deg);
         }
 
         .box_center .buttonLi button span.left_btn::before {
@@ -287,14 +273,14 @@
 
         #grid2 .tab-content .row .list-group {
             width: 100%;
-            font-size:14px;
+            font-size: 14px;
             margin: 0 !important;
         }
 
         #grid2 .tab-content .row .detail_list li:hover,
         #grid2 .tab-content .row .display_list li:hover {
             background-color: #EDF6F1;
-        } 
+        }
 
         #grid2 .tab-content .row .detail_list li.active,
         #grid2 .tab-content .row .display_list li.active {
@@ -729,7 +715,7 @@
         }
 
         #excel_data {
-            min-width:100%;
+            min-width: 100%;
             width: max-content;
         }
 
@@ -744,21 +730,52 @@
         .tui-grid-cell {
             background-color: white;
         }
-        #file_grid{
+
+        #file_grid {
             width: 100%;
             height: 600px;
             overflow: scroll;
         }
-        #file_modal{height: 655px;}
-        [id*="grid"] .color-dark.align-center{
-			font-size:16px !important;
-		}
 
-        .load_wrap {display: none;}
-        .load_wrap.on {display: flex; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 9999999999; background-color: rgba(0, 0, 0, 0.3); justify-content: center; align-items: center;}
+        #file_modal {
+            height: 655px;
+        }
 
-        .load_wrap .load {background-color: #fff; width: 220px; height: 90px; text-align: center; padding: 15px; border-radius: 6px;}
-        .load_wrap .load > h2 {font-size: 17px; font-weight: bold; color: #666;}
+        [id*="grid"] .color-dark.align-center {
+            font-size: 16px !important;
+        }
+
+        .load_wrap {
+            display: none;
+        }
+
+        .load_wrap.on {
+            display: flex;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 9999999999;
+            background-color: rgba(0, 0, 0, 0.3);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .load_wrap .load {
+            background-color: #fff;
+            width: 220px;
+            height: 90px;
+            text-align: center;
+            padding: 15px;
+            border-radius: 6px;
+        }
+
+        .load_wrap .load > h2 {
+            font-size: 17px;
+            font-weight: bold;
+            color: #666;
+        }
 
         .loader,
         .loader:before,
@@ -771,6 +788,7 @@
             -webkit-animation: load7 1.8s infinite ease-in-out;
             animation: load7 1.8s infinite ease-in-out;
         }
+
         .loader {
             color: #397FF4;
             font-size: 10px;
@@ -783,20 +801,24 @@
             -webkit-animation-delay: -0.16s;
             animation-delay: -0.16s;
         }
+
         .loader:before,
         .loader:after {
             content: '';
             position: absolute;
             top: 0;
         }
+
         .loader:before {
             left: -2.2em;
             -webkit-animation-delay: -0.32s;
             animation-delay: -0.32s;
         }
+
         .loader:after {
             left: 2.2em;
         }
+
         @-webkit-keyframes load7 {
             0%,
             80%,
@@ -807,6 +829,7 @@
                 box-shadow: 0 2.5em 0 0;
             }
         }
+
         @keyframes load7 {
             0%,
             80%,
@@ -1098,8 +1121,8 @@
                                                                     <div class="col-lg-12">
                                                                         <span class="color-dark align-center" style="font-size: 16px;">표시항목 설정</span>
                                                                     </div>
-                                                                    <input type='checkbox' value='selectall' onclick='chkSelectAll(this)' />
-                                                                    <input type='checkbox' value='selectall' onclick='misSelectAll(this)' />
+                                                                    <input type='checkbox' value='selectall' onclick='chkSelectAll(this)'/>
+                                                                    <input type='checkbox' value='selectall' onclick='misSelectAll(this)'/>
                                                                 </div>
                                                                 <div class="row mt-4" style="justify-content: center; align-items: center;">
                                                                     <div class="col-lg-5">
@@ -1478,7 +1501,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group mb-0" style="justify-content:end">
-                        <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                        <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none"
+                               accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
                         <button onclick="filesFunction()" class="btn btn-primary btn-sm">불러오기</button>
                         <input type="file" name="" id="file_data_upload" style="display: none;">
                     </div>
@@ -1531,7 +1555,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group mb-0" style="justify-content:end">
-                        <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                        <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none"
+                               accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
                         <button onclick="filesFunction()" class="btn btn-primary btn-sm">불러오기</button>
                         <input type="file" name="" id="file_data_upload" style="display: none;">
                     </div>
@@ -1881,7 +1906,31 @@
 <script type="text/javascript">
 
     function testbtn() {
-        location.href='/excelTemplate/' + $("#CropSelect").val() + '_품종관리.xlsx'
+        let crop = $("#CropSelect").val();
+
+        console.log(crop);
+
+        if (crop == "고추") {
+            location.href = '/excelTemplate/pepperBreedTemplate.xlsx'
+        } else if (crop == "대파") {
+            location.href = '/excelTemplate/greenOnionBreedTemplate.xlsx'
+        } else if (crop == "멜론") {
+            location.href = '/excelTemplate/melonBreedTemplate.xlsx'
+        } else if (crop == "무") {
+            location.href = '/excelTemplate/radishBreedTemplate.xlsx'
+        } else if (crop == "배추") {
+            location.href = '/excelTemplate/napaCabbageBreedTemplate.xlsx'
+        } else if (crop == "수박") {
+            location.href = '/excelTemplate/watermelonBreedTemplate.xlsx'
+        } else if (crop == "양배추") {
+            location.href = '/excelTemplate/cabbageBreedTemplate.xlsx'
+        } else if (crop == "양파") {
+            location.href = '/excelTemplate/onionBreedTemplate.xlsx'
+        } else if (crop == "참외") {
+            location.href = '/excelTemplate/koreanMelonBreedTemplate.xlsx'
+        } else if (crop == "토마토") {
+            location.href = '/excelTemplate/tomatoBreedTemplate.xlsx'
+        }
     }
 
     let c = 0;
@@ -3275,12 +3324,12 @@
     function imgView(e) {
         var fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/;
 
-        if(e.match(fileForm)) {
+        if (e.match(fileForm)) {
             document.getElementById("preview-image").src = '/upload/' + e;
         }
     }
 
-    function chkSelectAll(selectAll)  {
+    function chkSelectAll(selectAll) {
         const checkboxes
             = document.getElementsByName('chk_research');
 
@@ -3289,7 +3338,7 @@
         })
     }
 
-    function misSelectAll(selectAll)  {
+    function misSelectAll(selectAll) {
         const checkboxes
             = document.getElementsByName('mis_research');
 
