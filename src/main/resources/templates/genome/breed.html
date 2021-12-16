@@ -96,9 +96,10 @@
 
         .pop1 .modal-dialog textarea {
             width: 100%;
-            height: 300px;
+            height: 150px;
             border-radius: 5px;
             border: 1px solid #D9D9D9;
+            margin-top: 20px;
         }
 
         .pop1 .modal-dialog .btn-upload {
@@ -125,6 +126,7 @@
             display: block;
             text-align: left;
             color: #B2B2B2;
+            margin-bottom: 10px;
         }
 
         #gen-messege {
@@ -844,6 +846,12 @@
                 box-shadow: 0 2.5em 0 0;
             }
         }
+
+
+    /* 여기서부터 */
+        .main-content .form-group:nth-child(2) {display: block; width: 100%;}
+        .image-container { width: 300px; height: 200px; margin: 0 auto;}
+        .image-container img { width: 100%; height: 100%; object-fit: contain;}
     </style>
 </head>
 <body class="layout-light top-menu overlayScroll">
@@ -1023,10 +1031,10 @@
                             <input type="text" class="form-control form-control-lg inputText" id="breed_file_title" name="breed_file_title">
                         </div>
                         <div class="form-group mb-0">
-                            <textarea id="breed_file_contents" name="breed_file_contents" style="resize:none;"></textarea>
                             <div class="image-container">
-                                <img style="width: 500px;" id="preview-image">
+                                <img id="preview-image">
                             </div>
+                            <textarea id="breed_file_contents" name="breed_file_contents" style="resize:none;"></textarea>
                         </div>
                         <div>
                             <div class="atbd-upload">
@@ -2144,8 +2152,10 @@
 
         var add_list = "";
 
+        let research_id = 0;
+
         $(document).find("input:checkbox[name=chk_research]:checked").each(function () {
-            var research_id = $(this).val();
+            research_id = $(this).val();
             var research_title = $(this).next().text();
 
             if (length == 0) {
@@ -2169,7 +2179,19 @@
 
         step_container.append(add_list);
 
+        sorting(research_id);
+
         CheckFunction();
+    }
+
+    function sorting(e) {
+        console.log(e);
+
+        $("#detail_list").html(
+            $("#detail_list li").sort(function(a, b){
+                return $(b).data(e) - $(a).data(e);
+            })
+        );
     }
 
     //조사방법 체크박스 삭제
@@ -2189,6 +2211,16 @@
             } else {
                 length++;
             }
+
+            // add_list += '<div data-id="' + research_id + '" class="list-group step">';
+            // add_list += '<li class="list-group-item-sm list-group-item">';
+            // add_list += '<div class="row">';
+            // add_list += '<input type="checkbox" class="check_box" name="chk_research">';
+            // add_list += '<input type="hidden" name="detail_id" value="' + research_id + '">';
+            // add_list += '<div class="title">' + research_title + '</div>';
+            // add_list += '</div>';
+            // add_list += '</li>';
+            // add_list += '</div>';
 
             add_list += '<li>';
             add_list += '<input type="checkbox" class="check_box" name="chk_research">';
