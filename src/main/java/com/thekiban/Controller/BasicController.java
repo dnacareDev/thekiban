@@ -169,10 +169,21 @@ public class BasicController
 	// 원종 수정
 	@ResponseBody
 	@RequestMapping("updateBasic")
-	public int UpdateBasic(@RequestParam("basic_id") int basic_id, @RequestParam("detail_id") int detail_id, @RequestParam("standard") String standard)
+	public int UpdateBasic(@RequestParam("data") String data)
 	{
-		int result = service.UpdateBasic(basic_id, detail_id, standard);
-		
+		int result = 0;
+
+		JSONArray arr = new JSONArray(data);
+
+		for (int i = 0; i < arr.length(); i++) {
+			JSONObject item = arr.getJSONObject(i);
+			int basic_id = item.getInt("basic_id");
+			int detail_id = item.getInt("detail_id");
+			String standard = item.getString("standard");
+
+			result = service.UpdateBasic(basic_id, detail_id, standard);
+		}
+
 		return result;
 	}
 
@@ -217,9 +228,20 @@ public class BasicController
 	// 재고 수정
 	@ResponseBody
 	@RequestMapping("updateBasicRemain")
-	public int UpdateBasicRemain(@RequestParam("basic_remain_id") int basic_remain_id, @RequestParam("basic_remain_name") String basic_remain_name, @RequestParam("basic_remain_value") String basic_remain_value)
+	public int UpdateBasicRemain(@RequestParam("data") String data)
 	{
-		int result = service.UpdateBasicRemain(basic_remain_id, basic_remain_name, basic_remain_value);
+		int result = 0;
+
+		JSONArray arr = new JSONArray(data);
+
+		for (int i = 0; i < arr.length(); i++) {
+			JSONObject item = arr.getJSONObject(i);
+			int basic_remain_id = item.getInt("basic_remain_id");
+			String basic_remain_name = item.getString("basic_remain_name");
+			String basic_remain_value = item.getString("basic_remain_value");
+
+			result = service.UpdateBasicRemain(basic_remain_id, basic_remain_name, basic_remain_value);
+		}
 
 		return result;
 	}

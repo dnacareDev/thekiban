@@ -652,7 +652,7 @@
             cursor: pointer;
         }
 
-        #saveRow {
+        #saveRow, #updateRow {
             float: right;
             color: #fff;
             background-color: #217566;
@@ -661,7 +661,7 @@
             border-radius: 5px;
         }
 
-        #cancelRow {
+        #cancelRow, #cancelUpdate {
             float: right;
             color: #217566;
             background-color: #fff;
@@ -671,6 +671,10 @@
         }
 
         .plus_btn_submit1 {
+            display: none;
+        }
+
+        .plus_btn_submit2 {
             display: none;
         }
 
@@ -921,6 +925,10 @@
                         <div class='card-extra mt-10 mb-10 mr-20 plus_btn_submit1'>
                             <button type='button' id="cancelRow" onclick="cancelRow()">취소</button>
                             <button type='button' id="saveRow" onclick="saveRow()">저장</button>
+                        </div>
+                        <div class='card-extra mt-10 mb-10 mr-20 plus_btn_submit2'>
+                            <button type='button' id="cancelUpdate" onclick="cancelUpdate()">취소</button>
+                            <button type='button' id="updateRow" onclick="updateRow()">수정</button>
                         </div>
                         <div class="card-body" style="padding-top: 0;">
                             <div class="bg-white">
@@ -2492,6 +2500,9 @@
     })
 
     var basicgrid = null;
+    var basicRemainGrid = null;
+    let updateBasicData = [];
+    let updateBasicRemainData = [];
 
     function SearchBasicgrid(e) {
         var basic_name = $("#CropSelect").val();
@@ -2598,6 +2609,10 @@
                         }
                     });
 
+                    basicgrid.on('editingStart', (ev) => {
+                        $(".plus_btn_submit2").css("display", "block");
+                    })
+
                     var before = null;
                     var after = null;
 
@@ -2617,21 +2632,8 @@
                                     var detail_id = ev.changes[i].columnName;
                                     var standard = after;
 
-                                    var data = {"basic_id": basic_id, "detail_id": detail_id, "standard": standard};
-
                                     if (basic_id != null) {
-                                        $.ajax(
-                                            {
-                                                url: 'updateBasic',
-                                                method: 'POST',
-                                                dataType: 'json',
-                                                data: data,
-                                                success: function (result) {
-                                                    if (result == 0) {
-                                                        return Alert("수정에 실패하였습니다.")
-                                                    }
-                                                }
-                                            });
+                                        updateBasicData.push({"basic_id": basic_id, "detail_id": detail_id, "standard": standard});
                                     }
                                 }
                             }
@@ -2727,6 +2729,7 @@
 
                     for (let i = 0; i < result1.basicRemain.length; i++) {
                         let rowArr = {
+                            'basic_remain_id': result1.basicRemain[i].basic_remain_id,
                             'basic_remain_num': result1.basicRemain[i].basic_remain_num,
                             'basic_remain_amount': result1.basicRemain[i].basic_remain_amount,
                             'basic_remain_in': result1.basicRemain[i].basic_remain_in,
@@ -2748,6 +2751,10 @@
                         ev.stop();
                     })
 
+                    basicRemainGrid.on('editingStart', (ev) => {
+                        $(".plus_btn_submit2").css("display", "block");
+                    })
+
                     basicRemainGrid.on('afterChange', (ev) => {
                         var user_type = $("#user_type").val();
 
@@ -2764,21 +2771,8 @@
                                     var basic_remain_name = ev.changes[i].columnName;
                                     var basic_remain_value = after;
 
-                                    var data = {"basic_remain_id": basic_remain_id, "basic_remain_name": basic_remain_name, "basic_remain_value": basic_remain_value};
-
                                     if (basic_remain_id != null) {
-                                        $.ajax(
-                                            {
-                                                url: 'updateBasicRemain',
-                                                method: 'POST',
-                                                dataType: 'json',
-                                                data: data,
-                                                success: function (result) {
-                                                    if (result == 0) {
-                                                        return Alert("수정에 실패하였습니다.")
-                                                    }
-                                                }
-                                            });
+                                        updateBasicRemainData.push({"basic_remain_id": basic_remain_id, "basic_remain_name": basic_remain_name, "basic_remain_value": basic_remain_value})
                                     }
                                 }
                             }
@@ -2901,6 +2895,45 @@
 
         $(".plus_btn_submit1").css("display", "none");
     }
+
+    function updateRow() {
+        if(tablechk == 0) {
+            $.ajax(
+                {
+                    url: 'updateBasic',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {"data": JSON.stringify(updateBasicData)},
+                    success: function (result) {
+                        if (result == 0) {
+                            return Alert("수정에 실패하였습니다.")
+                        } else {
+                            location.reload();
+                        }
+                    }
+                });
+        } else {
+            $.ajax(
+                {
+                    url: 'updateBasicRemain',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {"data": JSON.stringify(updateBasicRemainData)},
+                    success: function (result) {
+                        if (result == 0) {
+                            return Alert("수정에 실패하였습니다.")
+                        } else {
+                            location.reload();
+                        }
+                    }
+                });
+        }
+    }
+
+    function cancelUpdate() {
+        $(".plus_btn_submit2").css("display", "none");
+    }
+
 
     /* 엑셀 업로드 버튼 */
     function filesFunction() {
