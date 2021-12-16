@@ -82,7 +82,6 @@ public class BreedController {
   @ResponseBody
   @RequestMapping("insertBreed2")
   public int InsertUpload(@RequestParam("data") String data) {
-
     JSONArray arr = new JSONArray(data);
 
     List<Standard> standards = new ArrayList<Standard>();
@@ -120,33 +119,31 @@ public class BreedController {
   @ResponseBody
   @RequestMapping("insertBreed")
   public int InsertBreed(ModelAndView mv, @RequestParam("breed_name") String breed_name, @RequestParam("offset") int offset) {
-		Map<String, Object> result = new LinkedHashMap<String, Object>();
+    Map<String, Object> result = new LinkedHashMap<String, Object>();
 
-		Breed breed = new Breed();
-		breed.setBreed_name(breed_name);
+    Breed breed = new Breed();
+    breed.setBreed_name(breed_name);
 
-		List<Detail> detail = service.SearchBreedDetail(breed_name);
+    List<Detail> detail = service.SearchBreedDetail(breed_name);
 
-		int insert_breed = service.InsertBreed(breed);
-		int insert_standard = service.InsertStandard(breed.getBreed_id(), breed_name, detail);
+    int insert_breed = service.InsertBreed(breed);
+    int insert_standard = service.InsertStandard(breed.getBreed_id(), breed_name, detail);
 
-		List<Breed> breed_list = service.SelectBreedAll(breed_name, offset);
+    List<Breed> breed_list = service.SelectBreedAll(breed_name, offset);
 
-		List<Standard> standard = new ArrayList<Standard>();
+    List<Standard> standard = new ArrayList<Standard>();
 
-		if(!breed_list.isEmpty())
-		{
-			for(int i = 0; i < breed_list.size(); i++)
-			{
-				standard = service.SelectBreedStandard(breed_list.get(i).getBreed_id());
+    if (!breed_list.isEmpty()) {
+      for (int i = 0; i < breed_list.size(); i++) {
+        standard = service.SelectBreedStandard(breed_list.get(i).getBreed_id());
 
-				breed_list.get(i).setBreed_standard(standard);
-			}
-		}
+        breed_list.get(i).setBreed_standard(standard);
+      }
+    }
 
-		result.put("breed", breed_list);
-		result.put("new_breed", breed);
-		result.put("detail", detail);
+    result.put("breed", breed_list);
+    result.put("new_breed", breed);
+    result.put("detail", detail);
 
     return 1;
   }
@@ -154,36 +151,42 @@ public class BreedController {
   // 품종 수정
   @ResponseBody
   @RequestMapping("updateBreed")
-  public int UpdateBreed(@RequestParam("breed_id") int breed_id, @RequestParam("detail_id") int detail_id, @RequestParam("standard") String standard) {
-    int result = service.UpdateBreed(breed_id, detail_id, standard);
+  public int UpdateBreed(@RequestParam("data") String data) {
+    int result = 0;
+
+    JSONArray arr = new JSONArray(data);
+
+    for (int i = 0; i < arr.length(); i++) {
+      JSONObject item = arr.getJSONObject(i);
+      int breed_id = item.getInt("breed_id");
+      int detail_id = item.getInt("detail_id");
+      String standard = item.getString("standard");
+
+      result = service.UpdateBreed(breed_id, detail_id, standard);
+    }
 
     return result;
   }
 
   // 품종 수정
   @RequestMapping("updateAllBreed")
-  public ModelAndView UpdateAllBreed(ModelAndView mv, @RequestParam("breed_id") int breed_id, @RequestParam("detail_id") int[] detail_id, @RequestParam("standard") String[] standard)
-  {
+  public ModelAndView UpdateAllBreed(ModelAndView mv, @RequestParam("breed_id") int breed_id, @RequestParam("detail_id") int[] detail_id, @RequestParam("standard") String[] standard) {
     int result = 0;
 
     List<Standard> list = new ArrayList<Standard>();
 
     Standard item = new Standard();
 
-    for(int i = 0; i < detail_id.length; i++)
-    {
+    for (int i = 0; i < detail_id.length; i++) {
       item = new Standard();
 
-      if(standard[i].equals(""))
-      {
+      if (standard[i].equals("")) {
         item.setBreed_id(breed_id);
         item.setDetail_id(detail_id[i]);
         item.setStandard(null);
 
         list.add(item);
-      }
-      else
-      {
+      } else {
         item.setBreed_id(breed_id);
         item.setDetail_id(detail_id[i]);
         item.setStandard(standard[i]);
@@ -474,7 +477,7 @@ public class BreedController {
 
     Map<Integer, Object> Breed = new LinkedHashMap<Integer, Object>();
 
-    for(int i = 0; i < breed_id.size(); i++) {
+    for (int i = 0; i < breed_id.size(); i++) {
       Breed.put(i, service.SelectBreedExcel(breed_id.get(i)));
     }
 

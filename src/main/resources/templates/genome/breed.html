@@ -2583,7 +2583,7 @@
     }
 
     var breedgrid = null;
-    let updateBreedData = {};
+    let updateBreedData = [];
 
     function SearchBreedgrid(e) {
         var breed_name = $("#CropSelect").val();
@@ -2735,10 +2735,12 @@
                                     var standard = after;
 
                                     if (breed_id != null) {
-                                        updateBreedData = {"breed_id": breed_id, "detail_id": detail_id, "standard": standard};
+                                        updateBreedData.push({"breed_id": breed_id, "detail_id": detail_id, "standard": standard});
                                     }
                                 }
                             }
+
+                            console.log(updateBreedData);
                         }
                     });
 
@@ -2807,7 +2809,7 @@
                 url: 'updateBreed',
                 method: 'POST',
                 dataType: 'json',
-                data: updateBreedData,
+                data: {"data": JSON.stringify(updateBreedData)},
                 success: function (result) {
                     if (result == 0) {
                         return Alert("수정에 실패하였습니다.")
