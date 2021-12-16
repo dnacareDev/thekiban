@@ -633,7 +633,7 @@
             cursor: pointer;
         }
 
-        #saveRow {
+        #saveRow, #updateRow {
             float: right;
             color: #fff;
             background-color: #217566;
@@ -642,7 +642,7 @@
             border-radius: 5px;
         }
 
-        #cancelRow {
+        #cancelRow, #cancelUpdate {
             float: right;
             color: #217566;
             background-color: #fff;
@@ -692,6 +692,10 @@
         }
 
         .plus_btn_submit1 {
+            display: none;
+        }
+
+        .plus_btn_submit2 {
             display: none;
         }
 
@@ -891,6 +895,11 @@
                             <button type='button' id="cancelRow" onclick="cancelRow()">취소</button>
                             <button type='button' id="saveRow" onclick="saveRow()">저장</button>
                         </div>
+                        <div class='card-extra mt-10 mb-10 mr-20 plus_btn_submit2'>
+                            <button type='button' id="cancelUpdate" onclick="cancelUpdate()">취소</button>
+                            <button type='button' id="updateRow" onclick="updateRow()">수정</button>
+                        </div>
+
                         <div class="card-body" style="padding-top: 0">
                             <div class="bg-white">
                                 <div id="breedGrid"></div>
@@ -2574,6 +2583,7 @@
     }
 
     var breedgrid = null;
+    let updateBreedData = {};
 
     function SearchBreedgrid(e) {
         var breed_name = $("#CropSelect").val();
@@ -2702,6 +2712,10 @@
                         }
                     });
 
+                    breedgrid.on('editingStart', (ev) => {
+                        $(".plus_btn_submit2").css("display", "block");
+                    })
+
                     var before = null;
                     var after = null;
 
@@ -2720,21 +2734,8 @@
                                     var detail_id = ev.changes[i].columnName;
                                     var standard = after;
 
-                                    var data = {"breed_id": breed_id, "detail_id": detail_id, "standard": standard};
-
                                     if (breed_id != null) {
-                                        $.ajax(
-                                            {
-                                                url: 'updateBreed',
-                                                method: 'POST',
-                                                dataType: 'json',
-                                                data: data,
-                                                success: function (result) {
-                                                    if (result == 0) {
-                                                        return Alert("수정에 실패하였습니다.")
-                                                    }
-                                                }
-                                            });
+                                        updateBreedData = {"breed_id": breed_id, "detail_id": detail_id, "standard": standard};
                                     }
                                 }
                             }
@@ -2776,7 +2777,6 @@
     }
 
     function saveRow() {
-
         $.ajax(
             {
                 url: 'insertBreed2',
@@ -2799,6 +2799,27 @@
         breedgrid.removeCheckedRows();
 
         $(".plus_btn_submit1").css("display", "none");
+    }
+
+    function updateRow() {
+        $.ajax(
+            {
+                url: 'updateBreed',
+                method: 'POST',
+                dataType: 'json',
+                data: updateBreedData,
+                success: function (result) {
+                    if (result == 0) {
+                        return Alert("수정에 실패하였습니다.")
+                    } else {
+                        location.reload();
+                    }
+                }
+            });
+    }
+
+    function cancelUpdate() {
+        $(".plus_btn_submit2").css("display", "none");
     }
 
     /* 엑셀 업로드 목록창 */
