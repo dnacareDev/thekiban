@@ -307,16 +307,38 @@ public class SampleController {
   // 시교자원 수정
   @ResponseBody
   @RequestMapping("updateSample")
-  public int UpdateSample(@RequestParam("sample_id") int sample_id, @RequestParam("sample_name") String sample_name, @RequestParam("sample_value") String sample_value) {
-    int result = service.UpdateSample(sample_id, sample_name, sample_value);
+  public int UpdateSample(@RequestParam("data") String data) {
+    int result = 0;
+
+    JSONArray arr = new JSONArray(data);
+
+    for (int i = 0; i < arr.length(); i++) {
+      JSONObject item = arr.getJSONObject(i);
+      int sample_id = item.getInt("sample_id");
+      String sample_name = item.getString("sample_name");
+      String sample_value = item.getString("sample_value");
+
+      result = service.UpdateSample(sample_id, sample_name, sample_value);
+    }
 
     return result;
   }
 
   @ResponseBody
   @RequestMapping("updateOutcome")
-  public int UpdateOutcome(@RequestParam("sample_outcome_id") int sample_outcome_id, @RequestParam("sample_outcome_name") String sample_outcome_name, @RequestParam("sample_outcome_value") String sample_outcome_value) {
-    int result = service.UpdateOutcome(sample_outcome_id, sample_outcome_name, sample_outcome_value);
+  public int UpdateOutcome(@RequestParam("data") String data) {
+    int result = 0;
+
+    JSONArray arr = new JSONArray(data);
+
+    for (int i = 0; i < arr.length(); i++) {
+      JSONObject item = arr.getJSONObject(i);
+      int sample_outcome_id = item.getInt("sample_outcome_id");
+      String sample_outcome_name = item.getString("sample_outcome_name");
+      String sample_outcome_value = item.getString("sample_outcome_value");
+
+      result = service.UpdateOutcome(sample_outcome_id, sample_outcome_name, sample_outcome_value);
+    }
 
     return result;
   }

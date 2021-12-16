@@ -2640,7 +2640,11 @@
                         var filter = {type: 'text', showApplyBtn: true, showClearBtn: true};
 
                         if (result.display[i].detail_spec == '기본 정보') {
-                            arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 180, 'filter': filter}
+                            if (result.display[i].detail_title == '시교명 (ID)' || result.display[i].detail_title == '모계 계통명 (ID)' || result.display[i].detail_title == '부계 계통명 (ID)'){
+                                arr = {'header': colHeader, 'name': colName, 'sortable': 'true', 'sortingType': 'asc', 'width': 180, 'filter': filter}
+                            } else {
+                                arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 180, 'filter': filter}
+                            }
                         } else {
                             arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 500, 'filter': filter}
                         }
@@ -2819,6 +2823,10 @@
 
     function cancelUpdate() {
         $(".plus_btn_submit2").css("display", "none");
+
+        if($(".tui-grid-cell-content").hasClass("tui-grid-layer-editing")){
+            $(".tui-grid-cell-content").removeClass("tui-grid-layer-editing");
+        }
     }
 
     /* 엑셀 업로드 목록창 */

@@ -285,16 +285,38 @@ public class IncomeController {
   // 시교자원 수정
   @ResponseBody
   @RequestMapping("updateIncome")
-  public int UpdateIncome(@RequestParam("income_id") int income_id, @RequestParam("income_name") String income_name, @RequestParam("income_value") String income_value) {
-    int result = service.UpdateIncome(income_id, income_name, income_value);
+  public int UpdateIncome(@RequestParam("data") String data) {
+    int result = 0;
+
+    JSONArray arr = new JSONArray(data);
+
+    for (int i = 0; i < arr.length(); i++) {
+      JSONObject item = arr.getJSONObject(i);
+      int income_id = item.getInt("income_id");
+      String income_name = item.getString("income_name");
+      String income_value = item.getString("income_value");
+
+      result = service.UpdateIncome(income_id, income_name, income_value);
+    }
 
     return result;
   }
 
   @ResponseBody
   @RequestMapping("updateRemain")
-  public int UpdateRemain(@RequestParam("income_remain_id") int income_remain_id, @RequestParam("income_remain_name") String income_remain_name, @RequestParam("income_remain_value") String income_remain_value) {
-    int result = service.UpdateRemain(income_remain_id, income_remain_name, income_remain_value);
+  public int UpdateRemain(@RequestParam("data") String data) {
+    int result = 0;
+
+    JSONArray arr = new JSONArray(data);
+
+    for (int i = 0; i < arr.length(); i++) {
+      JSONObject item = arr.getJSONObject(i);
+      int income_remain_id = item.getInt("income_remain_id");
+      String income_remain_name = item.getString("income_remain_name");
+      String income_remain_value = item.getString("income_remain_value");
+
+      result = service.UpdateRemain(income_remain_id, income_remain_name, income_remain_value);
+    }
 
     return result;
   }

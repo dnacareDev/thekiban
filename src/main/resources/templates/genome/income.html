@@ -538,7 +538,7 @@
             cursor: pointer;
         }
 
-        #saveRow {
+        #saveRow, #updateRow {
             float: right;
             color: #fff;
             background-color: #217566;
@@ -547,7 +547,7 @@
             border-radius: 5px;
         }
 
-        #cancelRow {
+        #cancelRow, #cancelUpdate {
             float: right;
             color: #217566;
             background-color: #fff;
@@ -587,6 +587,10 @@
         }
 
         .plus_btn_submit1 {
+            display: none;
+        }
+
+        .plus_btn_submit2 {
             display: none;
         }
 
@@ -964,6 +968,10 @@
                         <div class='card-extra mt-10 mb-10 mr-20 plus_btn_submit1'>
                             <button type='button' id="cancelRow" onclick="cancelRow()">취소</button>
                             <button type='button' id="saveRow" onclick="saveRow()">저장</button>
+                        </div>
+                        <div class='card-extra mt-10 mb-10 mr-20 plus_btn_submit2'>
+                            <button type='button' id="cancelUpdate" onclick="cancelUpdate()">취소</button>
+                            <button type='button' id="updateRow" onclick="updateRow()">수정</button>
                         </div>
                         <div class="card-body" style="padding-top: 0;">
                             <div class="bg-white">
@@ -2295,11 +2303,11 @@
         });
     }
 
-
-
     // grid
     var incomegrid = null;
     var remaingrid = null;
+    let updateIncomeData = [];
+    let updateRemainData = [];
 
     function SearchIncome(e) {
         var income_name = $("#CropSelect").val();
@@ -2340,7 +2348,6 @@
                             {
                                 header: '도입번호 (ID)',
                                 name: 'income_code',
-                                editor: 'text',
                                 sortable: true,
                                 sortingType: 'asc',
                                 filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
@@ -2477,6 +2484,10 @@
                         ev.stop();
                     })
 
+                    incomegrid.on('editingStart', (ev) => {
+                        $(".plus_btn_submit2").css("display", "block");
+                    })
+
                     incomegrid.on('afterChange', (ev) => {
                         var user_type = $("#user_type").val();
 
@@ -2493,21 +2504,8 @@
                                     var income_name = ev.changes[i].columnName;
                                     var income_value = after;
 
-                                    var data = {"income_id": income_id, "income_name": income_name, "income_value": income_value};
-
                                     if (income_id != null) {
-                                        $.ajax(
-                                            {
-                                                url: 'updateIncome',
-                                                method: 'POST',
-                                                dataType: 'json',
-                                                data: data,
-                                                success: function (result) {
-                                                    if (result == 0) {
-                                                        return Alert("수정에 실패하였습니다.")
-                                                    }
-                                                }
-                                            });
+                                        updateIncomeData.push({"income_id": income_id, "income_name": income_name, "income_value": income_value});
                                     }
                                 }
                             }
@@ -2604,6 +2602,7 @@
 
                     for (let i = 0; i < result1.incomeRemain.length; i++) {
                         let rowArr = {
+                            'income_remain_id': result1.incomeRemain[i].income_remain_id,
                             'income_remain_num': result1.incomeRemain[i].income_remain_num,
                             'income_remain_amount': result1.incomeRemain[i].income_remain_amount,
                             'income_remain_in': result1.incomeRemain[i].income_remain_in,
@@ -2625,6 +2624,10 @@
                         ev.stop();
                     })
 
+                    remaingrid.on('editingStart', (ev) => {
+                        $(".plus_btn_submit2").css("display", "block");
+                    })
+
                     remaingrid.on('afterChange', (ev) => {
                         var user_type = $("#user_type").val();
 
@@ -2641,21 +2644,8 @@
                                     var income_remain_name = ev.changes[i].columnName;
                                     var income_remain_value = after;
 
-                                    var data = {"income_remain_id": income_remain_id, "income_remain_name": income_remain_name, "income_remain_value": income_remain_value};
-
                                     if (income_remain_id != null) {
-                                        $.ajax(
-                                            {
-                                                url: 'updateRemain',
-                                                method: 'POST',
-                                                dataType: 'json',
-                                                data: data,
-                                                success: function (result) {
-                                                    if (result == 0) {
-                                                        return Alert("수정에 실패하였습니다.")
-                                                    }
-                                                }
-                                            });
+                                        updateRemainData.push({"income_remain_id": income_remain_id, "income_remain_name": income_remain_name, "income_remain_value": income_remain_value})
                                     }
                                 }
                             }
@@ -2748,6 +2738,48 @@
         }
 
         $(".plus_btn_submit1").css("display", "none");
+    }
+
+    function updateRow() {
+        if(tablechk == 0) {
+            $.ajax(
+                {
+                    url: 'updateIncome',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {"data": JSON.stringify(updateIncomeData)},
+                    success: function (result) {
+                        if (result == 0) {
+                            return Alert("수정에 실패하였습니다.")
+                        } else {
+                            location.reload();
+                        }
+                    }
+                });
+        } else {
+            $.ajax(
+                {
+                    url: 'updateRemain',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {"data": JSON.stringify(updateRemainData)},
+                    success: function (result) {
+                        if (result == 0) {
+                            return Alert("수정에 실패하였습니다.")
+                        } else {
+                            location.reload();
+                        }
+                    }
+                });
+        }
+    }
+
+    function cancelUpdate() {
+        $(".plus_btn_submit2").css("display", "none");
+
+        if($(".tui-grid-cell-content").hasClass("tui-grid-layer-editing")){
+            $(".tui-grid-cell-content").removeClass("tui-grid-layer-editing");
+        }
     }
 
     function imgView(e) {

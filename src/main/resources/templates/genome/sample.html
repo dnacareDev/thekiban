@@ -588,7 +588,7 @@
             cursor: pointer;
         }
 
-        #saveRow {
+        #saveRow, #updateRow {
             float: right;
             color: #fff;
             background-color: #217566;
@@ -597,7 +597,7 @@
             border-radius: 5px;
         }
 
-        #cancelRow {
+        #cancelRow, #cancelUpdate {
             float: right;
             color: #217566;
             background-color: #fff;
@@ -643,6 +643,10 @@
         }
 
         .plus_btn_submit1 {
+            display: none;
+        }
+
+        .plus_btn_submit2 {
             display: none;
         }
 
@@ -1006,6 +1010,10 @@
                         <div class='card-extra mt-10 mb-10 mr-20 plus_btn_submit1'>
                             <button type='button' id="cancelRow" onclick="cancelRow()">취소</button>
                             <button type='button' id="saveRow" onclick="saveRow()">저장</button>
+                        </div>
+                        <div class='card-extra mt-10 mb-10 mr-20 plus_btn_submit2'>
+                            <button type='button' id="cancelUpdate" onclick="cancelUpdate()">취소</button>
+                            <button type='button' id="updateRow" onclick="updateRow()">수정</button>
                         </div>
                         <div class="card-body" style="padding-top: 0;">
                             <div class="bg-white">
@@ -2542,6 +2550,8 @@
     // grid
     var samplegrid = null;
     var outcomegrid = null;
+    let updateSampleData = [];
+    let updateOutcomeData = [];
 
     function SearchSample(e) {
         var sample_name = $("#CropSelect").val();
@@ -2582,7 +2592,6 @@
                             {
                                 header: '시교명(ID)',
                                 name: 'sample_code',
-                                editor: 'text',
                                 sortable: true,
                                 sortingType: 'asc',
                                 filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
@@ -2614,7 +2623,6 @@
                             {
                                 header: '종자번호(ID)',
                                 name: 'sample_seed',
-                                editor: 'text',
                                 sortable: true,
                                 sortingType: 'asc',
                                 filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
@@ -2704,6 +2712,10 @@
                         ev.stop();
                     })
 
+                    samplegrid.on('editingStart', (ev) => {
+                        $(".plus_btn_submit2").css("display", "block");
+                    })
+
                     samplegrid.on('afterChange', (ev) => {
                         var user_type = $("#user_type").val();
 
@@ -2720,21 +2732,8 @@
                                     var sample_name = ev.changes[i].columnName;
                                     var sample_value = after;
 
-                                    var data = {"sample_id": sample_id, "sample_name": sample_name, "sample_value": sample_value};
-
                                     if (sample_id != null) {
-                                        $.ajax(
-                                            {
-                                                url: 'updateSample',
-                                                method: 'POST',
-                                                dataType: 'json',
-                                                data: data,
-                                                success: function (result) {
-                                                    if (result == 0) {
-                                                        return Alert("수정에 실패하였습니다.")
-                                                    }
-                                                }
-                                            });
+                                        updateSampleData.push({"sample_id": sample_id, "sample_name": sample_name, "sample_value": sample_value});
                                     }
                                 }
                             }
@@ -2784,7 +2783,6 @@
                             {
                                 header: '종자번호(ID)',
                                 name: 'sample_outcome_num',
-                                editor: 'text',
                                 sortable: true,
                                 filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
                             },
@@ -2869,6 +2867,7 @@
 
                     for (let i = 0; i < result1.sampleOutcome.length; i++) {
                         let rowArr = {
+                            'sample_outcome_id': result1.sampleOutcome[i].sample_outcome_id,
                             'sample_outcome_code': result1.sampleOutcome[i].sample_outcome_code,
                             'sample_outcome_num': result1.sampleOutcome[i].sample_outcome_num,
                             'sample_outcome_amount': result1.sampleOutcome[i].sample_outcome_amount,
@@ -2900,6 +2899,10 @@
                         }
                     });
 
+                    outcomegrid.on('editingStart', (ev) => {
+                        $(".plus_btn_submit2").css("display", "block");
+                    })
+
                     var before = null;
                     var after = null;
 
@@ -2919,21 +2922,8 @@
                                     var sample_outcome_name = ev.changes[i].columnName;
                                     var sample_outcome_value = after;
 
-                                    var data = {"sample_outcome_id": sample_outcome_id, "sample_outcome_name": sample_outcome_name, "sample_outcome_value": sample_outcome_value};
-
                                     if (sample_outcome_id != null) {
-                                        $.ajax(
-                                            {
-                                                url: 'updateOutcome',
-                                                method: 'POST',
-                                                dataType: 'json',
-                                                data: data,
-                                                success: function (result) {
-                                                    if (result == 0) {
-                                                        return Alert("수정에 실패하였습니다.")
-                                                    }
-                                                }
-                                            });
+                                        updateOutcomeData.push({"sample_outcome_id": sample_outcome_id, "sample_outcome_name": sample_outcome_name, "sample_outcome_value": sample_outcome_value});
                                     }
                                 }
                             }
@@ -3016,7 +3006,7 @@
 
             $.ajax(
                 {
-                    url: 'insertSampleOutcome',
+                    url: 'updateOutcome',
                     method: 'POST',
                     dataType: 'json',
                     data: {
@@ -3039,6 +3029,48 @@
         }
 
         $(".plus_btn_submit1").css("display", "none");
+    }
+
+    function updateRow() {
+        if(tablechk == 0) {
+            $.ajax(
+                {
+                    url: 'updateSample',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {"data": JSON.stringify(updateSampleData)},
+                    success: function (result) {
+                        if (result == 0) {
+                            return Alert("수정에 실패하였습니다.")
+                        } else {
+                            location.reload();
+                        }
+                    }
+                });
+        } else {
+            $.ajax(
+                {
+                    url: 'updateOutcome',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {"data": JSON.stringify(updateOutcomeData)},
+                    success: function (result) {
+                        if (result == 0) {
+                            return Alert("수정에 실패하였습니다.")
+                        } else {
+                            location.reload();
+                        }
+                    }
+                });
+        }
+    }
+
+    function cancelUpdate() {
+        $(".plus_btn_submit2").css("display", "none");
+
+        if($(".tui-grid-cell-content").hasClass("tui-grid-layer-editing")){
+            $(".tui-grid-cell-content").removeClass("tui-grid-layer-editing");
+        }
     }
 
     /* 지도 검색 */
