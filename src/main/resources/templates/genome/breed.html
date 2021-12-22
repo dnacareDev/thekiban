@@ -1924,8 +1924,6 @@
     function testbtn() {
         let crop = $("#CropSelect").val();
 
-        console.log(crop);
-
         if (crop == "고추") {
             location.href = '/excelTemplate/pepperBreedTemplate.xlsx'
         } else if (crop == "대파") {
@@ -2185,7 +2183,6 @@
     }
 
     function sorting(e) {
-        console.log(e);
 
         $("#detail_list").html(
             $("#detail_list li").sort(function(a, b){
@@ -2695,7 +2692,6 @@
 
                         if (result.breed[i].standard_count == 0) {
                             rowArr['status'] = '<span style="color:red">EMPTY</span>';
-
                         } else {
                             rowArr['status'] = '<span style="color:blue">PROGRESS</span>';
                         }
@@ -2994,7 +2990,6 @@
                 }
                 const obj = {...excel};
 
-                // console.log(obj);
                 rowdata[k] = obj;
             }
             $("#excel_data").empty();
@@ -3223,11 +3218,11 @@
                 dataType: 'json',
                 data: data,
                 success: function (result) {
-                    var header_list = $("#header_list");
-                    var header_add = "";
-
-                    var breed_list = $("#breed_list");
-                    var add_list = "";
+                    // var header_list = $("#header_list");
+                    // var header_add = "";
+                    //
+                    // var breed_list = $("#breed_list");
+                    // var add_list = "";
 
                     var detail_list = $(".detail_list");
                     var detail_list2 = $(".detail_list2");
@@ -3238,44 +3233,44 @@
                     var detail_add = "";
                     var detail_add2 = "";
 
-                    var pageNum = $("#pageNum");
-                    var page_add = "";
+                    // var pageNum = $("#pageNum");
+                    // var page_add = "";
 
                     // header
-                    header_add += '<tr>';
-                    header_add += '<th></th>';
-                    header_add += '<th><span class="title">첨부파일</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="첨부파일"></th>';
-                    header_add += '<th><span class="title">특성상태</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="특성상태"></th>';
-
-                    for (var i = 0; i < result.display.length; i++) {
-                        header_add += '<th style="cursor: pointer;"><span class="title">' + result.display[i].detail_title + '</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="' + result.display[i].detail_title + '"></th>'
-                    }
-
-                    header_add += '</tr>';
+                    // header_add += '<tr>';
+                    // header_add += '<th></th>';
+                    // header_add += '<th><span class="title">첨부파일</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="첨부파일"></th>';
+                    // header_add += '<th><span class="title">특성상태</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="특성상태"></th>';
+                    //
+                    // for (var i = 0; i < result.display.length; i++) {
+                    //     header_add += '<th style="cursor: pointer;"><span class="title">' + result.display[i].detail_title + '</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="' + result.display[i].detail_title + '"></th>'
+                    // }
+                    //
+                    // header_add += '</tr>';
 
                     // body
-                    for (var i = 0; i < result.breed.length; i++) {
-                        add_list += '<tr>';
-                        add_list += '<td><input type="checkbox" name="RowCheck" value="' + result.breed[i].breed_id + '"></td>';
-                        /* add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#breed_file"><i class="bi bi-file-earmark-arrow-down"></i></button></td>'; */
-                        add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" onclick="FileBtn(' + result.breed[i].breed_id + ');"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
-
-                        if (result.breed[i].standard_count == 0) {
-                            add_list += '<td onclick="EmptyBtn(' + result.breed[i].breed_id + ');" style="color : blue; cursor:pointer;">EMPTY</td>';
-                        } else {
-                            add_list += '<td onclick="EmptyBtn(' + result.breed[i].breed_id + ');" style="color : green; cursor:pointer;">PROGRESS</td>';
-                        }
-
-                        for (var j = 0; j < result.breed[i].breed_standard.length; j++) {
-                            if (result.breed[i].breed_standard[j].detail_id === 2 || result.breed[i].breed_standard[j].detail_id === 4 || result.breed[i].breed_standard[j].detail_id === 5) {
-                                add_list += '<td><input type="text" class="updateInput" data="' + result.breed[i].breed_id + '" name="' + result.breed[i].breed_standard[j].detail_id + '" value="' + result.breed[i].breed_standard[j].standard + '"><a data-toggle="modal" href="#pop_data1"><i class="fas fa-link"></i></a></td>';
-                            } else {
-                                add_list += '<td><input type="text" class="updateInput" data="' + result.breed[i].breed_id + '" name="' + result.breed[i].breed_standard[j].detail_id + '" value="' + result.breed[i].breed_standard[j].standard + '"></td>';
-                            }
-                        }
-
-                        add_list += '</tr>';
-                    }
+                    // for (var i = 0; i < result.breed.length; i++) {
+                    //     add_list += '<tr>';
+                    //     add_list += '<td><input type="checkbox" name="RowCheck" value="' + result.breed[i].breed_id + '"></td>';
+                    //     /* add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#breed_file"><i class="bi bi-file-earmark-arrow-down"></i></button></td>'; */
+                    //     add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" onclick="FileBtn(' + result.breed[i].breed_id + ');"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
+                    //
+                    //     if (result.breed[i].standard_count == 0) {
+                    //         add_list += '<td onclick="EmptyBtn(' + result.breed[i].breed_id + ');" style="color : blue; cursor:pointer;">EMPTY</td>';
+                    //     } else {
+                    //         add_list += '<td onclick="EmptyBtn(' + result.breed[i].breed_id + ');" style="color : green; cursor:pointer;">PROGRESS</td>';
+                    //     }
+                    //
+                    //     for (var j = 0; j < result.breed[i].breed_standard.length; j++) {
+                    //         if (result.breed[i].breed_standard[j].detail_id === 2 || result.breed[i].breed_standard[j].detail_id === 4 || result.breed[i].breed_standard[j].detail_id === 5) {
+                    //             add_list += '<td><input type="text" class="updateInput" data="' + result.breed[i].breed_id + '" name="' + result.breed[i].breed_standard[j].detail_id + '" value="' + result.breed[i].breed_standard[j].standard + '"><a data-toggle="modal" href="#pop_data1"><i class="fas fa-link"></i></a></td>';
+                    //         } else {
+                    //             add_list += '<td><input type="text" class="updateInput" data="' + result.breed[i].breed_id + '" name="' + result.breed[i].breed_standard[j].detail_id + '" value="' + result.breed[i].breed_standard[j].standard + '"></td>';
+                    //         }
+                    //     }
+                    //
+                    //     add_list += '</tr>';
+                    // }
 
                     // detail
                     for (var i = 0; i < detail_list.length; i++) {
@@ -3284,6 +3279,9 @@
                         display_add = "";
 
                         for (var j = 0; j < result.detail.length; j++) {
+
+                            console.log("detail_spec : ", result.detail[j].detail_spec)
+
                             // 표시항목
                             if (result.detail[j].detail_spec == detail_list.eq(i).attr("name")) {
                                 var check = true;
@@ -3344,34 +3342,34 @@
                     }
 
                     // paging
-                    if (result.page_num == 1) {
-                        page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></button>';
-                    } else {
-                        page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchBreed(' + (result.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
-                    }
+                    // if (result.page_num == 1) {
+                    //     page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></button>';
+                    // } else {
+                    //     page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchBreed(' + (result.page_num - 1) + ')"><span class="la la-angle-left"></span></button>';
+                    // }
+                    //
+                    // for (var i = 0; i < result.end_page; i++) {
+                    //     if (result.page_num == (i + 1)) {
+                    //         page_add += '<button class="atbd-pagination__link active" onclick="SearchBreed(' + (i + 1) + ')">' + (i + 1) + '</button>';
+                    //     } else {
+                    //         page_add += '<button class="atbd-pagination__link" onclick="SearchBreed(' + (i + 1) + ')">' + (i + 1) + '</button>';
+                    //     }
+                    // }
+                    //
+                    // if (result.page_num == result.end_page) {
+                    //     page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-right"></span></button>';
+                    // } else {
+                    //     page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchBreed(' + (result.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
+                    // }
 
-                    for (var i = 0; i < result.end_page; i++) {
-                        if (result.page_num == (i + 1)) {
-                            page_add += '<button class="atbd-pagination__link active" onclick="SearchBreed(' + (i + 1) + ')">' + (i + 1) + '</button>';
-                        } else {
-                            page_add += '<button class="atbd-pagination__link" onclick="SearchBreed(' + (i + 1) + ')">' + (i + 1) + '</button>';
-                        }
-                    }
+                    // header_list.empty();
+                    // header_list.append(header_add);
 
-                    if (result.page_num == result.end_page) {
-                        page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-right"></span></button>';
-                    } else {
-                        page_add += '<button class="atbd-pagination__link pagination-control" onclick="SearchBreed(' + (result.page_num + 1) + ')"><span class="la la-angle-right"></span></button>';
-                    }
+                    // breed_list.empty();
+                    // breed_list.append(add_list);
 
-                    header_list.empty();
-                    header_list.append(header_add);
-
-                    breed_list.empty();
-                    breed_list.append(add_list);
-
-                    pageNum.empty();
-                    pageNum.append(page_add);
+                    // pageNum.empty();
+                    // pageNum.append(page_add);
 
                     $("#offset").val(result.offset);
                     CheckFunction();
