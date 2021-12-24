@@ -859,7 +859,7 @@
             background-color: white;
         }
 
-		#pop_breed table thead tr {
+        #pop_breed table thead tr {
             border-top: 2px solid #aaa;
             border-bottom: 2px solid #aaa;
         }
@@ -894,11 +894,37 @@
         }
 
 
-        .load_wrap {display: none;}
-        .load_wrap.on {display: flex; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 9999999999; background-color: rgba(0, 0, 0, 0.3); justify-content: center; align-items: center;}
+        .load_wrap {
+            display: none;
+        }
 
-        .load_wrap .load {background-color: #fff; width: 220px; height: 90px; text-align: center; padding: 15px; border-radius: 6px;}
-        .load_wrap .load > h2 {font-size: 17px; font-weight: bold; color: #666;}
+        .load_wrap.on {
+            display: flex;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 9999999999;
+            background-color: rgba(0, 0, 0, 0.3);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .load_wrap .load {
+            background-color: #fff;
+            width: 220px;
+            height: 90px;
+            text-align: center;
+            padding: 15px;
+            border-radius: 6px;
+        }
+
+        .load_wrap .load > h2 {
+            font-size: 17px;
+            font-weight: bold;
+            color: #666;
+        }
 
         .loader,
         .loader:before,
@@ -911,6 +937,7 @@
             -webkit-animation: load7 1.8s infinite ease-in-out;
             animation: load7 1.8s infinite ease-in-out;
         }
+
         .loader {
             color: #397FF4;
             font-size: 10px;
@@ -923,20 +950,24 @@
             -webkit-animation-delay: -0.16s;
             animation-delay: -0.16s;
         }
+
         .loader:before,
         .loader:after {
             content: '';
             position: absolute;
             top: 0;
         }
+
         .loader:before {
             left: -2.2em;
             -webkit-animation-delay: -0.32s;
             animation-delay: -0.32s;
         }
+
         .loader:after {
             left: 2.2em;
         }
+
         @-webkit-keyframes load7 {
             0%,
             80%,
@@ -947,6 +978,7 @@
                 box-shadow: 0 2.5em 0 0;
             }
         }
+
         @keyframes load7 {
             0%,
             80%,
@@ -959,9 +991,22 @@
         }
 
         /* 여기서부터 */
-        .main-content .form-group:nth-child(2) {display: block; width: 100%;}
-        .image-container { width: 300px; height: 200px; margin: 0 auto;}
-        .image-container img { width: 100%; height: 100%; object-fit: contain;}
+        .main-content .form-group:nth-child(2) {
+            display: block;
+            width: 100%;
+        }
+
+        .image-container {
+            width: 300px;
+            height: 200px;
+            margin: 0 auto;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
     </style>
 </head>
 
@@ -1194,7 +1239,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group mb-0" style="justify-content: end">
-                        <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                        <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none"
+                               accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
                         <button onclick="filesFunction()">불러오기</button>
                         <input type="file" name="" id="file_data_upload" style="display: none;">
                     </div>
@@ -1239,7 +1285,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group mb-0" style="justify-content: end">
-                        <input type="file" id="excelFile1" onchange="excelExport(event)" style="display: none" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                        <input type="file" id="excelFile1" onchange="excelExport(event)" style="display: none"
+                               accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
                         <button onclick="filesFunction()">불러오기</button>
                         <input type="file" name="" id="file_data_upload1" style="display: none;">
                     </div>
@@ -1286,7 +1333,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group mb-0" style="justify-content: end">
-                        <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                        <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none"
+                               accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
                         <button onclick="filesFunction()">불러오기</button>
                         <input type="file" name="" id="file_data_upload" style="display: none;">
                     </div>
@@ -1331,7 +1379,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group mb-0" style="justify-content: end">
-                        <input type="file" id="excelFile1" onchange="excelExport(event)" style="display: none" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                        <input type="file" id="excelFile1" onchange="excelExport(event)" style="display: none"
+                               accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
                         <button onclick="filesFunction()">불러오기</button>
                         <input type="file" name="" id="file_data_upload1" style="display: none;">
                     </div>
@@ -1748,7 +1797,7 @@
                         $.each(rowdata[i], function (idx, value) {
                             // 공백처리
                             if (idx == tmp[j]) {
-                                if(idx == "__EMPTY_8" || idx == "__EMPTY_9") {
+                                if (idx == "__EMPTY_8" || idx == "__EMPTY_9") {
                                     html += "<td class='excel'><span>" + excelDateToJSDate(value) + "</span></td>";
                                     j++;
                                 } else {
@@ -1767,7 +1816,7 @@
                                     html += "<td><span> </span></td>";
                                 }
 
-                                if(idx == "__EMPTY_8" || idx == "__EMPTY_9") {
+                                if (idx == "__EMPTY_8" || idx == "__EMPTY_9") {
                                     html += "<td class='excel'><span>" + excelDateToJSDate(value) + "</span></td>";
                                     j++;
                                 } else {
@@ -1900,7 +1949,7 @@
 
     /* 엑셀 등록 창 */
     function ModifyDataBtn(e) {
-        if(tablechk == 0) {
+        if (tablechk == 0) {
             let s = String(e);
             s = s.replace(/(\d{4})(\d{2})(\d{2})/g, '$1-$2-$3');
 
@@ -1913,7 +1962,7 @@
                     dataType: 'json',
                     data: data,
                     success: function (result) {
-                        if(result != null) {
+                        if (result != null) {
                             $("#data_upload3").modal("show");
                             $("#data_upload2").modal("hide");
 
@@ -1956,7 +2005,7 @@
                     dataType: 'json',
                     data: data,
                     success: function (result) {
-                        if(result != null) {
+                        if (result != null) {
                             $("#data_upload13").modal("show");
                             $("#data_upload12").modal("hide");
 
@@ -2058,7 +2107,7 @@
 
             var jsonObj = tableToJson(document.getElementById("excel_data1"));
 
-            for(let i = 0; i < jsonObj.length; i++) {
+            for (let i = 0; i < jsonObj.length; i++) {
                 jsonObj[i]["작물"] = $("#CropSelect").val();
             }
 
@@ -2192,7 +2241,7 @@
     });
 
     $("#CropSelect").change(function () {
-        if(tablechk == 0) {
+        if (tablechk == 0) {
             samplegrid.destroy();
 
             SearchSample(1);
@@ -2205,7 +2254,7 @@
 
     // 갯수 선택
     $("#limit").change(function () {
-        if(tablechk == 0) {
+        if (tablechk == 0) {
             samplegrid.destroy();
 
             SearchSample(1);
@@ -2719,7 +2768,9 @@
                     })
 
                     samplegrid.on('editingStart', (ev) => {
-                        $(".plus_btn_submit2").css("display", "block");
+                        if ($(".plus_btn_submit1")[0].style.display != 'block') {
+                            $(".plus_btn_submit2").css("display", "block");
+                        }
                     })
 
                     samplegrid.on('afterChange', (ev) => {
@@ -2903,7 +2954,9 @@
                     });
 
                     outcomegrid.on('editingStart', (ev) => {
-                        $(".plus_btn_submit2").css("display", "block");
+                        if ($(".plus_btn_submit1")[0].style.display != 'block') {
+                            $(".plus_btn_submit2").css("display", "block");
+                        }
                     })
 
                     var before = null;
@@ -2926,21 +2979,22 @@
                                     var sample_outcome_value = after;
 
                                     if (sample_outcome_id != null) {
-                                        updateOutcomeData.push({"sample_outcome_id": sample_outcome_id, "sample_outcome_name": sample_outcome_name, "sample_outcome_value": sample_outcome_value});
+                                        updateOutcomeData.push({
+                                            "sample_outcome_id": sample_outcome_id,
+                                            "sample_outcome_name": sample_outcome_name,
+                                            "sample_outcome_value": sample_outcome_value
+                                        });
                                     }
                                 }
                             }
                         }
                     });
 
-                    makeSelect();
-
                     loading.classList.remove('on');
 
                 }
             });
     }
-
 
     function insertRow() {
         var user_type = $("#user_type").val();
@@ -3025,7 +3079,7 @@
     }
 
     function updateRow() {
-        if(tablechk == 0) {
+        if (tablechk == 0) {
             $.ajax(
                 {
                     url: 'updateSample',
@@ -3061,7 +3115,7 @@
     function cancelUpdate() {
         $(".plus_btn_submit2").css("display", "none");
 
-        if($(".tui-grid-cell-content").hasClass("tui-grid-layer-editing")){
+        if ($(".tui-grid-cell-content").hasClass("tui-grid-layer-editing")) {
             $(".tui-grid-cell-content").removeClass("tui-grid-layer-editing");
         }
     }
@@ -3069,29 +3123,25 @@
     var inKorea = [];
     var outKorea = [];
 
-    function SearchMarker()
-    {
+    function SearchMarker() {
         $.ajax(
             {
                 url: 'selectOutcomeList',
                 method: 'POST',
                 dataType: 'json',
                 data: data,
-                success: function (result)
-                {
-                    for (let i = 0; i < result.sampleOutcome.length; i++)
-                    {
-                        if (result.sampleOutcome[i].sample_outcome_country == '국내')
-                        {
+                success: function (result) {
+                    for (let i = 0; i < result.sampleOutcome.length; i++) {
+                        if (result.sampleOutcome[i].sample_outcome_country == '국내') {
                             inKorea.push(result.sampleOutcome[i].sample_outcome_place);
-                        }
-                        else if(result.sampleOutcome[i].sample_outcome_country == '해외')
-                        {
+                        } else if (result.sampleOutcome[i].sample_outcome_country == '해외') {
                             outKorea.push(result.sampleOutcome[i].sample_outcome_place);
                         }
                     }
 
                     searchArea();
+
+                    makeSelect();
                 }
             });
     }
@@ -3210,7 +3260,7 @@
     function imgView(e) {
         var fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/;
 
-        if(e.match(fileForm)) {
+        if (e.match(fileForm)) {
             document.getElementById("preview-image").src = '/upload/' + e;
         }
     }

@@ -846,11 +846,37 @@
             padding: 10px;
         }
 
-        .load_wrap {display: none;}
-        .load_wrap.on {display: flex; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 9999999999; background-color: rgba(0, 0, 0, 0.3); justify-content: center; align-items: center;}
+        .load_wrap {
+            display: none;
+        }
 
-        .load_wrap .load {background-color: #fff; width: 220px; height: 90px; text-align: center; padding: 15px; border-radius: 6px;}
-        .load_wrap .load > h2 {font-size: 17px; font-weight: bold; color: #666;}
+        .load_wrap.on {
+            display: flex;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 9999999999;
+            background-color: rgba(0, 0, 0, 0.3);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .load_wrap .load {
+            background-color: #fff;
+            width: 220px;
+            height: 90px;
+            text-align: center;
+            padding: 15px;
+            border-radius: 6px;
+        }
+
+        .load_wrap .load > h2 {
+            font-size: 17px;
+            font-weight: bold;
+            color: #666;
+        }
 
         .loader,
         .loader:before,
@@ -863,6 +889,7 @@
             -webkit-animation: load7 1.8s infinite ease-in-out;
             animation: load7 1.8s infinite ease-in-out;
         }
+
         .loader {
             color: #397FF4;
             font-size: 10px;
@@ -875,20 +902,24 @@
             -webkit-animation-delay: -0.16s;
             animation-delay: -0.16s;
         }
+
         .loader:before,
         .loader:after {
             content: '';
             position: absolute;
             top: 0;
         }
+
         .loader:before {
             left: -2.2em;
             -webkit-animation-delay: -0.32s;
             animation-delay: -0.32s;
         }
+
         .loader:after {
             left: 2.2em;
         }
+
         @-webkit-keyframes load7 {
             0%,
             80%,
@@ -899,6 +930,7 @@
                 box-shadow: 0 2.5em 0 0;
             }
         }
+
         @keyframes load7 {
             0%,
             80%,
@@ -911,9 +943,22 @@
         }
 
         /* 여기서부터 */
-        .main-content .form-group:nth-child(2) {display: block; width: 100%;}
-        .image-container { width: 300px; height: 200px; margin: 0 auto;}
-        .image-container img { width: 100%; height: 100%; object-fit: contain;}
+        .main-content .form-group:nth-child(2) {
+            display: block;
+            width: 100%;
+        }
+
+        .image-container {
+            width: 300px;
+            height: 200px;
+            margin: 0 auto;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
     </style>
 
 </head>
@@ -1142,7 +1187,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group mb-0" style="justify-content: end">
-                        <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                        <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none"
+                               accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
                         <button onclick="filesFunction()">불러오기</button>
                         <input type="file" name="" id="file_data_upload" style="display: none;">
                     </div>
@@ -1189,7 +1235,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group mb-0" style="justify-content: end">
-                        <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                        <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none"
+                               accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
                         <button onclick="filesFunction()">불러오기</button>
                         <input type="file" name="" id="file_data_upload" style="display: none;">
                     </div>
@@ -1271,7 +1318,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group mb-0" style="justify-content: end">
-                        <input type="file" id="excelFile1" onchange="excelExport(event)" style="display: none" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                        <input type="file" id="excelFile1" onchange="excelExport(event)" style="display: none"
+                               accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
                         <button onclick="filesFunction()">불러오기</button>
                         <input type="file" name="" id="file_data_upload1" style="display: none;">
                     </div>
@@ -1313,7 +1361,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group mb-0" style="justify-content: end">
-                        <input type="file" id="excelFile1" onchange="excelExport(event)" style="display: none" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+                        <input type="file" id="excelFile1" onchange="excelExport(event)" style="display: none"
+                               accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
                         <button onclick="filesFunction()">불러오기</button>
                         <input type="file" name="" id="file_data_upload1" style="display: none;">
                     </div>
@@ -1470,7 +1519,7 @@
     let rowDataL = 0;
 
     function excelExportCommon(event, callback) {
-        if(tablechk == 0) {
+        if (tablechk == 0) {
             var input = event.target;
             var reader = new FileReader();
 
@@ -1617,7 +1666,7 @@
                         $.each(rowdata[i], function (idx, value) {
                             // 공백처리
                             if (idx == tmp[j]) {
-                                if(idx == "__EMPTY_6") {
+                                if (idx == "__EMPTY_6") {
                                     html += "<td class='excel'><span>" + excelDateToJSDate(value) + "</span></td>";
                                     j++;
                                 } else {
@@ -1635,7 +1684,7 @@
                                     html += "<td><span> </span></td>";
                                 }
 
-                                if(idx == "__EMPTY_6") {
+                                if (idx == "__EMPTY_6") {
                                     html += "<td class='excel'><span>" + excelDateToJSDate(value) + "</span></td>";
                                     j++;
                                 } else {
@@ -1922,7 +1971,7 @@
 
             var jsonObj = tableToJson(document.getElementById("excel_data1"));
 
-            for(let i = 0; i < jsonObj.length; i++) {
+            for (let i = 0; i < jsonObj.length; i++) {
                 jsonObj[i]["작물"] = $("#CropSelect").val();
             }
 
@@ -2491,7 +2540,9 @@
                     })
 
                     incomegrid.on('editingStart', (ev) => {
-                        $(".plus_btn_submit2").css("display", "block");
+                        if ($(".plus_btn_submit1")[0].style.display != 'block') {
+                            $(".plus_btn_submit2").css("display", "block");
+                        }
                     })
 
                     incomegrid.on('afterChange', (ev) => {
@@ -2631,7 +2682,9 @@
                     })
 
                     remaingrid.on('editingStart', (ev) => {
-                        $(".plus_btn_submit2").css("display", "block");
+                        if ($(".plus_btn_submit1")[0].style.display != 'block') {
+                            $(".plus_btn_submit2").css("display", "block");
+                        }
                     })
 
                     remaingrid.on('afterChange', (ev) => {
@@ -2651,7 +2704,11 @@
                                     var income_remain_value = after;
 
                                     if (income_remain_id != null) {
-                                        updateRemainData.push({"income_remain_id": income_remain_id, "income_remain_name": income_remain_name, "income_remain_value": income_remain_value})
+                                        updateRemainData.push({
+                                            "income_remain_id": income_remain_id,
+                                            "income_remain_name": income_remain_name,
+                                            "income_remain_value": income_remain_value
+                                        })
                                     }
                                 }
                             }
@@ -2747,7 +2804,7 @@
     }
 
     function updateRow() {
-        if(tablechk == 0) {
+        if (tablechk == 0) {
             $.ajax(
                 {
                     url: 'updateIncome',
@@ -2783,7 +2840,7 @@
     function cancelUpdate() {
         $(".plus_btn_submit2").css("display", "none");
 
-        if($(".tui-grid-cell-content").hasClass("tui-grid-layer-editing")){
+        if ($(".tui-grid-cell-content").hasClass("tui-grid-layer-editing")) {
             $(".tui-grid-cell-content").removeClass("tui-grid-layer-editing");
         }
     }
@@ -2791,7 +2848,7 @@
     function imgView(e) {
         var fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/;
 
-        if(e.match(fileForm)) {
+        if (e.match(fileForm)) {
             document.getElementById("preview-image").src = '/upload/' + e;
         }
     }

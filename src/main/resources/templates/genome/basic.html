@@ -875,9 +875,22 @@
         }
 
         /* 여기서부터 */
-        .main-content .form-group:nth-child(2) {display: block; width: 100%;}
-        .image-container { width: 300px; height: 200px; margin: 0 auto;}
-        .image-container img { width: 100%; height: 100%; object-fit: contain;}
+        .main-content .form-group:nth-child(2) {
+            display: block;
+            width: 100%;
+        }
+
+        .image-container {
+            width: 300px;
+            height: 200px;
+            margin: 0 auto;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
     </style>
 </head>
 <body class="layout-light top-menu overlayScroll">
@@ -2620,7 +2633,9 @@
                     });
 
                     basicgrid.on('editingStart', (ev) => {
-                        $(".plus_btn_submit2").css("display", "block");
+                        if ($(".plus_btn_submit1")[0].style.display != 'block') {
+                            $(".plus_btn_submit2").css("display", "block");
+                        }
                     })
 
                     var before = null;
@@ -2762,7 +2777,9 @@
                     })
 
                     basicRemainGrid.on('editingStart', (ev) => {
-                        $(".plus_btn_submit2").css("display", "block");
+                        if ($(".plus_btn_submit1")[0].style.display != 'block') {
+                            $(".plus_btn_submit2").css("display", "block");
+                        }
                     })
 
                     basicRemainGrid.on('afterChange', (ev) => {
@@ -2782,7 +2799,11 @@
                                     var basic_remain_value = after;
 
                                     if (basic_remain_id != null) {
-                                        updateBasicRemainData.push({"basic_remain_id": basic_remain_id, "basic_remain_name": basic_remain_name, "basic_remain_value": basic_remain_value})
+                                        updateBasicRemainData.push({
+                                            "basic_remain_id": basic_remain_id,
+                                            "basic_remain_name": basic_remain_name,
+                                            "basic_remain_value": basic_remain_value
+                                        })
                                     }
                                 }
                             }
@@ -2907,7 +2928,7 @@
     }
 
     function updateRow() {
-        if(tablechk == 0) {
+        if (tablechk == 0) {
             $.ajax(
                 {
                     url: 'updateBasic',
@@ -2943,7 +2964,7 @@
     function cancelUpdate() {
         $(".plus_btn_submit2").css("display", "none");
 
-        if($(".tui-grid-cell-content").hasClass("tui-grid-layer-editing")){
+        if ($(".tui-grid-cell-content").hasClass("tui-grid-layer-editing")) {
             $(".tui-grid-cell-content").removeClass("tui-grid-layer-editing");
         }
     }
