@@ -1920,6 +1920,24 @@
 <!-- 공통 js -->
 <th:block th:include="/../fragments/commonjs.html"></th:block>
 <script type="text/javascript">
+    /* s :  parameter 값 받아오기 예제*/
+    function useParams(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
+    console.log("testID:", useParams("selector"));
+
+    if(useParams("selector") !== undefined && useParams("selector") !== null && useParams("selector") !== ""){
+
+    } else {
+
+    }
+    // 주소 뒤에 : http://www.localhost:8883/breed?selector="멜론"&testparams="테스트";
+    // 첫번째 파라미터는 ?로 시작 두번째부턴 &를 붙여서 테스트한다.
+    /* e :  parameter 값 받아오기 예제*/
 
     function testbtn() {
         let crop = $("#CropSelect").val();
@@ -3279,8 +3297,6 @@
                         display_add = "";
 
                         for (var j = 0; j < result.detail.length; j++) {
-
-                            console.log("detail_spec : ", result.detail[j].detail_spec)
 
                             // 표시항목
                             if (result.detail[j].detail_spec == detail_list.eq(i).attr("name")) {
