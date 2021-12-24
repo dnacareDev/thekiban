@@ -2762,7 +2762,9 @@
                     });
 
                     breedgrid.on('editingStart', (ev) => {
-                        $(".plus_btn_submit2").css("display", "block");
+                        if($(".plus_btn_submit1")[0].style.display != 'block') {
+                            $(".plus_btn_submit2").css("display", "block");
+                        }
                     })
 
                     var before = null;
