@@ -1485,6 +1485,30 @@
 <script src="../assets/vendor_assets/js/script.js"></script> <!-- 왼쪽상단에 버튼 클릭시 class 추가 스크립트 -->
 
 <script type="text/javascript">
+    /* s : localstorage 저장 예제 */
+    function setLocalS(key, value) {
+        localStorage.setItem(key, value);
+    }
+
+    function getLocalS(key, useRemove) {
+        let result = "";
+        if (localStorage.getItem(key) !== null) {
+            result = localStorage.getItem(key);
+            if (useRemove) {
+                removeLocalS(key);
+            }
+            return result;
+        } else {
+            result = "고추"
+            return result;
+        }
+    }
+
+    function removeLocalS(key) {
+        localStorage.removeItem(key);
+    }
+    /* e : localstorage 저장 예제 */
+
     function dataToggle(one, two) {
         $(one).modal("hide");
 
@@ -2103,18 +2127,24 @@
     $("#incomeTable1").click(function () {
         tablechk = 0;
         remaingrid.destroy();
+        $("#CropSelect").val(getLocalS("income_crop"));
+
         SearchIncome(1);
     })
 
     $("#incomeTable2").click(function () {
         tablechk = 1;
         incomegrid.destroy();
+        $("#CropSelect").val(getLocalS("income_crop"));
+
         SearchRemain(1);
     })
     /* 도입자원 재고관리 테이블 구분 */
 
     // DB 데이터 출력
     $(document).ready(function () {
+        $("#CropSelect").val(getLocalS("income_crop"));
+
         SearchIncome(1);
     });
 
@@ -2128,6 +2158,7 @@
 
             SearchRemain(1);
         }
+        setLocalS("income_crop", $("#CropSelect").val());
     })
 
     // 갯수 선택
@@ -2396,13 +2427,13 @@
                             {
                                 header: '작물',
                                 name: 'income_name',
-                                editor: 'text',
                                 sortable: true,
                                 sortingType: 'asc'
                             },
                             {
                                 header: '도입번호 (ID)',
                                 name: 'income_code',
+                                editor: 'text',
                                 sortable: true,
                                 sortingType: 'asc',
                                 filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
@@ -2565,6 +2596,10 @@
                                         updateIncomeData.push({"income_id": income_id, "income_name": income_name, "income_value": income_value});
                                     }
                                 }
+
+                                if($(".plus_btn_submit1")[0].style.display != 'block') {
+                                    $(".plus_btn_submit2").css("display", "block");
+                                }
                             }
                         }
                     });
@@ -2710,6 +2745,10 @@
                                             "income_remain_value": income_remain_value
                                         })
                                     }
+                                }
+
+                                if($(".plus_btn_submit1")[0].style.display != 'block') {
+                                    $(".plus_btn_submit2").css("display", "block");
                                 }
                             }
                         }

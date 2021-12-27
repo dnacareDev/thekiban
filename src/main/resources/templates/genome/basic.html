@@ -2025,6 +2025,29 @@
 <th:block th:include="/../fragments/commonjs.html"></th:block>
 
 <script type="text/javascript">
+    /* s : localstorage 저장 예제 */
+    function setLocalS(key, value) {
+        localStorage.setItem(key, value);
+    }
+
+    function getLocalS(key, useRemove) {
+        let result = "";
+        if (localStorage.getItem(key) !== null) {
+            result = localStorage.getItem(key);
+            if (useRemove) {
+                removeLocalS(key);
+            }
+            return result;
+        } else {
+            result = "고추"
+            return result;
+        }
+    }
+
+    function removeLocalS(key) {
+        localStorage.removeItem(key);
+    }
+    /* e : localstorage 저장 예제 */
 
     function testbtn() {
         let crop = $("#CropSelect").val();
@@ -2173,17 +2196,23 @@
     $("#basicTable1").click(function () {
         tablechk = 0;
         basicRemainGrid.destroy();
+        $("#CropSelect").val(getLocalS("basic_crop"));
+
         SearchBasicgrid(1);
     })
 
     $("#basicTable2").click(function () {
         tablechk = 1;
         basicgrid.destroy();
+        $("#CropSelect").val(getLocalS("basic_crop"));
+
         SearchBasicRemain(1);
     })
 
     // 원종 목록
     $(document).ready(function () {
+        $("#CropSelect").val(getLocalS("basic_crop"));
+
         SearchBasic(1);
         SearchBasicgrid(1);
     });
@@ -2200,6 +2229,7 @@
 
             SearchBasicRemain(1);
         }
+        setLocalS("basic_crop", $("#CropSelect").val());
     })
 
     // 갯수 선택
@@ -2578,7 +2608,7 @@
                         var filter = {type: 'text', showApplyBtn: true, showClearBtn: true};
 
                         if (result.display[i].detail_spec == '기본 정보') {
-                            if (result.display[i].detail_title == '계통명 (ID)') {
+                            if (result.display[i].detail_title == '작물') {
                                 arr = {'header': colHeader, 'name': colName, 'sortable': 'true', 'sortingType': 'asc', 'width': 180, 'filter': filter}
                             } else {
                                 arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 180, 'filter': filter}
@@ -2660,6 +2690,10 @@
                                     if (basic_id != null) {
                                         updateBasicData.push({"basic_id": basic_id, "detail_id": detail_id, "standard": standard});
                                     }
+                                }
+
+                                if($(".plus_btn_submit1")[0].style.display != 'block') {
+                                    $(".plus_btn_submit2").css("display", "block");
                                 }
                             }
                         }
@@ -2805,6 +2839,10 @@
                                             "basic_remain_value": basic_remain_value
                                         })
                                     }
+                                }
+
+                                if($(".plus_btn_submit1")[0].style.display != 'block') {
+                                    $(".plus_btn_submit2").css("display", "block");
                                 }
                             }
                         }

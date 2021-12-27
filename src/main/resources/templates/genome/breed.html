@@ -603,6 +603,28 @@
             color: #217566;
         }
 
+        #pop_data2 .modal-body li a {
+            display: block;
+            width: 120px;
+            padding: 15px 0;
+            text-align: center;
+            margin: 0;
+            font-size: 14px;
+            background-color: #FBFBFB;
+            border-radius: 0 5px 5px 0;
+        }
+
+        #pop_data2 .modal-body .btn-group > ul > li:first-child a {
+            border-radius: 5px 0 0 5px;
+        }
+
+        #pop_data2 .modal-body .btn-group > ul > li a.active, #pop_data2 .btn-group > ul > li:hover a {
+            border-color: #C3E3CC;
+            background-color: #EDF6F1 !important;
+            color: #217566;
+        }
+
+
         #pop_data .atbd-button-group li.active {
             background-color: #EDF6F1 !important;
         }
@@ -688,6 +710,36 @@
         }
 
         #pop_data1 table tbody td {
+            background-color: #fff;
+            color: #333;
+            font-size: 13px;
+        }
+
+        #pop_data2 table thead tr {
+            border-top: 2px solid #aaa;
+            border-bottom: 2px solid #aaa;
+        }
+
+        #pop_data2 table thead th {
+            border-left: 1px solid #eee;
+            border-right: 1px solid #eee;
+            color: #222;
+            font-size: 13px;
+        }
+
+        #pop_data2 table thead th:first-child {
+            border-left: none;
+        }
+
+        #pop_data2 table thead th:last-child {
+            border-right: none;
+        }
+
+        #pop_data2 table tbody tr {
+            border-bottom: 1px solid #eee;
+        }
+
+        #pop_data2 table tbody td {
             background-color: #fff;
             color: #333;
             font-size: 13px;
@@ -848,10 +900,23 @@
         }
 
 
-    /* 여기서부터 */
-        .main-content .form-group:nth-child(2) {display: block; width: 100%;}
-        .image-container { width: 300px; height: 200px; margin: 0 auto;}
-        .image-container img { width: 100%; height: 100%; object-fit: contain;}
+        /* 여기서부터 */
+        .main-content .form-group:nth-child(2) {
+            display: block;
+            width: 100%;
+        }
+
+        .image-container {
+            width: 300px;
+            height: 200px;
+            margin: 0 auto;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
     </style>
 </head>
 <body class="layout-light top-menu overlayScroll">
@@ -1768,7 +1833,6 @@
         </div>
     </div>
 
-
     <!--  시교명 클릭시 팝업 2021-11-08 -->
     <div class="modal-basic modal fade show pop7" id="pop_data1" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
@@ -1784,10 +1848,6 @@
                                 <li class="nav-item">
                                     <a class="pop_nav-link active" id="tab-horizontal-0-tab-0" data-toggle="tab" href="#tab-horizontal-0-0" role="tab"
                                        aria-controls="tab-horizontal-0-0" aria-selected="true">시교 자원 관리</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="pop_nav-link" id="tab-horizontal-1-tab-1" data-toggle="tab" href="#tab-horizontal-1-1" role="tab" aria-controls="tab-horizontal-1-1"
-                                       aria-selected="false">원종관리</a>
                                 </li>
                             </ul>
                         </div>
@@ -1814,7 +1874,42 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="atbd-upload popAdd tab-pane fade" id="tab-horizontal-1-1" role="tabpanel" aria-labelledby="tab-horizontal-1-tab-1" style="overflow: auto;">
+                    </div>
+                </div>
+                <div class="modal-footer" style="border: none">
+                    <div class="col-4">
+                        <div class="row" style="justify-content: center;">
+                            <div id="pageNum1" style="text-align:center; margin: 2% 0 0 0;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--  계통명 클릭시 팝업 -->
+    <div class="modal-basic modal fade show pop7" id="pop_data2" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content modal-bg-white">
+                <div class="modal-header" style="border: none">
+                    <h6 class="modal-title">품종관리 > 원종관리</h6>
+                    <span class="sample_title"></span>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group mb-0">
+                        <div class="btn-group atbd-button-group btn-group-normal my-2" role="group">
+                            <ul class="nav nav-tabs vertical-tabs" role="tablist">
+                                <li class="nav-item">
+                                    <a class="pop_nav-link active" id="tab-horizontal-0-tab-1" data-toggle="tab" href="#tab-horizontal-0-1" role="tab"
+                                       aria-controls="tab-horizontal-0-1"
+                                       aria-selected="true">원종관리</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="atbd-upload popAdd tab-pane fade show active" id="tab-horizontal-0-1" role="tabpanel" aria-labelledby="tab-horizontal-0-tab-1"
+                             style="overflow: auto; max-height: 500px;">
                             <div class="pop_cover_inner" style="padding-top: 0;">
                                 <span class="sub_title">모계 계통명(ID)</span>
                                 <div class="pop_top_content1" style="max-height:150px; overflow: auto;">
@@ -1877,37 +1972,6 @@
         </div>
     </div>
 
-    <div class="modal-basic modal fade show pop5" id="pop_data_sub1" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-md" role="document" style="margin: 5rem auto; box-shadow: 20px 1px 30px rgb(0 0 0 / 50%);">
-            <div class="modal-content modal-bg-white">
-                <div class="modal-header" style="border: none">
-                    <h6 class="modal-title">품종관리 > 시교자원관리 > 시교 출고 대장</h6>
-                </div>
-                <div class="modal-body">
-                    <div>
-                        <div class="atbd-upload">
-                            <table>
-                                <thead>
-                                <tr>
-                                    <th>시교명 (ID)</th>
-                                    <th>품종명</th>
-                                    <th>모계 계통명 (ID)</th>
-                                    <th>부계 계통명 (ID)</th>
-                                    <th>생산판매 (신고번호)</th>
-                                    <th>생산판매 (신고일자)</th>
-                                    <th>보호출원 (출원번호)</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="load_wrap">
         <div class="load">
             <h2>잠시만 기다려주세요</h2>
@@ -1921,6 +1985,7 @@
 <th:block th:include="/../fragments/commonjs.html"></th:block>
 <script type="text/javascript">
     /* s :  parameter 값 받아오기 예제*/
+    /*
     function useParams(name) {
         name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
         var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
@@ -1930,14 +1995,39 @@
 
     console.log("testID:", useParams("selector"));
 
-    if(useParams("selector") !== undefined && useParams("selector") !== null && useParams("selector") !== ""){
+    if (useParams("selector") !== undefined && useParams("selector") !== null && useParams("selector") !== "") {
 
     } else {
 
     }
+     */
     // 주소 뒤에 : http://www.localhost:8883/breed?selector="멜론"&testparams="테스트";
     // 첫번째 파라미터는 ?로 시작 두번째부턴 &를 붙여서 테스트한다.
     /* e :  parameter 값 받아오기 예제*/
+
+    /* s : localstorage 저장 예제 */
+    function setLocalS(key, value) {
+        localStorage.setItem(key, value);
+    }
+
+    function getLocalS(key, useRemove) {
+        let result = "";
+        if (localStorage.getItem(key) !== null) {
+            result = localStorage.getItem(key);
+            if (useRemove) {
+                removeLocalS(key);
+            }
+            return result;
+        } else {
+            result = "고추"
+            return result;
+        }
+    }
+
+    function removeLocalS(key) {
+        localStorage.removeItem(key);
+    }
+    /* e : localstorage 저장 예제 */
 
     function testbtn() {
         let crop = $("#CropSelect").val();
@@ -2103,6 +2193,8 @@
 
     // DB에 저장된 데이터 출력
     $(document).ready(function () {
+        $("#CropSelect").val(getLocalS("breed_crop"));
+
         SearchBreed(1);
         SearchBreedgrid(1);
     });
@@ -2113,6 +2205,7 @@
 
         SearchBreed(1);
         SearchBreedgrid(1);
+        setLocalS("breed_crop", $("#CropSelect").val());
     })
 
     // 갯수 선택
@@ -2203,7 +2296,7 @@
     function sorting(e) {
 
         $("#detail_list").html(
-            $("#detail_list li").sort(function(a, b){
+            $("#detail_list li").sort(function (a, b) {
                 return $(b).data(e) - $(a).data(e);
             })
         );
@@ -2401,141 +2494,8 @@
             });
     }
 
-    function SearchSample1(e) {
-        $("#pop_data1").modal();
-
-        var sample_name = $("#CropSelect").val();
-
-        var data = {"sample_name": sample_name};
-
-        $.ajax(
-            {
-                url: 'searchSampleList',
-                method: 'POST',
-                dataType: 'json',
-                data: data,
-                success: function (result) {
-                    $(".sample_title").text("시교명 (ID) : " + e);
-
-                    var sample_list = $(".sample-list");
-
-                    var add_list = "";
-
-                    for (var i = 0; i < result.sample.length; i++) {
-                        if (result.sample[i].sample_code === e) {
-                            add_list += '<tr>';
-                            add_list += '<td>' + result.sample[i].sample_name + '</td>';
-                            add_list += '<td>' + result.sample[i].sample_code + '</td>';
-                            add_list += '<td>' + result.sample[i].sample_country + '</td>';
-                            add_list += '<td>' + result.sample[i].sample_type + '</td>';
-                            add_list += '<td>' + result.sample[i].sample_mate + '</td>';
-                            add_list += '<td>' + result.sample[i].sample_seed + '</a></td>';
-                            add_list += '<td>' + result.sample[i].sample_amount + '</td>';
-                            add_list += '<td>' + result.sample[i].sample_sprout + '</td>';
-                            add_list += '<td>' + result.sample[i].sample_purity + '</td>';
-                            add_list += '<td>' + result.sample[i].sample_comment + '</td>';
-                            add_list += '</tr>';
-                        }
-                    }
-
-                    sample_list.empty();
-                    sample_list.append(add_list);
-                }
-            });
-    }
-
-    function SearchSample2(e) {
-        $("#pop_data1").modal();
-
-        var sample_name = $("#CropSelect").val();
-
-        var data = {"sample_name": sample_name};
-
-        $.ajax(
-            {
-                url: 'searchSampleList',
-                method: 'POST',
-                dataType: 'json',
-                data: data,
-                success: function (result) {
-                    $(".sample_title").text("시교명 (ID) : " + e);
-
-                    var sample_list = $(".sample-list");
-
-                    var add_list = "";
-
-                    for (var i = 0; i < result.sample.length; i++) {
-                        if (result.sample[i].sample_code === e) {
-                            add_list += '<tr>';
-                            add_list += '<td>' + result.sample[i].sample_name + '</td>';
-                            add_list += '<td>' + result.sample[i].sample_code + '</td>';
-                            add_list += '<td>' + result.sample[i].sample_country + '</td>';
-                            add_list += '<td>' + result.sample[i].sample_type + '</td>';
-                            add_list += '<td>' + result.sample[i].sample_mate + '</td>';
-                            add_list += '<td>' + result.sample[i].sample_seed + '</a></td>';
-                            add_list += '<td>' + result.sample[i].sample_amount + '</td>';
-                            add_list += '<td>' + result.sample[i].sample_sprout + '</td>';
-                            add_list += '<td>' + result.sample[i].sample_purity + '</td>';
-                            add_list += '<td>' + result.sample[i].sample_comment + '</td>';
-                            add_list += '</tr>';
-                        }
-                    }
-
-                    sample_list.empty();
-                    sample_list.append(add_list);
-                }
-            });
-    }
-
-    function SearchBasic(e1, e2) {
-        $("#pop_data1").modal();
-
-        var basic_name = $("#CropSelect").val();
-
-        var data = {"basic_name": basic_name};
-
-        $.ajax(
-            {
-                url: 'searchBasic1',
-                method: 'POST',
-                dataType: 'json',
-                data: data,
-                success: function (result) {
-                    var basic_list = $("#basic_list");
-                    var basicD_list = $("#basicD_list");
-
-                    var add_list = "";
-                    var add_listD = "";
-
-                    for (var i = 0; i < result.basic.length; i++) {
-                        add_list += '<tr>';
-                        add_listD += '<tr>';
-
-                        for (var j = 0; j < result.basic[i].basic_standard.length; j++) {
-                            if (result.basic[i].basic_standard[1].standard === e1) {
-                                add_list += '<td>' + result.basic[i].basic_standard[j].standard + '</td>';
-                            }
-
-                            if (result.basic[i].basic_standard[1].standard === e2) {
-                                add_listD += '<td>' + result.basic[i].basic_standard[j].standard + '</td>';
-                            }
-                        }
-
-                        add_list += '</tr>';
-                        add_listD += '</tr>';
-                    }
-
-                    basic_list.empty();
-                    basic_list.append(add_list);
-
-                    basicD_list.empty();
-                    basicD_list.append(add_listD);
-                }
-            });
-    }
-
     function SearchBasic1(e1, e2) {
-        $("#pop_data1").modal();
+        $("#pop_data2").modal();
 
         var basic_name = $("#CropSelect").val();
 
@@ -2582,7 +2542,7 @@
     }
 
     function SearchBasic2(e1, e2) {
-        $("#pop_data1").modal();
+        $("#pop_data2").modal();
 
         var basic_name = $("#CropSelect").val();
 
@@ -2687,7 +2647,7 @@
                         var filter = {type: 'text', showApplyBtn: true, showClearBtn: true};
 
                         if (result.display[i].detail_spec == '기본 정보') {
-                            if (result.display[i].detail_title == '시교명 (ID)' || result.display[i].detail_title == '모계 계통명 (ID)' || result.display[i].detail_title == '부계 계통명 (ID)'){
+                            if (result.display[i].detail_title == '작물') {
                                 arr = {'header': colHeader, 'name': colName, 'sortable': 'true', 'sortingType': 'asc', 'width': 180, 'filter': filter}
                             } else {
                                 arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 180, 'filter': filter}
@@ -2731,24 +2691,17 @@
                     breedgrid.on('click', (ev) => {
                         if (ev.targetType === 'cell' && (ev.columnName === '2' || ev.columnName === '277' || ev.columnName === '388' || ev.columnName === '626' || ev.columnName === '749' || ev.columnName === '912' || ev.columnName === '1076' || ev.columnName === '1254' || ev.columnName === '1412' || ev.columnName === '1599')) {
                             var value_sample = ev.nativeEvent.srcElement;
-                            var value_mom = breedgrid.getRow(ev.rowKey)[4];
-                            var value_dad = breedgrid.getRow(ev.rowKey)[5];
 
                             SearchSample(value_sample);
-                            SearchBasic(value_mom, value_dad);
                         } else if (ev.targetType === 'cell' && ev.columnName === '4') {
-                            var value_sample1 = breedgrid.getRow(ev.rowKey)[2];
                             var value_mom1 = ev.nativeEvent.srcElement;
                             var value_dad1 = breedgrid.getRow(ev.rowKey)[5];
 
-                            SearchSample1(value_sample1);
                             SearchBasic1(value_mom1, value_dad1);
                         } else if (ev.targetType === 'cell' && ev.columnName === '5') {
-                            var value_sample2 = breedgrid.getRow(ev.rowKey)[2];
                             var value_mom2 = breedgrid.getRow(ev.rowKey)[4];
                             var value_dad2 = ev.nativeEvent.srcElement;
 
-                            SearchSample2(value_sample2);
                             SearchBasic2(value_mom2, value_dad2);
                         } else if (ev.targetType === 'cell' && ev.columnName === 'file') {
                             var id = breedgrid.getRow(ev.rowKey).breed_id;
@@ -2762,7 +2715,7 @@
                     });
 
                     breedgrid.on('editingStart', (ev) => {
-                        if($(".plus_btn_submit1")[0].style.display != 'block') {
+                        if ($(".plus_btn_submit1")[0].style.display != 'block') {
                             $(".plus_btn_submit2").css("display", "block");
                         }
                     })
@@ -2789,6 +2742,10 @@
                                         updateBreedData.push({"breed_id": breed_id, "detail_id": detail_id, "standard": standard});
                                     }
                                 }
+
+                                if ($(".plus_btn_submit1")[0].style.display != 'block') {
+                                    $(".plus_btn_submit2").css("display", "block");
+                                }
                             }
                         }
                     });
@@ -2813,6 +2770,7 @@
             var cnt = breedgrid.getRowCount();
 
             const newRow = {'breed_id': null, '1': $("#CropSelect").val()};
+
 
             breedgrid.prependRow(newRow);
             breedgrid.check(cnt);
@@ -2872,7 +2830,7 @@
     function cancelUpdate() {
         $(".plus_btn_submit2").css("display", "none");
 
-        if($(".tui-grid-cell-content").hasClass("tui-grid-layer-editing")){
+        if ($(".tui-grid-cell-content").hasClass("tui-grid-layer-editing")) {
             $(".tui-grid-cell-content").removeClass("tui-grid-layer-editing");
         }
     }
@@ -3238,12 +3196,6 @@
                 dataType: 'json',
                 data: data,
                 success: function (result) {
-                    // var header_list = $("#header_list");
-                    // var header_add = "";
-                    //
-                    // var breed_list = $("#breed_list");
-                    // var add_list = "";
-
                     var detail_list = $(".detail_list");
                     var detail_list2 = $(".detail_list2");
 

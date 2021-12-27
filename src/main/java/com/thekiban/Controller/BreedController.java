@@ -59,9 +59,6 @@ public class BreedController {
     List<Detail> detail = service.SearchBreedDetail(breed_name);                  // 품종 작물별 컬럼 조회
     List<Display> display = service.SelectDisplay(user.getUser_id(), breed_name);          // 사용자별 품종 표시항목 조회
 
-    System.out.println(breed);
-
-
     List<Standard> standard = new ArrayList<Standard>();
 
     if (!detail.isEmpty()) {

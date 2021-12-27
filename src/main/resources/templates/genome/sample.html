@@ -1617,7 +1617,6 @@
 <th:block th:include="/../fragments/commonjs.html"></th:block>
 
 <script type="text/javascript">
-
     function dataToggle(one, two) {
         $(one).modal("hide");
 
@@ -1625,6 +1624,30 @@
             $(two).modal("show");
         }, 5);
     }
+
+    /* s : localstorage 저장 예제 */
+    function setLocalS(key, value) {
+        localStorage.setItem(key, value);
+    }
+
+    function getLocalS(key, useRemove) {
+        let result = "";
+        if (localStorage.getItem(key) !== null) {
+            result = localStorage.getItem(key);
+            if (useRemove) {
+                removeLocalS(key);
+            }
+            return result;
+        } else {
+            result = "고추"
+            return result;
+        }
+    }
+
+    function removeLocalS(key) {
+        localStorage.removeItem(key);
+    }
+    /* e : localstorage 저장 예제 */
 
     /* 엑셀 업로드 목록창 */
     function filesFunction() {
@@ -2224,18 +2247,24 @@
     $("#sampleTable1").click(function () {
         tablechk = 0;
         outcomegrid.destroy();
+        $("#CropSelect").val(getLocalS("sample_crop"));
+
         SearchSample(1);
     })
 
     $("#sampleTable2").click(function () {
         tablechk = 1;
         samplegrid.destroy();
+        $("#CropSelect").val(getLocalS("sample_crop"));
+
         SearchOutcome(1);
     })
     /* 시교자원 수출관리 테이블 구분 */
 
     // DB에 저장된 데이터 읽어와서 테이블에 보여줌
     $(document).ready(function () {
+        $("#CropSelect").val(getLocalS("sample_crop"));
+
         SearchSample(1);
         SearchMarker();
     });
@@ -2250,6 +2279,8 @@
 
             SearchOutcome(1);
         }
+
+        setLocalS("sample_crop", $("#CropSelect").val());
     })
 
     // 갯수 선택
@@ -2640,13 +2671,13 @@
                             {
                                 header: '작물',
                                 name: 'sample_name',
-                                editor: 'text',
                                 sortable: true,
                                 sortingType: 'asc'
                             },
                             {
                                 header: '시교명(ID)',
                                 name: 'sample_code',
+                                editor: 'text',
                                 sortable: true,
                                 sortingType: 'asc',
                                 filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
@@ -2678,6 +2709,7 @@
                             {
                                 header: '종자번호(ID)',
                                 name: 'sample_seed',
+                                editor: 'text',
                                 sortable: true,
                                 sortingType: 'asc',
                                 filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
@@ -2793,6 +2825,10 @@
                                         updateSampleData.push({"sample_id": sample_id, "sample_name": sample_name, "sample_value": sample_value});
                                     }
                                 }
+
+                                if($(".plus_btn_submit1")[0].style.display != 'block') {
+                                    $(".plus_btn_submit2").css("display", "block");
+                                }
                             }
                         }
                     });
@@ -2837,6 +2873,7 @@
                             {
                                 header: '종자번호(ID)',
                                 name: 'sample_outcome_num',
+                                editor: 'text',
                                 sortable: true,
                                 filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
                             },
@@ -2985,6 +3022,10 @@
                                             "sample_outcome_value": sample_outcome_value
                                         });
                                     }
+                                }
+
+                                if($(".plus_btn_submit1")[0].style.display != 'block') {
+                                    $(".plus_btn_submit2").css("display", "block");
                                 }
                             }
                         }
