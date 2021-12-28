@@ -16,7 +16,7 @@ public interface BasicService
 	int SelectRemainCount(String basic_name);
 
 	// 원종 검색
-	List<Basic> SearchBasic(String basic_name, int offset, int limit);
+	List<Basic> SearchBasic(String basic_name);
 
 	List<BasicRemain> SearchBasicRemain(String basic_name, int offset, int limit);
 

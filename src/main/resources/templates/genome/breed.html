@@ -1151,7 +1151,7 @@
                             <div class="tab-slide-content">
                                 <div class="atbd-tab tab-horizontal">
                                     <div class="top_box">
-                                        <ul class="nav nav-tabs vertical-tabs" role="tablist">
+                                        <ul class="nav nav-tabs vertical-tabs" role="tablist" id="headerList">
                                             <li class="nav-item">
                                                 <a class="nav-link" id="tab-horizontal-0-tab" data-toggle="tab" href="#tab-horizontal-0" role="tab" aria-controls="tab-horizontal-0"
                                                    aria-selected="true">기본 정보</a>
@@ -2253,9 +2253,57 @@
             }
         }
     }
+    /* s : 구간 체크박스 선택 */
+    var keyShiftBool = false;
+    var selectorOnce = true;
+    selectorCheck = "";
+    selectorCheck = "";
+    function onKeyWindow(e){
+        if(e.type === "keydown"){
+            if(e.keyCode === 16 && selectorOnce){
+                console.log("keydown:", 16);
+                keyShiftBool = true;
+                selectorOnce = false;
+            }
+        }else if(e.type === "keyup"){
+            keyShiftBool = false;
+            selectorOnce = true;
+        }
+    }
+
+    let tmpArray = {};
+
+    function onSectionSelector(e){
+        /* s : 액티브 탭 불러오기*/
+        var tabList = document.querySelectorAll("#headerList li.nav-item");
+        tabList = Array.prototype.slice.call(tabList);
+        var activeTab = document.querySelector("#headerList li.nav-item.active");
+        var indexTab = tabList.indexOf(activeTab);
+
+        /* e : 액티브 탭 불러오기*/
+        var getList = document.querySelectorAll("#display_container" + (indexTab + 1) + " li");
+        getList = Array.prototype.slice.call(getList);
+        var target = e.currentTarget;
+        var index = getList.indexOf(target);
+
+        if(keyShiftBool){
+            getList[index].classList.add("active");
+            var checkedEls = document.querySelectorAll("#display_container" + (indexTab + 1) + " li.active");
+            checkedEls = Array.prototype.slice.call(checkedEls);
+            var firstIndex = getList.indexOf(checkedEls[0]);
+            var lastIndex = getList.indexOf(checkedEls[checkedEls.length - 1]);
+            for(var i = firstIndex; i < (Math.abs(lastIndex - firstIndex) + 2); i++){
+                if(getList[i].children[0] !== undefined){
+                    getList[i].children[0].checked = true;
+                    getList[i].classList.add("active");
+                }
+            }
+        }
+     }
+    /* e : 구간 체크박스 선택 */
 
     /* 헤더 선택 */
-    function PlusResearch(e) {
+    function PlusResearch(e) { // plusO
         var step_container = $("#step_container" + e);
         var length = step_container.children().length;
 
@@ -2438,14 +2486,16 @@
     function CheckFunction() {
         // 박스안 리스트 클릭시 체크박스 체크
         $('#grid2 .tab-content .row li').off('click').on('click', function (e) {
-            e.preventDefault();
+            if(!keyShiftBool){
+                e.preventDefault();
 
-            $(this).toggleClass("active");
+                $(this).toggleClass("active");
 
-            if ($(this).hasClass("active") == true) {
-                $(this).find("input[type='checkbox']").eq(0).prop("checked", true);
-            } else {
-                $(this).find("input[type='checkbox']").eq(0).prop("checked", false);
+                if ($(this).hasClass("active") == true) {
+                    $(this).find("input[type='checkbox']").eq(0).prop("checked", true);
+                } else {
+                    $(this).find("input[type='checkbox']").eq(0).prop("checked", false);
+                }
             }
         });
     }
@@ -3205,45 +3255,6 @@
                     var detail_add = "";
                     var detail_add2 = "";
 
-                    // var pageNum = $("#pageNum");
-                    // var page_add = "";
-
-                    // header
-                    // header_add += '<tr>';
-                    // header_add += '<th></th>';
-                    // header_add += '<th><span class="title">첨부파일</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="첨부파일"></th>';
-                    // header_add += '<th><span class="title">특성상태</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="특성상태"></th>';
-                    //
-                    // for (var i = 0; i < result.display.length; i++) {
-                    //     header_add += '<th style="cursor: pointer;"><span class="title">' + result.display[i].detail_title + '</span><i></i><img src="../assets/vendor_assets/img/title_icon.png" alt="' + result.display[i].detail_title + '"></th>'
-                    // }
-                    //
-                    // header_add += '</tr>';
-
-                    // body
-                    // for (var i = 0; i < result.breed.length; i++) {
-                    //     add_list += '<tr>';
-                    //     add_list += '<td><input type="checkbox" name="RowCheck" value="' + result.breed[i].breed_id + '"></td>';
-                    //     /* add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" data-toggle="modal" data-target="#breed_file"><i class="bi bi-file-earmark-arrow-down"></i></button></td>'; */
-                    //     add_list += '<td><button class="btn btn-light btn-default btn-squared btn-transparent-light" onclick="FileBtn(' + result.breed[i].breed_id + ');"><i class="bi bi-file-earmark-arrow-down"></i></button></td>';
-                    //
-                    //     if (result.breed[i].standard_count == 0) {
-                    //         add_list += '<td onclick="EmptyBtn(' + result.breed[i].breed_id + ');" style="color : blue; cursor:pointer;">EMPTY</td>';
-                    //     } else {
-                    //         add_list += '<td onclick="EmptyBtn(' + result.breed[i].breed_id + ');" style="color : green; cursor:pointer;">PROGRESS</td>';
-                    //     }
-                    //
-                    //     for (var j = 0; j < result.breed[i].breed_standard.length; j++) {
-                    //         if (result.breed[i].breed_standard[j].detail_id === 2 || result.breed[i].breed_standard[j].detail_id === 4 || result.breed[i].breed_standard[j].detail_id === 5) {
-                    //             add_list += '<td><input type="text" class="updateInput" data="' + result.breed[i].breed_id + '" name="' + result.breed[i].breed_standard[j].detail_id + '" value="' + result.breed[i].breed_standard[j].standard + '"><a data-toggle="modal" href="#pop_data1"><i class="fas fa-link"></i></a></td>';
-                    //         } else {
-                    //             add_list += '<td><input type="text" class="updateInput" data="' + result.breed[i].breed_id + '" name="' + result.breed[i].breed_standard[j].detail_id + '" value="' + result.breed[i].breed_standard[j].standard + '"></td>';
-                    //         }
-                    //     }
-                    //
-                    //     add_list += '</tr>';
-                    // }
-
                     // detail
                     for (var i = 0; i < detail_list.length; i++) {
                         detail_add = "";
@@ -3309,6 +3320,18 @@
 
                         display_list.eq(i).empty();
                         display_list.eq(i).append(display_add);
+
+
+                    }
+
+                    // 붙여줌
+                    //selectorCheck = document.querySelectorAll("input[type=checkbox][name=mis_research]");
+                    selectorCheck = document.querySelectorAll(".detail_list li");
+                    selectorCheck = Array.prototype.slice.call(selectorCheck);
+                    window.addEventListener("keydown", onKeyWindow);
+                    window.addEventListener("keyup", onKeyWindow);
+                    for(var t = 0; t < selectorCheck.length; t++){
+                        selectorCheck[t].addEventListener("click", onSectionSelector);
                     }
 
                     // paging

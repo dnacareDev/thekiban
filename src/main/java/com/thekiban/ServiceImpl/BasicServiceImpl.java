@@ -35,9 +35,9 @@ public class BasicServiceImpl implements BasicService
 
 	// 원종 검색
 	@Override
-	public List<Basic> SearchBasic(String basic_name, int offset, int limit)
+	public List<Basic> SearchBasic(String basic_name)
 	{
-		return mapper.SearchBasic(basic_name, offset, limit);
+		return mapper.SearchBasic(basic_name);
 	}
 
 	@Override

@@ -18,7 +18,7 @@ public interface BasicMapper
 	int SelectRemainCount(String basic_name);
 
 	// 원종 검색
-	List<Basic> SearchBasic(@Param("basic_name") String basic_name, @Param("offset") int offset, @Param("limit") int limit);
+	List<Basic> SearchBasic(@Param("basic_name") String basic_name);
 
 	List<BasicRemain> SearchBasicRemain(@Param("basic_name") String basic_name, @Param("offset") int offset, @Param("limit") int limit);
 

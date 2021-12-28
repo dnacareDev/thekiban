@@ -65,7 +65,7 @@ public class BasicController
 		int offset = (page_num - 1) * limit;
 		int end_page = (count + limit - 1) / limit;
 		
-		List<Basic> basic = service.SearchBasicExcel(basic_name);						// 원종 검색
+		List<Basic> basic = service.SearchBasic(basic_name);						// 원종 검색
 		List<Detail> detail = service.SearchBasicDetail(basic_name);							// 원종 작물별 컬럼 조회
 		List<Display> display = service.SelectDisplay(user.getUser_id(), basic_name);			// 사용자별 원종 표시항목 조회
 		

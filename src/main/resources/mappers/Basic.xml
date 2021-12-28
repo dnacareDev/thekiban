@@ -37,7 +37,6 @@
             </when>
         </choose>
         ORDER BY b.basic_id DESC
-        LIMIT #{offset}, #{limit}
     </select>
 
     <!-- 원종별 세부 정보 조회 -->
