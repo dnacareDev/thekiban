@@ -505,7 +505,11 @@ public class BasicController
 				Standard standard = new Standard();
 				standard.setBasic_id(basic.getBasic_id());
 				standard.setDetail_id(detail.get(j).getDetail_id());
-				standard.setStandard((String)item.get(j));
+				if(j < item.length()) {
+					standard.setStandard((String) item.get(j));
+				} else {
+					standard.setStandard("");
+				}
 
 				standards.add(standard);
 			}
