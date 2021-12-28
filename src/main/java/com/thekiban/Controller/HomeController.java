@@ -1,9 +1,6 @@
 package com.thekiban.Controller;
 
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.thekiban.Entity.SampleOutcome;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,76 +15,85 @@ import com.thekiban.Service.HomeService;
 
 @Controller
 @RequestMapping(value = "/")
-public class HomeController
-{
-	@Autowired
-	private HomeService service;
+public class HomeController {
+  @Autowired
+  private HomeService service;
 
-	@RequestMapping("/")
-	public ModelAndView Index(ModelAndView mv)
-	{
-		mv.setViewName("home/kiban_home");
-		
-		return mv;
-	}
+  @RequestMapping("/")
+  public ModelAndView Index(ModelAndView mv) {
+    mv.setViewName("home/kiban_home");
 
-	@RequestMapping("/home")
-	public ModelAndView Home(ModelAndView mv)
-	{
-		mv.setViewName("home/kiban_home");
+    return mv;
+  }
 
-		return mv;
-	}
-	
-	@ResponseBody
-	@RequestMapping("selectChart")
-	public Map<String, Object> SelectChart()
-	{
-		Map<String, Object> result = new LinkedHashMap<String, Object>();
-		
-		ChartCount breed = service.SelectChartBreed();
-		ChartCount sales = service.SelectChartSales();
-		ChartCount apply = service.SelectChartApply();
-		ChartCount protect = service.SelectChartProtect();
+  @RequestMapping("/home")
+  public ModelAndView Home(ModelAndView mv) {
+    mv.setViewName("home/kiban_home");
 
-		result.put("breed", breed);
-		result.put("sales", sales);
-		result.put("apply", apply);
-		result.put("protect", protect);
-		
-		return result;
-	}
-	
-	@ResponseBody
-	@RequestMapping("selectChartBar")
-	public Map<Integer, Object> SelectChartBar()
-	{
-		Map<Integer, Object> result = new LinkedHashMap<Integer, Object>();
-		
-		Date date = new Date();
-		
-		for(int i = 1; i > -4; i--)
-		{
-			String year = (date.getYear() + 1900 + i) + "-01-01";
-			
-			List<Breed> breed = service.SelectChartBar(year);
-			
-			result.put((date.getYear() + 1899 + i), breed);
-		}
-		
-		return result;
-	}
+    return mv;
+  }
 
-	@ResponseBody
-	@RequestMapping("selectOutcomeList")
-	public Map<String, Object> SelectOutcome()
-	{
-		Map<String, Object> result = new LinkedHashMap<String, Object>();
+  @ResponseBody
+  @RequestMapping("selectChart")
+  public Map<String, Object> SelectChart() {
+    Map<String, Object> result = new LinkedHashMap<String, Object>();
 
-		List<SampleOutcome> sampleOutcomes = service.SelectOutcomeList();
+    ChartCount breed = service.SelectChartBreed();
+    ChartCount sales = service.SelectChartSales();
+    ChartCount apply = service.SelectChartApply();
+    ChartCount protect = service.SelectChartProtect();
 
-		result.put("sampleOutcome", sampleOutcomes);
+    result.put("breed", breed);
+    result.put("sales", sales);
+    result.put("apply", apply);
+    result.put("protect", protect);
 
-		return result;
-	}
+    return result;
+  }
+
+  @ResponseBody
+  @RequestMapping("selectChartBar")
+  public Map<Integer, Object> SelectChartBar() {
+    Map<Integer, Object> result = new LinkedHashMap<Integer, Object>();
+
+    Date date = new Date();
+
+    for (int i = 1; i > -4; i--) {
+      String year = (date.getYear() + 1900 + i) + "-01-01";
+
+      List<Breed> breed = service.SelectChartBar(year);
+
+      result.put((date.getYear() + 1899 + i), breed);
+    }
+
+    return result;
+  }
+
+  @ResponseBody
+  @RequestMapping("selectOutcomeList")
+  public Map<String, Object> SelectOutcome() {
+    Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+    List<SampleOutcome> sampleOutcomes = service.SelectOutcomeList();
+
+    List<String> placeK = new ArrayList<String>();
+    List<String> placeG = new ArrayList<String>();
+
+    for (int i = 0; i < sampleOutcomes.size(); i++) {
+      if (sampleOutcomes.get(i).getSample_outcome_country().equals("국내")) {
+        if (!placeK.contains(sampleOutcomes.get(i).getSample_outcome_place())) {
+          placeK.add(sampleOutcomes.get(i).getSample_outcome_place());
+        }
+      } else {
+        if (!placeG.contains(sampleOutcomes.get(i).getSample_outcome_place())) {
+          placeG.add(sampleOutcomes.get(i).getSample_outcome_place());
+        }
+      }
+    }
+
+    result.put("sampleOutcomeKo", placeK);
+    result.put("sampleOutcomeGlo", placeG);
+
+    return result;
+  }
 }

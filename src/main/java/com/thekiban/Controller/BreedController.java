@@ -409,7 +409,7 @@ public class BreedController {
         if(j < item.length()) {
           standard.setStandard((String) item.get(j));
         } else {
-          standard.setStandard("");
+          standard.setStandard(null);
         }
 
         standards.add(standard);

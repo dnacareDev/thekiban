@@ -3172,12 +3172,12 @@
                 dataType: 'json',
                 data: data,
                 success: function (result) {
-                    for (let i = 0; i < result.sampleOutcome.length; i++) {
-                        if (result.sampleOutcome[i].sample_outcome_country == '국내') {
-                            inKorea.push(result.sampleOutcome[i].sample_outcome_place);
-                        } else if (result.sampleOutcome[i].sample_outcome_country == '해외') {
-                            outKorea.push(result.sampleOutcome[i].sample_outcome_place);
-                        }
+                    for (let i = 0; i < result.sampleOutcomeKo.length; i++) {
+                        inKorea.push(result.sampleOutcomeKo[i]);
+                    }
+
+                    for(let i = 0; i < result.sampleOutcomeGlo.length; i++) {
+                        outKorea.push(result.sampleOutcomeGlo[i]);
                     }
 
                     searchArea();
