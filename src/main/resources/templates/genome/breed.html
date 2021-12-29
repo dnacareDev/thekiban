@@ -1202,8 +1202,6 @@
                                                                     <div class="col-lg-12">
                                                                         <span class="color-dark align-center" style="font-size: 16px;">표시항목 설정</span>
                                                                     </div>
-                                                                    <input type='checkbox' value='selectall' onclick='chkSelectAll(this)'/>
-                                                                    <input type='checkbox' value='selectall' onclick='misSelectAll(this)'/>
                                                                 </div>
                                                                 <div class="row mt-4" style="justify-content: center; align-items: center;">
                                                                     <div class="col-lg-5">
@@ -2333,7 +2331,7 @@
             let num = firstIndex;
             for (var i = 0; i < (Math.abs(lastIndex - firstIndex) + 1); i++) {
                 if (getList[num].children[0] !== undefined) {
-                    getList[num].children[0].checked = true;
+                    getList[num].children[0].children[0].checked = true;
                     getList[num].classList.add("active");
                 }
                 num++;
@@ -3319,7 +3317,6 @@
                                             display_add += '<div class="row">';
                                             display_add += '<input type="checkbox" class="checkbox mr-2" name="mis_research">';
                                             display_add += '<span class="research-title">' + result.detail[j].detail_title + '</span>';
-                                            /* display_add += '<input type="hidden" id="detail_id" name="detail_id" value="' + result.detail[j].detail_id + '">'; */
                                             display_add += '<input type="hidden" name="detail_id" value="' + result.detail[j].detail_id + '">';
                                             display_add += '</div>';
                                             display_add += '</li>';
