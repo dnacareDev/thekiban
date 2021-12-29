@@ -887,7 +887,25 @@ select{
 				
 				target_list.empty();
 				target_list.append(add_list);
-				
+
+                // 붙여줌
+                selectorCheck = document.querySelectorAll(".target_list li");
+                selectorCheck = Array.prototype.slice.call(selectorCheck);
+
+                selectorCheck2 = document.querySelectorAll(".plus_target li");
+                selectorCheck2 = Array.prototype.slice.call(selectorCheck2);
+
+                window.addEventListener("keydown", onKeyWindow);
+                window.addEventListener("keyup", onKeyWindow);
+
+                for (var t = 0; t < selectorCheck.length; t++) {
+                    selectorCheck[t].addEventListener("click", onSectionSelector);
+                }
+
+                for (var g = 0; g < selectorCheck2.length; g++) {
+                    selectorCheck2[g].addEventListener("click", offSectionSelector);
+                }
+
 				CheckFunction();
 			}
 		});
@@ -921,6 +939,86 @@ select{
 			$(elem).parent().next().css({"height" : $(elem).parent().height(), "padding-top": 0});
 		});
 	}*/
+
+    /* s : 구간 체크박스 선택 */
+    var keyShiftBool = false;
+    var selectorOnce = true;
+    selectorCheck = "";
+    selectorCheck = "";
+    selectorCheck2 = "";
+    selectorCheck2 = "";
+
+    function onKeyWindow(e) {
+        if (e.type === "keydown") {
+            if (e.keyCode === 16 && selectorOnce) {
+                keyShiftBool = true;
+                selectorOnce = false;
+            }
+        } else if (e.type === "keyup") {
+            keyShiftBool = false;
+            selectorOnce = true;
+        }
+    }
+
+    function onSectionSelector(e) {
+        var getList = document.querySelectorAll("#display_container" + (indexTab + 1) + " li");
+        getList = Array.prototype.slice.call(getList);
+        var target = e.currentTarget;
+        var index = getList.indexOf(target);
+
+        if (keyShiftBool) {
+            getList[index].classList.add("active");
+            var checkedEls = document.querySelectorAll("#display_container" + (indexTab + 1) + " li.active");
+            checkedEls = Array.prototype.slice.call(checkedEls);
+
+            var firstIndex = getList.indexOf(checkedEls[0]);
+
+            var lastIndex = getList.indexOf(checkedEls[checkedEls.length - 1]);
+
+            let num = firstIndex;
+            for (var i = 0; i < (Math.abs(lastIndex - firstIndex) + 1); i++) {
+                if (getList[num].children[0] !== undefined) {
+                    getList[num].children[0].checked = true;
+                    getList[num].classList.add("active");
+                }
+                num++;
+            }
+        }
+    }
+
+    function offSectionSelector(e) {
+        /* s : 액티브 탭 불러오기*/
+        var tabList = document.querySelectorAll("#headerList li.nav-item");
+        tabList = Array.prototype.slice.call(tabList);
+        var activeTab = document.querySelector("#headerList li.nav-item.active");
+        var indexTab = tabList.indexOf(activeTab);
+        /* e : 액티브 탭 불러오기*/
+
+        var getList = document.querySelectorAll("#step_container" + (indexTab + 1) + " li");
+        getList = Array.prototype.slice.call(getList);
+        var target = e.currentTarget;
+        var index = getList.indexOf(target);
+
+        if (keyShiftBool) {
+            getList[index].classList.add("active");
+            var checkedEls = document.querySelectorAll("#step_container" + (indexTab + 1) + " li.active");
+            checkedEls = Array.prototype.slice.call(checkedEls);
+
+            var firstIndex = getList.indexOf(checkedEls[0]);
+
+            var lastIndex = getList.indexOf(checkedEls[checkedEls.length - 1]);
+
+            let num = firstIndex;
+            for (var i = 0; i < (Math.abs(lastIndex - firstIndex) + 1); i++) {
+                if (getList[num].children[0] !== undefined) {
+                    getList[num].children[0].children[0].checked = true;
+                    getList[num].classList.add("active");
+                }
+                num++;
+            }
+        }
+    }
+    /* e : 구간 체크박스 선택 */
 	
 	// 선택 이벤트
 	function PlusBtn(e)
