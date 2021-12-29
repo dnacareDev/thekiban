@@ -2260,11 +2260,12 @@
     var selectorOnce = true;
     selectorCheck = "";
     selectorCheck = "";
+    selectorCheck2 = "";
+    selectorCheck2 = "";
 
     function onKeyWindow(e) {
         if (e.type === "keydown") {
             if (e.keyCode === 16 && selectorOnce) {
-                console.log("keydown:", 16);
                 keyShiftBool = true;
                 selectorOnce = false;
             }
@@ -2273,8 +2274,6 @@
             selectorOnce = true;
         }
     }
-
-    let tmpArray = {};
 
     function onSectionSelector(e) {
         /* s : 액티브 탭 불러오기*/
@@ -2326,18 +2325,37 @@
             getList[index].classList.add("active");
             var checkedEls = document.querySelectorAll("#step_container" + (indexTab + 1) + " li.active");
             checkedEls = Array.prototype.slice.call(checkedEls);
+
             var firstIndex = getList.indexOf(checkedEls[0]);
+
             var lastIndex = getList.indexOf(checkedEls[checkedEls.length - 1]);
-            for (var i = firstIndex; i < (Math.abs(lastIndex - firstIndex) + 1); i++) {
-                if (getList[i].children[0] !== undefined) {
-                    getList[i].children[0].checked = true;
-                    getList[i].classList.add("active");
+
+            let num = firstIndex;
+            for (var i = 0; i < (Math.abs(lastIndex - firstIndex) + 1); i++) {
+                if (getList[num].children[0] !== undefined) {
+                    getList[num].children[0].checked = true;
+                    getList[num].classList.add("active");
                 }
+                num++;
             }
         }
     }
-
     /* e : 구간 체크박스 선택 */
+
+    function sorting(e) {
+
+        $("#detail_list").html(
+            $("#detail_list li").sort(function (a, b) {
+                return $(b).data(e) - $(a).data(e);
+            })
+        );
+
+        $("#display_list").html(
+            $("#display_list li").sort(function (a, b) {
+                return $(b).data(e) - $(a).data(e);
+            })
+        );
+    }
 
     /* 헤더 선택 */
     function PlusResearch(e) { // plusO
@@ -2378,15 +2396,6 @@
         CheckFunction();
     }
 
-    function sorting(e) {
-
-        $("#detail_list").html(
-            $("#detail_list li").sort(function (a, b) {
-                return $(b).data(e) - $(a).data(e);
-            })
-        );
-    }
-
     //조사방법 체크박스 삭제
     function MinusResearch(e) {
         var display_container = $("#display_container" + e);
@@ -2394,9 +2403,10 @@
 
         var add_list = "";
 
+        var research_id = 0;
         //체크박스 삭제
         $(document).find("input:checkbox[name=mis_research]:checked").each(function () {
-            var research_id = $(this).val();
+            research_id = $(this).val();
             var research_title = $(this).next().text();
 
             if (length == 0) {
@@ -2405,18 +2415,8 @@
                 length++;
             }
 
-            // add_list += '<div data-id="' + research_id + '" class="list-group step">';
-            // add_list += '<li class="list-group-item-sm list-group-item">';
-            // add_list += '<div class="row">';
-            // add_list += '<input type="checkbox" class="check_box" name="chk_research">';
-            // add_list += '<input type="hidden" name="detail_id" value="' + research_id + '">';
-            // add_list += '<div class="title">' + research_title + '</div>';
-            // add_list += '</div>';
-            // add_list += '</li>';
-            // add_list += '</div>';
-
             add_list += '<li>';
-            add_list += '<input type="checkbox" class="check_box" name="chk_research">';
+            add_list += '<input type="checkbox" class="check_box" name="chk_research" value="' + research_id + '">';
             add_list += '<div class="title">' + research_title + '</div>';
             add_list += '</li>';
 
@@ -2424,6 +2424,9 @@
         });
 
         display_container.append(add_list);
+
+        sorting(research_id);
+
         CheckFunction();
     }
 
@@ -3365,13 +3368,20 @@
                     //selectorCheck = document.querySelectorAll("input[type=checkbox][name=mis_research]");
                     selectorCheck = document.querySelectorAll(".detail_list li");
                     selectorCheck = Array.prototype.slice.call(selectorCheck);
+
+                    selectorCheck2 = document.querySelectorAll(".display_list li");
+                    selectorCheck2 = Array.prototype.slice.call(selectorCheck2);
+
                     window.addEventListener("keydown", onKeyWindow);
                     window.addEventListener("keyup", onKeyWindow);
+
                     for (var t = 0; t < selectorCheck.length; t++) {
                         selectorCheck[t].addEventListener("click", onSectionSelector);
-                        selectorCheck[t].addEventListener("click", offSectionSelector);
                     }
 
+                    for (var g = 0; g < selectorCheck2.length; g++) {
+                        selectorCheck2[g].addEventListener("click", offSectionSelector);
+                    }
                     // paging
                     // if (result.page_num == 1) {
                     //     page_add += '<button class="atbd-pagination__link pagination-control"><span class="la la-angle-left"></span></button>';
