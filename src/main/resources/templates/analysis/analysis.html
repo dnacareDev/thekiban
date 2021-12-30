@@ -870,7 +870,7 @@
                                     <h6 class="title">분석형질</h6>
                                     <div class="box box1">
                                         <input type="text" id="search_trait" onchange="SearchTrait();" placeholder="품종-시교명ID, 원종-계통명ID 검색">
-                                        <div class="text_box text_box5">
+                                        <div class="text_box text_box5" style="-ms-user-select: none; -khtml-user-select: none; -webkit-user-select: none; user-select: none;">
                                             <ul id="trait_list">
                                             </ul>
                                         </div>
@@ -886,8 +886,8 @@
                                         </ul>
                                     </div>
                                     <div class="box box2">
-                                        <div class="text_box text_box6">
-                                            <ul>
+                                        <div class="text_box text_box6" style="-ms-user-select: none; -khtml-user-select: none; -webkit-user-select: none; user-select: none;">
+                                            <ul id="analysis_list">
                                             </ul>
                                         </div>
                                     </div>
@@ -1066,6 +1066,10 @@
     selectorCheck = "";
     selectorCheck2 = "";
     selectorCheck2 = "";
+    selectorCheck3 = "";
+    selectorCheck3 = "";
+    selectorCheck4 = "";
+    selectorCheck4 = "";
 
     function onKeyWindow(e) {
         if (e.type === "keydown") {
@@ -1108,7 +1112,6 @@
 
     function offSectionSelector(e) {
         var getList = document.querySelectorAll("#plus_target li");
-        console.log(getList)
         getList = Array.prototype.slice.call(getList);
         var target = e.currentTarget;
         var index = getList.indexOf(target);
@@ -1116,6 +1119,60 @@
         if (keyShiftBool) {
             getList[index].classList.add("clicked");
             var checkedEls = document.querySelectorAll("#plus_target li.clicked");
+            checkedEls = Array.prototype.slice.call(checkedEls);
+
+            var firstIndex = getList.indexOf(checkedEls[0]);
+
+            var lastIndex = getList.indexOf(checkedEls[checkedEls.length - 1]);
+
+            let num = firstIndex;
+            for (var i = 0; i < (Math.abs(lastIndex - firstIndex) + 1); i++) {
+                if (getList[num].children[0] !== undefined) {
+                    getList[num].children[0].checked = true;
+                    getList[num].classList.add("clicked");
+                }
+                num++;
+            }
+        }
+    }
+
+    function setSectionSelector(e) {
+        var getList = document.querySelectorAll("#trait_list li");
+        getList = Array.prototype.slice.call(getList);
+        console.log('set : ', getList)
+        var target = e.currentTarget;
+        var index = getList.indexOf(target);
+
+        if (keyShiftBool) {
+            getList[index].classList.add("clicked");
+            var checkedEls = document.querySelectorAll("#trait_list li.clicked");
+            checkedEls = Array.prototype.slice.call(checkedEls);
+
+            var firstIndex = getList.indexOf(checkedEls[0]);
+
+            var lastIndex = getList.indexOf(checkedEls[checkedEls.length - 1]);
+
+            let num = firstIndex;
+            for (var i = 0; i < (Math.abs(lastIndex - firstIndex) + 1); i++) {
+                if (getList[num].children[0] !== undefined) {
+                    getList[num].children[0].checked = true;
+                    getList[num].classList.add("clicked");
+                }
+                num++;
+            }
+        }
+    }
+
+    function delSectionSelector(e) {
+        var getList = document.querySelectorAll("#analysis_list li");
+        getList = Array.prototype.slice.call(getList);
+        console.log('del : ', getList)
+        var target = e.currentTarget;
+        var index = getList.indexOf(target);
+
+        if (keyShiftBool) {
+            getList[index].classList.add("clicked");
+            var checkedEls = document.querySelectorAll("#analysis_list li.clicked");
             checkedEls = Array.prototype.slice.call(checkedEls);
 
             var firstIndex = getList.indexOf(checkedEls[0]);
@@ -1188,6 +1245,37 @@
                             trait_list.append(add_list);
 
                             CheckFunction();
+
+                            selectorCheck = document.querySelectorAll("#target_list li");
+                            selectorCheck = Array.prototype.slice.call(selectorCheck);
+
+                            selectorCheck2 = document.querySelectorAll("#plus_target li");
+                            selectorCheck2 = Array.prototype.slice.call(selectorCheck2);
+
+                            selectorCheck3 = document.querySelectorAll("#trait_list li");
+                            selectorCheck3 = Array.prototype.slice.call(selectorCheck3);
+
+                            selectorCheck4 = document.querySelectorAll("#analysis_list li");
+                            selectorCheck4 = Array.prototype.slice.call(selectorCheck4);
+
+                            window.addEventListener("keydown", onKeyWindow);
+                            window.addEventListener("keyup", onKeyWindow);
+
+                            for (var t = 0; t < selectorCheck.length; t++) {
+                                selectorCheck[t].addEventListener("click", onSectionSelector);
+                            }
+
+                            for (var g = 0; g < selectorCheck2.length; g++) {
+                                selectorCheck2[g].addEventListener("click", offSectionSelector);
+                            }
+
+                            for (var f = 0; f < selectorCheck3.length; f++) {
+                                selectorCheck3[f].addEventListener("click", setSectionSelector);
+                            }
+
+                            for (var h = 0; h < selectorCheck4.length; h++) {
+                                selectorCheck4[h].addEventListener("click", delSectionSelector);
+                            }
                         }
                     });
             })
@@ -1221,29 +1309,43 @@
                     target_add += '</li>';
 
                     $(this).parent().remove();
-                    $(".text_box6").append(target_add);
+                    $("#analysis_list").append(target_add);
                 });
+
+                selectorCheck = document.querySelectorAll("#target_list li");
+                selectorCheck = Array.prototype.slice.call(selectorCheck);
+
+                selectorCheck2 = document.querySelectorAll("#plus_target li");
+                selectorCheck2 = Array.prototype.slice.call(selectorCheck2);
+
+                selectorCheck3 = document.querySelectorAll("#trait_list li");
+                selectorCheck3 = Array.prototype.slice.call(selectorCheck3);
+
+                selectorCheck4 = document.querySelectorAll("#analysis_list li");
+                selectorCheck4 = Array.prototype.slice.call(selectorCheck4);
+
+                window.addEventListener("keydown", onKeyWindow);
+                window.addEventListener("keyup", onKeyWindow);
+
+                for (var t = 0; t < selectorCheck.length; t++) {
+                    selectorCheck[t].addEventListener("click", onSectionSelector);
+                }
+
+                for (var g = 0; g < selectorCheck2.length; g++) {
+                    selectorCheck2[g].addEventListener("click", offSectionSelector);
+                }
+
+                for (var f = 0; f < selectorCheck3.length; f++) {
+                    selectorCheck3[f].addEventListener("click", setSectionSelector);
+                }
+
+                for (var h = 0; h < selectorCheck4.length; h++) {
+                    selectorCheck4[h].addEventListener("click", delSectionSelector);
+                }
             }
         }
 
         CheckFunction();
-
-        selectorCheck = document.querySelectorAll("#target_list li");
-        selectorCheck = Array.prototype.slice.call(selectorCheck);
-
-        selectorCheck2 = document.querySelectorAll("#plus_target li");
-        selectorCheck2 = Array.prototype.slice.call(selectorCheck2);
-
-        window.addEventListener("keydown", onKeyWindow);
-        window.addEventListener("keyup", onKeyWindow);
-
-        for (var t = 0; t < selectorCheck.length; t++) {
-            selectorCheck[t].addEventListener("click", onSectionSelector);
-        }
-
-        for (var g = 0; g < selectorCheck2.length; g++) {
-            selectorCheck2[g].addEventListener("click", offSectionSelector);
-        }
     }
 
     function MinusBtn(e) {
@@ -1256,6 +1358,37 @@
                 $(this).parent().remove();
                 $(".text_box1").append(add_list);
             })
+
+            selectorCheck = document.querySelectorAll("#target_list li");
+            selectorCheck = Array.prototype.slice.call(selectorCheck);
+
+            selectorCheck2 = document.querySelectorAll("#plus_target li");
+            selectorCheck2 = Array.prototype.slice.call(selectorCheck2);
+
+            selectorCheck3 = document.querySelectorAll("#trait_list li");
+            selectorCheck3 = Array.prototype.slice.call(selectorCheck3);
+
+            selectorCheck4 = document.querySelectorAll("#analysis_list li");
+            selectorCheck4 = Array.prototype.slice.call(selectorCheck4);
+
+            window.addEventListener("keydown", onKeyWindow);
+            window.addEventListener("keyup", onKeyWindow);
+
+            for (var t = 0; t < selectorCheck.length; t++) {
+                selectorCheck[t].addEventListener("click", onSectionSelector);
+            }
+
+            for (var g = 0; g < selectorCheck2.length; g++) {
+                selectorCheck2[g].addEventListener("click", offSectionSelector);
+            }
+
+            for (var f = 0; f < selectorCheck3.length; f++) {
+                selectorCheck3[f].addEventListener("click", setSectionSelector);
+            }
+
+            for (var h = 0; h < selectorCheck4.length; h++) {
+                selectorCheck4[h].addEventListener("click", delSectionSelector);
+            }
         } else if (e == 1) {
             $(document).find("input:checkbox[class=minus_method]:checked").each(function () {
                 var add_list = "";
@@ -1277,26 +1410,40 @@
                 $(this).parent().remove();
                 $(".text_box5").append(add_list);
             })
+
+            selectorCheck = document.querySelectorAll("#target_list li");
+            selectorCheck = Array.prototype.slice.call(selectorCheck);
+
+            selectorCheck2 = document.querySelectorAll("#plus_target li");
+            selectorCheck2 = Array.prototype.slice.call(selectorCheck2);
+
+            selectorCheck3 = document.querySelectorAll("#trait_list li");
+            selectorCheck3 = Array.prototype.slice.call(selectorCheck3);
+
+            selectorCheck4 = document.querySelectorAll("#analysis_list li");
+            selectorCheck4 = Array.prototype.slice.call(selectorCheck4);
+
+            window.addEventListener("keydown", onKeyWindow);
+            window.addEventListener("keyup", onKeyWindow);
+
+            for (var t = 0; t < selectorCheck.length; t++) {
+                selectorCheck[t].addEventListener("click", onSectionSelector);
+            }
+
+            for (var g = 0; g < selectorCheck2.length; g++) {
+                selectorCheck2[g].addEventListener("click", offSectionSelector);
+            }
+
+            for (var f = 0; f < selectorCheck3.length; f++) {
+                selectorCheck3[f].addEventListener("click", setSectionSelector);
+            }
+
+            for (var h = 0; h < selectorCheck4.length; h++) {
+                selectorCheck4[h].addEventListener("click", delSectionSelector);
+            }
         }
 
         CheckFunction();
-
-        selectorCheck = document.querySelectorAll("#target_list li");
-        selectorCheck = Array.prototype.slice.call(selectorCheck);
-
-        selectorCheck2 = document.querySelectorAll("#plus_target li");
-        selectorCheck2 = Array.prototype.slice.call(selectorCheck2);
-
-        window.addEventListener("keydown", onKeyWindow);
-        window.addEventListener("keyup", onKeyWindow);
-
-        for (var t = 0; t < selectorCheck.length; t++) {
-            selectorCheck[t].addEventListener("click", onSectionSelector);
-        }
-
-        for (var g = 0; g < selectorCheck2.length; g++) {
-            selectorCheck2[g].addEventListener("click", offSectionSelector);
-        }
     }
 
     $("#search_target").keyup(function () {
