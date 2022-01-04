@@ -38,13 +38,13 @@ public class LabController
 		
 		AnalysisFile analysis = service.SelectAnalysisFile(user.getUser_id(), analysis_type);
 		
-		
 		if(analysis != null)
 		{
 			analysis.setAnalysis_file("/common/r/result/" + analysis.getAnalysis_file());
 		}
 		
 		mv.addObject("analysis", analysis);
+		
 		mv.setViewName("lab/mabc");
 
 		return mv;

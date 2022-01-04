@@ -104,7 +104,7 @@ public class AnalysisController
         if(method == 0)
         {
         	root = "/data/apache-tomcat-9.0.8/webapps/ROOT/kiban/resultfiles/r_plot/corrplot/" + date_name;
-        	
+
         	path = new File(root);
         	file = new File(root + "/" + file_name);
         }
@@ -144,6 +144,7 @@ public class AnalysisController
         			writer.write(target_name[i / detail.size()]);
         			writer.write("\t");
         			writer.write(standard.get(i).getStandard());
+        			System.out.println("standard_" + i + " : " + standard.get(i).getStandard());
         		}
         		else
         		{
@@ -166,7 +167,8 @@ public class AnalysisController
         			}
         		}
         	}
-			
+        	
+        	writer.newLine();
 			writer.flush();
 			writer.close();
 			
