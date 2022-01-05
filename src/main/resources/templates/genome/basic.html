@@ -2526,7 +2526,7 @@
             }
 
             if (total_id.length != 0) {
-                location.href = "/analysis?total_id=" + total_id + "&type=" + 2;
+                window.open("/analysis?total_id=" + total_id + "&type=" + 2);
             }
         } else {
             Alert("사용할 수 없는 기능입니다.")
