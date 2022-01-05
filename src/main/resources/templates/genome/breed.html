@@ -2378,8 +2378,8 @@
             add_list += '<li class="list-group-item-sm list-group-item">';
             add_list += '<div class="row">';
             add_list += '<input type="checkbox" class="checkbox mr-2" name="mis_research">';
-            add_list += '<input type="hidden" name="detail_id" value="' + research_id + '">';
             add_list += '<span class="research-title">' + research_title + '</span>';
+            add_list += '<input type="hidden" name="detail_id" value="' + research_id + '">';
             add_list += '</div>';
             add_list += '</li>';
             add_list += '</div>';
@@ -2392,6 +2392,23 @@
         sorting(research_id);
 
         CheckFunction();
+
+        selectorCheck = document.querySelectorAll(".detail_list li");
+        selectorCheck = Array.prototype.slice.call(selectorCheck);
+
+        selectorCheck2 = document.querySelectorAll(".display_list li");
+        selectorCheck2 = Array.prototype.slice.call(selectorCheck2);
+
+        window.addEventListener("keydown", onKeyWindow);
+        window.addEventListener("keyup", onKeyWindow);
+
+        for (var t = 0; t < selectorCheck.length; t++) {
+            selectorCheck[t].addEventListener("click", onSectionSelector);
+        }
+
+        for (var g = 0; g < selectorCheck2.length; g++) {
+            selectorCheck2[g].addEventListener("click", offSectionSelector);
+        }
     }
 
     //조사방법 체크박스 삭제
@@ -2405,7 +2422,7 @@
         //체크박스 삭제
         $(document).find("input:checkbox[name=mis_research]:checked").each(function () {
             research_id = $(this).val();
-            var research_title = $(this).next().text();
+            var research_title = $(this).next().text()
 
             if (length == 0) {
                 length = 1;
@@ -2426,6 +2443,23 @@
         sorting(research_id);
 
         CheckFunction();
+
+        selectorCheck = document.querySelectorAll(".detail_list li");
+        selectorCheck = Array.prototype.slice.call(selectorCheck);
+
+        selectorCheck2 = document.querySelectorAll(".display_list li");
+        selectorCheck2 = Array.prototype.slice.call(selectorCheck2);
+
+        window.addEventListener("keydown", onKeyWindow);
+        window.addEventListener("keyup", onKeyWindow);
+
+        for (var t = 0; t < selectorCheck.length; t++) {
+            selectorCheck[t].addEventListener("click", onSectionSelector);
+        }
+
+        for (var g = 0; g < selectorCheck2.length; g++) {
+            selectorCheck2[g].addEventListener("click", offSectionSelector);
+        }
     }
 
     // 통합 분석
