@@ -2338,6 +2338,7 @@
             }
         }
     }
+
     /* e : 구간 체크박스 선택 */
 
     function sorting(e) {
@@ -2464,18 +2465,33 @@
 
     // 통합 분석
     function AnalysisBtn() {
-        var crop = $("#CropSelect").val();
+        let regExp = /<\/?[^>]+>/gi;
 
-        var total_id = [];
+        let crop = $("#CropSelect").val();
 
-        var l = breedgrid.getCheckedRows().length;
+        let total_id = [];
+
+        let l = breedgrid.getCheckedRows().length;
+
+        let chk = 0;
 
         for (let i = 0; i < l; i++) {
+            let status = breedgrid.getCheckedRows()[i].status;
+            let text = status.replace(regExp, "");
+
+            if(text === "EMPTY") {
+                chk = 1;
+            }
+
             total_id.push(breedgrid.getCheckedRows()[i].breed_id)
         }
 
         if (total_id.length != 0) {
-            window.open("/analysis?crop=" + crop + "&total_id=" + total_id + "&type=" + 1);
+            if (chk === 1) {
+                Alert1("형질 값이 존재하지 않습니다.")
+            } else {
+                window.open("/analysis?crop=" + crop + "&total_id=" + total_id + "&type=" + 1);
+            }
         }
     }
 
