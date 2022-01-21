@@ -2551,16 +2551,31 @@
     // 통합 분석
     function AnalysisBtn() {
         if (tablechk == 0) {
-            var total_id = [];
+            let regExp = /<\/?[^>]+>/gi;
 
-            var l = basicgrid.getCheckedRows().length;
+            let total_id = [];
+
+            let l = basicgrid.getCheckedRows().length;
+
+            let chk = 0;
 
             for (let i = 0; i < l; i++) {
+                let status = basicgrid.getCheckedRows()[i].status;
+                let text = status.replace(regExp, "");
+
+                if(text === "EMPTY") {
+                    chk = 1;
+                }
+
                 total_id.push(basicgrid.getCheckedRows()[i].basic_id)
             }
 
             if (total_id.length != 0) {
-                window.open("/analysis?total_id=" + total_id + "&type=" + 2);
+                if (chk === 1) {
+                    Alert1("형질 값이 존재하지 않습니다.")
+                } else {
+                    window.open("/analysis?total_id=" + total_id + "&type=" + 2);
+                }
             }
         } else {
             Alert("사용할 수 없는 기능입니다.")
