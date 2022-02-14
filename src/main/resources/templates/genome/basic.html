@@ -2048,6 +2048,7 @@
     function removeLocalS(key) {
         localStorage.removeItem(key);
     }
+
     /* e : localstorage 저장 예제 */
 
     function testbtn() {
@@ -2346,10 +2347,20 @@
                 dataType: 'json',
                 data: data,
                 success: function (result) {
-                    var empty_list = $(".empty_list");
+                    let empty_list = $(".empty_list");
+                    let empty_list_id = $(".empty_list").next();
 
                     for (var i = 0; i < empty_list.length; i++) {
-                        empty_list.eq(i).val(result[i].standard);
+
+                        console.log('empty_list.eq', i, empty_list.eq(i))
+                        console.log('result[i].detail_id', i, result[i].detail_id)
+                        console.log('empty_list_id.eq', i, empty_list_id.eq(i).val())
+
+                        if(result[i].detail_id != empty_list_id.eq(i).val()) {
+                            empty_list.eq(i).val(result[i + 1].standard);
+                        } else {
+                            empty_list.eq(i).val(result[i].standard);
+                        }
                     }
                 }
             });
@@ -2444,6 +2455,7 @@
             }
         }
     }
+
     /* e : 구간 체크박스 선택 */
 
     /* 헤더 선택 */
@@ -2563,7 +2575,7 @@
                 let status = basicgrid.getCheckedRows()[i].status;
                 let text = status.replace(regExp, "");
 
-                if(text === "EMPTY") {
+                if (text === "EMPTY") {
                     chk = 1;
                 }
 
@@ -2672,14 +2684,6 @@
                 }
             }
         });
-    }
-
-    function InsertInventory(e) {
-        console.log(123);
-    }
-
-    function DeleteInventory(e) {
-        console.log(456);
     }
 
     var tablechk = 0;
@@ -2840,7 +2844,7 @@
                                     }
                                 }
 
-                                if($(".plus_btn_submit1")[0].style.display != 'block') {
+                                if ($(".plus_btn_submit1")[0].style.display != 'block') {
                                     $(".plus_btn_submit2").css("display", "block");
                                 }
                             }
@@ -2989,7 +2993,7 @@
                                     }
                                 }
 
-                                if($(".plus_btn_submit1")[0].style.display != 'block') {
+                                if ($(".plus_btn_submit1")[0].style.display != 'block') {
                                     $(".plus_btn_submit2").css("display", "block");
                                 }
                             }
@@ -3756,12 +3760,6 @@
                 dataType: 'json',
                 data: data,
                 success: function (result) {
-                    var header_list = $("#header_list");
-                    var header_add = "";
-
-                    var basic_list = $("#basic_list");
-                    var add_list = "";
-
                     var detail_list = $(".detail_list");
                     var detail_list2 = $(".detail_list2");
 
@@ -3771,9 +3769,6 @@
                     var detail_add = "";
                     var detail_add2 = "";
 
-                    var pageNum = $("#pageNum");
-                    var page_add = "";
-
                     // detail
                     for (var i = 0; i < detail_list.length; i++) {
                         detail_add = "";
@@ -3781,6 +3776,7 @@
                         display_add = "";
 
                         for (var j = 0; j < result.detail.length; j++) {
+
                             // 표시항목
                             if (result.detail[j].detail_spec == detail_list.eq(i).attr("name")) {
                                 var check = true;
@@ -3858,14 +3854,14 @@
                         selectorCheck2[g].addEventListener("click", offSectionSelector);
                     }
 
- /*                   header_list.empty();
-                    header_list.append(header_add);
+                    /*                   header_list.empty();
+                                       header_list.append(header_add);
 
-                    basic_list.empty();
-                    basic_list.append(add_list);
+                                       basic_list.empty();
+                                       basic_list.append(add_list);
 
-                    pageNum.empty();
-                    pageNum.append(page_add);*/
+                                       pageNum.empty();
+                                       pageNum.append(page_add);*/
 
                     $("#offset").val(result.offset);
 

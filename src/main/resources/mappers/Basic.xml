@@ -28,8 +28,7 @@
     <!-- 원종 검색 -->
     <select id="SearchBasic" resultType="Basic">
         SELECT *,
-        (SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE s.basic_id = b.basic_id AND d.detail_origin = 1 AND s.standard IS NOT NULL) AS
-        standard_count
+        (SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE s.basic_id = b.basic_id AND d.detail_origin = 1 AND s.standard IS NOT NULL) AS standard_count
         FROM basic b
         <choose>
             <when test="basic_name != 'none'">
@@ -47,11 +46,9 @@
 
     <!-- 표시항목 조회 -->
     <select id="SelectDisplay" resultType="Display">
-        SELECT *
-        FROM display dp
-                 LEFT JOIN detail dt ON dp.detail_id = dt.detail_id
-        WHERE dp.user_id = #{user_id}
-          AND dp.basic_name = #{basic_name}
+        SELECT * FROM display dp
+        LEFT JOIN detail dt ON dp.detail_id = dt.detail_id
+        WHERE dp.user_id = #{user_id} AND dp.basic_name = #{basic_name}
     </select>
 
     <!-- 원종별 정보값 조회 -->

@@ -3,7 +3,9 @@
 <mapper namespace="com.thekiban.Mapper.AnalysisMapper">
 	<!-- 품종 조회 -->
 	<select id="SelectBreed" resultType="Breed">
-		SELECT * FROM breed b
+		SELECT *,
+		(SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE s.breed_id = b.breed_id AND d.detail_origin = 1 AND s.standard IS NOT NULL) AS standard_count
+		FROM breed b
 		LEFT JOIN detail d ON b.breed_name = d.detail_name
 		LEFT JOIN standard s ON d.detail_id = s.detail_id
 		WHERE b.breed_name = #{name} AND d.detail_title = '시교명 (ID)' AND s.breed_id = b.breed_id AND s.standard IS NOT NULL
@@ -18,7 +20,9 @@
 	
 	<!-- 원종 조회 -->
 	<select id="SelectBasic" resultType="Basic">
-		SELECT * FROM basic b
+		SELECT *,
+		(SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE s.basic_id = b.basic_id AND d.detail_origin = 1 AND s.standard IS NOT NULL) AS standard_count
+		FROM basic b
 		LEFT JOIN detail d ON b.basic_name = d.detail_name
 		LEFT JOIN standard s ON d.detail_id = s.detail_id
 		WHERE b.basic_name = #{name} AND d.detail_title = '계통명 (ID)'AND s.basic_id = b.basic_id AND s.standard IS NOT NULL

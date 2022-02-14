@@ -992,18 +992,23 @@
 
                     if (result.breed != null) {
                         for (var i = 0; i < result.breed.length; i++) {
-                            add_list += '<li>';
-                            add_list += '<input type="checkbox" class="plus_target" name="' + result.breed[i].breed_name + '" value="' + result.breed[i].breed_id + '">';
-                            add_list += '<span class="target_list">' + result.breed[i].standard + '</span>';
-                            add_list += '</li>';
+                            if (result.breed[i].standard_count != 0) {
+                                add_list += '<li>';
+                                add_list += '<input type="checkbox" class="plus_target" name="' + result.breed[i].breed_name + '" value="' + result.breed[i].breed_id + '">';
+                                add_list += '<span class="target_list">' + result.breed[i].standard + '</span>';
+                                add_list += '</li>';
+                            }
                         }
                     }
+
                     if (result.basic != null) {
                         for (var i = 0; i < result.basic.length; i++) {
-                            add_list += '<li>';
-                            add_list += '<input type="checkbox" class="plus_target" name="' + result.basic[i].basic_name + '" value="' + result.basic[i].basic_id + '">';
-                            add_list += '<span class="target_list">' + result.basic[i].standard + '</span>';
-                            add_list += '</li>';
+                            if (result.basic[i].standard_count != 0) {
+                                add_list += '<li>';
+                                add_list += '<input type="checkbox" class="plus_target" name="' + result.basic[i].basic_name + '" value="' + result.basic[i].basic_id + '">';
+                                add_list += '<span class="target_list">' + result.basic[i].standard + '</span>';
+                                add_list += '</li>';
+                            }
                         }
                     }
 
@@ -1472,8 +1477,7 @@
         }
     });
 
-    function RunAnalysis()
-    {
+    function RunAnalysis() {
         if ($(".minus_target").length == 0) {
             return Alert1("분석대상을 선택하세요.");
         }
@@ -1527,28 +1531,24 @@
         const loading = document.querySelector('.load_wrap');
 
         $.ajax(
-        {
-        	url: "runAnalysis",
-        	method: "POST",
-        	dataType: "text",
-        	data: data,
-        	success: function (result)
-        	{
-        		loading.classList.remove('on');
-        		
-        		if (result == "")
-        		{
-        			return Alert1("분석에 실패하였습니다.")
-        		}
-        		else
-        		{
-        			$("#result_view").attr("src", result);
-        			$("#result_file").attr("href", result);
-        			
-        			showModal();
-        		}
-        	}
-       });
+            {
+                url: "runAnalysis",
+                method: "POST",
+                dataType: "text",
+                data: data,
+                success: function (result) {
+                    loading.classList.remove('on');
+
+                    if (result == "") {
+                        return Alert1("분석에 실패하였습니다.")
+                    } else {
+                        $("#result_view").attr("src", result);
+                        $("#result_file").attr("href", result);
+
+                        showModal();
+                    }
+                }
+            });
     }
 
     $(".selectBox dt").off().on("click", function () {
