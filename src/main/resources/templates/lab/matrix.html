@@ -121,10 +121,10 @@
 					<div class="data_file" style="overflow: auto; height: auto; margin-top: 4px;">
         				<div class="top_menu_bar">
         					<ul>
-        						<li>distance matrix</li>
+        						<li>Distance matrix</li>
         						<li>Phylogenic tree</li>
         						<li>PCA plot</li>
-        						<li>pedigree map</li>
+        						<!--<li>pedigree map</li>-->
         					</ul>
         				</div>
         				<div class="content_type1 contents">
@@ -142,9 +142,10 @@
 	        					<img th:src="|/common/r/result/${path}/${path}_pca.png|">
         					</th:block>
         				</div>
-        				<div class="content_type4 contents">
-        					<!-- <img th:src="|http://112.169.63.197:8883/common/r/result/${path}/${path}_distancematrix.png|"> -->
-        				</div>
+                        <!-- 미구현 기능 숨김 처리 -->
+        				<!--<div class="content_type4 contents">
+        					&lt;!&ndash; <img th:src="|http://112.169.63.197:8883/common/r/result/${path}/${path}_distancematrix.png|"> &ndash;&gt;
+        				</div>-->
 					</div>
 				</div>
 			</div>
