@@ -647,7 +647,7 @@
             background-color: #FCFCFC;
         }
 
-        #breedGrid .tui-grid-body-area td[data-column-name='2'], #breedGrid .tui-grid-body-area td[data-column-name='4'], #breedGrid .tui-grid-body-area td[data-column-name='5'], #breedGrid .tui-grid-body-area td[data-column-name='277'], #breedGrid .tui-grid-body-area td[data-column-name='388'], #breedGrid .tui-grid-body-area td[data-column-name='626'], #breedGrid .tui-grid-body-area td[data-column-name='749'], #breedGrid .tui-grid-body-area td[data-column-name='912'], #breedGrid .tui-grid-body-area td[data-column-name='1076'], #breedGrid .tui-grid-body-area td[data-column-name='1254'], #breedGrid .tui-grid-body-area td[data-column-name='1412'], #breedGrid .tui-grid-body-area td[data-column-name='1599'] {
+        #breedGrid .tui-grid-body-area td[data-column-name='2'], #breedGrid .tui-grid-body-area td[data-column-name='278'], #breedGrid .tui-grid-body-area td[data-column-name='389'], #breedGrid .tui-grid-body-area td[data-column-name='627'], #breedGrid .tui-grid-body-area td[data-column-name='750'], #breedGrid .tui-grid-body-area td[data-column-name='913'], #breedGrid .tui-grid-body-area td[data-column-name='1077'], #breedGrid .tui-grid-body-area td[data-column-name='1255'], #breedGrid .tui-grid-body-area td[data-column-name='1413'], #breedGrid .tui-grid-body-area td[data-column-name='1600'] {
             color: mediumblue;
             text-decoration: underline;
             cursor: pointer;
@@ -2479,7 +2479,7 @@
             let status = breedgrid.getCheckedRows()[i].status;
             let text = status.replace(regExp, "");
 
-            if(text === "EMPTY") {
+            if (text === "EMPTY") {
                 chk = 1;
             }
 
@@ -2827,20 +2827,10 @@
                     })
 
                     breedgrid.on('click', (ev) => {
-                        if (ev.targetType === 'cell' && (ev.columnName === '2' || ev.columnName === '277' || ev.columnName === '388' || ev.columnName === '626' || ev.columnName === '749' || ev.columnName === '912' || ev.columnName === '1076' || ev.columnName === '1254' || ev.columnName === '1412' || ev.columnName === '1599')) {
+                        if (ev.targetType === 'cell' && (ev.columnName === '2' || ev.columnName === '278' || ev.columnName === '389' || ev.columnName === '627' || ev.columnName === '750' || ev.columnName === '913' || ev.columnName === '1077' || ev.columnName === '1255' || ev.columnName === '1413' || ev.columnName === '1600')) {
                             var value_sample = ev.nativeEvent.srcElement;
 
                             SearchSample(value_sample);
-                        } else if (ev.targetType === 'cell' && ev.columnName === '4') {
-                            var value_mom1 = ev.nativeEvent.srcElement;
-                            var value_dad1 = breedgrid.getRow(ev.rowKey)[5];
-
-                            SearchBasic1(value_mom1, value_dad1);
-                        } else if (ev.targetType === 'cell' && ev.columnName === '5') {
-                            var value_mom2 = breedgrid.getRow(ev.rowKey)[4];
-                            var value_dad2 = ev.nativeEvent.srcElement;
-
-                            SearchBasic2(value_mom2, value_dad2);
                         } else if (ev.targetType === 'cell' && ev.columnName === 'file') {
                             var id = breedgrid.getRow(ev.rowKey).breed_id;
 

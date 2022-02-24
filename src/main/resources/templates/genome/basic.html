@@ -643,7 +643,7 @@
             background-color: #FCFCFC;
         }
 
-        #basicGrid .tui-grid-body-area td[data-column-name='170'], #basicGrid .tui-grid-body-area td[data-column-name='336'], #basicGrid .tui-grid-body-area td[data-column-name='517'], #basicGrid .tui-grid-body-area td[data-column-name='692'], #basicGrid .tui-grid-body-area td[data-column-name='834'], #basicGrid .tui-grid-body-area td[data-column-name='999'], #basicGrid .tui-grid-body-area td[data-column-name='1169'], #basicGrid .tui-grid-body-area td[data-column-name='1337'], #basicGrid .tui-grid-body-area td[data-column-name='1511'], #basicGrid .tui-grid-body-area td[data-column-name='1722'] {
+        #basicGrid .tui-grid-body-area td[data-column-name='170'], #basicGrid .tui-grid-body-area td[data-column-name='337'], #basicGrid .tui-grid-body-area td[data-column-name='518'], #basicGrid .tui-grid-body-area td[data-column-name='693'], #basicGrid .tui-grid-body-area td[data-column-name='835'], #basicGrid .tui-grid-body-area td[data-column-name='1000'], #basicGrid .tui-grid-body-area td[data-column-name='1170'], #basicGrid .tui-grid-body-area td[data-column-name='1338'], #basicGrid .tui-grid-body-area td[data-column-name='1512'], #basicGrid .tui-grid-body-area td[data-column-name='1723'] {
             color: mediumblue;
             text-decoration: underline;
             cursor: pointer;
@@ -2351,11 +2351,6 @@
                     let empty_list_id = $(".empty_list").next();
 
                     for (var i = 0; i < empty_list.length; i++) {
-
-                        console.log('empty_list.eq', i, empty_list.eq(i))
-                        console.log('result[i].detail_id', i, result[i].detail_id)
-                        console.log('empty_list_id.eq', i, empty_list_id.eq(i).val())
-
                         if(result[i].detail_id != empty_list_id.eq(i).val()) {
                             empty_list.eq(i).val(result[i + 1].standard);
                         } else {
@@ -2799,7 +2794,7 @@
                     basicgrid.resetData(dataArr);
 
                     basicgrid.on('click', (ev) => {
-                        if (ev.targetType === 'cell' && (ev.columnName === '170' || ev.columnName === '336' || ev.columnName === '517' || ev.columnName === '692' || ev.columnName === '834' || ev.columnName === '999' || ev.columnName === '1169' || ev.columnName === '1337' || ev.columnName === '1511' || ev.columnName === '1722')) {
+                        if (ev.targetType === 'cell' && (ev.columnName === '170' || ev.columnName === '337' || ev.columnName === '518' || ev.columnName === '693' || ev.columnName === '835' || ev.columnName === '1000' || ev.columnName === '1170' || ev.columnName === '1338' || ev.columnName === '1512' || ev.columnName === '1723')) {
                             var value_basic = ev.nativeEvent.srcElement;
 
                             SearchBreed(value_basic);
