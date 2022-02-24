@@ -2351,7 +2351,7 @@
                     let empty_list_id = $(".empty_list").next();
 
                     for (var i = 0; i < empty_list.length; i++) {
-                        if(result[i].detail_id != empty_list_id.eq(i).val()) {
+                        if (result[i].detail_id != empty_list_id.eq(i).val()) {
                             empty_list.eq(i).val(result[i + 1].standard);
                         } else {
                             empty_list.eq(i).val(result[i].standard);
@@ -2795,7 +2795,7 @@
 
                     basicgrid.on('click', (ev) => {
                         if (ev.targetType === 'cell' && (ev.columnName === '170' || ev.columnName === '337' || ev.columnName === '518' || ev.columnName === '693' || ev.columnName === '835' || ev.columnName === '1000' || ev.columnName === '1170' || ev.columnName === '1338' || ev.columnName === '1512' || ev.columnName === '1723')) {
-                            var value_basic = ev.nativeEvent.srcElement;
+                            let value_basic = ev.nativeEvent.srcElement;
 
                             SearchBreed(value_basic);
                         } else if (ev.targetType === 'cell' && ev.columnName === 'status') {
@@ -3869,9 +3869,10 @@
     function SearchBreed(e) {
         $("#pop_breed").modal();
 
-        var breed_name = $("#CropSelect").val();
+        let breed_name = $("#CropSelect").val();
+        let sys_name = e.innerText;
 
-        var data = {"breed_name": breed_name};
+        let data = {"breed_name": breed_name, "sys_name": sys_name};
 
         $.ajax(
             {
@@ -3882,32 +3883,25 @@
                 success: function (result) {
                     $(".breed_title").text("계통명 (ID) : " + e.innerText);
 
-                    var header_list = $("#breed_header_list");
-                    var header_add = "";
+                    let header_list = $("#breed_header_list");
+                    let header_add = "";
 
-                    var breed_list = $("#breed_breed_list");
-                    var add_list = "";
-
-                    var detail_list = $(".detail_list");
-                    var detail_list2 = $(".detail_list2");
-
-                    var display_list = $(".display_list");
-                    var display_add = "";
-
-                    var detail_add = "";
-                    var detail_add2 = "";
+                    let breed_list = $("#breed_breed_list");
+                    let add_list = "";
 
                     // header
                     header_add += '<tr>';
 
-                    for (var i = 0; i < result.display.length; i++) {
-                        header_add += '<th><span class="title">' + result.display[i].detail_title + '</span></th>'
+                    for (let i = 0; i < result.detail.length; i++) {
+                        if (result.detail[i].detail_title != '첨부파일 관리') {
+                            header_add += '<th><span class="title">' + result.detail[i].detail_title + '</span></th>'
+                        }
                     }
 
                     header_add += '</tr>';
 
                     // body
-                    for (var i = 0; i < result.breed.length; i++) {
+                    /*for (var i = 0; i < result.breed.length; i++) {
                         add_list += '<tr>';
 
                         for (var j = 0; j < result.breed[i].breed_standard.length; j++) {
@@ -3915,63 +3909,16 @@
                         }
 
                         add_list += '</tr>';
-                    }
+                    }*/
 
-                    // detail
-                    for (var i = 0; i < detail_list.length; i++) {
-                        detail_add = "";
-                        detail_add2 = "";
-                        display_add = "";
+                    for (let i = 0; i < result.breeds.length; i++) {
+                        add_list += '<tr>';
 
-                        for (var j = 0; j < result.detail.length; j++) {
-                            // 표시항목
-                            if (result.detail[j].detail_spec == detail_list.eq(i).attr("name")) {
-                                var check = true;
-
-                                for (var k = 0; k < result.display.length; k++) {
-                                    if (result.display[k].detail_id == result.detail[j].detail_id) {
-                                        check = false;
-
-                                        display_add += '<div data-id="' + result.detail[j].detail_id + '" class="list-group step">';
-                                        display_add += '<li class="list-group-item-sm list-group-item">';
-                                        display_add += '<div class="row">';
-                                        display_add += '<input type="checkbox" class="checkbox mr-2" name="mis_research">';
-                                        display_add += '<span class="research-title">' + result.detail[j].detail_title + '</span>';
-                                        display_add += '<input type="hidden" name="detail_id" value="' + result.detail[j].detail_id + '">';
-                                        display_add += '</div>';
-                                        display_add += '</li>';
-                                        display_add += '</div>';
-                                    }
-                                }
-
-                                if (check) {
-                                    detail_add += '<li>';
-                                    detail_add += '<input type="checkbox" class="check_box" name="chk_research" value="' + result.detail[j].detail_id + '">';
-                                    detail_add += '<div class="title">' + result.detail[j].detail_title + '</div>';
-                                    detail_add += '</li>';
-                                }
-                            }
-
-                            // 특성상태
-                            if (result.detail[j].detail_spec == detail_list.eq(i).attr("name")) {
-                                detail_add2 += '<li>';
-                                detail_add2 += '<div class="title">' + result.detail[j].detail_title + '</div>';
-                                detail_add2 += '<div class="input_text">';
-                                detail_add2 += '<input type="text" class="empty_list" name="standard">';
-                                detail_add2 += '<input type="hidden" name="detail_id" value="' + result.detail[j].detail_id + '"></div>';
-                                detail_add2 += '</div>';
-                                detail_add2 += '</li>';
-                            }
+                        for (let j = 0; j < result.breeds[i].breed_standard.length; j++) {
+                            add_list += '<td>' + result.breeds[i].breed_standard[j].standard + '</td>';
                         }
 
-                        detail_list.eq(i).empty();
-                        detail_list.eq(i).append(detail_add);
-
-                        detail_list2.eq(i).empty();
-                        detail_list2.eq(i).append(detail_add2);
-
-                        display_list.eq(i).empty();
-                        display_list.eq(i).append(display_add);
+                        add_list += '</tr>';
                     }
 
                     header_list.empty();

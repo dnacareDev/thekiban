@@ -622,7 +622,7 @@ public class BasicController {
   // 품종 검색
   @ResponseBody
   @RequestMapping("searchBreedListBasic")
-  public Map<String, Object> SearchBreed(Authentication auth, @RequestParam("breed_name") String breed_name) {
+  public Map<String, Object> SearchBreed(Authentication auth, @RequestParam("breed_name") String breed_name, @RequestParam("sys_name") String sys_name) {
     Map<String, Object> result = new LinkedHashMap<String, Object>();
 
     User user = (User) auth.getPrincipal();
@@ -630,10 +630,11 @@ public class BasicController {
     int count = breedService.SelectBreedCount(breed_name);
 
     List<Breed> breed = breedService.SearchBreedList(breed_name);                // 품종 검색
+    List<Breed> breeds = breedService.SearchBreedList(breed_name);                // 품종 검색
     List<Detail> detail = breedService.SearchBreedDetail(breed_name);                  // 품종 작물별 컬럼 조회
-    List<Display> display = breedService.SelectDisplay(user.getUser_id(), breed_name);          // 사용자별 품종 표시항목 조회
 
     List<Standard> standard = new ArrayList<Standard>();
+    List<Standard> standards = new ArrayList<Standard>();
 
     if (!detail.isEmpty()) {
       for (int i = 0; i < breed.size(); i++) {
@@ -641,11 +642,17 @@ public class BasicController {
 
         breed.get(i).setBreed_standard(standard);
       }
+
+      for (int i = 0; i < breeds.size(); i++) {
+        standards = breedService.SelectBreedStandard(breed.get(i).getBreed_id());
+
+        breeds.get(i).setBreed_standard(standards);
+      }
     }
 
     result.put("breed", breed);
+    result.put("breeds", breeds);
     result.put("detail", detail);
-    result.put("display", display);
 
     return result;
   }
