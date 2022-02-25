@@ -3900,25 +3900,16 @@
 
                     header_add += '</tr>';
 
-                    // body
-                    /*for (var i = 0; i < result.breed.length; i++) {
-                        add_list += '<tr>';
-
-                        for (var j = 0; j < result.breed[i].breed_standard.length; j++) {
-                            add_list += '<td>' + result.breed[i].breed_standard[j].standard + '</td>';
-                        }
-
-                        add_list += '</tr>';
-                    }*/
-
                     for (let i = 0; i < result.breeds.length; i++) {
-                        add_list += '<tr>';
+                        if (result.breeds[i].breed_standard[3].standard === e.innerText || result.breeds[i].breed_standard[4].standard === e.innerText) {
+                            add_list += '<tr>';
 
-                        for (let j = 0; j < result.breeds[i].breed_standard.length; j++) {
-                            add_list += '<td>' + result.breeds[i].breed_standard[j].standard + '</td>';
+                            for (let j = 0; j < result.breeds[i].breed_standard.length; j++) {
+                                add_list += '<td>' + result.breeds[i].breed_standard[j].standard + '</td>';
+                            }
+
+                            add_list += '</tr>';
                         }
-
-                        add_list += '</tr>';
                     }
 
                     header_list.empty();

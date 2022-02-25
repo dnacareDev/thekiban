@@ -3,6 +3,7 @@ package com.thekiban.Controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thekiban.Entity.*;
+import com.thekiban.Service.BreedService;
 import com.thekiban.Service.DataListService;
 import com.thekiban.Service.SampleService;
 import org.json.JSONArray;
@@ -34,6 +35,9 @@ public class SampleController {
 
   @Autowired
   private SampleService service;
+
+  @Autowired
+  private BreedService breedService;
 
   @Autowired
   private DataListService d_service;
@@ -96,6 +100,8 @@ public class SampleController {
 
     if (!obj.isNull("sample_amount")) {
       sample.setSample_amount(Double.parseDouble((String) obj.get("sample_amount")));
+    } else if(obj.get("sample_amount") == ""){
+      sample.setSample_amount(0);
     } else {
       sample.setSample_amount(0);
     }
@@ -104,6 +110,8 @@ public class SampleController {
       String sample_sprout = (String) obj.get("sample_sprout");
       sample_sprout = sample_sprout.trim();
       sample.setSample_sprout(Integer.parseInt(sample_sprout));
+    } else if(obj.get("sample_sprout") == ""){
+      sample.setSample_sprout(0);
     } else {
       sample.setSample_sprout(0);
     }
@@ -112,6 +120,8 @@ public class SampleController {
       String sample_purity = (String) obj.get("sample_sprout");
       sample_purity = sample_purity.trim();
       sample.setSample_purity(Integer.parseInt(sample_purity));
+    } else if(obj.get("sample_purity") == ""){
+      sample.setSample_purity(0);
     } else {
       sample.setSample_purity(0);
     }
@@ -657,10 +667,12 @@ public class SampleController {
     int count = service.SelectBreedCount(breed_name);
 
     List<Breed> breed = service.SearchBreed(breed_name);                // 품종 검색
-    List<Detail> detail = service.SearchBreedDetail(breed_name);                  // 품종 작물별 컬럼 조회
+    List<Breed> breeds = breedService.SearchBreedList(breed_name);                // 품종 검색
+    List<Detail> detail = breedService.SearchBreedDetail(breed_name);                  // 품종 작물별 컬럼 조회
     List<Display> display = service.SelectDisplay(user.getUser_id(), breed_name);          // 사용자별 품종 표시항목 조회
 
     List<Standard> standard = new ArrayList<Standard>();
+    List<Standard> standards = new ArrayList<Standard>();
 
     if (!detail.isEmpty()) {
       for (int i = 0; i < breed.size(); i++) {
@@ -668,9 +680,16 @@ public class SampleController {
 
         breed.get(i).setBreed_standard(standard);
       }
+
+      for (int i = 0; i < breeds.size(); i++) {
+        standards = breedService.SelectBreedStandard(breed.get(i).getBreed_id());
+
+        breeds.get(i).setBreed_standard(standards);
+      }
     }
 
     result.put("breed", breed);
+    result.put("breeds", breeds);
     result.put("detail", detail);
     result.put("display", display);
 

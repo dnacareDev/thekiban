@@ -1030,7 +1030,7 @@
                                 <div class="atbd-button-list d-flex flex-wrap">
                                     <div class="btn-group atbd-button-group btn-group-normal my-2" role="group">
                                         <button type="button" class="btn btn-xs btn-outline-light" id="sampleTable1">시교관리</button>
-                                        <button type="button" class="btn btn-xs btn-outline-light" id="sampleTable2">시교수출관리</button>
+                                        <button type="button" class="btn btn-xs btn-outline-light" id="sampleTable2">시교출고관리</button>
                                     </div>
 
                                     <form action="" name="searchForm" class="d-flex align-items-center add-contact__form my-sm-0 my-2">
@@ -1281,7 +1281,7 @@
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white ">
                 <div class="modal-header" style="border: none">
-                    <h6 class="modal-title">시교수출관리 > 데이터 등록</h6>
+                    <h6 class="modal-title">시교출고관리 > 데이터 등록</h6>
                 </div>
                 <div class="modal-body">
                     <div class="form-group mb-0" style="justify-content: end">
@@ -1375,7 +1375,7 @@
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white ">
                 <div class="modal-header" style="border: none">
-                    <h6 class="modal-title">시교수출관리 > 데이터 등록</h6>
+                    <h6 class="modal-title">시교출고관리 > 데이터 등록</h6>
                 </div>
                 <div class="modal-body">
                     <div class="form-group mb-0" style="justify-content: end">
@@ -1459,7 +1459,7 @@
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white ">
                 <div class="modal-header" style="border: none">
-                    <h6 class="modal-title">시교수출관리 > 데이터 등록</h6>
+                    <h6 class="modal-title">시교출고관리 > 데이터 등록</h6>
                 </div>
                 <div class="modal-body">
                     <div class="form-group mb-0">
@@ -1563,7 +1563,7 @@
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white">
                 <div class="modal-header" style="border: none">
-                    <h6 class="modal-title">시교수출관리</h6>
+                    <h6 class="modal-title">시교출고관리</h6>
                     <span class="seed_title"></span>
                 </div>
                 <div class="modal-body">
@@ -1653,13 +1653,13 @@
     function filesFunction() {
         if (tablechk === 0) {
             let filesBtn = document.getElementById("excelFile");
-            var eventList = document.createEvent("MouseEvent");
+            let eventList = document.createEvent("MouseEvent");
 
             eventList.initEvent("click");
             filesBtn.dispatchEvent(eventList);
         } else {
             let filesBtn = document.getElementById("excelFile1");
-            var eventList1 = document.createEvent("MouseEvent");
+            let eventList1 = document.createEvent("MouseEvent");
 
             eventList1.initEvent("click");
             filesBtn.dispatchEvent(eventList1);
@@ -1684,26 +1684,26 @@
 
     function excelExportCommon(event, callback) {
         if (tablechk == 0) {
-            var input = event.target;
-            var reader = new FileReader();
+            let input = event.target;
+            let reader = new FileReader();
 
             reader.onload = function () {
-                var fileData = reader.result;
-                var wb = XLSX.read(fileData, {type: 'binary'});
-                var sheetNameList = wb.SheetNames; // 시트 이름 목록 가져오기
-                var fourthSheetName = sheetNameList[0]; // 네번째 시트명
-                var fourthSheet = wb.Sheets[fourthSheetName]; // 네번째 시트
+                let fileData = reader.result;
+                let wb = XLSX.read(fileData, {type: 'binary'});
+                let sheetNameList = wb.SheetNames; // 시트 이름 목록 가져오기
+                let fourthSheetName = sheetNameList[0]; // 네번째 시트명
+                let fourthSheet = wb.Sheets[fourthSheetName]; // 네번째 시트
                 callback(fourthSheet);
 
                 delete fourthSheet.A1;
                 delete fourthSheet.A2;
-                var rowdata = XLSX.utils.sheet_to_json(fourthSheet);
+                let rowdata = XLSX.utils.sheet_to_json(fourthSheet);
 
-                var keys = Object.values(rowdata[0]);
+                let keys = Object.values(rowdata[0]);
 
-                var html = "";
+                let html = "";
 
-                for (var i = 1; i < rowdata.length; i++) {
+                for (let i = 1; i < rowdata.length; i++) {
                     if (i === 0) {
                         html += "<thead class='text-center'>";
                         html += "<tr>";
@@ -1718,8 +1718,8 @@
                         html += "<tbody class='text-center'>";
                         html += "<tr>";
 
-                        var tmp = Object.keys(rowdata[0]);
-                        var j = 0;
+                        let tmp = Object.keys(rowdata[0]);
+                        let j = 0;
 
                         $.each(rowdata[i], function (idx, value) {
                             // 공백처리
@@ -1729,10 +1729,10 @@
                                 j++;
 
                             } else {
-                                var idx_str = idx.replace(/[^0-9]/g, '');
-                                var tmp_str = tmp[j].replace(/[^0-9]/g, '');
+                                let idx_str = idx.replace(/[^0-9]/g, '');
+                                let tmp_str = tmp[j].replace(/[^0-9]/g, '');
 
-                                var gap = idx_str - tmp_str;
+                                let gap = idx_str - tmp_str;
 
                                 while (gap > 0) {
                                     gap--;
@@ -1752,12 +1752,12 @@
                     }
                 }
 
-                var excel = [];
+                let excel = [];
 
-                for (var k = 1; k < rowdata.length; k++) {
-                    var chk = Object.values(rowdata[k]);
+                for (let k = 1; k < rowdata.length; k++) {
+                    let chk = Object.values(rowdata[k]);
 
-                    for (var n = 0; n < keys.length; n++) {
+                    for (let n = 0; n < keys.length; n++) {
                         if (chk[n] == undefined) {
                             excel[n] = {key: keys[n], value: " "};
                         } else if (keys[n] === "도입연월일") {
@@ -1773,33 +1773,33 @@
                 // $("#excel_data").empty();
                 $("#excel_data").append(html);
 
-                var jsonObj = tableToJson(document.getElementById("excel_data"));
+                let jsonObj = tableToJson(document.getElementById("excel_data"));
 
                 $("#excel_list").val(JSON.stringify(jsonObj));
             };
 
             reader.readAsBinaryString(input.files[0]);
         } else {
-            var input1 = event.target;
-            var reader1 = new FileReader();
+            let input1 = event.target;
+            let reader1 = new FileReader();
 
             reader1.onload = function () {
-                var fileData = reader1.result;
-                var wb = XLSX.read(fileData, {type: 'binary'});
-                var sheetNameList = wb.SheetNames; // 시트 이름 목록 가져오기
+                let fileData = reader1.result;
+                let wb = XLSX.read(fileData, {type: 'binary'});
+                let sheetNameList = wb.SheetNames; // 시트 이름 목록 가져오기
 
-                var sheetName_ten = sheetNameList[0]; // 네번째 시트명
-                var tenSheet = wb.Sheets[sheetName_ten]; // 네번째 시트
+                let sheetName_ten = sheetNameList[0]; // 네번째 시트명
+                let tenSheet = wb.Sheets[sheetName_ten]; // 네번째 시트
                 callback(tenSheet);
 
                 delete tenSheet.A1;
-                var rowdata = XLSX.utils.sheet_to_json(tenSheet);
+                let rowdata = XLSX.utils.sheet_to_json(tenSheet);
 
-                var keys = Object.values(rowdata[0]);
+                let keys = Object.values(rowdata[0]);
 
-                var html = "";
+                let html = "";
 
-                for (var i = 0; i < rowdata.length; i++) {
+                for (let i = 0; i < rowdata.length; i++) {
                     if (i === 0) {
                         html += "<thead class='text-center'>";
                         html += "<tr>";
@@ -1814,8 +1814,8 @@
                         html += "<tbody class='text-center'>";
                         html += "<tr>";
 
-                        var tmp = Object.keys(rowdata[0]);
-                        var j = 0;
+                        let tmp = Object.keys(rowdata[0]);
+                        let j = 0;
 
                         $.each(rowdata[i], function (idx, value) {
                             // 공백처리
@@ -1829,10 +1829,10 @@
                                 }
 
                             } else {
-                                var idx_str = idx.replace(/[^0-9]/g, '');
-                                var tmp_str = tmp[j].replace(/[^0-9]/g, '');
+                                let idx_str = idx.replace(/[^0-9]/g, '');
+                                let tmp_str = tmp[j].replace(/[^0-9]/g, '');
 
-                                var gap = idx_str - tmp_str;
+                                let gap = idx_str - tmp_str;
 
                                 while (gap > 0) {
                                     gap--;
@@ -1857,12 +1857,12 @@
                     }
                 }
 
-                var excel = [];
+                let excel = [];
 
-                for (var k = 1; k < rowdata.length; k++) {
-                    var chk = Object.values(rowdata[k]);
+                for (let k = 1; k < rowdata.length; k++) {
+                    let chk = Object.values(rowdata[k]);
 
-                    for (var n = 0; n < keys.length; n++) {
+                    for (let n = 0; n < keys.length; n++) {
                         if (chk[n] == undefined) {
                             excel[n] = {key: keys[n], value: " "};
                         } else if (keys[n] === "일자") {
@@ -1888,7 +1888,7 @@
 
     /* 엑셀 등록 창 */
     function openExcel() {
-        var user_type = $("#user_type").val();
+        let user_type = $("#user_type").val();
 
         if (user_type != 0 && user_type != 2) {
             return Alert("등록 권한이 없습니다.");
@@ -1905,16 +1905,16 @@
                         dataType: 'json',
                         data: data,
                         success: function (result) {
-                            var data_list = $("#uploadDate");
-                            var data_add = "";
+                            let data_list = $("#uploadDate");
+                            let data_add = "";
 
-                            for (var i = result.dataGroup.length - 1; i > -1; i--) {
+                            for (let i = result.dataGroup.length - 1; i > -1; i--) {
                                 let date = result.dataGroup[i].datalist_date;
 
-                                var resultArr = date.split('-');
-                                var resultDate = "";
+                                let resultArr = date.split('-');
+                                let resultDate = "";
 
-                                for (var j = 0; j < resultArr.length; j++) {
+                                for (let j = 0; j < resultArr.length; j++) {
                                     resultDate += resultArr[j];
                                 }
 
@@ -1941,16 +1941,16 @@
                         dataType: 'json',
                         data: data,
                         success: function (result) {
-                            var data_list = $("#uploadDate1");
-                            var data_add = "";
+                            let data_list = $("#uploadDate1");
+                            let data_add = "";
 
-                            for (var i = result.dataGroup.length - 1; i > -1; i--) {
+                            for (let i = result.dataGroup.length - 1; i > -1; i--) {
                                 let date = result.dataGroup[i].datalist_date;
 
-                                var resultArr = date.split('-');
-                                var resultDate = "";
+                                let resultArr = date.split('-');
+                                let resultDate = "";
 
-                                for (var j = 0; j < resultArr.length; j++) {
+                                for (let j = 0; j < resultArr.length; j++) {
                                     resultDate += resultArr[j];
                                 }
 
@@ -1976,7 +1976,7 @@
             let s = String(e);
             s = s.replace(/(\d{4})(\d{2})(\d{2})/g, '$1-$2-$3');
 
-            var data = {"datalist_date": s};
+            let data = {"datalist_date": s};
 
             $.ajax(
                 {
@@ -1989,12 +1989,12 @@
                             $("#data_upload3").modal("show");
                             $("#data_upload2").modal("hide");
 
-                            var sample_list = $("#sampleBody");
-                            var add_list = "";
+                            let sample_list = $("#sampleBody");
+                            let add_list = "";
 
                             let len = Object.keys(result.sample).length;
 
-                            for (var i = 0; i < len; i++) {
+                            for (let i = 0; i < len; i++) {
                                 add_list += '<tr>';
                                 add_list += '<td>' + result.sample[i][0].sample_name + '</td>';
                                 add_list += '<td>' + result.sample[i][0].sample_code + '</td>';
@@ -2019,7 +2019,7 @@
             let s = String(e);
             s = s.replace(/(\d{4})(\d{2})(\d{2})/g, '$1-$2-$3');
 
-            var data = {"datalist_date": s};
+            let data = {"datalist_date": s};
 
             $.ajax(
                 {
@@ -2032,12 +2032,12 @@
                             $("#data_upload13").modal("show");
                             $("#data_upload12").modal("hide");
 
-                            var sample_list = $("#outcomeBody");
-                            var add_list = "";
+                            let sample_list = $("#outcomeBody");
+                            let add_list = "";
 
                             let len = Object.keys(result.sample_outcome).length;
 
-                            for (var i = 0; i < len; i++) {
+                            for (let i = 0; i < len; i++) {
                                 add_list += '<tr>';
                                 add_list += '<td>' + result.sample_outcome[i][0].sample_outcome_code + '</td>';
                                 add_list += '<td>' + result.sample_outcome[i][0].sample_outcome_num + '</td>';
@@ -2069,18 +2069,18 @@
     /* 엑셀 입력 */
     function InsertExcel() {
         if (tablechk === 0) {
-            var data = [];
+            let data = [];
 
             $("#excel_data").each(function (index, item) {
                 const key = $(this).attr('id');
-                var value = $(this).val();
+                let value = $(this).val();
 
-                var arr = {key: key, value: value};
+                let arr = {key: key, value: value};
 
                 data.push(arr);
             });
 
-            var jsonObj = tableToJson(document.getElementById("excel_data"));
+            let jsonObj = tableToJson(document.getElementById("excel_data"));
 
             $.ajax(
                 {
@@ -2117,18 +2117,18 @@
                 }
             )
         } else {
-            var data1 = [];
+            let data1 = [];
 
             $("#excel_data1").each(function (index, item) {
                 const key = $(this).attr('id');
-                var value = $(this).val();
+                let value = $(this).val();
 
-                var arr = {key: key, value: value};
+                let arr = {key: key, value: value};
 
                 data1.push(arr);
             });
 
-            var jsonObj = tableToJson(document.getElementById("excel_data1"));
+            let jsonObj = tableToJson(document.getElementById("excel_data1"));
 
             for (let i = 0; i < jsonObj.length; i++) {
                 jsonObj[i]["작물"] = $("#CropSelect").val();
@@ -2175,19 +2175,19 @@
 
     // table to json
     function tableToJson(table) {
-        var data = [];
+        let data = [];
 
-        var headers = [];
-        for (var i = 0; i < table.rows[0].cells.length; i++) {
+        let headers = [];
+        for (let i = 0; i < table.rows[0].cells.length; i++) {
             headers[i] = table.rows[0].cells[i].innerText;
         }
 
-        for (var i = 1; i < table.rows.length; i++) {
-            var tableRow = table.rows[i];
+        for (let i = 1; i < table.rows.length; i++) {
+            let tableRow = table.rows[i];
 
-            var rowData = {};
+            let rowData = {};
 
-            for (var j = 0; j < tableRow.cells.length; j++) {
+            for (let j = 0; j < tableRow.cells.length; j++) {
                 rowData[headers[j]] = tableRow.cells[j].innerText;
             }
 
@@ -2201,7 +2201,7 @@
 
     // date to string
     function excelDateToJSDate(excelDate) {
-        var date = new Date(Math.round((excelDate - (25567 + 2)) * 86400 * 1000)),
+        let date = new Date(Math.round((excelDate - (25567 + 2)) * 86400 * 1000)),
             m = '' + (date.getMonth() + 1),
             d = '' + date.getDate(),
             y = date.getFullYear();
@@ -2219,10 +2219,10 @@
 
     /* form data to json */
     jQuery.fn.serializeObject = function () {
-        var obj = null;
+        let obj = null;
         try {
             if (this[0].tagName && this[0].tagName.toUpperCase() == "FORM") {
-                var arr = this.serializeArray();
+                let arr = this.serializeArray();
                 if (arr) {
                     obj = {};
                     jQuery.each(arr, function () {
@@ -2242,7 +2242,7 @@
     const thisBtn = document.querySelector('#modal_open');
 
     /* 시교자원 수출관리 테이블 구분 */
-    var tablechk = 0;
+    let tablechk = 0;
 
     $("#sampleTable1").click(function () {
         tablechk = 0;
@@ -2314,15 +2314,15 @@
         }
     }
 
-    var emptyEls;
+    let emptyEls;
 
     // 종자번호 팝업
     function SearchSeed(e) {
         $("#pop_seed").modal();
 
-        var sample_name1 = $("#CropSelect").val();
+        let sample_name1 = $("#CropSelect").val();
 
-        var data1 = {"sample_name": sample_name1};
+        let data1 = {"sample_name": sample_name1};
 
         $.ajax(
             {
@@ -2333,11 +2333,11 @@
                 success: function (result1) {
                     $(".seed_title").text("종자번호(ID) - " + e.innerText);
 
-                    var outcome_list = $(".outcome_list");
+                    let outcome_list = $(".outcome_list");
 
-                    var seed_list = "";
+                    let seed_list = "";
 
-                    for (var i = 0; i < result1.sampleOutcome.length; i++) {
+                    for (let i = 0; i < result1.sampleOutcome.length; i++) {
                         if (result1.sampleOutcome[i].sample_outcome_num === e.innerText) {
                             seed_list += '<tr>';
                             seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_code + '</td>';
@@ -2366,9 +2366,9 @@
     function SearchBreed(e) {
         $("#pop_breed").modal();
 
-        var breed_name = $("#CropSelect").val();
+        let breed_name = $("#CropSelect").val();
 
-        var data = {"breed_name": breed_name};
+        let data = {"breed_name": breed_name};
 
         $.ajax(
             {
@@ -2379,96 +2379,35 @@
                 success: function (result) {
                     $(".breed_title").text("시교명 (ID) : " + e.innerText);
 
-                    var header_list = $("#header_list");
-                    var header_add = "";
+                    let header_list = $("#header_list");
+                    let header_add = "";
 
-                    var breed_list = $("#breed_list");
-                    var add_list = "";
-
-                    var detail_list = $(".detail_list");
-                    var detail_list2 = $(".detail_list2");
-
-                    var display_list = $(".display_list");
-                    var display_add = "";
-
-                    var detail_add = "";
-                    var detail_add2 = "";
+                    let breed_list = $("#breed_list");
+                    let add_list = "";
 
                     // header
                     header_add += '<tr>';
 
-                    for (var i = 0; i < result.display.length; i++) {
-                        header_add += '<th><span class="title">' + result.display[i].detail_title + '</span></th>'
+                    for (let i = 0; i < result.detail.length; i++) {
+                        if (result.detail[i].detail_title != '첨부파일 관리') {
+                            header_add += '<th><span class="title">' + result.detail[i].detail_title + '</span></th>'
+                        }
                     }
 
                     header_add += '</tr>';
 
                     // body
-                    for (var i = 0; i < result.breed.length; i++) {
-                        add_list += '<tr>';
+                    for (let i = 0; i < result.breeds.length; i++) {
+                        if (result.breeds[i].breed_standard[1].standard === e.innerText) {
 
-                        for (var j = 0; j < result.breed[i].breed_standard.length; j++) {
-                            add_list += '<td>' + result.breed[i].breed_standard[j].standard + '</td>';
-                        }
+                            add_list += '<tr>';
 
-                        add_list += '</tr>';
-                    }
-
-                    // detail
-                    for (var i = 0; i < detail_list.length; i++) {
-                        detail_add = "";
-                        detail_add2 = "";
-                        display_add = "";
-
-                        for (var j = 0; j < result.detail.length; j++) {
-                            // 표시항목
-                            if (result.detail[j].detail_spec == detail_list.eq(i).attr("name")) {
-                                var check = true;
-
-                                for (var k = 0; k < result.display.length; k++) {
-                                    if (result.display[k].detail_id == result.detail[j].detail_id) {
-                                        check = false;
-
-                                        display_add += '<div data-id="' + result.detail[j].detail_id + '" class="list-group step">';
-                                        display_add += '<li class="list-group-item-sm list-group-item">';
-                                        display_add += '<div class="row">';
-                                        display_add += '<input type="checkbox" class="checkbox mr-2" name="mis_research">';
-                                        display_add += '<span class="research-title">' + result.detail[j].detail_title + '</span>';
-                                        display_add += '<input type="hidden" name="detail_id" value="' + result.detail[j].detail_id + '">';
-                                        display_add += '</div>';
-                                        display_add += '</li>';
-                                        display_add += '</div>';
-                                    }
-                                }
-
-                                if (check) {
-                                    detail_add += '<li>';
-                                    detail_add += '<input type="checkbox" class="check_box" name="chk_research" value="' + result.detail[j].detail_id + '">';
-                                    detail_add += '<div class="title">' + result.detail[j].detail_title + '</div>';
-                                    detail_add += '</li>';
-                                }
+                            for (let j = 0; j < result.breeds[i].breed_standard.length; j++) {
+                                add_list += '<td>' + result.breeds[i].breed_standard[j].standard + '</td>';
                             }
 
-                            // 특성상태
-                            if (result.detail[j].detail_spec == detail_list.eq(i).attr("name")) {
-                                detail_add2 += '<li>';
-                                detail_add2 += '<div class="title">' + result.detail[j].detail_title + '</div>';
-                                detail_add2 += '<div class="input_text">';
-                                detail_add2 += '<input type="text" class="empty_list" name="standard">';
-                                detail_add2 += '<input type="hidden" name="detail_id" value="' + result.detail[j].detail_id + '"></div>';
-                                detail_add2 += '</div>';
-                                detail_add2 += '</li>';
-                            }
+                            add_list += '</tr>';
                         }
-
-                        detail_list.eq(i).empty();
-                        detail_list.eq(i).append(detail_add);
-
-                        detail_list2.eq(i).empty();
-                        detail_list2.eq(i).append(detail_add2);
-
-                        display_list.eq(i).empty();
-                        display_list.eq(i).append(display_add);
                     }
 
                     header_list.empty();
@@ -2486,21 +2425,21 @@
 
     // 시교자원 삭제
     function DeleteSample() {
-        var user_type = $("#user_type").val();
+        let user_type = $("#user_type").val();
 
         if (user_type != 0) {
             return Alert("삭제 권한이 없습니다.");
         } else {
             if (tablechk === 0) {
-                var total_id = [];
+                let total_id = [];
 
-                var l = samplegrid.getCheckedRows().length;
+                let l = samplegrid.getCheckedRows().length;
 
                 for (let i = 0; i < l; i++) {
                     total_id.push(samplegrid.getCheckedRows()[i].sample_id)
                 }
 
-                var data = {'sample_id': total_id};
+                let data = {'sample_id': total_id};
 
                 if (confirm("삭제하시겠습니까?") == true) {
                     $.ajax(
@@ -2521,15 +2460,15 @@
                     return false;
                 }
             } else {
-                var total_id1 = [];
+                let total_id1 = [];
 
-                var l1 = outcomegrid.getCheckedRows().length;
+                let l1 = outcomegrid.getCheckedRows().length;
 
                 for (let i = 0; i < l1; i++) {
                     total_id1.push(outcomegrid.getCheckedRows()[i].sample_outcome_id)
                 }
 
-                var data1 = {'sample_outcome_id': total_id1};
+                let data1 = {'sample_outcome_id': total_id1};
 
                 if (confirm("삭제하시겠습니까?") == true) {
                     $.ajax(
@@ -2559,7 +2498,7 @@
     function FileBtn(e) {
         $("#sample_file").modal("show");
 
-        var data = {"sample_id": e};
+        let data = {"sample_id": e};
 
         $.ajax(
             {
@@ -2570,12 +2509,12 @@
                 success: function (result) {
                     $("#upload_id").val(e);
 
-                    var file_list = $("#file_list");
-                    var file_add = "";
+                    let file_list = $("#file_list");
+                    let file_add = "";
 
-                    for (var i = 0; i < result.sample_file.length; i++) {
-                        var file = JSON.stringify(result.sample_file[i]);
-                        var file_json = file.replace(/\"/g, "&quot;");
+                    for (let i = 0; i < result.sample_file.length; i++) {
+                        let file = JSON.stringify(result.sample_file[i]);
+                        let file_json = file.replace(/\"/g, "&quot;");
 
                         file_add += '<tr>';
                         file_add += '<td>' + (i + 1) + '</td>';
@@ -2597,8 +2536,8 @@
     }
 
     function InsertFile() {
-        var file = $("#upload_file");
-        var title = $(".file_title");
+        let file = $("#upload_file");
+        let title = $(".file_title");
 
         if (file.val() == "") {
             Alert1("파일을 선택해주세요.");
@@ -2614,7 +2553,7 @@
     }
 
     function ModifyBtn(e) {
-        var files = JSON.parse($("#file_" + e).val());
+        let files = JSON.parse($("#file_" + e).val());
 
         $("#sample_file_id").val(files.sample_file_id);
         $("#sample_file_title").val(files.sample_file_title);
@@ -2634,18 +2573,18 @@
     /* 첨부파일 */
 
     // grid
-    var samplegrid = null;
-    var outcomegrid = null;
+    let samplegrid = null;
+    let outcomegrid = null;
     let updateSampleData = [];
     let updateOutcomeData = [];
 
     function SearchSample(e) {
-        var sample_name = $("#CropSelect").val();
-        var limit = $("#limit").val();
+        let sample_name = $("#CropSelect").val();
+        let limit = $("#limit").val();
 
-        var data = {"sample_name": sample_name, "page_num": e, "limit": limit};
+        let data = {"sample_name": sample_name, "page_num": e, "limit": limit};
 
-        var loading = document.querySelector('.load_wrap');
+        let loading = document.querySelector('.load_wrap');
 
         loading.classList.add('on');
 
@@ -2755,15 +2694,15 @@
 
                     samplegrid.on('click', (ev) => {
                         if (ev.targetType === 'cell' && ev.columnName === 'sample_seed') {
-                            var value_seed = ev.nativeEvent.srcElement;
+                            let value_seed = ev.nativeEvent.srcElement;
 
                             SearchSeed(value_seed);
                         } else if (ev.targetType === 'cell' && ev.columnName === 'sample_code') {
-                            var value_breed = ev.nativeEvent.srcElement;
+                            let value_breed = ev.nativeEvent.srcElement;
 
                             SearchBreed(value_breed);
                         } else if (ev.targetType === 'cell' && ev.columnName === 'file') {
-                            var id = samplegrid.getRow(ev.rowKey).sample_id;
+                            let id = samplegrid.getRow(ev.rowKey).sample_id;
 
                             FileBtn(id);
                         }
@@ -2792,8 +2731,8 @@
 
                     samplegrid.resetData(dataArr);
 
-                    var before = null;
-                    var after = null;
+                    let before = null;
+                    let after = null;
 
                     samplegrid.on('dblclick', (ev) => {
                         ev.stop();
@@ -2806,7 +2745,7 @@
                     })
 
                     samplegrid.on('afterChange', (ev) => {
-                        var user_type = $("#user_type").val();
+                        let user_type = $("#user_type").val();
 
                         if (user_type != 0 && user_type != 2) {
                             return Alert("수정 권한이 없습니다.");
@@ -2817,9 +2756,9 @@
                                 after = ev.changes[i].value;
 
                                 if (after != before) {
-                                    var sample_id = samplegrid.getRow(ev.changes[i].rowKey).sample_id;
-                                    var sample_name = ev.changes[i].columnName;
-                                    var sample_value = after;
+                                    let sample_id = samplegrid.getRow(ev.changes[i].rowKey).sample_id;
+                                    let sample_name = ev.changes[i].columnName;
+                                    let sample_value = after;
 
                                     if (sample_id != null) {
                                         updateSampleData.push({"sample_id": sample_id, "sample_name": sample_name, "sample_value": sample_value});
@@ -2840,12 +2779,12 @@
     }
 
     function SearchOutcome(e) {
-        var sample_name1 = $("#CropSelect").val();
-        var limit1 = $("#limit").val();
+        let sample_name1 = $("#CropSelect").val();
+        let limit1 = $("#limit").val();
 
-        var data1 = {"sample_name": sample_name1, "page_num": e, "limit": limit1};
+        let data1 = {"sample_name": sample_name1, "page_num": e, "limit": limit1};
 
-        var loading = document.querySelector('.load_wrap');
+        let loading = document.querySelector('.load_wrap');
 
         loading.classList.add('on');
 
@@ -2984,7 +2923,7 @@
 
                     outcomegrid.on('click', (ev) => {
                         if (ev.targetType === 'cell' && ev.columnName === 'sample_outcome_num') {
-                            var value = ev.nativeEvent.srcElement;
+                            let value = ev.nativeEvent.srcElement;
 
                             SearchSeed(value);
                         }
@@ -2996,11 +2935,11 @@
                         }
                     })
 
-                    var before = null;
-                    var after = null;
+                    let before = null;
+                    let after = null;
 
                     outcomegrid.on('afterChange', (ev) => {
-                        var user_type = $("#user_type").val();
+                        let user_type = $("#user_type").val();
 
                         if (user_type != 0 && user_type != 2) {
                             return Alert("수정 권한이 없습니다.");
@@ -3011,9 +2950,9 @@
                                 after = ev.changes[i].value;
 
                                 if (after != before) {
-                                    var sample_outcome_id = outcomegrid.getRow(ev.changes[i].rowKey).sample_outcome_id
-                                    var sample_outcome_name = ev.changes[i].columnName;
-                                    var sample_outcome_value = after;
+                                    let sample_outcome_id = outcomegrid.getRow(ev.changes[i].rowKey).sample_outcome_id
+                                    let sample_outcome_name = ev.changes[i].columnName;
+                                    let sample_outcome_value = after;
 
                                     if (sample_outcome_id != null) {
                                         updateOutcomeData.push({
@@ -3038,7 +2977,7 @@
     }
 
     function insertRow() {
-        var user_type = $("#user_type").val();
+        let user_type = $("#user_type").val();
 
         if (user_type != 0 && user_type != 2) {
             return Alert("등록 권한이 없습니다.");
@@ -3046,7 +2985,7 @@
             $(".plus_btn_submit1").css("display", "block");
 
             if (tablechk === 0) {
-                var cnt = samplegrid.getRowCount();
+                let cnt = samplegrid.getRowCount();
 
                 const newRow = {
                     sample_name: $("#CropSelect").val(),
@@ -3055,7 +2994,7 @@
                 samplegrid.prependRow(newRow);
                 samplegrid.check(cnt);
             } else {
-                var cnt1 = outcomegrid.getRowCount();
+                let cnt1 = outcomegrid.getRowCount();
 
                 const newRow = {
                     sample_name: $("#CropSelect").val(),
@@ -3161,8 +3100,8 @@
         }
     }
 
-    var inKorea = [];
-    var outKorea = [];
+    let inKorea = [];
+    let outKorea = [];
 
     function SearchMarker() {
         $.ajax(
@@ -3194,7 +3133,7 @@
 
     function searchArea() {
 
-        var koreaOptions = {
+        let koreaOptions = {
             zoom: 6.4,
             center: {
                 lat: 36.613766432253634,
@@ -3210,17 +3149,17 @@
             // mapTypeId: google.maps.MapTypeId.ROADMAP
         };
 
-        var globalOptions = {
+        let globalOptions = {
             ...koreaOptions,
             zoom: 2,
         };
 
-        var geoCoder = new google.maps.Geocoder();
-        var korMap = new google.maps.Map(document.querySelector("#google_map1"), koreaOptions);
-        var globalMap = new google.maps.Map(document.querySelector("#google_map2"), globalOptions);
+        let geoCoder = new google.maps.Geocoder();
+        let korMap = new google.maps.Map(document.querySelector("#google_map1"), koreaOptions);
+        let globalMap = new google.maps.Map(document.querySelector("#google_map2"), globalOptions);
 
-        var koreaLocations = [];
-        var globalLocations = [];
+        let koreaLocations = [];
+        let globalLocations = [];
 
         for (let i = 0; i < inKorea.length; i++) {
             koreaLocations.push(inKorea[i]);
@@ -3231,12 +3170,12 @@
         }
 
         // 국내
-        for (var i = 0; i < koreaLocations.length; i++) {
+        for (let i = 0; i < koreaLocations.length; i++) {
             geoCoder.geocode({"address": koreaLocations[i]}, function (result, status) {
                 if (status == "OK") {
-                    var centerCoordinate = result[0].geometry.location; // 검색한 지역의 중앙 좌표
+                    let centerCoordinate = result[0].geometry.location; // 검색한 지역의 중앙 좌표
 
-                    var marker = new google.maps.Marker({ // 마커 생성
+                    let marker = new google.maps.Marker({ // 마커 생성
                         map: korMap,
                         position: centerCoordinate
                     });
@@ -3245,12 +3184,12 @@
         }
 
         // 해외
-        for (var i = 0; i < globalLocations.length; i++) {
+        for (let i = 0; i < globalLocations.length; i++) {
             geoCoder.geocode({"address": globalLocations[i]}, function (result, status) {
                 if (status == "OK") {
-                    var centerCoordinate = result[0].geometry.location; // 검색한 지역의 중앙 좌표
+                    let centerCoordinate = result[0].geometry.location; // 검색한 지역의 중앙 좌표
 
-                    var marker = new google.maps.Marker({ // 마커 생성
+                    let marker = new google.maps.Marker({ // 마커 생성
                         map: globalMap,
                         position: centerCoordinate
                     });
@@ -3276,10 +3215,10 @@
     }
 
     function makeSelect() {
-        var sbox = document.querySelector("#modal-search");
+        let sbox = document.querySelector("#modal-search");
 
-        var info = [];
-        var infoTag = [];
+        let info = [];
+        let infoTag = [];
 
         for (let i = 0; i < inKorea.length; i++) {
             info.push(inKorea[i]);
@@ -3290,7 +3229,7 @@
         }
 
         for (let i = 0; i < info.length; i++) {
-            var optionElement = document.createElement("option");
+            let optionElement = document.createElement("option");
             optionElement.value = info[i];
             optionElement.innerText = info[i];
             infoTag.push(optionElement);
@@ -3299,7 +3238,7 @@
     }
 
     function imgView(e) {
-        var fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/;
+        let fileForm = /(.*?)\.(jpg|jpeg|png|gif|bmp|pdf)$/;
 
         if (e.match(fileForm)) {
             document.getElementById("preview-image").src = '/upload/' + e;

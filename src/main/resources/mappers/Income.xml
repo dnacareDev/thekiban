@@ -170,6 +170,7 @@
                 WHERE income_name = #{income_name}
             </when>
         </choose>
+        ORDER BY income_id DESC
     </select>
 
     <select id="SearchIncomeRemainExcel" resultType="IncomeRemain">
