@@ -92,6 +92,8 @@ public class BreedController {
 
     List<Detail> detail = service.SearchBreedDetail(breed_name);
 
+    detail.forEach(System.out::println);
+
     Breed breed = new Breed();
     breed.setBreed_name(breed_name);
 
