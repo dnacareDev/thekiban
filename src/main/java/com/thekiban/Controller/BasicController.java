@@ -446,6 +446,7 @@ public class BasicController {
         upload.setBasic_file_id(basic_file.getBasic_file_id());
 
         int update_upload = service.UpdateBasicUpload(upload);
+        int update_file = service.UpdateBasicFile(basic_file);
       }
     }
 

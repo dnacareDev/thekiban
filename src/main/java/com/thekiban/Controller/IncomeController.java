@@ -573,6 +573,7 @@ public class IncomeController {
         upload.setIncome_file_id(income_file.getIncome_file_id());
 
         int update_upload = service.UpdateIncomeUpload(upload);
+        int update_file = service.UpdateIncomeFile(income_file);
       }
     }
 

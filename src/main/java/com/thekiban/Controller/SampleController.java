@@ -648,6 +648,7 @@ public class SampleController {
         upload.setSample_file_id(sample_file.getSample_file_id());
 
         int update_upload = service.UpdateSampleUpload(upload);
+        int update_file = service.UpdateSampleFile(sample_file);
       }
     }
 
