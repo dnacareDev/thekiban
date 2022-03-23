@@ -332,6 +332,7 @@ public class BreedController {
         upload.setBreed_file_id(breed_file.getBreed_file_id());
 
         int update_upload = service.UpdateBreedUpload(upload);
+        int update_file = service.UpdateBreedFile(breed_file);
       }
     }
 

@@ -258,7 +258,7 @@
     	SET breed_file_title = #{breed_file_title}, breed_file_contents = #{breed_file_contents}, modify_date = NOW()
     	WHERE breed_file_id = #{breed_file_id}
     </update>
-    
+
     <!-- 첨부파일 수정 -->
     <update id="UpdateBreedUpload" parameterType="Uploads">
     	UPDATE uploads
