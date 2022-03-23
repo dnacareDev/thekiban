@@ -2394,6 +2394,7 @@
     var remaingrid = null;
     let updateIncomeData = [];
     let updateRemainData = [];
+    var insertCheck = 0;
 
     function SearchIncome(e) {
         var income_name = $("#CropSelect").val();
@@ -2527,11 +2528,11 @@
                     });
 
                     incomegrid.on('click', (ev) => {
-                        if (ev.targetType === 'cell' && ev.columnName === 'income_code') {
+                        if (ev.targetType === 'cell' && ev.columnName === 'income_code' && insertCheck == 0) {
                             var value_seed = ev.nativeEvent.srcElement;
 
                             SearchRemainPop(value_seed);
-                        } else if (ev.targetType === 'cell' && ev.columnName === 'file') {
+                        } else if (ev.targetType === 'cell' && ev.columnName === 'file' && insertCheck == 0) {
                             var id = incomegrid.getRow(ev.rowKey).income_id;
 
                             FileBtn(id);
@@ -2768,6 +2769,8 @@
         } else {
             $(".plus_btn_submit1").css("display", "block");
 
+            insertCheck = 1;
+
             if (tablechk === 0) {
                 var cnt = incomegrid.getRowCount();
 
@@ -2840,6 +2843,8 @@
         }
 
         $(".plus_btn_submit1").css("display", "none");
+
+        insertCheck = 0;
     }
 
     function updateRow() {

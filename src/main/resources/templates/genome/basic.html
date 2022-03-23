@@ -2699,6 +2699,7 @@
     var basicRemainGrid = null;
     let updateBasicData = [];
     let updateBasicRemainData = [];
+    var insertCheck = 0;
 
     function SearchBasicgrid(e) {
         var basic_name = $("#CropSelect").val();
@@ -2794,15 +2795,15 @@
                     basicgrid.resetData(dataArr);
 
                     basicgrid.on('click', (ev) => {
-                        if (ev.targetType === 'cell' && (ev.columnName === '170' || ev.columnName === '337' || ev.columnName === '518' || ev.columnName === '693' || ev.columnName === '835' || ev.columnName === '1000' || ev.columnName === '1170' || ev.columnName === '1338' || ev.columnName === '1512' || ev.columnName === '1723')) {
+                        if (ev.targetType === 'cell' && (ev.columnName === '170' || ev.columnName === '337' || ev.columnName === '518' || ev.columnName === '693' || ev.columnName === '835' || ev.columnName === '1000' || ev.columnName === '1170' || ev.columnName === '1338' || ev.columnName === '1512' || ev.columnName === '1723') && insertCheck == 0) {
                             let value_basic = ev.nativeEvent.srcElement;
 
                             SearchBreed(value_basic);
-                        } else if (ev.targetType === 'cell' && ev.columnName === 'status') {
+                        } else if (ev.targetType === 'cell' && ev.columnName === 'status' && insertCheck == 0) {
                             var e_id = basicgrid.getRow(ev.rowKey).basic_id;
 
                             EmptyBtn(e_id);
-                        } else if (ev.targetType === 'cell' && ev.columnName === 'file') {
+                        } else if (ev.targetType === 'cell' && ev.columnName === 'file' && insertCheck == 0) {
                             var id = basicgrid.getRow(ev.rowKey).basic_id;
 
                             FileBtn(id);

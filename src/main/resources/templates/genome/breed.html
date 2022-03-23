@@ -2726,8 +2726,9 @@
             });
     }
 
-    var breedgrid = null;
+    let breedgrid = null;
     let updateBreedData = [];
+    var insertCheck = 0;
 
     function SearchBreedgrid(e) {
         var breed_name = $("#CropSelect").val();
@@ -2827,15 +2828,15 @@
                     })
 
                     breedgrid.on('click', (ev) => {
-                        if (ev.targetType === 'cell' && (ev.columnName === '2' || ev.columnName === '278' || ev.columnName === '389' || ev.columnName === '627' || ev.columnName === '750' || ev.columnName === '913' || ev.columnName === '1077' || ev.columnName === '1255' || ev.columnName === '1413' || ev.columnName === '1600')) {
+                        if (ev.targetType === 'cell' && (ev.columnName === '2' || ev.columnName === '278' || ev.columnName === '389' || ev.columnName === '627' || ev.columnName === '750' || ev.columnName === '913' || ev.columnName === '1077' || ev.columnName === '1255' || ev.columnName === '1413' || ev.columnName === '1600') && insertCheck == 0) {
                             var value_sample = ev.nativeEvent.srcElement;
 
                             SearchSample(value_sample);
-                        } else if (ev.targetType === 'cell' && ev.columnName === 'file') {
+                        } else if (ev.targetType === 'cell' && ev.columnName === 'file' && insertCheck == 0) {
                             var id = breedgrid.getRow(ev.rowKey).breed_id;
 
                             FileBtn(id);
-                        } else if (ev.targetType === 'cell' && ev.columnName === 'status') {
+                        } else if (ev.targetType === 'cell' && ev.columnName === 'status' && insertCheck == 0) {
                             var e_id = breedgrid.getRow(ev.rowKey).breed_id;
 
                             EmptyBtn(e_id);
@@ -2883,8 +2884,8 @@
             });
     }
 
-    var lastID = 0;
-    var saveStandard = [];
+    let lastID = 0;
+    let saveStandard = [];
     let breedData = [];
 
     function insertRow() {
@@ -2895,10 +2896,11 @@
         } else {
             $(".plus_btn_submit1").css("display", "block");
 
-            var cnt = breedgrid.getRowCount();
+            insertCheck = 1;
+
+            let cnt = breedgrid.getRowCount();
 
             const newRow = {'breed_id': null, '1': $("#CropSelect").val()};
-
 
             breedgrid.prependRow(newRow);
             breedgrid.check(cnt);
@@ -2936,6 +2938,8 @@
         breedgrid.removeCheckedRows();
 
         $(".plus_btn_submit1").css("display", "none");
+
+        insertCheck = 0;
     }
 
     function updateRow() {

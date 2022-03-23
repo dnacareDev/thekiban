@@ -2577,6 +2577,7 @@
     let outcomegrid = null;
     let updateSampleData = [];
     let updateOutcomeData = [];
+    var insertCheck = 0;
 
     function SearchSample(e) {
         let sample_name = $("#CropSelect").val();
@@ -2693,15 +2694,15 @@
                     });
 
                     samplegrid.on('click', (ev) => {
-                        if (ev.targetType === 'cell' && ev.columnName === 'sample_seed') {
+                        if (ev.targetType === 'cell' && ev.columnName === 'sample_seed'  && insertCheck == 0) {
                             let value_seed = ev.nativeEvent.srcElement;
 
                             SearchSeed(value_seed);
-                        } else if (ev.targetType === 'cell' && ev.columnName === 'sample_code') {
+                        } else if (ev.targetType === 'cell' && ev.columnName === 'sample_code'  && insertCheck == 0) {
                             let value_breed = ev.nativeEvent.srcElement;
 
                             SearchBreed(value_breed);
-                        } else if (ev.targetType === 'cell' && ev.columnName === 'file') {
+                        } else if (ev.targetType === 'cell' && ev.columnName === 'file'  && insertCheck == 0) {
                             let id = samplegrid.getRow(ev.rowKey).sample_id;
 
                             FileBtn(id);
@@ -2984,6 +2985,8 @@
         } else {
             $(".plus_btn_submit1").css("display", "block");
 
+            insertCheck = 1;
+
             if (tablechk === 0) {
                 let cnt = samplegrid.getRowCount();
 
@@ -3056,6 +3059,8 @@
         }
 
         $(".plus_btn_submit1").css("display", "none");
+
+        insertCheck = 0;
     }
 
     function updateRow() {
