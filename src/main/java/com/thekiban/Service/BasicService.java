@@ -18,7 +18,7 @@ public interface BasicService
 	// 원종 검색
 	List<Basic> SearchBasic(String basic_name);
 
-	List<BasicRemain> SearchBasicRemain(String basic_name, int offset, int limit);
+	List<BasicRemain> SearchBasicRemain(String basic_name);
 
 	// 원종별 세부 정보 조회
 	List<Detail> SearchBasicDetail(String basic_name);

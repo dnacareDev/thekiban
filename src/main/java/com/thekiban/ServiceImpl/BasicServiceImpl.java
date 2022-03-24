@@ -41,8 +41,8 @@ public class BasicServiceImpl implements BasicService
 	}
 
 	@Override
-	public List<BasicRemain> SearchBasicRemain(String basic_name, int offset, int limit) {
-		return mapper.SearchBasicRemain(basic_name, offset, limit);
+	public List<BasicRemain> SearchBasicRemain(String basic_name) {
+		return mapper.SearchBasicRemain(basic_name);
 	}
 
 	// 원종별 세부 정보 조회

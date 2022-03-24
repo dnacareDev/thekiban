@@ -82,17 +82,16 @@ public class BreedController {
   @ResponseBody
   @RequestMapping("insertBreed2")
   public int InsertUpload(@RequestParam("data") String data) {
-    JSONArray arr = new JSONArray(data);
+    int result = 0;
 
+    JSONArray arr = new JSONArray(data);
     List<Standard> standards = new ArrayList<Standard>();
 
     JSONObject item = arr.getJSONObject(0);
-
     String breed_name = item.getString("standard");
-
     List<Detail> detail = service.SearchBreedDetail(breed_name);
 
-    detail.forEach(System.out::println);
+    int sampleDetailId = detail.get(1).getDetail_id();
 
     Breed breed = new Breed();
     breed.setBreed_name(breed_name);
@@ -112,9 +111,13 @@ public class BreedController {
       standards.add(standard);
     }
 
-    service.UpdateAllBreed(standards);
+    /*if () {
 
-    return 1;
+    } else {
+      result = service.UpdateAllBreed(standards);
+    }*/
+
+    return result;
   }
 
   // 품종 등록

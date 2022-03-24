@@ -263,4 +263,9 @@ public class BreedServiceImpl implements BreedService
 	public List<Breed> SelectBreedExcel(int breed_id) {
 		return mapper.SelectBreedExcel(breed_id);
 	}
+
+	@Override
+	public int SearchByStandard(String standard) {
+		return mapper.SearchByStandard(standard);
+	}
 }

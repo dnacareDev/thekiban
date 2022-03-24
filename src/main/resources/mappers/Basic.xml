@@ -81,7 +81,6 @@
                 ORDER BY basic_remain_id DESC
             </when>
         </choose>
-        LIMIT #{offset}, #{limit}
     </select>
 
     <!-- 원종 등록 -->

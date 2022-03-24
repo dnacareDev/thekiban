@@ -97,7 +97,7 @@ public class BasicController {
     int offset = (page_num - 1) * limit;
     int end_page = (count + limit - 1) / limit;
 
-    List<BasicRemain> basicRemains = service.SearchBasicRemain(basic_name, offset, limit);
+    List<BasicRemain> basicRemains = service.SearchBasicRemain(basic_name);
 
     result.put("basicRemain", basicRemains);
     result.put("page_num", page_num);

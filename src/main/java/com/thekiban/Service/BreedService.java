@@ -121,4 +121,5 @@ public interface BreedService
 
 	List<Breed> SelectBreedExcel(int breed_id);
 
+	int SearchByStandard(String standard);
 }

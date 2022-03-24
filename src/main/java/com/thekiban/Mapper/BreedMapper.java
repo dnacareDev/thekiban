@@ -126,4 +126,5 @@ public interface BreedMapper
 
 	List<Breed> SelectBreedExcel(int breed_id);
 
+	int SearchByStandard(@Param("standard") String standard);
 }

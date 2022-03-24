@@ -239,7 +239,8 @@ public class IncomeController {
     int offset = (page_num - 1) * limit;
     int end_page = (count + limit - 1) / limit;
 
-    List<IncomeRemain> IncomeRemain = service.SearchRemain(income_name, offset, limit);
+//    List<IncomeRemain> IncomeRemain = service.SearchRemain(income_name, offset, limit);
+    List<IncomeRemain> IncomeRemain = service.SearchIncomeRemainExcel(income_name);
 
     result.put("incomeRemain", IncomeRemain);
     result.put("page_num", page_num);
