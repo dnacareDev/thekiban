@@ -84,7 +84,7 @@ public class HomeController {
         if (!placeK.contains(sampleOutcomes.get(i).getSample_outcome_place())) {
           placeK.add(sampleOutcomes.get(i).getSample_outcome_place());
         }
-      } else {
+      } else if (sampleOutcomes.get(i).getSample_outcome_country().equals("해외")) {
         if (!placeG.contains(sampleOutcomes.get(i).getSample_outcome_place())) {
           placeG.add(sampleOutcomes.get(i).getSample_outcome_place());
         }
