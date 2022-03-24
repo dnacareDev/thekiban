@@ -2894,24 +2894,28 @@
         if (user_type != 0 && user_type != 2) {
             return Alert("등록 권한이 없습니다.");
         } else {
-            $(".plus_btn_submit1").css("display", "block");
+            if (insertCheck == 0) {
+                $(".plus_btn_submit1").css("display", "block");
 
-            insertCheck = 1;
+                insertCheck = 1;
 
-            let cnt = breedgrid.getRowCount();
+                let cnt = breedgrid.getRowCount();
 
-            const newRow = {'breed_id': null, '1': $("#CropSelect").val()};
+                const newRow = {'breed_id': null, '1': $("#CropSelect").val()};
 
-            breedgrid.prependRow(newRow);
-            breedgrid.check(cnt);
+                breedgrid.prependRow(newRow);
+                breedgrid.check(cnt);
 
-            breedData.push({'detail_id': 1, 'standard': $("#CropSelect").val()})
+                breedData.push({'detail_id': 1, 'standard': $("#CropSelect").val()})
 
-            breedgrid.on('afterChange', (ev) => {
-                for (let i = 0; i < ev.changes.length; i++) {
-                    breedData.push({"detail_id": ev.changes[i].columnName, "standard": ev.changes[i].value})
-                }
-            });
+                breedgrid.on('afterChange', (ev) => {
+                    for (let i = 0; i < ev.changes.length; i++) {
+                        breedData.push({"detail_id": ev.changes[i].columnName, "standard": ev.changes[i].value})
+                    }
+                });
+            } else {
+                return Alert1("이미 데이터 추가 창이 활성화 중입니다.");
+            }
         }
     }
 

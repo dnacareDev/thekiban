@@ -2769,26 +2769,36 @@
         } else {
             $(".plus_btn_submit1").css("display", "block");
 
-            insertCheck = 1;
-
             if (tablechk === 0) {
-                var cnt = incomegrid.getRowCount();
+                if (insertCheck == 0) {
+                    let cnt = incomegrid.getRowCount();
 
-                const newRow = {
-                    income_name: $("#CropSelect").val(),
-                };
+                    insertCheck = 1;
 
-                incomegrid.prependRow(newRow);
-                incomegrid.check(cnt);
+                    const newRow = {
+                        income_name: $("#CropSelect").val(),
+                    };
+
+                    incomegrid.prependRow(newRow);
+                    incomegrid.check(cnt);
+                } else {
+                    return Alert1("이미 데이터 추가 창이 활성화 중입니다.");
+                }
             } else {
-                var cnt1 = remaingrid.getRowCount();
+                if (insertCheck == 0) {
+                    let cnt1 = remaingrid.getRowCount();
 
-                const newRow = {
-                    income_name: $("#CropSelect").val(),
-                };
+                    insertCheck = 1;
 
-                remaingrid.prependRow(newRow);
-                remaingrid.check(cnt1);
+                    const newRow = {
+                        income_name: $("#CropSelect").val(),
+                    };
+
+                    remaingrid.prependRow(newRow);
+                    remaingrid.check(cnt1);
+                } else {
+                    return Alert1("이미 데이터 추가 창이 활성화 중입니다.");
+                }
             }
         }
     }

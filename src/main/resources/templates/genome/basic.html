@@ -3017,34 +3017,45 @@
             $(".plus_btn_submit1").css("display", "block");
 
             if (tablechk == 0) {
-                var cnt = basicgrid.getRowCount();
+                if (insertCheck == 0) {
+                    var cnt = basicgrid.getRowCount();
 
-                const newRow = {'basic_id': null, '169': $("#CropSelect").val()};
+                    insertCheck = 1;
 
-                basicgrid.prependRow(newRow);
-                basicgrid.check(cnt);
+                    const newRow = {'basic_id': null, '169': $("#CropSelect").val()};
 
-                basicData.push({'detail_id': 169, 'standard': $("#CropSelect").val()})
+                    basicgrid.prependRow(newRow);
+                    basicgrid.check(cnt);
 
-                basicgrid.on('afterChange', (ev) => {
-                    for (let i = 0; i < ev.changes.length; i++) {
-                        basicData.push({"detail_id": ev.changes[i].columnName, "standard": ev.changes[i].value})
-                    }
-                });
+                    basicData.push({'detail_id': 169, 'standard': $("#CropSelect").val()})
+
+                    basicgrid.on('afterChange', (ev) => {
+                        for (let i = 0; i < ev.changes.length; i++) {
+                            basicData.push({"detail_id": ev.changes[i].columnName, "standard": ev.changes[i].value})
+                        }
+                    });
+                } else {
+                    return Alert1("이미 데이터 추가 창이 활성화 중입니다.");
+                }
             } else {
-                var cnt1 = basicRemainGrid.getRowCount();
+                if (insertCheck == 0) {
+                    var cnt1 = basicRemainGrid.getRowCount();
 
-                const newRow = {'basic_name': $("#CropSelect").val()};
+                    insertCheck = 1;
 
-                basicRemainGrid.prependRow(newRow);
-                basicRemainGrid.check(cnt1);
+                    const newRow = {'basic_name': $("#CropSelect").val()};
+
+                    basicRemainGrid.prependRow(newRow);
+                    basicRemainGrid.check(cnt1);
+                } else {
+                    return Alert1("이미 데이터 추가 창이 활성화 중입니다.");
+                }
             }
         }
     }
 
     function saveRow() {
         if (tablechk == 0) {
-
             $.ajax(
                 {
                     url: 'insertBasic',
@@ -3114,6 +3125,8 @@
         }
 
         $(".plus_btn_submit1").css("display", "none");
+
+        insertCheck = 0;
     }
 
     function updateRow() {
