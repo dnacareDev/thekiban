@@ -246,7 +246,7 @@ public class BasicController {
   // 재고 입력
   @ResponseBody
   @RequestMapping("updateInsertBasicRemain")
-  public int UpdateInsertBasicRemain(@ModelAttribute BasicRemain basicRemain, @RequestParam("data") String data) {
+  public int UpdateInsertBasicRemain(@ModelAttribute BasicRemain basicRemain, @RequestParam("input_data") String data) {
     JSONArray arr = new JSONArray(data);
 
     JSONObject obj = arr.getJSONObject(0);
@@ -302,7 +302,7 @@ public class BasicController {
     }
 
     if (!obj.isNull("basic_remain_date")) {
-      String date = (String) obj.get("income_date");
+      String date = (String) obj.get("basic_remain_date");
       DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.KOREA);
       LocalDate ldate = LocalDate.parse(date, formatter);
 
@@ -311,7 +311,9 @@ public class BasicController {
       basicRemain.setBasic_remain_date(null);
     }
 
-    int result = service.UpdateInsertBasicRemain(basicRemain);
+//    int result = service.UpdateInsertBasicRemain(basicRemain);
+    System.out.println("basicRemain = " + basicRemain);
+    int result = service.InsertRemain(basicRemain);
 
     return result;
   }

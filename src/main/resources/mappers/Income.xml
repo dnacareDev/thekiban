@@ -180,6 +180,7 @@
                 WHERE income_name = #{income_name}
             </when>
         </choose>
+        ORDER BY income_remain_id DESC
     </select>
 
     <!-- 첨부파일 조회 -->

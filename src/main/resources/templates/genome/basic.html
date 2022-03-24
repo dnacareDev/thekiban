@@ -3034,27 +3034,10 @@
             } else {
                 var cnt1 = basicRemainGrid.getRowCount();
 
-                const newRow = {basic_name: $("#CropSelect").val()};
+                const newRow = {'basic_name': $("#CropSelect").val()};
 
                 basicRemainGrid.prependRow(newRow);
                 basicRemainGrid.check(cnt1);
-
-                var input_data1 = [];
-
-                input_data1.push(basicRemainGrid.getCheckedRows()[0]);
-
-                $.ajax(
-                    {
-                        url: 'insertBasicRemain',
-                        method: 'POST',
-                        dataType: 'json',
-                        data: {"input_data": JSON.stringify(input_data1)},
-                        success: function (result) {
-                            if (result != null) {
-                                lastID = result.basic_remain_id;
-                            }
-                        }
-                    });
             }
         }
     }
@@ -3079,6 +3062,24 @@
                     }
                 });
         } else {
+            var input_data1 = [];
+
+            input_data1.push(basicRemainGrid.getCheckedRows()[0]);
+
+            $.ajax(
+                {
+                    url: 'updateInsertBasicRemain',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {"input_data": JSON.stringify(input_data1)},
+                    success: function (result) {
+                        /*if (result != null) {
+                            lastID = result.basic_remain_id;
+                        }*/
+                        location.reload();
+                    }
+                });
+            /*
             var data1 = [];
 
             var data_in1 = basicRemainGrid.getCheckedRows()[0];
@@ -3100,7 +3101,7 @@
                             location.reload();
                         }
                     }
-                });
+                });*/
         }
 
     }

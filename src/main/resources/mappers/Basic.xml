@@ -155,7 +155,7 @@
     <!-- 재고 등록 -->
     <insert id="InsertRemain" parameterType="BasicRemain">
         INSERT INTO basicRemain
-        (basic_remain_id, basic_name, basic_remain_num, basic_remain_amount, basic_remain_in, basic_remain_out, basic_remain_re, basic_remain_person, basic_remain_date, create_date, modify_date))
+        (basic_remain_id, basic_name, basic_remain_num, basic_remain_amount, basic_remain_in, basic_remain_out, basic_remain_re, basic_remain_person, basic_remain_date, create_date, modify_date)
         VALUES
         (#{basic_remain_id}, #{basic_name}, #{basic_remain_num}, #{basic_remain_amount}, #{basic_remain_in}, #{basic_remain_out}, #{basic_remain_re}, #{basic_remain_person},
         #{basic_remain_date}, now(), now())
