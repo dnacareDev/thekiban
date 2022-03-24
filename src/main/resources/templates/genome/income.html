@@ -2197,9 +2197,8 @@
 
                     var re_list = "";
 
-                    var j = 1;
-
                     for (var i = 0; i < result1.incomeRemain.length; i++) {
+
                         if (result1.incomeRemain[i].income_remain_num === e.innerText) {
                             re_list += '<tr>';
                             re_list += '<td>' + j + '</td>';
@@ -2212,7 +2211,7 @@
                             re_list += '<td>' + result1.incomeRemain[i].income_remain_date + '</td>';
                             re_list += '</tr>';
 
-                            j++;
+                            j--;
                         }
                     }
 

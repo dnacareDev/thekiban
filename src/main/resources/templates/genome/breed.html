@@ -653,6 +653,12 @@
             cursor: pointer;
         }
 
+        #breedGrid .tui-grid-body-area td[data-column-name='4'], #breedGrid .tui-grid-body-area td[data-column-name='5'], #breedGrid .tui-grid-body-area td[data-column-name='280'], #breedGrid .tui-grid-body-area td[data-column-name='281'], #breedGrid .tui-grid-body-area td[data-column-name='391'], #breedGrid .tui-grid-body-area td[data-column-name='392'], #breedGrid .tui-grid-body-area td[data-column-name='629'], #breedGrid .tui-grid-body-area td[data-column-name='630'], #breedGrid .tui-grid-body-area td[data-column-name='752'], #breedGrid .tui-grid-body-area td[data-column-name='753'], #breedGrid .tui-grid-body-area td[data-column-name='915'], #breedGrid .tui-grid-body-area td[data-column-name='916'], #breedGrid .tui-grid-body-area td[data-column-name='1079'], #breedGrid .tui-grid-body-area td[data-column-name='1080'], #breedGrid .tui-grid-body-area td[data-column-name='1257'], #breedGrid .tui-grid-body-area td[data-column-name='1258'], #breedGrid .tui-grid-body-area td[data-column-name='1415'], #breedGrid .tui-grid-body-area td[data-column-name='1416'], #breedGrid .tui-grid-body-area td[data-column-name='1603'], #breedGrid .tui-grid-body-area td[data-column-name='1604'] {
+            color: mediumblue;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
         #breedGrid .tui-grid-body-area td[data-column-name='status'], #breedGrid .tui-grid-body-area td[data-column-name='file'] {
             cursor: pointer;
         }
@@ -1909,7 +1915,7 @@
                         <div class="atbd-upload popAdd tab-pane fade show active" id="tab-horizontal-0-1" role="tabpanel" aria-labelledby="tab-horizontal-0-tab-1"
                              style="overflow: auto; max-height: 500px;">
                             <div class="pop_cover_inner" style="padding-top: 0;">
-                                <span class="sub_title">모계 계통명(ID)</span>
+                                <span class="sub_title">계통명(ID)</span>
                                 <div class="pop_top_content1" style="max-height:150px; overflow: auto;">
                                     <table style="width: max-content; min-width: 100%;">
                                         <thead>
@@ -1928,30 +1934,6 @@
                                         </tr>
                                         </thead>
                                         <tbody class="basic_mom" id="basic_list">
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="pop_cover_inner">
-                                <span class="sub_title">부계 계통명(ID)</span>
-                                <div class="pop_top_content2" style="max-height:150px; overflow: auto;">
-                                    <table style="width: max-content; min-width: 100%;">
-                                        <thead>
-                                        <tr>
-                                            <th><span class="title">작물</span></th>
-                                            <th><span class="title">계통명(ID)</span></th>
-                                            <th><span class="title">원소재 계통번호</span></th>
-                                            <th><span class="title">원종 계통번호</span></th>
-                                            <th><span class="title">B.N. 기준 년도</span></th>
-                                            <th><span class="title">B.N. (교배번호)</span></th>
-                                            <th><span class="title">종자번호(ID)</span></th>
-                                            <th><span class="title">현 종자량(g)</span></th>
-                                            <th><span class="title">천립중(g)</span></th>
-                                            <th><span class="title">계통번호 부여일</span></th>
-                                            <th><span class="title">비고</span></th>
-                                        </tr>
-                                        </thead>
-                                        <tbody class="basic_dad" id="basicD_list">
                                         </tbody>
                                     </table>
                                 </div>
@@ -2632,7 +2614,7 @@
             });
     }
 
-    function SearchBasic1(e1, e2) {
+    function SearchBasic(e) {
         $("#pop_data2").modal();
 
         var basic_name = $("#CropSelect").val();
@@ -2657,59 +2639,8 @@
                         add_listD += '<tr>';
 
                         for (var j = 0; j < result.basic[i].basic_standard.length; j++) {
-                            if (result.basic[i].basic_standard[1].standard === e1.innerText) {
+                            if (result.basic[i].basic_standard[1].standard === e.innerText) {
                                 add_list += '<td>' + result.basic[i].basic_standard[j].standard + '</td>';
-                            }
-
-                            if (result.basic[i].basic_standard[1].standard === e2) {
-                                add_listD += '<td>' + result.basic[i].basic_standard[j].standard + '</td>';
-                            }
-                        }
-
-                        add_list += '</tr>';
-                        add_listD += '</tr>';
-                    }
-
-                    basic_list.empty();
-                    basic_list.append(add_list);
-
-                    basicD_list.empty();
-                    basicD_list.append(add_listD);
-                }
-            });
-    }
-
-    function SearchBasic2(e1, e2) {
-        $("#pop_data2").modal();
-
-        var basic_name = $("#CropSelect").val();
-
-        var data = {"basic_name": basic_name};
-
-        $.ajax(
-            {
-                url: 'searchBasic1',
-                method: 'POST',
-                dataType: 'json',
-                data: data,
-                success: function (result) {
-                    var basic_list = $("#basic_list");
-                    var basicD_list = $("#basicD_list");
-
-                    var add_list = "";
-                    var add_listD = "";
-
-                    for (var i = 0; i < result.basic.length; i++) {
-                        add_list += '<tr>';
-                        add_listD += '<tr>';
-
-                        for (var j = 0; j < result.basic[i].basic_standard.length; j++) {
-                            if (result.basic[i].basic_standard[1].standard === e1) {
-                                add_list += '<td>' + result.basic[i].basic_standard[j].standard + '</td>';
-                            }
-
-                            if (result.basic[i].basic_standard[1].standard === e2.innerText) {
-                                add_listD += '<td>' + result.basic[i].basic_standard[j].standard + '</td>';
                             }
                         }
 
@@ -2832,6 +2763,10 @@
                             var value_sample = ev.nativeEvent.srcElement;
 
                             SearchSample(value_sample);
+                        } else if (ev.targetType === 'cell' && (ev.columnName === '4' || ev.columnName === '5' || ev.columnName === '280' || ev.columnName === '281' || ev.columnName === '391' || ev.columnName === '392' || ev.columnName === '629' || ev.columnName === '630' || ev.columnName === '752' || ev.columnName === '753' || ev.columnName === '915' || ev.columnName === '916' || ev.columnName === '1079' || ev.columnName === '1080' || ev.columnName === '1257' || ev.columnName === '1258' || ev.columnName === '1415' || ev.columnName === '1416' || ev.columnName === '1603' || ev.columnName === '1604') && insertCheck == 0) {
+                            var value_basic = ev.nativeEvent.srcElement;
+
+                            SearchBasic(value_basic);
                         } else if (ev.targetType === 'cell' && ev.columnName === 'file' && insertCheck == 0) {
                             var id = breedgrid.getRow(ev.rowKey).breed_id;
 

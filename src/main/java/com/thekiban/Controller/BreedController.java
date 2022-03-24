@@ -378,6 +378,8 @@ public class BreedController {
       for (int i = 0; i < basic.size(); i++) {
         standard = service.SearchBasicStandard(detail, user.getUser_id(), basic.get(i).getBasic_id());
         basic.get(i).setBasic_standard(standard);
+
+        basic.forEach(System.out::println);
       }
     }
 
