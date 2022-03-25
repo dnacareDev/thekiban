@@ -370,34 +370,55 @@
            globalLocations.push(outKorea[o]);
        }
 
-       // 국내
-       for (var i = 0; i < koreaLocations.length; i++) {
-           geoCoder.geocode({"address": koreaLocations[i]}, function (result, status) {
-               if (status == "OK") {
-                   var centerCoordinate = result[0].geometry.location; // 검색한 지역의 중앙 좌표
+       let delay1 = 0;
 
-                   var marker = new google.maps.Marker({ // 마커 생성
-                       map: korMap,
-                       position: centerCoordinate
-                   });
-               }
-           });
+       // 국내
+       for (let i = 0; i < koreaLocations.length; i++) {
+           delay1 += 1000;
+
+           var marker1;
+
+           setTimeout(function() {
+               geoCoder.geocode({"address": koreaLocations[i]}, function (result, status) {
+                   console.log("ko result", result);
+                   console.log("ko status", status);
+
+                   if (status == "OK") {
+                       let centerCoordinate = result[0].geometry.location; // 검색한 지역의 중앙 좌표
+
+                       marker1 = new google.maps.Marker({ // 마커 생성
+                           map: korMap,
+                           position: centerCoordinate
+                       });
+                   }
+               });
+           }, delay1)
        }
 
+       let delay2 = 0;
+
        // 해외
-       for (var i = 0; i < globalLocations.length; i++) {
-           geoCoder.geocode({"address": globalLocations[i]}, function (result, status) {
-               if (status == "OK") {
-                   var centerCoordinate = result[0].geometry.location; // 검색한 지역의 중앙 좌표
+       for (let i = 0; i < globalLocations.length; i++) {
+           delay2 += 1000;
 
-                   var marker = new google.maps.Marker({ // 마커 생성
-                       map: globalMap,
-                       position: centerCoordinate
-                   });
+           var marker2;
 
-                   globalMap.setCenter(centerCoordinate);
-               }
-           });
+           setTimeout(function() {
+               geoCoder.geocode({"address": globalLocations[i]}, function (result, status) {
+                   console.log("glo status", status);
+
+                   if (status == "OK") {
+                       let centerCoordinate = result[0].geometry.location; // 검색한 지역의 중앙 좌표
+
+                       marker2 = new google.maps.Marker({ // 마커 생성
+                           map: globalMap,
+                           position: centerCoordinate
+                       });
+
+                       globalMap.setCenter(centerCoordinate);
+                   }
+               });
+           }, delay2)
        }
    }
 

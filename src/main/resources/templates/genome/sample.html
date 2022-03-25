@@ -3136,6 +3136,9 @@
                         outKorea.push(result.sampleOutcomeGlo[i]);
                     }
 
+                    console.log(inKorea);
+                    console.log(outKorea);
+
                     searchArea();
 
                     makeSelect();
@@ -3186,34 +3189,50 @@
             globalLocations.push(outKorea[o]);
         }
 
+        let delay1 = 0;
+
         // 국내
         for (let i = 0; i < koreaLocations.length; i++) {
-            geoCoder.geocode({"address": koreaLocations[i]}, function (result, status) {
-                if (status == "OK") {
-                    let centerCoordinate = result[0].geometry.location; // 검색한 지역의 중앙 좌표
+            delay1 += 1000;
 
-                    let marker = new google.maps.Marker({ // 마커 생성
-                        map: korMap,
-                        position: centerCoordinate
-                    });
-                }
-            });
+            setTimeout(function() {
+                geoCoder.geocode({"address": koreaLocations[i]}, function (result, status) {
+                    console.log("ko status", status);
+
+                    if (status == "OK") {
+                        let centerCoordinate = result[0].geometry.location; // 검색한 지역의 중앙 좌표
+
+                        let marker = new google.maps.Marker({ // 마커 생성
+                            map: korMap,
+                            position: centerCoordinate
+                        });
+                    }
+                });
+            }, delay1)
         }
+
+        let delay2 = 0;
 
         // 해외
         for (let i = 0; i < globalLocations.length; i++) {
-            geoCoder.geocode({"address": globalLocations[i]}, function (result, status) {
-                if (status == "OK") {
-                    let centerCoordinate = result[0].geometry.location; // 검색한 지역의 중앙 좌표
+            delay2 += 1000;
 
-                    let marker = new google.maps.Marker({ // 마커 생성
-                        map: globalMap,
-                        position: centerCoordinate
-                    });
+            setTimeout(function() {
+                geoCoder.geocode({"address": globalLocations[i]}, function (result, status) {
+                    console.log("glo status", status);
 
-                    globalMap.setCenter(centerCoordinate);
-                }
-            });
+                    if (status == "OK") {
+                        let centerCoordinate = result[0].geometry.location; // 검색한 지역의 중앙 좌표
+
+                        let marker = new google.maps.Marker({ // 마커 생성
+                            map: globalMap,
+                            position: centerCoordinate
+                        });
+
+                        globalMap.setCenter(centerCoordinate);
+                    }
+                });
+            }, delay2)
         }
     }
 
