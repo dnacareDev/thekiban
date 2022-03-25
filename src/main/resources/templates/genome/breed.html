@@ -1616,7 +1616,7 @@
                                     <th><span class="title">작물 타입2</span></th>
                                     <th><span class="title">비고</span></th>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="excel_data_body">
                                     </tbody>
                                 </table>
                             </div>
@@ -1649,7 +1649,7 @@
                         <form action="excelBreed" id="excelForm" method="POST" enctype="multipart/form-data">
                             <input type="hidden" id="excel_list" name="excel_list">
                             <div class="atbd-upload" id="file_grid">
-                                <table id="excel_data">
+                                <table id="excel_data1">
                                     <thead id="breedHead">
                                     <th><span class="title">작물</span></th>
                                     <th><span class="title">시교명(ID)</span></th>
@@ -2007,7 +2007,6 @@
     function removeLocalS(key) {
         localStorage.removeItem(key);
     }
-
     /* e : localstorage 저장 예제 */
 
     function testbtn() {
@@ -2622,10 +2621,8 @@
         var data = {"basic_name": basic_name};
 
         var basic_list = $("#basic_list");
-        var basicD_list = $("#basicD_list");
 
         basic_list.empty();
-        basicD_list.empty();
 
         var loading = document.querySelector('.load_wrap');
 
@@ -2643,7 +2640,6 @@
 
                     for (var i = 0; i < result.basic.length; i++) {
                         add_list += '<tr>';
-                        add_listD += '<tr>';
 
                         for (var j = 0; j < result.basic[i].basic_standard.length; j++) {
                             if (result.basic[i].basic_standard[1].standard === e.innerText) {
@@ -2652,11 +2648,9 @@
                         }
 
                         add_list += '</tr>';
-                        add_listD += '</tr>';
                     }
 
                     basic_list.append(add_list);
-                    basicD_list.append(add_listD);
 
                     loading.classList.remove('on');
                 }
@@ -2920,7 +2914,6 @@
         eventList.initEvent("click");
         filesBtn.dispatchEvent(eventList);
     }
-
     /* 엑셀 업로드 목록창 */
 
     /* 엑셀 코드 */
@@ -3047,6 +3040,7 @@
 
                 rowdata[k] = obj;
             }
+
             $("#excel_data").empty();
             $("#excel_data").append(html);
         };
@@ -3054,7 +3048,7 @@
         reader.readAsBinaryString(input.files[0]);
     }
 
-    /* 엑셀 등록 창 */
+    /* s : 엑셀 등록 창 */
     function openExcel() {
         var user_type = $("#user_type").val();
 
@@ -3099,8 +3093,7 @@
 
         }
     }
-
-    /* 엑셀 등록 창 */
+    /* e : 엑셀 등록 창 */
 
     function ModifyDataBtn(e) {
         let s = String(e);
@@ -3186,29 +3179,32 @@
                     "excel_list": JSON.stringify(total_arr)
                 },
                 success: function (result) {
+                    if (result != 0) {
+                        now = new Date(+new Date() + 3240 * 10000).toISOString().split("T")[0];
 
-                    now = new Date(+new Date() + 3240 * 10000).toISOString().split("T")[0];
+                        let listData = [];
 
-                    let listData = [];
+                        let breed_name = $("#CropSelect").val();
 
-                    let breed_name = $("#CropSelect").val();
+                        let lData = {"datalist_type": 'breed', "datalist_date": now, "breed_name": breed_name};
 
-                    let lData = {"datalist_type": 'breed', "datalist_date": now, "breed_name": breed_name};
+                        listData.push(lData);
 
-                    listData.push(lData);
-
-                    $.ajax(
-                        {
-                            url: 'insertBreedDataList',
-                            method: 'POST',
-                            dataType: 'json',
-                            data: {
-                                "listData": JSON.stringify(listData)
-                            },
-                            success: function (result) {
-                                return location.reload();
-                            }
-                        })
+                        $.ajax(
+                            {
+                                url: 'insertBreedDataList',
+                                method: 'POST',
+                                dataType: 'json',
+                                data: {
+                                    "listData": JSON.stringify(listData)
+                                },
+                                success: function (result) {
+                                    return location.reload();
+                                }
+                            })
+                    } else {
+                        return Alert1("잘못된 엑셀 파일입니다.")
+                    }
                 }
             }
         )

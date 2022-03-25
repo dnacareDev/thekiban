@@ -653,6 +653,12 @@
             cursor: pointer;
         }
 
+        #basicGrid .tui-grid-body-area td[data-column-name='175'], #basicGrid .tui-grid-body-area td[data-column-name='342'], #basicGrid .tui-grid-body-area td[data-column-name='523'], #basicGrid .tui-grid-body-area td[data-column-name='698'], #basicGrid .tui-grid-body-area td[data-column-name='840'], #basicGrid .tui-grid-body-area td[data-column-name='1005'], #basicGrid .tui-grid-body-area td[data-column-name='1175'], #basicGrid .tui-grid-body-area td[data-column-name='1343'], #basicGrid .tui-grid-body-area td[data-column-name='1517'], #basicGrid .tui-grid-body-area td[data-column-name='1729'] {
+            color: mediumblue;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
         #saveRow, #updateRow {
             float: right;
             color: #fff;
@@ -891,6 +897,58 @@
             height: 100%;
             object-fit: contain;
         }
+
+        #pop_data2 .modal-body li a {
+            display: block;
+            width: 120px;
+            padding: 15px 0;
+            text-align: center;
+            margin: 0;
+            font-size: 14px;
+            background-color: #FBFBFB;
+            border-radius: 0 5px 5px 0;
+        }
+
+        #pop_data2 .modal-body .btn-group > ul > li:first-child a {
+            border-radius: 5px 0 0 5px;
+        }
+
+        #pop_data2 .modal-body .btn-group > ul > li a.active, #pop_data2 .btn-group > ul > li:hover a {
+            border-color: #C3E3CC;
+            background-color: #EDF6F1 !important;
+            color: #217566;
+        }
+
+        #pop_data2 table thead tr {
+            border-top: 2px solid #aaa;
+            border-bottom: 2px solid #aaa;
+        }
+
+        #pop_data2 table thead th {
+            border-left: 1px solid #eee;
+            border-right: 1px solid #eee;
+            color: #222;
+            font-size: 13px;
+        }
+
+        #pop_data2 table thead th:first-child {
+            border-left: none;
+        }
+
+        #pop_data2 table thead th:last-child {
+            border-right: none;
+        }
+
+        #pop_data2 table tbody tr {
+            border-bottom: 1px solid #eee;
+        }
+
+        #pop_data2 table tbody td {
+            background-color: #fff;
+            color: #333;
+            font-size: 13px;
+        }
+
     </style>
 </head>
 <body class="layout-light top-menu overlayScroll">
@@ -2013,6 +2071,63 @@
         </div>
     </div>
 
+    <!--  계통명 클릭시 팝업 -->
+    <div class="modal-basic modal fade show pop7" id="pop_data2" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content modal-bg-white">
+                <div class="modal-header" style="border: none">
+                    <h6 class="modal-title">원종관리 > 원종재고관리</h6>
+                    <span class="remain_title"></span>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group mb-0">
+                        <div class="btn-group atbd-button-group btn-group-normal my-2" role="group">
+                            <ul class="nav nav-tabs vertical-tabs" role="tablist">
+                                <li class="nav-item">
+                                    <a class="pop_nav-link active" id="tab-horizontal-0-tab-1" data-toggle="tab" href="#tab-horizontal-0-1" role="tab"
+                                       aria-controls="tab-horizontal-0-1"
+                                       aria-selected="true">원종재고관리</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="atbd-upload popAdd tab-pane fade show active" id="tab-horizontal-0-1" role="tabpanel" aria-labelledby="tab-horizontal-0-tab-1"
+                             style="overflow: auto; max-height: 500px;">
+                            <div class="pop_cover_inner" style="padding-top: 0;">
+                                <div class="pop_top_content1" style="max-height:150px; overflow: auto;">
+                                    <table style="width: max-content; min-width: 100%;">
+                                        <thead>
+                                        <tr>
+                                            <th><span class="title">작물</span></th>
+                                            <th><span class="title">도입번호(ID)</span></th>
+                                            <th><span class="title">종자 보유량</span></th>
+                                            <th><span class="title">입고량</span></th>
+                                            <th><span class="title">출고량</span></th>
+                                            <th><span class="title">재고량</span></th>
+                                            <th><span class="title">담당자</span></th>
+                                            <th><span class="title">일자</span></th>
+                                        </tr>
+                                        </thead>
+                                            <tbody class="basic_mom" id="basic_list">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border: none">
+                    <div class="col-4">
+                        <div class="row" style="justify-content: center;">
+                            <div id="pageNum1" style="text-align:center; margin: 2% 0 0 0;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="load_wrap">
         <div class="load">
             <h2>잠시만 기다려주세요</h2>
@@ -2807,6 +2922,10 @@
                             var id = basicgrid.getRow(ev.rowKey).basic_id;
 
                             FileBtn(id);
+                        } else if (ev.targetType === 'cell' && (ev.columnName === '175' || ev.columnName === '342' || ev.columnName === '523' || ev.columnName === '698' || ev.columnName === '840' || ev.columnName === '1005' || ev.columnName === '1175' || ev.columnName === '1343' || ev.columnName === '1517' || ev.columnName === '1729') && insertCheck == 0) {
+                            let sample_num = ev.nativeEvent.srcElement;
+
+                            SearchBasicRemain1(sample_num);
                         }
                     });
 
@@ -3947,6 +4066,57 @@
         if (e.match(fileForm)) {
             document.getElementById("preview-image").src = '/upload/' + e;
         }
+    }
+
+    function SearchBasicRemain1(e) {
+        $("#pop_data2").modal();
+
+        console.log(e);
+
+        var basic_name = $("#CropSelect").val();
+
+        var data = {"basic_name": basic_name, "basic_remain_num": e.innerText};
+
+        var basic_list = $("#basic_list");
+
+        basic_list.empty();
+
+        var loading = document.querySelector('.load_wrap');
+
+        loading.classList.add('on');
+
+        $.ajax(
+            {
+                url: 'searchBasicRemainByNum',
+                method: 'POST',
+                dataType: 'json',
+                data: data,
+                success: function (result) {
+                    $(".remain_title").text("종자번호 (ID) : " + e.innerText);
+
+                    console.log(result)
+
+                    let add_list = "";
+
+                    for (let i = 0; i < result.basicRemain.length; i++) {
+                        add_list += '<tr>';
+                        add_list += '<td>' + result.basicRemain[i].basic_name + '</td>';
+                        add_list += '<td>' + result.basicRemain[i].basic_remain_num + '</td>';
+                        add_list += '<td>' + result.basicRemain[i].basic_remain_amount + '</td>';
+                        add_list += '<td>' + result.basicRemain[i].basic_remain_in + '</td>';
+                        add_list += '<td>' + result.basicRemain[i].basic_remain_out + '</td>';
+                        add_list += '<td>' + result.basicRemain[i].basic_remain_re + '</td>';
+                        add_list += '<td>' + result.basicRemain[i].basic_remain_person + '</td>';
+                        add_list += '<td>' + result.basicRemain[i].basic_remain_date + '</td>';
+                        add_list += '</tr>';
+                    }
+
+
+                    basic_list.append(add_list);
+
+                    loading.classList.remove('on');
+                }
+            });
     }
 </script>
 </body>

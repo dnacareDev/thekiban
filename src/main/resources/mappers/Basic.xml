@@ -83,6 +83,17 @@
         </choose>
     </select>
 
+    <!-- 재고자원 검색 -->
+    <select id="SearchBasicRemainByNum" resultType="basicRemain">
+        SELECT * FROM basicRemain
+        <choose>
+            <when test="basic_name != 'none'">
+                WHERE basic_name = #{basic_name}
+                AND basic_remain_num = #{basic_remain_num}
+            </when>
+        </choose>
+    </select>
+
     <!-- 원종 등록 -->
     <insert id="InsertBasic" parameterType="Basic">
         INSERT INTO basic

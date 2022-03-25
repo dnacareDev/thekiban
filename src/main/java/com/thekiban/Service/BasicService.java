@@ -20,6 +20,8 @@ public interface BasicService
 
 	List<BasicRemain> SearchBasicRemain(String basic_name);
 
+	List<BasicRemain> SearchBasicRemainByNum(String basic_name, String basic_remain_num);
+
 	// 원종별 세부 정보 조회
 	List<Detail> SearchBasicDetail(String basic_name);
 	

@@ -22,6 +22,8 @@ public interface BasicMapper
 
 	List<BasicRemain> SearchBasicRemain(@Param("basic_name") String basic_name);
 
+	List<BasicRemain> SearchBasicRemainByNum(@Param("basic_name") String basic_name, @Param("basic_remain_num") String basic_remain_num);
+
 	// 원종별 세부 정보 조회
 	List<Detail> SearchBasicDetail(String basic_name);
 	

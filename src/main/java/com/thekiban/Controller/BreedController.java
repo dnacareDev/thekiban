@@ -393,6 +393,7 @@ public class BreedController {
   @ResponseBody
   @RequestMapping("excelBreed")
   public int excelUpload(ModelAndView mv, @RequestParam("excel_list") String excel_list) {
+    int result = 0;
 
     JSONArray arr = new JSONArray(excel_list);
 
@@ -412,9 +413,11 @@ public class BreedController {
 
       for (int j = 0; j < detail.size(); j++) {
         Standard standard = new Standard();
+
         standard.setBreed_id(breed.getBreed_id());
         standard.setDetail_id(detail.get(j).getDetail_id());
-        if(j < item.length()) {
+
+        if (j < item.length()) {
           standard.setStandard((String) item.get(j));
         } else {
           standard.setStandard(null);
@@ -424,9 +427,15 @@ public class BreedController {
       }
     }
 
-    service.InsertExcel(standards);
+    standards.forEach(System.out::println);
 
-    return 1;
+    if(!standards.isEmpty()) {
+      result = service.InsertExcel(standards);
+    }
+
+    System.out.println("result = " + result);
+
+    return result;
   }
 
   @ResponseBody
