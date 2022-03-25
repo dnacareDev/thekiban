@@ -647,7 +647,7 @@
             background-color: #FCFCFC;
         }
 
-        #breedGrid .tui-grid-body-area td[data-column-name='2'], #breedGrid .tui-grid-body-area td[data-column-name='278'], #breedGrid .tui-grid-body-area td[data-column-name='389'], #breedGrid .tui-grid-body-area td[data-column-name='627'], #breedGrid .tui-grid-body-area td[data-column-name='750'], #breedGrid .tui-grid-body-area td[data-column-name='913'], #breedGrid .tui-grid-body-area td[data-column-name='1077'], #breedGrid .tui-grid-body-area td[data-column-name='1255'], #breedGrid .tui-grid-body-area td[data-column-name='1413'], #breedGrid .tui-grid-body-area td[data-column-name='1600'] {
+        #breedGrid .tui-grid-body-area td[data-column-name='2'], #breedGrid .tui-grid-body-area td[data-column-name='278'], #breedGrid .tui-grid-body-area td[data-column-name='389'], #breedGrid .tui-grid-body-area td[data-column-name='627'], #breedGrid .tui-grid-body-area td[data-column-name='750'], #breedGrid .tui-grid-body-area td[data-column-name='913'], #breedGrid .tui-grid-body-area td[data-column-name='1077'], #breedGrid .tui-grid-body-area td[data-column-name='1255'], #breedGrid .tui-grid-body-area td[data-column-name='1413'], #breedGrid .tui-grid-body-area td[data-column-name='1601'] {
             color: mediumblue;
             text-decoration: underline;
             cursor: pointer;
@@ -2621,6 +2621,16 @@
 
         var data = {"basic_name": basic_name};
 
+        var basic_list = $("#basic_list");
+        var basicD_list = $("#basicD_list");
+
+        basic_list.empty();
+        basicD_list.empty();
+
+        var loading = document.querySelector('.load_wrap');
+
+        loading.classList.add('on');
+
         $.ajax(
             {
                 url: 'searchBasic1',
@@ -2628,9 +2638,6 @@
                 dataType: 'json',
                 data: data,
                 success: function (result) {
-                    var basic_list = $("#basic_list");
-                    var basicD_list = $("#basicD_list");
-
                     var add_list = "";
                     var add_listD = "";
 
@@ -2648,11 +2655,10 @@
                         add_listD += '</tr>';
                     }
 
-                    basic_list.empty();
                     basic_list.append(add_list);
-
-                    basicD_list.empty();
                     basicD_list.append(add_listD);
+
+                    loading.classList.remove('on');
                 }
             });
     }
@@ -2759,7 +2765,7 @@
                     })
 
                     breedgrid.on('click', (ev) => {
-                        if (ev.targetType === 'cell' && (ev.columnName === '2' || ev.columnName === '278' || ev.columnName === '389' || ev.columnName === '627' || ev.columnName === '750' || ev.columnName === '913' || ev.columnName === '1077' || ev.columnName === '1255' || ev.columnName === '1413' || ev.columnName === '1600') && insertCheck == 0) {
+                        if (ev.targetType === 'cell' && (ev.columnName === '2' || ev.columnName === '278' || ev.columnName === '389' || ev.columnName === '627' || ev.columnName === '750' || ev.columnName === '913' || ev.columnName === '1077' || ev.columnName === '1255' || ev.columnName === '1413' || ev.columnName === '1601') && insertCheck == 0) {
                             var value_sample = ev.nativeEvent.srcElement;
 
                             SearchSample(value_sample);

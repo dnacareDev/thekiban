@@ -1551,7 +1551,7 @@
                 var fileData = reader.result;
                 var wb = XLSX.read(fileData, {type: 'binary'});
                 var sheetNameList = wb.SheetNames; // 시트 이름 목록 가져오기
-                var thirdSheetName = sheetNameList[2]; // 세번째 시트명
+                var thirdSheetName = sheetNameList[0]; // 세번째 시트명
                 var thirdSheet = wb.Sheets[thirdSheetName]; // 세번째 시트
                 callback(thirdSheet);
 
@@ -1754,7 +1754,7 @@
 
     }
 
-    /* 엑셀 등록 창 */
+    /* s : 엑셀 등록 창 */
     function openExcel() {
         var user_type = $("#user_type").val();
 
@@ -1837,7 +1837,7 @@
         }
     }
 
-    /* 엑셀 등록 창 */
+    /* e : 엑셀 등록 창 */
 
     function ModifyDataBtn(e) {
         if (tablechk == 0) {

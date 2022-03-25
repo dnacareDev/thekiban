@@ -100,7 +100,7 @@ public class SampleController {
 
     if (!obj.isNull("sample_amount")) {
       sample.setSample_amount(Double.parseDouble((String) obj.get("sample_amount")));
-    } else if(obj.get("sample_amount") == ""){
+    } else if (obj.get("sample_amount") == "") {
       sample.setSample_amount(0);
     } else {
       sample.setSample_amount(0);
@@ -110,7 +110,7 @@ public class SampleController {
       String sample_sprout = (String) obj.get("sample_sprout");
       sample_sprout = sample_sprout.trim();
       sample.setSample_sprout(Integer.parseInt(sample_sprout));
-    } else if(obj.get("sample_sprout") == ""){
+    } else if (obj.get("sample_sprout") == "") {
       sample.setSample_sprout(0);
     } else {
       sample.setSample_sprout(0);
@@ -120,7 +120,7 @@ public class SampleController {
       String sample_purity = (String) obj.get("sample_sprout");
       sample_purity = sample_purity.trim();
       sample.setSample_purity(Integer.parseInt(sample_purity));
-    } else if(obj.get("sample_purity") == ""){
+    } else if (obj.get("sample_purity") == "") {
       sample.setSample_purity(0);
     } else {
       sample.setSample_purity(0);
@@ -437,10 +437,17 @@ public class SampleController {
           sampleOutcome.setSample_outcome_date(ldate);
         } else if (k.equals("시교 종료 일자")) {
           String date = obj.getString(k);
-          DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.KOREA);
-          LocalDate ldate = LocalDate.parse(date, formatter);
 
-          sampleOutcome.setSample_outcome_end(ldate);
+          System.out.println("date = " + date);
+
+          if (date.isEmpty()) {
+            sampleOutcome.setSample_outcome_end(null);
+          } else {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.KOREA);
+            LocalDate ldate = LocalDate.parse(date, formatter);
+
+            sampleOutcome.setSample_outcome_end(ldate);
+          }
         } else if (k.equals("지역 구분")) {
           sampleOutcome.setSample_outcome_country(obj.getString(k));
         } else if (k.equals("대상 지역")) {
