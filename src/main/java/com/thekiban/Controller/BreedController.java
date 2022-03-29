@@ -367,7 +367,7 @@ public class BreedController {
   // 원종 검색
   @ResponseBody
   @RequestMapping("searchBasic1")
-  public Map<String, Object> SearchBasic(Authentication auth, @RequestParam("basic_name") String basic_name) {
+  public Map<String, Object> SearchBasic(Authentication auth, @RequestParam("basic_name") String basic_name, @RequestParam("basic_num") String basic_num) {
     Map<String, Object> result = new LinkedHashMap<String, Object>();
 
     User user = (User) auth.getPrincipal();
@@ -379,19 +379,36 @@ public class BreedController {
     List<Display> display = service.SelectDisplay(user.getUser_id(), basic_name);      // 사용자별 원종 표시항목 조회
 
     List<Standard> standard = new ArrayList<Standard>();
+    List<Standard> standardByNum = new ArrayList<Standard>();
+
+    basic.forEach(System.out::println);
 
     if (!detail.isEmpty()) {
       for (int i = 0; i < basic.size(); i++) {
         standard = service.SearchBasicStandard(detail, user.getUser_id(), basic.get(i).getBasic_id());
         basic.get(i).setBasic_standard(standard);
-
-        basic.forEach(System.out::println);
       }
     }
 
     result.put("basic", basic);
     result.put("detail", detail);
     result.put("display", display);
+
+    return result;
+  }
+
+  @ResponseBody
+  @RequestMapping("searchBasic2")
+  public Map<String, Object> SearchBasic2(Authentication auth, @RequestParam(value = "basic_name", required = false) String basic_name, @RequestParam("basic_num") String basic_num) {
+    Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+    User user = (User) auth.getPrincipal();
+
+    List<Standard> standardByNum = new ArrayList<Standard>();
+
+    standardByNum = service.SearchBasicStandardByBasicId(basic_num);
+
+    result.put("basic", standardByNum);
 
     return result;
   }
@@ -435,7 +452,7 @@ public class BreedController {
 
     standards.forEach(System.out::println);
 
-    if(!standards.isEmpty()) {
+    if (!standards.isEmpty()) {
       result = service.InsertExcel(standards);
     }
 

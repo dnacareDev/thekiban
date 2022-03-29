@@ -1846,16 +1846,6 @@
                     <span class="sample_title"></span>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group mb-0">
-                        <div class="btn-group atbd-button-group btn-group-normal my-2" role="group">
-                            <ul class="nav nav-tabs vertical-tabs" role="tablist">
-                                <li class="nav-item">
-                                    <a class="pop_nav-link active" id="tab-horizontal-0-tab-0" data-toggle="tab" href="#tab-horizontal-0-0" role="tab"
-                                       aria-controls="tab-horizontal-0-0" aria-selected="true">시교 자원 관리</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
                     <div>
                         <div class="atbd-upload popAdd tab-pane fade show active" id="tab-horizontal-0-0" role="tabpanel" aria-labelledby="tab-horizontal-0-tab-0"
                              style=" overflow: auto; max-height: 500px;">
@@ -1900,25 +1890,13 @@
                     <span class="sample_title"></span>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group mb-0">
-                        <div class="btn-group atbd-button-group btn-group-normal my-2" role="group">
-                            <ul class="nav nav-tabs vertical-tabs" role="tablist">
-                                <li class="nav-item">
-                                    <a class="pop_nav-link active" id="tab-horizontal-0-tab-1" data-toggle="tab" href="#tab-horizontal-0-1" role="tab"
-                                       aria-controls="tab-horizontal-0-1"
-                                       aria-selected="true">원종관리</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
                     <div>
                         <div class="atbd-upload popAdd tab-pane fade show active" id="tab-horizontal-0-1" role="tabpanel" aria-labelledby="tab-horizontal-0-tab-1"
                              style="overflow: auto; max-height: 500px;">
                             <div class="pop_cover_inner" style="padding-top: 0;">
-                                <span class="sub_title">계통명(ID)</span>
                                 <div class="pop_top_content1" style="max-height:150px; overflow: auto;">
                                     <table style="width: max-content; min-width: 100%;">
-                                        <thead>
+                                        <thead id="basic_header">
                                         <tr>
                                             <th><span class="title">작물</span></th>
                                             <th><span class="title">계통명(ID)</span></th>
@@ -2007,6 +1985,7 @@
     function removeLocalS(key) {
         localStorage.removeItem(key);
     }
+
     /* e : localstorage 저장 예제 */
 
     function testbtn() {
@@ -2627,10 +2606,12 @@
 
         var basic_name = $("#CropSelect").val();
 
-        var data = {"basic_name": basic_name};
+        var data = {"basic_name": basic_name, "basic_num": e.innerText};
 
+        var basic_header = $("#basic_header");
         var basic_list = $("#basic_list");
 
+        basic_header.empty();
         basic_list.empty();
 
         var loading = document.querySelector('.load_wrap');
@@ -2639,26 +2620,26 @@
 
         $.ajax(
             {
-                url: 'searchBasic1',
+                url: 'searchBasic2',
                 method: 'POST',
                 dataType: 'json',
                 data: data,
                 success: function (result) {
+                    var add_header = "";
                     var add_list = "";
-                    var add_listD = "";
 
-                    for (var i = 0; i < result.basic.length; i++) {
-                        add_list += '<tr>';
+                    add_header += '<tr>';
+                    add_list += '<tr>';
 
-                        for (var j = 0; j < result.basic[i].basic_standard.length; j++) {
-                            if (result.basic[i].basic_standard[1].standard === e.innerText) {
-                                add_list += '<td>' + result.basic[i].basic_standard[j].standard + '</td>';
-                            }
-                        }
-
-                        add_list += '</tr>';
+                    for (let i = 0; i < result.basic.length; i++) {
+                        add_header += '<td>' + result.basic[i].detail_title + '</td>';
+                        add_list += '<td>' + result.basic[i].standard + '</td>';
                     }
 
+                    add_header += '</tr>';
+                    add_list += '</tr>';
+
+                    basic_header.append(add_header);
                     basic_list.append(add_list);
 
                     loading.classList.remove('on');
@@ -2899,9 +2880,9 @@
                 data: {"data": JSON.stringify(updateBreedData)},
                 success: function (result) {
                     if (result == 0) {
-                      return Alert("데이터 수정에 실패하였습니다.")
+                        return Alert("데이터 수정에 실패하였습니다.")
                     } else if (result == 2) {
-                      return Alert1("엔터를 눌러 수정을 완료해주세요.")
+                        return Alert1("엔터를 눌러 수정을 완료해주세요.")
                     } else {
                         location.reload();
                     }
@@ -2925,6 +2906,7 @@
         eventList.initEvent("click");
         filesBtn.dispatchEvent(eventList);
     }
+
     /* 엑셀 업로드 목록창 */
 
     /* 엑셀 코드 */
@@ -3104,6 +3086,7 @@
 
         }
     }
+
     /* e : 엑셀 등록 창 */
 
     function ModifyDataBtn(e) {

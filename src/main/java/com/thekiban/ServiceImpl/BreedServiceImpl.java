@@ -235,6 +235,11 @@ public class BreedServiceImpl implements BreedService
 	}
 
 	@Override
+	public List<Standard> SearchBasicStandardByBasicId(String basic_num) {
+		return mapper.SearchBasicStandardByBasicId(basic_num);
+	}
+
+	@Override
 	public int InsertExcel(List<Standard> standards) {
 		return mapper.InsertExcel(standards);
 	}

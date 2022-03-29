@@ -116,6 +116,8 @@ public interface BreedMapper
 	// 원종별 정보값 조회
 	List<Standard> SearchBasicStandard(@Param("detail") List<Detail> detail, @Param("user_id") int user_id, @Param("basic_id") int basic_id);
 
+	List<Standard> SearchBasicStandardByBasicId(@Param("basic_num") String basic_num);
+
 	int InsertExcel(List<Standard> standards);
 
 	List<Detail> SelectDetail();
