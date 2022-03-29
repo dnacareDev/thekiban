@@ -291,13 +291,17 @@ public class IncomeController {
 
     JSONArray arr = new JSONArray(data);
 
-    for (int i = 0; i < arr.length(); i++) {
-      JSONObject item = arr.getJSONObject(i);
-      int income_id = item.getInt("income_id");
-      String income_name = item.getString("income_name");
-      String income_value = item.getString("income_value");
+    if (arr.length() == 0) {
+      result = 2;
+    } else {
+      for (int i = 0; i < arr.length(); i++) {
+        JSONObject item = arr.getJSONObject(i);
+        int income_id = item.getInt("income_id");
+        String income_name = item.getString("income_name");
+        String income_value = item.getString("income_value");
 
-      result = service.UpdateIncome(income_id, income_name, income_value);
+        result = service.UpdateIncome(income_id, income_name, income_value);
+      }
     }
 
     return result;
@@ -310,13 +314,17 @@ public class IncomeController {
 
     JSONArray arr = new JSONArray(data);
 
-    for (int i = 0; i < arr.length(); i++) {
-      JSONObject item = arr.getJSONObject(i);
-      int income_remain_id = item.getInt("income_remain_id");
-      String income_remain_name = item.getString("income_remain_name");
-      String income_remain_value = item.getString("income_remain_value");
+    if (arr.length() == 0) {
+      result = 2;
+    } else {
+      for (int i = 0; i < arr.length(); i++) {
+        JSONObject item = arr.getJSONObject(i);
+        int income_remain_id = item.getInt("income_remain_id");
+        String income_remain_name = item.getString("income_remain_name");
+        String income_remain_value = item.getString("income_remain_value");
 
-      result = service.UpdateRemain(income_remain_id, income_remain_name, income_remain_value);
+        result = service.UpdateRemain(income_remain_id, income_remain_name, income_remain_value);
+      }
     }
 
     return result;

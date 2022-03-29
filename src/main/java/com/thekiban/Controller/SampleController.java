@@ -322,13 +322,17 @@ public class SampleController {
 
     JSONArray arr = new JSONArray(data);
 
-    for (int i = 0; i < arr.length(); i++) {
-      JSONObject item = arr.getJSONObject(i);
-      int sample_id = item.getInt("sample_id");
-      String sample_name = item.getString("sample_name");
-      String sample_value = item.getString("sample_value");
+    if (arr.length() == 0) {
+      result = 2;
+    } else {
+      for (int i = 0; i < arr.length(); i++) {
+        JSONObject item = arr.getJSONObject(i);
+        int sample_id = item.getInt("sample_id");
+        String sample_name = item.getString("sample_name");
+        String sample_value = item.getString("sample_value");
 
-      result = service.UpdateSample(sample_id, sample_name, sample_value);
+        result = service.UpdateSample(sample_id, sample_name, sample_value);
+      }
     }
 
     return result;
@@ -341,13 +345,17 @@ public class SampleController {
 
     JSONArray arr = new JSONArray(data);
 
-    for (int i = 0; i < arr.length(); i++) {
-      JSONObject item = arr.getJSONObject(i);
-      int sample_outcome_id = item.getInt("sample_outcome_id");
-      String sample_outcome_name = item.getString("sample_outcome_name");
-      String sample_outcome_value = item.getString("sample_outcome_value");
+    if (arr.length() == 0) {
+      result = 2;
+    } else {
+      for (int i = 0; i < arr.length(); i++) {
+        JSONObject item = arr.getJSONObject(i);
+        int sample_outcome_id = item.getInt("sample_outcome_id");
+        String sample_outcome_name = item.getString("sample_outcome_name");
+        String sample_outcome_value = item.getString("sample_outcome_value");
 
-      result = service.UpdateOutcome(sample_outcome_id, sample_outcome_name, sample_outcome_value);
+        result = service.UpdateOutcome(sample_outcome_id, sample_outcome_name, sample_outcome_value);
+      }
     }
 
     return result;

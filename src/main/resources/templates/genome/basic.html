@@ -2332,6 +2332,9 @@
 
         SearchBasic(1);
         SearchBasicgrid(1);
+
+        $(".plus_btn_submit1").css("display", "none");
+        $(".plus_btn_submit2").css("display", "none");
     });
 
     $("#CropSelect").change(function () {
@@ -2347,6 +2350,9 @@
             SearchBasicRemain(1);
         }
         setLocalS("basic_crop", $("#CropSelect").val());
+
+        $(".plus_btn_submit1").css("display", "none");
+        $(".plus_btn_submit2").css("display", "none");
     })
 
     // 갯수 선택
@@ -2362,6 +2368,9 @@
 
             SearchBasicRemain(1);
         }
+
+        $(".plus_btn_submit1").css("display", "none");
+        $(".plus_btn_submit2").css("display", "none");
     })
 
     // 원종 삭제
@@ -3258,7 +3267,9 @@
                     data: {"data": JSON.stringify(updateBasicData)},
                     success: function (result) {
                         if (result == 0) {
-                            return Alert("수정에 실패하였습니다.")
+                            return Alert("데이터 수정에 실패하였습니다.")
+                        } else if (result == 2) {
+                            return Alert1("엔터를 눌러 수정을 완료해주세요.")
                         } else {
                             location.reload();
                         }
@@ -3273,7 +3284,9 @@
                     data: {"data": JSON.stringify(updateBasicRemainData)},
                     success: function (result) {
                         if (result == 0) {
-                            return Alert("수정에 실패하였습니다.")
+                            return Alert("데이터 수정에 실패하였습니다.")
+                        } else if (result == 2) {
+                            return Alert1("엔터를 눌러 수정을 완료해주세요.")
                         } else {
                             location.reload();
                         }

@@ -2267,6 +2267,9 @@
 
         SearchSample(1);
         SearchMarker();
+
+        $(".plus_btn_submit1").css("display", "none");
+        $(".plus_btn_submit2").css("display", "none");
     });
 
     $("#CropSelect").change(function () {
@@ -2281,6 +2284,9 @@
         }
 
         setLocalS("sample_crop", $("#CropSelect").val());
+
+        $(".plus_btn_submit1").css("display", "none");
+        $(".plus_btn_submit2").css("display", "none");
     })
 
     // 갯수 선택
@@ -2294,6 +2300,9 @@
 
             SearchOutcome(1);
         }
+
+        $(".plus_btn_submit1").css("display", "none");
+        $(".plus_btn_submit2").css("display", "none");
     })
 
     function selectAll(selectAll) {
@@ -3085,7 +3094,9 @@
                     data: {"data": JSON.stringify(updateSampleData)},
                     success: function (result) {
                         if (result == 0) {
-                            return Alert("수정에 실패하였습니다.")
+                            return Alert("데이터 수정에 실패하였습니다.")
+                        } else if (result == 2) {
+                            return Alert1("엔터를 눌러 수정을 완료해주세요.")
                         } else {
                             location.reload();
                         }
@@ -3100,7 +3111,9 @@
                     data: {"data": JSON.stringify(updateOutcomeData)},
                     success: function (result) {
                         if (result == 0) {
-                            return Alert("수정에 실패하였습니다.")
+                            return Alert("데이터 수정에 실패하였습니다.")
+                        } else if (result == 2) {
+                            return Alert1("엔터를 눌러 수정을 완료해주세요.")
                         } else {
                             location.reload();
                         }

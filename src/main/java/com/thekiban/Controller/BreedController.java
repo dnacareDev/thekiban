@@ -111,11 +111,7 @@ public class BreedController {
       standards.add(standard);
     }
 
-    /*if () {
-
-    } else {
-      result = service.UpdateAllBreed(standards);
-    }*/
+    result = service.UpdateAllBreed(standards);
 
     return result;
   }
@@ -159,15 +155,25 @@ public class BreedController {
   public int UpdateBreed(@RequestParam("data") String data) {
     int result = 0;
 
+    System.out.println("data = " + data);
+    System.out.println("data.length() = " + data.length());
+
     JSONArray arr = new JSONArray(data);
 
-    for (int i = 0; i < arr.length(); i++) {
-      JSONObject item = arr.getJSONObject(i);
-      int breed_id = item.getInt("breed_id");
-      int detail_id = item.getInt("detail_id");
-      String standard = item.getString("standard");
+    System.out.println("arr = " + arr);
+    System.out.println("arr.length() = " + arr.length());
 
-      result = service.UpdateBreed(breed_id, detail_id, standard);
+    if (arr.length() == 0) {
+      result = 2;
+    } else {
+      for (int i = 0; i < arr.length(); i++) {
+        JSONObject item = arr.getJSONObject(i);
+        int breed_id = item.getInt("breed_id");
+        int detail_id = item.getInt("detail_id");
+        String standard = item.getString("standard");
+
+        result = service.UpdateBreed(breed_id, detail_id, standard);
+      }
     }
 
     return result;

@@ -2146,6 +2146,9 @@
         $("#CropSelect").val(getLocalS("income_crop"));
 
         SearchIncome(1);
+
+        $(".plus_btn_submit1").css("display", "none");
+        $(".plus_btn_submit2").css("display", "none");
     });
 
     $("#CropSelect").change(function () {
@@ -2159,6 +2162,9 @@
             SearchRemain(1);
         }
         setLocalS("income_crop", $("#CropSelect").val());
+
+        $(".plus_btn_submit1").css("display", "none");
+        $(".plus_btn_submit2").css("display", "none");
     })
 
     // 갯수 선택
@@ -2172,6 +2178,9 @@
 
             SearchRemain(1);
         }
+
+        $(".plus_btn_submit1").css("display", "none");
+        $(".plus_btn_submit2").css("display", "none");
     })
 
     var emptyEls;
@@ -2377,6 +2386,9 @@
 
     $(document).ready(function () {
         $("#upload_file").on("change", handleImgFileSelect);
+
+        $(".plus_btn_submit1").css("display", "none");
+        $(".plus_btn_submit2").css("display", "none");
     });
 
     function handleImgFileSelect(e) {
@@ -2873,7 +2885,9 @@
                     data: {"data": JSON.stringify(updateIncomeData)},
                     success: function (result) {
                         if (result == 0) {
-                            return Alert("수정에 실패하였습니다.")
+                            return Alert("데이터 수정에 실패하였습니다.")
+                        } else if (result == 2) {
+                            return Alert1("엔터를 눌러 수정을 완료해주세요.")
                         } else {
                             location.reload();
                         }
@@ -2888,7 +2902,9 @@
                     data: {"data": JSON.stringify(updateRemainData)},
                     success: function (result) {
                         if (result == 0) {
-                            return Alert("수정에 실패하였습니다.")
+                            return Alert("데이터 수정에 실패하였습니다.")
+                        } else if (result == 2) {
+                            return Alert1("엔터를 눌러 수정을 완료해주세요.")
                         } else {
                             location.reload();
                         }

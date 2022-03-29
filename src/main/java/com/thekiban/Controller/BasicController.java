@@ -183,13 +183,17 @@ public class BasicController {
 
     JSONArray arr = new JSONArray(data);
 
-    for (int i = 0; i < arr.length(); i++) {
-      JSONObject item = arr.getJSONObject(i);
-      int basic_id = item.getInt("basic_id");
-      int detail_id = item.getInt("detail_id");
-      String standard = item.getString("standard");
+    if (arr.length() == 0) {
+      result = 2;
+    } else {
+      for (int i = 0; i < arr.length(); i++) {
+        JSONObject item = arr.getJSONObject(i);
+        int basic_id = item.getInt("basic_id");
+        int detail_id = item.getInt("detail_id");
+        String standard = item.getString("standard");
 
-      result = service.UpdateBasic(basic_id, detail_id, standard);
+        result = service.UpdateBasic(basic_id, detail_id, standard);
+      }
     }
 
     return result;
@@ -236,13 +240,17 @@ public class BasicController {
 
     JSONArray arr = new JSONArray(data);
 
-    for (int i = 0; i < arr.length(); i++) {
-      JSONObject item = arr.getJSONObject(i);
-      int basic_remain_id = item.getInt("basic_remain_id");
-      String basic_remain_name = item.getString("basic_remain_name");
-      String basic_remain_value = item.getString("basic_remain_value");
+    if (arr.length() == 0) {
+      result = 2;
+    } else {
+      for (int i = 0; i < arr.length(); i++) {
+        JSONObject item = arr.getJSONObject(i);
+        int basic_remain_id = item.getInt("basic_remain_id");
+        String basic_remain_name = item.getString("basic_remain_name");
+        String basic_remain_value = item.getString("basic_remain_value");
 
-      result = service.UpdateBasicRemain(basic_remain_id, basic_remain_name, basic_remain_value);
+        result = service.UpdateBasicRemain(basic_remain_id, basic_remain_name, basic_remain_value);
+      }
     }
 
     return result;
