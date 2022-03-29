@@ -1847,9 +1847,10 @@
                 </div>
                 <div class="modal-body">
                     <div>
+                        <input type='button' class='btn btn-inverse' value='excel 다운' style='width:100px;height:36px;font-weight:bold;' onclick="ReportToExcelConverter()" />
                         <div class="atbd-upload popAdd tab-pane fade show active" id="tab-horizontal-0-0" role="tabpanel" aria-labelledby="tab-horizontal-0-tab-0"
                              style=" overflow: auto; max-height: 500px;">
-                            <table style="width: max-content; min-width: 100%;">
+                            <table style="width: max-content; min-width: 100%;" class="TableToExcel">
                                 <thead>
                                 <tr>
                                     <th><span class="title">작물</span></th>
@@ -1891,11 +1892,12 @@
                 </div>
                 <div class="modal-body">
                     <div>
+                        <input type='button' class='btn btn-inverse' value='excel 다운' style='width:100px;height:36px;font-weight:bold;' onclick="ReportToExcelConverter()" />
                         <div class="atbd-upload popAdd tab-pane fade show active" id="tab-horizontal-0-1" role="tabpanel" aria-labelledby="tab-horizontal-0-tab-1"
                              style="overflow: auto; max-height: 500px;">
                             <div class="pop_cover_inner" style="padding-top: 0;">
                                 <div class="pop_top_content1" style="max-height:150px; overflow: auto;">
-                                    <table style="width: max-content; min-width: 100%;">
+                                    <table style="width: max-content; min-width: 100%;" class="TableToExcel">
                                         <thead id="basic_header">
                                         <tr>
                                             <th><span class="title">작물</span></th>
@@ -3425,6 +3427,18 @@
         checkboxes.forEach((checkbox) => {
             checkbox.checked = selectAll.checked;
         })
+    }
+
+    function ReportToExcelConverter() {
+        $(".TableToExcel").table2excel({
+            exclude: ".noExl",
+            name: "Excel Document Name",
+            filename: "report" + '.xls',
+            fileext: ".xls",
+            exclude_img: true,
+            exclude_links: true,
+            exclude_inputs: true
+        });
     }
 </script>
 </body>

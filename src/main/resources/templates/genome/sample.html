@@ -1529,10 +1529,11 @@
                 </div>
                 <div class="modal-body">
                     <div>
+                        <input type='button' class='btn btn-inverse' value='excel 다운' style='width:100px;height:36px;font-weight:bold;' onclick="ReportToExcelConverter()" />
                         <div class="atbd-upload popAdd tab-pane fade show active" id="tab-horizontal-0-0" role="tabpanel" aria-labelledby="tab-horizontal-0-tab-0"
                              style=" overflow: auto; max-height: 500px;">
                             <div class="table-responsive">
-                                <table class="table" id="display">
+                                <table class="table TableToExcel" id="display">
                                     <thead class="text-center" id="header_list">
                                     </thead>
                                     <tbody class="text-center" id="breed_list">
@@ -1558,9 +1559,10 @@
                 </div>
                 <div class="modal-body">
                     <div>
+                        <input type='button' class='btn btn-inverse' value='excel 다운' style='width:100px;height:36px;font-weight:bold;' onclick="ReportToExcelConverter()" />
                         <div class="atbd-upload">
                             <div class="table-responsive">
-                                <table class="table table2">
+                                <table class="table table2 TableToExcel">
                                     <thead class="text-center">
                                     <tr>
                                         <th style="cursor: pointer;"><span class="title">시교명</span></th>
@@ -3282,6 +3284,18 @@
         if (e.match(fileForm)) {
             document.getElementById("preview-image").src = '/upload/' + e;
         }
+    }
+
+    function ReportToExcelConverter() {
+        $(".TableToExcel").table2excel({
+            exclude: ".noExl",
+            name: "Excel Document Name",
+            filename: "report" + '.xls',
+            fileext: ".xls",
+            exclude_img: true,
+            exclude_links: true,
+            exclude_inputs: true
+        });
     }
 </script>
 
