@@ -112,9 +112,9 @@ public class BasicController {
   public Map<String, Object> SearchBasicRemainByNum(@RequestParam("basic_name") String basic_name, @RequestParam("basic_remain_num") String basic_remain_num) {
     Map<String, Object> result = new LinkedHashMap<String, Object>();
 
-    System.out.println("basic_remain_num = " + basic_remain_num);
-
     List<BasicRemain> basicRemains = service.SearchBasicRemainByNum(basic_name, basic_remain_num);
+
+    basicRemains.forEach(System.out::println);
 
     result.put("basicRemain", basicRemains);
 

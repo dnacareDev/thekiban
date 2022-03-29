@@ -346,10 +346,16 @@
         </foreach>
     </select>
 
-    <select id="SearchBasicStandardByBasicId" resultType="Standard">
+    <select id="SearchBasicIdByBasicNum" resultType="int">
+        select basic_id from standard
+        where basic_id in (select basic_id from standard where standard = #{basic_num} AND basic_id is not null)
+        group by basic_id
+    </select>
+
+    <select id="SelectStandardById" resultType="Standard">
         select * from standard s
-        LEFT JOIN detail d ON s.detail_id = d.detail_id
-        where s.basic_id = (select basic_id from standard where standard = #{basic_num} AND basic_id is not null)
+        left join detail d on d.detail_id = s.detail_id
+        where s.basic_id = #{basic_id}
     </select>
 
     <select id="SearchBreedList" resultType="Breed">

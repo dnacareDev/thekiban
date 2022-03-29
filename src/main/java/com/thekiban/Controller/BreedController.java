@@ -399,16 +399,20 @@ public class BreedController {
 
   @ResponseBody
   @RequestMapping("searchBasic2")
-  public Map<String, Object> SearchBasic2(Authentication auth, @RequestParam(value = "basic_name", required = false) String basic_name, @RequestParam("basic_num") String basic_num) {
-    Map<String, Object> result = new LinkedHashMap<String, Object>();
+  public Map<Integer, Object> SearchBasic2(Authentication auth, @RequestParam("basic_num") String basic_num) {
+    Map<Integer, Object> result = new LinkedHashMap<Integer, Object>();
 
     User user = (User) auth.getPrincipal();
 
-    List<Standard> standardByNum = new ArrayList<Standard>();
+    int[] basicId = service.SearchBasicIdByBasicNum(basic_num);
 
-    standardByNum = service.SearchBasicStandardByBasicId(basic_num);
+    List<Standard> standards = new ArrayList<>();
 
-    result.put("basic", standardByNum);
+    for (int i = 0; i < basicId.length; i++) {
+      standards = service.SelectStandardById(basicId[i]);
+
+      result.put(i, standards);
+    }
 
     return result;
   }

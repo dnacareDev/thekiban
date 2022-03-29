@@ -2076,7 +2076,7 @@
                             <div class="pop_cover_inner" style="padding-top: 0;">
                                 <div class="pop_top_content1" style="max-height:150px; overflow: auto;">
                                     <table style="width: max-content; min-width: 100%;">
-                                        <thead>
+                                        <thead id="basic_header">
                                         <tr>
                                             <th><span class="title">작물</span></th>
                                             <th><span class="title">도입번호(ID)</span></th>
@@ -4086,8 +4086,6 @@
                 success: function (result) {
                     $(".remain_title").text("종자번호 (ID) : " + e.innerText);
 
-                    console.log(result)
-
                     let add_list = "";
 
                     for (let i = 0; i < result.basicRemain.length; i++) {
@@ -4102,7 +4100,6 @@
                         add_list += '<td>' + result.basicRemain[i].basic_remain_date + '</td>';
                         add_list += '</tr>';
                     }
-
 
                     basic_list.append(add_list);
 

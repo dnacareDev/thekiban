@@ -2606,7 +2606,7 @@
 
         var basic_name = $("#CropSelect").val();
 
-        var data = {"basic_name": basic_name, "basic_num": e.innerText};
+        let data = {"basic_name": basic_name, "basic_num": e.innerText};
 
         var basic_header = $("#basic_header");
         var basic_list = $("#basic_list");
@@ -2629,15 +2629,22 @@
                     var add_list = "";
 
                     add_header += '<tr>';
-                    add_list += '<tr>';
 
-                    for (let i = 0; i < result.basic.length; i++) {
-                        add_header += '<td>' + result.basic[i].detail_title + '</td>';
-                        add_list += '<td>' + result.basic[i].standard + '</td>';
+                    for (let i = 0; i < result[0].length; i++) {
+                        add_header += '<td>' + result[0][i].detail_title + '</td>';
                     }
 
                     add_header += '</tr>';
-                    add_list += '</tr>';
+
+                    for (let i = 0; i < Object.keys(result).length; i++) {
+                        add_list += '<tr>';
+
+                        for (let j = 0; j < result[i].length; j++) {
+                            add_list += '<td>' + result[i][j].standard + '</td>';
+                        }
+
+                        add_list += '</tr>';
+                    }
 
                     basic_header.append(add_header);
                     basic_list.append(add_list);

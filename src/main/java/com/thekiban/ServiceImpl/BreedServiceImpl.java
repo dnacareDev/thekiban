@@ -235,8 +235,13 @@ public class BreedServiceImpl implements BreedService
 	}
 
 	@Override
-	public List<Standard> SearchBasicStandardByBasicId(String basic_num) {
-		return mapper.SearchBasicStandardByBasicId(basic_num);
+	public int[] SearchBasicIdByBasicNum(String basic_num) {
+		return mapper.SearchBasicIdByBasicNum(basic_num);
+	}
+
+	@Override
+	public List<Standard> SelectStandardById(int basic_id) {
+		return mapper.SelectStandardById(basic_id);
 	}
 
 	@Override

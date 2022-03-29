@@ -111,7 +111,9 @@ public interface BreedService
 	// 원종별 정보값 조회
 	List<Standard> SearchBasicStandard(List<Detail> detail, int user_id, int basic_id);
 
-	List<Standard> SearchBasicStandardByBasicId(String basic_num);
+	int[] SearchBasicIdByBasicNum(String basic_num);
+
+	List<Standard> SelectStandardById(int basic_id);
 
 	int InsertExcel(List<Standard> standards);
 
