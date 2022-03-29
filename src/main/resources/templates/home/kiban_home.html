@@ -380,9 +380,6 @@
 
            setTimeout(function() {
                geoCoder.geocode({"address": koreaLocations[i]}, function (result, status) {
-                   console.log("ko result", result);
-                   console.log("ko status", status);
-
                    if (status == "OK") {
                        let centerCoordinate = result[0].geometry.location; // 검색한 지역의 중앙 좌표
 
@@ -405,8 +402,6 @@
 
            setTimeout(function() {
                geoCoder.geocode({"address": globalLocations[i]}, function (result, status) {
-                   console.log("glo status", status);
-
                    if (status == "OK") {
                        let centerCoordinate = result[0].geometry.location; // 검색한 지역의 중앙 좌표
 

@@ -94,8 +94,6 @@ public class HomeController {
     result.put("sampleOutcomeKo", placeK);
     result.put("sampleOutcomeGlo", placeG);
 
-    System.out.println("result = " + result);
-
     return result;
   }
 }
