@@ -677,11 +677,63 @@
             border-radius: 5px;
         }
 
+        #saveRow1, #updateRow1 {
+            float: right;
+            color: #fff;
+            background-color: #217566;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        #cancelRow1, #cancelUpdate1 {
+            float: right;
+            color: #217566;
+            background-color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        #saveRow2, #updateRow2 {
+            float: right;
+            color: #fff;
+            background-color: #217566;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        #cancelRow2, #cancelUpdate2 {
+            float: right;
+            color: #217566;
+            background-color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
         .plus_btn_submit1 {
             display: none;
         }
 
         .plus_btn_submit2 {
+            display: none;
+        }
+
+        .plus_btn_submit3 {
+            display: none;
+        }
+
+        .plus_btn_submit4 {
+            display: none;
+        }
+
+        .plus_btn_submit5 {
+            display: none;
+        }
+
+        .plus_btn_submit6 {
             display: none;
         }
 
@@ -1740,16 +1792,35 @@
                 </div>
                 <div class="modal-body">
                     <div>
+                        <!--
                         <input type='button' class='btn btn-inverse' value='excel 다운' style='width:100px;height:36px;font-weight:bold;' onclick="ReportToExcelConverter()" />
+                        -->
                         <div class="atbd-upload popAdd tab-pane fade show active" id="tab-horizontal-0-0" role="tabpanel" aria-labelledby="tab-horizontal-0-tab-0"
                              style=" overflow: auto; max-height: 500px;">
-                            <div class="table-responsive">
-                                <table class="table TableToExcel" id="display">
-                                    <thead class="text-center" id="breed_header_list">
-                                    </thead>
-                                    <tbody class="text-center" id="breed_breed_list">
-                                    </tbody>
-                                </table>
+
+                            <div class='card-extra mt-10 mb-10 mr-20 plus_btn_submit3'>
+                                <button type='button' id="cancelRow1" onclick="cancelRow1()">취소</button>
+                                <button type='button' id="saveRow1" onclick="saveRow1()">저장</button>
+                            </div>
+                            <div class='card-extra mt-10 mb-10 mr-20 plus_btn_submit4'>
+                                <button type='button' id="cancelUpdate1" onclick="cancelUpdate1()">취소</button>
+                                <button type='button' id="updateRow1" onclick="updateRow1()">수정</button>
+                            </div>
+                            <div class="card-body" style="padding-top: 0;">
+                                <div class="bg-white">
+                                    <div id="breedGrid1"></div>                                    
+                                    <div class="row">
+                                        <div class="col-4" id="btn1">
+                                            <button class="btn btn-icon btn-light btn-circle" onclick="insertRow1()">
+                                                <span data-feather="plus"></span>
+                                            </button>
+                                            <button class="btn btn-icon btn-light btn-circle" onclick="DeleteBreed1()">
+                                                <span data-feather="trash-2"></span>
+                                            </button>
+                                            
+                                        </div>                                        
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -2067,32 +2138,38 @@
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white">
                 <div class="modal-header" style="border: none">
-                    <h6 class="modal-title">원종관리 > 원종재고관리</h6>
+                    <h6 class="modal-title">원종재고관리</h6>
                     <span class="remain_title"></span>
                 </div>
                 <div class="modal-body">
                     <div>
+                        <!--
                         <input type='button' class='btn btn-inverse' value='excel 다운' style='width:100px;height:36px;font-weight:bold;' onclick="ReportToExcelConverter()" />
+                        -->
                         <div class="atbd-upload popAdd tab-pane fade show active" id="tab-horizontal-0-1" role="tabpanel" aria-labelledby="tab-horizontal-0-tab-1"
                              style="overflow: auto; max-height: 500px;">
-                            <div class="pop_cover_inner" style="padding-top: 0;">
-                                <div class="pop_top_content1" style="max-height:150px; overflow: auto;">
-                                    <table style="width: max-content; min-width: 100%;" class="TableToExcel">
-                                        <thead id="basic_header">
-                                        <tr>
-                                            <th><span class="title">작물</span></th>
-                                            <th><span class="title">도입번호(ID)</span></th>
-                                            <th><span class="title">종자 보유량</span></th>
-                                            <th><span class="title">입고량</span></th>
-                                            <th><span class="title">출고량</span></th>
-                                            <th><span class="title">재고량</span></th>
-                                            <th><span class="title">담당자</span></th>
-                                            <th><span class="title">일자</span></th>
-                                        </tr>
-                                        </thead>
-                                            <tbody class="basic_mom" id="basic_list">
-                                        </tbody>
-                                    </table>
+                             <div class='card-extra mt-10 mb-10 mr-20 plus_btn_submit5'>
+                                <button type='button' id="cancelRow2" onclick="cancelRow2()">취소</button>
+                                <button type='button' id="saveRow2" onclick="saveRow2()">저장</button>
+                            </div>
+                            <div class='card-extra mt-10 mb-10 mr-20 plus_btn_submit6'>
+                                <button type='button' id="cancelUpdate2" onclick="cancelUpdate2()">취소</button>
+                                <button type='button' id="updateRow2" onclick="updateRow2()">수정</button>
+                            </div>
+                            <div class="card-body" style="padding-top: 0;">
+                                <div class="bg-white">
+                                    <div id="remainGrid1"></div>                                    
+                                    <div class="row">
+                                        <div class="col-4" id="btn1">
+                                            <button class="btn btn-icon btn-light btn-circle" onclick="insertRow2()">
+                                                <span data-feather="plus"></span>
+                                            </button>
+                                            <button class="btn btn-icon btn-light btn-circle" onclick="DeleteBasic2()">
+                                                <span data-feather="trash-2"></span>
+                                            </button>
+                                            
+                                        </div>                                        
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -2316,6 +2393,10 @@
 
         $(".plus_btn_submit1").css("display", "none");
         $(".plus_btn_submit2").css("display", "none");
+        $(".plus_btn_submit3").css("display", "none");
+        $(".plus_btn_submit4").css("display", "none");
+        $(".plus_btn_submit5").css("display", "none");
+        $(".plus_btn_submit6").css("display", "none");
     });
 
     $("#CropSelect").change(function () {
@@ -2334,6 +2415,10 @@
 
         $(".plus_btn_submit1").css("display", "none");
         $(".plus_btn_submit2").css("display", "none");
+        $(".plus_btn_submit3").css("display", "none");
+        $(".plus_btn_submit4").css("display", "none");
+        $(".plus_btn_submit5").css("display", "none");
+        $(".plus_btn_submit6").css("display", "none");
     })
 
     // 갯수 선택
@@ -2352,6 +2437,10 @@
 
         $(".plus_btn_submit1").css("display", "none");
         $(".plus_btn_submit2").css("display", "none");
+        $(".plus_btn_submit3").css("display", "none");
+        $(".plus_btn_submit4").css("display", "none");
+        $(".plus_btn_submit5").css("display", "none");
+        $(".plus_btn_submit6").css("display", "none");
     })
 
     // 원종 삭제
@@ -2802,8 +2891,11 @@
 
     var basicgrid = null;
     var basicRemainGrid = null;
+    var breedGrid1 = null;
+    var remainGrid1 = null;
     let updateBasicData = [];
     let updateBasicRemainData = [];
+    let updateBreedData = [];
     var insertCheck = 0;
 
     function SearchBasicgrid(e) {
@@ -3116,6 +3208,7 @@
     var lastID = 0;
     var saveStandard = [];
     let basicData = [];
+    let breedData = [];
 
     function insertRow() {
         var user_type = $("#user_type").val();
@@ -3174,9 +3267,7 @@
                         "data": JSON.stringify(basicData)
                     },
                     success: function (result) {
-                        if (result == 0) {
-                            return Alert("저장에 실패하였습니다.");
-                        } else {
+                        if (result != null) {
                             location.reload();
                         }
                     }
@@ -3215,9 +3306,7 @@
                         "data": JSON.stringify(data1)
                     },
                     success: function (result) {
-                        if (result == 0) {
-                            return Alert("저장에 실패하였습니다.");
-                        } else {
+                        if (result != null) {
                             location.reload();
                         }
                     }
@@ -3999,10 +4088,17 @@
     function SearchBreed(e) {
         $("#pop_breed").modal();
 
+        tablechk = 2;
+
         let breed_name = $("#CropSelect").val();
+        var limit = $("#limit").val();
         let sys_name = e.innerText;
 
         let data = {"breed_name": breed_name, "sys_name": sys_name};
+
+        var loading = document.querySelector('.load_wrap');
+
+        loading.classList.add('on');
 
         $.ajax(
             {
@@ -4010,48 +4106,128 @@
                 method: 'POST',
                 dataType: 'json',
                 data: data,
-                success: function (result) {
+                success: function (result2) {
                     $(".breed_title").text("계통명 (ID) : " + e.innerText);
 
-                    let header_list = $("#breed_header_list");
-                    let header_add = "";
-
-                    let breed_list = $("#breed_breed_list");
-                    let add_list = "";
+                    breedGrid1 = new tui.Grid({
+                        el: document.getElementById('breedGrid1'),
+                        scrollX: true,
+                        scrollY: true,
+                        data: result2.breed,
+                        rowHeaders: ['checkbox'],
+                        columns: [],
+                        pageOptions: {
+                            useClient: false,
+                            perPage: limit
+                        }
+                    });
 
                     // header
-                    header_add += '<tr>';
+                    const header_add = [];
+                    var headerName = [];
 
-                    for (let i = 0; i < result.detail.length; i++) {
-                        if (result.detail[i].detail_title != '첨부파일 관리') {
-                            header_add += '<th><span class="title">' + result.detail[i].detail_title + '</span></th>'
+                    for (let i = 0; i < result2.detail.length; i++) {
+                        var colHeader = result2.detail[i].detail_title;
+                        var colName = result2.detail[i].detail_id;
+                        headerName[i] = result2.detail[i].detail_id;
+
+                        var title_arr = {};
+
+                        var filter = {type: 'text', showApplyBtn: true, showClearBtn: true};
+
+                        if (result2.detail[i].detail_title != '첨부파일 관리') {
+                            let title_arr = {
+                                'header' : colHeader,
+                                'name' : colName,
+                                'editor': 'text', 
+                                'sortable': 'true',
+                                'width': 180,
+                                'filter': filter
+                            }
+                            header_add.push(title_arr);
                         }
+
                     }
 
-                    header_add += '</tr>';
+                    breedGrid1.setColumns(header_add);
+                    const dataArr = [];
+                    const dataArr2 = [];
+                    
+                    for (let i = 0; i < result2.breeds.length; i++) {
+                        
+                        let rowArr = {};
 
-                    for (let i = 0; i < result.breeds.length; i++) {
-                        if (result.breeds[i].breed_standard[3].standard === e.innerText || result.breeds[i].breed_standard[4].standard === e.innerText) {
-                            add_list += '<tr>';
+                        if (result2.breed[i].breed_standard[3].standard === e.innerText || result2.breed[i].breed_standard[4].standard === e.innerText) {                       
 
-                            for (let j = 0; j < result.breeds[i].breed_standard.length; j++) {
-                                add_list += '<td>' + result.breeds[i].breed_standard[j].standard + '</td>';
+                            rowArr = {'breed_id': result2.breed[i].breed_id};
+
+                            
+                            for (var j = 0; j < result2.breed[i].breed_standard.length; j++) {
+                                var rowData = result2.breed[i].breed_standard[j].standard;
+                                rowArr[headerName[j]] = rowData;
                             }
 
-                            add_list += '</tr>';
+                            dataArr.push(rowArr);
+                        
                         }
-                    }
+                        
+                    }  
+                  
+                    breedGrid1.resetData(dataArr);
 
-                    header_list.empty();
-                    header_list.append(header_add);
+                    breedGrid1.on('check', (ev) => {
+                        breedGrid1.getRow(ev.rowKey).breed_id;
+                    })
 
-                    breed_list.empty();
-                    breed_list.append(add_list);
+                    breedGrid1.on('editingStart', (ev) => {
+                        if ($(".plus_btn_submit3")[0].style.display != 'block') {
+                            $(".plus_btn_submit4").css("display", "block");
+                        }
+                    })
 
-                    $("#offset").val(result.offset);
+                    var before = null;
+                    var after = null;
+
+                    breedGrid1.on('afterChange', (ev) => {
+                        var user_type = $("#user_type").val();
+
+                        if (user_type != 0 && user_type != 2) {
+                            return Alert("수정 권한이 없습니다.");
+                        } else {
+                            for (let i = 0; i < ev.changes.length; i++) {
+                                before = ev.changes[i].prevValue;
+                                after = ev.changes[i].value;
+
+                                if (after != before) {
+                                    var breed_id = breedGrid1.getRow(ev.changes[i].rowKey).breed_id;
+                                    var detail_id = ev.changes[i].columnName;
+                                    var standard = after;
+
+                                    if (breed_id != null) {
+                                        updateBreedData.push({"breed_id": breed_id, "detail_id": detail_id, "standard": standard});
+                                    }
+                                }
+
+                                if ($(".plus_btn_submit3")[0].style.display != 'block') {
+                                    $(".plus_btn_submit4").css("display", "block");
+                                }
+                            }
+                        }
+                    });
+
+                    loading.classList.remove('on');
                 }
-
             });
+
+            $("#pop_breed").on('hidden.bs.modal', function (e) {
+            tablechk = 0;
+            breedGrid1.destroy();
+            basicgrid.reload();
+                                    
+            
+            SearchBasicgrid(1);     
+        })
+            
     }
 
     function imgView(e) {
@@ -4065,9 +4241,12 @@
     function SearchBasicRemain1(e) {
         $("#pop_data2").modal();
 
+        tablechk = 3;
+
         console.log(e);
 
         var basic_name = $("#CropSelect").val();
+        var limit = $("#limit").val();
 
         var data = {"basic_name": basic_name, "basic_remain_num": e.innerText};
 
@@ -4085,29 +4264,801 @@
                 method: 'POST',
                 dataType: 'json',
                 data: data,
-                success: function (result) {
+                success: function (result3) {
                     $(".remain_title").text("종자번호 (ID) : " + e.innerText);
 
-                    let add_list = "";
+                    remainGrid1 = new tui.Grid({
+                        el: document.getElementById('remainGrid1'),
+                        scrollX: true,
+                        scrollY: true,
+                        data: result3.basicRemain,
+                        rowHeaders: ['checkbox'],
+                        columns: [
+                            {
+                                header: '도입번호(ID)',
+                                name: 'basic_remain_num',
+                                editor: 'text',
+                                sortable: true,
+                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
+                            },
+                            {
+                                header: '종자 보유량',
+                                name: 'basic_remain_amount',
+                                editor: 'text',
+                                sortable: true,
+                                filter: 'number'
+                            },
+                            {
+                                header: '입고량',
+                                name: 'basic_remain_in',
+                                editor: 'text',
+                                sortable: true,
+                                filter: 'number'
+                            },
+                            {
+                                header: '출고량',
+                                name: 'basic_remain_out',
+                                editor: 'text',
+                                sortable: true,
+                                filter: 'number'
+                            },
+                            {
+                                header: '재고량',
+                                name: 'basic_remain_re',
+                                editor: 'text',
+                                sortable: true,
+                                filter: 'number'
+                            },
+                            {
+                                header: '담당자',
+                                name: 'basic_remain_person',
+                                editor: 'text',
+                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true},
+                                sortable: true
+                            },
+                            {
+                                header: '일자',
+                                name: 'basic_remain_date',
+                                editor: 'text',
+                                filter: 'date',
+                                sortable: true
+                            }
+                        ],
+                        pageOptions: {
+                            useClient: false,
+                            perPage: limit
+                        }
+                    });
 
-                    for (let i = 0; i < result.basicRemain.length; i++) {
-                        add_list += '<tr>';
-                        add_list += '<td>' + result.basicRemain[i].basic_name + '</td>';
-                        add_list += '<td>' + result.basicRemain[i].basic_remain_num + '</td>';
-                        add_list += '<td>' + result.basicRemain[i].basic_remain_amount + '</td>';
-                        add_list += '<td>' + result.basicRemain[i].basic_remain_in + '</td>';
-                        add_list += '<td>' + result.basicRemain[i].basic_remain_out + '</td>';
-                        add_list += '<td>' + result.basicRemain[i].basic_remain_re + '</td>';
-                        add_list += '<td>' + result.basicRemain[i].basic_remain_person + '</td>';
-                        add_list += '<td>' + result.basicRemain[i].basic_remain_date + '</td>';
-                        add_list += '</tr>';
+                    console.log(result3.basicRemain)
+
+                    const dataArr = [];
+                    const dataArr2 = [];
+
+                    for (let i = 0; i < result3.basicRemain.length; i++) {
+                        if (result3.basicRemain[i].basic_remain_num === e.innerText) {
+
+                            let rowArr = {
+                            'basic_remain_id': result3.basicRemain[i].basic_remain_id,
+                            'basic_remain_num': result3.basicRemain[i].basic_remain_num,
+                            'basic_remain_amount': result3.basicRemain[i].basic_remain_amount,
+                            'basic_remain_in': result3.basicRemain[i].basic_remain_in,
+                            'basic_remain_out': result3.basicRemain[i].basic_remain_out,
+                            'basic_remain_re': result3.basicRemain[i].basic_remain_re,
+                            'basic_remain_person': result3.basicRemain[i].basic_remain_person,
+                            'basic_remain_date': result3.basicRemain[i].basic_remain_date
+                            }
+
+                            dataArr2.push(rowArr);
+
+                        }                                             
+                        
                     }
 
-                    basic_list.append(add_list);
+                    for (let j = dataArr2.length -1; j >= 0; j--) {
+                        let rowArr2 = {
+                            'basic_remain_id': dataArr2[j].basic_remain_id,
+                            'basic_remain_num': dataArr2[j].basic_remain_num,
+                            'basic_remain_amount': dataArr2[j].basic_remain_amount,
+                            'basic_remain_in': dataArr2[j].basic_remain_in,
+                            'basic_remain_out': dataArr2[j].basic_remain_out,
+                            'basic_remain_re': dataArr2[j].basic_remain_re,
+                            'basic_remain_person': dataArr2[j].basic_remain_person,
+                            'basic_remain_date': dataArr2[j].basic_remain_date
+                        }
+                        dataArr.push(rowArr2);
+                    }
+
+                    remainGrid1.resetData(dataArr);
+
+                    var before = null;
+                    var after = null;
+
+                    remainGrid1.on('dblclick', (ev) => {
+                        ev.stop();
+                    })
+
+                    remainGrid1.on('editingStart', (ev) => {
+                        if ($(".plus_btn_submit5")[0].style.display != 'block') {
+                            $(".plus_btn_submit6").css("display", "block");
+                        }
+                    })
+
+                    remainGrid1.on('afterChange', (ev) => {
+                        var user_type = $("#user_type").val();
+
+                        if (user_type != 0 && user_type != 2) {
+                            return Alert("수정 권한이 없습니다.");
+                            location.reload();
+                        } else {
+                            for (let i = 0; i < ev.changes.length; i++) {
+                                before = ev.changes[i].prevValue;
+                                after = ev.changes[i].value;
+
+                                if (after != before) {
+                                    var basic_remain_id = remainGrid1.getRow(ev.changes[i].rowKey).basic_remain_id;
+                                    var basic_remain_name = ev.changes[i].columnName;
+                                    var basic_remain_value = after;
+
+                                    if (basic_remain_id != null) {
+                                        updateBasicRemainData.push({
+                                            "basic_remain_id": basic_remain_id,
+                                            "basic_remain_name": basic_remain_name,
+                                            "basic_remain_value": basic_remain_value
+                                        })
+                                    }
+                                }
+
+                                if ($(".plus_btn_submit5")[0].style.display != 'block') {
+                                    $(".plus_btn_submit6").css("display", "block");
+                                }
+                            }
+                        }
+                    });
 
                     loading.classList.remove('on');
+
                 }
             });
+
+            $("#pop_data2").on('hidden.bs.modal', function (e) {
+            tablechk = 0;
+            remainGrid1.destroy();
+            basicgrid.reload();
+                                    
+            
+            SearchBasicgrid(1);     
+        })
+    }
+
+    function insertRow1() {
+        var user_type = $("#user_type").val();
+
+        if (user_type != 0 && user_type != 2) {
+            return Alert("등록 권한이 없습니다.");
+        } else {
+            $(".plus_btn_submit3").css("display", "block");
+
+            if (tablechk == 2) {
+                if (insertCheck == 0) {
+
+                    insertCheck = 1;
+
+                    let cnt = breedGrid1.getRowCount();
+
+                    const newRow = {'breed_id': null, '1': $("#CropSelect").val()};
+
+                    breedGrid1.prependRow(newRow);
+                    breedGrid1.check(cnt);
+
+                    breedData.push({'detail_id': 1, 'standard': $("#CropSelect").val()})
+
+                    breedGrid1.on('afterChange', (ev) => {
+                        for (let i = 0; i < ev.changes.length; i++) {
+                            breedData.push({"detail_id": ev.changes[i].columnName, "standard": ev.changes[i].value})
+                        }
+                    });
+                } else {
+                    return Alert1("이미 데이터 추가 창이 활성화 중입니다.");
+                }
+            } else if (tablechk == 0) {
+                if (insertCheck == 0) {
+                    var cnt = basicgrid.getRowCount();
+
+                    insertCheck = 1;
+
+                    const newRow = {'basic_id': null, '169': $("#CropSelect").val()};
+
+                    basicgrid.prependRow(newRow);
+                    basicgrid.check(cnt);
+
+                    basicData.push({'detail_id': 169, 'standard': $("#CropSelect").val()})
+
+                    basicgrid.on('afterChange', (ev) => {
+                        for (let i = 0; i < ev.changes.length; i++) {
+                            basicData.push({"detail_id": ev.changes[i].columnName, "standard": ev.changes[i].value})
+                        }
+                    });
+                } else {
+                    return Alert1("이미 데이터 추가 창이 활성화 중입니다.");
+                }
+            } else {
+                if (insertCheck == 0) {
+                    var cnt1 = basicRemainGrid.getRowCount();
+
+                    insertCheck = 1;
+
+                    const newRow = {'basic_name': $("#CropSelect").val()};
+
+                    basicRemainGrid.prependRow(newRow);
+                    basicRemainGrid.check(cnt1);
+                } else {
+                    return Alert1("이미 데이터 추가 창이 활성화 중입니다.");
+                }
+            }
+        }
+    }
+
+    function saveRow1() {
+        if (tablechk == 2) {
+            $.ajax(
+                {
+                    url: 'insertBreed2',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        "data": JSON.stringify(breedData)
+                    },
+                    success: function (result) {
+                        if (result != null) {
+                            location.reload();
+                        }
+                    }
+                });
+        } else if (tablechk == 0) {
+            $.ajax(
+                {
+                    url: 'insertBasic',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        "data": JSON.stringify(basicData)
+                    },
+                    success: function (result) {
+                        if (result != null) {
+                            location.reload();
+                        }
+                    }
+                });
+        } else {
+            var input_data1 = [];
+
+            input_data1.push(basicRemainGrid.getCheckedRows()[0]);
+
+            $.ajax(
+                {
+                    url: 'updateInsertBasicRemain',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {"input_data": JSON.stringify(input_data1)},
+                    success: function (result) {
+                        /*if (result != null) {
+                            lastID = result.basic_remain_id;
+                        }*/
+                        location.reload();
+                    }
+                });
+            /*
+            var data1 = [];
+
+            var data_in1 = basicRemainGrid.getCheckedRows()[0];
+
+            data1.push(data_in1);
+
+            $.ajax(
+                {
+                    url: 'updateInsertBasicRemain',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        "data": JSON.stringify(data1)
+                    },
+                    success: function (result) {
+                        if (result != null) {
+                            location.reload();
+                        }
+                    }
+                });*/
+        }
+
+    }
+
+    function cancelRow1() {
+        if (tablechk === 2) {
+            breedGrid1.removeCheckedRows();
+        } else if (tablechk === 0) {
+            basicgrid.removeCheckedRows();
+        } else {
+            basicRemainGrid.removeCheckedRows();
+        }
+
+        $(".plus_btn_submit3").css("display", "none");
+
+        insertCheck = 0;
+    }
+
+    function updateRow1() {
+        if (tablechk == 2) {
+            $.ajax(
+                {
+                    url: 'updateBreed',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {"data": JSON.stringify(updateBreedData)},
+                    success: function (result) {
+                        if (result == 0) {
+                            return Alert("데이터 수정에 실패하였습니다.")
+                        } else if (result == 2) {
+                            return Alert1("엔터를 눌러 수정을 완료해주세요.")
+                        } else {
+                            location.reload();
+                        }
+                    }
+                });
+        } else if (tablechk == 0) {
+            $.ajax(
+                {
+                    url: 'updateBasic',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {"data": JSON.stringify(updateBasicData)},
+                    success: function (result) {
+                        if (result == 0) {
+                            return Alert("데이터 수정에 실패하였습니다.")
+                        } else if (result == 2) {
+                            return Alert1("엔터를 눌러 수정을 완료해주세요.")
+                        } else {
+                            location.reload();
+                        }
+                    }
+                });
+        } else {
+            $.ajax(
+                {
+                    url: 'updateBasicRemain',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {"data": JSON.stringify(updateBasicRemainData)},
+                    success: function (result) {
+                        if (result == 0) {
+                            return Alert("데이터 수정에 실패하였습니다.")
+                        } else if (result == 2) {
+                            return Alert1("엔터를 눌러 수정을 완료해주세요.")
+                        } else {
+                            location.reload();
+                        }
+                    }
+                });
+        }
+    }
+
+    function cancelUpdate1() {
+        $(".plus_btn_submit4").css("display", "none");
+
+        if ($(".tui-grid-cell-content").hasClass("tui-grid-layer-editing")) {
+            $(".tui-grid-cell-content").removeClass("tui-grid-layer-editing");
+        }
+    }
+
+    function insertRow2() {
+        var user_type = $("#user_type").val();
+
+        if (user_type != 0 && user_type != 2) {
+            return Alert("등록 권한이 없습니다.");
+        } else {
+            $(".plus_btn_submit5").css("display", "block");
+
+            if (tablechk == 3) {
+                if (insertCheck == 0) {
+                    var cnt1 = remainGrid1.getRowCount();
+
+                    insertCheck = 1;
+
+                    const newRow = {'basic_name': $("#CropSelect").val()};
+
+                    remainGrid1.prependRow(newRow);
+                    remainGrid1.check(cnt1);
+                } else {
+                    return Alert1("이미 데이터 추가 창이 활성화 중입니다.");
+                }
+            } else if (tablechk == 0) {
+                if (insertCheck == 0) {
+                    var cnt = basicgrid.getRowCount();
+
+                    insertCheck = 1;
+
+                    const newRow = {'basic_id': null, '169': $("#CropSelect").val()};
+
+                    basicgrid.prependRow(newRow);
+                    basicgrid.check(cnt);
+
+                    basicData.push({'detail_id': 169, 'standard': $("#CropSelect").val()})
+
+                    basicgrid.on('afterChange', (ev) => {
+                        for (let i = 0; i < ev.changes.length; i++) {
+                            basicData.push({"detail_id": ev.changes[i].columnName, "standard": ev.changes[i].value})
+                        }
+                    });
+                } else {
+                    return Alert1("이미 데이터 추가 창이 활성화 중입니다.");
+                }
+            } else {
+                if (insertCheck == 0) {
+                    var cnt1 = basicRemainGrid.getRowCount();
+
+                    insertCheck = 1;
+
+                    const newRow = {'basic_name': $("#CropSelect").val()};
+
+                    basicRemainGrid.prependRow(newRow);
+                    basicRemainGrid.check(cnt1);
+                } else {
+                    return Alert1("이미 데이터 추가 창이 활성화 중입니다.");
+                }
+            }
+        }
+    }
+
+    function saveRow2() {
+        if (tablechk == 3) {
+            var input_data1 = [];
+
+            input_data1.push(remainGrid1.getCheckedRows()[0]);
+
+            $.ajax(
+                {
+                    url: 'updateInsertBasicRemain',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {"input_data": JSON.stringify(input_data1)},
+                    success: function (result) {
+                        /*if (result != null) {
+                            lastID = result.basic_remain_id;
+                        }*/
+                        location.reload();
+                    }
+                });
+        } else if (tablechk == 0) {
+            $.ajax(
+                {
+                    url: 'insertBasic',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        "data": JSON.stringify(basicData)
+                    },
+                    success: function (result) {
+                        if (result != null) {
+                            location.reload();
+                        }
+                    }
+                });
+        } else {
+            var input_data1 = [];
+
+            input_data1.push(basicRemainGrid.getCheckedRows()[0]);
+
+            $.ajax(
+                {
+                    url: 'updateInsertBasicRemain',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {"input_data": JSON.stringify(input_data1)},
+                    success: function (result) {
+                        /*if (result != null) {
+                            lastID = result.basic_remain_id;
+                        }*/
+                        location.reload();
+                    }
+                });
+            /*
+            var data1 = [];
+
+            var data_in1 = basicRemainGrid.getCheckedRows()[0];
+
+            data1.push(data_in1);
+
+            $.ajax(
+                {
+                    url: 'updateInsertBasicRemain',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        "data": JSON.stringify(data1)
+                    },
+                    success: function (result) {
+                        if (result != null) {
+                            location.reload();
+                        }
+                    }
+                });*/
+        }
+
+    }
+
+    function cancelRow2() {
+        if (tablechk === 3) {
+            remainGrid1.removeCheckedRows();
+        } else if (tablechk === 2) {
+            breedGrid1.removeCheckedRows();
+        } else if (tablechk === 0) {
+            basicgrid.removeCheckedRows();
+        } else {
+            basicRemainGrid.removeCheckedRows();
+        }
+
+        $(".plus_btn_submit5").css("display", "none");
+
+        insertCheck = 0;
+    }
+
+    function updateRow2() {
+        if (tablechk == 3) {
+            $.ajax(
+                {
+                    url: 'updateBasicRemain',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {"data": JSON.stringify(updateBasicRemainData)},
+                    success: function (result) {
+                        if (result == 0) {
+                            return Alert("데이터 수정에 실패하였습니다.")
+                        } else if (result == 2) {
+                            return Alert1("엔터를 눌러 수정을 완료해주세요.")
+                        } else {
+                            location.reload();
+                        }
+                    }
+                });
+        } else if (tablechk == 0) {
+            $.ajax(
+                {
+                    url: 'updateBasic',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {"data": JSON.stringify(updateBasicData)},
+                    success: function (result) {
+                        if (result == 0) {
+                            return Alert("데이터 수정에 실패하였습니다.")
+                        } else if (result == 2) {
+                            return Alert1("엔터를 눌러 수정을 완료해주세요.")
+                        } else {
+                            location.reload();
+                        }
+                    }
+                });
+        } else {
+            $.ajax(
+                {
+                    url: 'updateBasicRemain',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {"data": JSON.stringify(updateBasicRemainData)},
+                    success: function (result) {
+                        if (result == 0) {
+                            return Alert("데이터 수정에 실패하였습니다.")
+                        } else if (result == 2) {
+                            return Alert1("엔터를 눌러 수정을 완료해주세요.")
+                        } else {
+                            location.reload();
+                        }
+                    }
+                });
+        }
+    }
+
+    function cancelUpdate2() {
+        $(".plus_btn_submit6").css("display", "none");
+
+        if ($(".tui-grid-cell-content").hasClass("tui-grid-layer-editing")) {
+            $(".tui-grid-cell-content").removeClass("tui-grid-layer-editing");
+        }
+    }
+
+    // 품종 삭제
+    function DeleteBreed1() {
+        var user_type = $("#user_type").val();
+
+        if (user_type != 0) {
+            return Alert("삭제 권한이 없습니다.");
+        } else {
+            if (tablechk === 2) {
+                var total_id = [];
+
+                var l = breedGrid1.getCheckedRows().length;
+
+                for (let i = 0; i < l; i++) {
+                    total_id.push(breedGrid1.getCheckedRows()[i].breed_id)
+                }
+
+                var data = {'breed_id': total_id};
+
+                if (confirm("삭제하시겠습니까?") == true) {
+                    $.ajax(
+                        {
+                            url: 'deleteBreed',
+                            method: 'POST',
+                            dataType: 'json',
+                            data: data,
+                            success: function (result) {
+                                if (result == 0) {
+                                    return Alert("삭제에 실패하였습니다.");
+                                } else {
+                                    location.reload();
+                                }
+                            }
+                        });
+                } else {
+                    return false;
+                }
+            } else if (tablechk === 0) {
+                var total_id = [];
+
+                var l = basicgrid.getCheckedRows().length;
+
+                for (let i = 0; i < l; i++) {
+                    total_id.push(basicgrid.getCheckedRows()[i].basic_id)
+                }
+
+                var data = {'basic_id': total_id};
+
+                if (confirm("삭제하시겠습니까?") == true) {
+                    $.ajax(
+                        {
+                            url: 'deleteBasic',
+                            method: 'POST',
+                            dataType: 'json',
+                            data: data,
+                            success: function (result) {
+                                if (result == 0) {
+                                    return Alert("삭제에 실패하였습니다.");
+                                } else {
+                                    location.reload();
+                                }
+                            }
+                        });
+                } else {
+                    return false;
+                }
+            } else {
+                var total_id1 = [];
+
+                var l1 = basicRemainGrid.getCheckedRows().length;
+
+                for (let i = 0; i < l1; i++) {
+                    total_id1.push(basicRemainGrid.getCheckedRows()[i].basic_remain_id)
+                }
+
+                var data1 = {'basic_remain_id': total_id1};
+
+                if (confirm("삭제하시겠습니까?") == true) {
+                    $.ajax(
+                        {
+                            url: 'deleteBasicRemain',
+                            method: 'POST',
+                            dataType: 'json',
+                            data: data1,
+                            success: function (result) {
+                                if (result == 0) {
+                                    return Alert("삭제에 실패하였습니다.");
+                                } else {
+                                    location.reload();
+                                }
+                            }
+                        });
+                } else {
+                    return false;
+                }
+            }
+        }
+    }
+
+    // 원종 삭제
+    function DeleteBasic2() {
+        var user_type = $("#user_type").val();
+
+        if (user_type != 0) {
+            return Alert("삭제 권한이 없습니다.");
+        } else {
+            if (tablechk === 3) {
+                var total_id1 = [];
+
+                var l1 = remainGrid1.getCheckedRows().length;
+
+                for (let i = 0; i < l1; i++) {
+                    total_id1.push(remainGrid1.getCheckedRows()[i].basic_remain_id)
+                }
+
+                var data1 = {'basic_remain_id': total_id1};
+
+                if (confirm("삭제하시겠습니까?") == true) {
+                    $.ajax(
+                        {
+                            url: 'deleteBasicRemain',
+                            method: 'POST',
+                            dataType: 'json',
+                            data: data1,
+                            success: function (result) {
+                                if (result == 0) {
+                                    return Alert("삭제에 실패하였습니다.");
+                                } else {
+                                    location.reload();
+                                }
+                            }
+                        });
+                } else {
+                    return false;
+                }
+            } else if (tablechk === 0) {
+                var total_id = [];
+
+                var l = basicgrid.getCheckedRows().length;
+
+                for (let i = 0; i < l; i++) {
+                    total_id.push(basicgrid.getCheckedRows()[i].basic_id)
+                }
+
+                var data = {'basic_id': total_id};
+
+                if (confirm("삭제하시겠습니까?") == true) {
+                    $.ajax(
+                        {
+                            url: 'deleteBasic',
+                            method: 'POST',
+                            dataType: 'json',
+                            data: data,
+                            success: function (result) {
+                                if (result == 0) {
+                                    return Alert("삭제에 실패하였습니다.");
+                                } else {
+                                    location.reload();
+                                }
+                            }
+                        });
+                } else {
+                    return false;
+                }
+            } else {
+                var total_id1 = [];
+
+                var l1 = basicRemainGrid.getCheckedRows().length;
+
+                for (let i = 0; i < l1; i++) {
+                    total_id1.push(basicRemainGrid.getCheckedRows()[i].basic_remain_id)
+                }
+
+                var data1 = {'basic_remain_id': total_id1};
+
+                if (confirm("삭제하시겠습니까?") == true) {
+                    $.ajax(
+                        {
+                            url: 'deleteBasicRemain',
+                            method: 'POST',
+                            dataType: 'json',
+                            data: data1,
+                            success: function (result) {
+                                if (result == 0) {
+                                    return Alert("삭제에 실패하였습니다.");
+                                } else {
+                                    location.reload();
+                                }
+                            }
+                        });
+                } else {
+                    return false;
+                }
+            }
+        }
     }
 
     function ReportToExcelConverter() {

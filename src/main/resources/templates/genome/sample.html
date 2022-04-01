@@ -607,6 +607,42 @@
             border-radius: 5px;
         }
 
+        #saveRow1, #updateRow1 {
+            float: right;
+            color: #fff;
+            background-color: #217566;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        #cancelRow1, #cancelUpdate1 {
+            float: right;
+            color: #217566;
+            background-color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        #saveRow2, #updateRow2 {
+            float: right;
+            color: #fff;
+            background-color: #217566;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        #cancelRow2, #cancelUpdate2 {
+            float: right;
+            color: #217566;
+            background-color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
         #pop_breed table thead tr, #pop_seed table thead tr {
             border-top: 2px solid #aaa;
             border-bottom: 2px solid #aaa;
@@ -648,6 +684,22 @@
         }
 
         .plus_btn_submit2 {
+            display: none;
+        }
+
+        .plus_btn_submit3 {
+            display: none;
+        }
+
+        .plus_btn_submit4 {
+            display: none;
+        }
+
+        .plus_btn_submit5 {
+            display: none;
+        }
+
+        .plus_btn_submit6 {
             display: none;
         }
 
@@ -1531,17 +1583,35 @@
                 </div>
                 <div class="modal-body">
                     <div>
+                        <!--
                         <input type='button' class='btn btn-inverse' value='excel 다운' style='width:100px;height:36px;font-weight:bold;' onclick="ReportToExcelConverter()" />
+                        -->
                         <div class="atbd-upload popAdd tab-pane fade show active" id="tab-horizontal-0-0" role="tabpanel" aria-labelledby="tab-horizontal-0-tab-0"
                              style=" overflow: auto; max-height: 500px;">
-                            <div class="table-responsive">
-                                <table class="table TableToExcel" id="display">
-                                    <thead class="text-center" id="header_list">
-                                    </thead>
-                                    <tbody class="text-center" id="breed_list">
-                                    </tbody>
-                                </table>
+                             <div class='card-extra mt-10 mb-10 mr-20 plus_btn_submit3'>
+                                <button type='button' id="cancelRow1" onclick="cancelRow1()">취소</button>
+                                <button type='button' id="saveRow1" onclick="saveRow1()">저장</button>
                             </div>
+                            <div class='card-extra mt-10 mb-10 mr-20 plus_btn_submit4'>
+                                <button type='button' id="cancelUpdate1" onclick="cancelUpdate1()">취소</button>
+                                <button type='button' id="updateRow1" onclick="updateRow1()">수정</button>
+                            </div>
+                            <div class="card-body" style="padding-top: 0;">
+                                <div class="bg-white">
+                                    <div id="breedGrid2"></div>                                    
+                                    <div class="row">
+                                        <div class="col-4" id="btn1">
+                                            <button class="btn btn-icon btn-light btn-circle" onclick="insertRow1()">
+                                                <span data-feather="plus"></span>
+                                            </button>
+                                            <button class="btn btn-icon btn-light btn-circle" onclick="DeleteBreed1()">
+                                                <span data-feather="trash-2"></span>
+                                            </button>
+                                            
+                                        </div>                                        
+                                    </div>
+                                </div>
+                            </div> 
                         </div>
                     </div>
                 </div>
@@ -1561,29 +1631,33 @@
                 </div>
                 <div class="modal-body">
                     <div>
+                        <!--
                         <input type='button' class='btn btn-inverse' value='excel 다운' style='width:100px;height:36px;font-weight:bold;' onclick="ReportToExcelConverter()" />
+                        -->
                         <div class="atbd-upload">
-                            <div class="table-responsive">
-                                <table class="table table2 TableToExcel">
-                                    <thead class="text-center">
-                                    <tr>
-                                        <th style="cursor: pointer;"><span class="title">시교명</span></th>
-                                        <th style="cursor: pointer;"><span class="title">종자번호(ID)</span></th>
-                                        <th style="cursor: pointer;"><span class="title">종자 보유량</span></th>
-                                        <th style="cursor: pointer;"><span class="title">입고량</span></th>
-                                        <th style="cursor: pointer;"><span class="title">출고량</span></th>
-                                        <th style="cursor: pointer;"><span class="title">재고량</span></th>
-                                        <th style="cursor: pointer;"><span class="title">담당자</span></th>
-                                        <th style="cursor: pointer;"><span class="title">인수자</span></th>
-                                        <th style="cursor: pointer;"><span class="title">날짜</span></th>
-                                        <th style="cursor: pointer;"><span class="title">시교종료일자</span></th>
-                                        <th style="cursor: pointer;"><span class="title">지역구분</span></th>
-                                        <th style="cursor: pointer;"><span class="title">대상 지역</span></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody class="text-center outcome_list">
-                                    </tbody>
-                                </table>
+                            <div class='card-extra mt-10 mb-10 mr-20 plus_btn_submit5'>
+                                <button type='button' id="cancelRow2" onclick="cancelRow2()">취소</button>
+                                <button type='button' id="saveRow2" onclick="saveRow2()">저장</button>
+                            </div>
+                            <div class='card-extra mt-10 mb-10 mr-20 plus_btn_submit6'>
+                                <button type='button' id="cancelUpdate2" onclick="cancelUpdate2()">취소</button>
+                                <button type='button' id="updateRow2" onclick="updateRow2()">수정</button>
+                            </div>
+                            <div class="card-body" style="padding-top: 0;">
+                                <div class="bg-white">
+                                    <div id="outcomeGrid2"></div>                                    
+                                    <div class="row">
+                                        <div class="col-4" id="btn1">
+                                            <button class="btn btn-icon btn-light btn-circle" onclick="insertRow2()">
+                                                <span data-feather="plus"></span>
+                                            </button>
+                                            <button class="btn btn-icon btn-light btn-circle" onclick="DeleteSample1()">
+                                                <span data-feather="trash-2"></span>
+                                            </button>
+                                            
+                                        </div>                                        
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -2264,6 +2338,10 @@
 
         $(".plus_btn_submit1").css("display", "none");
         $(".plus_btn_submit2").css("display", "none");
+        $(".plus_btn_submit3").css("display", "none");
+        $(".plus_btn_submit4").css("display", "none");
+        $(".plus_btn_submit5").css("display", "none");
+        $(".plus_btn_submit6").css("display", "none");
     });
 
     $("#CropSelect").change(function () {
@@ -2281,6 +2359,10 @@
 
         $(".plus_btn_submit1").css("display", "none");
         $(".plus_btn_submit2").css("display", "none");
+        $(".plus_btn_submit3").css("display", "none");
+        $(".plus_btn_submit4").css("display", "none");
+        $(".plus_btn_submit5").css("display", "none");
+        $(".plus_btn_submit6").css("display", "none");
     })
 
     // 갯수 선택
@@ -2297,6 +2379,10 @@
 
         $(".plus_btn_submit1").css("display", "none");
         $(".plus_btn_submit2").css("display", "none");
+        $(".plus_btn_submit3").css("display", "none");
+        $(".plus_btn_submit4").css("display", "none");
+        $(".plus_btn_submit5").css("display", "none");
+        $(".plus_btn_submit6").css("display", "none");
     })
 
     function selectAll(selectAll) {
@@ -2322,56 +2408,246 @@
     // 종자번호 팝업
     function SearchSeed(e) {
         $("#pop_seed").modal();
-
+        
+        tablechk = 3;
+        
         let sample_name1 = $("#CropSelect").val();
+        var limit3 = $("#limit").val();
 
         let data1 = {"sample_name": sample_name1};
 
+        var loading = document.querySelector('.load_wrap');
+
+        loading.classList.add('on');
+        
         $.ajax(
             {
                 url: 'searchSeed',
                 method: 'POST',
                 dataType: 'json',
                 data: data1,
-                success: function (result1) {
+                success: function (result3) {
                     $(".seed_title").text("종자번호(ID) - " + e.innerText);
 
-                    let outcome_list = $(".outcome_list");
+                    outcomeGrid2 = new tui.Grid({
+                        el: document.getElementById('outcomeGrid2'),
+                        scrollX: true,
+                        scrollY: true,
+                        data: result3.sampleOutcome,
+                        rowHeaders: ['checkbox'],
+                        columns: [
+                            {
+                                header: '시교명',
+                                name: 'sample_outcome_code',
+                                editor: 'text',
+                                sortable: true,
+                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
+                            },
+                            {
+                                header: '종자번호(ID)',
+                                name: 'sample_outcome_num',
+                                editor: 'text',
+                                sortable: true,
+                                filter: 'number'
+                            },
+                            {
+                                header: '종자 보유량',
+                                name: 'sample_outcome_amount',
+                                editor: 'text',
+                                sortable: true,
+                                filter: 'number'
+                            },
+                            {
+                                header: '입고량',
+                                name: 'sample_outcome_in',
+                                editor: 'text',
+                                sortable: true,
+                                filter: 'number'
+                            },
+                            {
+                                header: '출고량',
+                                name: 'sample_outcome_out',
+                                editor: 'text',
+                                sortable: true,
+                                filter: 'number'
+                            },
+                            {
+                                header: '재고량',
+                                name: 'sample_outcome_remain',
+                                editor: 'text',
+                                sortable: true,
+                                filter: 'number'
+                            },
+                            {
+                                header: '담당자',
+                                name: 'sample_outcome_person',
+                                editor: 'text',
+                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true},
+                                sortable: true
+                            },
+                            {
+                                header: '인수자',
+                                name: 'sample_outcome_reciever',
+                                editor: 'text',
+                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true},
+                                sortable: true
+                            },
+                            {
+                                header: '날짜',
+                                name: 'sample_outcome_date',
+                                editor: 'text',
+                                filter: 'date',
+                                sortable: true
+                            },
+                            {
+                                header: '시교종료일자',
+                                name: 'sample_outcome_end',
+                                editor: 'text',
+                                filter: 'date',
+                                sortable: true
+                            },
+                            {
+                                header: '지역 구분',
+                                name: 'sample_outcome_country',
+                                editor: 'text',
+                                sortable: true,
+                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
+                            },
+                            {
+                                header: '대상 지역',
+                                name: 'sample_outcome_place',
+                                editor: 'text',
+                                sortable: true,
+                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
+                            }                             
 
-                    let seed_list = "";
-
-                    for (let i = 0; i < result1.sampleOutcome.length; i++) {
-                        if (result1.sampleOutcome[i].sample_outcome_num === e.innerText) {
-                            seed_list += '<tr>';
-                            seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_code + '</td>';
-                            seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_num + '</td>';
-                            seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_amount + '</td>';
-                            seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_in + '</td>';
-                            seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_out + '</td>';
-                            seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_remain + '</td>';
-                            seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_person + '</td>';
-                            seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_reciever + '</td>';
-                            seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_date + '</td>';
-                            seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_end + '</td>';
-                            seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_country + '</td>';
-                            seed_list += '<td>' + result1.sampleOutcome[i].sample_outcome_place + '</td>';
-                            seed_list += '</tr>';
+                        ],
+                        pageOptions: {
+                            useClient: false,
+                            perPage: limit3
                         }
+
+                    });
+
+                    const dataArr = [];
+                    const dataArr2 = [];
+
+                    for (let i = 0; i < result3.sampleOutcome.length; i++) {
+                        if (result3.sampleOutcome[i].sample_outcome_num === e.innerText) {
+
+                            let rowArr = {
+                            'sample_outcome_id': result3.sampleOutcome[i].sample_outcome_id,
+                            'sample_outcome_code': result3.sampleOutcome[i].sample_outcome_code,
+                            'sample_outcome_num': result3.sampleOutcome[i].sample_outcome_num,
+                            'sample_outcome_amount': result3.sampleOutcome[i].sample_outcome_amount,
+                            'sample_outcome_in': result3.sampleOutcome[i].sample_outcome_in,
+                            'sample_outcome_out': result3.sampleOutcome[i].sample_outcome_out,
+                            'sample_outcome_remain': result3.sampleOutcome[i].sample_outcome_remain,
+                            'sample_outcome_person': result3.sampleOutcome[i].sample_outcome_person,
+                            'sample_outcome_reciever': result3.sampleOutcome[i].sample_outcome_reciever,
+                            'sample_outcome_date': result3.sampleOutcome[i].sample_outcome_date,
+                            'sample_outcome_end': result3.sampleOutcome[i].sample_outcome_end,
+                            'sample_outcome_country': result3.sampleOutcome[i].sample_outcome_country,
+                            'sample_outcome_place': result3.sampleOutcome[i].sample_outcome_place
+                            }
+
+                            dataArr2.push(rowArr);
+
+                        }                                             
+                        
                     }
 
-                    outcome_list.empty();
-                    outcome_list.append(seed_list);
+                    for (let j = dataArr2.length - 1; j >= 0; j--) {
+                        let rowArr2 = {
+                            'sample_outcome_id': dataArr2[j].sample_outcome_id,
+                            'sample_outcome_code': dataArr2[j].sample_outcome_code,
+                            'sample_outcome_num': dataArr2[j].sample_outcome_num,
+                            'sample_outcome_amount': dataArr2[j].sample_outcome_amount,
+                            'sample_outcome_in': dataArr2[j].sample_outcome_in,
+                            'sample_outcome_out': dataArr2[j].sample_outcome_out,
+                            'sample_outcome_remain': dataArr2[j].sample_outcome_remain,
+                            'sample_outcome_person': dataArr2[j].sample_outcome_person,
+                            'sample_outcome_reciever': dataArr2[j].sample_outcome_reciever,
+                            'sample_outcome_date': dataArr2[j].sample_outcome_date,
+                            'sample_outcome_end': dataArr2[j].sample_outcome_end,
+                            'sample_outcome_country': dataArr2[j].sample_outcome_country,
+                            'sample_outcome_place': dataArr2[j].sample_outcome_place
+                        }
+                        dataArr.push(rowArr2);
+                    }
+
+                    outcomeGrid2.resetData(dataArr);
+
+                    let before = null;
+                    let after = null;
+
+                    outcomeGrid2.on('dblclick', (ev) => {
+                        ev.stop();
+                    })
+
+                    outcomeGrid2.on('editingStart', (ev) => {
+                        if ($(".plus_btn_submit5")[0].style.display != 'block') {
+                            $(".plus_btn_submit6").css("display", "block");
+                        }
+                    })
+
+                    outcomeGrid2.on('afterChange', (ev) => {
+                        let user_type = $("#user_type").val();
+
+                        if (user_type != 0 && user_type != 2) {
+                            return Alert("수정 권한이 없습니다.");
+                            location.reload();
+                        } else {
+                            for (let i = 0; i < ev.changes.length; i++) {
+                                before = ev.changes[i].prevValue;
+                                after = ev.changes[i].value;
+
+                                if (after != before) {
+                                    let sample_outcome_id = outcomeGrid2.getRow(ev.changes[i].rowKey).sample_outcome_id
+                                    let sample_outcome_name = ev.changes[i].columnName;
+                                    let sample_outcome_value = after;
+
+                                    if (sample_outcome_id != null) {
+                                        updateOutcomeData.push({
+                                            "sample_outcome_id": sample_outcome_id,
+                                            "sample_outcome_name": sample_outcome_name,
+                                            "sample_outcome_value": sample_outcome_value
+                                        });
+                                    }
+                                }
+
+                                if($(".plus_btn_submit5")[0].style.display != 'block') {
+                                    $(".plus_btn_submit6").css("display", "block");
+                                }
+                            }
+                        }
+                    });
+
+                    loading.classList.remove('on');
+
                 }
             });
+
+            $("#pop_seed").on('hidden.bs.modal', function (e) {
+            tablechk = 0;
+            outcomeGrid2.destroy();
+            samplegrid.reload();
+                                                
+            SearchSample(1);     
+        })
     }
 
     // 시교명 팝업
     function SearchBreed(e) {
         $("#pop_breed").modal();
 
-        let breed_name = $("#CropSelect").val();
+        tablechk = 2;
 
+        let breed_name = $("#CropSelect").val();
+        var limit = $("#limit").val();
         let data = {"breed_name": breed_name};
+
+        var loading = document.querySelector('.load_wrap');
 
         $.ajax(
             {
@@ -2379,50 +2655,128 @@
                 method: 'POST',
                 dataType: 'json',
                 data: data,
-                success: function (result) {
+                success: function (result2) {
                     $(".breed_title").text("시교명 (ID) : " + e.innerText);
 
-                    let header_list = $("#header_list");
-                    let header_add = "";
-
-                    let breed_list = $("#breed_list");
-                    let add_list = "";
+                    breedGrid2 = new tui.Grid({
+                        el: document.getElementById('breedGrid2'),
+                        scrollX: true,
+                        scrollY: true,
+                        data: result2.breed,
+                        rowHeaders: ['checkbox'],
+                        columns: [],
+                        pageOptions: {
+                            useClient: false,
+                            perPage: limit
+                        }
+                    });
 
                     // header
-                    header_add += '<tr>';
+                    const header_add = [];
+                    var headerName = [];
 
-                    for (let i = 0; i < result.detail.length; i++) {
-                        if (result.detail[i].detail_title != '첨부파일 관리') {
-                            header_add += '<th><span class="title">' + result.detail[i].detail_title + '</span></th>'
+                    for (let i = 0; i < result2.detail.length; i++) {
+                        var colHeader = result2.detail[i].detail_title;
+                        var colName = result2.detail[i].detail_id;
+                        headerName[i] = result2.detail[i].detail_id;
+
+                        var title_arr = {};
+
+                        var filter = {type: 'text', showApplyBtn: true, showClearBtn: true};
+
+                        if (result2.detail[i].detail_title != '첨부파일 관리') {
+                            let title_arr = {
+                                'header' : colHeader,
+                                'name' : colName,
+                                'editor': 'text', 
+                                'sortable': 'true',
+                                'width': 180,
+                                'filter': filter
+                            }
+                            header_add.push(title_arr);
                         }
+
                     }
 
-                    header_add += '</tr>';
+                    breedGrid2.setColumns(header_add);
+                    const dataArr = [];
+                    const dataArr2 = [];
+                    
+                    for (let i = 0; i < result2.breeds.length; i++) {
+                        
+                        let rowArr = {};
 
-                    // body
-                    for (let i = 0; i < result.breeds.length; i++) {
-                        if (result.breeds[i].breed_standard[1].standard === e.innerText) {
+                        if (result2.breeds[i].breed_standard[1].standard === e.innerText) {                       
 
-                            add_list += '<tr>';
+                            rowArr = {'breed_id': result2.breed[i].breed_id};
 
-                            for (let j = 0; j < result.breeds[i].breed_standard.length; j++) {
-                                add_list += '<td>' + result.breeds[i].breed_standard[j].standard + '</td>';
+                            
+                            for (var j = 0; j < result2.breed[i].breed_standard.length; j++) {
+                                var rowData = result2.breed[i].breed_standard[j].standard;
+                                rowArr[headerName[j]] = rowData;
                             }
 
-                            add_list += '</tr>';
+                            dataArr.push(rowArr);
+                        
                         }
+                        
                     }
 
-                    header_list.empty();
-                    header_list.append(header_add);
+                    breedGrid2.resetData(dataArr);
 
-                    breed_list.empty();
-                    breed_list.append(add_list);
+                    breedGrid2.on('check', (ev) => {
+                        breedGrid2.getRow(ev.rowKey).breed_id;
+                    })
 
-                    $("#offset").val(result.offset);
+                    breedGrid2.on('editingStart', (ev) => {
+                        if ($(".plus_btn_submit3")[0].style.display != 'block') {
+                            $(".plus_btn_submit4").css("display", "block");
+                        }
+                    })
+
+                    let before = null;
+                    let after = null;
+
+                    breedGrid2.on('afterChange', (ev) => {
+                        var user_type = $("#user_type").val();
+
+                        if (user_type != 0 && user_type != 2) {
+                            return Alert("수정 권한이 없습니다.");
+                        } else {
+                            for (let i = 0; i < ev.changes.length; i++) {
+                                before = ev.changes[i].prevValue;
+                                after = ev.changes[i].value;
+
+                                if (after != before) {
+                                    var breed_id = breedGrid2.getRow(ev.changes[i].rowKey).breed_id;
+                                    var detail_id = ev.changes[i].columnName;
+                                    var standard = after;
+
+                                    if (breed_id != null) {
+                                        updateBreedData.push({"breed_id": breed_id, "detail_id": detail_id, "standard": standard});
+                                    }
+                                }
+
+                                if ($(".plus_btn_submit3")[0].style.display != 'block') {
+                                    $(".plus_btn_submit4").css("display", "block");
+                                }
+                            }
+                        }
+                    });
+
+                    loading.classList.remove('on');
                 }
-
             });
+
+            $("#pop_breed").on('hidden.bs.modal', function (e) {
+            tablechk = 0;
+            breedGrid2.destroy();
+            samplegrid.reload();
+                                    
+            
+            SearchSample(1);     
+        })
+            
     }
 
 
@@ -2578,8 +2932,12 @@
     // grid
     let samplegrid = null;
     let outcomegrid = null;
+    let breedGrid2 = null;
+    let outcomeGrid2 = null;
     let updateSampleData = [];
     let updateOutcomeData = [];
+    let updateBreedData = [];
+    let breedData = [];
     var insertCheck = 0;
 
     function SearchSample(e) {
@@ -3285,6 +3643,602 @@
 
         if (e.match(fileForm)) {
             document.getElementById("preview-image").src = '/upload/' + e;
+        }
+    }
+
+    // 시교자원출고관리 삭제
+    function DeleteSample1() {
+        let user_type = $("#user_type").val();
+
+        if (user_type != 0) {
+            return Alert("삭제 권한이 없습니다.");
+        } else {
+            if (tablechk === 3) {
+                let total_id1 = [];
+
+                let l1 = outcomeGrid2.getCheckedRows().length;
+
+                for (let i = 0; i < l1; i++) {
+                    total_id1.push(outcomeGrid2.getCheckedRows()[i].sample_outcome_id)
+                }
+
+                let data1 = {'sample_outcome_id': total_id1};
+
+                if (confirm("삭제하시겠습니까?") == true) {
+                    $.ajax(
+                        {
+                            url: 'deleteOutcome',
+                            method: 'POST',
+                            dataType: 'json',
+                            data: data1,
+                            success: function (result) {
+                                if (result == 0) {
+                                    return Alert("삭제에 실패하였습니다.");
+                                } else {
+                                    location.reload()
+                                }
+                            }
+                        });
+                } else {
+                    return false;
+                }
+            } else if (tablechk === 0) {
+                let total_id = [];
+
+                let l = samplegrid.getCheckedRows().length;
+
+                for (let i = 0; i < l; i++) {
+                    total_id.push(samplegrid.getCheckedRows()[i].sample_id)
+                }
+
+                let data = {'sample_id': total_id};
+
+                if (confirm("삭제하시겠습니까?") == true) {
+                    $.ajax(
+                        {
+                            url: 'deleteSample',
+                            method: 'POST',
+                            dataType: 'json',
+                            data: data,
+                            success: function (result) {
+                                if (result == 0) {
+                                    return Alert("삭제에 실패하였습니다.");
+                                } else {
+                                    location.reload()
+                                }
+                            }
+                        });
+                } else {
+                    return false;
+                }
+            } else {
+                let total_id1 = [];
+
+                let l1 = outcomegrid.getCheckedRows().length;
+
+                for (let i = 0; i < l1; i++) {
+                    total_id1.push(outcomegrid.getCheckedRows()[i].sample_outcome_id)
+                }
+
+                let data1 = {'sample_outcome_id': total_id1};
+
+                if (confirm("삭제하시겠습니까?") == true) {
+                    $.ajax(
+                        {
+                            url: 'deleteOutcome',
+                            method: 'POST',
+                            dataType: 'json',
+                            data: data1,
+                            success: function (result) {
+                                if (result == 0) {
+                                    return Alert("삭제에 실패하였습니다.");
+                                } else {
+                                    location.reload()
+                                }
+                            }
+                        });
+                } else {
+                    return false;
+                }
+            }
+        }
+    }
+
+    // 품종 삭제
+    function DeleteBreed1() {
+        let user_type = $("#user_type").val();
+
+        if (user_type != 0) {
+            return Alert("삭제 권한이 없습니다.");
+        } else {
+            if (tablechk === 2) {
+                var total_id = [];
+
+                var l = breedGrid2.getCheckedRows().length;
+
+                for (let i = 0; i < l; i++) {
+                    total_id.push(breedGrid2.getCheckedRows()[i].breed_id)
+                }
+
+                var data = {'breed_id': total_id};
+
+                if (confirm("삭제하시겠습니까?") == true) {
+                    $.ajax(
+                        {
+                            url: 'deleteBreed',
+                            method: 'POST',
+                            dataType: 'json',
+                            data: data,
+                            success: function (result) {
+                                if (result == 0) {
+                                    return Alert("삭제에 실패하였습니다.");
+                                } else {
+                                    location.reload();
+                                }
+                            }
+                        });
+                } else {
+                    return false;
+                }
+            } else if (tablechk === 0) {
+                let total_id = [];
+
+                let l = samplegrid.getCheckedRows().length;
+
+                for (let i = 0; i < l; i++) {
+                    total_id.push(samplegrid.getCheckedRows()[i].sample_id)
+                }
+
+                let data = {'sample_id': total_id};
+
+                if (confirm("삭제하시겠습니까?") == true) {
+                    $.ajax(
+                        {
+                            url: 'deleteSample',
+                            method: 'POST',
+                            dataType: 'json',
+                            data: data,
+                            success: function (result) {
+                                if (result == 0) {
+                                    return Alert("삭제에 실패하였습니다.");
+                                } else {
+                                    location.reload()
+                                }
+                            }
+                        });
+                } else {
+                    return false;
+                }
+            } else {
+                let total_id1 = [];
+
+                let l1 = outcomegrid.getCheckedRows().length;
+
+                for (let i = 0; i < l1; i++) {
+                    total_id1.push(outcomegrid.getCheckedRows()[i].sample_outcome_id)
+                }
+
+                let data1 = {'sample_outcome_id': total_id1};
+
+                if (confirm("삭제하시겠습니까?") == true) {
+                    $.ajax(
+                        {
+                            url: 'deleteOutcome',
+                            method: 'POST',
+                            dataType: 'json',
+                            data: data1,
+                            success: function (result) {
+                                if (result == 0) {
+                                    return Alert("삭제에 실패하였습니다.");
+                                } else {
+                                    location.reload()
+                                }
+                            }
+                        });
+                } else {
+                    return false;
+                }
+            }
+        }
+    }
+
+    function insertRow1() {
+        var user_type = $("#user_type").val();
+
+        if (user_type != 0 && user_type != 2) {
+            return Alert("등록 권한이 없습니다.");
+        } else {
+            $(".plus_btn_submit3").css("display", "block");
+
+            if (tablechk === 2) {
+                if (insertCheck == 0) {
+
+                    insertCheck = 1;
+
+                    let cnt = breedGrid2.getRowCount();
+
+                    const newRow = {'breed_id': null, '1': $("#CropSelect").val()};
+
+                    breedGrid2.prependRow(newRow);
+                    breedGrid2.check(cnt);
+
+                    breedData.push({'detail_id': 1, 'standard': $("#CropSelect").val()})
+
+                    breedGrid2.on('afterChange', (ev) => {
+                        for (let i = 0; i < ev.changes.length; i++) {
+                            breedData.push({"detail_id": ev.changes[i].columnName, "standard": ev.changes[i].value})
+                        }
+                    });
+                } else {
+                    return Alert1("이미 데이터 추가 창이 활성화 중입니다.");
+                }
+            } else if (tablechk === 0) {
+                if (insertCheck == 0) {
+                    let cnt = samplegrid.getRowCount();
+
+                    insertCheck = 1;
+
+                    const newRow = {
+                        sample_name: $("#CropSelect").val(),
+                    };
+
+                    samplegrid.prependRow(newRow);
+                    samplegrid.check(cnt);
+                } else {
+                    return Alert1("이미 데이터 추가 창이 활성화 중입니다.");
+                }
+
+            } else {
+                if (insertCheck == 0) {
+                    let cnt1 = outcomegrid.getRowCount();
+
+                    insertCheck = 1;
+
+                    const newRow = {
+                        sample_name: $("#CropSelect").val(),
+                    };
+
+                    outcomegrid.prependRow(newRow);
+                    outcomegrid.check(cnt1);
+                } else {
+                    return Alert1("이미 데이터 추가 창이 활성화 중입니다.");
+                }
+
+            }
+        }
+    }
+
+    function saveRow1() {
+        if (tablechk === 2) {
+            $.ajax(
+                {
+                    url: 'insertBreed2',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        "data": JSON.stringify(breedData)
+                    },
+                    success: function (result) {
+                        if (result != null) {
+                            location.reload();
+                        }
+                    }
+                });
+        } else if (tablechk === 0) {
+            let input_data = [];
+
+            input_data.push(samplegrid.getCheckedRows()[0]);
+
+            $.ajax(
+                {
+                    url: 'insertSample',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        "input_data": JSON.stringify(input_data)
+                    },
+                    success: function (result) {
+                        if (result != null) {
+                            location.reload();
+                        }
+                    }
+                });
+        } else {
+            let input_data1 = [];
+
+            input_data1.push(outcomegrid.getCheckedRows()[0]);
+
+            $.ajax(
+                {
+                    url: 'insertSampleOutcome',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        "input_data": JSON.stringify(input_data1)
+                    },
+                    success: function (result) {
+                        if (result != null) {
+                            location.reload();
+                        }
+                    }
+                });
+        }
+    }
+
+    function cancelRow1() {
+        if (tablechk === 2) {
+            breedGrid2.removeCheckedRows();
+        } else if (tablechk === 0) {
+            samplegrid.removeCheckedRows();
+        } else {
+            outcomegrid.removeCheckedRows();
+        }
+
+        $(".plus_btn_submit3").css("display", "none");
+
+        insertCheck = 0;
+    }
+
+    function updateRow1() {
+        if (tablechk == 2) {
+            
+            $.ajax(
+                {
+                    url: 'updateBreed',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {"data": JSON.stringify(updateBreedData)},
+                    success: function (result) {
+                        if (result == 0) {
+                            return Alert("데이터 수정에 실패하였습니다.")
+                        } else if (result == 2) {
+                            return Alert1("엔터를 눌러 수정을 완료해주세요.")
+                        } else {
+                            location.reload();
+                        }
+                    }
+                });
+        } else if (tablechk == 0) {
+            $.ajax(
+                {
+                    url: 'updateSample',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {"data": JSON.stringify(updateSampleData)},
+                    success: function (result) {
+                        if (result == 0) {
+                            return Alert("데이터 수정에 실패하였습니다.")
+                        } else if (result == 2) {
+                            return Alert1("엔터를 눌러 수정을 완료해주세요.")
+                        } else {
+                            location.reload();
+                        }
+                    }
+                });
+        } else {
+            $.ajax(
+                {
+                    url: 'updateOutcome',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {"data": JSON.stringify(updateOutcomeData)},
+                    success: function (result) {
+                        if (result == 0) {
+                            return Alert("데이터 수정에 실패하였습니다.")
+                        } else if (result == 2) {
+                            return Alert1("엔터를 눌러 수정을 완료해주세요.")
+                        } else {
+                            location.reload();
+                        }
+                    }
+                });
+        }
+    }
+
+    function cancelUpdate1() {
+        $(".plus_btn_submit4").css("display", "none");
+
+        if ($(".tui-grid-cell-content").hasClass("tui-grid-layer-editing")) {
+            $(".tui-grid-cell-content").removeClass("tui-grid-layer-editing");
+        }
+    }
+
+    function insertRow2() {
+        var user_type = $("#user_type").val();
+
+        if (user_type != 0 && user_type != 2) {
+            return Alert("등록 권한이 없습니다.");
+        } else {
+            $(".plus_btn_submit5").css("display", "block");
+
+            if (tablechk == 3) {
+                if (insertCheck == 0) {
+                    let cnt1 = outcomeGrid2.getRowCount();
+
+                    insertCheck = 1;
+
+                    const newRow = {
+                        sample_name: $("#CropSelect").val(),
+                    };
+
+                    outcomeGrid2.prependRow(newRow);
+                    outcomeGrid2.check(cnt1);
+                } else {
+                    return Alert1("이미 데이터 추가 창이 활성화 중입니다.");
+                }
+            } else if (tablechk === 0) {
+                if (insertCheck == 0) {
+                    let cnt = samplegrid.getRowCount();
+
+                    insertCheck = 1;
+
+                    const newRow = {
+                        sample_name: $("#CropSelect").val(),
+                    };
+
+                    samplegrid.prependRow(newRow);
+                    samplegrid.check(cnt);
+                } else {
+                    return Alert1("이미 데이터 추가 창이 활성화 중입니다.");
+                }
+
+            } else {
+                if (insertCheck == 0) {
+                    let cnt1 = outcomegrid.getRowCount();
+
+                    insertCheck = 1;
+
+                    const newRow = {
+                        sample_name: $("#CropSelect").val(),
+                    };
+
+                    outcomegrid.prependRow(newRow);
+                    outcomegrid.check(cnt1);
+                } else {
+                    return Alert1("이미 데이터 추가 창이 활성화 중입니다.");
+                }
+
+            }
+        }
+    }
+
+    function saveRow2() {
+        if (tablechk == 3) {
+            var input_data1 = [];
+
+            input_data1.push(outcomeGrid2.getCheckedRows()[0]);
+
+            $.ajax(
+                {
+                    url: 'insertSampleOutcome',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        "input_data": JSON.stringify(input_data1)
+                    },
+                    success: function (result) {
+                        if (result != null) {
+                            location.reload();
+                        }
+                    }
+                });
+        } else if (tablechk === 0) {
+            let input_data = [];
+
+            input_data.push(samplegrid.getCheckedRows()[0]);
+
+            $.ajax(
+                {
+                    url: 'insertSample',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        "input_data": JSON.stringify(input_data)
+                    },
+                    success: function (result) {
+                        if (result != null) {
+                            location.reload();
+                        }
+                    }
+                });
+        } else {
+            let input_data1 = [];
+
+            input_data1.push(outcomegrid.getCheckedRows()[0]);
+
+            $.ajax(
+                {
+                    url: 'insertSampleOutcome',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        "input_data": JSON.stringify(input_data1)
+                    },
+                    success: function (result) {
+                        if (result != null) {
+                            location.reload();
+                        }
+                    }
+                });
+        }
+    }
+
+    function cancelRow2() {
+        if (tablechk === 3) {
+            outcomeGrid2.removeCheckedRows();
+        } else if (tablechk === 2) {
+            breedGrid2.removeCheckedRows();
+        } else if (tablechk === 0) {
+            samplegrid.removeCheckedRows();
+        } else {
+            outcomegrid.removeCheckedRows();
+        }
+
+        $(".plus_btn_submit5").css("display", "none");
+
+        insertCheck = 0;
+    }
+
+    function updateRow2() {
+        if (tablechk == 3) {
+            $.ajax(
+                {
+                    url: 'updateOutcome',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {"data": JSON.stringify(updateOutcomeData)},
+                    success: function (result) {
+                        if (result == 0) {
+                            return Alert("데이터 수정에 실패하였습니다.")
+                        } else if (result == 2) {
+                            return Alert1("엔터를 눌러 수정을 완료해주세요.")
+                        } else {
+                            location.reload();
+                        }
+                    }
+                });
+        } else if (tablechk == 0) {
+            $.ajax(
+                {
+                    url: 'updateSample',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {"data": JSON.stringify(updateSampleData)},
+                    success: function (result) {
+                        if (result == 0) {
+                            return Alert("데이터 수정에 실패하였습니다.")
+                        } else if (result == 2) {
+                            return Alert1("엔터를 눌러 수정을 완료해주세요.")
+                        } else {
+                            location.reload();
+                        }
+                    }
+                });
+        } else {
+            $.ajax(
+                {
+                    url: 'updateOutcome',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {"data": JSON.stringify(updateOutcomeData)},
+                    success: function (result) {
+                        if (result == 0) {
+                            return Alert("데이터 수정에 실패하였습니다.")
+                        } else if (result == 2) {
+                            return Alert1("엔터를 눌러 수정을 완료해주세요.")
+                        } else {
+                            location.reload();
+                        }
+                    }
+                });
+        }
+    }
+
+    function cancelUpdate2() {
+        $(".plus_btn_submit6").css("display", "none");
+
+        if ($(".tui-grid-cell-content").hasClass("tui-grid-layer-editing")) {
+            $(".tui-grid-cell-content").removeClass("tui-grid-layer-editing");
         }
     }
 

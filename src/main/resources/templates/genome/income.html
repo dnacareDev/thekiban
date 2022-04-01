@@ -557,6 +557,24 @@
             border-radius: 5px;
         }
 
+        #saveRow2, #updateRow2 {
+            float: right;
+            color: #fff;
+            background-color: #217566;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        #cancelRow2, #cancelUpdate2 {
+            float: right;
+            color: #217566;
+            background-color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
         #pop_remain table thead tr {
             border-top: 2px solid #aaa;
             border-bottom: 2px solid #aaa;
@@ -592,6 +610,14 @@
         }
 
         .plus_btn_submit2 {
+            display: none;
+        }
+
+        .plus_btn_submit3 {
+            display: none;
+        }
+
+        .plus_btn_submit4 {
             display: none;
         }
 
@@ -1440,25 +1466,35 @@
                 </div>
                 <div class="modal-body">
                     <div>
+                        <!--
                         <input type='button' class='btn btn-inverse' value='excel 다운' style='width:100px;height:36px;font-weight:bold;' onclick="ReportToExcelConverter()" />
-                        <div class="atbd-upload">
-                            <div class="table-responsive">
-                                <table class="table table2 TableToExcel">
-                                    <thead class="text-center">
-                                    <tr>
-                                        <th style="cursor: pointer;"><span class="title">순번</span></th>
-                                        <th style="cursor: pointer;"><span class="title">도입번호(ID)</span></th>
-                                        <th style="cursor: pointer;"><span class="title">종자 보유량</span></th>
-                                        <th style="cursor: pointer;"><span class="title">입고량</span></th>
-                                        <th style="cursor: pointer;"><span class="title">출고량</span></th>
-                                        <th style="cursor: pointer;"><span class="title">재고량</span></th>
-                                        <th style="cursor: pointer;"><span class="title">담당자</span></th>
-                                        <th style="cursor: pointer;"><span class="title">일자</span></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody class="text-center remain_list">
-                                    </tbody>
-                                </table>
+                        -->
+                        <div class="atbd-upload" style=" overflow: auto; max-height: 500px;">
+                            
+                            <div class='card-extra mt-10 mb-10 mr-20 plus_btn_submit3'>
+                                <button type='button' id="cancelRow2" onclick="cancelRow2()">취소</button>
+                                <button type='button' id="saveRow2" onclick="saveRow2()">저장</button>
+                            </div>                            
+                            <div class='card-extra mt-10 mb-10 mr-20 plus_btn_submit4'>
+                                <button type='button' id="cancelUpdate2" onclick="cancelUpdate2()">취소</button>
+                                <button type='button' id="updateRow2" onclick="updateRow2()">수정</button>
+                            </div>
+                            <div class="card-body" style="padding-top: 0;">
+                                <div class="bg-white">
+                                                                           
+                                    <div id="remainGrid2"></div>                                        
+                                                                
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <button class="btn btn-icon btn-light btn-circle" onclick="insertRow2()">
+                                                <span data-feather="plus"></span>
+                                            </button>
+                                            <button class="btn btn-icon btn-light btn-circle" onclick="DeleteIncome2()">
+                                                <span data-feather="trash-2"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -2150,6 +2186,8 @@
 
         $(".plus_btn_submit1").css("display", "none");
         $(".plus_btn_submit2").css("display", "none");
+        $(".plus_btn_submit3").css("display", "none");
+        $(".plus_btn_submit4").css("display", "none");
     });
 
     $("#CropSelect").change(function () {
@@ -2166,6 +2204,8 @@
 
         $(".plus_btn_submit1").css("display", "none");
         $(".plus_btn_submit2").css("display", "none");
+        $(".plus_btn_submit3").css("display", "none");
+        $(".plus_btn_submit4").css("display", "none");
     })
 
     // 갯수 선택
@@ -2182,60 +2222,214 @@
 
         $(".plus_btn_submit1").css("display", "none");
         $(".plus_btn_submit2").css("display", "none");
+        $(".plus_btn_submit3").css("display", "none");
+        $(".plus_btn_submit4").css("display", "none");
     })
 
     var emptyEls;
 
     // 도입번호 팝업
     function SearchRemainPop(e) {
+        
         $("#pop_remain").modal();
+        
+        tablechk = 2;
 
         var income_name1 = $("#CropSelect").val();
+        var limit1 = $("#limit").val();
 
         var data1 = {"income_name": income_name1};
 
+        var loading = document.querySelector('.load_wrap');
+
+        loading.classList.add('on');
+      
         $.ajax(
             {
                 url: 'searchIncomeRemain',
                 method: 'POST',
                 dataType: 'json',
                 data: data1,
-                success: function (result1) {
+                success: function (result2) { console.log("1");
                     $(".remain_title").text("도입번호(ID) - " + e.innerText);
-
-                    var incomeRe_list = $(".remain_list");
-
-                    var re_list = "";
-
-                    var j = 0;
-
-                    for (var i = 0; i < result1.incomeRemain.length; i++) {
-                        if (result1.incomeRemain[i].income_remain_num === e.innerText) {
-                            j++;
+                                       
+                    console.log("result2.incomeRemain : " + result2.incomeRemain);
+                    
+					remaingrid2 = new tui.Grid({
+                        el: document.getElementById('remainGrid2'),
+                        scrollX: true,
+                        scrollY: true,
+                        data: result2.incomeRemain,
+                        rowHeaders: ['checkbox'],
+                        columns: [
+						    {
+                                header: '도입번호(ID)',
+                                name: 'income_remain_num',
+                                editor: 'text',
+                                sortable: true,
+                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
+                            },
+                            {
+                                header: '종자 보유량',
+                                name: 'income_remain_amount',
+                                editor: 'text',
+                                sortable: true,
+                                filter: 'number'
+                            },
+                            {
+                                header: '입고량',
+                                name: 'income_remain_in',
+                                editor: 'text',
+                                sortable: true,
+                                filter: 'number'
+                            },
+                            {
+                                header: '출고량',
+                                name: 'income_remain_out',
+                                editor: 'text',
+                                sortable: true,
+                                filter: 'number'
+                            },
+                            {
+                                header: '재고량',
+                                name: 'income_remain_re',
+                                editor: 'text',
+                                sortable: true,
+                                filter: 'number'
+                            },
+                            {
+                                header: '담당자',
+                                name: 'income_remain_person',
+                                editor: 'text',
+                                sortable: true,
+                                filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
+                            },
+                            {
+                                header: '일자',
+                                name: 'income_remain_date',
+                                editor: 'text',
+                                sortable: true,
+                                filter: 'date'
+                            }
+                        ],
+                        pageOptions: {
+                            useClient: false,
+                            perPage: limit1
                         }
-                    }
+                     });
 
-                    for (var i = 0; i < result1.incomeRemain.length; i++) {
-                        if (result1.incomeRemain[i].income_remain_num === e.innerText) {
-                            re_list += '<tr>';
-                            re_list += '<td>' + j + '</td>';
-                            re_list += '<td>' + result1.incomeRemain[i].income_remain_num + '</td>';
-                            re_list += '<td>' + result1.incomeRemain[i].income_remain_amount + '</td>';
-                            re_list += '<td>' + result1.incomeRemain[i].income_remain_in + '</td>';
-                            re_list += '<td>' + result1.incomeRemain[i].income_remain_out + '</td>';
-                            re_list += '<td>' + result1.incomeRemain[i].income_remain_re + '</td>';
-                            re_list += '<td>' + result1.incomeRemain[i].income_remain_person + '</td>';
-                            re_list += '<td>' + result1.incomeRemain[i].income_remain_date + '</td>';
-                            re_list += '</tr>';
+					 const dataArr = [];
+                     const dataArr2 = [];
+                     
+                     for (let i = 0; i < result2.incomeRemain.length; i++) {
+                        if (result2.incomeRemain[i].income_remain_num === e.innerText) {
+                            
+                            let rowArr = {								                          
 
-                            j--;
+                            'income_remain_id': result2.incomeRemain[i].income_remain_id,
+                            'income_remain_num': result2.incomeRemain[i].income_remain_num,
+                            'income_remain_amount': result2.incomeRemain[i].income_remain_amount,
+                            'income_remain_in': result2.incomeRemain[i].income_remain_in,
+                            'income_remain_out': result2.incomeRemain[i].income_remain_out,
+                            'income_remain_re': result2.incomeRemain[i].income_remain_re,
+                            'income_remain_person': result2.incomeRemain[i].income_remain_person,
+                            'income_remain_date': result2.incomeRemain[i].income_remain_date
+
+                            }
+
+                            dataArr2.push(rowArr);
+
                         }
-                    }
+                     } 
 
-                    incomeRe_list.empty();
-                    incomeRe_list.append(re_list);
-                }
+                     let count = 0;
+                     for (let l = 0; l < result2.incomeRemain.length; l++) {
+                         if(result2.incomeRemain[l].income_remain_num === e.innerText) {
+                             count++;
+                         }
+                     }
+                     console.log(count);                     
+
+                     for (let j = dataArr2.length -1; j >= 0; j--) {
+                        
+                         let rowArr2 = {
+                            'income_remain_id': dataArr2[j].income_remain_id,
+                            'income_remain_num': dataArr2[j].income_remain_num,
+                            'income_remain_amount': dataArr2[j].income_remain_amount,
+                            'income_remain_in': dataArr2[j].income_remain_in,
+                            'income_remain_out': dataArr2[j].income_remain_out,
+                            'income_remain_re': dataArr2[j].income_remain_re,
+                            'income_remain_person': dataArr2[j].income_remain_person,
+                            'income_remain_date': dataArr2[j].income_remain_date
+                         }
+                         dataArr.push(rowArr2);
+                         
+                     } 					 
+                    
+                     console.log(dataArr);                    
+                    
+                     remaingrid2.resetData(dataArr);            
+
+                     var before = null;
+                     var after = null;
+
+                     remaingrid2.on('dblclick', (ev) => {
+                        ev.stop();
+                     })
+
+                     remaingrid2.on('editingStart', (ev) => {
+                        if ($(".plus_btn_submit3")[0].style.display != 'block') {
+                            $(".plus_btn_submit4").css("display", "block");
+                        }
+                     })
+
+                     remaingrid2.on('afterChange', (ev) => {
+                        var user_type = $("#user_type").val();
+
+                        if (user_type != 0 && user_type != 2) {
+                            return Alert("수정 권한이 없습니다.");
+                            location.reload();
+                        } else {
+                            for (let i = 0; i < ev.changes.length; i++) {
+                                before = ev.changes[i].prevValue;
+                                after = ev.changes[i].value;
+
+                                if (after != before) {
+                                    var income_remain_id = remaingrid2.getRow(ev.changes[i].rowKey).income_remain_id
+                                    var income_remain_name = ev.changes[i].columnName;
+                                    var income_remain_value = after;
+
+                                    if (income_remain_id != null) {
+                                        updateRemainData.push({
+                                            "income_remain_id": income_remain_id,
+                                            "income_remain_name": income_remain_name,
+                                            "income_remain_value": income_remain_value
+                                        })
+                                    }
+                                }
+
+                                if($(".plus_btn_submit3")[0].style.display != 'block') {
+                                    $(".plus_btn_submit4").css("display", "block");
+                                }
+                            }
+                        }
+                    });
+
+                    loading.classList.remove('on');
+					
+					}
+
             });
+            
+        $("#pop_remain").on('hidden.bs.modal', function (e) {
+            tablechk = 0;
+            remaingrid2.destroy();
+            incomegrid.reload();
+                                    
+            
+            SearchIncome(1);     
+        })
+
     }
 
     // 도입자원 삭제
@@ -2390,6 +2584,8 @@
 
         $(".plus_btn_submit1").css("display", "none");
         $(".plus_btn_submit2").css("display", "none");
+        $(".plus_btn_submit3").css("display", "none");
+        $(".plus_btn_submit4").css("display", "none");
     });
 
     function handleImgFileSelect(e) {
@@ -2411,8 +2607,10 @@
     // grid
     var incomegrid = null;
     var remaingrid = null;
+    var remaingrid2 = null;
     let updateIncomeData = [];
     let updateRemainData = [];
+    let updateRemainData2 = [];
     var insertCheck = 0;
 
     function SearchIncome(e) {
@@ -2919,6 +3117,270 @@
 
         if ($(".tui-grid-cell-content").hasClass("tui-grid-layer-editing")) {
             $(".tui-grid-cell-content").removeClass("tui-grid-layer-editing");
+        }
+    }
+
+    function insertRow2() {
+        var user_type = $("#user_type").val();
+
+        if (user_type != 0 && user_type != 2) {
+            return Alert("등록 권한이 없습니다.");
+        } else {
+            $(".plus_btn_submit3").css("display", "block");
+
+            if (tablechk === 2) {
+                if (insertCheck == 0) {
+                    let cnt1 = remaingrid2.getRowCount();
+
+                    insertCheck = 1;
+
+                    const newRow = {
+                        income_name: $("#CropSelect").val(),
+                    };
+
+                    remaingrid2.prependRow(newRow);
+                    remaingrid2.check(cnt1);
+                } else {
+                    return Alert1("이미 데이터 추가 창이 활성화 중입니다.");
+                }
+            } else if (tablechk === 0) {
+                if (insertCheck == 0) {
+                    let cnt = incomegrid.getRowCount();
+
+                    insertCheck = 1;
+
+                    const newRow = {
+                        income_name: $("#CropSelect").val(),
+                    };
+
+                    incomegrid.prependRow(newRow);
+                    incomegrid.check(cnt);
+                } else {
+                    return Alert1("이미 데이터 추가 창이 활성화 중입니다.");
+                }
+
+            } else {
+                if (insertCheck == 0) {
+                    let cnt1 = remaingrid.getRowCount();
+
+                    insertCheck = 1;
+
+                    const newRow = {
+                        income_name: $("#CropSelect").val(),
+                    };
+
+                    remaingrid.prependRow(newRow);
+                    remaingrid.check(cnt1);
+                } else {
+                    return Alert1("이미 데이터 추가 창이 활성화 중입니다.");
+                }
+            }
+        }
+    }
+
+    function saveRow2() {
+        if (tablechk === 2) {
+            let input_data1 = [];
+
+            input_data1.push(remaingrid2.getCheckedRows()[0]);
+
+            $.ajax(
+                {
+                    url: 'insertIncomeRemain',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        "input_data": JSON.stringify(input_data1)
+                    },
+                    success: function (result) {
+                        if (result != null) {
+                            location.reload();
+                        }
+                    }
+                });
+                
+        } else if (tablechk === 0) {
+            let input_data = [];
+
+            input_data.push(incomegrid.getCheckedRows()[0]);
+
+            $.ajax(
+                {
+                    url: 'insertIncome',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        "input_data": JSON.stringify(input_data)
+                    },
+                    success: function (result) {
+                        if (result != null) {
+                            location.reload();
+                        }
+                    }
+                });
+
+        } else {
+            let input_data1 = [];
+
+            input_data1.push(remaingrid.getCheckedRows()[0]);
+
+            $.ajax(
+                {
+                    url: 'insertIncomeRemain',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        "input_data": JSON.stringify(input_data1)
+                    },
+                    success: function (result) {
+                        if (result != null) {
+                            location.reload();
+                        }
+                    }
+                });
+        }
+    }
+
+    function cancelRow2() {
+        if (tablechk === 2) {
+            remaingrid2.removeCheckedRows();
+        } else if (tablechk === 0) {
+            incomegrid.removeCheckedRows();
+        }else {
+            remaingrid.removeCheckedRows();
+        }
+
+        $(".plus_btn_submit3").css("display", "none");
+
+        insertCheck = 0;
+    }
+
+    function updateRow2() {
+        
+        $.ajax(
+            {
+                url: 'updateRemain',
+                method: 'POST',
+                dataType: 'json',
+                data: {"data": JSON.stringify(updateRemainData)},
+                success: function (result) {
+                    if (result == 0) {
+                        return Alert("데이터 수정에 실패하였습니다.")
+                    } else if (result == 2) {
+                        return Alert1("엔터를 눌러 수정을 완료해주세요.")
+                    } else {
+                        location.reload();
+                    }
+                }
+            });
+        
+    }
+
+    function cancelUpdate2() {
+        $(".plus_btn_submit4").css("display", "none");
+
+        if ($(".tui-grid-cell-content").hasClass("tui-grid-layer-editing")) {
+            $(".tui-grid-cell-content").removeClass("tui-grid-layer-editing");
+        }
+    }
+
+    // 도입자원 삭제
+    function DeleteIncome2() {
+        var user_type = $("#user_type").val();
+
+        if (user_type != 0) {
+            return Alert("삭제 권한이 없습니다.");
+        } else {
+            if (tablechk === 2) {
+
+                var total_id1 = [];
+
+                var l1 = remaingrid2.getCheckedRows().length;
+
+                for (let i = 0; i < l1; i++) {
+                    total_id1.push(remaingrid2.getCheckedRows()[i].income_remain_id)
+                }
+
+                var data1 = {'income_remain_id': total_id1};
+
+                if (confirm("삭제하시겠습니까?") == true) {
+                    $.ajax(
+                        {
+                            url: 'deleteRemain',
+                            method: 'POST',
+                            dataType: 'json',
+                            data: data1,
+                            success: function (result) {
+                                if (result == 0) {
+                                    return Alert("삭제에 실패하였습니다.");
+                                } else {
+                                    location.reload();
+                                }
+                            }
+                        });
+                } else {
+                    return false;
+                }
+            } else if (tablechk === 0) {
+                var total_id = [];
+
+                var l = incomegrid.getCheckedRows().length;
+
+                for (let i = 0; i < l; i++) {
+                    total_id.push(incomegrid.getCheckedRows()[i].income_id);
+                }
+
+                var data = {'income_id': total_id};
+
+                if (confirm("삭제하시겠습니까?") == true) {
+                    $.ajax(
+                        {
+                            url: 'deleteIncome',
+                            method: 'POST',
+                            dataType: 'json',
+                            data: data,
+                            success: function (result) {
+                                if (result == 0) {
+                                    return Alert("삭제에 실패하였습니다.");
+                                } else {
+                                    location.reload();
+                                }
+                            }
+                        });
+                } else {
+                    return false;
+                }
+
+            } else {
+                var total_id1 = [];
+
+                var l1 = remaingrid.getCheckedRows().length;
+
+                for (let i = 0; i < l1; i++) {
+                    total_id1.push(remaingrid.getCheckedRows()[i].income_remain_id)
+                }
+
+                var data1 = {'income_remain_id': total_id1};
+
+                if (confirm("삭제하시겠습니까?") == true) {
+                    $.ajax(
+                        {
+                            url: 'deleteRemain',
+                            method: 'POST',
+                            dataType: 'json',
+                            data: data1,
+                            success: function (result) {
+                                if (result == 0) {
+                                    return Alert("삭제에 실패하였습니다.");
+                                } else {
+                                    location.reload();
+                                }
+                            }
+                        });
+                } else {
+                    return false;
+                }
+            } 
         }
     }
 
