@@ -370,6 +370,9 @@
            globalLocations.push(outKorea[o]);
        }
 
+       console.log(koreaLocations);
+       console.log(globalLocations);
+
        let delay1 = 0;
 
        // 국내
@@ -380,6 +383,8 @@
 
            setTimeout(function() {
                geoCoder.geocode({"address": koreaLocations[i]}, function (result, status) {
+                   console.log("status", status)
+
                    if (status == "OK") {
                        let centerCoordinate = result[0].geometry.location; // 검색한 지역의 중앙 좌표
 
@@ -402,6 +407,8 @@
 
            setTimeout(function() {
                geoCoder.geocode({"address": globalLocations[i]}, function (result, status) {
+                   console.log("status", status)
+
                    if (status == "OK") {
                        let centerCoordinate = result[0].geometry.location; // 검색한 지역의 중앙 좌표
 
@@ -452,8 +459,7 @@
 				var chartData2 = [result.sales.crop_count_1, result.sales.crop_count_2, result.sales.crop_count_3, result.sales.crop_count_4, result.sales.crop_count_5, result.sales.crop_count_6, result.sales.crop_count_7, result.sales.crop_count_8, result.sales.crop_count_9, result.sales.crop_count_10];
 				var chartData3 = [result.apply.crop_count_1, result.apply.crop_count_2, result.apply.crop_count_3, result.apply.crop_count_4, result.apply.crop_count_5, result.apply.crop_count_6, result.apply.crop_count_7, result.apply.crop_count_8, result.apply.crop_count_9, result.apply.crop_count_10];
 				var chartData4 = [result.protect.crop_count_1, result.protect.crop_count_2, result.protect.crop_count_3, result.protect.crop_count_4, result.protect.crop_count_5, result.protect.crop_count_6, result.protect.crop_count_7, result.protect.crop_count_8, result.protect.crop_count_9, result.protect.crop_count_10];
-				
-				console.log(chartData1)
+
 				for(var i = 1; i < 11; i++)
 				{
 				}
