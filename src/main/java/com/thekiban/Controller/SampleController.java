@@ -140,6 +140,7 @@ public class SampleController {
   @ResponseBody
   @RequestMapping("insertSampleOutcome")
   public int InsertSampleOutcome(@ModelAttribute SampleOutcome sampleOutcome, @RequestParam("input_data") String input_data) {
+    Location location = new Location();
     JSONArray arr = new JSONArray(input_data);
 
     JSONObject obj = arr.getJSONObject(0);
@@ -228,12 +229,20 @@ public class SampleController {
 
     if (!obj.isNull("sample_outcome_country")) {
       sampleOutcome.setSample_outcome_country((String) obj.get("sample_outcome_country"));
+
+      if (obj.get("sample_outcome_country").equals("국내")) {
+        location.setLocation_type(0);
+      } else if (obj.get("sample_outcome_country").equals("해외")) {
+        location.setLocation_type(1);
+      }
     } else {
       sampleOutcome.setSample_outcome_country("");
     }
 
     if (!obj.isNull("sample_outcome_place")) {
       sampleOutcome.setSample_outcome_place((String) obj.get("sample_outcome_place"));
+
+      location.setLocation_name((String) obj.get("sample_outcome_place"));
     } else {
       sampleOutcome.setSample_outcome_place("");
     }
