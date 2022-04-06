@@ -10,8 +10,9 @@ import lombok.ToString;
 public class Location {
 
   private int location_id;
+  private String sample_name;
   private String location_name;
-  private int location_type;
+  private String location_type;
   private String location_lat;
   private String location_lng;
 

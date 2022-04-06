@@ -1549,7 +1549,7 @@
                     <h6 class="modal-title" id="test_click">시교 진행 현황</h6>
                 </div>
 
-				<!-- 
+                <!--
                 <select class="form-control form-control-lg mt-10 mb-10 mr-10" style="width: 250px; margin: 1.75rem" id="modal-search">
                     <option value="none">선택</option>
                 </select>
@@ -1588,7 +1588,7 @@
                         -->
                         <div class="atbd-upload popAdd tab-pane fade show active" id="tab-horizontal-0-0" role="tabpanel" aria-labelledby="tab-horizontal-0-tab-0"
                              style=" overflow: auto; max-height: 500px;">
-                             <div class='card-extra mt-10 mb-10 mr-20 plus_btn_submit3'>
+                            <div class='card-extra mt-10 mb-10 mr-20 plus_btn_submit3'>
                                 <button type='button' id="cancelRow1" onclick="cancelRow1()">취소</button>
                                 <button type='button' id="saveRow1" onclick="saveRow1()">저장</button>
                             </div>
@@ -1598,7 +1598,7 @@
                             </div>
                             <div class="card-body" style="padding-top: 0;">
                                 <div class="bg-white">
-                                    <div id="breedGrid2"></div>                                    
+                                    <div id="breedGrid2"></div>
                                     <div class="row">
                                         <div class="col-4" id="btn1">
                                             <button class="btn btn-icon btn-light btn-circle" onclick="insertRow1()">
@@ -1607,11 +1607,11 @@
                                             <button class="btn btn-icon btn-light btn-circle" onclick="DeleteBreed1()">
                                                 <span data-feather="trash-2"></span>
                                             </button>
-                                            
-                                        </div>                                        
+
+                                        </div>
                                     </div>
                                 </div>
-                            </div> 
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1645,7 +1645,7 @@
                             </div>
                             <div class="card-body" style="padding-top: 0;">
                                 <div class="bg-white">
-                                    <div id="outcomeGrid2"></div>                                    
+                                    <div id="outcomeGrid2"></div>
                                     <div class="row">
                                         <div class="col-4" id="btn1">
                                             <button class="btn btn-icon btn-light btn-circle" onclick="insertRow2()">
@@ -1654,8 +1654,8 @@
                                             <button class="btn btn-icon btn-light btn-circle" onclick="DeleteSample1()">
                                                 <span data-feather="trash-2"></span>
                                             </button>
-                                            
-                                        </div>                                        
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -1715,6 +1715,7 @@
     function removeLocalS(key) {
         localStorage.removeItem(key);
     }
+
     /* e : localstorage 저장 예제 */
 
     /* 엑셀 업로드 목록창 */
@@ -2408,9 +2409,9 @@
     // 종자번호 팝업
     function SearchSeed(e) {
         $("#pop_seed").modal();
-        
+
         tablechk = 3;
-        
+
         let sample_name1 = $("#CropSelect").val();
         var limit3 = $("#limit").val();
 
@@ -2419,7 +2420,7 @@
         var loading = document.querySelector('.load_wrap');
 
         loading.classList.add('on');
-        
+
         $.ajax(
             {
                 url: 'searchSeed',
@@ -2531,7 +2532,7 @@
                                 sortable: true,
                                 width: 180,
                                 filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
-                            }                             
+                            }
 
                         ],
                         pageOptions: {
@@ -2548,25 +2549,25 @@
                         if (result3.sampleOutcome[i].sample_outcome_num === e.innerText) {
 
                             let rowArr = {
-                            'sample_outcome_id': result3.sampleOutcome[i].sample_outcome_id,
-                            'sample_outcome_code': result3.sampleOutcome[i].sample_outcome_code,
-                            'sample_outcome_num': result3.sampleOutcome[i].sample_outcome_num,
-                            'sample_outcome_amount': result3.sampleOutcome[i].sample_outcome_amount,
-                            'sample_outcome_in': result3.sampleOutcome[i].sample_outcome_in,
-                            'sample_outcome_out': result3.sampleOutcome[i].sample_outcome_out,
-                            'sample_outcome_remain': result3.sampleOutcome[i].sample_outcome_remain,
-                            'sample_outcome_person': result3.sampleOutcome[i].sample_outcome_person,
-                            'sample_outcome_reciever': result3.sampleOutcome[i].sample_outcome_reciever,
-                            'sample_outcome_date': result3.sampleOutcome[i].sample_outcome_date,
-                            'sample_outcome_end': result3.sampleOutcome[i].sample_outcome_end,
-                            'sample_outcome_country': result3.sampleOutcome[i].sample_outcome_country,
-                            'sample_outcome_place': result3.sampleOutcome[i].sample_outcome_place
+                                'sample_outcome_id': result3.sampleOutcome[i].sample_outcome_id,
+                                'sample_outcome_code': result3.sampleOutcome[i].sample_outcome_code,
+                                'sample_outcome_num': result3.sampleOutcome[i].sample_outcome_num,
+                                'sample_outcome_amount': result3.sampleOutcome[i].sample_outcome_amount,
+                                'sample_outcome_in': result3.sampleOutcome[i].sample_outcome_in,
+                                'sample_outcome_out': result3.sampleOutcome[i].sample_outcome_out,
+                                'sample_outcome_remain': result3.sampleOutcome[i].sample_outcome_remain,
+                                'sample_outcome_person': result3.sampleOutcome[i].sample_outcome_person,
+                                'sample_outcome_reciever': result3.sampleOutcome[i].sample_outcome_reciever,
+                                'sample_outcome_date': result3.sampleOutcome[i].sample_outcome_date,
+                                'sample_outcome_end': result3.sampleOutcome[i].sample_outcome_end,
+                                'sample_outcome_country': result3.sampleOutcome[i].sample_outcome_country,
+                                'sample_outcome_place': result3.sampleOutcome[i].sample_outcome_place
                             }
 
                             dataArr2.push(rowArr);
 
-                        }                                             
-                        
+                        }
+
                     }
 
                     for (let j = dataArr2.length - 1; j >= 0; j--) {
@@ -2628,7 +2629,7 @@
                                     }
                                 }
 
-                                if($(".plus_btn_submit5")[0].style.display != 'block') {
+                                if ($(".plus_btn_submit5")[0].style.display != 'block') {
                                     $(".plus_btn_submit6").css("display", "block");
                                 }
                             }
@@ -2640,12 +2641,12 @@
                 }
             });
 
-            $("#pop_seed").on('hidden.bs.modal', function (e) {
+        $("#pop_seed").on('hidden.bs.modal', function (e) {
             tablechk = 0;
             outcomeGrid2.destroy();
             samplegrid.reload();
-                                                
-            SearchSample(1);     
+
+            SearchSample(1);
         })
     }
 
@@ -2698,9 +2699,9 @@
 
                         if (result2.detail[i].detail_title != '첨부파일 관리') {
                             let title_arr = {
-                                'header' : colHeader,
-                                'name' : colName,
-                                'editor': 'text', 
+                                'header': colHeader,
+                                'name': colName,
+                                'editor': 'text',
                                 'sortable': 'true',
                                 'width': 180,
                                 'filter': filter
@@ -2713,25 +2714,25 @@
                     breedGrid2.setColumns(header_add);
                     const dataArr = [];
                     const dataArr2 = [];
-                    
+
                     for (let i = 0; i < result2.breed.length; i++) {
-                        
+
                         let rowArr = {};
 
-                        if (result2.breeds[i].breed_standard[1].standard === e.innerText) {                       
+                        if (result2.breeds[i].breed_standard[1].standard === e.innerText) {
 
                             rowArr = {'breed_id': result2.breed[i].breed_id};
 
-                            
+
                             for (var j = 0; j < result2.breed[i].breed_standard.length; j++) {
                                 var rowData = result2.breed[i].breed_standard[j].standard;
                                 rowArr[headerName[j]] = rowData;
                             }
 
                             dataArr.push(rowArr);
-                        
+
                         }
-                        
+
                     }
 
                     breedGrid2.resetData(dataArr);
@@ -2780,15 +2781,15 @@
                 }
             });
 
-            $("#pop_breed").on('hidden.bs.modal', function (e) {
+        $("#pop_breed").on('hidden.bs.modal', function (e) {
             tablechk = 0;
             breedGrid2.destroy();
             samplegrid.reload();
-                                    
-            
-            SearchSample(1);     
+
+
+            SearchSample(1);
         })
-            
+
     }
 
 
@@ -3067,15 +3068,15 @@
                     });
 
                     samplegrid.on('click', (ev) => {
-                        if (ev.targetType === 'cell' && ev.columnName === 'sample_seed'  && insertCheck == 0) {
+                        if (ev.targetType === 'cell' && ev.columnName === 'sample_seed' && insertCheck == 0) {
                             let value_seed = ev.nativeEvent.srcElement;
 
                             SearchSeed(value_seed);
-                        } else if (ev.targetType === 'cell' && ev.columnName === 'sample_code'  && insertCheck == 0) {
+                        } else if (ev.targetType === 'cell' && ev.columnName === 'sample_code' && insertCheck == 0) {
                             let value_breed = ev.nativeEvent.srcElement;
 
                             SearchBreed(value_breed);
-                        } else if (ev.targetType === 'cell' && ev.columnName === 'file'  && insertCheck == 0) {
+                        } else if (ev.targetType === 'cell' && ev.columnName === 'file' && insertCheck == 0) {
                             let id = samplegrid.getRow(ev.rowKey).sample_id;
 
                             FileBtn(id);
@@ -3139,7 +3140,7 @@
                                     }
                                 }
 
-                                if($(".plus_btn_submit1")[0].style.display != 'block') {
+                                if ($(".plus_btn_submit1")[0].style.display != 'block') {
                                     $(".plus_btn_submit2").css("display", "block");
                                 }
                             }
@@ -3337,7 +3338,7 @@
                                     }
                                 }
 
-                                if($(".plus_btn_submit1")[0].style.display != 'block') {
+                                if ($(".plus_btn_submit1")[0].style.display != 'block') {
                                     $(".plus_btn_submit2").css("display", "block");
                                 }
                             }
@@ -3419,20 +3420,31 @@
 
             input_data1.push(outcomegrid.getCheckedRows()[0]);
 
-            $.ajax(
-                {
-                    url: 'insertSampleOutcome',
-                    method: 'POST',
-                    dataType: 'json',
-                    data: {
-                        "input_data": JSON.stringify(input_data1)
-                    },
-                    success: function (result) {
-                        if (result != null) {
-                            location.reload();
+            var geoCoder = new google.maps.Geocoder();
+            let placement = outcomegrid.getCheckedRows()[0].sample_outcome_place;
+
+            geoCoder.geocode({"address": placement}, function (result, status) {
+                if (status == "OK") {
+                    input_data1.push(result[0].geometry.location);
+                }
+
+                $.ajax(
+                    {
+                        url: 'insertSampleOutcome',
+                        method: 'POST',
+                        dataType: 'json',
+                        data: {
+                            "input_data": JSON.stringify(input_data1)
+                        },
+                        success: function (result) {
+                            if (result == 1) {
+                                location.reload();
+                            } else {
+                                return Alert("데이터 입력에 실패했습니다.");
+                            }
                         }
-                    }
-                });
+                    })
+            });
         }
     }
 
@@ -3509,7 +3521,7 @@
                         inKorea.push(result.sampleOutcomeKo[i]);
                     }
 
-                    for(let i = 0; i < result.sampleOutcomeGlo.length; i++) {
+                    for (let i = 0; i < result.sampleOutcomeGlo.length; i++) {
                         outKorea.push(result.sampleOutcomeGlo[i]);
                     }
 
@@ -3572,10 +3584,8 @@
         for (let i = 0; i < koreaLocations.length; i++) {
             delay1 += 1000;
 
-            setTimeout(function() {
+            setTimeout(function () {
                 geoCoder.geocode({"address": koreaLocations[i]}, function (result, status) {
-                    console.log("ko status", status);
-
                     if (status == "OK") {
                         let centerCoordinate = result[0].geometry.location; // 검색한 지역의 중앙 좌표
 
@@ -3594,10 +3604,8 @@
         for (let i = 0; i < globalLocations.length; i++) {
             delay2 += 1000;
 
-            setTimeout(function() {
+            setTimeout(function () {
                 geoCoder.geocode({"address": globalLocations[i]}, function (result, status) {
-                    console.log("glo status", status);
-
                     if (status == "OK") {
                         let centerCoordinate = result[0].geometry.location; // 검색한 지역의 중앙 좌표
 
@@ -3993,7 +4001,7 @@
 
     function updateRow1() {
         if (tablechk == 2) {
-            
+
             $.ajax(
                 {
                     url: 'updateBreed',

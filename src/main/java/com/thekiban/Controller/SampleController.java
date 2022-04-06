@@ -5,7 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thekiban.Entity.*;
 import com.thekiban.Service.BreedService;
 import com.thekiban.Service.DataListService;
+import com.thekiban.Service.LocationService;
 import com.thekiban.Service.SampleService;
+import lombok.RequiredArgsConstructor;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,19 +33,18 @@ import java.util.*;
 
 // 시교자원
 @Controller
+@RequiredArgsConstructor
 public class SampleController {
 
-  @Autowired
-  private SampleService service;
+  private final SampleService service;
 
-  @Autowired
-  private BreedService breedService;
+  private final BreedService breedService;
 
-  @Autowired
-  private DataListService d_service;
+  private final DataListService d_service;
 
-  @Autowired
-  private FileController fileController;
+  private final LocationService locationService;
+
+  private final FileController fileController;
 
   // 시교자원 관리 페이지
   @RequestMapping("sample")
@@ -141,9 +142,22 @@ public class SampleController {
   @RequestMapping("insertSampleOutcome")
   public int InsertSampleOutcome(@ModelAttribute SampleOutcome sampleOutcome, @RequestParam("input_data") String input_data) {
     Location location = new Location();
-    JSONArray arr = new JSONArray(input_data);
 
+    JSONArray arr = new JSONArray(input_data);
     JSONObject obj = arr.getJSONObject(0);
+    JSONObject locaObj = arr.getJSONObject(1);
+
+    if (!locaObj.isNull("lng")) {
+      location.setLocation_lng(Double.toString((double) locaObj.get("lng")));
+    } else {
+      location.setLocation_lng("");
+    }
+
+    if (!locaObj.isNull("lat")) {
+      location.setLocation_lat(Double.toString((double) locaObj.get("lat")));
+    } else {
+      location.setLocation_lat("");
+    }
 
     if (!obj.isNull("sample_outcome_code")) {
       sampleOutcome.setSample_outcome_code((String) obj.get("sample_outcome_code"));
@@ -153,8 +167,10 @@ public class SampleController {
 
     if (!obj.isNull("sample_name")) {
       sampleOutcome.setSample_name((String) obj.get("sample_name"));
+      location.setSample_name((String) obj.get("sample_name"));
     } else {
       sampleOutcome.setSample_name("");
+      location.setSample_name("");
     }
 
     if (!obj.isNull("sample_outcome_num")) {
@@ -229,23 +245,21 @@ public class SampleController {
 
     if (!obj.isNull("sample_outcome_country")) {
       sampleOutcome.setSample_outcome_country((String) obj.get("sample_outcome_country"));
-
-      if (obj.get("sample_outcome_country").equals("국내")) {
-        location.setLocation_type(0);
-      } else if (obj.get("sample_outcome_country").equals("해외")) {
-        location.setLocation_type(1);
-      }
+      location.setLocation_type((String) obj.get("sample_outcome_country"));
     } else {
       sampleOutcome.setSample_outcome_country("");
+      location.setLocation_type("");
     }
 
     if (!obj.isNull("sample_outcome_place")) {
       sampleOutcome.setSample_outcome_place((String) obj.get("sample_outcome_place"));
-
       location.setLocation_name((String) obj.get("sample_outcome_place"));
     } else {
       sampleOutcome.setSample_outcome_place("");
+      location.setLocation_name("");
     }
+
+    locationService.insertLocation(location);
 
     int result = service.InsertSampleOutcome(sampleOutcome);
 
