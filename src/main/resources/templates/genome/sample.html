@@ -3506,9 +3506,6 @@
         }
     }
 
-    let inKorea = [];
-    let outKorea = [];
-
     function SearchMarker() {
         $.ajax(
             {
@@ -3517,6 +3514,9 @@
                 dataType: 'json',
                 data: data,
                 success: function (result) {
+                    var inKorea = [];
+                    var outKorea = [];
+
                     for (let i = 0; i < result.sampleOutcomeKo.length; i++) {
                         inKorea.push(result.sampleOutcomeKo[i]);
                     }
@@ -3525,12 +3525,7 @@
                         outKorea.push(result.sampleOutcomeGlo[i]);
                     }
 
-                    console.log(inKorea);
-                    console.log(outKorea);
-
-                    searchArea();
-
-                    makeSelect();
+                    searchArea(inKorea, outKorea);
                 }
             });
     }
@@ -3540,9 +3535,8 @@
         searchArea();
     });
 
-    function searchArea() {
-
-        let koreaOptions = {
+    async function searchArea(inKo, outKo) {
+        var koreaOptions = {
             zoom: 6.4,
             center: {
                 lat: 36.613766432253634,
@@ -3558,66 +3552,41 @@
             // mapTypeId: google.maps.MapTypeId.ROADMAP
         };
 
-        let globalOptions = {
+        var globalOptions = {
             ...koreaOptions,
             zoom: 2,
         };
 
-        let geoCoder = new google.maps.Geocoder();
-        let korMap = new google.maps.Map(document.querySelector("#google_map1"), koreaOptions);
-        let globalMap = new google.maps.Map(document.querySelector("#google_map2"), globalOptions);
+        var korMap = new google.maps.Map(document.querySelector("#google_map1"), koreaOptions);
+        var globalMap = new google.maps.Map(document.querySelector("#google_map2"), globalOptions);
 
-        let koreaLocations = [];
-        let globalLocations = [];
+        var koreaLocations = [];
+        var globalLocations = [];
 
-        for (let i = 0; i < inKorea.length; i++) {
-            koreaLocations.push(inKorea[i]);
+        for (let i = 0; i < inKo.length; i++) {
+            koreaLocations.push(inKo[i]);
         }
 
-        for (let o = 0; o < outKorea.length; o++) {
-            globalLocations.push(outKorea[o]);
+        for (let o = 0; o < outKo.length; o++) {
+            globalLocations.push(outKo[o]);
         }
 
-        let delay1 = 0;
+        for await (const item of koreaLocations) {
+            var marker1;
 
-        // 국내
-        for (let i = 0; i < koreaLocations.length; i++) {
-            delay1 += 1000;
-
-            setTimeout(function () {
-                geoCoder.geocode({"address": koreaLocations[i]}, function (result, status) {
-                    if (status == "OK") {
-                        let centerCoordinate = result[0].geometry.location; // 검색한 지역의 중앙 좌표
-
-                        let marker = new google.maps.Marker({ // 마커 생성
-                            map: korMap,
-                            position: centerCoordinate
-                        });
-                    }
-                });
-            }, delay1)
+            marker1 = new google.maps.Marker({ // 마커 생성
+                map: korMap,
+                position: item
+            });
         }
 
-        let delay2 = 0;
+        for await (const item of globalLocations) {
+            var marker2;
 
-        // 해외
-        for (let i = 0; i < globalLocations.length; i++) {
-            delay2 += 1000;
-
-            setTimeout(function () {
-                geoCoder.geocode({"address": globalLocations[i]}, function (result, status) {
-                    if (status == "OK") {
-                        let centerCoordinate = result[0].geometry.location; // 검색한 지역의 중앙 좌표
-
-                        let marker = new google.maps.Marker({ // 마커 생성
-                            map: globalMap,
-                            position: centerCoordinate
-                        });
-
-                        globalMap.setCenter(centerCoordinate);
-                    }
-                });
-            }, delay2)
+            marker2 = new google.maps.Marker({ // 마커 생성
+                map: globalMap,
+                position: item
+            });
         }
     }
 

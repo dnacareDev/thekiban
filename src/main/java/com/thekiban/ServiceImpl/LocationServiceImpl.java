@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class LocationServiceImpl implements LocationService {
 
@@ -18,5 +20,8 @@ public class LocationServiceImpl implements LocationService {
     return locationMapper.insertLocation(location);
   }
 
-
+  @Override
+  public List<Location> selectAll() {
+    return locationMapper.selectAll();
+  }
 }

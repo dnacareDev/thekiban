@@ -369,18 +369,17 @@
                         outKorea.push(result.sampleOutcomeGlo[i]);
                     }
 
-                    searchAreaKo(inKorea, outKorea);
+                    searchArea(inKorea, outKorea);
                 }
             });
     }
 
     /* 지도 검색 */
     $("#modal-search").change(function () {
-        searchAreaKo();
-        searchAreaGlo();
+        searchArea();
     });
 
-    async function searchAreaKo(inKo, outKo) {
+    async function searchArea(inKo, outKo) {
         var koreaOptions = {
             zoom: 6.4,
             center: {
@@ -397,108 +396,42 @@
             // mapTypeId: google.maps.MapTypeId.ROADMAP
         };
 
-        var geoCoder = new google.maps.Geocoder();
+        var globalOptions = {
+            ...koreaOptions,
+            zoom: 2,
+        };
+
         var korMap = new google.maps.Map(document.querySelector("#google_map1"), koreaOptions);
+        var globalMap = new google.maps.Map(document.querySelector("#google_map2"), globalOptions);
 
         var koreaLocations = [];
+        var globalLocations = [];
 
         for (let i = 0; i < inKo.length; i++) {
             koreaLocations.push(inKo[i]);
         }
 
-        let koreaCenter = [];
-        let tempLocationKo = [];
-
-        for await (const item of koreaLocations) {
-            await locatedKo(item);
-        }
-
-        if (tempLocationKo.length != 0) {
-            setTimeout(locatedKo(tempLocationKo), 1000);
-            tempLocationKo = [];
-        }
-
-        async function locatedKo(koreanLocation) {
-            await geoCoder.geocode({"address": koreanLocation}, function (result, status) {
-                if (status == "OK") {
-                    koreaCenter.push(result[0].geometry.location);
-                } else if (status === google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
-                    setTimeout(function () {
-                        koreaCenter.push(result[0].geometry.location);
-                    }, 200);
-                }
-            });
-
-            // await new Promise(resolve => setTimeout(resolve, 300));
-        }
-
-        for await (const i of koreaCenter) {
-            var marker1;
-
-            marker1 = new google.maps.Marker({ // 마커 생성
-                map: korMap,
-                position: i
-            });
-        }
-
-        // await searchAreaGlo(outKo);
-    }
-
-    async function searchAreaGlo(outKo) {
-        var globalOptions = {
-            center: {
-                lat: 36.613766432253634,
-                lng: 127.84942123102657
-            },
-            panControl: false,
-            zoomControl: false,
-            scaleControl: false,
-            mapTypeControl: false,
-            streetViewControl: false,
-            fullscreenControl: false,
-            scrollwheel: true,
-            zoom: 2,
-        };
-
-        var geoCoder = new google.maps.Geocoder();
-        var globalMap = new google.maps.Map(document.querySelector("#google_map2"), globalOptions);
-
-        var globalLocations = [];
-
         for (let o = 0; o < outKo.length; o++) {
             globalLocations.push(outKo[o]);
         }
 
-        let globalCenter = [];
-        let tempLocationGo = [];
+        for await (const item of koreaLocations) {
+            console.log(item)
 
-        for await (const item of globalLocations) {
-            await locatedGo(item);
-        }
+            var marker1;
 
-        if (tempLocationGo.length != 0) {
-            setTimeout(locatedGo(tempLocationGo), 1000);
-            tempLocationGo = [];
-        }
-
-        async function locatedGo(globalLocation) {
-            await geoCoder.geocode({"address": globalLocation}, function (result, status) {
-                if (status == "OK") {
-                    globalCenter.push(result[0].geometry.location);
-                } else if (status === google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
-                    setTimeout(function () {
-                        globalCenter.push(result[0].geometry.location);
-                    }, 200);
-                }
+            marker1 = new google.maps.Marker({ // 마커 생성
+                map: korMap,
+                position: item
             });
         }
 
-        for await (const i of globalCenter) {
+        for await (const item of globalLocations) {
             var marker2;
 
             marker2 = new google.maps.Marker({ // 마커 생성
                 map: globalMap,
-                position: i
+                position: item
             });
         }
     }

@@ -2,7 +2,9 @@ package com.thekiban.Controller;
 
 import java.util.*;
 
+import com.thekiban.Entity.Location;
 import com.thekiban.Entity.SampleOutcome;
+import com.thekiban.Service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,6 +20,9 @@ import com.thekiban.Service.HomeService;
 public class HomeController {
   @Autowired
   private HomeService service;
+
+  @Autowired
+  private LocationService locationService;
 
   @RequestMapping("/")
   public ModelAndView Index(ModelAndView mv) {
@@ -74,20 +79,36 @@ public class HomeController {
   public Map<String, Object> SelectOutcome() {
     Map<String, Object> result = new LinkedHashMap<String, Object>();
 
-    List<SampleOutcome> sampleOutcomes = service.SelectOutcomeList();
+//    List<SampleOutcome> sampleOutcomes = service.SelectOutcomeList();
+    List<Location> locations = locationService.selectAll();
 
-    List<String> placeK = new ArrayList<String>();
-    List<String> placeG = new ArrayList<String>();
+    List<Map<String, Object>> placeK = new ArrayList<>();
+    List<Map<String, Object>> placeG = new ArrayList<>();
 
-    for (int i = 0; i < sampleOutcomes.size(); i++) {
-      if (sampleOutcomes.get(i).getSample_outcome_country().equals("국내")) {
-        if (!placeK.contains(sampleOutcomes.get(i).getSample_outcome_place())) {
-          placeK.add(sampleOutcomes.get(i).getSample_outcome_place());
-        }
-      } else if (sampleOutcomes.get(i).getSample_outcome_country().equals("해외")) {
-        if (!placeG.contains(sampleOutcomes.get(i).getSample_outcome_place())) {
-          placeG.add(sampleOutcomes.get(i).getSample_outcome_place());
-        }
+//    for (int i = 0; i < sampleOutcomes.size(); i++) {
+//      if (sampleOutcomes.get(i).getSample_outcome_country().equals("국내")) {
+//        if (!placeK.contains(sampleOutcomes.get(i).getSample_outcome_place())) {
+//          placeK.add(sampleOutcomes.get(i).getSample_outcome_place());
+//        }
+//      } else if (sampleOutcomes.get(i).getSample_outcome_country().equals("해외")) {
+//        if (!placeG.contains(sampleOutcomes.get(i).getSample_outcome_place())) {
+//          placeG.add(sampleOutcomes.get(i).getSample_outcome_place());
+//        }
+//      }
+//    }
+
+    Map<String, Object> latlngKo = new LinkedHashMap<>();
+    Map<String, Object> latlngGlo = new LinkedHashMap<>();
+
+    for (Location location : locations) {
+      if (location.getLocation_type().equals("국내")) {
+        latlngKo.put("lat", Double.parseDouble(location.getLocation_lat()));
+        latlngKo.put("lng", Double.parseDouble(location.getLocation_lng()));
+        placeK.add(latlngKo);
+      } else if (location.getLocation_type().equals("해외")) {
+        latlngGlo.put("lat", Double.parseDouble(location.getLocation_lat()));
+        latlngGlo.put("lng", Double.parseDouble(location.getLocation_lng()));
+        placeG.add(latlngGlo);
       }
     }
 
