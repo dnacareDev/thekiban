@@ -2136,7 +2136,7 @@
     let now = null;
 
     /* 엑셀 입력 */
-    function InsertExcel() {
+    async function InsertExcel() {
         if (tablechk === 0) {
             let data = [];
 
@@ -2203,6 +2203,22 @@
                 jsonObj[i]["작물"] = $("#CropSelect").val();
             }
 
+            var geoCoder = new google.maps.Geocoder();
+
+            for await (const item of jsonObj) {
+                if(item['대상 지역']){
+                    let placement = item["대상 지역"];
+
+                    await geoCoder.geocode({"address": placement}, function (result, status) {
+                        if (status == "OK") {
+                            item["lat"] = result[0].geometry.location.lat();
+                            item["lng"] = result[0].geometry.location.lng();
+                            console.log("in", item);
+                        }
+                    });
+                }
+            }
+
             $.ajax(
                 {
                     url: 'excelOutcome',
@@ -2212,28 +2228,33 @@
                         "excel_list": JSON.stringify(jsonObj)
                     },
                     success: function (result) {
-                        now = new Date(+new Date() + 3240 * 10000).toISOString().split("T")[0];
+                        if (result == 0) {
+                            return Alert1("데이터 입력에 실패했습니다.");
+                        } else {
+                            now = new Date(+new Date() + 3240 * 10000).toISOString().split("T")[0];
 
-                        let listData = [];
+                            let listData = [];
 
-                        let sample_name = $("#CropSelect").val();
+                            let sample_name = $("#CropSelect").val();
 
-                        let lData = {"datalist_type": 'sample_outcome', "datalist_date": now, "sample_name": sample_name};
+                            let lData = {"datalist_type": 'sample_outcome', "datalist_date": now, "sample_name": sample_name};
 
-                        listData.push(lData);
+                            listData.push(lData);
 
-                        $.ajax(
-                            {
-                                url: 'insertOutcomeDataList',
-                                method: 'POST',
-                                dataType: 'json',
-                                data: {
-                                    "listData": JSON.stringify(listData)
-                                },
-                                success: function (result) {
-                                    location.reload();
-                                }
-                            })
+                            $.ajax(
+                                {
+                                    url: 'insertOutcomeDataList',
+                                    method: 'POST',
+                                    dataType: 'json',
+                                    data: {
+                                        "listData": JSON.stringify(listData)
+                                    },
+                                    success: function (result) {
+                                        location.reload();
+                                    }
+                                })
+                        }
+
                     }
                 }
             )

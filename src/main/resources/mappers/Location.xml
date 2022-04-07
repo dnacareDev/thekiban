@@ -3,9 +3,9 @@
 <mapper namespace="com.thekiban.Mapper.LocationMapper">
     <insert id="insertLocation" parameterType="Location">
         INSERT IGNORE INTO location
-        (location_id, sample_name, location_name, location_type, location_lat, location_lng)
+        (location_id, location_name, location_type, location_lat, location_lng)
         VALUES
-        (#{location_id}, #{sample_name}, #{location_name}, #{location_type}, #{location_lat}, #{location_lng})
+        (#{location_id}, #{location_name}, #{location_type}, #{location_lat}, #{location_lng})
     </insert>
 
     <select id="selectAll" resultType="location">

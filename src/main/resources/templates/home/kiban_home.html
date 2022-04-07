@@ -415,23 +415,17 @@
             globalLocations.push(outKo[o]);
         }
 
-        for await (const item of koreaLocations) {
-            console.log(item)
-
-            var marker1;
-
-            marker1 = new google.maps.Marker({ // 마커 생성
+        for (let i = 0; i < koreaLocations.length; i++) {
+            var marker = new google.maps.Marker({ // 마커 생성
                 map: korMap,
-                position: item
+                position: koreaLocations[i]
             });
         }
 
-        for await (const item of globalLocations) {
-            var marker2;
-
-            marker2 = new google.maps.Marker({ // 마커 생성
+        for (let i = 0; i < globalLocations.length; i++) {
+            var marker = new google.maps.Marker({ // 마커 생성
                 map: globalMap,
-                position: item
+                position: globalLocations[i]
             });
         }
     }

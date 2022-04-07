@@ -167,10 +167,8 @@ public class SampleController {
 
     if (!obj.isNull("sample_name")) {
       sampleOutcome.setSample_name((String) obj.get("sample_name"));
-      location.setSample_name((String) obj.get("sample_name"));
     } else {
       sampleOutcome.setSample_name("");
-      location.setSample_name("");
     }
 
     if (!obj.isNull("sample_outcome_num")) {
@@ -431,14 +429,14 @@ public class SampleController {
 
   @ResponseBody
   @RequestMapping("excelOutcome")
-  public int outComeExcelUpload(ModelAndView mv, @ModelAttribute SampleOutcome sampleOutcome, @RequestParam("excel_list") String excel_list) {
+  public int outComeExcelUpload(ModelAndView mv, @ModelAttribute SampleOutcome sampleOutcome, @ModelAttribute Location location, @RequestParam("excel_list") String excel_list) {
+    int result = 0;
     JSONArray arr = new JSONArray(excel_list);
-
-    System.out.println(arr);
 
     for (int i = arr.length() - 1; i > -1; i--) {
 
       JSONObject obj = arr.getJSONObject(i);
+      JSONObject locationObj = arr.getJSONObject(i);
 
       Set<String> key = obj.keySet();
 
@@ -469,8 +467,6 @@ public class SampleController {
         } else if (k.equals("시교 종료 일자")) {
           String date = obj.getString(k);
 
-          System.out.println("date = " + date);
-
           if (date.isEmpty()) {
             sampleOutcome.setSample_outcome_end(null);
           } else {
@@ -481,14 +477,21 @@ public class SampleController {
           }
         } else if (k.equals("지역 구분")) {
           sampleOutcome.setSample_outcome_country(obj.getString(k));
+          location.setLocation_type(obj.getString(k));
         } else if (k.equals("대상 지역")) {
           sampleOutcome.setSample_outcome_place(obj.getString(k));
+          location.setLocation_name(obj.getString(k));
         } else if (k.equals("작물")) {
           sampleOutcome.setSample_name(obj.getString(k));
+        } else if (k.equals("lat")) {
+          location.setLocation_lat((obj.get(k)).toString());
+        } else if (k.equals("lng")) {
+          location.setLocation_lng((obj.get(k)).toString());
         }
       }
 
       service.InsertOutcomeExcel(sampleOutcome);
+      result = locationService.insertLocation(location);
     }
 
     return 1;
