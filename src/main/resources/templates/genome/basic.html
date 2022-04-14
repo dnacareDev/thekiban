@@ -1018,6 +1018,7 @@
                             <div class="breadcrumb-main" style="float: left;">
                                 <h4 class="text-capitalize breadcrumb-title">원종 관리</h4>
                                 <input type="hidden" id="user_type" th:value="${user.user_type}">
+                                <input type="hidden" id="user_crop" th:value="${user.auth_crop}">
                             </div>
                             <div class="action-btn d-flex justify-content-end">
                                 <div class="atbd-button-list d-flex flex-wrap">
@@ -2400,25 +2401,67 @@
     });
 
     $("#CropSelect").change(function () {
-        SearchBasic(1);
+        var user_type = $("#user_type").val();
 
-        if (tablechk == 0) {
-            basicgrid.destroy();
+        if (user_type == 2) {
+            console.log("check", user_type);
 
-            SearchBasicgrid(1);
+            var auth_type = $("#user_crop").val();
+            var crop = $("#CropSelect").val();
+
+            console.log(auth_type);
+
+            if (!auth_type) {
+                console.log("null");
+            } else {
+                if (auth_type.indexOf(crop) !== -1) {
+                    console.log("same")
+                } else {
+                    $("#CropSelect").val(getLocalS("basic_crop"));
+                    return Alert1("허가되지 않은 작물입니다.");
+                }
+            }
+
+            SearchBasic(1);
+
+            if (tablechk == 0) {
+                basicgrid.destroy();
+
+                SearchBasicgrid(1);
+            } else {
+                basicRemainGrid.destroy();
+
+                SearchBasicRemain(1);
+            }
+            setLocalS("basic_crop", $("#CropSelect").val());
+
+            $(".plus_btn_submit1").css("display", "none");
+            $(".plus_btn_submit2").css("display", "none");
+            $(".plus_btn_submit3").css("display", "none");
+            $(".plus_btn_submit4").css("display", "none");
+            $(".plus_btn_submit5").css("display", "none");
+            $(".plus_btn_submit6").css("display", "none");
         } else {
-            basicRemainGrid.destroy();
+            SearchBasic(1);
 
-            SearchBasicRemain(1);
+            if (tablechk == 0) {
+                basicgrid.destroy();
+
+                SearchBasicgrid(1);
+            } else {
+                basicRemainGrid.destroy();
+
+                SearchBasicRemain(1);
+            }
+            setLocalS("basic_crop", $("#CropSelect").val());
+
+            $(".plus_btn_submit1").css("display", "none");
+            $(".plus_btn_submit2").css("display", "none");
+            $(".plus_btn_submit3").css("display", "none");
+            $(".plus_btn_submit4").css("display", "none");
+            $(".plus_btn_submit5").css("display", "none");
+            $(".plus_btn_submit6").css("display", "none");
         }
-        setLocalS("basic_crop", $("#CropSelect").val());
-
-        $(".plus_btn_submit1").css("display", "none");
-        $(".plus_btn_submit2").css("display", "none");
-        $(".plus_btn_submit3").css("display", "none");
-        $(".plus_btn_submit4").css("display", "none");
-        $(".plus_btn_submit5").css("display", "none");
-        $(".plus_btn_submit6").css("display", "none");
     })
 
     // 갯수 선택

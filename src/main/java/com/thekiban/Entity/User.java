@@ -25,6 +25,7 @@ public class User implements UserDetails
 	private String user_name;				// 사용자 이름
 	private int user_type;					// 사용자 유형
 	private String user_authority;			// 사용자 권한(spring security)
+	private String auth_crop;				// 허가된 작물
 	private String create_date;				// 등록일
 	private String modify_date;				// 수정일
 	

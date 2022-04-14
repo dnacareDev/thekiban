@@ -1009,6 +1009,7 @@
                             <div class="breadcrumb-main" style="float: left;">
                                 <h4 class="text-capitalize breadcrumb-title">도입 자원 관리</h4>
                                 <input type="hidden" id="user_type" th:value="${user.user_type}">
+                                <input type="hidden" id="user_crop" th:value="${user.auth_crop}">
                             </div>
                             <!-- 버튼 등록하는 곳 -->
                             <div class="action-btn d-flex justify-content-end">
@@ -2191,21 +2192,59 @@
     });
 
     $("#CropSelect").change(function () {
-        if (tablechk == 0) {
-            incomegrid.destroy();
+        var user_type = $("#user_type").val();
 
-            SearchIncome(1);
+        if (user_type == 2) {
+            console.log("check", user_type);
+
+            var auth_type = $("#user_crop").val();
+            var crop = $("#CropSelect").val();
+
+            console.log(auth_type);
+
+            if (!auth_type) {
+                console.log("null");
+            } else {
+                if (auth_type.indexOf(crop) !== -1) {
+                    console.log("same")
+                } else {
+                    $("#CropSelect").val(getLocalS("income_crop"));
+                    return Alert1("허가되지 않은 작물입니다.");
+                }
+            }
+
+            if (tablechk == 0) {
+                incomegrid.destroy();
+
+                SearchIncome(1);
+            } else {
+                remaingrid.destroy();
+
+                SearchRemain(1);
+            }
+            setLocalS("income_crop", $("#CropSelect").val());
+
+            $(".plus_btn_submit1").css("display", "none");
+            $(".plus_btn_submit2").css("display", "none");
+            $(".plus_btn_submit3").css("display", "none");
+            $(".plus_btn_submit4").css("display", "none");
         } else {
-            remaingrid.destroy();
+            if (tablechk == 0) {
+                incomegrid.destroy();
 
-            SearchRemain(1);
+                SearchIncome(1);
+            } else {
+                remaingrid.destroy();
+
+                SearchRemain(1);
+            }
+            setLocalS("income_crop", $("#CropSelect").val());
+
+            $(".plus_btn_submit1").css("display", "none");
+            $(".plus_btn_submit2").css("display", "none");
+            $(".plus_btn_submit3").css("display", "none");
+            $(".plus_btn_submit4").css("display", "none");
         }
-        setLocalS("income_crop", $("#CropSelect").val());
-
-        $(".plus_btn_submit1").css("display", "none");
-        $(".plus_btn_submit2").css("display", "none");
-        $(".plus_btn_submit3").css("display", "none");
-        $(".plus_btn_submit4").css("display", "none");
     })
 
     // 갯수 선택
