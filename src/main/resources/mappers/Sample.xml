@@ -48,22 +48,25 @@
 
     <!-- 시교자원 검색 -->
     <select id="SearchSample" resultType="Sample">
-        SELECT * FROM sample
+        SELECT a.sample_id, a.sample_code, a.sample_name, a.sample_country, a.sample_type, a.sample_mate, a.sample_seed,
+        ifnull((select b.sample_outcome_remain from sampleOutcome b where a.sample_seed=b.sample_outcome_num order by b.create_date desc  limit 1),0) as sample_amount, a.sample_sprout, a.sample_purity, a.sample_comment, a.create_date, a.modify_date
+        FROM sample a
         <choose>
             <when test="sample_name != 'none'">
-                WHERE sample_name = #{sample_name}
-                ORDER BY sample_id DESC
+                WHERE a.sample_name = #{sample_name} order by a.create_date desc;
             </when>
         </choose>
         LIMIT #{offset}, #{limit}
     </select>
 
+    <!-- 시교자원관리 리스트 -->
     <select id="SearchSampleTest" resultType="Sample">
-        SELECT * FROM sample
+        SELECT a.sample_id, a.sample_code, a.sample_name, a.sample_country, a.sample_type, a.sample_mate, a.sample_seed,
+        ifnull((select b.sample_outcome_remain from sampleOutcome b where a.sample_seed=b.sample_outcome_num order by b.sample_outcome_date desc  limit 1),0) as sample_amount, a.sample_sprout, a.sample_purity, a.sample_comment, a.create_date, a.modify_date
+        FROM sample a
         <choose>
             <when test="sample_name != 'none'">
-                WHERE sample_name = #{sample_name}
-                ORDER BY sample_id DESC
+                WHERE a.sample_name = #{sample_name} order by a.create_date desc;
             </when>
         </choose>
     </select>

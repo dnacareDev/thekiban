@@ -2907,150 +2907,182 @@
         var loading = document.querySelector('.load_wrap');
 
         loading.classList.add('on')
+        let rowArr_global;
+		let map = new Map();
 
         $.ajax(
             {
-                url: 'searchBasic',
-                method: 'POST',
-                dataType: 'json',
-                data: data,
-                success: function (result) {
-                    basicgrid = new tui.Grid({
-                        el: document.getElementById('basicGrid'),
-                        scrollX: true,
-                        scrollY: false,
-                        data: result.basic,
-                        rowHeaders: ['checkbox'],
-                        editingEvent: 'click',
-                        columns: [],
-                        pageOptions: {
-                            useClient: true,
-                            perPage: limit,
-                        }
-                    });
+            	url: 'searchBasicRemain',
+				method: 'POST',
+				dataType: 'json',
+				data: data,
+				success: function (result_global) {
+				for (let i = 0; i < result_global.basicRemain.length; i++) {
+						rowArr_global = {
+							'basic_remain_id': result_global.basicRemain[i].basic_remain_id,
+							'basic_remain_num': result_global.basicRemain[i].basic_remain_num,
+							'basic_remain_amount': result_global.basicRemain[i].basic_remain_amount,
+							'basic_remain_in': result_global.basicRemain[i].basic_remain_in,
+							'basic_remain_out': result_global.basicRemain[i].basic_remain_out,
+							'basic_remain_re': result_global.basicRemain[i].basic_remain_re,
+							'basic_remain_person': result_global.basicRemain[i].basic_remain_person,
+							'basic_remain_date': result_global.basicRemain[i].basic_remain_date
+						}
 
-                    const headerArr = [
-                        {
-                            'header': '첨부파일',
-                            'name': 'file',
-                            'width': 100,
-                        },
-                        {
-                            'header': '특성상태',
-                            'name': 'status',
-                            'width': 150,
-                        }
-                    ];
-                    var headerName = [];
-
-                    var arr = {};
-
-                    for (let i = 0; i < result.display.length; i++) {
-                        var colHeader = result.display[i].detail_title;
-                        var colName = result.display[i].detail_id;
-                        headerName[i] = result.display[i].detail_id;
-
-                        var filter = {type: 'text', showApplyBtn: true, showClearBtn: true};
-
-                        if (result.display[i].detail_spec == '기본 정보') {
-                            if (result.display[i].detail_title == '작물') {
-                                arr = {'header': colHeader, 'name': colName, 'sortable': 'true', 'sortingType': 'asc', 'width': 180, 'filter': filter}
-                            } else {
-                                arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 180, 'filter': filter}
-                            }
-                        } else {
-                            arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 500, 'filter': filter}
-                        }
-
-                        headerArr.push(arr);
-                    }
-
-                    basicgrid.setColumns(headerArr);
-
-                    const dataArr = [];
-
-                    for (let i = 0; i < result.basic.length; i++) {
-                        let rowArr = {};
-
-                        rowArr = {'file': '<i class="bi bi-file-earmark-arrow-down"></i>', 'basic_id': result.basic[i].basic_id};
-
-                        if (result.basic[i].standard_count == 0) {
-                            rowArr['status'] = '<span style="color:red">EMPTY</span>';
-
-                        } else {
-                            rowArr['status'] = '<span style="color:blue">PROGRESS</span>';
-                        }
-
-                        for (var j = 0; j < result.basic[i].basic_standard.length; j++) {
-                            var rowData = result.basic[i].basic_standard[j].standard;
-                            rowArr[headerName[j]] = rowData;
-                        }
-
-                        dataArr.push(rowArr);
-                    }
-
-                    basicgrid.resetData(dataArr);
-
-                    basicgrid.on('click', (ev) => {
-                        if (ev.targetType === 'cell' && (ev.columnName === '170' || ev.columnName === '337' || ev.columnName === '518' || ev.columnName === '693' || ev.columnName === '835' || ev.columnName === '1000' || ev.columnName === '1170' || ev.columnName === '1338' || ev.columnName === '1512' || ev.columnName === '1724') && insertCheck == 0) {
-                            let value_basic = ev.nativeEvent.srcElement;
-
-                            SearchBreed(value_basic);
-                        } else if (ev.targetType === 'cell' && ev.columnName === 'status' && insertCheck == 0) {
-                            var e_id = basicgrid.getRow(ev.rowKey).basic_id;
-
-                            EmptyBtn(e_id);
-                        } else if (ev.targetType === 'cell' && ev.columnName === 'file' && insertCheck == 0) {
-                            var id = basicgrid.getRow(ev.rowKey).basic_id;
-
-                            FileBtn(id);
-                        } else if (ev.targetType === 'cell' && (ev.columnName === '175' || ev.columnName === '342' || ev.columnName === '523' || ev.columnName === '698' || ev.columnName === '840' || ev.columnName === '1005' || ev.columnName === '1175' || ev.columnName === '1343' || ev.columnName === '1517' || ev.columnName === '1729') && insertCheck == 0) {
-                            let sample_num = ev.nativeEvent.srcElement;
-
-                            SearchBasicRemain1(sample_num);
-                        }
-                    });
-
-                    basicgrid.on('editingStart', (ev) => {
-                        if ($(".plus_btn_submit1")[0].style.display != 'block') {
-                            $(".plus_btn_submit2").css("display", "block");
-                        }
-                    })
-
-                    var before = null;
-                    var after = null;
-
-                    basicgrid.on('afterChange', (ev) => {
-                        var user_type = $("#user_type").val();
-
-                        if (user_type != 0 && user_type != 2) {
-                            return Alert("수정 권한이 없습니다.");
-                            location.reload();
-                        } else {
-                            for (let i = 0; i < ev.changes.length; i++) {
-                                before = ev.changes[i].prevValue;
-                                after = ev.changes[i].value;
-
-                                if (after != before) {
-                                    var basic_id = basicgrid.getRow(ev.changes[i].rowKey).basic_id;
-                                    var detail_id = ev.changes[i].columnName;
-                                    var standard = after;
-
-                                    if (basic_id != null) {
-                                        updateBasicData.push({"basic_id": basic_id, "detail_id": detail_id, "standard": standard});
-                                    }
-                                }
-
-                                if ($(".plus_btn_submit1")[0].style.display != 'block') {
-                                    $(".plus_btn_submit2").css("display", "block");
-                                }
-                            }
-                        }
-                    });
-
-                    loading.classList.remove('on');
-                }
-            });
+						//console.log("rowArr_global : " + rowArr_global['basic_remain_re']);
+						//console.log("rowArr_global : " + rowArr_global['basic_remain_id']);
+						//console.log("rowArr_global : " + rowArr_global['basic_remain_num']);
+						
+						map.set(rowArr_global['basic_remain_num'], rowArr_global['basic_remain_re']); 
+				}
+				
+				$.ajax(
+						{
+							
+			                url: 'searchBasic',
+			                method: 'POST',
+			                dataType: 'json',
+			                data: data,
+			                success: function (result) {
+			                    basicgrid = new tui.Grid({
+			                        el: document.getElementById('basicGrid'),
+			                        scrollX: true,
+			                        scrollY: false,
+			                        data: result.basic,
+			                        rowHeaders: ['checkbox'],
+			                        editingEvent: 'click',
+			                        columns: [],
+			                        pageOptions: {
+			                            useClient: true,
+			                            perPage: limit,
+			                        }
+			                    });
+			
+			                    const headerArr = [
+			                        {
+			                            'header': '첨부파일',
+			                            'name': 'file',
+			                            'width': 100,
+			                        },
+			                        {
+			                            'header': '특성상태',
+			                            'name': 'status',
+			                            'width': 150,
+			                        }
+			                    ];
+			                    var headerName = [];
+			
+			                    var arr = {};
+			
+			                    for (let i = 0; i < result.display.length; i++) {
+			                        var colHeader = result.display[i].detail_title;
+			                        var colName = result.display[i].detail_id;
+			                        headerName[i] = result.display[i].detail_id;
+			
+			                        var filter = {type: 'text', showApplyBtn: true, showClearBtn: true};
+			
+			                        if (result.display[i].detail_spec == '기본 정보') {
+			                            if (result.display[i].detail_title == '작물') {
+			                                arr = {'header': colHeader, 'name': colName, 'sortable': 'true', 'sortingType': 'asc', 'width': 180, 'filter': filter}
+			                            } else {
+			                                arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 180, 'filter': filter}
+			                            }
+			                        } else {
+			                            arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 500, 'filter': filter}
+			                        }
+			
+			                        headerArr.push(arr);
+			                    }
+			
+			                    basicgrid.setColumns(headerArr);
+			
+			                    const dataArr = [];
+			
+			                    for (let i = 0; i < result.basic.length; i++) {
+			                        let rowArr = {};
+			
+			                        rowArr = {'file': '<i class="bi bi-file-earmark-arrow-down"></i>', 'basic_id': result.basic[i].basic_id};
+			
+			                        if (result.basic[i].standard_count == 0) {
+			                            rowArr['status'] = '<span style="color:red">EMPTY</span>';
+			
+			                        } else {
+			                            rowArr['status'] = '<span style="color:blue">PROGRESS</span>';
+			                        }
+			
+			                        for (var j = 0; j < result.basic[i].basic_standard.length; j++) {
+			                            var rowData = result.basic[i].basic_standard[j].standard;
+			                            rowArr[headerName[j]] = rowData;
+			                        }
+			
+			                        dataArr.push(rowArr);
+			                    }
+			
+			                    basicgrid.resetData(dataArr);
+			
+			                    basicgrid.on('click', (ev) => {
+			                        if (ev.targetType === 'cell' && (ev.columnName === '170' || ev.columnName === '337' || ev.columnName === '518' || ev.columnName === '693' || ev.columnName === '835' || ev.columnName === '1000' || ev.columnName === '1170' || ev.columnName === '1338' || ev.columnName === '1512' || ev.columnName === '1724') && insertCheck == 0) {
+			                            let value_basic = ev.nativeEvent.srcElement;
+			
+			                            SearchBreed(value_basic);
+			                        } else if (ev.targetType === 'cell' && ev.columnName === 'status' && insertCheck == 0) {
+			                            var e_id = basicgrid.getRow(ev.rowKey).basic_id;
+			
+			                            EmptyBtn(e_id);
+			                        } else if (ev.targetType === 'cell' && ev.columnName === 'file' && insertCheck == 0) {
+			                            var id = basicgrid.getRow(ev.rowKey).basic_id;
+			
+			                            FileBtn(id);
+			                        } else if (ev.targetType === 'cell' && (ev.columnName === '175' || ev.columnName === '342' || ev.columnName === '523' || ev.columnName === '698' || ev.columnName === '840' || ev.columnName === '1005' || ev.columnName === '1175' || ev.columnName === '1343' || ev.columnName === '1517' || ev.columnName === '1729') && insertCheck == 0) {
+			                            let sample_num = ev.nativeEvent.srcElement;
+			
+			                            SearchBasicRemain1(sample_num);
+			                        }
+			                    });
+			
+			                    basicgrid.on('editingStart', (ev) => {
+			                        if ($(".plus_btn_submit1")[0].style.display != 'block') {
+			                            $(".plus_btn_submit2").css("display", "block");
+			                        }
+			                    })
+			
+			                    var before = null;
+			                    var after = null;
+			
+			                    basicgrid.on('afterChange', (ev) => {
+			                        var user_type = $("#user_type").val();
+			
+			                        if (user_type != 0 && user_type != 2) {
+			                            return Alert("수정 권한이 없습니다.");
+			                            location.reload();
+			                        } else {
+			                            for (let i = 0; i < ev.changes.length; i++) {
+			                                before = ev.changes[i].prevValue;
+			                                after = ev.changes[i].value;
+			
+			                                if (after != before) {
+			                                    var basic_id = basicgrid.getRow(ev.changes[i].rowKey).basic_id;
+			                                    var detail_id = ev.changes[i].columnName;
+			                                    var standard = after;
+			
+			                                    if (basic_id != null) {
+			                                        updateBasicData.push({"basic_id": basic_id, "detail_id": detail_id, "standard": standard});
+			                                    }
+			                                }
+			
+			                                if ($(".plus_btn_submit1")[0].style.display != 'block') {
+			                                    $(".plus_btn_submit2").css("display", "block");
+			                                }
+			                            }
+			                        }
+			                    });
+			
+			                    loading.classList.remove('on');
+			                }
+			            });
+				}
+        
+    	});
     }
 
     function SearchBasicRemain(e) {

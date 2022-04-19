@@ -43,11 +43,12 @@
 
     <!-- 도입자원 검색 -->
     <select id="SearchIncome" resultType="Income">
-        SELECT * FROM income
+        SELECT a.income_id, a.income_code, a.income_name, a.income_kind, a.income_division, a.income_place, a.income_country, a.income_person, a.income_date,
+        ifnull((select b.income_remain_re from incomeRemain b where a.income_code=b.income_remain_num order by b.create_date desc  limit 1),0) as income_num, a.income_type, a.income_trait, a.income_comment, a.create_date, a.modify_date
+        FROM income a 
         <choose>
             <when test="income_name != 'none'">
-                WHERE income_name = #{income_name}
-                ORDER BY income_id DESC
+                WHERE a.income_name = #{income_name} order by a.create_date desc;
             </when>
         </choose>
         LIMIT #{offset}, #{limit}
@@ -164,7 +165,10 @@
     </insert>
 
     <select id="SearchIncomeExcel" resultType="Income">
-        SELECT * FROM income
+        SELECT a.income_id, a.income_code, a.income_name, a.income_kind, a.income_division, a.income_place, a.income_country, a.income_person, a.income_date,
+        ifnull((select b.income_remain_re from incomeRemain b where a.income_code=b.income_remain_num order by
+        b.income_remain_date desc  limit 1),0) as income_num, a.income_type, a.income_trait, a.income_comment, a.create_date, a.modify_date
+        FROM income a 
         <choose>
             <when test="income_name != 'none'">
                 WHERE income_name = #{income_name}
