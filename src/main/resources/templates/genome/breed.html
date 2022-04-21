@@ -993,6 +993,7 @@
                             <div class="breadcrumb-main" style="float: left;">
                                 <h4 class="text-capitalize breadcrumb-title">품종 관리</h4>
                                 <input type="hidden" id="user_type" th:value="${user.user_type}">
+                                <input type="hidden" id="user_crop" th:value="${user.auth_crop}">
                             </div>
                             <div class="action-btn d-flex justify-content-end">
                                 <div class="atbd-button-list d-flex flex-wrap">
@@ -2036,6 +2037,7 @@
 
     function getLocalS(key, useRemove) {
         let result = "";
+
         if (localStorage.getItem(key) !== null) {
             result = localStorage.getItem(key);
             if (useRemove) {
@@ -2235,18 +2237,53 @@
 
     // 작물 선택
     $("#CropSelect").change(function () {
-        breedgrid.destroy();
+        var user_type = $("#user_type").val();
 
-        SearchBreed(1);
-        SearchBreedgrid(1);
-        setLocalS("breed_crop", $("#CropSelect").val());
+        if (user_type == 2) {
+            console.log("check", user_type);
 
-        $(".plus_btn_submit1").css("display", "none");
-        $(".plus_btn_submit2").css("display", "none");
-        $(".plus_btn_submit3").css("display", "none");
-        $(".plus_btn_submit4").css("display", "none");
-        $(".plus_btn_submit5").css("display", "none");
-        $(".plus_btn_submit6").css("display", "none");
+            var auth_type = $("#user_crop").val();
+            var crop = $("#CropSelect").val();
+
+            console.log(auth_type);
+
+            if (!auth_type) {
+                console.log("null");
+            } else {
+                if (auth_type.indexOf(crop) !== -1) {
+                    console.log("same")
+                } else {
+                    $("#CropSelect").val(getLocalS("breed_crop"));
+                    return Alert1("허가되지 않은 작물입니다.");
+                }
+            }
+
+            breedgrid.destroy();
+
+            SearchBreed(1);
+            SearchBreedgrid(1);
+            setLocalS("breed_crop", $("#CropSelect").val());
+
+            $(".plus_btn_submit1").css("display", "none");
+            $(".plus_btn_submit2").css("display", "none");
+            $(".plus_btn_submit3").css("display", "none");
+            $(".plus_btn_submit4").css("display", "none");
+            $(".plus_btn_submit5").css("display", "none");
+            $(".plus_btn_submit6").css("display", "none");
+        } else {
+            breedgrid.destroy();
+
+            SearchBreed(1);
+            SearchBreedgrid(1);
+            setLocalS("breed_crop", $("#CropSelect").val());
+
+            $(".plus_btn_submit1").css("display", "none");
+            $(".plus_btn_submit2").css("display", "none");
+            $(".plus_btn_submit3").css("display", "none");
+            $(".plus_btn_submit4").css("display", "none");
+            $(".plus_btn_submit5").css("display", "none");
+            $(".plus_btn_submit6").css("display", "none");
+        }
     })
 
     // 갯수 선택
