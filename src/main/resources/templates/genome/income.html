@@ -1530,7 +1530,13 @@
 
     function getLocalS(key, useRemove) {
         let result = "";
-        if (localStorage.getItem(key) !== null) {
+        let user_type = $("#user_type").val();
+
+        if (user_type == 2) {
+            var auth_type = $("#user_crop").val();
+            result = auth_type;
+            return result;
+        } else if (localStorage.getItem(key) !== null) {
             result = localStorage.getItem(key);
             if (useRemove) {
                 removeLocalS(key);

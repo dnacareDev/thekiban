@@ -1668,7 +1668,37 @@
             </div>
         </div>
     </div>
-
+    
+    <!-- 구글지도에서 출력되는 시교출고관리 modal  -->
+    <div class="modal-basic modal fade show pop7" id="sampleOutcome_modal_after_googleMap" role="dialog" aria-hidden="true">
+    	 <!-- <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content modal-bg-white ">
+                <div class="modal-header" style="border: none">
+                    <h6 class="modal-title">시교자원관리</h6>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="atbd-upload">
+                            <table>
+                                <thead>
+                                <tr>
+                                    <th>작목명</th>
+                                    <th>시교명</th>
+                                    <th>종자번호(ID)</th>
+                                </tr>
+                                </thead>
+                                <tbody id="file_list">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="border: none">
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
+                </div>
+            </div>
+        </div>  js로 출력하는 영역 -->
+	</div>
     <!-- modal end -->
 
     <div class="load_wrap">
@@ -1701,7 +1731,13 @@
 
     function getLocalS(key, useRemove) {
         let result = "";
-        if (localStorage.getItem(key) !== null) {
+        let user_type = $("#user_type").val();
+
+        if (user_type == 2) {
+            var auth_type = $("#user_crop").val();
+            result = auth_type;
+            return result;
+        } else if (localStorage.getItem(key) !== null) {
             result = localStorage.getItem(key);
             if (useRemove) {
                 removeLocalS(key);
@@ -3576,7 +3612,7 @@
     function SearchMarker() {
         $.ajax(
             {
-                url: 'selectOutcomeList',
+                url: 'selectOutcomeList',										// sample.html에서 불러도 url은 homeController.java에 있으니까 백엔드쪽은 건드릴필요 없나?
                 method: 'POST',
                 dataType: 'json',
                 data: data,
@@ -3629,34 +3665,193 @@
 
         var koreaLocations = [];
         var globalLocations = [];
+        
+        var koreaSubLocations = [];			// location을 받는 데이터배열에 지역명 추가, subLocation배열을 따로 만들어 이쪽으로 배정
+        var globalSubLocations = [];	
+        
+        var marker1 = [];
+        var marker2 = [];
+        var infoWindow = new google.maps.InfoWindow();
 
+        // console.log(outKo);
+        
         for (let i = 0; i < inKo.length; i++) {
-            koreaLocations.push(inKo[i]);
+            koreaLocations.push({"lat":inKo[i].lat , "lng":inKo[i].lng});
+            koreaSubLocations.push({"location_name":inKo[i].name});
         }
 
         for (let o = 0; o < outKo.length; o++) {
-            globalLocations.push(outKo[o]);
+        	 console.log(outKo[o].lat);		// 정상
+        	globalLocations.push({"lat":outKo[o].lat , "lng":outKo[o].lng});
+        	globalSubLocations.push({"location_name":outKo[o].name});
         }
 
-        for await (const item of koreaLocations) {
-            var marker1;
+        for await (const item of koreaLocations) {						// for await of 구문 안에 marker관련 코드를 넣는다. 
+        	for (let i = 0; i < koreaLocations.length; i++) {			// home과 달리 sample은 지도가 바로 출력되지 않고 버튼을 눌러야해서 await를 넣은것 같다
 
-            marker1 = new google.maps.Marker({ // 마커 생성
+        		console.log(koreaSubLocations[i]);
+        		
+                marker1[i] = new google.maps.Marker({ // 마커 생성
                 map: korMap,
-                position: item
-            });
+                position: koreaLocations[i],
+        	    });									
+        	
+        	    marker1[i].addListener("click", () => {				// infoWindow 생성
+        	    	infoWindow.close();
+        	    	infoWindow.setContent('<p>지역: ' + koreaSubLocations[i].location_name + '<p>' +
+        	    							//myFunction()에 지역명을 매개변수로 넘긴다
+        	    						 '<button onclick="KoreaList(' + i + ')">상세정보</button>');	
+        	    	infoWindow.open(marker1[i].getMap(), marker1[i]);
+        	    });
+        	}
         }
 
         for await (const item of globalLocations) {
-            var marker2;
+        	for (let i = 0; i < globalLocations.length; i++) {
 
-            marker2 = new google.maps.Marker({ // 마커 생성
+        		console.log(globalSubLocations[i]);
+        	
+                marker2[i] = new google.maps.Marker({ // 마커 생성
                 map: globalMap,
-                position: item
-            });
+                position: globalLocations[i]
+            	});
+            	
+                marker2[i].addListener("click", () => {
+                	infoWindow.close();
+                	infoWindow.setContent('<p>지역: ' + globalSubLocations[i].location_name + '<p>' +
+                						  '<button onclick="GlobalList(' + i + ')">상세정보</button>');
+                	infoWindow.open(marker2[i].getMap(), marker2[i]);
+                });
+       		}
         }
     }
 
+    function KoreaList(num) {
+    	location_arr = [
+    			'서울',
+    			'강원도',
+    			'부산'
+    	];
+    	
+    	for(let i=0; i<location_arr.length ; i++) {
+    		if(num == i) {
+    			console.log(location_arr[i]);
+    			myFunction(location_arr[i]);
+    			break;
+    		}
+    	}
+    }
+    
+    function GlobalList(num) {
+    	location_arr = [
+			'멕시코',
+			'베트남',
+	];
+	
+		for(let i=0; i<location_arr.length ; i++) {
+			if(num == i) {
+				console.log(location_arr[i]);
+				myFunction(location_arr[i]);
+				break;
+			}
+		}
+    }
+    
+    function myFunction(num) {			// DB접근 및  modal창 생성
+    	
+		let sample_outcome_place = num;		// name을 받아서 modal창에 서울이 떠야함
+			
+    	let data4 = {"sample_outcome_place": sample_outcome_place};
+
+    	
+    	$.ajax(
+    		{
+    			url: 'searchSeed2',		
+    			method: 'POST',
+    			dataType: 'json',
+    			data: data4,
+    			success: function(result2) {
+    				
+    				let name_arr = [];
+    				let code_arr = [];
+    				let num_arr = [];
+    				
+    				console.log(result2);	// 내부에 result2를 parameter로 받은것 확인
+
+    				for (let i = 0; i < result2.sampleOutcome.length; i++) {
+
+    					name_arr.push(result2.sampleOutcome[i].sample_name);
+    					code_arr.push(result2.sampleOutcome[i].sample_outcome_code);
+    					num_arr.push(result2.sampleOutcome[i].sample_outcome_num);
+    				}	
+    				
+    				const set = new Set(code_arr);	// new Set 설정으로 중복제거
+    				const set2 = new Set(num_arr);
+    				
+					let unique_code_arr = [...set];
+					let unique_num_arr = [...set2];
+    				
+    				console.log(unique_code_arr);	// unique_code_arr = sample_outcome_code - 시교명(중복제거)  
+    				console.log(unique_num_arr);	// unique_num_arr  = sample_outcome_num  - 종자번호(중복제거)
+    				
+    				
+    				
+    				const rowCnt = unique_code_arr.length;	// 행 개수는 데이터배열의 수만큼
+    				
+    				// modal에 해당하는 태그
+    				let sample_outcome_modal_htmlString = '';
+    				
+    				
+    				sample_outcome_modal_htmlString += 	'<div class="modal-dialog modal-md" role="document">';
+    				sample_outcome_modal_htmlString += 		'<div class="modal-content modal-bg-white ">';
+    				sample_outcome_modal_htmlString += 			'<div class="modal-header" style="border: none">';
+    				sample_outcome_modal_htmlString += 				'<h6 class="modal-title">시교자원관리 (' + sample_outcome_place + ')</h6>';
+    				sample_outcome_modal_htmlString += 			'</div>';
+    				sample_outcome_modal_htmlString += 			'<div class="modal-body">';
+    				sample_outcome_modal_htmlString += 				'<div>';
+    				sample_outcome_modal_htmlString += 					'<div class="atbd-upload">';
+    				sample_outcome_modal_htmlString += 						'<table>';
+    				sample_outcome_modal_htmlString += 							'<thead>';
+    				sample_outcome_modal_htmlString += 								'<tr>'
+    				sample_outcome_modal_htmlString += 									'<th>작목명</th><th>시교명</th><th>종자번호(ID)</th>';
+    				sample_outcome_modal_htmlString += 								'</tr>';
+    				sample_outcome_modal_htmlString += 							'</thead>'
+    				sample_outcome_modal_htmlString += 							'<tbody id="file_list">';
+    				
+    				console.log("rowCnt:");		// 여기까지 문제없음
+    				console.log(rowCnt);
+    				
+    				// td에 리스트 받기
+    				for(let i=0 ; i<rowCnt ; i++) { // length는 3일 것
+        				sample_outcome_modal_htmlString += 								'<tr>'
+                		sample_outcome_modal_htmlString += 									'<td>' +name_arr[i] + '</td><td>' + unique_code_arr[i] + '</td><td>' + unique_num_arr[i] +'</td>';
+                		sample_outcome_modal_htmlString += 								'</tr>';
+    				}    				
+
+    				sample_outcome_modal_htmlString += 							'</tbody>';
+    				sample_outcome_modal_htmlString += 						'</table>';
+    				sample_outcome_modal_htmlString += 					'</div>';
+    				sample_outcome_modal_htmlString += 				'</div>';
+    				sample_outcome_modal_htmlString += 			'</div>';
+    				sample_outcome_modal_htmlString += 			'<div class="modal-footer" style="border: none">';
+    				sample_outcome_modal_htmlString += 				'<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">닫기</button>';
+    				sample_outcome_modal_htmlString += 			'</div>';
+    				sample_outcome_modal_htmlString += 		'</div>';
+    				sample_outcome_modal_htmlString += 	'</div>';
+    				
+    				
+    				
+    				console.log(sample_outcome_modal_htmlString);
+    				
+    				$("#sampleOutcome_modal_after_googleMap").html(sample_outcome_modal_htmlString);	// 홈화면에서는 sample.html을 가져온거라 괜찮았지만
+    																							// id = sample_file을 그대로 쓰면 코드가 터진다. 
+    				// 일단 html로 단순텍스트 모달창을 띄워보자
+    				$("#sampleOutcome_modal_after_googleMap").modal("show");	// 모달창이 열리긴 하는데 닫기 시도시 무한스택에 빠지고 크롬 먹통
+
+    			} 
+    		})
+    }
+    
     function smoothZoom(map, max, cnt) {
         if (cnt >= max) {
             return;
@@ -3671,6 +3866,7 @@
         }
     }
 
+    
     function makeSelect() {
         let sbox = document.querySelector("#modal-search");
 

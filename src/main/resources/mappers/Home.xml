@@ -75,4 +75,12 @@
 		SELECT *
 		FROM sampleOutcome
 	</select>
+	
+	
+	<!-- 새로 작성. 망가지면 이 밑으로 삭제  -->
+	<select id="SearchSeed2" resultType="SampleOutcome">
+        SELECT * FROM sampleOutcome
+        WHERE sample_outcome_place = #{sample_outcome_place} 
+        ORDER BY sample_outcome_id DESC
+    </select>
 </mapper>

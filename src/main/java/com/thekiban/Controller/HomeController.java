@@ -8,6 +8,7 @@ import com.thekiban.Service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -91,11 +92,13 @@ public class HomeController {
       if (location.getLocation_type().equals("국내")) {
         latlngKo.put("lat", Double.parseDouble(location.getLocation_lat()));
         latlngKo.put("lng", Double.parseDouble(location.getLocation_lng()));
+        latlngKo.put("name", location.getLocation_name());
 
         placeK.add(latlngKo);
       } else if (location.getLocation_type().equals("해외")) {
         latlngGlo.put("lat", Double.parseDouble(location.getLocation_lat()));
         latlngGlo.put("lng", Double.parseDouble(location.getLocation_lng()));
+        latlngGlo.put("name", location.getLocation_name());							// 글로벌 작업중. 한국과 똑같이 하면 된다
 
         placeG.add(latlngGlo);
       }
@@ -106,4 +109,20 @@ public class HomeController {
 
     return result;
   }
+  
+  // searchSeed2 생성중. 망가지면 이 밑으로 다 지운다
+  
+  @ResponseBody
+  @RequestMapping("searchSeed2")
+  public Map<String, Object> SearchSeed2(@RequestParam("sample_outcome_place") String sample_outcome_place) {
+	  Map<String, Object> result2 = new LinkedHashMap<String, Object>();
+	  
+	  List<SampleOutcome> SampleOutcome = service.SearchSeed2(sample_outcome_place);		
+
+	  																						// 
+	  result2.put("sampleOutcome", SampleOutcome);
+	  return result2;							
+  }
+
+  
 }

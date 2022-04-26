@@ -17,4 +17,8 @@ public interface HomeService
 	List<Breed> SelectChartBar(String year);
 
 	List<SampleOutcome> SelectOutcomeList();
+	
+//	DB접근 추가중. 망가지면 아래쪽 삭제
+	List<SampleOutcome> SearchSeed2(String sample_outcome_place);
+	
 }

@@ -48,4 +48,11 @@ public class HomeServiceImpl implements HomeService
 	public List<SampleOutcome> SelectOutcomeList() {
 		return mapper.SelectOutcomeList();
 	}
+
+	// DB접근중. 망가지면 이 밑으로 다 지움
+	@Override
+	public List<SampleOutcome> SearchSeed2(String sample_outcome_place) {
+		return mapper.SearchSeed2(sample_outcome_place);
+	}
+
 }
