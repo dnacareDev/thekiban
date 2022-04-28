@@ -333,7 +333,7 @@
             margin-left: 10px;
         }
         
-        /* 2022-04-27 구글맵 상세정보에 해당하는 버튼에도 같은 css를 적용하기 위해 #google_map-detail 추가 */
+        /* 2022-04-27 | DNACARE 구글맵 상세정보에 해당하는 버튼에도 같은 css를 적용하기 위해 #google_map-detail 추가 */
         /* kiban_home.html에도 추가 */
         #google_map-detail {
             height: 30px;
@@ -3701,7 +3701,6 @@
         var marker2 = [];
         var infoWindow = new google.maps.InfoWindow();
 
-        // console.log(outKo);
         
         for (let i = 0; i < inKo.length; i++) {
             koreaLocations.push({"lat":inKo[i].lat , "lng":inKo[i].lng});
@@ -3709,7 +3708,6 @@
         }
 
         for (let o = 0; o < outKo.length; o++) {
-        	 console.log(outKo[o].lat);		// 정상
         	globalLocations.push({"lat":outKo[o].lat , "lng":outKo[o].lng});
         	globalSubLocations.push({"location_name":outKo[o].name});
         }
@@ -3717,7 +3715,6 @@
         for await (const item of koreaLocations) {						// for await of 구문 안에 marker관련 코드를 넣는다. 
         	for (let i = 0; i < koreaLocations.length; i++) {			// home과 달리 sample은 지도가 바로 출력되지 않고 버튼을 눌러야해서 await를 넣은것 같다
 
-        		console.log(koreaSubLocations[i]);
         		
                 marker1[i] = new google.maps.Marker({ // 마커 생성
                 map: korMap,
@@ -3737,7 +3734,6 @@
         for await (const item of globalLocations) {
         	for (let i = 0; i < globalLocations.length; i++) {
 
-        		console.log(globalSubLocations[i]);
         	
                 marker2[i] = new google.maps.Marker({ // 마커 생성
                 map: globalMap,
@@ -3763,7 +3759,6 @@
     	
     	for(let i=0; i<location_arr.length ; i++) {
     		if(num == i) {
-    			console.log(location_arr[i]);
     			myFunction(location_arr[i]);
     			break;
     		}
@@ -3778,7 +3773,6 @@
 	
 		for(let i=0; i<location_arr.length ; i++) {
 			if(num == i) {
-				console.log(location_arr[i]);
 				myFunction(location_arr[i]);
 				break;
 			}
@@ -3800,36 +3794,35 @@
     			data: data4,
     			success: function(result2) {
     				
-    				let name_arr = [];
-    				let code_arr = [];
-    				let num_arr = [];
     				
-    				console.log(result2);	// 내부에 result2를 parameter로 받은것 확인
+					console.log(result2);	// 내부에 result2를 parameter로 받은것 확인
+    				
+    				let name_code_num_arr = [];
+    				
+    				for (let i = 0; i < result2.sampleOutcome.length; i++) {			// 각 배열의 원소에 map을 집어넣음. 이 데이터에서 중복제거를 시도
+    					
+    					const map1 = {};
+    					
+    					map1['name'] = result2.sampleOutcome[i].sample_name;
+    					map1['code'] = result2.sampleOutcome[i].sample_outcome_code;
+    					map1['num'] = result2.sampleOutcome[i].sample_outcome_num;
+    					
+    					name_code_num_arr.push(map1);									
+    				}
 
-    				for (let i = 0; i < result2.sampleOutcome.length; i++) {
+    				
+    				const map2 = new Map();
 
-    					name_arr.push(result2.sampleOutcome[i].sample_name);
-    					code_arr.push(result2.sampleOutcome[i].sample_outcome_code);
-    					num_arr.push(result2.sampleOutcome[i].sample_outcome_num);
-    				}	
-    				
-    				const set = new Set(code_arr);	// new Set 설정으로 중복제거
-    				const set2 = new Set(num_arr);
-    				
-					let unique_code_arr = [...set];
-					let unique_num_arr = [...set2];
-    				
-    				console.log(unique_code_arr);	// unique_code_arr = sample_outcome_code - 시교명(중복제거)  
-    				console.log(unique_num_arr);	// unique_num_arr  = sample_outcome_num  - 종자번호(중복제거)
+					for(const character of name_code_num_arr) {							// 중요. 그냥 비교하면 참조주소를 비교하기 때문에 같다고 나올수가 없다.(중복제거 불가능)
+						map2.set(JSON.stringify(character), character);					// 따라서 아예 문자열화하여 String의 값을 비교 & 중복제거함
+					}
+
+					const unique_arr = [...map2.values()];								// 중복제거된 map의 집합을 다시 배열화
     				
     				
     				
-    				const rowCnt = unique_code_arr.length;	// 행 개수는 데이터배열의 수만큼
-    				
-    				// modal에 해당하는 태그
+    				// modal 영역에 필요한 태그 생성 영역
     				let sample_outcome_modal_htmlString = '';
-    				
-    				
     				sample_outcome_modal_htmlString += 	'<div class="modal-dialog modal-md" role="document">';
     				sample_outcome_modal_htmlString += 		'<div class="modal-content modal-bg-white ">';
     				sample_outcome_modal_htmlString += 			'<div class="modal-header" style="border: none">';
@@ -3837,22 +3830,20 @@
     				sample_outcome_modal_htmlString += 			'</div>';
     				sample_outcome_modal_htmlString += 			'<div class="modal-body">';
     				sample_outcome_modal_htmlString += 				'<div>';
-    				sample_outcome_modal_htmlString += 					'<div>';
+    				sample_outcome_modal_htmlString += 					'<div class="atbd-upload">';
     				sample_outcome_modal_htmlString += 						'<table class="modal-outcome">';
     				sample_outcome_modal_htmlString += 							'<thead>';
     				sample_outcome_modal_htmlString += 								'<tr>'
     				sample_outcome_modal_htmlString += 									'<th>작목명</th><th>시교명</th><th>종자번호(ID)</th>';
     				sample_outcome_modal_htmlString += 								'</tr>';
     				sample_outcome_modal_htmlString += 							'</thead>'
-    				sample_outcome_modal_htmlString += 							'<tbody>';
+    				sample_outcome_modal_htmlString += 							'<tbody id="file_list">';
     				
-    				// console.log("rowCnt:");		// 여기까지 문제없음
-    				// console.log(rowCnt);
     				
     				// td에 리스트 받기
-    				for(let i=0 ; i<rowCnt ; i++) { 
+    				for(let i=0 ; i<unique_arr.length ; i++) { // length는 3일 것
         				sample_outcome_modal_htmlString += 								'<tr>'
-                		sample_outcome_modal_htmlString += 									'<td>' +name_arr[i] + '</td><td>' + unique_code_arr[i] + '</td><td>' + unique_num_arr[i] +'</td>';
+                		sample_outcome_modal_htmlString += 									'<td>' + unique_arr[i].name + '</td><td>' + unique_arr[i].code + '</td><td>' + unique_arr[i].num +'</td>';
                 		sample_outcome_modal_htmlString += 								'</tr>';
     				}    				
 
@@ -3862,14 +3853,10 @@
     				sample_outcome_modal_htmlString += 				'</div>';
     				sample_outcome_modal_htmlString += 			'</div>';
     				sample_outcome_modal_htmlString += 			'<div class="modal-footer" style="border: none">';
-    				sample_outcome_modal_htmlString += 				'<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">닫기</button>';
+    				sample_outcome_modal_htmlString += 				'<button type="button" id="pink_to_green" class="btn btn-secondary btn-sm" data-dismiss="modal">닫기</button>';
     				sample_outcome_modal_htmlString += 			'</div>';
     				sample_outcome_modal_htmlString += 		'</div>';
     				sample_outcome_modal_htmlString += 	'</div>';
-    				
-    				
-    				
-    				console.log(sample_outcome_modal_htmlString);
     				
     				$("#sampleOutcome_modal_after_googleMap").html(sample_outcome_modal_htmlString);	
     																							 
