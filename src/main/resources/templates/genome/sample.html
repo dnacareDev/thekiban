@@ -249,6 +249,14 @@
             font-size: 16px
         }
 
+		/* 2022-04-27 | google지도 마커의 상세정보를 띄울 시 생성되는 modal(title : 시교자원관리)의 table을 중앙정렬   */
+		table.modal-outcome {
+			width: 100%;
+			height: 100px;
+			margin: auto;
+			text-align: left;
+		}
+
         .main-content .table thead th span.title:before,
         .main-content .table thead th span.title:after,
         .main-content .table thead th i {
@@ -314,6 +322,7 @@
             justify-content: flex-start;
         }
 
+			
         #data_upload .form-group button, #data_upload2 .form-group button, #data_upload3 .form-group button, #sample_file .form-group button {
             height: 45px;
             padding: 0 20px;
@@ -323,7 +332,20 @@
             border-radius: 5px;
             margin-left: 10px;
         }
-
+        
+        /* 2022-04-27 구글맵 상세정보에 해당하는 버튼에도 같은 css를 적용하기 위해 #google_map-detail 추가 */
+        /* kiban_home.html에도 추가 */
+        #google_map-detail {
+            height: 30px;
+            padding: 0 20px;
+            background-color: #217566;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            margin-top: 5px;
+            margin-left: 10px;        
+        }
+        
         #data_upload2 .form-group button, #data_upload3 .form-group button, #sample_file .form-group button {
             margin-left: 0;
         }
@@ -1671,7 +1693,8 @@
     
     <!-- 구글지도에서 출력되는 시교출고관리 modal  -->
     <div class="modal-basic modal fade show pop7" id="sampleOutcome_modal_after_googleMap" role="dialog" aria-hidden="true">
-    	 <!-- <div class="modal-dialog modal-md" role="document">
+    	 <!-- 
+    	 <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white ">
                 <div class="modal-header" style="border: none">
                     <h6 class="modal-title">시교자원관리</h6>
@@ -1697,7 +1720,8 @@
                     <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
                 </div>
             </div>
-        </div>  js로 출력하는 영역 -->
+        </div>   		
+        -->
 	</div>
     <!-- modal end -->
 
@@ -3657,7 +3681,11 @@
 
         var globalOptions = {
             ...koreaOptions,
-            zoom: 2,
+            zoom: 1.5,
+            center: {
+                lat: 26.613766432253634,
+                lng: 167.84942123102657
+            },
         };
 
         var korMap = new google.maps.Map(document.querySelector("#google_map1"), koreaOptions);
@@ -3698,9 +3726,9 @@
         	
         	    marker1[i].addListener("click", () => {				// infoWindow 생성
         	    	infoWindow.close();
-        	    	infoWindow.setContent('<p>지역: ' + koreaSubLocations[i].location_name + '<p>' +
+        	    	infoWindow.setContent('<p>지역: ' + koreaSubLocations[i].location_name + '</p>' +
         	    							//myFunction()에 지역명을 매개변수로 넘긴다
-        	    						 '<button onclick="KoreaList(' + i + ')">상세정보</button>');	
+        	    						 '<button id="google_map-detail" onclick="KoreaList(' + i + ')">상세정보</button>');	
         	    	infoWindow.open(marker1[i].getMap(), marker1[i]);
         	    });
         	}
@@ -3718,8 +3746,8 @@
             	
                 marker2[i].addListener("click", () => {
                 	infoWindow.close();
-                	infoWindow.setContent('<p>지역: ' + globalSubLocations[i].location_name + '<p>' +
-                						  '<button onclick="GlobalList(' + i + ')">상세정보</button>');
+                	infoWindow.setContent('<p>지역: ' + globalSubLocations[i].location_name + '</p>' +
+                						  '<button id="google_map-detail" onclick="GlobalList(' + i + ')">상세정보</button>');
                 	infoWindow.open(marker2[i].getMap(), marker2[i]);
                 });
        		}
@@ -3809,20 +3837,20 @@
     				sample_outcome_modal_htmlString += 			'</div>';
     				sample_outcome_modal_htmlString += 			'<div class="modal-body">';
     				sample_outcome_modal_htmlString += 				'<div>';
-    				sample_outcome_modal_htmlString += 					'<div class="atbd-upload">';
-    				sample_outcome_modal_htmlString += 						'<table>';
+    				sample_outcome_modal_htmlString += 					'<div>';
+    				sample_outcome_modal_htmlString += 						'<table class="modal-outcome">';
     				sample_outcome_modal_htmlString += 							'<thead>';
     				sample_outcome_modal_htmlString += 								'<tr>'
     				sample_outcome_modal_htmlString += 									'<th>작목명</th><th>시교명</th><th>종자번호(ID)</th>';
     				sample_outcome_modal_htmlString += 								'</tr>';
     				sample_outcome_modal_htmlString += 							'</thead>'
-    				sample_outcome_modal_htmlString += 							'<tbody id="file_list">';
+    				sample_outcome_modal_htmlString += 							'<tbody>';
     				
-    				console.log("rowCnt:");		// 여기까지 문제없음
-    				console.log(rowCnt);
+    				// console.log("rowCnt:");		// 여기까지 문제없음
+    				// console.log(rowCnt);
     				
     				// td에 리스트 받기
-    				for(let i=0 ; i<rowCnt ; i++) { // length는 3일 것
+    				for(let i=0 ; i<rowCnt ; i++) { 
         				sample_outcome_modal_htmlString += 								'<tr>'
                 		sample_outcome_modal_htmlString += 									'<td>' +name_arr[i] + '</td><td>' + unique_code_arr[i] + '</td><td>' + unique_num_arr[i] +'</td>';
                 		sample_outcome_modal_htmlString += 								'</tr>';
@@ -3843,10 +3871,10 @@
     				
     				console.log(sample_outcome_modal_htmlString);
     				
-    				$("#sampleOutcome_modal_after_googleMap").html(sample_outcome_modal_htmlString);	// 홈화면에서는 sample.html을 가져온거라 괜찮았지만
-    																							// id = sample_file을 그대로 쓰면 코드가 터진다. 
-    				// 일단 html로 단순텍스트 모달창을 띄워보자
-    				$("#sampleOutcome_modal_after_googleMap").modal("show");	// 모달창이 열리긴 하는데 닫기 시도시 무한스택에 빠지고 크롬 먹통
+    				$("#sampleOutcome_modal_after_googleMap").html(sample_outcome_modal_htmlString);	
+    																							 
+    				
+    				$("#sampleOutcome_modal_after_googleMap").modal("show");	
 
     			} 
     		})

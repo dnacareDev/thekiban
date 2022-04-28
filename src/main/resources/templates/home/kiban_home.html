@@ -177,6 +177,31 @@
                 padding: 0 50px 0 50px;
             }
         }
+        
+        /* 2022-04-27 | google지도 마커의 상세정보를 띄울 시 생성되는 modal(title : 시교자원관리)의 table을 중앙정렬   */
+        /* ※sample.html에도 똑같이 추가 */
+		table.modal-outcome {
+			width: 100%;
+			height: 100px;
+			margin: auto;
+			text-align: left;
+		}
+		
+		/* 구글맵 상세정보에 해당하는 버튼에도 같은 css를 적용하기 위해 #google_map-detail 추가 */
+		/* sample.html에서 가져옴 */
+        #google_map-detail {
+            height: 30px;
+            padding: 0 20px;
+            background-color: #217566;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            margin-top: 5px;
+            margin-left: 10px;        
+        }
+
+        
+        
     </style>
 </head>
 
@@ -482,9 +507,9 @@
         	
         	    marker1[i].addListener("click", () => {				// infoWindow 생성
         	    	infoWindow.close();
-        	    	infoWindow.setContent('<p>지역: ' + koreaSubLocations[i].location_name + '<p>' +
+        	    	infoWindow.setContent('<p>지역: ' + koreaSubLocations[i].location_name + '</p>' +
         	    							//myFunction()에 지역명을 매개변수로 넘긴다
-        	    						 '<button onclick="KoreaList(' + i + ')">상세정보</button>');		
+        	    						 '<button id="google_map-detail" onclick="KoreaList(' + i + ')">상세정보</button>');		
         	    	infoWindow.open(marker1[i].getMap(), marker1[i]);
         	    });
         }
@@ -502,8 +527,8 @@
             	
                 marker2[i].addListener("click", () => {
                 	infoWindow.close();
-                	infoWindow.setContent('<p>지역: ' + globalSubLocations[i].location_name + '<p>' +
-                						  '<button onclick="GlobalList(' + i + ')">상세정보</button>');
+                	infoWindow.setContent('<p>지역: ' + globalSubLocations[i].location_name + '</p>' +
+                						  '<button id="google_map-detail" onclick="GlobalList(' + i + ')">상세정보</button>');
                 	infoWindow.open(marker2[i].getMap(), marker2[i]);
                 });
                 
@@ -593,7 +618,7 @@
     				sample_outcome_modal_htmlString += 			'<div class="modal-body">';
     				sample_outcome_modal_htmlString += 				'<div>';
     				sample_outcome_modal_htmlString += 					'<div class="atbd-upload">';
-    				sample_outcome_modal_htmlString += 						'<table>';
+    				sample_outcome_modal_htmlString += 						'<table class="modal-outcome">';
     				sample_outcome_modal_htmlString += 							'<thead>';
     				sample_outcome_modal_htmlString += 								'<tr>'
     				sample_outcome_modal_htmlString += 									'<th>작목명</th><th>시교명</th><th>종자번호(ID)</th>';
