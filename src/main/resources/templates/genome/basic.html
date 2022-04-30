@@ -4190,6 +4190,8 @@
         var limit = $("#limit").val();
         let sys_name = e.innerText;
 
+        console.log("e.innerText" , e.innerText);
+        
         let data = {"breed_name": breed_name, "sys_name": sys_name};
 
         var loading = document.querySelector('.load_wrap');
@@ -4257,6 +4259,7 @@
 
                             rowArr = {'breed_id': result2.breed[i].breed_id};
 
+                            console.log("result2.breed[i].breed_id : ", result2.breed[i].breed_id);
                             
                             for (var j = 0; j < result2.breed[i].breed_standard.length; j++) {
                                 var rowData = result2.breed[i].breed_standard[j].standard;
@@ -4983,6 +4986,11 @@
                 for (let i = 0; i < l; i++) {
                     total_id.push(breedGrid1.getCheckedRows()[i].breed_id)
                 }
+                
+                console.log("breedGrid1 : ", breedGrid1);
+                console.log("breedGrid1.getCheckedRows() : ", breedGrid1.getCheckedRows());
+                console.log("breedGrid1.getCheckedRows()[0] : " , breedGrid1.getCheckedRows()[0]);
+                console.log("breedGrid1.getCheckedRows()[0].breed_id : " , breedGrid1.getCheckedRows()[0].breed_id);
 
                 var data = {'breed_id': total_id};
 
@@ -5012,6 +5020,8 @@
                 for (let i = 0; i < l; i++) {
                     total_id.push(basicgrid.getCheckedRows()[i].basic_id)
                 }
+                
+
 
                 var data = {'basic_id': total_id};
 
@@ -5078,6 +5088,9 @@
 
                 var l1 = remainGrid1.getCheckedRows().length;
 
+                console.log("remainGrid", remainGrid1);
+                console.log("checkedRows", remainGrid1.getCheckedRows());
+                
                 for (let i = 0; i < l1; i++) {
                     total_id1.push(remainGrid1.getCheckedRows()[i].basic_remain_id)
                 }

@@ -2919,13 +2919,18 @@
                 data: data,
                 success: function (result2) {
 
+                	console.log(result2);
+                	
                     if (Object.keys(result2).length == 0) {
                         return Alert1("해당 원종이 존재하지 않습니다.")
                     } else {
                         $("#pop_data2").modal();
 
                         $(".breed_title").text("계통명 (ID) : " + e.innerText);
-
+			
+                        console.log(e);
+                        console.log(e.innerText);
+                        
                         tablechk = 2;
 
                         basicGrid1 = new tui.Grid({
@@ -2975,14 +2980,16 @@
                                                                         
                         for (let i = 0; i < Object.keys(result2).length; i++) {
                             
-                            let rowArr = {'basic_id' : Object.keys(result2)[i].basic_id};
+                            let rowArr = {'basic_id' : result2[i][0].basic_id};
+
 
                             for (let j = 0; j < result2[i].length; j++) {
                                 rowData = result2[i][j].standard;
                                 rowArr[headerName[j]] = rowData;
                             }
                             
-                            dataArr.push(rowArr);                            
+                            dataArr.push(rowArr);    
+                            
                         }
 
                         basicGrid1.resetData(dataArr);
@@ -3013,8 +3020,8 @@
                         });
 
                         basicGrid1.on('editingStart', (ev) => {
-                            if ($(".plus_btn_submit3")[0].style.display != 'block') {
-                                $(".plus_btn_submit4").css("display", "block");
+                            if ($(".plus_btn_submit5")[0].style.display != 'block') {
+                                $(".plus_btn_submit6").css("display", "block");
                             }
                         })
 
@@ -4025,6 +4032,8 @@
             for (let i = 0; i < l; i++) {
                 total_id.push(sampleGrid1.getCheckedRows()[i].sample_id);
             }
+            
+            console.log(total_id[0]);
 
             var data = {'sample_id': total_id};
 
@@ -4052,7 +4061,7 @@
     // 원종 삭제
     function DeleteBasic2() {
         var user_type = $("#user_type").val();
-
+        
         if (user_type != 0) {
             return Alert("삭제 권한이 없습니다.");
         } else {
@@ -4061,11 +4070,16 @@
                 var total_id = [];
 
                 var l = basicGrid1.getCheckedRows().length;
-
+                
                 for (let i = 0; i < l; i++) {
                     total_id.push(basicGrid1.getCheckedRows()[i].basic_id);
                 }
-
+				
+                console.log("basicGrid1 : ", basicGrid1);
+                console.log("basicGrid1.getCheckedRows() : " , basicGrid1.getCheckedRows());
+                console.log("basicGrid1.getCheckedRows()[0] : " , basicGrid1.getCheckedRows()[0]);
+                console.log("basicGrid1.getCheckedRows()[0].basic_id : " , basicGrid1.getCheckedRows()[0].basic_id); 
+                
                 var data = {'basic_id': total_id};
 
                 if (confirm("삭제하시겠습니까?") == true) {
@@ -4088,6 +4102,7 @@
                 }
             } else {
 
+            	
                 var total_id = [];
 
                 var l = breedgrid.getCheckedRows().length;
@@ -4116,6 +4131,7 @@
                 } else {
                     return false;
                 }
+                
             }
             
         }

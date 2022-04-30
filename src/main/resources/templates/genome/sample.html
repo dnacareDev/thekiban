@@ -2846,7 +2846,7 @@
 
                         let rowArr = {};
 
-                        if (result2.breeds[i].breed_standard[1].standard === e.innerText) {
+                        if (result2.breed[i].breed_standard[1].standard === e.innerText) {
 
                             rowArr = {'breed_id': result2.breed[i].breed_id};
 
@@ -4374,7 +4374,8 @@
             var input_data1 = [];
 
             input_data1.push(outcomeGrid2.getCheckedRows()[0]);
-
+			console.log(input_data1.push(outcomeGrid2.getCheckedRows()[0]));
+            
             $.ajax(
                 {
                     url: 'insertSampleOutcome',
