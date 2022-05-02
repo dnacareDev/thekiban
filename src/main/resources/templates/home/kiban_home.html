@@ -416,6 +416,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         SearchMarker();
+        console.log("a");
         SelectChartBar();
         SelectChart();
     });
@@ -430,8 +431,9 @@
                 success: function (result) {
                     var inKorea = [];
                     var outKorea = [];
-
+                    console.log("result.sampleOutcomeKo.length",result.sampleOutcomeKo.length);
                     for (let i = 0; i < result.sampleOutcomeKo.length; i++) {
+                    	console.log("result.sampleOutcomeKo[i]",result.sampleOutcomeKo[i]);
                         inKorea.push(result.sampleOutcomeKo[i]);
                     }
 
@@ -488,8 +490,9 @@
         
 
         for (let i = 0; i < inKo.length; i++) {
-            koreaLocations.push({"lat":inKo[i].lat , "lng":inKo[i].lng});
+        	koreaLocations.push({"lat":inKo[i].lat , "lng":inKo[i].lng});
             koreaSubLocations.push({"location_name":inKo[i].name});
+            console.log("koreaLocations", koreaLocations);
         }
 
 
@@ -541,7 +544,12 @@
     	location_arr = [
     			'서울',
     			'강원도',
-    			'부산'
+    			'부산',
+    			'강릉',
+    			'남해',
+    			'밀양',
+    			'성주',
+    			'익산'
     	];
     	
     	for(let i=0; i<location_arr.length ; i++) {
@@ -556,6 +564,10 @@
     	location_arr = [
 			'멕시코',
 			'베트남',
+			'미국',
+			'일본',
+			'인도',
+			'파키스탄'
 	];
 	
 	for(let i=0; i<location_arr.length ; i++) {
