@@ -106,5 +106,8 @@ public interface BasicService
 	List<Basic> SelectBasicExcel(int basic_id);
 
 	List<BasicRemain> SelectBRemainExcel(int basic_remain_id);
+	
+	// 첨부파일 목록 전체 조회
+	List<BasicFile> selectBasicFileAll();
 
 }

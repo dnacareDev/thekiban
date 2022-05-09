@@ -87,5 +87,8 @@ public interface IncomeMapper {
   List<Income> SelectIncomeExcel(int income_id);
 
   List<IncomeRemain> SelectIncomeRemainExcel(int income_remain_id);
+  
+  //income_file 전체목록 조회
+  List<IncomeFile> SelectIncomeFileAll();
 
 }

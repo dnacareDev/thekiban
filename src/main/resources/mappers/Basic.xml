@@ -371,4 +371,12 @@
         SELECT * FROM basicRemain
         WHERE basic_remain_id = #{basic_remain_id}
     </select>
+    
+    
+    <!-- 첨부파일 전체목록 조회 -->
+    <select id="selectBasicFileAll" resultType="BasicFile">
+        SELECT *
+        FROM basic_file
+    </select>
+    
 </mapper>

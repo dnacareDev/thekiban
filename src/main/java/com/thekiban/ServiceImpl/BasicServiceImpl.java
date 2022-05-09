@@ -253,4 +253,12 @@ public class BasicServiceImpl implements BasicService
 	public List<BasicRemain> SelectBRemainExcel(int basic_remain_id) {
 		return mapper.SelectBRemainExcel(basic_remain_id);
 	}
+	
+	// basic_file 전체목록 조회
+	@Override
+	public List<BasicFile> selectBasicFileAll()
+	{
+		return mapper.selectBasicFileAll();
+	}
+	
 }

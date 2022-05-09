@@ -344,4 +344,11 @@
             </when>
         </choose>
     </select>
+    
+    <!-- 첨부파일 전체목록 조회 -->
+    <select id="SelectSampleFileAll" resultType="SampleFile">
+        SELECT *
+        FROM sample_file
+    </select>
+    
 </mapper>

@@ -738,5 +738,17 @@ public class SampleController {
     return result;
   }
   
+//모든 파일의 income_id 리스트 조회
+ @ResponseBody
+ @RequestMapping("selectSampleFileAll")
+ public Map<String, Object> SelectSampleFile() {
+   Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+   List<SampleFile> sample_file = service.SelectSampleFileAll();
+
+   result.put("sample_file", sample_file);
+
+   return result;
+ }  
   
 }

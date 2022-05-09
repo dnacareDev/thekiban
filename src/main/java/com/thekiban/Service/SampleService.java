@@ -104,5 +104,6 @@ public interface SampleService {
 
   List<SampleOutcome> SelectSampleOutcomeExcel(int sample_outcome_id);
 
-
+  // 첨부파일 목록 전체 조회
+  List<SampleFile> SelectSampleFileAll();
 }

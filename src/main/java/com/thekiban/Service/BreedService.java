@@ -126,4 +126,7 @@ public interface BreedService
 	List<Breed> SelectBreedExcel(int breed_id);
 
 	int SearchByStandard(String standard);
+	
+	// 첨부파일 목록 전체 조회
+	List<BreedFile> selectBreedFileAll();
 }

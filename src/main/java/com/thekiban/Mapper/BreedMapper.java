@@ -131,4 +131,7 @@ public interface BreedMapper
 	List<Breed> SelectBreedExcel(int breed_id);
 
 	int SearchByStandard(@Param("standard") String standard);
+	
+	//breed_file 전체목록 조회
+	List<BreedFile> selectBreedFileAll();
 }

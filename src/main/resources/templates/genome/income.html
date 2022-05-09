@@ -2367,7 +2367,43 @@
                         pageOptions: {
                             useClient: false,
                             perPage: limit1
-                        }
+                        },
+					
+                        contextMenu: ({ rowKey, columnName }) => (
+                        	[
+                        		[
+                        			{
+                        				name: 'edit',
+                        				label: 'Edit',
+                        				action: () => {
+                        					remaingrid2.startEditing(rowKey, columnName);
+                        				}
+                        			},
+                        			{
+										name: 'export',
+										label: 'Export',
+										subMenu: [
+											{												
+												name: 'csvExport',
+												label: 'CSV Export',
+												action: () => {
+													remaingrid2.export('csv', {	fileName:	'도입자원재고관리' });
+												}
+											},
+											{
+												name: 'excelExport',
+												label: 'Excel Export',
+												action: () => {
+													remaingrid2.export('xlsx', {	fileName:	'도입자원재고관리' });
+												}
+											}
+										]
+										
+									}
+                        		]
+                        	]
+                        )
+
                      });
 
 					 const dataArr = [];
@@ -2793,7 +2829,71 @@
                         pageOptions: {
                             useClient: true,
                             perPage: limit
-                        }
+                        },
+                        
+                        contextMenu: ({ rowKey, columnName }) => (
+                            	[
+                            		[
+                            			{
+                            				name: 'edit',
+                            				label: 'Edit',
+                            				action: () => {
+                            					incomegrid.startEditing(rowKey, columnName);
+                            				}
+                            			},
+                            			{
+                            				name: 'export',
+                            				label: 'Export',
+                            				subMenu: [
+                            					{
+            										name: 'csvExport',
+            										label: 'CSV Export',
+            										action: () => {
+            											incomegrid.export('csv', {	fileName:	'도입자원관리', 
+            																		columnNames: [
+            																			'income_name',
+            																			'income_code',
+            																			'income_kind',
+            																			'income_division',
+            																			'income_place',
+            																			'income_country',
+            																			'income_person',
+            																			'income_date',
+            																			'income_num',
+            																			'income_type',
+            																			'income_trait',
+            																			'income_comment'
+            																					]});
+            										}
+            									},
+            									{
+            										name: 'excelExport',
+            										label: 'Excel Export',
+            										action: () => {
+            											incomegrid.export('xlsx', {	fileName:	'도입자원관리', 
+            																		columnNames: [
+            																			'income_name',
+            																			'income_code',
+            																			'income_kind',
+            																			'income_division',
+            																			'income_place',
+            																			'income_country',
+            																			'income_person',
+            																			'income_date',
+            																			'income_num',
+            																			'income_type',
+            																			'income_trait',
+            																			'income_comment'
+            																					]});
+            										}
+            									}
+                            				]
+                            			},
+                            			
+                            		]
+                            	]
+                            )
+                        
                     });
 
                     incomegrid.on('click', (ev) => {
@@ -2810,6 +2910,74 @@
 
                     const dataArr = [];
 
+                    
+                    		// ajax를 통해 첨부파일 확인 시도중
+                    $.ajax({
+						url: 'selectIncomeFileAll',				
+						method: 'POST',
+						dataType: 'json',
+						async: false,							// async: false -> 동기화하여 그리드가 출력되지 않는것 방지
+						data: data,
+						success: function(file_list) {			// file_list : income_file 테이블에 있는 모든 income_id(=파일 업로드가 된 id 목록)
+							console.log("result", result);
+                    		console.log("file_list",file_list);
+                    
+							for (let i = 0; i < result.income.length; i++) {
+								
+								let isMatch = false;
+								
+								// [i]에 해당하는 basic_id가 file_list 배열에 속해있는지 판별 
+								for(let j = 0; j < file_list.income_file.length; j++) {
+									if(result.income[i].income_id == file_list.income_file[j].income_id) {
+										isMatch = true;
+									}
+								}
+
+								let rowArr = {};
+
+								if(isMatch == true) {	// file_list에 속해있다면 arrow-down이 있는, 아니면 없는 아이콘을 출력
+									rowArr = {
+										'file': '<i class="bi bi-file-earmark-arrow-down-fill"></i>', 
+										'income_id': result.income[i].income_id,
+										'income_name': result.income[i].income_name,
+			                            'income_code': result.income[i].income_code,
+			                            'income_kind': result.income[i].income_kind,
+			                            'income_division': result.income[i].income_division,
+			                            'income_place': result.income[i].income_place,
+			                            'income_country': result.income[i].income_country,
+			                            'income_person': result.income[i].income_person,
+			                            'income_date': result.income[i].income_date,
+			                            'income_num': result.income[i].income_num,
+			                            'income_type': result.income[i].income_type,
+			                            'income_trait': result.income[i].income_trait,
+			                            'income_comment': result.income[i].income_comment
+									};
+								} else {
+									rowArr = {
+										'file': '<i class="bi bi-file-earmark"></i>', 
+										'income_id': result.income[i].income_id,
+										'income_name': result.income[i].income_name,
+				                        'income_code': result.income[i].income_code,
+				                        'income_kind': result.income[i].income_kind,
+				                        'income_division': result.income[i].income_division,
+				                        'income_place': result.income[i].income_place,
+				                        'income_country': result.income[i].income_country,
+				                        'income_person': result.income[i].income_person,
+				                        'income_date': result.income[i].income_date,
+				                        'income_num': result.income[i].income_num,
+				                        'income_type': result.income[i].income_type,
+				                        'income_trait': result.income[i].income_trait,
+				                        'income_comment': result.income[i].income_comment
+										};
+								}
+
+		                        dataArr.push(rowArr);
+		                    }
+								
+						}
+                    });
+                    
+                    /*
                     for (let i = 0; i < result.income.length; i++) {
                         let rowArr = {
                             'file': '<i class="bi bi-file-earmark-arrow-down"></i>',
@@ -2830,7 +2998,8 @@
 
                         dataArr.push(rowArr);
                     }
-
+					*/
+                    
                     incomegrid.resetData(dataArr);
 
                     var before = null;
@@ -2957,7 +3126,43 @@
                         pageOptions: {
                             useClient: true,
                             perPage: limit1
-                        }
+                        },
+                        
+                        contextMenu: ({ rowKey, columnName }) => (
+                            	[
+                            		[
+                            			{
+                            				name: 'edit',
+                            				label: 'Edit',
+                            				action: () => {
+                            					remaingrid.startEditing(rowKey, columnName);
+                            				}
+                            			},
+                            			{
+    										name: 'export',
+    										label: 'Export',
+    										subMenu:[
+    											{												
+    												name: 'csvExport',
+    												label: 'CSV Export',
+    												action: () => {
+    													remaingrid.export('csv', {	fileName:	'도입자원재고관리' });
+    												}
+    											},
+    											{
+    												name: 'excelExport',
+    												label: 'Excel Export',
+    												action: () => {
+    													remaingrid.export('xlsx', {	fileName:	'도입자원재고관리' });
+    												}
+    											}
+    										]
+    										
+    									}
+                            		]
+                            	]
+                            )
+                        
                     });
 
                     const dataArr = [];

@@ -278,4 +278,11 @@ public class BreedServiceImpl implements BreedService
 	public int SearchByStandard(String standard) {
 		return mapper.SearchByStandard(standard);
 	}
+	
+	// basic_file 전체목록 조회
+	@Override
+	public List<BreedFile> selectBreedFileAll()
+	{
+		return mapper.selectBreedFileAll();
+	}
 }

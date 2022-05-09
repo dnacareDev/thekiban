@@ -8,8 +8,17 @@
         (#{location_id}, #{location_name}, #{location_type}, #{location_lat}, #{location_lng})
     </insert>
 
-    <select id="selectAll" resultType="location">
-        SELECT *
-        FROM location
+    <select id="selectAll" resultType="Location">
+		
+		select a.location_id, a.location_name, a.location_type, a.location_lat, a.location_lng from location a, sampleOutcome b
+		where a.location_name=b.sample_outcome_place
+		<choose>
+            <when test="!user_crop.equals('checked')">
+                and b.sample_name = #{user_crop}
+            </when>
+        </choose>
     </select>
+    <select id="selectAll2" resultType="Location">
+		select * from location
+    </select>    
 </mapper>

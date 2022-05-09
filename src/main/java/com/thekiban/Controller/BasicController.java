@@ -721,4 +721,18 @@ public class BasicController {
 
     return result;
   }
+  
+  // 모든 파일의 basic_id 리스트 조회
+  @ResponseBody
+  @RequestMapping("selectBasicFileAll")
+  public Map<String, Object> SelectBasicFile() {
+    Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+    List<BasicFile> basic_file = service.selectBasicFileAll();
+
+    result.put("basic_file", basic_file);
+
+    return result;
+  }
+  
 }

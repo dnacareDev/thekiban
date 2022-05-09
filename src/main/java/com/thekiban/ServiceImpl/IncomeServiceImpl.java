@@ -167,4 +167,11 @@ public class IncomeServiceImpl implements IncomeService {
   public List<IncomeRemain> SelectIncomeRemainExcel(int income_remain_id) {
     return mapper.SelectIncomeRemainExcel(income_remain_id);
   }
+  
+  // income_file 전체목록 조회
+  @Override
+  public List<IncomeFile> SelectIncomeFileAll()
+  {
+	return mapper.SelectIncomeFileAll();
+  }
 }

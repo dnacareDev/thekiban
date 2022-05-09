@@ -205,4 +205,11 @@ public class SampleServiceImpl implements SampleService {
   public List<SampleOutcome> SelectSampleOutcomeExcel(int sample_outcome_id) {
     return mapper.SelectSampleOutcomeExcel(sample_outcome_id);
   }
+  
+  // sample_file 전체목록 조회
+  @Override
+  public List<SampleFile> SelectSampleFileAll()
+  {
+	return mapper.SelectSampleFileAll();
+  }  
 }

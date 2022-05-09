@@ -110,5 +110,7 @@ public interface BasicMapper
 
 	List<BasicRemain> SelectBRemainExcel(int basic_remain_id);
 
+	//basic_file 전체목록 조회
+	List<BasicFile> selectBasicFileAll();
 
 }

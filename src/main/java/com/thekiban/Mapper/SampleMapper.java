@@ -105,5 +105,8 @@ public interface SampleMapper {
   List<Sample> SelectSampleExcel(int sample_id);
 
   List<SampleOutcome> SelectSampleOutcomeExcel(int sample_outcome_id);
+  
+  //sample_file 전체목록 조회
+  List<SampleFile> SelectSampleFileAll();
 }
 

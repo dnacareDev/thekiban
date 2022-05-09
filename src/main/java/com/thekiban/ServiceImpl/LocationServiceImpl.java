@@ -21,7 +21,14 @@ public class LocationServiceImpl implements LocationService {
   }
 
   @Override
-  public List<Location> selectAll() {
-    return locationMapper.selectAll();
+  public List<Location> selectAll(String user_crop) {
+	  return locationMapper.selectAll(user_crop);  
+	  //public List<Location> selectAll() {
+		//  return locationMapper.selectAll();  
+  }
+  
+  @Override
+  public List<Location> selectAll2() {
+	  return locationMapper.selectAll2();  
   }
 }

@@ -2800,7 +2800,42 @@
                         pageOptions: {
                             useClient: false,
                             perPage: limit
-                        }
+                        },
+                        
+                        contextMenu: ({ rowKey, columnName }) => (
+    							[
+    								[
+    									{
+    										name: 'edit',
+    										label: 'Edit',
+    										action: () => {
+    											sampleGrid1.startEdit(rowKey, columnName);
+    										}
+    									},
+    									{
+    										name: 'export',
+    										label: 'Export',
+    										subMenu: [
+    											{
+    	    										name: 'csv export',
+    	    										label: 'CSV Export',
+    	    										action: () => {
+    	    											sampleGrid1.export('csv', {  fileName: '품종관리 _ 시교자원관리' });
+    	    										}
+    	    									},
+    	    									{
+    	    										name: 'excel export',
+    	    										label: 'Excel Export',
+    	    										action: () => {
+    	    											sampleGrid1.export('xlsx', {  fileName: '품종관리 _ 시교자원관리' });
+    	    										}
+    	    									}
+    										]
+    									}
+    								]
+    							]
+    						)
+                        
                     });
 
                     sampleGrid1.on('click', (ev) => {
@@ -2821,6 +2856,8 @@
 
                     const dataArr = [];
 
+                    console.log("result",result);
+                    
                     for (let i = 0; i < result.sample.length; i++) {
                         if (result.sample[i].sample_code === e.innerText) {
                             let rowArr = {                            
@@ -2919,7 +2956,7 @@
                 data: data,
                 success: function (result2) {
 
-                	console.log(result2);
+                	console.log("result2",result2);
                 	
                     if (Object.keys(result2).length == 0) {
                         return Alert1("해당 원종이 존재하지 않습니다.")
@@ -2927,9 +2964,6 @@
                         $("#pop_data2").modal();
 
                         $(".breed_title").text("계통명 (ID) : " + e.innerText);
-			
-                        console.log(e);
-                        console.log(e.innerText);
                         
                         tablechk = 2;
 
@@ -2944,7 +2978,42 @@
                             pageOptions: {
                                 useClient: false,
                                 perPage: limit,
-                            }
+                            },
+                            
+                            contextMenu: ({ rowKey, columnName }) => (
+        							[
+        								[
+        									{
+        										name: 'edit',
+        										label: 'Edit',
+        										action: () => {
+        											basicGrid1.startEdit(rowKey, columnName);
+        										}
+        									},
+        									{
+        										name: 'export',
+        										label: 'Export',
+        										subMenu: [
+        											{
+        	    										name: 'csv export',
+        	    										label: 'CSV Export',
+        	    										action: () => {
+        	    											basicGrid1.export('csv', {  fileName: '품종관리 _ 원종관리' });
+        	    										}
+        	    									},
+        	    									{
+        	    										name: 'excel export',
+        	    										label: 'Excel Export',
+        	    										action: () => {
+        	    											basicGrid1.export('xlsx', {  fileName: '품종관리 _ 원종관리' });
+        	    										}
+        	    									}
+        										]
+        									}
+        								]
+        							]
+        						)
+                            
                         });
 
                         // header
@@ -2975,6 +3044,7 @@
                         }
 
                         basicGrid1.setColumns(header_add);
+
                         const dataArr = [];
                         const dataArr2 = [];
                                                                         
@@ -3108,9 +3178,45 @@
                         pageOptions: {
                             useClient: true,
                             perPage: limit
-                        }
+                        },
+                     // 2022-05-06 | 엑셀 내보내기 옵션 수정코드
+						contextMenu: ({ rowKey, columnName }) => (
+							[
+								[
+									{
+										name: 'edit',
+										label: 'Edit',
+										action: () => {
+											breedgrid.startEditing(rowKey, columnName);
+										}
+									},
+									{
+										name: 'export',
+										label: 'Export',
+										subMenu:[
+											{
+												name: 'csvExport',
+												label: 'CSV Export',
+												action: () => {
+													breedgrid.export('csv', breedgridExportOption );
+												}
+											},
+											{
+												name: 'excelExport',
+												label: 'Excel export',
+												action: () => {
+													breedgrid.export('xlsx', breedgridExportOption);
+												}
+											}
+										]
+									}
+								]
+							]
+						)
                     });
 
+                    console.log("breed result", result);
+                    
                     const headerArr = [
                         {
                             'header': '첨부파일',
@@ -3120,6 +3226,8 @@
                         {
                             'header': '특성상태',
                             'name': 'status',
+                            'sortable' : 'true',		// 2022-05-03 | 특성상태 column에도 정렬기능 시도
+                            'sortingType' : 'asc',
                             'width': 150,
                         }
                     ];
@@ -3150,27 +3258,69 @@
 
                     breedgrid.setColumns(headerArr);
 
+                    
+					// option에 들어갈 배열 설정
+					// headerArr은 map을 원소로 하는 배열이므로 원하는 key값만 가진 배열을 따로 만든다.
+                    let headerArrKeys = [];
+                    for(let i=2 ; i<headerArr.length ; i++) {			// 'file'(첨부파일), 'status'(특성상태)가 들어있는 i=0, i=2 제거
+                    	headerArrKeys.push(headerArr[i].name);
+                    }
+                    
+                    console.log("headerArrKeys", headerArrKeys);
+                    
+                    const breedgridExportOption = { fileName: '품종관리' ,
+													columnNames: headerArrKeys }		
+                    //
+                    
                     const dataArr = [];
 
-                    for (let i = 0; i < result.breed.length; i++) {
-                        let rowArr = {};
+                    $.ajax({
+						url: 'selectBreedFileAll',
+						method: 'POST',
+						dataType: 'json',
+						async: false,				// async: false -> 동기화하여 그리드가 출력되지 않는것 방지
+						data: data,
+						success: function(file_list) {			// file_list : breed_file 테이블에 있는 모든 breed_id(=파일 업로드가 된 id 목록)
+                    
+							for (let i = 0; i < result.breed.length; i++) {			// for i는 result,
+																					// for j는 file_list로 length를 재는게 맞다. 
+		                        
+								let isMatch = false;
+								
+								// [i]에 해당하는 basic_id가 file_list 배열에 속해있는지 판별 
+								for(let j = 0; j < file_list.breed_file.length; j++) {
+									if(result.breed[i].breed_id == file_list.breed_file[j].breed_id) {
+										isMatch = true;
+									}
+								}
+								
+								let rowArr = {};
+								
+								if(isMatch == true) {	// file_list에 속해있다면 arrow-down이 있는, 아니면 없는 아이콘을 출력
+									rowArr = {'file': '<i class="bi bi-file-earmark-arrow-down-fill"></i>', 'breed_id': result.breed[i].breed_id};
+								} else {
+									rowArr = {'file': '<i class="bi bi-file-earmark"></i>', 'breed_id': result.breed[i].breed_id};
+								}								
+								
+		                        // rowArr = {'file': '<i class="bi bi-file-earmark-arrow-down"></i>', 'breed_id': result.breed[i].breed_id};
 
-                        rowArr = {'file': '<i class="bi bi-file-earmark-arrow-down"></i>', 'breed_id': result.breed[i].breed_id};
+		                        if (result.breed[i].standard_count == 0) {
+		                            rowArr['status'] = '<span style="color:red">EMPTY</span>';
+		                        } else {
+		                            rowArr['status'] = '<span style="color:blue">PROGRESS</span>';
+		                        }
 
-                        if (result.breed[i].standard_count == 0) {
-                            rowArr['status'] = '<span style="color:red">EMPTY</span>';
-                        } else {
-                            rowArr['status'] = '<span style="color:blue">PROGRESS</span>';
-                        }
+		                        for (var j = 0; j < result.breed[i].breed_standard.length; j++) {
+		                            var rowData = result.breed[i].breed_standard[j].standard;
+		                            rowArr[headerName[j]] = rowData;
+		                        }
 
-                        for (var j = 0; j < result.breed[i].breed_standard.length; j++) {
-                            var rowData = result.breed[i].breed_standard[j].standard;
-                            rowArr[headerName[j]] = rowData;
-                        }
-
-                        dataArr.push(rowArr);
-                    }
-
+		                        dataArr.push(rowArr);
+							}
+						}
+                    })
+                   
+                    
                     breedgrid.resetData(dataArr);
 
                     breedgrid.on('check', (ev) => {

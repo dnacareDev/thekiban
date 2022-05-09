@@ -77,10 +77,12 @@ public class HomeController {
 
   @ResponseBody
   @RequestMapping("selectOutcomeList")
-  public Map<String, Object> SelectOutcome() {
+  public Map<String, Object> SelectOutcome(@RequestParam("user_crop") String user_crop) {	// user_crop param 생성중. 망가지면 param을 지운다
+	  											// String user_crop
     Map<String, Object> result = new LinkedHashMap<String, Object>();
 
-    List<Location> locations = locationService.selectAll();
+    //List<Location> locations = locationService.selectAll();
+    List<Location> locations = locationService.selectAll(user_crop);
 
     List<Map<String, Object>> placeK = new ArrayList<>();
     List<Map<String, Object>> placeG = new ArrayList<>();
@@ -111,7 +113,6 @@ public class HomeController {
   }
   
   // searchSeed2 생성중. 망가지면 이 밑으로 다 지운다
-  
   @ResponseBody
   @RequestMapping("searchSeed2")
   public Map<String, Object> SearchSeed2(@RequestParam("sample_outcome_place") String sample_outcome_place) {
@@ -119,10 +120,45 @@ public class HomeController {
 	  
 	  List<SampleOutcome> SampleOutcome = service.SearchSeed2(sample_outcome_place);		
 
-	  																						// 
+	  																						
 	  result2.put("sampleOutcome", SampleOutcome);
 	  return result2;							
   }
 
+  // 아이디 권한에 상관없이 모든 지역을 다 부르는 클래스 생성중. param을 집어넣어 수정하기 이전의 코드를 적당히 고치면 됨.
+  @ResponseBody
+  @RequestMapping("selectOutcomeListAll")
+  public Map<String, Object> SelectOutcome() {
+    Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+    List<Location> locations = locationService.selectAll2();
+
+    List<Map<String, Object>> placeK = new ArrayList<>();
+    List<Map<String, Object>> placeG = new ArrayList<>();
+
+    for (Location location : locations) {
+      Map<String, Object> latlngKo = new LinkedHashMap<>();
+      Map<String, Object> latlngGlo = new LinkedHashMap<>();
+
+      if (location.getLocation_type().equals("국내")) {
+        latlngKo.put("lat", Double.parseDouble(location.getLocation_lat()));
+        latlngKo.put("lng", Double.parseDouble(location.getLocation_lng()));
+        latlngKo.put("name", location.getLocation_name());
+
+        placeK.add(latlngKo);
+      } else if (location.getLocation_type().equals("해외")) {
+        latlngGlo.put("lat", Double.parseDouble(location.getLocation_lat()));
+        latlngGlo.put("lng", Double.parseDouble(location.getLocation_lng()));
+        latlngGlo.put("name", location.getLocation_name());							
+
+        placeG.add(latlngGlo);
+      }
+    }
+
+    result.put("sampleOutcomeKo", placeK);
+    result.put("sampleOutcomeGlo", placeG);
+
+    return result;
+  }
   
 }

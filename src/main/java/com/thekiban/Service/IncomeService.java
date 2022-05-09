@@ -88,5 +88,7 @@ public interface IncomeService {
 
   List<IncomeRemain> SelectIncomeRemainExcel(int income_remain_id);
 
+  // 첨부파일 목록 전체 조회
+  List<IncomeFile> SelectIncomeFileAll();
 
 }

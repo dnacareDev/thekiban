@@ -535,4 +535,17 @@ public class BreedController {
     return result;
   }
 
+//모든 파일의 basic_id 리스트 조회
+ @ResponseBody
+ @RequestMapping("selectBreedFileAll")
+ public Map<String, Object> SelectBreedFile() {
+   Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+   List<BreedFile> breed_file = service.selectBreedFileAll();
+
+   result.put("breed_file", breed_file);
+
+   return result;
+ }
+  
 }

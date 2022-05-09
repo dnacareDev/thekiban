@@ -380,4 +380,11 @@
         SELECT COUNT(standard) FROM standard
         WHERE standard = #{standard}
     </select>
+    
+    
+    <!-- 첨부파일 전체목록 조회 -->
+    <select id="selectBreedFileAll" resultType="BreedFile">
+        SELECT *
+        FROM breed_file
+    </select>
 </mapper>

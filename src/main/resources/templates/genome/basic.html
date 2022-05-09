@@ -2850,6 +2850,8 @@
                     var file_list = $("#file_list");
                     var file_add = "";
 
+                    console.log(result);
+                    
                     for (var i = 0; i < result.basic_file.length; i++) {
                         var file = JSON.stringify(result.basic_file[i]);
                         var file_json = file.replace(/\"/g, "&quot;");
@@ -2860,6 +2862,7 @@
                         file_add += '<td>' + result.basic_file[i].create_date + '</td>';
                         file_add += '<td><input type="hidden" id="file_' + result.basic_file[i].basic_file_id + '" value="' + file.replace(/\"/g, "&quot;") + '"></td>';
                         file_add += '</tr>';
+                        console.log("result.basic_file[i].basic_file_id",result.basic_file[i].basic_file_id);
                     }
 
                     file_list.empty();
@@ -3003,7 +3006,43 @@
 								pageOptions: {
 									useClient: true,
 									perPage: limit,
-								}
+								},
+								
+								// 2022-05-06 | 엑셀 내보내기 옵션 수정코드
+								contextMenu: ({ rowKey, columnName }) => (
+							[
+								[
+									{
+										name: 'edit',
+										label: 'Edit',
+										action: () => {
+											basicgrid.startEditing(rowKey, columnName);
+										}
+									},
+									{
+										name: 'export',
+										label: 'Export',
+										subMenu:[
+											{
+												name: 'csvExport',
+												label: 'CSV Export',
+												action: () => {
+													basicgrid.export('csv', basicgridExportOption );
+												}
+											},
+											{
+												name: 'excelExport',
+												label: 'Excel export',
+												action: () => {
+													basicgrid.export('xlsx', basicgridExportOption);
+												}
+											}
+										]
+									}
+								]
+							]
+						)
+								
 							});
 
 							const headerArr = [
@@ -3015,6 +3054,8 @@
 								{
 									'header': '특성상태',
 									'name': 'status',
+		                            'sortable' : 'true',		// 2022-05-03 DNACARE | 특성상태 column에도 정렬기능 시도
+		                            'sortingType' : 'asc',
 									'width': 150,
 								}
 							];
@@ -3049,40 +3090,85 @@
 
 							basicgrid.setColumns(headerArr);
 
+							// option에 들어갈 배열 설정
+							// headerArr은 map을 원소로 하는 배열이므로 원하는 key값만 가진 배열을 따로 만든다.
+		                    let headerArrKeys = [];
+		                    for(let i=2 ; i<headerArr.length ; i++) {			// 'file'(첨부파일), 'status'(특성상태)가 들어있는 i=0, i=2 제거
+		                    	headerArrKeys.push(headerArr[i].name);
+		                    }
+		                    
+		                    console.log("headerArrKeys", headerArrKeys);
+		                    
+		                    const basicgridExportOption = { fileName: '품종관리' ,
+															columnNames: headerArrKeys }		
+		                    //
+							
 							const dataArr = [];
 
-							for (let i = 0; i < result.basic.length; i++) {
-								let rowArr = {};
+							 
+							
+							$.ajax({
+								url: 'selectBasicFileAll',
+								method: 'POST',
+								dataType: 'json',
+								async: false,				// async: false -> 동기화하여 그리드가 출력되지 않는것 방지
+								data: data,
+								success: function(file_list) {			// file_list : basic_file 테이블에 있는 모든 basic_id(=파일 업로드가 된 id 목록)
+									console.log("file_list",file_list);
+									
+									for (let i = 0; i < result.basic.length; i++) {
 
-								rowArr = {'file': '<i class="bi bi-file-earmark-arrow-down"></i>', 'basic_id': result.basic[i].basic_id};
+										let isMatch = false
+										
+										for(let j = 0; j < file_list.basic_file.length; j++) {
+											if(result.basic[i].basic_id == file_list.basic_file[j].basic_id) {
+												isMatch = true;
+											}
+										}
+										
+										let rowArr = {};
 
-								if (result.basic[i].standard_count == 0) {
-									rowArr['status'] = '<span style="color:red">EMPTY</span>';
+										if(isMatch == true) {	// file_list에 속해있다면 arrow-down이 있는, 아니면 없는 아이콘을 출력
+											rowArr = {'file': '<i class="bi bi-file-earmark-arrow-down-fill"></i>', 'basic_id': result.basic[i].basic_id};
+										} else {
+											rowArr = {'file': '<i class="bi bi-file-earmark"></i>', 'basic_id': result.basic[i].basic_id};
+										}
+										
+										
+										// rowArr = {'file': '<i class="bi bi-file-earmark-arrow-down"></i>', 'basic_id': result.basic[i].basic_id};
+										// rowArr = {'file': '<i class="bi bi-file"></i>', 'basic_id': result.basic[i].basic_id};
+										// console.log("result.basic[i].basic_id", result.basic[i].basic_id); 선택한 작목명에 해당하는 basic_id만 필터링
+										
+										if (result.basic[i].standard_count == 0) {
+											rowArr['status'] = '<span style="color:red">EMPTY</span>';
 
-								} else {
-									rowArr['status'] = '<span style="color:blue">PROGRESS</span>';
-								}
+										} else {
+											rowArr['status'] = '<span style="color:blue">PROGRESS</span>';
+										}
 
-								for (var j = 0; j < result.basic[i].basic_standard.length; j++) {												
-									if (j == remaincnt) {   
-										console.log( map.get(result.basic[i].basic_standard[6].standard));
-										// console.log("value : " + map.get("P17C0123"));
-										var rowData = map.get(result.basic[i].basic_standard[6].standard);
+										for (var j = 0; j < result.basic[i].basic_standard.length; j++) {												
+											if (j == remaincnt) {   
+												console.log( map.get(result.basic[i].basic_standard[6].standard));
+												// console.log("value : " + map.get("P17C0123"));
+												var rowData = map.get(result.basic[i].basic_standard[6].standard);
+											}
+
+											else{
+												var rowData = result.basic[i].basic_standard[j].standard;
+											}
+
+											rowArr[headerName[j]] = rowData;
+										}
+
+										dataArr.push(rowArr);
+										
 									}
-
-									else{
-										var rowData = result.basic[i].basic_standard[j].standard;
-									}
-
-									rowArr[headerName[j]] = rowData;
+									
 								}
-
-								dataArr.push(rowArr);
-							}
-
+							});
 
 							basicgrid.resetData(dataArr);
-
+							
 							basicgrid.on('click', (ev) => {
 								if (ev.targetType === 'cell' && (ev.columnName === '170' || ev.columnName === '337' || ev.columnName === '518' || ev.columnName === '693' || ev.columnName === '835' || ev.columnName === '1000' || ev.columnName === '1170' || ev.columnName === '1338' || ev.columnName === '1512' || ev.columnName === '1724') && insertCheck == 0) {
 									let value_basic = ev.nativeEvent.srcElement;
@@ -3140,6 +3226,8 @@
 								}
 							});
 
+							// basicgrid.export('xlsx', {columnNames: ['작물','계통명 (ID)','원소재 계통번호','원종 계통번호']}); // tui grid export 컬럼 옵션
+							
                             loading.classList.remove('on');
                         }
                     });
@@ -3226,7 +3314,41 @@
                         pageOptions: {
                             useClient: true,
                             perPage: limit1
-                        }
+                        },
+                     // 2022-05-06 | 엑셀 내보내기 옵션 수정코드
+						contextMenu: ({ rowKey, columnName }) => (
+							[
+								[
+									{
+										name: 'edit',
+										label: 'Edit',
+										action: () => {
+											basicRemainGrid.startEditing(rowKey, columnName);
+										}
+									},
+									{
+										name: 'export',
+										label: 'Export',
+										subMenu:[
+											{
+												name: 'csvExport',
+												label: 'CSV Export',
+												action: () => {
+													basicRemainGrid.export('csv', {fileName: '원종재고관리'});
+												}
+											},
+											{
+												name: 'excelExport',
+												label: 'Excel export',
+												action: () => {
+													basicRemainGrid.export('xlsx', {fileName: '원종재고관리'});
+												}
+											}
+										]
+									}
+								]
+							]
+						)
                     });
 
                     console.log(result1.basicRemain)
@@ -4190,8 +4312,6 @@
         var limit = $("#limit").val();
         let sys_name = e.innerText;
 
-        console.log("e.innerText" , e.innerText);
-        
         let data = {"breed_name": breed_name, "sys_name": sys_name};
 
         var loading = document.querySelector('.load_wrap');
@@ -4217,7 +4337,41 @@
                         pageOptions: {
                             useClient: false,
                             perPage: limit
-                        }
+                        },
+                        
+                        contextMenu: ({ rowKey, columnName }) => (
+   							[
+   								[
+   									{
+   										name: 'edit',
+   										label: 'Edit',
+   										action: () => {
+   											breedGrid1.startEditing(rowKey, columnName);
+   										}
+   									},
+   									{
+   										name: 'export',
+   										label: 'Export',
+   										subMenu:[
+   											{
+   												name: 'csvExport',
+   												label: 'CSV Export',
+   												action: () => {
+   													breedGrid1.export('csv', {fileName: '원종관리 _ 품종관리'});
+   												}
+   											},
+   											{
+   												name: 'excelExport',
+   												label: 'Excel export',
+   												action: () => {
+   													breedGrid1.export('xlsx', {fileName: '원종관리 _ 품종관리'});
+   												}
+   											}
+   										]
+   									}
+   								]
+   							]
+   						)
                     });
 
                     // header
@@ -4259,8 +4413,6 @@
 
                             rowArr = {'breed_id': result2.breed[i].breed_id};
 
-                            console.log("result2.breed[i].breed_id : ", result2.breed[i].breed_id);
-                            
                             for (var j = 0; j < result2.breed[i].breed_standard.length; j++) {
                                 var rowData = result2.breed[i].breed_standard[j].standard;
                                 rowArr[headerName[j]] = rowData;
@@ -4433,7 +4585,41 @@
                         pageOptions: {
                             useClient: false,
                             perPage: limit
-                        }
+                        },
+                        
+                        contextMenu: ({ rowKey, columnName }) => (
+    							[
+    								[
+    									{
+    										name: 'edit',
+    										label: 'Edit',
+    										action: () => {
+    											remainGrid1.startEditing(rowKey, columnName);
+    										}
+    									},
+    									{
+    										name: 'export',
+    										label: 'Export',
+    										subMenu:[
+    											{
+    												name: 'csvExport',
+    												label: 'CSV Export',
+    												action: () => {
+    													remainGrid1.export('csv', {fileName: '원종재고관리'});
+    												}
+    											},
+    											{
+    												name: 'excelExport',
+    												label: 'Excel export',
+    												action: () => {
+    													remainGrid1.export('xlsx', {fileName: '원종재고관리'});
+    												}
+    											}
+    										]
+    									}
+    								]
+    							]
+    						)
                     });
 
                     console.log(result3.basicRemain)

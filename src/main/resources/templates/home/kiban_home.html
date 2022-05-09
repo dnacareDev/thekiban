@@ -334,7 +334,6 @@
                 </div>
             </div>
         </div>
-
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
@@ -376,8 +375,6 @@
 <th:block th:include="/../fragments/commonjs.html"></th:block>
 
 
-
-
     <!-- modal code -->
     <!-- 첨부파일 리스트  2021-11-04 -->
     <div class="modal-basic modal fade show pop7" id="sample_file" tabindex="-1" role="dialog" aria-hidden="true">
@@ -416,24 +413,28 @@
 <script type="text/javascript">
     $(document).ready(function () {
         SearchMarker();
-        console.log("a");
         SelectChartBar();
         SelectChart();
     });
 
     function SearchMarker() {
-        $.ajax(
+        
+																// kiban_home.html에는 crop_type을 부른 흔적이 없다.
+																// 다른 div에 임의로 넣어봐도 화면이 깨지거나 여전히 인식을 못함. 
+																// 제대로 하려면 시간이 걸리니 기반측에서 괜찮다고 했던 전부 노출시키는 방법을 기획중
+																// 예전의 코드를 만들어서 sample과 분리시키면 되니까 어려울건 없다.
+																
+    	$.ajax(
             {
-                url: 'selectOutcomeList',
+                url: 'selectOutcomeListAll',										
                 method: 'POST',
                 dataType: 'json',
                 data: data,
                 success: function (result) {
+                	console.log("result", result);
                     var inKorea = [];
                     var outKorea = [];
-                    console.log("result.sampleOutcomeKo.length",result.sampleOutcomeKo.length);
                     for (let i = 0; i < result.sampleOutcomeKo.length; i++) {
-                    	console.log("result.sampleOutcomeKo[i]",result.sampleOutcomeKo[i]);
                         inKorea.push(result.sampleOutcomeKo[i]);
                     }
 
@@ -470,7 +471,11 @@
 
         var globalOptions = {
             ...koreaOptions,
-            zoom: 1
+            zoom: 1.4,
+            center: {
+                lat: 26.613766432253634,
+                lng: 167.84942123102657
+            },
 
         };
 
@@ -490,14 +495,14 @@
         
 
         for (let i = 0; i < inKo.length; i++) {
-        	koreaLocations.push({"lat":inKo[i].lat , "lng":inKo[i].lng});
+        	koreaLocations.push({"lat":inKo[i].lat , "lng":inKo[i].lng , "location_name":inKo[i].name});
             koreaSubLocations.push({"location_name":inKo[i].name});
             console.log("koreaLocations", koreaLocations);
         }
 
 
         for (let o = 0; o < outKo.length; o++) {
-        	globalLocations.push({"lat":outKo[o].lat , "lng":outKo[o].lng});
+        	globalLocations.push({"lat":outKo[o].lat , "lng":outKo[o].lng , "location_name":outKo[o].name });
         	globalSubLocations.push({"location_name":outKo[o].name});
         }
 		
@@ -515,7 +520,7 @@
         	    	infoWindow.close();
         	    	infoWindow.setContent('<p>지역: ' + koreaSubLocations[i].location_name + '</p>' +
         	    							//myFunction()에 지역명을 매개변수로 넘긴다
-        	    						 '<button id="google_map-detail" onclick="KoreaList(' + i + ')">상세정보</button>');		
+        	    						 '<button id="google_map-detail" onclick="myFunction(' + "'" + koreaLocations[i].location_name + "'" + ')">상세정보</button>');		
         	    	infoWindow.open(marker1[i].getMap(), marker1[i]);
         	    });
         }
@@ -533,7 +538,7 @@
                 marker2[i].addListener("click", () => {
                 	infoWindow.close();
                 	infoWindow.setContent('<p>지역: ' + globalSubLocations[i].location_name + '</p>' +
-                						  '<button id="google_map-detail" onclick="GlobalList(' + i + ')">상세정보</button>');
+                						  '<button id="google_map-detail" onclick="myFunction(' + "'" + globalLocations[i].location_name + "'" + ')">상세정보</button>');
                 	infoWindow.open(marker2[i].getMap(), marker2[i]);
                 });
                 
@@ -570,12 +575,12 @@
 			'파키스탄'
 	];
 	
-	for(let i=0; i<location_arr.length ; i++) {
-		if(num == i) {
-			myFunction(location_arr[i]);
-			break;
+		for(let i=0; i<location_arr.length ; i++) {
+			if(num == i) {
+				myFunction(location_arr[i]);
+				break;
+			}
 		}
-	}
     }
 
 
@@ -603,8 +608,10 @@
     					const map1 = {};
     					
     					map1['name'] = result2.sampleOutcome[i].sample_name;
-    					map1['code'] = result2.sampleOutcome[i].sample_outcome_code;
-    					map1['num'] = result2.sampleOutcome[i].sample_outcome_num;
+        				map1['code'] = result2.sampleOutcome[i].sample_outcome_code;
+        				map1['num'] = result2.sampleOutcome[i].sample_outcome_num;
+    				
+    					
     					
     					name_code_num_arr.push(map1);									// 중복제거된 map의 집합을 다시 배열화								
     				}

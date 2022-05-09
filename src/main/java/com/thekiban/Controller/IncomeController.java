@@ -626,4 +626,18 @@ public class IncomeController {
 
     return result;
   }
+  
+//모든 파일의 income_id 리스트 조회
+ @ResponseBody
+ @RequestMapping("selectIncomeFileAll")
+ public Map<String, Object> SelectIncomeFile() {
+   Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+   List<IncomeFile> income_file = service.SelectIncomeFileAll();
+
+   result.put("income_file", income_file);
+
+   return result;
+ }
+  
 }

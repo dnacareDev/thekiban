@@ -2665,7 +2665,42 @@
                         pageOptions: {
                             useClient: false,
                             perPage: limit3
-                        }
+                        },
+                        
+                        contextMenu: ({ rowKey, columnName }) => (
+                            	[
+                            		[
+                            			{
+                            				name: 'edit',
+                            				label: 'Edit',
+                            				action: () => {
+                            					outcomeGrid2.startEditing(rowKey, columnName);
+                            				}
+                            			},
+                            			{
+    										name: 'export',
+    										label: 'Export',
+    										subMenu:[
+    											{												
+    												name: 'csvExport',
+    												label: 'CSV Export',
+    												action: () => {
+    													outcomeGrid2.export('csv', {	fileName:	'시교출고관리' });
+    												}
+    											},
+    											{
+    												name: 'excelExport',
+    												label: 'Excel Export',
+    												action: () => {
+    													outcomeGrid2.export('xlsx', {	fileName:	'시교출고관리' });
+    												}
+    											}
+    										]
+    										
+    									}
+                            		]
+                            	]
+                            )
 
                     });
 
@@ -2779,25 +2814,27 @@
 
     // 시교명 팝업
     function SearchBreed(e) {
+    	
         $("#pop_breed").modal();
-
         tablechk = 2;
-
+        
+        
         let breed_name = $("#CropSelect").val();
         var limit = $("#limit").val();
         let data = {"breed_name": breed_name};
 
         var loading = document.querySelector('.load_wrap');
-
+        
         $.ajax(
             {
                 url: 'searchBreedList',
                 method: 'POST',
                 dataType: 'json',
+                // async: false,				// 도저히 안될것 같으면 이걸로 해결
                 data: data,
                 success: function (result2) {
                     $(".breed_title").text("시교명 (ID) : " + e.innerText);
-
+                    
                     breedGrid2 = new tui.Grid({
                         el: document.getElementById('breedGrid2'),
                         scrollX: true,
@@ -2808,7 +2845,43 @@
                         pageOptions: {
                             useClient: false,
                             perPage: limit
-                        }
+                        },
+                        
+                        contextMenu: ({ rowKey, columnName }) => (
+                            	[
+                            		[
+                            			{
+                            				name: 'edit',
+                            				label: 'Edit',
+                            				action: () => {
+                            					breedGrid2.startEditing(rowKey, columnName);
+                            				}
+                            			},
+                            			{
+    										name: 'export',
+    										label: 'Export',
+    										subMenu:[
+    											{												
+    												name: 'csvExport',
+    												label: 'CSV Export',
+    												action: () => {
+    													breedGrid2.export('csv', {	fileName:	'시교자원관리 _ 품종관리' });
+    												}
+    											},
+    											{
+    												name: 'excelExport',
+    												label: 'Excel Export',
+    												action: () => {
+    													breedGrid2.export('xlsx', {	fileName:	'시교자원관리 _ 품종관리' });
+    												}
+    											}
+    										]
+    										
+    									}
+                            		]
+                            	]
+                            )
+                        
                     });
 
                     // header
@@ -2837,7 +2910,8 @@
                         }
 
                     }
-
+					
+                    
                     breedGrid2.setColumns(header_add);
                     const dataArr = [];
                     const dataArr2 = [];
@@ -2903,11 +2977,12 @@
                             }
                         }
                     });
-
+                    
                     loading.classList.remove('on');
+
+                    
                 }
             });
-
         $("#pop_breed").on('hidden.bs.modal', function (e) {
             tablechk = 0;
             breedGrid2.destroy();
@@ -3089,7 +3164,7 @@
         let loading = document.querySelector('.load_wrap');
 
         loading.classList.add('on');
-
+        
         $.ajax(
             {
                 url: 'searchSample',
@@ -3191,27 +3266,172 @@
                         pageOptions: {
                             useClient: true,
                             perPage: limit
-                        }
+                        },
+                        
+                    	// 2022-05-06 | 엑셀 내보내기 옵션 수정코드
+						contextMenu: ({ rowKey, columnName }) => (
+							[
+								[
+									{
+										name: 'edit',
+										label: 'Edit',
+										action: () => {
+											samplegrid.startEditing(rowKey, columnName);
+										}
+									},
+									{
+										name: 'export',
+										label: 'Export',
+										subMenu: [
+											{
+												name: 'csvExport',
+												label: 'CSV Export',
+												action: () => {
+													samplegrid.export('csv', {  
+																				fileName: '시교관리' ,
+																				columnNames: [
+																							'sample_name',
+																							'sample_code',
+																							'sample_country',
+																							'sample_type',
+																							'sample_mate',
+																							'sample_seed',
+																							'sample_amount',
+																							'sample_sprout',
+																							'sample_purity',
+																							'sample_comment'
+													]});
+												}
+											},
+											{
+												name: 'excelExport',
+												label: 'Excel Export',
+												action: () => {
+													samplegrid.export('xlsx', {  
+																				fileName: '시교관리' ,
+																				columnNames: [
+																							'sample_name',
+																							'sample_code',
+																							'sample_country',
+																							'sample_type',
+																							'sample_mate',
+																							'sample_seed',
+																							'sample_amount',
+																							'sample_sprout',
+																							'sample_purity',
+																							'sample_comment'
+													]});
+												}
+											}
+										]
+									}
+									
+								]
+							]
+						)
                     });
-
+                    
+                    /*
+					// 2022-05-06 | 엑셀 내보내기 옵션 수정코드(try)
+                    // 지금은 그리드가 로딩되자마자 엑셀파일이 다운된다. 옵션메뉴의 설정으로 만들어야 함
+					samplegrid.export('csv', { fileName: 'myExport', 
+											   columnNames: [
+												   'sample_name',
+												   'sample_code',
+												   'sample_country',
+												   'sample_type',
+												   'sample_mate',
+												   'sample_seed',
+												   'sample_amount',
+												   'sample_sprout',
+												   'sample_purity',
+												   'sample_comment'
+												   ]});
+					*/
+                    
+                    
                     samplegrid.on('click', (ev) => {
+                    	
                         if (ev.targetType === 'cell' && ev.columnName === 'sample_seed' && insertCheck == 0) {
-                            let value_seed = ev.nativeEvent.srcElement;
+                            let value_seed = ev.nativeEvent.srcElement; 
 
                             SearchSeed(value_seed);
                         } else if (ev.targetType === 'cell' && ev.columnName === 'sample_code' && insertCheck == 0) {
                             let value_breed = ev.nativeEvent.srcElement;
-
-                            SearchBreed(value_breed);
+                            
+	                        SearchBreed(value_breed);
+                            
                         } else if (ev.targetType === 'cell' && ev.columnName === 'file' && insertCheck == 0) {
                             let id = samplegrid.getRow(ev.rowKey).sample_id;
 
                             FileBtn(id);
-                        }
+                        } 
                     });
 
                     const dataArr = [];
+                    
+                    $.ajax({
+						url: 'selectSampleFileAll',				
+						method: 'POST',
+						dataType: 'json',
+						async: false,							// async: false -> 동기화하여 그리드가 출력되지 않는것 방지
+						data: data,
+						success: function(file_list) {			// file_list : sample_file 테이블에 있는 모든 sample_id(=파일 업로드가 된 id 목록)
+							console.log("result", result);
+                    		console.log("file_list",file_list);
+                    
+							for (let i = 0; i < result.sample.length; i++) {
+								
+								let isMatch = false;
+								
+								// [i]에 해당하는 basic_id가 file_list 배열에 속해있는지 판별 
+								for(let j = 0; j < file_list.sample_file.length; j++) {
+									if(result.sample[i].sample_id == file_list.sample_file[j].sample_id) {
+										isMatch = true;
+									}
+								}
 
+								
+								let rowArr = {};
+
+								if(isMatch == true) {	// file_list에 속해있다면 arrow-down이 있는, 아니면 없는 아이콘을 출력
+									rowArr = {
+											'file': '<i class="bi bi-file-earmark-arrow-down-fill"></i>',
+				                            'sample_id': result.sample[i].sample_id,
+				                            'sample_name': result.sample[i].sample_name,
+				                            'sample_code': result.sample[i].sample_code,
+				                            'sample_country': result.sample[i].sample_country,
+				                            'sample_type': result.sample[i].sample_type,
+				                            'sample_mate': result.sample[i].sample_mate,
+				                            'sample_seed': result.sample[i].sample_seed,
+				                            'sample_amount': result.sample[i].sample_amount,
+				                            'sample_sprout': result.sample[i].sample_sprout,
+				                            'sample_purity': result.sample[i].sample_purity,
+				                            'sample_comment': result.sample[i].sample_comment
+									};
+								} else {
+									rowArr = {
+											'file': '<i class="bi bi-file-earmark"></i>',
+				                            'sample_id': result.sample[i].sample_id,
+				                            'sample_name': result.sample[i].sample_name,
+				                            'sample_code': result.sample[i].sample_code,
+				                            'sample_country': result.sample[i].sample_country,
+				                            'sample_type': result.sample[i].sample_type,
+				                            'sample_mate': result.sample[i].sample_mate,
+				                            'sample_seed': result.sample[i].sample_seed,
+				                            'sample_amount': result.sample[i].sample_amount,
+				                            'sample_sprout': result.sample[i].sample_sprout,
+				                            'sample_purity': result.sample[i].sample_purity,
+				                            'sample_comment': result.sample[i].sample_comment
+										};
+								}
+
+		                        dataArr.push(rowArr);
+		                    }
+						}
+                    });
+                    
+                    /* ajax를 통한 첨부파일 구분 시도중. 망가졌을 경우 이 구문 복원 
                     for (let i = 0; i < result.sample.length; i++) {
                         let rowArr = {
                             'file': '<i class="bi bi-file-earmark-arrow-down"></i>',
@@ -3230,7 +3450,8 @@
 
                         dataArr.push(rowArr);
                     }
-
+					*/
+                    
                     samplegrid.resetData(dataArr);
 
                     let before = null;
@@ -3392,7 +3613,43 @@
                         pageOptions: {
                             useClient: true,
                             perPage: limit1
-                        }
+                        },
+                        contextMenu: ({ rowKey, columnName }) => (
+                            	[
+                            		[
+                            			{
+                            				name: 'edit',
+                            				label: 'Edit',
+                            				action: () => {
+                            					outcomegrid.startEditing(rowKey, columnName);
+                            				}
+                            			},
+                            			{
+    										name: 'export',
+    										label: 'Export',
+    										subMenu:[
+    											{												
+    												name: 'csvExport',
+    												label: 'CSV Export',
+    												action: () => {
+    													outcomegrid.export('csv', {	fileName:	'시교출고관리' });
+    												}
+    											},
+    											{
+    												name: 'excelExport',
+    												label: 'Excel Export',
+    												action: () => {
+    													outcomegrid.export('xlsx', {	fileName:	'시교출고관리' });
+    												}
+    											}
+    										]
+    										
+    									}
+                            		]
+                            	]
+                            )
+                        	
+                        
                     });
 
                     const dataArr = [];
@@ -3633,27 +3890,39 @@
         }
     }
 
+    
+     
+    
     function SearchMarker() {
+    	
+        let crop_type = $("#user_crop").val();		// 쿼리문에 param을 올려야함
+        
+        if(crop_type == '') {
+        	crop_type = 'checked';
+        }
+        
         $.ajax(
             {
                 url: 'selectOutcomeList',										// sample.html에서 불러도 url은 homeController.java에 있으니까 백엔드쪽은 건드릴필요 없나?
                 method: 'POST',
                 dataType: 'json',
-                data: data,
+                data: { "user_crop" : crop_type },
                 success: function (result) {
                     var inKorea = [];
                     var outKorea = [];
 
+                    console.log(result);
+                    
                     for (let i = 0; i < result.sampleOutcomeKo.length; i++) {
-                        inKorea.push(result.sampleOutcomeKo[i]);
+	                    inKorea.push(result.sampleOutcomeKo[i]);
                     }
-
+                    
                     for (let i = 0; i < result.sampleOutcomeGlo.length; i++) {
                         outKorea.push(result.sampleOutcomeGlo[i]);
                     }
 
                     searchArea(inKorea, outKorea);
-                }
+                },
             });
     }
 
@@ -3664,7 +3933,7 @@
 
     async function searchArea(inKo, outKo) {
         var koreaOptions = {
-            zoom: 6.4,
+            zoom: 7,
             center: {
                 lat: 36.613766432253634,
                 lng: 127.84942123102657
@@ -3679,9 +3948,11 @@
             // mapTypeId: google.maps.MapTypeId.ROADMAP
         };
 
+        console.log(inKo);
+        
         var globalOptions = {
             ...koreaOptions,
-            zoom: 1.5,
+            zoom: 1,
             center: {
                 lat: 26.613766432253634,
                 lng: 167.84942123102657
@@ -3703,12 +3974,13 @@
 
         
         for (let i = 0; i < inKo.length; i++) {
-            koreaLocations.push({"lat":inKo[i].lat , "lng":inKo[i].lng});
+        	
+            koreaLocations.push({"lat":inKo[i].lat , "lng":inKo[i].lng , "location_name":inKo[i].name});
             koreaSubLocations.push({"location_name":inKo[i].name});
         }
 
         for (let o = 0; o < outKo.length; o++) {
-        	globalLocations.push({"lat":outKo[o].lat , "lng":outKo[o].lng});
+        	globalLocations.push({"lat":outKo[o].lat , "lng":outKo[o].lng, "location_name":outKo[o].name});
         	globalSubLocations.push({"location_name":outKo[o].name});
         }
 
@@ -3723,9 +3995,9 @@
         	
         	    marker1[i].addListener("click", () => {				// infoWindow 생성
         	    	infoWindow.close();
-        	    	infoWindow.setContent('<p>지역: ' + koreaSubLocations[i].location_name + '</p>' +
+        	    	infoWindow.setContent('<p>지역: ' + koreaLocations[i].location_name + '</p>' +
         	    							//myFunction()에 지역명을 매개변수로 넘긴다
-        	    						 '<button id="google_map-detail" onclick="KoreaList(' + i + ')">상세정보</button>');	
+        	    							'<button id="google_map-detail" onclick="myFunction(' + "'" + koreaLocations[i].location_name + "'" + ')">상세정보</button>');
         	    	infoWindow.open(marker1[i].getMap(), marker1[i]);
         	    });
         	}
@@ -3742,25 +4014,28 @@
             	
                 marker2[i].addListener("click", () => {
                 	infoWindow.close();
-                	infoWindow.setContent('<p>지역: ' + globalSubLocations[i].location_name + '</p>' +
-                						  '<button id="google_map-detail" onclick="GlobalList(' + i + ')">상세정보</button>');
+                	infoWindow.setContent('<p>지역: ' + globalLocations[i].location_name + '</p>' +
+                						  '<button id="google_map-detail" onclick="myFunction(' + "'" + globalLocations[i].location_name + "'" + ')">상세정보</button>');
                 	infoWindow.open(marker2[i].getMap(), marker2[i]);
                 });
        		}
         }
     }
-
+/* 필요없어짐
     function KoreaList(num) {
-    	location_arr = [
-    			'서울',
-    			'강원도',
-    			'부산',
-    			'강릉',
-    			'남해',
-    			'밀양',
-    			'성주',
-    			'익산'
-    	];
+    	console.log(num);
+    	
+       	location_arr = [
+			'서울',
+			'강원도',
+			'부산',
+			'강릉',
+			'남해',
+			'밀양',
+			'성주',
+			'익산'
+	];
+    	
     	
     	for(let i=0; i<location_arr.length ; i++) {
     		if(num == i) {
@@ -3787,14 +4062,19 @@
 			}
 		}
     }
+    */
     
     function myFunction(num) {			// DB접근 및  modal창 생성
     	
+    	let auth_type = $("#user_crop").val();
+    
+    	console.log("auth_type",auth_type);
+    	console.log(num);
+    	
 		let sample_outcome_place = num;		// name을 받아서 modal창에 서울이 떠야함
-			
+		
     	let data4 = {"sample_outcome_place": sample_outcome_place};
 
-    	
     	$.ajax(
     		{
     			url: 'searchSeed2',		
@@ -3803,21 +4083,26 @@
     			data: data4,
     			success: function(result2) {
     				
-    				
-					console.log(result2);	// 내부에 result2를 parameter로 받은것 확인
+					console.log("result2 : ",result2);	// 내부에 result2를 parameter로 받은것 확인
     				
     				let name_code_num_arr = [];
     				
+    				console.log(result2.sampleOutcome.length);
+					
     				for (let i = 0; i < result2.sampleOutcome.length; i++) {			// 각 배열의 원소에 map을 집어넣음. 이 데이터에서 중복제거를 시도
     					
     					const map1 = {};
     					
-    					map1['name'] = result2.sampleOutcome[i].sample_name;
-    					map1['code'] = result2.sampleOutcome[i].sample_outcome_code;
-    					map1['num'] = result2.sampleOutcome[i].sample_outcome_num;
     					
-    					name_code_num_arr.push(map1);									
+    					if(auth_type == '' || auth_type == result2.sampleOutcome[i].sample_name) {						// 2022-05-03 DNACARE | 아이디 권한에 따른 작물 필터링 
+	    					map1['name'] = result2.sampleOutcome[i].sample_name;
+	    					map1['code'] = result2.sampleOutcome[i].sample_outcome_code;
+	    					map1['num'] = result2.sampleOutcome[i].sample_outcome_num;
+    					}
+    					
+    					name_code_num_arr.push(map1);	
     				}
+    				console.log("name_code_num_arr",name_code_num_arr);					// console.log : 맞지않은 작물이 필터링되면서 배열에 안 들어가는게 아니라 {}으로 들어감
 
     				
     				const map2 = new Map();
@@ -3826,7 +4111,14 @@
 						map2.set(JSON.stringify(character), character);					// 따라서 아예 문자열화하여 String의 값을 비교 & 중복제거함
 					}
 
+					console.log(map2);
+					
+					map2.delete("{}");													// 키값 {} 제거!
+					
 					const unique_arr = [...map2.values()];								// 중복제거된 map의 집합을 다시 배열화
+					
+
+					
     				
     				
     				
