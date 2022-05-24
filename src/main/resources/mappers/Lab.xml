@@ -16,4 +16,166 @@
 		VALUES
 		(#{user_id}, #{analysis_type}, #{analysis_file}, #{analysis_origin_file}, NOW(), NOW())
 	</insert>
+	
+	
+	<!-- ======================================marker_information.html=================================================== -->
+
+	
+	<select id="SearchMarkerInformation" resultType="MarkerInformation">
+		SELECT * FROM marker_information
+		ORDER BY marker_num DESC
+	</select>
+	 
+	<insert id="InsertMarkerInformation" parameterType="MarkerInformation">
+		INSERT INTO marker_information
+		(crop, marker_category, regist_person, regist_date, detail, note) 
+		VALUES
+		(#{crop}, #{marker_category}, #{regist_person}, #{regist_date}, #{detail}, #{note})
+		<selectKey resultType="int" keyProperty="marker_num" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+	</insert>
+	
+	<select id="DeleteMarkerInformation" parameterType="java.util.ArrayList">
+        DELETE FROM marker_information
+        WHERE
+        <foreach collection="array" item="item" open="(" close=")" separator="OR">
+            marker_num = #{item}
+        </foreach>
+	</select>
+	
+	<!-- 첨부파일 등록(첨부파일 등록 후 동작. 서버에 파일 업로드) -->
+    <insert id="InsertMarkerUpload" parameterType="Uploads">
+    	INSERT INTO uploads
+    	(uploads_file, uploads_origin_file, uploads_type, uploads_cat, marker_num, create_date, modify_date)
+    	VALUES
+    	(#{uploads_file}, #{uploads_origin_file}, 1, 4, #{marker_num}, NOW(), NOW())
+    </insert>
+    
+    
+	
+	<!-- =============================================================================================================== -->	
+	
+	<!-- =========================================qtl_information.html=================================================== -->
+	<select id="SearchQTLInformation" resultType="QTLInformation">
+		SELECT * FROM qtl_information
+		ORDER BY qtl_num DESC
+	</select>
+	
+	<insert id="InsertQTLInformation" parameterType="QTLInformation">
+		INSERT INTO qtl_information
+		(crop, qtl_category, regist_person, regist_date, detail, note) 
+		VALUES
+		(#{crop}, #{qtl_category}, #{regist_person}, #{regist_date}, #{detail}, #{note})
+		<selectKey resultType="int" keyProperty="qtl_num" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+	</insert>
+	
+	<update id="UpdateQTLInformation" parameterType="QTLInformation">
+		UPDATE qtl_information
+		SET qtl_name    = #{qtl_name},
+            qtl_kinds    = #{qtl_kinds},
+            crop = #{crop},
+            chromosome_number    = #{chromosome_number},
+            location_start    = #{location_start},
+            location_end    = #{location_end},
+            characteristic  = #{characteristic},
+            qtl_reference  = #{qtl_reference}
+		WHERE
+			qtl_id = #{qtl_id}
+		<selectKey resultType="int" keyProperty="location_start" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+	</update>
+	
+	<select id="SearchQTLById" resultType="QTLInformation">
+		SELECT * FROM qtl_information
+		WHERE qtl_id = #{qtl_id}
+	</select>
+	
+	<select id="DeleteQTLInformation" parameterType="java.util.ArrayList">
+        DELETE FROM qtl_information
+        WHERE
+        <foreach collection="array" item="item" open="(" close=")" separator="OR">
+            qtl_num = #{item}
+        </foreach>
+	</select>
+	
+	<!-- 첨부파일 등록(첨부파일 등록 후 동작. 서버에 파일 업로드) -->
+    <insert id="InsertQTLUpload" parameterType="Uploads">
+    	INSERT INTO uploads
+    	(uploads_file, uploads_origin_file, uploads_type, uploads_cat, qtl_num, create_date, modify_date)
+    	VALUES
+    	(#{uploads_file}, #{uploads_origin_file}, 1, 5, #{qtl_num}, NOW(), NOW())
+    </insert>
+	<!-- =============================================================================================================== -->	
+	
+	
+	<!-- ==========================================mabc_analysis.html=================================================== -->
+	<!-- mabc DB 조회, grid 출력 -->
+	<select id="SearchMABCSample" resultType="MABCSample">
+		SELECT * FROM mabc_sample
+	</select>
+	
+	<!-- 업로드파일 DB 조회, grid 출력 -->
+	<select id="SearchUploads" resultType="Uploads">
+		SELECT * FROM uploads
+	</select>
+	
+
+	
+	
+	<!-- DB 입력(첨부파일 등록 후 동작하지만 grid에만 영향) -->
+	<insert id="InsertMABCSample" parameterType="MABCSample">
+		INSERT INTO mabc_sample
+    	(crop, mabc_category, regist_person, regist_date, detail)
+    	VALUES
+    	(#{crop}, #{mabc_category},#{regist_person},#{regist_date},#{detail})
+        <selectKey resultType="int" keyProperty="mabc_id" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+	</insert>
+	
+	<!-- mabc 첨부파일 등록(첨부파일 등록 후 동작. 서버에 파일 업로드) -->
+    <insert id="InsertMABCUpload" parameterType="Uploads">
+    	INSERT INTO uploads
+    	(uploads_file, uploads_origin_file, uploads_type, uploads_cat, mabc_id, create_date, modify_date)
+    	VALUES
+    	(#{uploads_file}, #{uploads_origin_file}, 1, 6, #{mabc_id}, NOW(), NOW())
+    </insert>
+	
+	<!-- 체크된 행의 mabc_id를 기준으로 데이터 삭제 -->
+	<select id="DeleteMABCSample" parameterType="java.util.ArrayList">
+        DELETE FROM mabc_sample
+        WHERE
+        <foreach collection="array" item="item" open="(" close=")" separator="OR">
+            mabc_id = #{item}
+        </foreach>
+	</select>
+	<!-- =============================================================================================================== -->
+	
+	<!-- map -->
+	<insert id="InsertChromosomeViewer" parameterType="ChromosomeViewer">
+		INSERT INTO chromosomeViewer(chr, pos, mname, sel, jobid)
+		VALUES(#{str1}, #{str2}, #{str3}, #{sel}, #{jobid})
+		<selectKey resultType="int" keyProperty="sel" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+	</insert>
+	<!-- ================================================================================================================= -->
+	
+	<!-- ==============================MABCDesign.html -->
+	<insert id="InsertMABCDesign" parameterType="MABCDesign">
+		INSERT INTO MABC_design(memo, create_date, MABC_status, jobid, crop)
+		VALUES(#{memo}, NOW(), 0, #{jobid}, #{crop})
+		<selectKey resultType="int" keyProperty="MABCDesign_num" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+	</insert>	
+	
+	<select id="Search_MABCDesign" resultType="MABCDesign">
+		select MABCDesign_num, memo, create_date, if(MABC_status=0,"분석중",if(MABC_status=1,"분석완료","분석실패")) as MABC_status, jobid, crop from MABC_design
+		ORDER BY MABCDesign_num DESC;
+	</select>
 </mapper>

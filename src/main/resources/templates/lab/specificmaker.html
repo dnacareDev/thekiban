@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <!-- 공통 헤더 -->
+    <th:block th:include="/../fragments/header.html"></th:block>
+
+    <style>
+        table {
+            border-top: 1px solid grey;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border-bottom: 2px solid #E5E9F2;
+            padding: 10px;
+            text-align: center;
+            font-weight: initial;
+        }
+
+        th, tbody tr {
+            background-color: white;
+        }
+		.top-menu .main-content{
+			background-color:#FCFCFC;
+		}
+		.top-menu .main-content .contents{
+			background-color:#FCFCFC;
+		}
+		.atbd-box{
+			display: inherit;
+		    width: 100%;
+		    justify-content: center;
+		}
+		.atbd-upload{
+			flex: 0 0 50%;
+		}
+		.atbd-box a {
+			width:100%;
+		}
+		.atbd-box button{
+			background-color:#217566;
+			border: 1px solid #217566;
+			margin-left: 10px;
+		}
+		.top-menu .main-content .card{
+			padding-bottom: 100px;
+		}
+		.top-menu .main-content .btn-primary{
+			background-color:#EDF6F1;
+			color:#217566;
+		}
+		.top-menu .main-content .btn-primary img{
+			margin-right: 10px;
+		}
+		.top-menu .main-content .align-items-center{
+			justify-content: center;
+		}
+		select{
+			margin-left: 25px;
+		}
+		.top-menu .main-content .form-group{
+			margin-left: 30px;
+   		    padding-bottom: 0;
+		}
+		.main-content .form-group input[type=text]{
+			margin-left: 25px;
+		}
+		@media (min-width: 576px){
+			.top-menu .main-content .modal-dialog {
+			    max-width: 850px;
+			    margin: 1.75rem auto;
+			}
+		}
+		
+		/* 그리드 특정 column의 텍스트에 링크형태 */
+		#mabc_grid .tui-grid-body-area td[data-column-name='mabc_id'], #mabc_grid .tui-grid-body-area td[data-column-name='mabc_name'] {
+            color: mediumblue;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+		
+		#iframe {
+			margin-top: 50px;
+			margin-left: 180px;
+		}
+    </style>
+
+</head>
+
+<body class="layout-light top-menu overlayScroll">
+<div class="mobile-search"></div>
+
+<div class="mobile-author-actions"></div>
+
+<!-- 공통 topbar -->
+<th:block th:include="/../fragments/topbar.html"></th:block>
+
+<div id="iframe">
+	<iframe src="http://112.169.63.197:8843//digit/specificmaker" width="1800" height="1000"></iframe>
+</div>
+<!-- 공통 하단 -->
+<th:block th:include="/../fragments/footer.html"></th:block>
+<!-- 공통 js -->
+<th:block th:include="/../fragments/commonjs.html"></th:block>
+
+<script type="text/javascript">
+
+    
+	
+
+		
+	
+	
+</script>
+
+</body>
+
+</html>

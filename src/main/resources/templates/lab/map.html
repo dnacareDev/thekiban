@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <!-- 공통 헤더 -->
+    <th:block th:include="/../fragments/header.html"></th:block>
+
+    <style>
+        table {
+            border-top: 1px solid grey;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border-bottom: 2px solid #E5E9F2;
+            padding: 10px;
+            text-align: center;
+            font-weight: initial;
+        }
+
+        th, tbody tr {
+            background-color: white;
+        }
+		.top-menu .main-content{
+			background-color:#FCFCFC;
+		}
+		.top-menu .main-content .contents{
+			background-color:#FCFCFC;
+		}
+		.atbd-box{
+			display: inherit;
+		    width: 100%;
+		    justify-content: center;
+		}
+		.atbd-upload{
+			flex: 0 0 50%;
+		}
+		.atbd-box a {
+			width:100%;
+		}
+		.atbd-box button{
+			background-color:#217566;
+			border: 1px solid #217566;
+			margin-left: 10px;
+		}
+		.top-menu .main-content .card{
+			padding-bottom: 100px;
+		}
+		.top-menu .main-content .btn-primary{
+			background-color:#EDF6F1;
+			color:#217566;
+		}
+		.top-menu .main-content .btn-primary img{
+			margin-right: 10px;
+		}
+		.top-menu .main-content .align-items-center{
+			justify-content: center;
+		}
+		select{
+			margin-left: 25px;
+		}
+		.top-menu .main-content .form-group{
+			margin-left: 30px;
+   		    padding-bottom: 0;
+		}
+		.main-content .form-group input[type=text]{
+			margin-left: 25px;
+		}
+		@media (min-width: 576px){
+			.top-menu .main-content .modal-dialog {
+			    max-width: 850px;
+			    margin: 1.75rem auto;
+			}
+		}
+		
+		/* 그리드 특정 column의 텍스트에 링크형태 */
+		#qtl_grid .tui-grid-body-area td[data-column-name='qtl_id'], #qtl_grid .tui-grid-body-area td[data-column-name='qtl_name'] {
+            color: mediumblue;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+		
+    </style>
+
+</head>
+
+<body class="layout-light top-menu overlayScroll">
+<div class="mobile-search"></div>
+
+<div class="mobile-author-actions"></div>
+
+<!-- 공통 topbar -->
+<th:block th:include="/../fragments/topbar.html"></th:block>
+
+<main class="main-content">
+
+    <div class="contents">
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                	<div class="breadcrumb-main">
+			        		<h4 class="text-capitalize breadcrumb-title">염색체 지도</h4>
+			        </div>
+                </div>
+            </div>
+            <div class="row">
+            	<div class="card">
+            		<div class="card-body">
+	        			<div class="bg-white">
+	                        <div class="card" id="cardPlus" style="width:1100px" >	<!-- width를 지정해야 다 보인다. 오른쪽으로 쏠려있으니 그것도 방법을 찾아보자. 일단은 container-fluid가 중앙정렬된게 원인으로 보임 -->
+	                        	<div class="card-extra mt-20 mr-20">
+		                            <div class="action-btn d-flex justify-content-end">
+		                                <div class="atbd-button-list d-flex flex-wrap">
+		                                    <form action="" name="searchForm" class="d-flex align-items-center add-contact__form my-sm-0 my-2">
+		                                        <select class="form-control form-control-lg mt-10 mb-10 mr-10" style="width: 250px; float: left;" id="limit">
+		                                            <option value="10">10개</option>
+		                                            <option value="20">20개</option>
+		                                            <option value="30">30개</option>
+		                                        </select>
+		                                        <select class="form-control form-control-lg mt-10 mb-10 mr-10" style="width: 250px;" id="CropSelect">
+		                                            <option value="고추">고추</option>
+		                                            <option value="대파">대파</option>
+		                                            <option value="멜론">멜론</option>
+		                                            <option value="무">무</option>
+		                                            <option value="배추">배추</option>
+		                                            <option value="수박">수박</option>
+		                                            <option value="양배추">양배추</option>
+		                                            <option value="양파">양파</option>
+		                                            <option value="참외">참외</option>
+		                                            <option value="토마토">토마토</option>
+		                                        </select>
+		                                    </form>
+		                                </div>
+                            		</div>
+		                        </div>
+		                        <div class="card-body" style="padding-top: 0;">
+		                            <div class="bg-white">
+		                                <canvas id="test" width="150" height="150">
+		                                
+		                                </canvas>
+		                            </div>
+		                        </div>		                        
+	                        </div>
+	                    </div>
+            		</div>
+            	</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- modal code -->
+    <!-- 마커 등록버튼 클릭시 나타나는 modal -->
+    <div class="modal-basic modal fade show" id="qtl_insert_modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content modal-bg-white ">
+                <form action="insertQTLFile" id="insertFile" method="POST" enctype="multipart/form-data">
+	                <div class="modal-body">
+		                <table class="table">
+		               		<tbody>
+		               			<tr>
+		                			<td><label class="reg" for="crop">작물</label></td>
+		                			<td><input type="text" name="crop"></td>
+		                			<td><label class="reg" for="qtl_category">분류</label></td>
+		                			<td><input type="text" name="qtl_category"></td>
+		                		</tr>
+		                		<tr>
+		                			<td><label class="reg" for="regist_person">등록자</label></td>
+		                			<td><input type="text" name="regist_person"></td>
+		                			<td><label class="reg" for="regist_date">등록일</label></td>
+		                			<td><input type="text" name="regist_date"></td>
+		                		</tr>
+		                		<tr>
+		                			<td><label class="reg" for="detail">상세내용</label></td>
+		                			<td><input type="text" name="detail"></td>
+		                		</tr>
+		                		<tr>
+		                			<td><label class="reg" for="note">비고</label></td>
+		                			<td><input type="text" name="note"></td>
+		                		</tr>
+		                	</tbody>
+			            </table>
+			            <div>
+                            <div class="atbd-upload">
+                                <div class="atbd-upload__button">
+                                    <input type="file" id="upload_file" name="file">
+                                </div>
+                            </div>
+                        </div>
+	                </div>
+	                <div class="modal-footer" style="border: none">
+	                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
+	                    <button type="button" class="btn btn-primary btn-sm" onclick="insert_qtl_information()" style="background-color:#217566; color:#fff">등록</button>
+	                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+ 
+    
+    <!-- (염색체 지도의 marker 클릭시 이동하는 modal) 마커 Primer 제작 화면 -->
+    <div class="modal-basic modal fade show" id="qtl_Primer" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content modal-bg-white ">
+                <div class="modal-body">
+					<table class="table">
+						<tbody>
+							<tr>
+								<td><label class="reg" for="selected_marker_id">선택 마커 ID</label></td>
+								<td><input type="text" name="selected_marker_id" value="Ca_SSR_01(임시)" readonly/></td>
+							</tr>
+							<tr>
+								<td><label class="reg" for="selected_marker_name">마커 이름</label></td>
+								<td><input type="text" name="selected_marker_name" value="Xdd401(임시)" readonly/></td>
+							</tr>
+							<tr>
+								<td><label class="reg" for="marker_range">범위 크기</label></td>
+								<td><input type="text" name="marker_range" placeholder="범위제한 : 1000?"/></td>
+							</tr>
+						</tbody>
+					</table>
+                </div>
+                <div class="modal-footer" style="border: none">
+                    <button type="button" class="btn btn-primary btn-sm" onclick="copy_clipboard1()" style="background-color:#217566; color:#fff">확인</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 조회한 DNA_sequence를 저장해두는 영역. 이 텍스트를 클립보드에 복사 -->
+	<div class="modal-basic modal fade show" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content modal-bg-white ">
+			    <div id="DNA_sequence_textarea" >
+			                	AAAAAAAAAACCCCCCCCCCGGGGGGGGGGTTTTTTTTTTUUUUUUUUUU
+			                	AAAAAAAAAACCCCCCCCCCGGGGGGGGGGTTTTTTTTTTUUUUUUUUUU
+			                	AAAAAAAAAACCCCCCCCCCGGGGGGGGGGTTTTTTTTTTUUUUUUUUUU
+			                	AAAAAAAAAACCCCCCCCCCGGGGGGGGGGTTTTTTTTTTUUUUUUUUUU
+			                	AAAAAAAAAACCCCCCCCCCGGGGGGGGGGTTTTTTTTTTUUUUUUUUUU
+			                	AAAAAAAAAACCCCCCCCCCGGGGGGGGGGTTTTTTTTTTUUUUUUUUUU
+			                	AAAAAAAAAACCCCCCCCCCGGGGGGGGGGTTTTTTTTTTUUUUUUUUUU
+			                	AAAAAAAAAACCCCCCCCCCGGGGGGGGGGTTTTTTTTTTUUUUUUUUUU
+			                	AAAAAAAAAACCCCCCCCCCGGGGGGGGGGTTTTTTTTTTUUUUUUUUUU
+			                	AAAAAAAAAACCCCCCCCCCGGGGGGGGGGTTTTTTTTTTUUUUUUUUUU
+			    </div>
+			</div>
+		</div>
+	</div>
+    
+</main>
+
+<!-- 공통 하단 -->
+<th:block th:include="/../fragments/footer.html"></th:block>
+<!-- 공통 js -->
+<th:block th:include="/../fragments/commonjs.html"></th:block>
+
+<script type="text/javascript">
+	// 페이지 시작
+	$(document).ready(function(){
+		var canvas = document.getElementById("test");
+        if(canvas.getContext){
+            var ctx = canvas.getContext("2d");
+
+            ctx.fillStyle = "rgb(200, 0, 0)";
+            ctx.fillRect(10, 10, 50, 50);
+
+            ctx.fillStyle = "rgb(0, 0, 200, 0.5)";
+            ctx.fillRect(30, 30, 50, 50);
+
+        }
+	});
+	
+	
+    
+		
+</script>
+
+</body>
+
+</html>

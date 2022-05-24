@@ -277,7 +277,8 @@ public class BreedController {
   // 첨부파일 등록
   @RequestMapping("insertBreedFile")
   public ModelAndView InsertBreedFile(ModelAndView mv, @ModelAttribute BreedFile breed_file, @RequestParam("file") MultipartFile file) throws IOException {
-    String[] extension = file.getOriginalFilename().split("\\.");
+    
+	String[] extension = file.getOriginalFilename().split("\\.");
 
     String file_name = fileController.ChangeFileName(extension[1]);
     String origin_file_name = file.getOriginalFilename();

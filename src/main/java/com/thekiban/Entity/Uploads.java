@@ -16,7 +16,8 @@ public class Uploads
 	private String uploads_file;
 	private String uploads_origin_file;
 	private int uploads_type;						// 파일 유형(0: 첨부파일, 1: 엑셀파일)
-	private int uploads_cat;						// 파일 카테고리(0: 품종, 1: 원종, 2: 도입, 3: 시교)
+	private int uploads_cat;						// 파일 카테고리 (0: 품종, 1: 원종, 2: 도입, 3: 시교) 
+													// 파일 카테고리 추가. 문제시 삭제 (4: marker, 5: qtl, 6: mabc)
 	private int row_num;		
 	private String create_date;
 	private String modify_date;
@@ -25,4 +26,8 @@ public class Uploads
 	private int basic_file_id;
 	private int income_file_id;
 	private int sample_file_id;
+	
+	private int mabc_id;
+	private int marker_num;
+	private int qtl_num;
 }

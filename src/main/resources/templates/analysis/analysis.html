@@ -786,6 +786,9 @@
                     <div class="card" style="background-color: #fff !important; box-shadow: 0 3px 20px 3px rgb(0 0 0 / 7%)">
                         <div class="breadcrumb-main" style="float: left; padding: 1.56rem;">
                             <h4 class="text-capitalize breadcrumb-title">통합분석</h4>
+                            <!-- 2022-05-11 | 작물권한에 따른 접근제한이 필요하여 user_type, user_crop 추가 -->
+                            <input type="hidden" id="user_type" th:value="${user.user_type}">
+                            <input type="hidden" id="user_crop" th:value="${user.auth_crop}">
                         </div>
                         <div class="container clearfix">
                             <form action="" method="post">

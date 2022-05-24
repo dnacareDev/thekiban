@@ -1,0 +1,617 @@
+<!doctype html>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <!-- 공통 헤더 -->
+    <th:block th:include="/../fragments/header.html"></th:block>
+
+    <style>
+        table {
+            border-top: 1px solid grey;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border-bottom: 2px solid #E5E9F2;
+            padding: 10px;
+            text-align: center;
+            font-weight: initial;
+        }
+
+        th, tbody tr {
+            background-color: white;
+        }
+		.top-menu .main-content{
+			background-color:#FCFCFC;
+		}
+		.top-menu .main-content .contents{
+			background-color:#FCFCFC;
+		}
+		.atbd-box{
+			display: inherit;
+		    width: 100%;
+		    justify-content: center;
+		}
+		.atbd-upload{
+			flex: 0 0 50%;
+		}
+		.atbd-box a {
+			width:100%;
+		}
+		.atbd-box button{
+			background-color:#217566;
+			border: 1px solid #217566;
+			margin-left: 10px;
+		}
+		.top-menu .main-content .card{
+			padding-bottom: 100px;
+		}
+		.top-menu .main-content .btn-primary{
+			background-color:#EDF6F1;
+			color:#217566;
+		}
+		.top-menu .main-content .btn-primary img{
+			margin-right: 10px;
+		}
+		.top-menu .main-content .align-items-center{
+			justify-content: center;
+		}
+		select{
+			margin-left: 25px;
+		}
+		.top-menu .main-content .form-group{
+			margin-left: 30px;
+   		    padding-bottom: 0;
+		}
+		.main-content .form-group input[type=text]{
+			margin-left: 25px;
+		}
+		@media (min-width: 576px){
+			.top-menu .main-content .modal-dialog {
+			    max-width: 850px;
+			    margin: 1.75rem auto;
+			}
+		}
+		
+		/* 그리드 특정 column의 텍스트에 링크형태 */
+		#qtl_example_file {
+            color: mediumblue;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+		
+    </style>
+
+</head>
+
+<body class="layout-light top-menu overlayScroll">
+<div class="mobile-search"></div>
+
+<div class="mobile-author-actions"></div>
+
+<!-- 공통 topbar -->
+<th:block th:include="/../fragments/topbar.html"></th:block>
+
+<main class="main-content">
+
+    <div class="contents">
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                	<div class="breadcrumb-main">
+			        		<h4 class="text-capitalize breadcrumb-title">QTL INFORMATION</h4>
+			        </div>
+                </div>
+            </div>
+            <div class="row">
+            	<div class="card">
+            		<div class="card-body">
+	        			<div class="bg-white">
+	                        <div class="card" id="cardPlus" style="width:1100px" >	<!-- width를 지정해야 다 보인다. 오른쪽으로 쏠려있으니 그것도 방법을 찾아보자. 일단은 container-fluid가 중앙정렬된게 원인으로 보임 -->
+	                        	<div class="card-extra mt-20 mr-20">
+		                            <div class="action-btn d-flex justify-content-end">
+		                                <div class="atbd-button-list d-flex flex-wrap">
+
+		                                </div>
+                            		</div>
+		                        </div>
+		                        <div class="card-body" style="padding-top: 0;">
+		                            <div class="bg-white">
+		                                <div id="qtl_grid"><!-- 여기에 그리드 출력 --></div>
+		                                <div class="row">
+		                                    <div class="col-4">
+		                                        <button class="btn btn-icon btn-light btn-circle" data-toggle="modal" data-target="#qtl_insert_modal">
+		                                            추가
+		                                        </button>
+		                                        <button type="button" class="btn btn-icon btn-light btn-circle" onclick="delete_row()">
+		                                            삭제
+		                                        </button>
+		                                        <button type="button" class="btn btn-icon btn-light btn-circle" onclick="read_csv()">
+		                                            지도
+		                                        </button>
+
+		                                    </div>
+		                                    <div class="col-4">
+		                                        <div class="row" style="justify-content: center;">
+		                                            <div id="pageNum" style="text-align:center; margin: 2% 0 0 0;"></div>
+		                                        </div>
+		                                    </div>
+		                                </div>
+		                            </div>
+		                        </div>		                        
+	                        </div>
+	                    </div>
+            		</div>
+            	</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- modal code -->
+    <!-- 마커 등록버튼 클릭시 나타나는 modal -->
+    <div class="modal-basic modal fade show" id="qtl_insert_modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content modal-bg-white ">
+                <form action="insertQTLFile" id="insertFile" method="POST" enctype="multipart/form-data">
+	                <div class="modal-body">
+		                <select class="form-control form-control-lg mt-10 mb-10 mr-10" style="width: 250px;" name="crop" id="crop">
+                                            <option value="고추">고추</option>
+                                            <option value="대파">대파</option>
+                                            <option value="멜론">멜론</option>
+                                            <option value="무">무</option>
+                                            <option value="배추">배추</option>
+                                            <option value="수박">수박</option>
+                                            <option value="양배추">양배추</option>
+                                            <option value="양파">양파</option>
+                                            <option value="참외">참외</option>
+                                            <option value="토마토">토마토</option>
+	                              </select>
+		                <table class="table">
+		               		<tbody>
+			               		
+		               			<tr>
+		                			<td><label class="reg" for="qtl_category">분류</label></td>
+		                			<td><input type="text" name="qtl_category"></td>
+		                		</tr>
+		                		<tr>
+		                			<td><label class="reg" for="regist_person">등록자</label></td>
+		                			<td><input type="text" name="regist_person"></td>
+		                		</tr>
+		                		<tr>
+		                			<td><label class="reg" for="regist_date">등록일</label></td>
+		                			<td><input type="text" name="regist_date"></td>
+		                		</tr>
+		                		<tr>
+		                			<td><label class="reg" for="detail">상세내용</label></td>
+		                			<td><input type="text" name="detail"></td>
+		                		</tr>
+		                		<tr>
+		                			<td><input type="hidden" name="note"></td>
+		                		</tr>
+		                	</tbody>
+			            </table>
+			            <div>
+                            <div class="atbd-upload">
+                            	<div class="atbd-upload__button">
+                                	<a id="qtl_example_file" href="/common/r/example/qtl_example.xlsx" download>예제파일다운</a></td>
+                                </div>
+                                <div class="atbd-upload__button">
+                                	<input type="file" id="upload_file" name="file">
+                                </div>
+                            </div>
+                        </div>
+	                </div>
+	                <div class="modal-footer" style="border: none">
+	                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
+	                    <button type="button" class="btn btn-primary btn-sm" onclick="insert_qtl_information()" style="background-color:#217566; color:#fff">등록</button>
+	                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+ 
+    
+    <!-- (염색체 지도의 marker 클릭시 이동하는 modal) 마커 Primer 제작 화면 -->
+    <div class="modal-basic modal fade show" id="qtl_Primer" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-md" role="document">
+            <div class="modal-content modal-bg-white ">
+                <div class="modal-body">
+					<table class="table">
+						<tbody>
+							<tr>
+								<td><label class="reg" for="selected_marker_id">선택 마커 ID</label></td>
+								<td><input type="text" name="selected_marker_id" value="Ca_SSR_01(임시)" readonly/></td>
+							</tr>
+							<tr>
+								<td><label class="reg" for="selected_marker_name">마커 이름</label></td>
+								<td><input type="text" name="selected_marker_name" value="Xdd401(임시)" readonly/></td>
+							</tr>
+							<tr>
+								<td><label class="reg" for="marker_range">범위 크기</label></td>
+								<td><input type="text" name="marker_range" placeholder="범위제한 : 1000?"/></td>
+							</tr>
+						</tbody>
+					</table>
+                </div>
+                <div class="modal-footer" style="border: none">
+                    <button type="button" class="btn btn-primary btn-sm" onclick="copy_clipboard1()" style="background-color:#217566; color:#fff">확인</button>
+                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    
+</main>
+
+<!-- 공통 하단 -->
+<th:block th:include="/../fragments/footer.html"></th:block>
+<!-- 공통 js -->
+<th:block th:include="/../fragments/commonjs.html"></th:block>
+
+<script type="text/javascript">
+	// 페이지 시작
+	$(document).ready(function(){
+				SearchPlan();
+
+			/*	$("#qtl_information_more").on('hidden.bs.modal', function (e) {
+					$('input[name=crop]').val('');
+					$('input[name=qtl_category]').val('');
+					$('input[name=regist_person]').val('');
+					$('input[name=regist_date]').val('');
+					$('input[name=detail]').val('');
+					$('input[name=note]').val('');
+				}); */		
+		});
+	
+	/*
+	$("#CropSelect").change(function () {
+		qtl_grid.destroy();
+		
+		SearchPlan();
+	}); 
+	
+	
+	// 페이지 당 데이터 개수 변경
+	$("#limit").change(function () {
+        	qtl_grid.destroy();
+
+        	SearchPlan();
+        });
+	*/
+	
+	
+	// grid
+    let qtl_grid = null;
+    let update_qtl_data = [];
+	
+	function SearchPlan() {
+		
+		var crop_name = $("#CropSelect").val();
+		var limit = $("#limit").val();
+		
+		
+		
+		$.ajax({
+			url : 'search_qtl_information',
+			method : 'POST',
+			dataType: 'json',
+			data : data,
+			success : function(result) {
+				console.log("result : ",result);
+				
+				let dataArr = [];
+				
+				let rowArr = {};
+				
+				//for(let i=result.qtl_information.length -1 ; i>=0 ; i--) {
+				for(let i=0 ; i<result.qtl_information.length ; i++) {
+					
+					for(let j=0 ; j<result.search_uploads.length ; j++) {
+						if(result.qtl_information[i].qtl_num == result.search_uploads[j].qtl_num) {
+							rowArr = {
+									'file': '<a href="upload/' + result.search_uploads[j].uploads_file + '" download><i class="bi bi-file-earmark-arrow-down-fill"></i></a>',
+									'file_name': result.search_uploads[j].uploads_file,
+									'file_origin_name' : result.search_uploads[j].uploads_origin_file,	 		// 파일명 조회 용도
+									'qtl_num': result.qtl_information[i].qtl_num,
+									'crop': result.qtl_information[i].crop,
+									'qtl_category': result.qtl_information[i].qtl_category,
+									'regist_person': result.qtl_information[i].regist_person,
+									'regist_date': result.qtl_information[i].regist_date,
+									'detail': result.qtl_information[i].detail,
+									'note': result.qtl_information[i].note,
+							};
+							console.log(rowArr);
+							dataArr.push(rowArr);
+						}
+					}
+					
+				}
+				console.log(dataArr);
+				
+				// 2022-05-12 | marker_grid를 qtl_grid로 교체. 뭔가 출력이 안된다 싶으면 이 부분을 확인해보자
+				qtl_grid = new tui.Grid({
+					el: document.getElementById('qtl_grid'),
+					scrollX: true,
+					scrollY: true,
+					data: dataArr,
+					rowHeaders: ['checkbox'],
+					columns: [
+						{
+                            header: 'qtl_num',
+                            name: 'qtl_num',
+                            hidden: true,
+                            sortable: true,
+                            width: 100,
+                            filter: {type: 'select', showApplyBtn: true, showClearBtn: true}
+                        },
+						{
+                            header: '파일첨부',
+                            name: 'file',
+                            width: 80,
+                        },
+                        {
+                            header: '파일명',
+                            name: 'file_origin_name',
+                            width: 200,
+                        },
+						{
+                            header: '작물',
+                            name: 'crop',
+                            sortable: true,
+                            width: 100,
+                            filter: {type: 'select', showApplyBtn: true, showClearBtn: true}
+                        },
+                        {
+                            header: '분류',
+                            name: 'qtl_category',
+                            sortable: true,
+                            width: 100,
+                            filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
+                        },
+                        {
+                            header: '등록자',
+                            name: 'regist_person',
+                            sortable: true,
+                            width: 100,
+                            filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
+                        },
+                        {
+                            header: '등록일',
+                            name: 'regist_date',
+                            sortable: true,
+                            width: 150,
+                            filter: {type: 'text', showApplyBtn: true, showClearBtn: true}
+                        },
+                        {
+                            header: '상세내용',
+                            name: 'detail',
+                            width: 230,
+                        },
+                        {
+                            header: '비고',
+                            name: 'note',
+                            hidden: true,
+                            width: 100,
+                        },
+					],
+					pageOptions: {
+                        useClient: true,
+                        perPage: 10
+                    },
+				});
+				
+
+			},
+			error: function() {
+				console.log("DB 작업중");
+			}
+		});
+	}
+	
+	function insert_qtl_information() {
+		
+		let fileCheck = $("#upload_file").val();
+
+		if(!fileCheck) {
+			alert("파일을 첨부해 주세요.");
+			return false;
+		}
+		
+		$("#insertFile").submit();
+	}
+	
+
+
+	/*
+	
+	// 마커 상세정보 수정 함수 (작업중)
+	function update_qtl_information1() {
+		$("#modify").css('display', 'none');
+		$('input[name=qtl_id]').css('color', '#808080');
+		$('input[name=qtl_name]').attr('readonly',false);
+		$('input[name=qtl_kinds]').attr('readonly',false);
+		$('input[name=crop]').attr('readonly',false);
+		$('input[name=chromosome_number]').attr('readonly',false);
+		$('input[name=location_start]').attr('readonly',false);
+		$('input[name=location_end]').attr('readonly',false);
+		$('input[name=characteristic]').attr('readonly',false);
+		$('input[name=qtl_reference]').attr('readonly',false);
+		$("#modify_complete").css('display', 'block');
+	}
+	
+	function update_qtl_information2() {
+		let input_qtl_data = [];
+		
+		update_qtl_data.push({  	'qtl_id' : $('input[name=qtl_id]').val(),
+									'qtl_name' : $('input[name=qtl_name]').val(),
+									'qtl_kinds' : $('input[name=qtl_kinds]').val(),
+									'crop' : $('input[name=crop]').val(),
+									'chromosome_number' : $('input[name=chromosome_number]').val(),
+									'location_start' : $('input[name=location_start]').val(),
+									'location_end' : $('input[name=location_end]').val(),
+									'characteristic' : $('input[name=characteristic]').val(),
+									'qtl_reference' : $('input[name=qtl_reference]').val()
+		});
+		
+		console.log("update_qtl_data 입력 확인 : " , update_qtl_data);
+		
+
+		$.ajax(
+			{
+				url: 'update_qtl_information',
+				method: 'POST',
+				dataType: 'json',
+				data: { "update_qtl_data" : JSON.stringify(update_qtl_data) },
+				success: function(result) {
+					
+					if(result != null) {
+						location.reload();									// ajax 성공시 새로고침
+					}
+					
+				},
+				error: function() {
+					alert("입력실패")
+				}
+			}		
+		);
+	}
+	*/
+	
+	
+	var tablechk = 0; 	// samplegrid, outcomegrid구별용인듯. 일단 안바뀌니까 0으로 설정
+	var insertCheck = 0;	// insert가 이미 활성화되었는지 체크용. 없으면 누를때마다 추가행이 계속 뜨겠지
+	
+	
+	/* function insert_row() {
+		console.log("modal로 띄워야하므로 tui 기능 주석처리");
+		
+        2022-05-11 폴더에 코드 저장. 필요하면 참고
+       
+    } */
+	
+	function delete_row() {
+		let total_qtl_num = [];
+
+
+        for (let i = 0; i < qtl_grid.getCheckedRows().length; i++) {
+        	total_qtl_num.push(qtl_grid.getCheckedRows()[i].qtl_num)
+        }
+
+        // ajax data에 직접 넣을거라서 꼭 변수화할 필요는 없을듯 
+        // let data1 = {'sample_outcome_id': total_id1};
+        
+        // total_qtl_id 배열은 위에서 아래로 쌓인다. getCheckedRows()도 체크된 행이 어디인지 구분하지 않고 위에서부터 순서대로 쌓는다
+        console.log("qtl_grid.getCheckedRows()",qtl_grid.getCheckedRows());
+        console.log(total_qtl_num);
+        
+        if(qtl_grid.getCheckedRows().length >= 1) {
+        	
+	        if( confirm("삭제하시겠습니까?") == true) {
+		        $.ajax(
+		       		{
+		       			url: 'delete_qtl_information',
+		       			method: 'POST',
+		       			dataType: 'json',
+		       			data: {'total_qtl_num' : total_qtl_num},
+		       			success: function(result)	{
+		       				location.reload();
+		       			},
+		       			error: function() {
+		       				console.log("db연결 실패");
+		       			}
+		       		});
+	        } else {
+	        	return false;
+	        }
+        } else {
+        	alert("하나 이상의 체크박스를 체크해주세요.");
+        	return false;
+        }
+        
+	}
+	
+    function saveRow() {
+        if (tablechk === 0) {
+            let input_qtl_data = [];
+
+            input_qtl_data.push(qtl_grid.getCheckedRows()[0]);							// [0]이 있어야 추가된 행만 저장한다
+
+            console.log("qtl_grid.getCheckedRows()",qtl_grid.getCheckedRows());
+            console.log("input_qtl_data",input_qtl_data);
+            
+            
+            $.ajax(
+                {
+                    url: 'insert_qtl_information',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: {
+                        "input_qtl_data": JSON.stringify(input_qtl_data)
+                    },
+                    success: function (result) {
+                        if (result != null) {
+                            location.reload();
+                        } else {
+                        	console.log("정상출력 실패. result : ",result);
+                        }
+                    }
+                });
+        }  
+    }
+	
+
+    
+    
+    
+    function read_csv() {
+		
+    	let total_file_name = [];
+
+    	let total_crop_name = [];
+
+        for (let i = 0; i < qtl_grid.getCheckedRows().length; i++) {
+        	total_file_name.push(qtl_grid.getCheckedRows()[i].file_name);
+        	console.log("qtl_grid.getCheckedRows()[i].file_name",qtl_grid.getCheckedRows()[i].file_name);
+        	console.log("total_file_name",total_file_name);
+        	total_crop_name.push(qtl_grid.getCheckedRows()[i].crop);
+        }
+        
+        for(let i = 0 ; i<qtl_grid.getCheckedRows().length; i++) {
+        	if(qtl_grid.getCheckedRows()[0].crop == qtl_grid.getCheckedRows()[i].crop) {
+        		continue;
+        	} else {
+        		alert("작물명이 서로 다릅니다.");
+        		return false;
+        	}
+        }
+        
+        console.log("total_file_name", total_file_name);
+        
+        $.ajax(
+                {
+                    url: 'QTLMap',
+                    method: 'POST',
+                    dataType: 'json',
+                    // data: {'total_qtl_num' : total_qtl_num},
+                    data: {'total_file_name' : total_file_name},
+                    success: function (result) {
+                       console.log("현재시간 : " , result)
+                       console.log($("#CropSelect").val());
+						window.open('/chrMakerViewer/drawmap.jsp?orga=' + qtl_grid.getCheckedRows()[0].crop + '&jobid=' + result , 'drawmap_qtl', 'top=100, left=400, width=1200, height=800, toolbar=no, menubar=no, location=no, status=no, scrollbars=yes, resizable=no');
+
+                    }
+                });
+       
+    }
+    
+		
+</script>
+
+</body>
+
+</html>

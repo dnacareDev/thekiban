@@ -1172,7 +1172,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 
     <!-- modal code -->
@@ -2830,7 +2829,7 @@
                 url: 'searchBreedList',
                 method: 'POST',
                 dataType: 'json',
-                // async: false,				// 도저히 안될것 같으면 이걸로 해결
+                async: false,				// 2022-05-09 | async로 해결했는데 아직 방법이 있을거같다. 잊지말고 고치자
                 data: data,
                 success: function (result2) {
                     $(".breed_title").text("시교명 (ID) : " + e.innerText);
@@ -3330,25 +3329,7 @@
 							]
 						)
                     });
-                    
-                    /*
-					// 2022-05-06 | 엑셀 내보내기 옵션 수정코드(try)
-                    // 지금은 그리드가 로딩되자마자 엑셀파일이 다운된다. 옵션메뉴의 설정으로 만들어야 함
-					samplegrid.export('csv', { fileName: 'myExport', 
-											   columnNames: [
-												   'sample_name',
-												   'sample_code',
-												   'sample_country',
-												   'sample_type',
-												   'sample_mate',
-												   'sample_seed',
-												   'sample_amount',
-												   'sample_sprout',
-												   'sample_purity',
-												   'sample_comment'
-												   ]});
-					*/
-                    
+
                     
                     samplegrid.on('click', (ev) => {
                     	
@@ -4021,48 +4002,6 @@
        		}
         }
     }
-/* 필요없어짐
-    function KoreaList(num) {
-    	console.log(num);
-    	
-       	location_arr = [
-			'서울',
-			'강원도',
-			'부산',
-			'강릉',
-			'남해',
-			'밀양',
-			'성주',
-			'익산'
-	];
-    	
-    	
-    	for(let i=0; i<location_arr.length ; i++) {
-    		if(num == i) {
-    			myFunction(location_arr[i]);
-    			break;
-    		}
-    	}
-    }
-    
-    function GlobalList(num) {
-    	location_arr = [
-			'멕시코',
-			'베트남',
-			'미국',
-			'일본',
-			'인도',
-			'파키스탄'
-	];
-	
-		for(let i=0; i<location_arr.length ; i++) {
-			if(num == i) {
-				myFunction(location_arr[i]);
-				break;
-			}
-		}
-    }
-    */
     
     function myFunction(num) {			// DB접근 및  modal창 생성
     	

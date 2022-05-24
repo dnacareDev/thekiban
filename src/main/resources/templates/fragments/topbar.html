@@ -62,6 +62,11 @@
     .strikingDash-top-menu ul li.has-subMenu > a:before {
         right: -20px;
     }
+    
+    /* 2022-05-12 | 2차 서브메뉴 길이 수정 */
+    .atbd-submenu-item > li {
+    	width: 300px;
+    }
 
 </style>
 <header class="header-top">
@@ -116,22 +121,33 @@
                             <ul class="atbd-menu menu-top menu-vertical subMenu">
                                 <li class="atbd-menu__item">
                                     <a class="atbd-menu__link">
-                                        <span class="atbd-menu__text">MABC Tools</span>
+                                        <span class="atbd-menu__text">유전형 정보 관리</span>
                                     </a>
                                     <ul class="atbd-submenu">
                                         <li class="atbd-menu__item">
                                             <ul class="atbd-submenu-item">
                                                 <li>
-                                                    <!-- <a href="">Design tool</a> -->
-                                                    <a onclick="research(0);">Design tool</a>
+                                                    <!-- <a onclick="research(0);">Design tool</a> -->
+                                                    <a onclick="research(0)">유전형 data 보관</a>
                                                 </li>
                                                 <li>
                                                     <!-- <a href="mabc">Data 관리</a> -->
-                                                    <a onclick="research(1);">Data 관리</a>
+                                                    <!-- <a onclick="research(1);">Data 관리</a> -->
+                                                    <a onclick="research(1)">계통 구분용 마커 선발</a>
                                                 </li>
                                                 <li>
                                                     <!-- <a href="matrix">Analysis tool</a> -->
-                                                    <a onclick="research(2);">Analysis tool</a>
+                                                    <!-- <a onclick="research(2);">Analysis tool</a>  -->
+                                                    <a onclick="research(2)">다형성 마커 분석</a>
+                                                </li>
+                                                <li>
+                                                    <a onclick="research(3)">유사도 분석</a>
+                                                </li>
+                                                <li>
+                                                    <a onclick="research(4)">MABC 디자인</a>
+                                                </li>
+                                                <li>
+                                                    <a onclick="research(5)">MABC 분석</a>
                                                 </li>
                                             </ul>
                                         </li>
@@ -139,33 +155,37 @@
                                 </li>
                                 <li class="atbd-menu__item">
                                     <a class="atbd-menu__link">
-                                        <span class="atbd-menu__text">Genome browser</span>
+                                        <span class="atbd-menu__text">마커 정보 관리</span>
                                     </a>
                                     <ul class="atbd-submenu">
                                         <li class="atbd-menu__item">
                                             <ul class="atbd-submenu-item">
                                                 <li>
                                                     <!-- <a href="">Genome Data</a> -->
-                                                    <a onclick="research(3);">Genome Data</a>
+                                                    <a onclick="research(6);">Genome Data</a>
                                                 </li>
                                                 <li>
                                                     <!-- <a href="">Marker Information</a> -->
-                                                    <a onclick="research(4);">Marker Information</a>
+                                                    <a onclick="research(7);">마커정보 DB & 맵</a>
                                                 </li>
                                                 <li>
                                                     <!-- <a href="">QTL Information</a> -->
-                                                    <a onclick="research(5);">QTL Information</a>
+                                                    <a onclick="research(8);">QTL정보 DB & 맵</a>
                                                 </li>
                                             </ul>
                                         </li>
                                     </ul>
                                 </li>
+                                <!--  GWAS 메뉴. ppt에 메뉴가 없었으므로 주석처리. 차후에 제거
+                                
                                 <li class="atbd-menu__item">
-                                    <!-- <a class="atbd-menu__link" href=""> -->
+                                    /* <a class="atbd-menu__link" href=""> */
                                     <a class="atbd-menu__link" onclick="research(6);">
                                         <span class="atbd-menu__text">GWAS</span>
                                     </a>
                                 </li>
+                                
+                                -->
                             </ul>
                         </li>
                         <li>
@@ -311,23 +331,26 @@
             return Alert("접근 권한이 없습니다.");
         } else {
             if (e == 0) {
-                return Alert1("준비 중입니다.");
-                location.href = "";
+            	location.href = "/genotype_data";
             } else if (e == 1) {
-                window.open("/mabc");
+            	window.open("http://112.169.63.197:8843/digit/specificmaker",'specificmaker','width=10000px,height=10000px,scrollbars=yes');
+                //window.open("/mabc");
+            	//location.href = "/specificmaker";
             } else if (e == 2) {
-                window.open("/matrix");
+            	window.open("http://112.169.63.197:8843/digit/polymorphic",'polymorphic','width=10000px,height=10000px,scrollbars=yes');
+                // window.open("/matrix");
             } else if (e == 3) {
-                window.open("http://112.169.63.197:8080/snpbrowser/tomato_2022/?name=tomato_2022");
+            	window.open("http://112.169.63.197:8843/digit/phylogeny",'phylogeny','width=10000px,height=10000px,scrollbars=yes');
             } else if (e == 4) {
-                return Alert1("준비 중입니다.");
-                location.href = "";
+            	location.href = "/MABCDesign";
             } else if (e == 5) {
-                return Alert1("준비 중입니다.");
-                location.href = "";
+            	window.open("http://112.169.63.197:8843/digit/mabc_list",'mabc_list','width=10000px,height=10000px,scrollbars=yes');
             } else if (e == 6) {
-                return Alert1("준비 중입니다.");
-                location.href = "";
+            	window.open("http://112.169.63.197:8080/snpbrowser/tomato_2022/?name=tomato_2022",'snpbrowser','width=10000px,height=10000px,scrollbars=yes');
+            } else if (e == 7) {
+            	location.href = "/marker_information";
+            } else if (e == 8) {
+            	location.href = "/qtl_information";
             }
         }
     }

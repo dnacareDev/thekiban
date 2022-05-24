@@ -2647,6 +2647,10 @@
     function ModifyBtn(e) {
         var files = JSON.parse($("#file_" + e).val());
 
+        console.log($("#file_" + e));
+        console.log(("#file_ + e = ???"), $("#file_" + e).val());
+        console.log("files.uploads_file", files.uploads_file);
+        
         $("#breed_file_id").val(files.breed_file_id);
         $("#breed_file_title").val(files.breed_file_title);
         $("#breed_file_contents").val(files.breed_file_contents);
@@ -3215,7 +3219,6 @@
 						)
                     });
 
-                    console.log("breed result", result);
                     
                     const headerArr = [
                         {
@@ -3266,7 +3269,8 @@
                     	headerArrKeys.push(headerArr[i].name);
                     }
                     
-                    console.log("headerArrKeys", headerArrKeys);
+                    // headerArrKeys = 특정 작목을 선택했을 경우 갖게되는 column의 종류. 배열에서 각 number에 대응하는 column명이 있다 
+                    // console.log("headerArrKeys", headerArrKeys);
                     
                     const breedgridExportOption = { fileName: '품종관리' ,
 													columnNames: headerArrKeys }		
@@ -3681,6 +3685,7 @@
                 dataType: 'json',
                 data: data,
                 success: function (result) {
+                	
                     if (result != null) {
                         $("#data_upload2").modal("hide");
                         $("#data_upload3").modal("show");

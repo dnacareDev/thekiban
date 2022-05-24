@@ -1,0 +1,1177 @@
+<!doctype html>
+<html lang="en" dir="ltr" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" th:with="user = ${#authentication.principal}">
+<head>
+    <!-- 공통 헤더 -->
+    <th:block th:include="/../fragments/header.html"></th:block>
+    <script src="../assets/vendor_assets/js/script.js"></script>
+    <style>
+        .card {
+            box-shadow: 0 3px 20px 3px rgb(0 0 0 / 7%);
+        }
+
+        table {
+            border-top: 1px solid grey;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border-bottom: 2px solid #E5E9F2;
+            padding: 10px;
+            text-align: center;
+            font-weight: initial;
+        }
+
+        th, tbody tr {
+            background-color: white;
+        }
+
+        .main-content .card-extra .justify-content-end .atbd-button-list {
+            width: 100%;
+            margin: 0;
+        }
+
+        .main-content .nav-tabs .nav-link.active, .main-content .nav-tabs .nav-item.show .nav-link, .modal-basic .atbd-tab .nav-link {
+            color: #D9D9D9;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .main-content .atbd-tab .nav-link:after {
+            background-color: #f4f5f7;
+        }
+
+        .modal-basic .atbd-tab .nav-tabs .nav-item.active a {
+            border-radius: 21px;
+            background-color: #EDF6F1;
+            color: #217566;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .modal-basic .atbd-tab .nav-tabs .nav-item a::after,
+        .modal-basic .atbd-tab .nav-tabs:after {
+            display: none;
+        }
+
+        .content_title {
+            width: 100%;
+            background-color: #F7F7F8;
+            padding: 10px 0;
+        }
+
+        /*.content_title li { alpaDesign 수정
+            float: left;
+            width: 50%;
+            text-align: center;
+        }*/
+
+        .content_1 {
+            padding: 20px;
+            max-height: 500px;
+            overflow: auto;
+            line-height: 2;
+        }
+
+        .content_1 .title {
+            float: left;
+        }
+
+        .content_1 .input_text {
+            float: right;
+            width: 50%;
+        }
+
+        .content_1 .input_text input[type="text"] {
+            width: 100%;
+        }
+
+        .content_1 li {
+            display: inline-block;
+            width: 100%;
+            color: #222222;
+            font-size: 16px;
+        }
+
+        .pop1 .modal-dialog textarea {
+            width: 100%;
+            height: 150px;
+            border-radius: 5px;
+            border: 1px solid #D9D9D9;
+            margin-top: 20px;
+        }
+
+        .pop1 .modal-dialog .btn-upload {
+            width: 100%;
+        }
+
+        .pop1 .atbd-upload__file {
+            display: none;
+        }
+
+        .pop2 .modal-header {
+            display: -webkit-box;
+        }
+
+        .main-content .pop1 .form-group input[type=text] {
+            flex: 0 0 85%;
+        }
+
+        .main-content .pop1 .form-group span {
+            flex: 0 0 10%;
+        }
+
+        .main-content .pop1 a.btn-outline-lighten {
+            display: block;
+            text-align: left;
+            color: #B2B2B2;
+        }
+
+        #gen-messege {
+            display: table;
+        }
+
+        #gen-messege .modal-dialog {
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        #gen-messege .modal-dialog .modal-content {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        #gen-messege .modal-dialog .modal-content .messege {
+            padding-bottom: 30px;
+        }
+
+        .main-content .modal-body {
+            width: 100%;
+        }
+
+        .main-content .modal-body .content_title ul li {
+            display: inline-block;
+            width: calc((100% - 50px) / 2);
+            margin-left: 40px;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .main-content .modal-body ul li:first-child {
+            margin-left: 0;
+        }
+
+        .main-content .modal-body ul li img {
+            width: 100%;
+        }
+
+        #google_container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            height: 500px;
+        }
+
+        #google_container li {
+            flex: 1;
+            height: 100%;
+        }
+
+        @media (min-width: 576px) {
+            .modal-dialog {
+                max-width: 1014px;
+                margin: 1.75rem auto;
+            }
+
+            #recent .modal-dialog {
+                max-width: 1300px;
+                margin: 1.75rem auto;
+            }
+
+            /* 2021 - 11 - 02 수정 */
+            .pop1 .modal-dialog {
+                max-width: 750px;
+            }
+
+            .pop4 .modal-dialog {
+                max-width: 750px;
+                margin: 0 auto;
+            }
+        }
+
+        .btn.btn-light.btn-transparent-light {
+            display: block;
+            width: 100%;
+            background-color: transparent;
+        }
+
+        .main-content .contents .container-fluid {
+            max-width: 100%;
+            padding: 50px;
+        }
+
+        .bg-white > .row {
+            padding-top: 0px;
+        }
+
+        .table th, .table td {
+            vertical-align: middle;
+        }
+
+        td .btn i.bi-file-earmark-arrow-down {
+            color: #000;
+        }
+
+        .table td {
+            padding: 0px 12px;
+            vertical-align: middle;
+            font-size: 14px;
+            border-bottom: 2px solid #d9d9d9;
+        }
+
+        .table th {
+            font-size: 16px;
+            border-top: 1px solid #d9d9d9;
+        }
+
+        .table thead th {
+            border-bottom: 2px solid #adadad;
+        }
+
+        #table2 td {
+            padding: 12px 12px;
+            font-size: 14px
+        }
+
+        #table2 th {
+            font-size: 16px
+        }
+
+		/* 2022-04-27 | google지도 마커의 상세정보를 띄울 시 생성되는 modal(title : 시교자원관리)의 table을 중앙정렬   */
+		table.modal-outcome {
+			width: 100%;
+			height: 100px;
+			margin: auto;
+			text-align: left;
+		}
+
+        .main-content .table thead th span.title:before,
+        .main-content .table thead th span.title:after,
+        .main-content .table thead th i {
+            display: none;
+        }
+
+        .main-content .table thead th > img {
+            margin: 6px 0 0 12px;
+        }
+
+        #data_upload .form-group input[type=text]::placeholder {
+            text-align: left;
+            text-indent: 20px
+        }
+
+        .popup_wrap {
+            display: none
+        }
+
+        .popup_wrap.on {
+            display: block;
+            position: fixed;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 999;
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .popup_wrap.on .popup {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            height: 150px;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            padding-top: 40px
+        }
+
+        .popup_wrap.on .close {
+            opacity: 1;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 20px;
+            font-size: 14px;
+            background-color: #1e695c;
+            display: block;
+            height: 35px;
+            width: 90px;
+            color: #fff;
+            font-weight: 400;
+            border-radius: 6px
+        }
+
+
+        #data_upload1 .modal-body .form-group, #data_upload .modal-body .form-group {
+            justify-content: flex-start;
+        }
+
+			
+        #data_upload .form-group button, #data_upload2 .form-group button, #data_upload3 .form-group button, #sample_file .form-group button {
+            height: 45px;
+            padding: 0 20px;
+            background-color: #217566;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+        
+        /* 2022-04-27 | DNACARE 구글맵 상세정보에 해당하는 버튼에도 같은 css를 적용하기 위해 #google_map-detail 추가 */
+        /* kiban_home.html에도 추가 */
+        #google_map-detail {
+            height: 30px;
+            padding: 0 20px;
+            background-color: #217566;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            margin-top: 5px;
+            margin-left: 10px;        
+        }
+        
+        #data_upload2 .form-group button, #data_upload3 .form-group button, #sample_file .form-group button {
+            margin-left: 0;
+        }
+
+        #data_upload .form-group input[type=text], #data_upload2 .form-group input[type=text], #data_upload3 .form-group input[type=text], #sample_file .form-group input[type=text] {
+            flex: 0 0 30%;
+            cursor: pointer;
+        }
+
+        #data_upload .form-group input[type=text]::-webkit-input-placeholder {
+            background: url("../assets/vendor_assets/img/upload.png") no-repeat 0 3px;
+            background-size: 15px;
+            color: #B2B2B2;
+        }
+
+        #data_upload .atbd-upload, #data_upload2 .atbd-upload, #data_upload3 .atbd-upload, #sample_file .atbd-upload {
+            width: 100%;
+            height: 300px;
+            overflow: auto;
+        }
+
+        #data_upload .atbd-upload table {
+            min-width: max-content;
+            border: none;
+        }
+
+        #data_upload2 .atbd-upload table, #data_upload3 .atbd-upload table, #sample_file .atbd-upload table {
+            width: 100%;
+        }
+
+        #data_upload table thead tr, #data_upload2 table thead tr, #data_upload3 table thead tr, #sample_file table thead tr {
+            border-top: none;
+            border-bottom: 2px solid #E8EEF2;
+        }
+
+        #data_upload table tbody tr, #data_upload2 table tbody tr, #data_upload3 table tbody tr, #sample_file table tbody tr {
+            border-bottom: 1px solid #E8EEF2;
+        }
+
+        #data_upload .atbd-upload table thead th, #data_upload2 .atbd-upload table thead th, #data_upload3 .atbd-upload table thead th, #sample_file .atbd-upload table thead th {
+            background-color: #F7F7F8;
+            color: #222222;
+            font-size: 16px;
+        }
+
+        #data_upload .atbd-upload table tbody td, #data_upload2 .atbd-upload table tbody td, #data_upload3 .atbd-upload table tbody td, #sample_file .atbd-upload table tbody td {
+            background-color: #fff;
+            color: #666666;
+            font-size: 16px;
+            font-weight: 200;
+        }
+
+        /* 2021 - 11 - 02 수정 */
+        #data_upload .form-group button {
+            line-height: 2rem;
+            font-size: 13px;
+            height: 34px;
+            margin-left: 5px;
+        }
+
+        #data_upload .form-group input[type=text] {
+            height: 34px;
+        }
+
+        #data_upload .form-group input[type=text]::placeholder {
+            text-align: left;
+            text-indent: 20px;
+            font-size: 14px;
+        }
+
+        .contents .container-fluid {
+            background-color: #FCFCFC;
+        }
+
+        #excel_data {
+            width: 100%;
+        }
+
+        .modal-content .modal-footer {
+            padding-bottom: 28px;
+            padding-right: 24px;
+        }
+
+        .modal-search {
+            width: 250px;
+        }
+
+        .btn-primary {
+            border: none;
+        }
+
+        .main-content .card-extra .justify-content-end .atbd-button-list .data_btn1,
+        .main-content .card-extra .justify-content-end .atbd-button-list .data_btn2,
+        .main-content .card-extra .justify-content-end .atbd-button-list .form-control {
+            height: 36px;
+        }
+
+        .main-content .card-extra .justify-content-end .atbd-button-list .data_btn1,
+        .main-content .card-extra .justify-content-end .atbd-button-list .data_btn2 {
+            width: 31px;
+            margin-top: 12px;
+            padding: 0px 19px;
+        }
+
+
+        .atbd-button-list button {
+            margin: 5px 3px;
+        }
+
+        #data_upload2 .form-group button, #data_upload3 .form-group button, #sample_file .form-group button {
+            height: 34px;
+            line-height: 2rem;
+            font-size: 13px;
+        }
+
+        #excel_data {
+            width: 100%;
+        }
+
+        .col-4 .bottom_btn > span {
+            height: 34px;
+            line-height: 2rem;
+            font-size: 13px;
+        }
+
+        /* 푸터 배경색 */
+        .footer-wrapper {
+            background-color: #FCFCFC;
+        }
+
+        .contextmenu li {
+            border-left: 3px solid transparent;
+            transition: ease .2s;
+        }
+
+        .contextmenu li a {
+            display: block;
+            padding: 10px;
+            color: #B0BEC5;
+            background: #FFFFFF;
+            text-decoration: none;
+            transition: ease .2s;
+        }
+
+        .contextmenu li:hover {
+            border-left: 3px solid #9C27B0;
+        }
+
+        .contextmenu li:hover a {
+            color: #FFFFFF;
+        }
+
+        /* input 크기 */
+        .rowInput {
+            width: 115px;
+        }
+
+        .box_center .buttonLi button {
+            width: 32px;
+            height: 32px;
+            border: 2px solid #217566;
+            background-color: transparent;
+            border-radius: 50%;
+        }
+
+        .box_center .buttonLi button svg {
+            display: none;
+        }
+
+        .box_center .buttonLi button span {
+            position: relative;
+        }
+
+        .box_center .buttonLi button span::before {
+            content: "";
+            display: block;
+            position: absolute;
+            top: -1px;
+            left: 0;
+            width: 2px;
+            height: 10px;
+            background-color: #217566;
+            transform: rotate(45deg);
+        }
+
+        .box_center .buttonLi button span::after {
+            content: "";
+            display: block;
+            position: absolute;
+            top: -7px;
+            left: 0;
+            width: 2px;
+            height: 10px;
+            background-color: #217566;
+            transform: rotate(-45deg);
+        }
+
+        .box_center .buttonLi button span.left_btn::before {
+            left: -2px;
+            transform: rotate(-45deg);
+        }
+
+        .box_center .buttonLi button span.left_btn::after {
+            left: -2px;
+            transform: rotate(45deg);
+        }
+
+        #grid2 .tab-content .row .detail_list li {
+            width: 100%;
+            border-bottom: 1px solid #E2E3E5;
+        }
+
+        #grid2 .tab-content .row .list-group {
+            width: 100%;
+            margin: 0 !important;
+        }
+
+        #grid2 .tab-content .row .detail_list li:hover,
+        #grid2 .tab-content .row .display_list li:hover {
+            background-color: #EDF6F1;
+        }
+
+        #grid2 .tab-content .row .detail_list li.active,
+        #grid2 .tab-content .row .display_list li.active {
+            background-color: #217566;
+            color: #fff;
+            border: none;
+        }
+
+        #grid2 .tab-content .row .display_list li .row {
+            margin-left: 0;
+            margin-right: 0;
+            display: block;
+        }
+
+        #grid2 input[type="checkbox"] {
+            display: none !important;
+        }
+
+        #grid2 .tab-content .row li {
+            padding: 0 10px !important;
+        }
+
+        input[type="text"].updateInput {
+            border: none;
+            height: 45px;
+            text-align: center;
+        }
+
+        #sampleGrid .tui-grid-body-area td[data-column-name='sample_code'], #sampleGrid .tui-grid-body-area td[data-column-name='sample_seed'] {
+            color: mediumblue;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        #sampleGrid .tui-grid-body-area td[data-column-name='file'] {
+            cursor: pointer;
+        }
+
+        #outcomeGrid .tui-grid-body-area td[data-column-name='sample_outcome_num'] {
+            color: mediumblue;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        #saveRow, #updateRow {
+            float: right;
+            color: #fff;
+            background-color: #217566;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        #cancelRow, #cancelUpdate {
+            float: right;
+            color: #217566;
+            background-color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        #saveRow1, #updateRow1 {
+            float: right;
+            color: #fff;
+            background-color: #217566;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        #cancelRow1, #cancelUpdate1 {
+            float: right;
+            color: #217566;
+            background-color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        #saveRow2, #updateRow2 {
+            float: right;
+            color: #fff;
+            background-color: #217566;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        #cancelRow2, #cancelUpdate2 {
+            float: right;
+            color: #217566;
+            background-color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+        }
+
+        #pop_breed table thead tr, #pop_seed table thead tr {
+            border-top: 2px solid #aaa;
+            border-bottom: 2px solid #aaa;
+            border-bottom: 2px solid #E5E9F2;
+        }
+
+        #pop_breed table thead th, #pop_seed table thead th {
+            border-left: 1px solid #eee;
+            border-right: 1px solid #eee;
+            border-bottom: 2px solid #E5E9F2;
+            color: #222;
+            font-size: 13px;
+        }
+
+        #pop_breed table thead th:first-child, #pop_seed table thead th:first-child {
+            border-left: none;
+        }
+
+        #pop_breed table thead th:last-child, #pop_seed table thead th:last-child {
+            border-right: none;
+        }
+
+        #pop_breed table tbody tr, #pop_seed table tbody tr {
+            border-bottom: 1px solid #eee;
+        }
+
+        #pop_breed table tbody td, #pop_seed table tbody td {
+            background-color: #fff;
+            color: #333;
+            font-size: 13px;
+        }
+
+        #pop_seed table tbody td {
+            padding: 12px 12px;
+        }
+
+        .plus_btn_submit1 {
+            display: none;
+        }
+
+        .plus_btn_submit2 {
+            display: none;
+        }
+
+        .plus_btn_submit3 {
+            display: none;
+        }
+
+        .plus_btn_submit4 {
+            display: none;
+        }
+
+        .plus_btn_submit5 {
+            display: none;
+        }
+
+        .plus_btn_submit6 {
+            display: none;
+        }
+
+        .bg-white .row {
+            padding-top: 0;
+        }
+
+        #data_upload12 .form-group button, #data_upload2 .form-group button, #basic_file .form-group button, #data_upload1 .form-group button, #data_upload21 .form-group button {
+            height: 45px;
+            padding: 0 20px;
+            background-color: #217566;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+
+        #data_upload2 .form-group button, #basic_file .form-group button, #data_upload21 .form-group button {
+            margin-left: 0;
+        }
+
+        #data_upload12 .form-group input[type=text], #data_upload2 .form-group input[type=text], #basic_file .form-group input[type=text], #data_upload21 .form-group input[type=text], #data_upload1 .form-group input[type=text] {
+            flex: 0 0 30%;
+            cursor: pointer;
+        }
+
+        #data_upload12 .form-group input[type=text]::-webkit-input-placeholder, #data_upload1 .form-group input[type=text]::-webkit-input-placeholder {
+            background: url("../assets/vendor_assets/img/upload.png") no-repeat 0 3px;
+            background-size: 15px;
+            color: #B2B2B2;
+        }
+
+        #data_upload12 .atbd-upload, #data_upload2 .atbd-upload, #data_upload21 .atbd-upload, #data_upload1 .atbd-upload {
+            width: 100%;
+            height: 300px;
+            overflow: auto;
+        }
+
+        #data_upload12 .atbd-upload table, #data_upload1 .atbd-upload table {
+            width: max-content;
+            border: none;
+            min-width: 100%;
+        }
+
+        #data_upload2 .atbd-upload table, #data_upload21 .atbd-upload table {
+            width: 100%;
+        }
+
+        #data_upload12 table thead tr, #data_upload2 table thead tr, #data_upload21 table thead tr, #data_upload1 table thead tr {
+            border-top: none;
+            border-bottom: 2px solid #E8EEF2;
+        }
+
+        #data_upload12 table tbody tr, #data_upload2 table tbody tr, #data_upload21 table tbody tr, #data_upload1 table tbody tr {
+            border-bottom: 1px solid #E8EEF2;
+        }
+
+        #data_upload12 .atbd-upload table thead th, #data_upload2 .atbd-upload table thead th, #data_upload21 .atbd-upload table thead th, #data_upload1 .atbd-upload table thead th {
+            background-color: #F7F7F8;
+            color: #222222;
+            font-size: 16px;
+        }
+
+        #data_upload12 .atbd-upload table tbody td, #data_upload2 .atbd-upload table tbody td, #data_upload21 .atbd-upload table tbody td, #data_upload1 .atbd-upload table tbody td {
+            background-color: #fff;
+            color: #666666;
+            font-size: 16px;
+            font-weight: 200;
+        }
+
+        /* 2021 - 11 - 01 수정 */
+        #basic_list td {
+            padding: 0px 12px;
+            vertical-align: middle;
+            font-size: 14px
+        }
+
+        #basic_list th {
+            font-size: 16px
+        }
+
+        .main-content .contents .container-fluid {
+            max-width: 100%;
+            padding: 50px;
+        }
+
+        .btn.btn-light.btn-transparent-light {
+            display: block;
+            width: 100%;
+            background-color: rgba(244, 245, 247, 0);
+        }
+
+        .main-content .contents .container-fluid {
+            max-width: 100%;
+            padding: 50px;
+        }
+
+        .table th, .table td {
+            vertical-align: middle;
+        }
+
+        td .btn i.bi-file-earmark-arrow-down {
+            color: #000;
+        }
+
+        .table td {
+            padding: 0px 12px;
+            vertical-align: middle;
+            font-size: 14px;
+            border-bottom: 2px solid #d9d9d9;
+        }
+
+        /* 2021 - 11 - 02 수정 */
+        .table th {
+            font-size: 16px;
+            border-top: 1px solid #d9d9d9;
+        }
+
+        /* 2021 - 11 - 02 수정 */
+        .table thead th {
+            border-bottom: 2px solid #adadad;
+        }
+
+        /* 2021 - 11 - 02 수정 */
+
+        #table2 td {
+            padding: 12px 12px;
+            font-size: 14px
+        }
+
+        #table2 th {
+            font-size: 16px
+        }
+
+        .main-content .table thead th span.title:before,
+        .main-content .table thead th span.title:after,
+        .main-content .table thead th i {
+            display: none;
+        }
+
+        .main-content .table thead th > img {
+            margin: 6px 0 0 12px;
+        }
+
+        .popup_wrap {
+            display: none
+        }
+
+        .popup_wrap.on {
+            display: block;
+            position: fixed;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 999;
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .popup_wrap.on .popup {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            height: 150px;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            padding-top: 40px
+        }
+
+        .popup_wrap.on .close {
+            opacity: 1;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 20px;
+            font-size: 14px;
+            background-color: #1e695c;
+            display: block;
+            height: 35px;
+            width: 90px;
+            color: #fff;
+            font-weight: 400;
+            border-radius: 6px
+        }
+
+        /* 2021 - 11 - 02 수정 */
+        #data_upload2 .form-group button, #data_upload12 .form-group button, #data_upload1 .form-group button {
+            line-height: 2rem;
+            font-size: 13px;
+            height: 34px;
+            margin-left: 5px;
+        }
+
+        #data_upload2 .form-group input[type=text], #data_upload1 .form-group input[type=text] {
+            height: 34px;
+        }
+
+        #data_upload2 .form-group input[type=text]::placeholder, #data_upload1 .form-group input[type=text]::placeholder {
+            text-align: left;
+            text-indent: 20px;
+            font-size: 14px;
+        }
+
+        .tui-grid-cell {
+            background-color: white;
+        }
+
+        #pop_breed table thead tr {
+            border-top: 2px solid #aaa;
+            border-bottom: 2px solid #aaa;
+        }
+
+        #pop_breed table thead th {
+            border-left: 1px solid #eee;
+            border-right: 1px solid #eee;
+            border-bottom: 2px solid #E5E9F2;
+            color: #222;
+            font-size: 13px;
+            padding: 10px;
+        }
+
+        #pop_breed table thead th:first-child {
+            border-left: none;
+        }
+
+        #pop_breed table thead th:last-child {
+            border-right: none;
+        }
+
+        #pop_breed table tbody tr {
+            border-bottom: 1px solid #eee;
+        }
+
+        #pop_breed table tbody td {
+            background-color: #fff;
+            border-bottom: 2px solid #E5E9F2;
+            color: #333;
+            font-size: 13px;
+            padding: 10px;
+        }
+
+
+        .load_wrap {
+            display: none;
+        }
+
+        .load_wrap.on {
+            display: flex;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 9999999999;
+            background-color: rgba(0, 0, 0, 0.3);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .load_wrap .load {
+            background-color: #fff;
+            width: 220px;
+            height: 90px;
+            text-align: center;
+            padding: 15px;
+            border-radius: 6px;
+        }
+
+        .load_wrap .load > h2 {
+            font-size: 17px;
+            font-weight: bold;
+            color: #666;
+        }
+
+        .loader,
+        .loader:before,
+        .loader:after {
+            border-radius: 50%;
+            width: 1.3em;
+            height: 1.3em;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+            -webkit-animation: load7 1.8s infinite ease-in-out;
+            animation: load7 1.8s infinite ease-in-out;
+        }
+
+        .loader {
+            color: #397FF4;
+            font-size: 10px;
+            margin: -10px auto 0;
+            position: relative;
+            text-indent: -9999em;
+            -webkit-transform: translateZ(0);
+            -ms-transform: translateZ(0);
+            transform: translateZ(0);
+            -webkit-animation-delay: -0.16s;
+            animation-delay: -0.16s;
+        }
+
+        .loader:before,
+        .loader:after {
+            content: '';
+            position: absolute;
+            top: 0;
+        }
+
+        .loader:before {
+            left: -2.2em;
+            -webkit-animation-delay: -0.32s;
+            animation-delay: -0.32s;
+        }
+
+        .loader:after {
+            left: 2.2em;
+        }
+
+        @-webkit-keyframes load7 {
+            0%,
+            80%,
+            100% {
+                box-shadow: 0 2.5em 0 -1.3em;
+            }
+            40% {
+                box-shadow: 0 2.5em 0 0;
+            }
+        }
+
+        @keyframes load7 {
+            0%,
+            80%,
+            100% {
+                box-shadow: 0 2.5em 0 -1.3em;
+            }
+            40% {
+                box-shadow: 0 2.5em 0 0;
+            }
+        }
+
+        /* 여기서부터 */
+        .main-content .form-group:nth-child(2) {
+            display: block;
+            width: 100%;
+        }
+
+        .image-container {
+            width: 300px;
+            height: 200px;
+            margin: 0 auto;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+    </style>
+</head>
+
+<body class="layout-light top-menu overlayScroll" oncontextmenu='return false'>
+<div class="mobile-search"></div>
+<div class="mobile-author-actions"></div>
+<!-- 공통 topbar -->
+<th:block th:include="/../fragments/topbar.html"></th:block>
+
+
+<main class="main-content" style="background-color: #FCFCFC;">
+    <div class="contents" style="background-color: #FFFFFF;">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 mb-30">
+                    <div class="card" id="cardPlus">
+                        <div class="card-extra mt-20 mr-20">
+                            <div class="breadcrumb-main" style="float: left;">
+                                <h4 class="text-capitalize breadcrumb-title">MABC 디자인 [MABC design]</h4>
+                                <input type="hidden" id="user_type" th:value="${user.user_type}">
+                                <input type="hidden" id="user_crop" th:value="${user.auth_crop}">
+                            </div>
+                            <div class="action-btn d-flex justify-content-end">
+                                <div class="atbd-button-list d-flex flex-wrap">
+                                    <div class="btn-group atbd-button-group btn-group-normal my-2" role="group">
+                                        <button type="button" class="btn btn-xs btn-outline-light" id="sampleTable1">TABLE</button>
+                                        <button type="button" class="btn btn-xs btn-outline-light" id="sampleTable2">MAP</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body" style="padding-top: 0;">
+                            <div class="bg-white">
+	                            <div id="MABCDesign_result_table" style="width:100%; height:400px; overflow:auto"></div>
+	                        </div>
+	                        <div class="bg-white">
+	                            <div id="MABCDesign_result_pdf"></div>
+	                            <div>
+	                            	<embed src="/common/r/MABC/20220521213957/results/20220521213957.pdf" type="application/pdf" width=1500px height=800px/>
+	                            </div>
+	                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- modal code -->
+
+    <!-- modal end -->
+
+    <div class="load_wrap">
+        <div class="load">
+            <h2>잠시만 기다려주세요</h2>
+            <div class="loader"></div>
+        </div>
+    </div>
+
+</main>
+
+<!-- 공통 하단 -->
+<th:block th:include="/../fragments/footer.html"></th:block>
+<!-- 공통 js -->
+<th:block th:include="/../fragments/commonjs.html"></th:block>
+
+<script type="text/javascript">
+ 
+	$(document).ready(function(){
+		start_read();
+	});
+
+	function start_read() {
+		
+		console.log("start");
+		
+		$.ajax({
+			url : 'MABC_design_result_html_and_pdf',
+			method : 'POST',
+			data : data,
+			success : function(result) {
+				
+				$('#MABCDesign_result_table').append(result);
+				
+			}
+		});		
+}
+ 
+</script>
+
+</body>
+
+</html>
