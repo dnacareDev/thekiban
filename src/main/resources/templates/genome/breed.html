@@ -3067,8 +3067,7 @@
                         }
 
                         basicGrid1.resetData(dataArr);
-
-
+                        
                         basicGrid1.on('check', (ev) => {
                             basicGrid1.getRow(ev.rowKey).basic_id;
                         })
@@ -3258,7 +3257,7 @@
 
                         headerArr.push(arr);
                     }
-
+			
                     breedgrid.setColumns(headerArr);
 
                     
@@ -3847,6 +3846,7 @@
                 dataType: 'json',
                 data: data,
                 success: function (result) {
+                	console.log("searchBreed result : ", result);
                     var detail_list = $(".detail_list");
                     var detail_list2 = $(".detail_list2");
 

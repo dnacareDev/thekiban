@@ -431,7 +431,7 @@
                 dataType: 'json',
                 data: data,
                 success: function (result) {
-                	console.log("result", result);
+                	//console.log("result", result);
                     var inKorea = [];
                     var outKorea = [];
                     for (let i = 0; i < result.sampleOutcomeKo.length; i++) {
@@ -497,7 +497,7 @@
         for (let i = 0; i < inKo.length; i++) {
         	koreaLocations.push({"lat":inKo[i].lat , "lng":inKo[i].lng , "location_name":inKo[i].name});
             koreaSubLocations.push({"location_name":inKo[i].name});
-            console.log("koreaLocations", koreaLocations);
+            //console.log("koreaLocations", koreaLocations);
         }
 
 
@@ -599,7 +599,7 @@
     			data: data4,
     			success: function(result2) {
     				
-    				console.log(result2);												// 내부에 result2를 parameter로 받은것 확인
+    				// console.log(result2);												// 내부에 result2를 parameter로 받은것 확인
     				
     				let name_code_num_arr = [];
     				

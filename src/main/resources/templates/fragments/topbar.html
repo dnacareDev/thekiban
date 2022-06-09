@@ -149,6 +149,9 @@
                                                 <li>
                                                     <a onclick="research(5)">MABC 분석</a>
                                                 </li>
+                                                <li>
+                                                    <a onclick="research(9)">QTL 분석</a>
+                                                </li>
                                             </ul>
                                         </li>
                                     </ul>
@@ -162,7 +165,7 @@
                                             <ul class="atbd-submenu-item">
                                                 <li>
                                                     <!-- <a href="">Genome Data</a> -->
-                                                    <a onclick="research(6);">Genome Data</a>
+                                                    <a onclick="research(6);">SNP 위치 탐색</a>
                                                 </li>
                                                 <li>
                                                     <!-- <a href="">Marker Information</a> -->
@@ -333,24 +336,24 @@
             if (e == 0) {
             	location.href = "/genotype_data";
             } else if (e == 1) {
-            	window.open("http://112.169.63.197:8843/digit/specificmaker",'specificmaker','width=10000px,height=10000px,scrollbars=yes');
-                //window.open("/mabc");
-            	//location.href = "/specificmaker";
+            	//window.open("http://112.169.63.197:8843/digit/specificmaker",'specificmaker','width=10000px,height=10000px,scrollbars=yes');
+            	window.open("http://112.169.69.112:8843/digit/specificmaker",'specificmaker','width=10000px,height=10000px,scrollbars=yes');
             } else if (e == 2) {
-            	window.open("http://112.169.63.197:8843/digit/polymorphic",'polymorphic','width=10000px,height=10000px,scrollbars=yes');
-                // window.open("/matrix");
+            	window.open("http://112.169.69.112:8843/digit/polymorphic",'polymorphic','width=10000px,height=10000px,scrollbars=yes');
             } else if (e == 3) {
-            	window.open("http://112.169.63.197:8843/digit/phylogeny",'phylogeny','width=10000px,height=10000px,scrollbars=yes');
+            	window.open("http://112.169.69.112:8843/digit/phylogeny",'phylogeny','width=10000px,height=10000px,scrollbars=yes');
             } else if (e == 4) {
             	location.href = "/MABCDesign";
             } else if (e == 5) {
-            	window.open("http://112.169.63.197:8843/digit/mabc_list",'mabc_list','width=10000px,height=10000px,scrollbars=yes');
+            	window.open("http://112.169.69.112:8843/digit/mabc_list",'mabc_list','width=10000px,height=10000px,scrollbars=yes');
             } else if (e == 6) {
-            	window.open("http://112.169.63.197:8080/snpbrowser/tomato_2022/?name=tomato_2022",'snpbrowser','width=10000px,height=10000px,scrollbars=yes');
+            	window.open("http://112.169.69.112:8080/snpbrowser/tomato_2022/?name=tomato_2022",'snpbrowser','width=10000px,height=10000px,scrollbars=yes');
             } else if (e == 7) {
             	location.href = "/marker_information";
             } else if (e == 8) {
             	location.href = "/qtl_information";
+            } else if (e == 9) {
+            	window.open("http://112.169.69.112:8843/digit/qtl",'qtl','width=10000px,height=10000px,scrollbars=yes');
             }
         }
     }

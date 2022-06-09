@@ -299,6 +299,9 @@ public class IncomeController {
         int income_id = item.getInt("income_id");
         String income_name = item.getString("income_name");
         String income_value = item.getString("income_value");
+        System.out.println(income_id);
+        System.out.println(income_name);
+        System.out.println(income_value);
 
         result = service.UpdateIncome(income_id, income_name, income_value);
       }

@@ -1,10 +1,11 @@
 package com.thekiban.Controller;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
-import com.thekiban.Entity.Location;
-import com.thekiban.Entity.SampleOutcome;
-import com.thekiban.Service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +15,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.thekiban.Entity.Breed;
 import com.thekiban.Entity.ChartCount;
+import com.thekiban.Entity.Location;
+import com.thekiban.Entity.SampleOutcome;
 import com.thekiban.Service.HomeService;
+import com.thekiban.Service.LocationService;
 
 @Controller
 @RequestMapping(value = "/")
@@ -62,16 +66,34 @@ public class HomeController {
   public Map<Integer, Object> SelectChartBar() {
     Map<Integer, Object> result = new LinkedHashMap<Integer, Object>();
 
+  
     Date date = new Date();
 
     for (int i = 1; i > -4; i--) {
       String year = (date.getYear() + 1900 + i) + "-01-01";
 
+      //System.out.println("date.getYear()"+date.getYear());
+      //System.out.println("year"+year);
+      
       List<Breed> breed = service.SelectChartBar(year);
 
       result.put((date.getYear() + 1899 + i), breed);
     }
+  
+    /*
+    Calendar calendar = Calendar.getInstance();
+    
+    for(int i = 1; i > -4; i--) {
+    	String year = calendar.get(Calendar.YEAR) + i - 1 + "-01-01 00:00:00";
+    	
+    	List<Breed> breed = service.SelectChartBar(year);
+    	
+    	System.out.println("year" + year);
 
+    	result.put(calendar.get(Calendar.YEAR) + i - 1, breed);
+    	
+    }
+*/
     return result;
   }
 

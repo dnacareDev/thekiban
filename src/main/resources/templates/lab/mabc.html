@@ -966,7 +966,10 @@
 
     <!-- 여기다가 len 경로 넣어주세요 -->
     <th:block th:if="${analysis != null}">
+        <!--  
         <div style="display:none;" class="serverLen" th:text="|http://112.169.63.197:8883${analysis.analysis_file}|"></div>
+        -->
+        <div style="display:none;" class="serverLen" th:text="|http://112.169.69.112:8883${analysis.analysis_file}|"></div>
     </th:block>
     <th:block th:if="${analysis == null}">
         <div style="display:none;" class="serverLen"></div>
@@ -1055,8 +1058,9 @@
     function InsertMarker() {
     	
     	//수정 필요 아래 len 파일 변환 부분 테스트 완료시 return 해당 주석 부터 return까지 삭제 처리 필요.
-    	document.querySelector(".serverLen").innerText = 'http://112.169.63.197:8893/digit/common/r/result/2022110163458/lengh.len'
-        readLenFile();
+    	//document.querySelector(".serverLen").innerText = 'http://112.169.63.197:8893/digit/common/r/result/2022110163458/lengh.len'
+        document.querySelector(".serverLen").innerText = 'http://112.169.69.112:8893/digit/common/r/result/2022110163458/lengh.len'
+    	readLenFile();
     	return;
     	
         var data = new FormData($("#insert_form")[0]);

@@ -314,7 +314,7 @@
 					for(let j=0 ; j<result.search_uploads.length ; j++) {
 						if(result.qtl_information[i].qtl_num == result.search_uploads[j].qtl_num) {
 							rowArr = {
-									'file': '<a href="upload/' + result.search_uploads[j].uploads_file + '" download><i class="bi bi-file-earmark-arrow-down-fill"></i></a>',
+									'file': '<a href="upload/' + result.search_uploads[j].uploads_file + '" download=' + result.search_uploads[j].uploads_origin_file + '><i class="bi bi-file-earmark-arrow-down-fill"></i></a>',
 									'file_name': result.search_uploads[j].uploads_file,
 									'file_origin_name' : result.search_uploads[j].uploads_origin_file,	 		// 파일명 조회 용도
 									'qtl_num': result.qtl_information[i].qtl_num,

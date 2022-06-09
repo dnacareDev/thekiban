@@ -92,6 +92,19 @@ public class AnalysisController
 		List<Detail> detail = service.SelectDetail(detail_name, detail_type);
 		List<Standard> standard = service.SelectStandard(target_id, detail_type);
 		
+		
+		
+		
+		//standard, detail 확인용 로그
+		System.out.println("standard : " + standard.toString());
+		System.out.println("detail : " + detail.toString());
+		System.out.println("detail.get(0).getDetail_spec : " + detail.get(0).getDetail_title().toString());
+		
+//		for(Detail data: detail)
+//		{
+//    		System.out.println(data);
+//		}
+		
 		Date date = new Date();
 		
         String date_name = (1900 + date.getYear()) + "" + (date.getMonth() + 1) + "" + date.getDate() + "" + date.getHours() + "" + date.getMinutes() + "" + date.getSeconds();
@@ -104,7 +117,7 @@ public class AnalysisController
         if(method == 0)
         {
         	root = "/data/apache-tomcat-9.0.8/webapps/ROOT/kiban/resultfiles/r_plot/corrplot/" + date_name;
-
+        	
         	path = new File(root);
         	file = new File(root + "/" + file_name);
         }
@@ -136,12 +149,35 @@ public class AnalysisController
         		writer.write("PH" + (i + 1));
     		}
         	
+        	writer.newLine();
+        	writer.write("aaaa");
+        	
+        	for(int i = 0; i < detail.size(); i++)
+    		{
+        		writer.write("\t");
+        		writer.write(detail.get(i).getDetail_title().replaceAll(" ", ""));
+    		} 
+        	
+
+        	System.out.println("standard.size()"+standard.size());
+        	System.out.println("detail.size()"+detail.size());
+        	for(int i=0; i<target_name.length ; i++) {
+        		System.out.println("target_name[i] : "+target_name[i]);
+        	}
+        	
         	for(int i = 0; i < standard.size(); i++)
         	{
+        		System.out.println("standard_" + i + " : " + standard.get(i).getStandard());
         		if(i % detail.size() == 0)
         		{
+        			//if(i/detail.size() == target_name.length) break;
+        			
+        			System.out.println("(i % detail.size() == 0) i : "+i);
+        			System.out.println("i / detail.size()  : "+ i / detail.size());
         			writer.newLine();
+        			System.out.println("prev target");
         			writer.write(target_name[i / detail.size()]);
+        			System.out.println("after target");
         			writer.write("\t");
         			writer.write(standard.get(i).getStandard());
         			System.out.println("standard_" + i + " : " + standard.get(i).getStandard());
@@ -178,6 +214,8 @@ public class AnalysisController
         	String trait = trait_id.replace("[", "");
         	trait = trait.replace("]", "");
         	trait = trait.replace("\"", "");
+        	
+        	System.out.println("standard pass");
         	
             if(method == 0)
             {

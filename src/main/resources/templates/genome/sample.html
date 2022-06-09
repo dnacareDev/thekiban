@@ -2210,7 +2210,7 @@
             });
 
             let jsonObj = tableToJson(document.getElementById("excel_data"));
-
+            
             $.ajax(
                 {
                     url: 'excelSample',
@@ -2263,6 +2263,7 @@
                 jsonObj[i]["작물"] = $("#CropSelect").val();
             }
 
+            
             var geoCoder = new google.maps.Geocoder();
 
             for await (const item of jsonObj) {
@@ -2278,6 +2279,7 @@
                     });
                 }
             }
+            
 
             $.ajax(
                 {
@@ -2292,7 +2294,7 @@
                             return Alert1("데이터 입력에 실패했습니다.");
                         } else {
                             now = new Date(+new Date() + 3240 * 10000).toISOString().split("T")[0];
-
+                            
                             let listData = [];
 
                             let sample_name = $("#CropSelect").val();
@@ -2300,6 +2302,8 @@
                             let lData = {"datalist_type": 'sample_outcome', "datalist_date": now, "sample_name": sample_name};
 
                             listData.push(lData);
+                            
+                            console.log("lData : ", lData);
 
                             $.ajax(
                                 {

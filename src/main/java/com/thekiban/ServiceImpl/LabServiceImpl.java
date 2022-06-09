@@ -194,7 +194,7 @@ public class LabServiceImpl implements LabService
 	@Override
 	public int InsertChromosomeViewer(ChromosomeViewer chromosomeViewer)
 	{
-		System.out.println(chromosomeViewer+"impl");
+		//System.out.println(chromosomeViewer+"impl");
 		return mapper.InsertChromosomeViewer(chromosomeViewer);
 	}
 	
@@ -209,7 +209,7 @@ public class LabServiceImpl implements LabService
 	@Override
 	public List<MABCDesign> Search_MABCDesign() 
 	{
-		System.out.println("aaa");
+		//System.out.println("aaa");
 		return mapper.Search_MABCDesign();
 	}
 }

@@ -299,7 +299,7 @@
 						if(result.marker_information[i].marker_num == result.search_uploads[j].marker_num) {
 							
 							rowArr = {
-									'file': '<a href="upload/' + result.search_uploads[j].uploads_file + '" download><i class="bi bi-file-earmark-arrow-down-fill"></i></a>',
+									'file': '<a href="upload/' + result.search_uploads[j].uploads_file + '" download=' + result.search_uploads[j].uploads_origin_file + '><i class="bi bi-file-earmark-arrow-down-fill"></i></a>',
 									'file_name' : result.search_uploads[j].uploads_file,			// 파일명 조회 용도
 									'file_origin_name' : result.search_uploads[j].uploads_origin_file,
 									'marker_num': result.marker_information[i].marker_num,
