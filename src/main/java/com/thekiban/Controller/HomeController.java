@@ -152,9 +152,9 @@ public class HomeController {
   @RequestMapping("selectOutcomeListAll")
   public Map<String, Object> SelectOutcome() {
     Map<String, Object> result = new LinkedHashMap<String, Object>();
-
+    
     List<Location> locations = locationService.selectAll2();
-
+    
     List<Map<String, Object>> placeK = new ArrayList<>();
     List<Map<String, Object>> placeG = new ArrayList<>();
 

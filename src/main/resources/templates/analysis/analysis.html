@@ -1316,9 +1316,11 @@
                     target_add += '<span name="' + $(this)[0].nextElementSibling.getAttribute("name") + '">' + $(this).next().text() + '</span>';
                     target_add += '</li>';
 
-                    $(this).parent().remove();
+                    $(this).parent().remove();					// 오른쪽으로 넘겨도 특성이 사라지지 않도록 처리(왼쪽으로 넘겨도 추가되지 않아야 함)
                     $("#analysis_list").append(target_add);
                 });
+                
+                $(".plus_trait").prop("checked", false);
 
                 selectorCheck = document.querySelectorAll("#target_list li");
                 selectorCheck = Array.prototype.slice.call(selectorCheck);

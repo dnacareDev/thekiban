@@ -419,19 +419,44 @@
 
     function SearchMarker() {
         
-																// kiban_home.html에는 crop_type을 부른 흔적이 없다.
-																// 다른 div에 임의로 넣어봐도 화면이 깨지거나 여전히 인식을 못함. 
-																// 제대로 하려면 시간이 걸리니 기반측에서 괜찮다고 했던 전부 노출시키는 방법을 기획중
-																// 예전의 코드를 만들어서 sample과 분리시키면 되니까 어려울건 없다.
-																
+		let crop_type = 'checked';		// 2022-06-13 | 이유는 모르겠지만 crop_type(유저권한?)이 'checked'여야 쿼리문이 정상작동
+		
+        $.ajax(
+                {
+                    url: 'selectOutcomeList',										// sample.html에서 불러도 url은 homeController.java에 있으니까 백엔드쪽은 건드릴필요 없나?
+                    method: 'POST',
+                    dataType: 'json',
+                    data: { "user_crop" : crop_type },
+                    success: function (result) {
+                        var inKorea = [];
+                        var outKorea = [];
+
+                        console.log(result);
+                        
+                        for (let i = 0; i < result.sampleOutcomeKo.length; i++) {
+    	                    inKorea.push(result.sampleOutcomeKo[i]);
+                        }
+                        
+                        for (let i = 0; i < result.sampleOutcomeGlo.length; i++) {
+                            outKorea.push(result.sampleOutcomeGlo[i]);
+                        }
+
+                        console.log("home inKo : ", inKorea );
+                        console.log("home outKo : ", outKorea );
+                        
+                        searchArea(inKorea, outKorea);
+                    },
+                });
+		
+		/*
     	$.ajax(
             {
                 url: 'selectOutcomeListAll',										
                 method: 'POST',
                 dataType: 'json',
-                data: data,
+                //data: data,
                 success: function (result) {
-                	//console.log("result", result);
+                	console.log("result", result);
                     var inKorea = [];
                     var outKorea = [];
                     for (let i = 0; i < result.sampleOutcomeKo.length; i++) {
@@ -445,6 +470,7 @@
                     searchArea(inKorea, outKorea);
                 }
             });
+		*/																
     }
 
     /* 지도 검색 */
@@ -452,7 +478,7 @@
         searchArea();
     });
 
-    async function searchArea(inKo, outKo) {
+    function searchArea(inKo, outKo) {
         var koreaOptions = {
             zoom: 6.4,
             center: {
@@ -506,8 +532,8 @@
         	globalSubLocations.push({"location_name":outKo[o].name});
         }
 		
-
-
+        console.log("koreaLocations(sample) : ", koreaLocations);
+        
         for (let i = 0; i < koreaLocations.length; i++) {
 
         		

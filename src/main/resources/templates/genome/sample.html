@@ -3906,6 +3906,9 @@
                         outKorea.push(result.sampleOutcomeGlo[i]);
                     }
 
+                    console.log("sample inKo : ", inKorea );
+                    console.log("sample outKo : ", outKorea );
+                    
                     searchArea(inKorea, outKorea);
                 },
             });
@@ -3968,7 +3971,7 @@
         	globalLocations.push({"lat":outKo[o].lat , "lng":outKo[o].lng, "location_name":outKo[o].name});
         	globalSubLocations.push({"location_name":outKo[o].name});
         }
-
+        
         for await (const item of koreaLocations) {						// for await of 구문 안에 marker관련 코드를 넣는다. 
         	for (let i = 0; i < koreaLocations.length; i++) {			// home과 달리 sample은 지도가 바로 출력되지 않고 버튼을 눌러야해서 await를 넣은것 같다
 
