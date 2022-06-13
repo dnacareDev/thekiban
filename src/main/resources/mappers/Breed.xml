@@ -59,6 +59,7 @@
     	SELECT * FROM display dp
 		LEFT JOIN detail dt ON dp.detail_id = dt.detail_id
     	WHERE dp.user_id = #{user_id} AND dp.breed_name = #{breed_name}
+    	ORDER BY dp.detail_id ASC
     </select>
     
     <!-- 품종별 정보값 조회 -->
@@ -333,6 +334,7 @@
         SELECT * FROM display dp
                           LEFT JOIN detail dt ON dp.detail_id = dt.detail_id
         WHERE dp.user_id = #{user_id} AND dp.basic_name = #{basic_name}
+        ORDER BY dp.detail_id ASC
     </select>
 
     <!-- 원종별 정보값 조회 -->

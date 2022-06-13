@@ -2433,7 +2433,7 @@
     /* e : 구간 체크박스 선택 */
 
     function sorting(e) {
-
+    	
         $("#detail_list").html(
             $("#detail_list li").sort(function (a, b) {
                 return $(b).data(e) - $(a).data(e);
@@ -3218,7 +3218,6 @@
 						)
                     });
 
-                    
                     const headerArr = [
                         {
                             'header': '첨부파일',

@@ -3416,27 +3416,6 @@
 						}
                     });
                     
-                    /* ajax를 통한 첨부파일 구분 시도중. 망가졌을 경우 이 구문 복원 
-                    for (let i = 0; i < result.sample.length; i++) {
-                        let rowArr = {
-                            'file': '<i class="bi bi-file-earmark-arrow-down"></i>',
-                            'sample_id': result.sample[i].sample_id,
-                            'sample_name': result.sample[i].sample_name,
-                            'sample_code': result.sample[i].sample_code,
-                            'sample_country': result.sample[i].sample_country,
-                            'sample_type': result.sample[i].sample_type,
-                            'sample_mate': result.sample[i].sample_mate,
-                            'sample_seed': result.sample[i].sample_seed,
-                            'sample_amount': result.sample[i].sample_amount,
-                            'sample_sprout': result.sample[i].sample_sprout,
-                            'sample_purity': result.sample[i].sample_purity,
-                            'sample_comment': result.sample[i].sample_comment
-                        }
-
-                        dataArr.push(rowArr);
-                    }
-					*/
-                    
                     samplegrid.resetData(dataArr);
 
                     let before = null;
@@ -3906,9 +3885,6 @@
                         outKorea.push(result.sampleOutcomeGlo[i]);
                     }
 
-                    console.log("sample inKo : ", inKorea );
-                    console.log("sample outKo : ", outKorea );
-                    
                     searchArea(inKorea, outKorea);
                 },
             });
