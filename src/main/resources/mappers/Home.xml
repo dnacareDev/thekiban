@@ -80,7 +80,7 @@
 	<!-- 새로 작성. 망가지면 이 밑으로 삭제  -->
 	<select id="SearchSeed2" resultType="SampleOutcome">
         SELECT * FROM sampleOutcome
-        WHERE sample_outcome_place = #{sample_outcome_place} 
-        ORDER BY sample_outcome_id DESC
+        WHERE sample_outcome_place = #{sample_outcome_place} and sample_outcome_end >= now() <!-- ifnull(b.sample_outcome_end,now()) >= now() -->
+        ORDER BY sample_outcome_id DESC 
     </select>
 </mapper>

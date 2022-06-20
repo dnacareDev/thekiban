@@ -2559,6 +2559,8 @@
                 data: data1,
                 success: function (result3) {
                     $(".seed_title").text("종자번호(ID) - " + e.innerText);
+                    
+                    console.log("result3 : ", result3);
 
                     outcomeGrid2 = new tui.Grid({
                         el: document.getElementById('outcomeGrid2'),
@@ -2632,7 +2634,7 @@
                                 sortable: true
                             },
                             {
-                                header: '날짜',
+                                header: '일자',
                                 name: 'sample_outcome_date',
                                 editor: 'text',
                                 width: 180,
@@ -2735,7 +2737,7 @@
 
                     }
 
-                    for (let j = dataArr2.length - 1; j >= 0; j--) {
+                    for (let j = 0; j < dataArr2.length; j++) {
                         let rowArr2 = {
                             'sample_outcome_id': dataArr2[j].sample_outcome_id,
                             'sample_outcome_code': dataArr2[j].sample_outcome_code,
