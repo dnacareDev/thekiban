@@ -487,6 +487,8 @@ public class BasicController {
 
     List<Standard> standards = new ArrayList<Standard>();
 
+    //System.out.println("arr : " + arr);
+    
     for (int i = 0; i < arr.length(); i++) {
       JSONArray item = arr.getJSONArray(i);
 
@@ -523,8 +525,8 @@ public class BasicController {
   public int remainExcelUpload(ModelAndView mv, @ModelAttribute BasicRemain basicRemain, @RequestParam("excel_list") String excel_list) {
     JSONArray arr = new JSONArray(excel_list);
 
-    for (int i = arr.length() - 1; i > -1; i--) {
-
+    //for (int i = arr.length() - 1; i > -1; i--) {
+    for (int i = 0; i < arr.length(); i++) {
       JSONObject obj = arr.getJSONObject(i);
 
       Set<String> key = obj.keySet();

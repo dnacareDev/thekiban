@@ -388,7 +388,7 @@ public class SampleController {
   public int excelUpload(ModelAndView mv, @ModelAttribute Sample sample, @RequestParam("excel_list") String excel_list) {
     JSONArray arr = new JSONArray(excel_list);
 
-    for (int i = arr.length() - 1; i > -1; i--) {
+    for (int i=0 ; i<arr.length() ; i++) {
 
       JSONObject obj = arr.getJSONObject(i);
 
@@ -432,8 +432,10 @@ public class SampleController {
   public int outComeExcelUpload(ModelAndView mv, @ModelAttribute SampleOutcome sampleOutcome, @ModelAttribute Location location, @RequestParam("excel_list") String excel_list) {
     int result = 0;
     JSONArray arr = new JSONArray(excel_list);
+    
+    //System.out.println("arr : " + arr);
 
-    for (int i = arr.length() - 1; i > -1; i--) {
+    for (int i=0 ; i<arr.length() ; i++) {
 
       JSONObject obj = arr.getJSONObject(i);
       JSONObject locationObj = arr.getJSONObject(i);

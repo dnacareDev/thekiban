@@ -62,7 +62,7 @@
     <!-- 시교자원관리 리스트 -->
     <select id="SearchSampleTest" resultType="Sample">
         SELECT a.sample_id, a.sample_code, a.sample_name, a.sample_country, a.sample_type, a.sample_mate, a.sample_seed,
-        ifnull((select b.sample_outcome_remain from sampleOutcome b where a.sample_seed=b.sample_outcome_num order by b.sample_outcome_date desc  limit 1),0) as sample_amount, a.sample_sprout, a.sample_purity, a.sample_comment, a.create_date, a.modify_date
+        ifnull((select b.sample_outcome_remain from sampleOutcome b where a.sample_seed=b.sample_outcome_num order by b.sample_outcome_id desc  limit 1),0) as sample_amount, a.sample_sprout, a.sample_purity, a.sample_comment, a.create_date, a.modify_date
         FROM sample a
         <choose>
             <when test="sample_name != 'none'">

@@ -2015,7 +2015,7 @@
 
     <!-- 재고관리 목록 창 -->
     <div class="modal-basic modal fade show pop7" id="data_upload21" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-md" role="document">
+        <div class="modal-dialog modal-md modal-dialog-scrollable" role="document">
             <div class="modal-content modal-bg-white ">
                 <div class="modal-header" style="border: none">
                     <h6 class="modal-title">원종재고관리 > 데이터 등록</h6>
@@ -2050,7 +2050,7 @@
 
     <!-- 재고관리 등록 모달창 -->
     <div class="modal-basic modal fade show pop5" id="data_upload11" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-md" role="document">
+        <div class="modal-dialog modal-md modal-dialog-scrollable" role="document">
             <div class="modal-content modal-bg-white ">
                 <div class="modal-header" style="border: none">
                     <h6 class="modal-title">원종재고관리 > 데이터 등록</h6>
@@ -2093,7 +2093,7 @@
 
     <!-- 재고관리 확인 모달창 -->
     <div class="modal-basic modal fade show pop5" id="data_upload22" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-md" role="document">
+        <div class="modal-dialog modal-md modal-dialog-scrollable" role="document">
             <div class="modal-content modal-bg-white ">
                 <div class="modal-header" style="border: none">
                     <h6 class="modal-title">원종재고관리 > 데이터 등록</h6>
@@ -2981,11 +2981,15 @@
 							'basic_remain_date': result_global.basicRemain[i].basic_remain_date
 						}
 
-						//console.log("rowArr_global : " + rowArr_global['basic_remain_re']);
 						//console.log("rowArr_global : " + rowArr_global['basic_remain_id']);
-						//console.log("rowArr_global : " + rowArr_global['basic_remain_num']);
+						//console.log("rowArr_global_num : " + rowArr_global['basic_remain_num']);
+						//console.log("rowArr_global_re : " + rowArr_global['basic_remain_re']);
 						
-						map.set(rowArr_global['basic_remain_num'], rowArr_global['basic_remain_re']); 
+						if(map.get(rowArr_global['basic_remain_num']) == null){
+							map.set(rowArr_global['basic_remain_num'], rowArr_global['basic_remain_re']); 
+						} else {
+							continue;
+						}
 				}
 
                 $.ajax(
@@ -2995,6 +2999,7 @@
 						dataType: 'json',
 						data: data,
 						success: function (result) {
+							//console.log("basic result : ", result);
 							basicgrid = new tui.Grid({
 								el: document.getElementById('basicGrid'),
 								scrollX: true,
@@ -3108,13 +3113,13 @@
 							 
 							
 							$.ajax({
-								url: 'selectBasicFileAll',
+								url: 'selectBasicFileAll',	// 모든 파일리스트를 조회하여 일치하는 id의 아이콘 변경
 								method: 'POST',
 								dataType: 'json',
 								async: false,				// async: false -> 동기화하여 그리드가 출력되지 않는것 방지
 								data: data,
 								success: function(file_list) {			// file_list : basic_file 테이블에 있는 모든 basic_id(=파일 업로드가 된 id 목록)
-									console.log("file_list",file_list);
+									//console.log("file_list",file_list);
 									
 									for (let i = 0; i < result.basic.length; i++) {
 
@@ -3135,10 +3140,6 @@
 										}
 										
 										
-										// rowArr = {'file': '<i class="bi bi-file-earmark-arrow-down"></i>', 'basic_id': result.basic[i].basic_id};
-										// rowArr = {'file': '<i class="bi bi-file"></i>', 'basic_id': result.basic[i].basic_id};
-										// console.log("result.basic[i].basic_id", result.basic[i].basic_id); 선택한 작목명에 해당하는 basic_id만 필터링
-										
 										if (result.basic[i].standard_count == 0) {
 											rowArr['status'] = '<span style="color:red">EMPTY</span>';
 
@@ -3148,7 +3149,7 @@
 
 										for (var j = 0; j < result.basic[i].basic_standard.length; j++) {												
 											if (j == remaincnt) {   
-												console.log( map.get(result.basic[i].basic_standard[6].standard));
+												//console.log( map.get(result.basic[i].basic_standard[6].standard));
 												// console.log("value : " + map.get("P17C0123"));
 												var rowData = map.get(result.basic[i].basic_standard[6].standard);
 											}
@@ -3166,6 +3167,8 @@
 									
 								}
 							});
+							
+							//console.log("map : ", map);
 
 							basicgrid.resetData(dataArr);
 							
@@ -3958,6 +3961,57 @@
                     dataType: 'json',
                     data: data,
                     success: function (result) {
+                    	
+                    	//console.log("list result : ", result);
+                    	
+                    	if(!result) {
+                    		console.log("return;")
+                    		return;
+                    	}
+                    	
+                    	$("#data_upload3").modal("show");
+                        $("#data_upload2").modal("hide");
+
+                        var header_list = $("#basicHead");
+                        var header_add = "";
+                        var basic_list = $("#basicBody");
+                        var add_list = "";
+
+						// 모달창 헤더
+                        header_add += '<tr>';
+                        for (let i = 0; i < result.detail.length; i++) {
+                            header_add += '<th>' + result.detail[i].detail_title + '</th>'
+                        }
+                        header_add += '</tr>';
+                        //
+                        
+                        
+                        // 모달창 바디
+                        let len = Object.keys(result.basic).length;
+                        
+                        for (let i = 0; i < len; i++) {
+                        	if(result.basic[i].length == 0 || result.basic[i][0].standard != $("#CropSelect").val()) {
+                        		continue;
+                        	}
+                        	
+                        	add_list += '<tr>';
+
+                            for (var j = 0; j < result.basic[i].length; j++) {
+                                add_list += '<td>' + result.basic[i][j].standard + '</td>';
+                            }
+
+                            add_list += '</tr>';
+                        }
+                        
+                        // html 영역에 실제 구현
+                        header_list.empty();
+                        header_list.append(header_add);
+                        basic_list.empty();
+                        basic_list.append(add_list);
+                    	
+
+                    	
+                    	/*
                         if (result != null) {
                             $("#data_upload3").modal("show");
                             $("#data_upload2").modal("hide");
@@ -3993,6 +4047,7 @@
                             basic_list.empty();
                             basic_list.append(add_list);
                         }
+                    	*/
                     }
                 }
             );
@@ -4009,6 +4064,9 @@
                     dataType: 'json',
                     data: data,
                     success: function (result) {
+                    	
+                    	//console.log("basic remain result : " , result);
+                    	
                         if (result != null) {
                             $("#data_upload22").modal("show");
                             $("#data_upload21").modal("hide");
@@ -4019,6 +4077,11 @@
                             let len = Object.keys(result.basic_remain).length;
 
                             for (var i = 0; i < len; i++) {
+                            	//console.log(result.basic_remain[i][0].basic_name);
+                            	if(result.basic_remain[i].length == 0 || result.basic_remain[i][0].basic_name != $("#CropSelect").val()) {
+                            		//console.log("remain continue");
+                            		continue;
+                            	}
                                 add_list += '<tr>';
                                 add_list += '<td>' + result.basic_remain[i][0].basic_remain_num + '</td>';
                                 add_list += '<td>' + result.basic_remain[i][0].basic_remain_amount + '</td>';
@@ -4062,7 +4125,10 @@
             }
 
             $("#excel_list").val(JSON.stringify(total_arr));
+            
+            //console.log("total_arr : ", total_arr);
 
+            
             $.ajax(
                 {
                     url: 'excelBasic',
@@ -4098,7 +4164,10 @@
                     }
                 }
             )
+            
         } else {
+        	// tablechk == 1, 원종재고관리 엑셀등록
+        	// 현재 엑셀데이터 등록순서가 거꾸로 되어있음
             var data1 = [];
 
             $("#excel_data1").each(function (index, item) {

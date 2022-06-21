@@ -1347,7 +1347,7 @@
                     <div class="form-group mb-0" style="justify-content: end">
                         <input type="file" id="excelFile1" onchange="excelExport(event)" style="display: none"
                                accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
-                        <button onclick="filesFunction()">불러오기</button>
+                        <button onclick="filesFunction()" class="btn btn-primary btn-sm">불러오기</button>
                         <input type="file" name="" id="file_data_upload1" style="display: none;">
                     </div>
                     <div>
@@ -1427,7 +1427,7 @@
         <div class="modal-dialog modal-md" role="document">
             <div class="modal-content modal-bg-white ">
                 <div class="modal-header" style="border: none">
-                    <h6 class="modal-title">도입자원관리 > 데이터 등록</h6>
+                    <h6 class="modal-title">도입자원재고관리 > 데이터 등록</h6>
                 </div>
                 <div class="modal-body">
                     <div class="form-group mb-0">
@@ -1897,6 +1897,9 @@
                     dataType: 'json',
                     data: data,
                     success: function (result) {
+                    	
+						console.log("list result : ", result);
+                    	
                         if (result != null) {
                             $("#data_upload3").modal("show");
                             $("#data_upload1").modal("hide");
@@ -1907,7 +1910,13 @@
                             let len = Object.keys(result.income).length;
 
                             for (var i = 0; i < len; i++) {
-                                add_list += '<tr>';
+                            	//console.log(result.income[i][0].income_name);
+                            	if(result.income[i].length == 0 || result.income[i][0].income_name != $("#CropSelect").val()) {
+                            		//console.log("remain continue");
+                            		continue;
+                            	}
+                            	
+                            	add_list += '<tr>';
                                 add_list += '<td>' + result.income[i][0].income_name + '</td>';
                                 add_list += '<td>' + result.income[i][0].income_code + '</td>';
                                 add_list += '<td>' + result.income[i][0].income_kind + '</td>';
@@ -1942,6 +1951,9 @@
                     dataType: 'json',
                     data: data,
                     success: function (result) {
+                    	
+                    	console.log("income remain list result : ", result);
+                    	
                         if (result != null) {
                             $("#data_upload23").modal("show");
                             $("#data_upload12").modal("hide");
@@ -1952,6 +1964,11 @@
                             let len = Object.keys(result.incomeRemain).length;
 
                             for (var i = 0; i < len; i++) {
+                            	//console.log(result.basic_remain[i][0].basic_name);
+                            	if(result.incomeRemain[i].length == 0 || result.incomeRemain[i][0].income_name != $("#CropSelect").val() ) {
+                            		//console.log("remain continue");
+                            		continue;
+                            	}
                                 add_list += '<tr>';
                                 add_list += '<td>' + result.incomeRemain[i][0].income_remain_num + '</td>';
                                 add_list += '<td>' + result.incomeRemain[i][0].income_remain_amount + '</td>';
@@ -1962,6 +1979,8 @@
                                 add_list += '<td>' + result.incomeRemain[i][0].income_remain_date + '</td>';
                                 add_list += '</tr>';
                             }
+                            
+                            console.log("add_list : ", add_list);
 
                             Income_remain_list.empty();
                             Income_remain_list.append(add_list);

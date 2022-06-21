@@ -1315,7 +1315,7 @@
                     <div class="form-group mb-0" style="justify-content: end">
                         <input type="file" id="excelFile" onchange="excelExport(event)" style="display: none"
                                accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
-                        <button onclick="filesFunction()">불러오기</button>
+                        <button onclick="filesFunction()" class="btn btn-primary btn-sm">불러오기</button>
                         <input type="file" name="" id="file_data_upload" style="display: none;">
                     </div>
                     <div>
@@ -1361,7 +1361,7 @@
                     <div class="form-group mb-0" style="justify-content: end">
                         <input type="file" id="excelFile1" onchange="excelExport(event)" style="display: none"
                                accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
-                        <button onclick="filesFunction()">불러오기</button>
+                        <button onclick="filesFunction()" class="btn btn-primary btn-sm">불러오기</button>
                         <input type="file" name="" id="file_data_upload1" style="display: none;">
                     </div>
                     <div>
@@ -2114,6 +2114,9 @@
                     dataType: 'json',
                     data: data,
                     success: function (result) {
+                    	
+                    	//console.log("sample list result : ", result);
+                    	
                         if (result != null) {
                             $("#data_upload3").modal("show");
                             $("#data_upload2").modal("hide");
@@ -2124,6 +2127,11 @@
                             let len = Object.keys(result.sample).length;
 
                             for (let i = 0; i < len; i++) {
+                            	//console.log(result.basic_remain[i][0].basic_name);
+                            	if(result.sample[i].length == 0 || result.sample[i][0].sample_name != $("#CropSelect").val()) {
+                            		//console.log("remain continue");
+                            		continue;
+                            	}
                                 add_list += '<tr>';
                                 add_list += '<td>' + result.sample[i][0].sample_name + '</td>';
                                 add_list += '<td>' + result.sample[i][0].sample_code + '</td>';
@@ -2157,6 +2165,9 @@
                     dataType: 'json',
                     data: data,
                     success: function (result) {
+                    	
+                    	console.log("outcome list result : ", result);
+                    	
                         if (result != null) {
                             $("#data_upload13").modal("show");
                             $("#data_upload12").modal("hide");
@@ -2167,6 +2178,11 @@
                             let len = Object.keys(result.sample_outcome).length;
 
                             for (let i = 0; i < len; i++) {
+                            	//console.log(result.basic_remain[i][0].basic_name);
+                            	if(result.sample_outcome[i].length == 0 || result.sample_outcome[i][0].sample_name != $("#CropSelect").val()) {
+                            		//console.log("remain continue");
+                            		continue;
+                            	}
                                 add_list += '<tr>';
                                 add_list += '<td>' + result.sample_outcome[i][0].sample_outcome_code + '</td>';
                                 add_list += '<td>' + result.sample_outcome[i][0].sample_outcome_num + '</td>';
