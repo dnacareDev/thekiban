@@ -2932,11 +2932,13 @@
 
             $("#pop_data1").on('hidden.bs.modal', function (e) {
             tablechk = 0;
-            sampleGrid1.destroy();
-            breedgrid.reload();
+            
+            $("#sampleGrid1").empty();
+            //sampleGrid1.destroy();
+            //breedgrid.reload();
                                     
             
-            SearchBreedgrid(1);     
+            //SearchBreedgrid(1);     
         })
     }
 
@@ -2952,6 +2954,8 @@
         basic_header.empty();
         basic_list.empty();
 
+        //console.log(data);
+        
         var loading = document.querySelector('.load_wrap');
 
         $.ajax(
@@ -3145,11 +3149,13 @@
 
             $("#pop_data2").on('hidden.bs.modal', function (e) {
             tablechk = 0;
-            basicGrid1.destroy();
-            breedgrid.reload();
+            
+            $("#basicGrid1").empty();
+            //basicGrid1.destroy();
+            //breedgrid.reload();
                                     
             
-            SearchBreedgrid(1);     
+            //SearchBreedgrid(1);     
         })
     }
 
@@ -3168,16 +3174,18 @@
         var data = {"breed_name": breed_name, "page_num": e, "limit": limit};
 
         var loading = document.querySelector('.load_wrap');
-
         loading.classList.add('on')
 
         $.ajax(
             {
-                url: 'searchBreed',
+                url: 'searchBreed2',
                 method: 'POST',
                 dataType: 'json',
                 data: data,
                 success: function (result) {
+                	
+                	console.log("searchBreed result : ", result);
+                	
                     breedgrid = new tui.Grid({
                         el: document.getElementById('breedGrid'),
                         scrollX: true,
@@ -3283,7 +3291,46 @@
                     //
                     
                     const dataArr = [];
+                    
+                    let k = 0;
+                    for (let i = 0; i < result.breed.length; i++) {
+                    	
+                    	let rowArr = {};
+                    	
+                    	// 첨부파일이 있으면 아이콘 변화
+                    	rowArr['file'] = '<i class="bi bi-file-earmark"></i>';
+                    	for(let j = 0 ; j < result.breed_file.length; j++) {
+                    		if(result.breed[i].breed_id == result.breed_file[j].breed_id) {
+                    			rowArr['file'] = '<i class="bi bi-file-earmark-arrow-down-fill"></i>';
+                    			break;
+							}
+                    	}
+                    	
+                    	// detail 항목이 전부 비어있지 않으면 PROGRESS 
+                    	rowArr['status'] = '<span style="color:red">EMPTY</span>';
+                    	for(let j=0 ; j<result.filledBreed.length ; j++) {
+                    		console.log()
+                    		if(result.breed[i].breed_id == result.filledBreed[j]) {
+                    			rowArr['status'] = '<span style="color:blue">PROGRESS</span>';
+                    			break;
+                    		}
+                    	}
+                    	
+                    	// breed_id 정보를 입력해두고 다른곳과 연계할 때 사용(hidden);
+                    	rowArr['breed_id'] = result.breed[i].breed_id;
+                    	
+                    	
+                    	
+                    	
+                    	for(let j=0 ; j<result.display.length ; j++) {
+                    		rowArr[headerName[j]] = result.standard[k].standard;
+                    		k++;
+                    	}
+                    	
+                    	dataArr.push(rowArr);
+                    }
 
+                    /*
                     $.ajax({
 						url: 'selectBreedFileAll',
 						method: 'POST',
@@ -3329,7 +3376,7 @@
 							}
 						}
                     })
-                   
+                   	*/
                     
                     breedgrid.resetData(dataArr);
 
@@ -3861,7 +3908,7 @@
                 dataType: 'json',
                 data: data,
                 success: function (result) {
-                	console.log("searchBreed result : ", result);
+                	
                     var detail_list = $(".detail_list");
                     var detail_list2 = $(".detail_list2");
 

@@ -55,6 +55,12 @@ public class BreedServiceImpl implements BreedService
 	{
 		return mapper.SearchBreedStandard(detail, user_id, breed_id);
 	}
+	
+	@Override
+	public List<Standard> SearchBreedStandard2(List<Detail> detail, int user_id, String breed_name) 
+	{
+		return mapper.SearchBreedStandard2(detail, user_id, breed_name);
+	}
  
 	// 품종 등록
 	@Override
@@ -243,6 +249,12 @@ public class BreedServiceImpl implements BreedService
 	public List<Standard> SelectStandardById(int basic_id) {
 		return mapper.SelectStandardById(basic_id);
 	}
+	
+	@Override
+	public List<Standard> SelectStandardById2(int[] basic_id) {
+		return mapper.SelectStandardById2(basic_id);
+	}
+	
 
 	@Override
 	public int InsertExcel(List<Standard> standards) {
@@ -267,6 +279,11 @@ public class BreedServiceImpl implements BreedService
 	@Override
 	public List<Breed> SearchBreedTest(String breed_name) {
 		return mapper.SearchBreedTest(breed_name);
+	}
+	
+	@Override
+	public int[] SearchFilledBreed(String breed_name) {
+		return mapper.SearchFilledBreed(breed_name);
 	}
 
 	@Override

@@ -61,6 +61,7 @@ public class BreedController {
 
     List<Standard> standard = new ArrayList<Standard>();
 
+    
     if (!detail.isEmpty()) {
       for (int i = 0; i < breed.size(); i++) {
         standard = service.SearchBreedStandard(detail, user.getUser_id(), breed.get(i).getBreed_id());
@@ -68,6 +69,9 @@ public class BreedController {
         breed.get(i).setBreed_standard(standard);
       }
     }
+    
+    
+    //standard = service.SearchBreedStandard(detail, user.getUser_id(), breed.get(0).getBreed_id());
 
     result.put("breed", breed);
     result.put("detail", detail);
@@ -79,6 +83,36 @@ public class BreedController {
     return result;
   }
 
+  @ResponseBody
+  @RequestMapping("searchBreed2")
+  public Map<String, Object> SearchBreed2(Authentication auth, @RequestParam("breed_name") String breed_name, @RequestParam("page_num") int page_num, @RequestParam("limit") int limit) {
+	  Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+//	  System.out.println("Controller - searchBreed2");
+    
+	  User user = (User) auth.getPrincipal();
+
+	  List<Breed> breed = service.SearchBreedTest(breed_name);                // 품종 검색
+	  int[] filledBreed = service.SearchFilledBreed(breed_name);
+	  List<Detail> detail = service.SearchBreedDetail(breed_name);                  // 품종 작물별 컬럼 조회
+	  List<Display> display = service.SelectDisplay(user.getUser_id(), breed_name);          // 사용자별 품종 표시항목 조회
+	  List<BreedFile> breed_file = service.selectBreedFileAll();
+    
+	  List<Standard> standard = new ArrayList<Standard>();
+	  standard = service.SearchBreedStandard2(detail, user.getUser_id(), breed_name);
+	  
+//	  System.out.println("filledBreed : " + Arrays.toString(filledBreed));
+
+	  result.put("breed", breed);
+	  result.put("filledBreed", filledBreed);
+	  result.put("detail", detail);
+	  result.put("display", display);
+	  result.put("breed_file", breed_file);
+	  result.put("standard", standard);
+	  
+	  return result;
+  }
+  
   @ResponseBody
   @RequestMapping("insertBreed2")
   public int InsertUpload(@RequestParam("data") String data) {
@@ -273,6 +307,19 @@ public class BreedController {
 
     return result;
   }
+  
+  //모든 파일의 basic_id 리스트 조회
+  @ResponseBody
+  @RequestMapping("selectBreedFileAll")
+  public Map<String, Object> SelectBreedFile() {
+	  Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+	  List<BreedFile> breed_file = service.selectBreedFileAll();
+
+	  result.put("breed_file", breed_file);
+
+	  return result;
+  }
 
   // 첨부파일 등록
   @RequestMapping("insertBreedFile")
@@ -409,19 +456,50 @@ public class BreedController {
 
     List<Standard> standards = new ArrayList<>();
     
+    /*
     standards = service.SelectStandardById(basicId[0]);
 
     result.put(0, standards);
+    */
     
-    /*
     for (int i = 0; i < basicId.length; i++) {
       standards = service.SelectStandardById(basicId[i]);
 
       result.put(i, standards);
     }
-    */
+    
     
     return result;
+  }
+  
+  @ResponseBody
+  @RequestMapping("searchBasic3")
+  public Map<String, Object> SearchBasic3(Authentication auth, @RequestParam("basic_num") String basic_num) {
+	  Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+//	  User user = (User) auth.getPrincipal();
+    
+	  int[] basicId = service.SearchBasicIdByBasicNum(basic_num);
+
+	  List<Standard> standards = new ArrayList<>();
+    
+//	  standards = service.SelectStandardById(basicId[0]);
+//	  result.put(0, standards);
+	  
+	  standards = service.SelectStandardById2(basicId);
+	  
+	  System.out.println("standards : " + standards);
+	  
+	  /*
+	  for (int i = 0; i < basicId.length; i++) {
+		  standards = service.SelectStandardById(basicId[i]);
+
+		  result.put(i, standards);
+	  }
+	  */
+	  result.put("standards", standards);
+    
+	  return result;
   }
 
   @ResponseBody
@@ -542,17 +620,6 @@ public class BreedController {
     return result;
   }
 
-//모든 파일의 basic_id 리스트 조회
- @ResponseBody
- @RequestMapping("selectBreedFileAll")
- public Map<String, Object> SelectBreedFile() {
-   Map<String, Object> result = new LinkedHashMap<String, Object>();
 
-   List<BreedFile> breed_file = service.selectBreedFileAll();
-
-   result.put("breed_file", breed_file);
-
-   return result;
- }
   
 }

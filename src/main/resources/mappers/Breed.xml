@@ -37,8 +37,10 @@
     </select>
 
     <select id="SearchBreedTest" resultType="Breed">
-        SELECT *,
-        (SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE s.breed_id = b.breed_id AND d.detail_origin = 1 AND s.standard IS NOT NULL) AS standard_count
+        SELECT * 
+        <!--  
+        ,(SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE s.breed_id = b.breed_id AND d.detail_origin = 1 AND s.standard IS NOT NULL) AS standard_count 
+        -->
         FROM breed b
         <choose>
             <when test="breed_name != 'none'">
@@ -47,6 +49,13 @@
         </choose>
         ORDER BY b.breed_id DESC
     </select>
+    
+    <select id="SearchFilledBreed" resultType="int">
+    	SELECT distinct b.breed_id from breed a, standard b, detail c
+		WHERE b.breed_id=a.breed_id AND b.detail_id=c.detail_id AND c.detail_spec != '기본 정보' AND b.standard IS NOT NULL AND a.breed_name = #{breed_name} 
+		ORDER BY b.breed_id DESC;
+    </select>
+    
     
     <!-- 품종별 세부 정보 조회 -->
     <select id="SearchBreedDetail" parameterType="String" resultType="Detail">
@@ -71,6 +80,13 @@
     	<foreach collection="detail" item="item" open="AND (" close=")" separator="OR">
             dp.detail_id = #{item.detail_id}
         </foreach>
+    </select>
+    <select id="SearchBreedStandard2" resultType="Standard">
+    	SELECT * FROM standard s
+		LEFT JOIN detail d ON s.detail_id = d.detail_id
+		LEFT JOIN display dp ON d.detail_id = dp.detail_id
+    	WHERE dp.user_id = #{user_id} AND dp.breed_name = #{breed_name}
+    	ORDER BY s.breed_id DESC, s.detail_id ASC
     </select>
 
     <!-- 품종 등록 -->
@@ -234,6 +250,12 @@
     	WHERE bf.breed_id = #{breed_id}
     </select>
     
+    <!-- 첨부파일 전체목록 조회 -->
+    <select id="selectBreedFileAll" resultType="BreedFile">
+        SELECT *
+        FROM breed_file
+    </select>
+    
     <!-- 첨부파일 내용 등록 -->
     <insert id="InsertBreedFile" parameterType="BreedFile">
     	INSERT INTO breed_file
@@ -359,6 +381,15 @@
         left join detail d on d.detail_id = s.detail_id
         where s.basic_id = #{basic_id}
     </select>
+    
+    <select id="SelectStandardById2" resultType="Standard">
+    	SELECT * FROM standard s
+        LEFT JOIN detail d ON d.detail_id = s.detail_id
+        WHERE
+        <foreach collection="basic_id" item="item" separator="OR">
+        	s.basic_id = #{item}
+        </foreach>
+    </select>
 
     <select id="SearchBreedList" resultType="Breed">
         SELECT *,
@@ -384,9 +415,5 @@
     </select>
     
     
-    <!-- 첨부파일 전체목록 조회 -->
-    <select id="selectBreedFileAll" resultType="BreedFile">
-        SELECT *
-        FROM breed_file
-    </select>
+
 </mapper>
