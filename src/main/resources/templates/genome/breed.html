@@ -975,6 +975,7 @@
             height: 100%;
             object-fit: contain;
         }
+        
     </style>
 </head>
 <body class="layout-light top-menu overlayScroll">
@@ -1058,7 +1059,7 @@
 
     <!-- 첨부파일 목록창 -->
     <div class="modal-basic modal fade show pop7" id="breed_file" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-md" role="document">
+        <div class="modal-dialog modal-md modal-dialog-scrollable" role="document">
             <div class="modal-content modal-bg-white">
                 <div class="modal-header" style="border: none">
                     <h6 class="modal-title">품종관리 > 첨부파일</h6>
@@ -1632,7 +1633,7 @@
 
     <!-- 품종관리 데이터 등록 모달창 -->
     <div class="modal-basic modal fade show pop5" id="data_upload" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-md" role="document">
+        <div class="modal-dialog modal-md modal-dialog-scrollable" role="document">
             <div class="modal-content modal-bg-white ">
                 <div class="modal-header" style="border: none">
                     <h6 class="modal-title">품종관리 > 데이터 등록</h6>
@@ -1686,7 +1687,7 @@
 
     <!-- 품종관리 데이터 확인 모달창 -->
     <div class="modal-basic modal fade show pop5" id="data_upload3" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-md" role="document">
+        <div class="modal-dialog modal-md modal-dialog-scrollable" role="document">
             <div class="modal-content modal-bg-white ">
                 <div class="modal-header" style="border: none">
                     <h6 class="modal-title">품종관리 > 데이터 등록</h6>
@@ -1892,7 +1893,7 @@
 
     <!--  시교명 클릭시 팝업 2021-11-08 -->
     <div class="modal-basic modal show pop7" id="pop_data1" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-md" role="document">
+        <div class="modal-dialog modal-md modal-dialog-scrollable" role="document">
             <div class="modal-content modal-bg-white">
                 <div class="modal-header" style="border: none">
                     <h6 class="modal-title">품종관리 > 시교자원관리</h6>
@@ -1946,7 +1947,7 @@
 
     <!--  계통명 클릭시 팝업 -->
     <div class="modal-basic modal show pop7" id="pop_data2" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-md" role="document">
+        <div class="modal-dialog modal-md modal-dialog-scrollable" role="document">
             <div class="modal-content modal-bg-white">
                 <div class="modal-header" style="border: none">
                     <h6 class="modal-title">품종관리 > 원종관리</h6>
@@ -2845,15 +2846,15 @@
                     sampleGrid1.on('click', (ev) => {
                         if (ev.targetType === 'cell' && ev.columnName === 'sample_seed'  && insertCheck == 0) {
                             let value_seed = ev.nativeEvent.srcElement;
-
+                            
                             SearchSeed(value_seed);
                         } else if (ev.targetType === 'cell' && ev.columnName === 'sample_code'  && insertCheck == 0) {
                             let value_breed = ev.nativeEvent.srcElement;
-
+                            
                             SearchBreed(value_breed);
                         } else if (ev.targetType === 'cell' && ev.columnName === 'file'  && insertCheck == 0) {
                             let id = sampleGrid1.getRow(ev.rowKey).sample_id;
-
+                            
                             FileBtn(id);
                         }
                     });
@@ -2940,13 +2941,14 @@
     }
 
     function SearchBasic(e) {
+    	
         var basic_name = $("#CropSelect").val();
 
         let data = {"basic_name": basic_name, "basic_num": e.innerText};
 
         var basic_header = $("#basic_header");
         var basic_list = $("#basic_list");
-
+        
         basic_header.empty();
         basic_list.empty();
 
@@ -2960,10 +2962,11 @@
                 data: data,
                 success: function (result2) {
 
-                	console.log("result2",result2);
+                	console.log("result2 : ",result2);
                 	
                     if (Object.keys(result2).length == 0) {
-                        return Alert1("해당 원종이 존재하지 않습니다.")
+                        Alert1("해당 원종이 존재하지 않습니다.");
+                        return;
                     } else {
                         $("#pop_data2").modal();
 
@@ -3048,6 +3051,11 @@
                         }
 
                         basicGrid1.setColumns(header_add);
+                        
+                        // 공백 클릭시 빈 그리드를 출력하도록 데이터 영역부터는 계산하지 않음
+                        if(!e.innerText) {
+                        	return;
+                        }
 
                         const dataArr = [];
                         const dataArr2 = [];
@@ -3332,7 +3340,7 @@
                     breedgrid.on('click', (ev) => {
                         if (ev.targetType === 'cell' && (ev.columnName === '2' || ev.columnName === '278' || ev.columnName === '389' || ev.columnName === '627' || ev.columnName === '750' || ev.columnName === '913' || ev.columnName === '1077' || ev.columnName === '1255' || ev.columnName === '1413' || ev.columnName === '1601') && insertCheck == 0) {
                             var value_sample = ev.nativeEvent.srcElement;
-
+                            
                             SearchSample(value_sample);
                         } else if (ev.targetType === 'cell' && (ev.columnName === '4' || ev.columnName === '5' || ev.columnName === '280' || ev.columnName === '281' || ev.columnName === '391' || ev.columnName === '392' || ev.columnName === '629' || ev.columnName === '630' || ev.columnName === '752' || ev.columnName === '753' || ev.columnName === '915' || ev.columnName === '916' || ev.columnName === '1079' || ev.columnName === '1080' || ev.columnName === '1257' || ev.columnName === '1258' || ev.columnName === '1415' || ev.columnName === '1416' || ev.columnName === '1603' || ev.columnName === '1604') && insertCheck == 0) {
                             var value_basic = ev.nativeEvent.srcElement;
@@ -3684,6 +3692,8 @@
                 data: data,
                 success: function (result) {
                 	
+                	console.log("breed list result : ", result);
+                	
                     if (result != null) {
                         $("#data_upload2").modal("hide");
                         $("#data_upload3").modal("show");
@@ -3704,6 +3714,12 @@
                         header_add += '</tr>';
 
                         for (var i = 0; i < len; i++) {
+                        	
+                        	if(result.breed[i].length == 0 || result.breed[i][0].standard != $("#CropSelect").val()) {
+                        		console.log("remain continue");
+                        		continue;
+                        	}
+                        	
                             add_list += '<tr>';
 
                             for (var j = 0; j < result.breed[i].length; j++) {

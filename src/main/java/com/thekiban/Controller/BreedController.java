@@ -404,17 +404,23 @@ public class BreedController {
     Map<Integer, Object> result = new LinkedHashMap<Integer, Object>();
 
     User user = (User) auth.getPrincipal();
-
+    
     int[] basicId = service.SearchBasicIdByBasicNum(basic_num);
 
     List<Standard> standards = new ArrayList<>();
+    
+    standards = service.SelectStandardById(basicId[0]);
 
+    result.put(0, standards);
+    
+    /*
     for (int i = 0; i < basicId.length; i++) {
       standards = service.SelectStandardById(basicId[i]);
 
       result.put(i, standards);
     }
-
+    */
+    
     return result;
   }
 

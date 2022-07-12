@@ -3187,7 +3187,7 @@
 									FileBtn(id);
 								} else if (ev.targetType === 'cell' && (ev.columnName === '175' || ev.columnName === '342' || ev.columnName === '523' || ev.columnName === '698' || ev.columnName === '840' || ev.columnName === '1005' || ev.columnName === '1175' || ev.columnName === '1343' || ev.columnName === '1517' || ev.columnName === '1729') && insertCheck == 0) {
 									let sample_num = ev.nativeEvent.srcElement;
-
+									
 									SearchBasicRemain1(sample_num);
 								}
 							});
@@ -4569,7 +4569,7 @@
         var limit = $("#limit").val();
 
         var data = {"basic_name": basic_name, "basic_remain_num": e.innerText};
-
+        
         var basic_list = $("#basic_list");
 
         basic_list.empty();
@@ -4577,7 +4577,7 @@
         var loading = document.querySelector('.load_wrap');
 
         loading.classList.add('on');
-
+        
         $.ajax(
             {
                 url: 'searchBasicRemainByNum',
