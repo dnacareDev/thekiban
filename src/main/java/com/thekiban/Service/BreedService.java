@@ -28,7 +28,7 @@ public interface BreedService
 
 	// 품종별 정보값 조회
 	List<Standard> SearchBreedStandard(List<Detail> detail, int user_id, int breed_id);
-	List<Standard> SearchBreedStandard2(List<Detail> detail, int user_id, String breed_name);
+	List<Standard> SearchBreedStandard2(int user_id, String breed_name);
 	
 	// 품종 등록
 	int InsertBreed(Breed breed);
@@ -114,7 +114,7 @@ public interface BreedService
 	// 원종별 정보값 조회
 	List<Standard> SearchBasicStandard(List<Detail> detail, int user_id, int basic_id);
 
-	int[] SearchBasicIdByBasicNum(String basic_num);
+	int[] SearchBasicIdByBasicNum(String basic_name, String basic_num);
 
 	List<Standard> SelectStandardById(int basic_id);
 	List<Standard> SelectStandardById2(int[] basic_id);
@@ -124,6 +124,7 @@ public interface BreedService
 	List<Detail> SelectDetail();
 
 	List<Breed> SearchBreedList(String breed_name);
+	int[] SearchBreedList2(String breed_name);
 
 	List<Breed> SearchBreedExcel(String breed_name);
 

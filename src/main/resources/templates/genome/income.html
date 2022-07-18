@@ -869,7 +869,7 @@
             border-bottom: 2px solid #E5E9F2;
             color: #333;
             font-size: 13px;
-            padding: 10px;
+            /*padding: 10px;*/
         }
 
         .load_wrap {
@@ -1460,7 +1460,7 @@
     <!-- 도입번호 팝업 -->
     <div class="modal-basic modal show pop7" id="pop_remain" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-md" role="document">
-            <div class="modal-content modal-bg-white">
+            <div class="modal-content modal-bg-white" style="height:900px">
                 <div class="modal-header" style="border: none">
                     <h6 class="modal-title">도입자원재고관리</h6>
                     <span class="remain_title"></span>
@@ -1470,7 +1470,7 @@
                         <!--
                         <input type='button' class='btn btn-inverse' value='excel 다운' style='width:100px;height:36px;font-weight:bold;' onclick="ReportToExcelConverter()" />
                         -->
-                        <div class="atbd-upload" style=" overflow: auto; max-height: 500px;">
+                        <div class="atbd-upload" style=" overflow: auto; max-height: 800px;">
                             
                             <div class='card-extra mt-10 mb-10 mr-20 plus_btn_submit3'>
                                 <button type='button' id="cancelRow2" onclick="cancelRow2()">취소</button>
@@ -1898,7 +1898,7 @@
                     data: data,
                     success: function (result) {
                     	
-						console.log("list result : ", result);
+						//console.log("list result : ", result);
                     	
                         if (result != null) {
                             $("#data_upload3").modal("show");
@@ -1952,7 +1952,7 @@
                     data: data,
                     success: function (result) {
                     	
-                    	console.log("income remain list result : ", result);
+                    	//console.log("income remain list result : ", result);
                     	
                         if (result != null) {
                             $("#data_upload23").modal("show");
@@ -1980,7 +1980,7 @@
                                 add_list += '</tr>';
                             }
                             
-                            console.log("add_list : ", add_list);
+                            //console.log("add_list : ", add_list);
 
                             Income_remain_list.empty();
                             Income_remain_list.append(add_list);
@@ -2317,12 +2317,12 @@
                 success: function (result2) { console.log("1");
                     $(".remain_title").text("도입번호(ID) - " + e.innerText);
                                        
-                    console.log("result2.incomeRemain : " + result2.incomeRemain);
+                    //console.log("modal income Remain result : " + result2);
                     
 					remaingrid2 = new tui.Grid({
                         el: document.getElementById('remainGrid2'),
                         scrollX: true,
-                        scrollY: true,
+                        scrollY: false,
                         data: result2.incomeRemain,
                         rowHeaders: ['checkbox'],
                         columns: [
@@ -2384,8 +2384,8 @@
                             }
                         ],
                         pageOptions: {
-                            useClient: false,
-                            perPage: limit1
+                            useClient: true,
+                            perPage: 10
                         },
 					
                         contextMenu: ({ rowKey, columnName }) => (
@@ -2455,7 +2455,7 @@
                              count++;
                          }
                      }
-                     console.log(count);                     
+                     //console.log(count);                     
 
                      for (let j = dataArr2.length -1; j >= 0; j--) {
                         
@@ -2473,7 +2473,7 @@
                          
                      } 					 
                     
-                     console.log(dataArr);                    
+                     //console.log(dataArr);                    
                     
                      remaingrid2.resetData(dataArr);            
 
@@ -2531,10 +2531,12 @@
         $("#pop_remain").on('hidden.bs.modal', function (e) {
             tablechk = 0;
             remaingrid2.destroy();
+            /*
             incomegrid.reload();
                                     
             
-            SearchIncome(1);     
+            SearchIncome(1);
+            */
         })
 
     }
@@ -2938,8 +2940,8 @@
 						async: false,							// async: false -> 동기화하여 그리드가 출력되지 않는것 방지
 						data: data,
 						success: function(file_list) {			// file_list : income_file 테이블에 있는 모든 income_id(=파일 업로드가 된 id 목록)
-							console.log("result", result);
-                    		console.log("file_list",file_list);
+							//console.log("result", result);
+                    		//console.log("file_list",file_list);
                     
 							for (let i = 0; i < result.income.length; i++) {
 								

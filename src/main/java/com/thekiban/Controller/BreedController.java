@@ -99,7 +99,7 @@ public class BreedController {
 	  List<BreedFile> breed_file = service.selectBreedFileAll();
     
 	  List<Standard> standard = new ArrayList<Standard>();
-	  standard = service.SearchBreedStandard2(detail, user.getUser_id(), breed_name);
+	  standard = service.SearchBreedStandard2(user.getUser_id(), breed_name);
 	  
 //	  System.out.println("filledBreed : " + Arrays.toString(filledBreed));
 
@@ -189,8 +189,8 @@ public class BreedController {
   public int UpdateBreed(@RequestParam("data") String data) {
     int result = 0;
 
-    System.out.println("data = " + data);
-    System.out.println("data.length() = " + data.length());
+//    System.out.println("data = " + data);
+//    System.out.println("data.length() = " + data.length());
 
     JSONArray arr = new JSONArray(data);
 
@@ -447,14 +447,16 @@ public class BreedController {
 
   @ResponseBody
   @RequestMapping("searchBasic2")
-  public Map<Integer, Object> SearchBasic2(Authentication auth, @RequestParam("basic_num") String basic_num) {
+  public Map<Integer, Object> SearchBasic2(Authentication auth, @RequestParam("basic_name") String basic_name, @RequestParam("basic_num") String basic_num) {
     Map<Integer, Object> result = new LinkedHashMap<Integer, Object>();
 
     User user = (User) auth.getPrincipal();
     
-    int[] basicId = service.SearchBasicIdByBasicNum(basic_num);
+    int[] basicId = service.SearchBasicIdByBasicNum(basic_name, basic_num);
 
     List<Standard> standards = new ArrayList<>();
+    
+    System.out.println(basicId.length);
     
     /*
     standards = service.SelectStandardById(basicId[0]);
@@ -462,16 +464,26 @@ public class BreedController {
     result.put(0, standards);
     */
     
+    System.out.println(Arrays.toString(basicId));
+    
+    
+    
     for (int i = 0; i < basicId.length; i++) {
       standards = service.SelectStandardById(basicId[i]);
 
+//      System.out.println(standards);
+      
       result.put(i, standards);
     }
+    
+
+    
     
     
     return result;
   }
   
+  /*
   @ResponseBody
   @RequestMapping("searchBasic3")
   public Map<String, Object> SearchBasic3(Authentication auth, @RequestParam("basic_num") String basic_num) {
@@ -479,7 +491,7 @@ public class BreedController {
 
 //	  User user = (User) auth.getPrincipal();
     
-	  int[] basicId = service.SearchBasicIdByBasicNum(basic_num);
+	  int[] basicId = service.SearchBasicIdByBasicNum(basic_name, basic_num);
 
 	  List<Standard> standards = new ArrayList<>();
     
@@ -490,17 +502,18 @@ public class BreedController {
 	  
 	  System.out.println("standards : " + standards);
 	  
-	  /*
-	  for (int i = 0; i < basicId.length; i++) {
-		  standards = service.SelectStandardById(basicId[i]);
-
-		  result.put(i, standards);
-	  }
-	  */
+	  
+//	  for (int i = 0; i < basicId.length; i++) {
+//		  standards = service.SelectStandardById(basicId[i]);
+//
+//		  result.put(i, standards);
+//	  }
+	  
 	  result.put("standards", standards);
     
 	  return result;
   }
+  */
 
   @ResponseBody
   @RequestMapping("excelBreed")

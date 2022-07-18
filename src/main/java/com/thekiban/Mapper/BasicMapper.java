@@ -19,6 +19,8 @@ public interface BasicMapper
 
 	// 원종 검색
 	List<Basic> SearchBasic(@Param("basic_name") String basic_name);
+	
+	int[] SearchFilledBasic(String basic_name);
 
 	List<BasicRemain> SearchBasicRemain(@Param("basic_name") String basic_name);
 
@@ -32,7 +34,10 @@ public interface BasicMapper
 	
 	// 원종별 정보값 조회
 	List<Standard> SearchBasicStandard(@Param("detail") List<Detail> detail, @Param("user_id") int user_id, @Param("basic_id") int basic_id);
+	List<Standard> SearchBasicStandard2(@Param("user_id") int user_id, @Param("basic_name") String basic_name);
 
+	List<Standard> SelectStandardByBreedId(@Param("breed_id") int breed_id);
+	
 	// 원종 등록
 	int InsertBasic(Basic basic);
 

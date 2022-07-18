@@ -697,9 +697,11 @@
             font-size: 13px;
         }
 
+		/*
         #pop_seed table tbody td {
             padding: 12px 12px;
         }
+        */
 
         .plus_btn_submit1 {
             display: none;
@@ -964,7 +966,7 @@
             border-bottom: 2px solid #E5E9F2;
             color: #333;
             font-size: 13px;
-            padding: 10px;
+            /*padding: 10px; */
         }
 
 
@@ -1609,7 +1611,7 @@
                         <input type='button' class='btn btn-inverse' value='excel 다운' style='width:100px;height:36px;font-weight:bold;' onclick="ReportToExcelConverter()" />
                         -->
                         <div class="atbd-upload popAdd tab-pane fade show active" id="tab-horizontal-0-0" role="tabpanel" aria-labelledby="tab-horizontal-0-tab-0"
-                             style=" overflow: auto; max-height: 500px;">
+                             style=" overflow: auto; max-height: 700px;">
                             <div class='card-extra mt-10 mb-10 mr-20 plus_btn_submit3'>
                                 <button type='button' id="cancelRow1" onclick="cancelRow1()">취소</button>
                                 <button type='button' id="saveRow1" onclick="saveRow1()">저장</button>
@@ -2581,7 +2583,7 @@
                     outcomeGrid2 = new tui.Grid({
                         el: document.getElementById('outcomeGrid2'),
                         scrollX: true,
-                        scrollY: true,
+                        scrollY: false,
                         data: result3.sampleOutcome,
                         rowHeaders: ['checkbox'],
                         columns: [
@@ -2684,8 +2686,8 @@
 
                         ],
                         pageOptions: {
-                            useClient: false,
-                            perPage: limit3
+                            useClient: true,
+                            perPage: 10
                         },
                         
                         contextMenu: ({ rowKey, columnName }) => (
@@ -2839,33 +2841,38 @@
         $("#pop_breed").modal();
         tablechk = 2;
         
-        
-        let breed_name = $("#CropSelect").val();
         var limit = $("#limit").val();
-        let data = {"breed_name": breed_name};
+        let breed_name = $("#CropSelect").val();
+        let cell_value = e.innerText;
+        
+        let data = {"breed_name": breed_name, "cell_value": cell_value};
+        
 
-        var loading = document.querySelector('.load_wrap');
+        let loading = document.querySelector('.load_wrap');
+        loading.classList.add('on');
         
         $.ajax(
             {
                 url: 'searchBreedList',
                 method: 'POST',
                 dataType: 'json',
-                async: false,				// 2022-05-09 | async로 해결했는데 아직 방법이 있을거같다. 잊지말고 고치자
                 data: data,
                 success: function (result2) {
+                	
+                	console.log("modal breed result : ", result2);
+                	
                     $(".breed_title").text("시교명 (ID) : " + e.innerText);
                     
                     breedGrid2 = new tui.Grid({
                         el: document.getElementById('breedGrid2'),
                         scrollX: true,
-                        scrollY: true,
-                        data: result2.breed,
+                        scrollY: false,
+                        //data: result2.breed,
                         rowHeaders: ['checkbox'],
                         columns: [],
                         pageOptions: {
-                            useClient: false,
-                            perPage: limit
+                            useClient: true,
+                            perPage: 10
                         },
                         
                         contextMenu: ({ rowKey, columnName }) => (
@@ -2886,14 +2893,14 @@
     												name: 'csvExport',
     												label: 'CSV Export',
     												action: () => {
-    													breedGrid2.export('csv', {	fileName:	'시교자원관리 _ 품종관리' });
+    													breedGrid2.export('csv', {	fileName:	'품종관리(시교명 : )' + e.innerText });
     												}
     											},
     											{
     												name: 'excelExport',
     												label: 'Excel Export',
     												action: () => {
-    													breedGrid2.export('xlsx', {	fileName:	'시교자원관리 _ 품종관리' });
+    													breedGrid2.export('xlsx', {	fileName:	'품종관리(시교명 : )' + e.innerText });
     												}
     											}
     										]
@@ -2931,12 +2938,30 @@
                         }
 
                     }
-					
                     
                     breedGrid2.setColumns(header_add);
                     const dataArr = [];
                     const dataArr2 = [];
-
+                    
+                    let k = 0;
+                    for(let i=0 ; i<result2.breed.length ; i++) {
+                    	let rowArr = {};
+                    	
+                    	rowArr = {'breed_id': result2.breed[i].breed_id};
+                    	
+                    	for(let j=0 ; j<result2.detail.length ; j++) {
+                    		rowArr[headerName[j]] = result2.standard[k].standard;
+                    		k++;
+                    	}
+                    	
+                    	//console.log(rowArr);
+                    	
+                    	if (rowArr[2] === e.innerText) {
+                    		dataArr.push(rowArr);
+                    	}
+                    }
+                    
+                    /*
                     for (let i = 0; i < result2.breed.length; i++) {
 
                         let rowArr = {};
@@ -2956,6 +2981,7 @@
                         }
 
                     }
+                    */
 
                     breedGrid2.resetData(dataArr);
 
@@ -3007,10 +3033,12 @@
         $("#pop_breed").on('hidden.bs.modal', function (e) {
             tablechk = 0;
             breedGrid2.destroy();
+            /*
             samplegrid.reload();
 
 
             SearchSample(1);
+            */
         })
 
     }

@@ -25,6 +25,12 @@ public class AnalysisServiceImpl implements AnalysisService
 		return mapper.SelectBreed(name, total_id, type);
 	}
 
+	@Override
+	public int[] SelectFilledBreed(String name, int[] total_id, int type)
+	{
+		return mapper.SelectFilledBreed(name, total_id, type);
+	}
+	
 	// 원종 조회
 	@Override
 	public List<Basic> SelectBasic(String name, int[] total_id, int type)
@@ -49,5 +55,11 @@ public class AnalysisServiceImpl implements AnalysisService
 	public List<Standard> SelectStandard(int[] target_id, int detail_type)
 	{
 		return mapper.SelectStandard(target_id, detail_type);
+	}
+	
+	@Override
+	public List<Standard> SelectStandard2(int target_id, int detail_type)
+	{
+		return mapper.SelectStandard2(target_id, detail_type);
 	}
 }

@@ -49,43 +49,75 @@ public class BasicController {
     return mv;
   }
 
-  // 원종 검색
-  @ResponseBody
-  @RequestMapping("searchBasic")
-  public Map<String, Object> SearchBasic(Authentication auth, @RequestParam("basic_name") String basic_name, @RequestParam("page_num") int page_num, @RequestParam("limit") int limit) {
-    Map<String, Object> result = new LinkedHashMap<String, Object>();
+	  // 원종 검색
+	@ResponseBody
+	@RequestMapping("searchBasic")
+	public Map<String, Object> SearchBasic(Authentication auth, @RequestParam("basic_name") String basic_name, @RequestParam("page_num") int page_num, @RequestParam("limit") int limit) {
+		Map<String, Object> result = new LinkedHashMap<String, Object>();
+	
+		User user = (User) auth.getPrincipal();
+	
+		int count = service.SelectBasicCount(basic_name);
+	
+		int offset = (page_num - 1) * limit;
+		int end_page = (count + limit - 1) / limit;
+	
+		List<Basic> basic = service.SearchBasic(basic_name);            // 원종 검색
+		List<Detail> detail = service.SearchBasicDetail(basic_name);              // 원종 작물별 컬럼 조회
+		List<Display> display = service.SelectDisplay(user.getUser_id(), basic_name);      // 사용자별 원종 표시항목 조회
+	
+		List<Standard> standard = new ArrayList<Standard>();
+	
+		
+		if (!detail.isEmpty()) {
+			for (int i = 0; i < basic.size(); i++) {
+	        standard = service.SearchBasicStandard(detail, user.getUser_id(), basic.get(i).getBasic_id());
+	
+	        basic.get(i).setBasic_standard(standard);
+//	        System.out.println(basic.get(i).getBasic_standard());
+	      }
+	    }
+	    
+//		System.out.println(standard);
+		
+	
+	    result.put("basic", basic);
+	    result.put("detail", detail);
+	    result.put("display", display);
+	    result.put("page_num", page_num);
+	    result.put("end_page", end_page);
+	    result.put("offset", offset);
+	
+	    return result;
+	}
 
-    User user = (User) auth.getPrincipal();
-
-    int count = service.SelectBasicCount(basic_name);
-
-    int offset = (page_num - 1) * limit;
-    int end_page = (count + limit - 1) / limit;
-
-    List<Basic> basic = service.SearchBasic(basic_name);            // 원종 검색
-    List<Detail> detail = service.SearchBasicDetail(basic_name);              // 원종 작물별 컬럼 조회
-    List<Display> display = service.SelectDisplay(user.getUser_id(), basic_name);      // 사용자별 원종 표시항목 조회
-
-    List<Standard> standard = new ArrayList<Standard>();
-
-    if (!detail.isEmpty()) {
-      for (int i = 0; i < basic.size(); i++) {
-        standard = service.SearchBasicStandard(detail, user.getUser_id(), basic.get(i).getBasic_id());
-
-        basic.get(i).setBasic_standard(standard);
-      }
-    }
-
-    result.put("basic", basic);
-    result.put("detail", detail);
-    result.put("display", display);
-    result.put("page_num", page_num);
-    result.put("end_page", end_page);
-    result.put("offset", offset);
-
-    return result;
-  }
-
+	@ResponseBody
+	@RequestMapping("searchBasic_2")
+	public Map<String, Object> SearchBasic2(Authentication auth, @RequestParam("basic_name") String basic_name, @RequestParam("page_num") int page_num, @RequestParam("limit") int limit) {
+		Map<String, Object> result = new LinkedHashMap<String, Object>();
+	
+		User user = (User) auth.getPrincipal();
+	
+		List<Basic> basic = service.SearchBasic(basic_name);            // 원종 검색
+		List<BasicFile> basic_file = service.selectBasicFileAll();
+		List<Detail> detail = service.SearchBasicDetail(basic_name);              // 원종 작물별 컬럼 조회
+		List<Display> display = service.SelectDisplay(user.getUser_id(), basic_name);      // 사용자별 원종 표시항목 조회
+	
+		List<Standard> standard = new ArrayList<Standard>();
+		standard = service.SearchBasicStandard2(user.getUser_id(), basic_name);
+	
+		int[] filledBasic = service.SearchFilledBasic(basic_name);
+		
+		result.put("basic", basic);
+		result.put("filledBasic", filledBasic);
+	    result.put("basic_file", basic_file);
+	    result.put("detail", detail);
+	    result.put("display", display);
+	    result.put("standard", standard);
+	
+	    return result;
+	}
+	
   // 재고 검색
   @ResponseBody
   @RequestMapping("searchBasicRemain")
@@ -646,6 +678,7 @@ public class BasicController {
     return result;
   }
 
+  
   // 품종 검색
   @ResponseBody
   @RequestMapping("searchBreedListBasic")
@@ -684,6 +717,33 @@ public class BasicController {
     return result;
   }
 
+  	// 품종 검색
+  	@ResponseBody
+  	@RequestMapping("searchBreedListBasic2")
+  	public Map<String, Object> SearchBreedListBasic2(Authentication auth, @RequestParam("breed_name") String breed_name) {
+  		Map<String, Object> result = new LinkedHashMap<String, Object>();
+
+  		User user = (User) auth.getPrincipal();
+
+  		List<Breed> breed = breedService.SearchBreedTest(breed_name);
+  		
+//  		List<Detail> detail = breedService.SearchBreedDetail(breed_name);                  // 품종 작물별 컬럼 조회
+  		List<Display> display = breedService.SelectDisplay(user.getUser_id(), breed_name);          // 사용자별 품종 표시항목 조회
+
+  		List<Standard> standard = new ArrayList<Standard>();
+    
+  		standard = breedService.SearchBreedStandard2(user.getUser_id(), breed_name);
+    
+  		result.put("breed", breed);
+//  		result.put("detail", detail);
+  		result.put("display", display);
+  		result.put("standard", standard);
+    
+        
+
+  		return result;
+  	}
+  
   @ResponseBody
   @RequestMapping("searchTargetBasic")
   public Map<String, Object> SearchTarget(Authentication auth, @RequestParam("datalist_date") String datalist_date, @RequestParam("basic_name") String basic_name) {

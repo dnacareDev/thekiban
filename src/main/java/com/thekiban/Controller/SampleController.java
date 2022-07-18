@@ -707,11 +707,18 @@ public class SampleController {
     Map<String, Object> result = new LinkedHashMap<String, Object>();
 
     User user = (User) auth.getPrincipal();
+    
+    List<Breed> breed = breedService.SearchBreedTest(breed_name);
+//    List<Display> display = breedService.SelectDisplay(user.getUser_id(), breed_name);
+    List<Detail> detail = breedService.SearchBreedDetail(breed_name); 
+    List<Standard> standard = new ArrayList<Standard>();
+    
+	standard = breedService.SearchBreedStandard2(user.getUser_id(), breed_name);
 
-    int count = service.SelectBreedCount(breed_name);
 
+    
+    /*
     List<Breed> breed = service.SearchBreed(breed_name);                // 품종 검색
-    List<Breed> breeds = breedService.SearchBreedList(breed_name);                // 품종 검색
     List<Detail> detail = breedService.SearchBreedDetail(breed_name);                  // 품종 작물별 컬럼 조회
     List<Display> display = service.SelectDisplay(user.getUser_id(), breed_name);          // 사용자별 품종 표시항목 조회
 
@@ -724,19 +731,19 @@ public class SampleController {
 
         breed.get(i).setBreed_standard(standard);
       }
-
-      for (int i = 0; i < breeds.size(); i++) {
-        standards = breedService.SelectBreedStandard(breed.get(i).getBreed_id());
-
-        breeds.get(i).setBreed_standard(standards);
-      }
     }
 
     result.put("breed", breed);
-    result.put("breeds", breeds);
     result.put("detail", detail);
     result.put("display", display);
+    */
 
+	
+	result.put("breed", breed);
+	result.put("detail", detail);
+//	result.put("display", display);
+	result.put("standard", standard);
+	
     return result;
   }
   

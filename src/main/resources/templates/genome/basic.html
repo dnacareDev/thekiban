@@ -185,7 +185,7 @@
         }
 
         .bg-white > .row {
-            padding-top: 50px;
+            padding-top: 10px;
         }
 
         .top-menu .type_1 {
@@ -821,7 +821,7 @@
             border-bottom: 2px solid #E5E9F2;
             color: #333;
             font-size: 13px;
-            padding: 10px;
+            /*padding: 10px;*/
         }
 
         #file_modal {
@@ -1797,7 +1797,7 @@
                         <input type='button' class='btn btn-inverse' value='excel 다운' style='width:100px;height:36px;font-weight:bold;' onclick="ReportToExcelConverter()" />
                         -->
                         <div class="atbd-upload popAdd tab-pane fade show active" id="tab-horizontal-0-0" role="tabpanel" aria-labelledby="tab-horizontal-0-tab-0"
-                             style=" overflow: auto; max-height: 500px;">
+                             style=" overflow: auto; max-height: 700px;">
 
                             <div class='card-extra mt-10 mb-10 mr-20 plus_btn_submit3'>
                                 <button type='button' id="cancelRow1" onclick="cancelRow1()">취소</button>
@@ -2148,7 +2148,7 @@
                         <input type='button' class='btn btn-inverse' value='excel 다운' style='width:100px;height:36px;font-weight:bold;' onclick="ReportToExcelConverter()" />
                         -->
                         <div class="atbd-upload popAdd tab-pane fade show active" id="tab-horizontal-0-1" role="tabpanel" aria-labelledby="tab-horizontal-0-tab-1"
-                             style="overflow: auto; max-height: 500px;">
+                             style="overflow: auto; max-height: 700px;">
                              <div class='card-extra mt-10 mb-10 mr-20 plus_btn_submit5'>
                                 <button type='button' id="cancelRow2" onclick="cancelRow2()">취소</button>
                                 <button type='button' id="saveRow2" onclick="saveRow2()">저장</button>
@@ -2230,6 +2230,111 @@
     }
 
     /* e : localstorage 저장 예제 */
+    
+    
+    
+        // 원종 목록
+    $(document).ready(function () {
+        $("#CropSelect").val(getLocalS("basic_crop"));
+
+        SearchBasic(1);
+        SearchBasicgrid(1);
+        $(".plus_btn_submit1").css("display", "none");
+        $(".plus_btn_submit2").css("display", "none");
+        $(".plus_btn_submit3").css("display", "none");
+        $(".plus_btn_submit4").css("display", "none");
+        $(".plus_btn_submit5").css("display", "none");
+        $(".plus_btn_submit6").css("display", "none");
+    });
+
+    $("#CropSelect").change(function () {
+        var user_type = $("#user_type").val();
+
+        if (user_type == 2) {
+            console.log("check", user_type);
+
+            var auth_type = $("#user_crop").val();
+            var crop = $("#CropSelect").val();
+
+            console.log(auth_type);
+
+            if (!auth_type) {
+                console.log("null");
+            } else {
+                if (auth_type.indexOf(crop) !== -1) {
+                    console.log("same")
+                } else {
+                    $("#CropSelect").val(getLocalS("basic_crop"));
+                    return Alert1("허가되지 않은 작물입니다.");
+                }
+            }
+
+            SearchBasic(1);
+
+            if (tablechk == 0) {
+                basicgrid.destroy();
+
+                SearchBasicgrid(1);
+            } else {
+                basicRemainGrid.destroy();
+
+                SearchBasicRemain(1);
+            }
+            setLocalS("basic_crop", $("#CropSelect").val());
+
+            $(".plus_btn_submit1").css("display", "none");
+            $(".plus_btn_submit2").css("display", "none");
+            $(".plus_btn_submit3").css("display", "none");
+            $(".plus_btn_submit4").css("display", "none");
+            $(".plus_btn_submit5").css("display", "none");
+            $(".plus_btn_submit6").css("display", "none");
+        } else {
+            SearchBasic(1);
+
+            if (tablechk == 0) {
+                basicgrid.destroy();
+
+                SearchBasicgrid(1);
+            } else {
+                basicRemainGrid.destroy();
+
+                SearchBasicRemain(1);
+            }
+            setLocalS("basic_crop", $("#CropSelect").val());
+
+            $(".plus_btn_submit1").css("display", "none");
+            $(".plus_btn_submit2").css("display", "none");
+            $(".plus_btn_submit3").css("display", "none");
+            $(".plus_btn_submit4").css("display", "none");
+            $(".plus_btn_submit5").css("display", "none");
+            $(".plus_btn_submit6").css("display", "none");
+        }
+    })
+
+    // 갯수 선택
+    $("#limit").change(function () {
+        SearchBasic(1);
+
+        if (tablechk == 0) {
+            basicgrid.destroy();
+
+            SearchBasicgrid(1);
+        } else {
+            basicRemainGrid.destroy();
+
+            SearchBasicRemain(1);
+        }
+
+        $(".plus_btn_submit1").css("display", "none");
+        $(".plus_btn_submit2").css("display", "none");
+        $(".plus_btn_submit3").css("display", "none");
+        $(".plus_btn_submit4").css("display", "none");
+        $(".plus_btn_submit5").css("display", "none");
+        $(".plus_btn_submit6").css("display", "none");
+    })
+    
+    
+    
 
     function testbtn() {
         let crop = $("#CropSelect").val();
@@ -2391,106 +2496,7 @@
         SearchBasicRemain(1);
     })
 
-    // 원종 목록
-    $(document).ready(function () {
-        $("#CropSelect").val(getLocalS("basic_crop"));
 
-        SearchBasic(1);
-        SearchBasicgrid(1);
-
-        $(".plus_btn_submit1").css("display", "none");
-        $(".plus_btn_submit2").css("display", "none");
-        $(".plus_btn_submit3").css("display", "none");
-        $(".plus_btn_submit4").css("display", "none");
-        $(".plus_btn_submit5").css("display", "none");
-        $(".plus_btn_submit6").css("display", "none");
-    });
-
-    $("#CropSelect").change(function () {
-        var user_type = $("#user_type").val();
-
-        if (user_type == 2) {
-            console.log("check", user_type);
-
-            var auth_type = $("#user_crop").val();
-            var crop = $("#CropSelect").val();
-
-            console.log(auth_type);
-
-            if (!auth_type) {
-                console.log("null");
-            } else {
-                if (auth_type.indexOf(crop) !== -1) {
-                    console.log("same")
-                } else {
-                    $("#CropSelect").val(getLocalS("basic_crop"));
-                    return Alert1("허가되지 않은 작물입니다.");
-                }
-            }
-
-            SearchBasic(1);
-
-            if (tablechk == 0) {
-                basicgrid.destroy();
-
-                SearchBasicgrid(1);
-            } else {
-                basicRemainGrid.destroy();
-
-                SearchBasicRemain(1);
-            }
-            setLocalS("basic_crop", $("#CropSelect").val());
-
-            $(".plus_btn_submit1").css("display", "none");
-            $(".plus_btn_submit2").css("display", "none");
-            $(".plus_btn_submit3").css("display", "none");
-            $(".plus_btn_submit4").css("display", "none");
-            $(".plus_btn_submit5").css("display", "none");
-            $(".plus_btn_submit6").css("display", "none");
-        } else {
-            SearchBasic(1);
-
-            if (tablechk == 0) {
-                basicgrid.destroy();
-
-                SearchBasicgrid(1);
-            } else {
-                basicRemainGrid.destroy();
-
-                SearchBasicRemain(1);
-            }
-            setLocalS("basic_crop", $("#CropSelect").val());
-
-            $(".plus_btn_submit1").css("display", "none");
-            $(".plus_btn_submit2").css("display", "none");
-            $(".plus_btn_submit3").css("display", "none");
-            $(".plus_btn_submit4").css("display", "none");
-            $(".plus_btn_submit5").css("display", "none");
-            $(".plus_btn_submit6").css("display", "none");
-        }
-    })
-
-    // 갯수 선택
-    $("#limit").change(function () {
-        SearchBasic(1);
-
-        if (tablechk == 0) {
-            basicgrid.destroy();
-
-            SearchBasicgrid(1);
-        } else {
-            basicRemainGrid.destroy();
-
-            SearchBasicRemain(1);
-        }
-
-        $(".plus_btn_submit1").css("display", "none");
-        $(".plus_btn_submit2").css("display", "none");
-        $(".plus_btn_submit3").css("display", "none");
-        $(".plus_btn_submit4").css("display", "none");
-        $(".plus_btn_submit5").css("display", "none");
-        $(".plus_btn_submit6").css("display", "none");
-    })
 
     // 원종 삭제
     function DeleteBasic() {
@@ -2803,6 +2809,8 @@
         if (tablechk == 0) {
             let regExp = /<\/?[^>]+>/gi;
 
+            let crop = $("#CropSelect").val();
+            
             let total_id = [];
 
             let l = basicgrid.getCheckedRows().length;
@@ -2824,7 +2832,7 @@
                 if (chk === 1) {
                     Alert1("형질 값이 존재하지 않습니다.")
                 } else {
-                    window.open("/analysis?total_id=" + total_id + "&type=" + 2);
+                    window.open("/analysis?crop=" + crop + "&total_id=" + total_id + "&type=" + 1);
                 }
             }
         } else {
@@ -2962,6 +2970,293 @@
         let rowArr_global;
 		let map = new Map();
 
+		
+		$.ajax(
+				{
+					url: 'searchBasic_2',
+					method: 'POST',
+					dataType: 'json',
+					data: data,
+					success: function (result) {
+						
+						console.log("basic result : ", result);
+						
+						basicgrid = new tui.Grid({
+							el: document.getElementById('basicGrid'),
+							scrollX: true,
+							scrollY: false,
+							data: result.basic,
+							rowHeaders: ['checkbox'],
+							editingEvent: 'click',
+							columns: [],
+							pageOptions: {
+								useClient: true,
+								perPage: limit,
+							},
+							
+							// 2022-05-06 | 엑셀 내보내기 옵션 수정코드
+							contextMenu: ({ rowKey, columnName }) => (
+								[
+									[
+										{
+											name: 'edit',
+											label: 'Edit',
+											action: () => {
+												basicgrid.startEditing(rowKey, columnName);
+											}
+										},
+										{
+											name: 'export',
+											label: 'Export',
+											subMenu:[
+												{
+													name: 'csvExport',
+													label: 'CSV Export',
+													action: () => {
+														basicgrid.export('csv', basicgridExportOption );
+													}
+												},
+												{
+													name: 'excelExport',
+													label: 'Excel export',
+													action: () => {
+														basicgrid.export('xlsx', basicgridExportOption);
+													}
+												}
+											]
+										}
+									]
+								]
+							)
+							
+						});
+
+						const headerArr = [
+							{
+								'header': '첨부파일',
+								'name': 'file',
+								'width': 100,
+							},
+							{
+								'header': '특성상태',
+								'name': 'status',
+	                            'sortable' : 'true',		// 2022-05-03 DNACARE | 특성상태 column에도 정렬기능 시도
+	                            'sortingType' : 'asc',
+								'width': 150,
+							}
+						];
+						var headerName = [];
+
+						var arr = {};
+						var remaincnt;
+						
+						let k = 0;
+						for (let i = 0; i < result.display.length; i++) {
+							var colHeader = result.display[i].detail_title;
+							var colName = result.display[i].detail_id;
+							headerName[i] = result.display[i].detail_id;
+
+							if (colHeader == '현 종자량 (g)') {
+								//alert(i);
+								remaincnt=i;
+							}
+
+							var filter = {type: 'text', showApplyBtn: true, showClearBtn: true};
+
+							if (result.display[i].detail_spec == '기본 정보') {
+								if (result.display[i].detail_title == '작물') {
+									arr = {'header': colHeader, 'name': colName, 'sortable': 'true', 'sortingType': 'asc', 'width': 180, 'filter': filter}
+								} else {
+									arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 180, 'filter': filter}
+								}
+							} else {
+								arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 500, 'filter': filter}
+							}
+
+							headerArr.push(arr);
+						}
+
+						basicgrid.setColumns(headerArr);
+
+						// option에 들어갈 배열 설정
+						// headerArr은 map을 원소로 하는 배열이므로 원하는 key값만 가진 배열을 따로 만든다.
+	                    let headerArrKeys = [];
+	                    for(let i=2 ; i<headerArr.length ; i++) {			// 'file'(첨부파일), 'status'(특성상태)가 들어있는 i=0, i=2 제거
+	                    	headerArrKeys.push(headerArr[i].name);
+	                    }
+	                    
+	                    console.log("headerArrKeys", headerArrKeys);
+	                    
+	                    const basicgridExportOption = { fileName: '품종관리' ,
+														columnNames: headerArrKeys }		
+	                    //
+						
+	                    
+	                    
+						const dataArr = [];
+	                    
+						
+	                    for(let i=0 ; i<result.basic.length ; i++) {
+	                    	
+	                    	let rowArr = {};
+	                    	
+	                    	rowArr['basic_id'] = result.basic[i].basic_id;
+	                    	
+	                    	//첨부파일 있을경우 아이콘 변경
+	                    	rowArr['file'] = '<i class="bi bi-file-earmark"></i>';
+	                    	for(let j=0 ; j<result.basic_file.length ; j++) {
+	                    		//console.log(result.basic[i].basic_id, " vs ", result.basic_file[j].basic_id);
+	                    		if(result.basic[i].basic_id == result.basic_file[j].basic_id) {
+	                    			rowArr['file'] = '<i class="bi bi-file-earmark-arrow-down-fill"></i>';
+	                    			break;
+	                    		}
+	                    	}
+	                    	
+	                    	rowArr['status'] = '<span style="color:red">EMPTY</span>';
+	                    	for(let j=0 ; j<result.filledBasic.length ; j++) {
+	                    		if(result.basic[i].basic_id == result.filledBasic[j]) {
+	                    			rowArr['status'] = '<span style="color:blue">PROGRESS</span>';
+	                    			break;
+	                    		} 
+	                    	}
+	                    	
+	                    	for(let j=0 ; j<result.display.length ; j++) {
+	                    		rowArr[headerName[j]] = result.standard[k].standard;
+	                    		k++;
+	                    	}
+	                    	
+	                    	
+	                    	
+	                    	
+	                    	dataArr.push(rowArr);
+	                    }
+	                    
+	                    
+	                    
+						/*
+						$.ajax({
+							url: 'selectBasicFileAll',	// 모든 파일리스트를 조회하여 일치하는 id의 아이콘 변경
+							method: 'POST',
+							dataType: 'json',
+							async: false,				// async: false -> 동기화하여 그리드가 출력되지 않는것 방지
+							data: data,
+							success: function(file_list) {			// file_list : basic_file 테이블에 있는 모든 basic_id(=파일 업로드가 된 id 목록)
+								//console.log("file_list",file_list);
+								
+								for (let i = 0; i < result.basic.length; i++) {
+
+									let isMatch = false
+									
+									for(let j = 0; j < file_list.basic_file.length; j++) {
+										if(result.basic[i].basic_id == file_list.basic_file[j].basic_id) {
+											isMatch = true;
+										}
+									}
+									
+									let rowArr = {};
+
+									if(isMatch == true) {	// file_list에 속해있다면 arrow-down이 있는, 아니면 없는 아이콘을 출력
+										rowArr = {'file': '<i class="bi bi-file-earmark-arrow-down-fill"></i>', 'basic_id': result.basic[i].basic_id};
+									} else {
+										rowArr = {'file': '<i class="bi bi-file-earmark"></i>', 'basic_id': result.basic[i].basic_id};
+									}
+									
+									
+									if (result.basic[i].standard_count == 0) {
+										rowArr['status'] = '<span style="color:red">EMPTY</span>';
+
+									} else {
+										rowArr['status'] = '<span style="color:blue">PROGRESS</span>';
+									}
+
+									for (var j = 0; j < result.basic[i].basic_standard.length; j++) {												
+										if (j == remaincnt) {   
+											//console.log( map.get(result.basic[i].basic_standard[6].standard));
+											// console.log("value : " + map.get("P17C0123"));
+											var rowData = map.get(result.basic[i].basic_standard[6].standard);
+										}
+
+										else{
+											var rowData = result.basic[i].basic_standard[j].standard;
+										}
+
+										rowArr[headerName[j]] = rowData;
+									}
+
+									dataArr.push(rowArr);
+									
+								}
+								
+							}
+						});
+						
+						//console.log("map : ", map);
+						*/
+						
+						basicgrid.resetData(dataArr);
+						
+						
+						basicgrid.on('click', (ev) => {
+							if (ev.targetType === 'cell' && (ev.columnName === '170' || ev.columnName === '337' || ev.columnName === '518' || ev.columnName === '693' || ev.columnName === '835' || ev.columnName === '1000' || ev.columnName === '1170' || ev.columnName === '1338' || ev.columnName === '1512' || ev.columnName === '1724') && insertCheck == 0) {
+								let value_basic = ev.nativeEvent.srcElement;
+
+								SearchBreed(value_basic);
+							} else if (ev.targetType === 'cell' && ev.columnName === 'status' && insertCheck == 0) {
+								var e_id = basicgrid.getRow(ev.rowKey).basic_id;
+
+								EmptyBtn(e_id);
+							} else if (ev.targetType === 'cell' && ev.columnName === 'file' && insertCheck == 0) {
+								var id = basicgrid.getRow(ev.rowKey).basic_id;
+
+								FileBtn(id);
+							} else if (ev.targetType === 'cell' && (ev.columnName === '175' || ev.columnName === '342' || ev.columnName === '523' || ev.columnName === '698' || ev.columnName === '840' || ev.columnName === '1005' || ev.columnName === '1175' || ev.columnName === '1343' || ev.columnName === '1517' || ev.columnName === '1729') && insertCheck == 0) {
+								let sample_num = ev.nativeEvent.srcElement;
+								
+								SearchBasicRemain1(sample_num);
+							}
+						});
+
+						basicgrid.on('editingStart', (ev) => {
+							if ($(".plus_btn_submit1")[0].style.display != 'block') {
+								$(".plus_btn_submit2").css("display", "block");
+							}
+						})
+
+						var before = null;
+						var after = null;
+
+						basicgrid.on('afterChange', (ev) => {
+							var user_type = $("#user_type").val();
+
+							if (user_type != 0 && user_type != 2) {
+								return Alert("수정 권한이 없습니다.");
+								location.reload();
+							} else {
+								for (let i = 0; i < ev.changes.length; i++) {
+									before = ev.changes[i].prevValue;
+									after = ev.changes[i].value;
+
+									if (after != before) {
+										var basic_id = basicgrid.getRow(ev.changes[i].rowKey).basic_id;
+										var detail_id = ev.changes[i].columnName;
+										var standard = after;
+
+										if (basic_id != null) {
+											updateBasicData.push({"basic_id": basic_id, "detail_id": detail_id, "standard": standard});
+										}
+									}
+
+									if ($(".plus_btn_submit1")[0].style.display != 'block') {
+										$(".plus_btn_submit2").css("display", "block");
+									}
+								}
+							}
+						});
+						
+                        loading.classList.remove('on');
+                    }
+                });
+		/*
         $.ajax(
 			{
 				url: 'searchBasicRemain',
@@ -2969,275 +3264,35 @@
 				dataType: 'json',
 				data: data,
 				success: function (result_global) {
-				for (let i = 0; i < result_global.basicRemain.length; i++) {
-						rowArr_global = {
-							'basic_remain_id': result_global.basicRemain[i].basic_remain_id,
-							'basic_remain_num': result_global.basicRemain[i].basic_remain_num,
-							'basic_remain_amount': result_global.basicRemain[i].basic_remain_amount,
-							'basic_remain_in': result_global.basicRemain[i].basic_remain_in,
-							'basic_remain_out': result_global.basicRemain[i].basic_remain_out,
-							'basic_remain_re': result_global.basicRemain[i].basic_remain_re,
-							'basic_remain_person': result_global.basicRemain[i].basic_remain_person,
-							'basic_remain_date': result_global.basicRemain[i].basic_remain_date
-						}
-
-						//console.log("rowArr_global : " + rowArr_global['basic_remain_id']);
-						//console.log("rowArr_global_num : " + rowArr_global['basic_remain_num']);
-						//console.log("rowArr_global_re : " + rowArr_global['basic_remain_re']);
-						
-						if(map.get(rowArr_global['basic_remain_num']) == null){
-							map.set(rowArr_global['basic_remain_num'], rowArr_global['basic_remain_re']); 
-						} else {
-							continue;
-						}
-				}
-
-                $.ajax(
-					{
-						url: 'searchBasic',
-						method: 'POST',
-						dataType: 'json',
-						data: data,
-						success: function (result) {
-							//console.log("basic result : ", result);
-							basicgrid = new tui.Grid({
-								el: document.getElementById('basicGrid'),
-								scrollX: true,
-								scrollY: false,
-								data: result.basic,
-								rowHeaders: ['checkbox'],
-								editingEvent: 'click',
-								columns: [],
-								pageOptions: {
-									useClient: true,
-									perPage: limit,
-								},
-								
-								// 2022-05-06 | 엑셀 내보내기 옵션 수정코드
-								contextMenu: ({ rowKey, columnName }) => (
-							[
-								[
-									{
-										name: 'edit',
-										label: 'Edit',
-										action: () => {
-											basicgrid.startEditing(rowKey, columnName);
-										}
-									},
-									{
-										name: 'export',
-										label: 'Export',
-										subMenu:[
-											{
-												name: 'csvExport',
-												label: 'CSV Export',
-												action: () => {
-													basicgrid.export('csv', basicgridExportOption );
-												}
-											},
-											{
-												name: 'excelExport',
-												label: 'Excel export',
-												action: () => {
-													basicgrid.export('xlsx', basicgridExportOption);
-												}
-											}
-										]
-									}
-								]
-							]
-						)
-								
-							});
-
-							const headerArr = [
-								{
-									'header': '첨부파일',
-									'name': 'file',
-									'width': 100,
-								},
-								{
-									'header': '특성상태',
-									'name': 'status',
-		                            'sortable' : 'true',		// 2022-05-03 DNACARE | 특성상태 column에도 정렬기능 시도
-		                            'sortingType' : 'asc',
-									'width': 150,
-								}
-							];
-							var headerName = [];
-
-							var arr = {};
-							var remaincnt;
-							for (let i = 0; i < result.display.length; i++) {
-								var colHeader = result.display[i].detail_title;
-								var colName = result.display[i].detail_id;
-								headerName[i] = result.display[i].detail_id;
-
-								if (colHeader == '현 종자량 (g)') {
-									//alert(i);
-									remaincnt=i;
-								}
-
-								var filter = {type: 'text', showApplyBtn: true, showClearBtn: true};
-
-								if (result.display[i].detail_spec == '기본 정보') {
-									if (result.display[i].detail_title == '작물') {
-										arr = {'header': colHeader, 'name': colName, 'sortable': 'true', 'sortingType': 'asc', 'width': 180, 'filter': filter}
-									} else {
-										arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 180, 'filter': filter}
-									}
-								} else {
-									arr = {'header': colHeader, 'name': colName, 'editor': 'text', 'sortable': 'true', 'sortingType': 'asc', 'width': 500, 'filter': filter}
-								}
-
-								headerArr.push(arr);
+					for (let i = 0; i < result_global.basicRemain.length; i++) {
+							rowArr_global = {
+								'basic_remain_id': result_global.basicRemain[i].basic_remain_id,
+								'basic_remain_num': result_global.basicRemain[i].basic_remain_num,
+								'basic_remain_amount': result_global.basicRemain[i].basic_remain_amount,
+								'basic_remain_in': result_global.basicRemain[i].basic_remain_in,
+								'basic_remain_out': result_global.basicRemain[i].basic_remain_out,
+								'basic_remain_re': result_global.basicRemain[i].basic_remain_re,
+								'basic_remain_person': result_global.basicRemain[i].basic_remain_person,
+								'basic_remain_date': result_global.basicRemain[i].basic_remain_date
 							}
-
-							basicgrid.setColumns(headerArr);
-
-							// option에 들어갈 배열 설정
-							// headerArr은 map을 원소로 하는 배열이므로 원하는 key값만 가진 배열을 따로 만든다.
-		                    let headerArrKeys = [];
-		                    for(let i=2 ; i<headerArr.length ; i++) {			// 'file'(첨부파일), 'status'(특성상태)가 들어있는 i=0, i=2 제거
-		                    	headerArrKeys.push(headerArr[i].name);
-		                    }
-		                    
-		                    console.log("headerArrKeys", headerArrKeys);
-		                    
-		                    const basicgridExportOption = { fileName: '품종관리' ,
-															columnNames: headerArrKeys }		
-		                    //
+	
+							//console.log("rowArr_global : " + rowArr_global['basic_remain_id']);
+							//console.log("rowArr_global_num : " + rowArr_global['basic_remain_num']);
+							//console.log("rowArr_global_re : " + rowArr_global['basic_remain_re']);
 							
-							const dataArr = [];
+							if(map.get(rowArr_global['basic_remain_num']) == null){
+								map.set(rowArr_global['basic_remain_num'], rowArr_global['basic_remain_re']); 
+							} else {
+								continue;
+							}
+					}
 
-							 
-							
-							$.ajax({
-								url: 'selectBasicFileAll',	// 모든 파일리스트를 조회하여 일치하는 id의 아이콘 변경
-								method: 'POST',
-								dataType: 'json',
-								async: false,				// async: false -> 동기화하여 그리드가 출력되지 않는것 방지
-								data: data,
-								success: function(file_list) {			// file_list : basic_file 테이블에 있는 모든 basic_id(=파일 업로드가 된 id 목록)
-									//console.log("file_list",file_list);
-									
-									for (let i = 0; i < result.basic.length; i++) {
-
-										let isMatch = false
-										
-										for(let j = 0; j < file_list.basic_file.length; j++) {
-											if(result.basic[i].basic_id == file_list.basic_file[j].basic_id) {
-												isMatch = true;
-											}
-										}
-										
-										let rowArr = {};
-
-										if(isMatch == true) {	// file_list에 속해있다면 arrow-down이 있는, 아니면 없는 아이콘을 출력
-											rowArr = {'file': '<i class="bi bi-file-earmark-arrow-down-fill"></i>', 'basic_id': result.basic[i].basic_id};
-										} else {
-											rowArr = {'file': '<i class="bi bi-file-earmark"></i>', 'basic_id': result.basic[i].basic_id};
-										}
-										
-										
-										if (result.basic[i].standard_count == 0) {
-											rowArr['status'] = '<span style="color:red">EMPTY</span>';
-
-										} else {
-											rowArr['status'] = '<span style="color:blue">PROGRESS</span>';
-										}
-
-										for (var j = 0; j < result.basic[i].basic_standard.length; j++) {												
-											if (j == remaincnt) {   
-												//console.log( map.get(result.basic[i].basic_standard[6].standard));
-												// console.log("value : " + map.get("P17C0123"));
-												var rowData = map.get(result.basic[i].basic_standard[6].standard);
-											}
-
-											else{
-												var rowData = result.basic[i].basic_standard[j].standard;
-											}
-
-											rowArr[headerName[j]] = rowData;
-										}
-
-										dataArr.push(rowArr);
-										
-									}
-									
-								}
-							});
-							
-							//console.log("map : ", map);
-
-							basicgrid.resetData(dataArr);
-							
-							basicgrid.on('click', (ev) => {
-								if (ev.targetType === 'cell' && (ev.columnName === '170' || ev.columnName === '337' || ev.columnName === '518' || ev.columnName === '693' || ev.columnName === '835' || ev.columnName === '1000' || ev.columnName === '1170' || ev.columnName === '1338' || ev.columnName === '1512' || ev.columnName === '1724') && insertCheck == 0) {
-									let value_basic = ev.nativeEvent.srcElement;
-
-									SearchBreed(value_basic);
-								} else if (ev.targetType === 'cell' && ev.columnName === 'status' && insertCheck == 0) {
-									var e_id = basicgrid.getRow(ev.rowKey).basic_id;
-
-									EmptyBtn(e_id);
-								} else if (ev.targetType === 'cell' && ev.columnName === 'file' && insertCheck == 0) {
-									var id = basicgrid.getRow(ev.rowKey).basic_id;
-
-									FileBtn(id);
-								} else if (ev.targetType === 'cell' && (ev.columnName === '175' || ev.columnName === '342' || ev.columnName === '523' || ev.columnName === '698' || ev.columnName === '840' || ev.columnName === '1005' || ev.columnName === '1175' || ev.columnName === '1343' || ev.columnName === '1517' || ev.columnName === '1729') && insertCheck == 0) {
-									let sample_num = ev.nativeEvent.srcElement;
-									
-									SearchBasicRemain1(sample_num);
-								}
-							});
-
-							basicgrid.on('editingStart', (ev) => {
-								if ($(".plus_btn_submit1")[0].style.display != 'block') {
-									$(".plus_btn_submit2").css("display", "block");
-								}
-							})
-
-							var before = null;
-							var after = null;
-
-							basicgrid.on('afterChange', (ev) => {
-								var user_type = $("#user_type").val();
-
-								if (user_type != 0 && user_type != 2) {
-									return Alert("수정 권한이 없습니다.");
-									location.reload();
-								} else {
-									for (let i = 0; i < ev.changes.length; i++) {
-										before = ev.changes[i].prevValue;
-										after = ev.changes[i].value;
-
-										if (after != before) {
-											var basic_id = basicgrid.getRow(ev.changes[i].rowKey).basic_id;
-											var detail_id = ev.changes[i].columnName;
-											var standard = after;
-
-											if (basic_id != null) {
-												updateBasicData.push({"basic_id": basic_id, "detail_id": detail_id, "standard": standard});
-											}
-										}
-
-										if ($(".plus_btn_submit1")[0].style.display != 'block') {
-											$(".plus_btn_submit2").css("display", "block");
-										}
-									}
-								}
-							});
-
-							// basicgrid.export('xlsx', {columnNames: ['작물','계통명 (ID)','원소재 계통번호','원종 계통번호']}); // tui grid export 컬럼 옵션
-							
-                            loading.classList.remove('on');
-                        }
-                    });
+                
 
                 }
 
             });
+		*/
     }
 
     function SearchBasicRemain(e) {
@@ -3259,7 +3314,7 @@
                 success: function (result1) {
                     basicRemainGrid = new tui.Grid({
                         el: document.getElementById('basicRemainGrid'),
-                        scrollX: false,
+                        scrollX: true,
                         scrollY: false,
                         data: result1.basicRemain,
                         rowHeaders: ['checkbox'],
@@ -3316,7 +3371,7 @@
                         ],
                         pageOptions: {
                             useClient: true,
-                            perPage: limit1
+                            perPage: 10
                         },
                      // 2022-05-06 | 엑셀 내보내기 옵션 수정코드
 						contextMenu: ({ rowKey, columnName }) => (
@@ -4378,10 +4433,10 @@
         tablechk = 2;
 
         let breed_name = $("#CropSelect").val();
-        var limit = $("#limit").val();
+        //var limit = $("#limit").val();
         let sys_name = e.innerText;
-
-        let data = {"breed_name": breed_name, "sys_name": sys_name};
+        
+        let data = {"breed_name": breed_name};
 
         var loading = document.querySelector('.load_wrap');
 
@@ -4389,23 +4444,26 @@
 
         $.ajax(
             {
-                url: 'searchBreedListBasic',
+                url: 'searchBreedListBasic2',
                 method: 'POST',
                 dataType: 'json',
                 data: data,
                 success: function (result2) {
+                	
+                	console.log("breed modal result : ", result2);
+                	
                     $(".breed_title").text("계통명 (ID) : " + e.innerText);
-
+                    
                     breedGrid1 = new tui.Grid({
                         el: document.getElementById('breedGrid1'),
                         scrollX: true,
-                        scrollY: true,
+                        scrollY: false,
                         data: result2.breed,
                         rowHeaders: ['checkbox'],
                         columns: [],
                         pageOptions: {
-                            useClient: false,
-                            perPage: limit
+                            useClient: true,
+                            perPage: 10
                         },
                         
                         contextMenu: ({ rowKey, columnName }) => (
@@ -4442,11 +4500,14 @@
    							]
    						)
                     });
+                    
+                    
 
                     // header
                     const header_add = [];
                     var headerName = [];
 
+                    /* detail에서 display로 변경
                     for (let i = 0; i < result2.detail.length; i++) {
                         var colHeader = result2.detail[i].detail_title;
                         var colName = result2.detail[i].detail_id;
@@ -4469,11 +4530,50 @@
                         }
 
                     }
+                    */
+                    
+                    for(let i=0 ; i<result2.display.length ; i++) {
+                    	let colHeader = result2.display[i].detail_title;
+                    	let colName = result2.display[i].detail_id;
+                    	headerName[i] = result2.display[i].detail_id;
+                    	
+                    	//let title_arr = {};
+                    	let filter = {type: 'text', showApplyBtn: true, showClearBtn: true};
+                    	
+                    	let title_arr = {
+                                'header' : colHeader,
+                                'name' : colName,
+                                'editor': 'text', 
+                                'sortable': 'true',
+                                'width': 180,
+                                'filter': filter
+                        }
+                        
+                    	header_add.push(title_arr);
+                    }
 
                     breedGrid1.setColumns(header_add);
                     const dataArr = [];
-                    const dataArr2 = [];
+                    //const dataArr2 = [];
                     
+                    let k = 0;
+                    for(let i=0 ; i<result2.breed.length ; i++) {
+                    	let rowArr = {};
+                    	
+                    	rowArr['breed_id'] = result2.breed[i].breed_id;
+                    	
+                    	for(let j=0 ; j<result2.display.length ; j++) {
+                    		rowArr[headerName[j]] = result2.standard[k].standard;
+                    		k++;
+                    	}
+                    	
+                    	if(rowArr[4] == sys_name || rowArr[5] == sys_name) {
+                        	dataArr.push(rowArr);                    		
+                    	}
+                    	
+                    }
+                    
+                    /*
                     for (let i = 0; i < result2.breed.length; i++) {
                         
                         let rowArr = {};
@@ -4491,7 +4591,8 @@
                         
                         }
                         
-                    }  
+                    } 
+                    */
                   
                     breedGrid1.resetData(dataArr);
 
@@ -4542,10 +4643,12 @@
             $("#pop_breed").on('hidden.bs.modal', function (e) {
             tablechk = 0;
             breedGrid1.destroy();
+            /*
             basicgrid.reload();
                                     
             
-            SearchBasicgrid(1);     
+            SearchBasicgrid(1);
+            */
         })
             
     }
@@ -4590,7 +4693,7 @@
                     remainGrid1 = new tui.Grid({
                         el: document.getElementById('remainGrid1'),
                         scrollX: true,
-                        scrollY: true,
+                        scrollY: false,
                         data: result3.basicRemain,
                         rowHeaders: ['checkbox'],
                         columns: [
@@ -4653,7 +4756,7 @@
                         ],
                         pageOptions: {
                             useClient: false,
-                            perPage: limit
+                            perPage: 10
                         },
                         
                         contextMenu: ({ rowKey, columnName }) => (

@@ -177,7 +177,7 @@
         }
 
         .bg-white > .row {
-            padding-top: 50px;
+            padding-top: 10px;
         }
 
         .top-menu .type_1 {
@@ -1905,7 +1905,7 @@
                         <input type='button' class='btn btn-inverse' value='excel 다운' style='width:100px;height:36px;font-weight:bold;' onclick="ReportToExcelConverter()" />
                         -->
                         <div class="atbd-upload popAdd tab-pane fade show active" id="tab-horizontal-0-0" role="tabpanel" aria-labelledby="tab-horizontal-0-tab-0"
-                             style=" overflow: auto; max-height: 500px;">
+                             style=" overflow: auto; max-height: 700px;">
                              <div class='card-extra mt-10 mb-10 mr-20 plus_btn_submit3'>
                                 <button type='button' id="cancelRow1" onclick="cancelRow1()">취소</button>
                                 <button type='button' id="saveRow1" onclick="saveRow1()">저장</button>
@@ -1959,7 +1959,7 @@
                         <input type='button' class='btn btn-inverse' value='excel 다운' style='width:100px;height:36px;font-weight:bold;' onclick="ReportToExcelConverter()" />
                         -->
                         <div class="atbd-upload popAdd tab-pane fade show active" id="tab-horizontal-0-1" role="tabpanel" aria-labelledby="tab-horizontal-0-tab-1"
-                             style="overflow: auto; max-height: 500px;">
+                             style="overflow: auto; max-height: 700px;">
                              <div class='card-extra mt-10 mb-10 mr-20 plus_btn_submit5'>
                                 <button type='button' id="cancelRow2" onclick="cancelRow2()">취소</button>
                                 <button type='button' id="saveRow2" onclick="saveRow2()">저장</button>
@@ -1987,6 +1987,7 @@
                         </div>
                     </div>
                 </div>
+                <!--  
                 <div class="modal-footer" style="border: none">
                     <div class="col-4">
                         <div class="row" style="justify-content: center;">
@@ -1994,6 +1995,7 @@
                         </div>
                     </div>
                 </div>
+                -->
             </div>
         </div>
     </div>
@@ -2232,6 +2234,7 @@
 
         SearchBreed(1);
         SearchBreedgrid(1);
+        
 
         $(".plus_btn_submit1").css("display", "none");
         $(".plus_btn_submit2").css("display", "none");
@@ -2582,7 +2585,7 @@
             if (chk === 1) {
                 Alert1("형질 값이 존재하지 않습니다.")
             } else {
-                window.open("/analysis?crop=" + crop + "&total_id=" + total_id + "&type=" + 1);
+                window.open("/analysis?crop=" + crop + "&total_id=" + total_id + "&type=" + 0);
             }
         }
     }
@@ -2710,7 +2713,7 @@
                     sampleGrid1 = new tui.Grid({
                         el: document.getElementById('sampleGrid1'),
                         scrollX: true,
-                        scrollY: true,
+                        scrollY: false,
                         data: result.sample,
                         rowHeaders: ['checkbox'],
                         columns: [
@@ -2981,14 +2984,14 @@
                         basicGrid1 = new tui.Grid({
                             el: document.getElementById('basicGrid1'),
                             scrollX: true,
-                            scrollY: true,
-                            data: result2.basic,
+                            scrollY: false,
+                            //data: result2.basic,
                             rowHeaders: ['checkbox'],
                             editingEvent: 'click',
                             columns: [],
                             pageOptions: {
-                                useClient: false,
-                                perPage: limit,
+                                useClient: true,
+                                perPage: 10,
                             },
                             
                             contextMenu: ({ rowKey, columnName }) => (
@@ -3068,6 +3071,15 @@
                             
                             let rowArr = {'basic_id' : result2[i][0].basic_id};
 
+                            // 작물체크
+                            if(result2[i][0].standard != $("#CropSelect").val() ) {
+                            	continue;
+                            }
+                            
+                            // 계통명의 cell값 체크
+                            if(result2[i][1].standard != e.innerText) {
+                            	continue;
+                            }
 
                             for (let j = 0; j < result2[i].length; j++) {
                                 rowData = result2[i][j].standard;
@@ -3329,6 +3341,8 @@
                     	
                     	dataArr.push(rowArr);
                     }
+                    
+
 
                     /*
                     $.ajax({

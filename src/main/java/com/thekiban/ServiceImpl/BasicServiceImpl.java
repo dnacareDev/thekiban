@@ -39,6 +39,12 @@ public class BasicServiceImpl implements BasicService
 	{
 		return mapper.SearchBasic(basic_name);
 	}
+	
+	@Override
+	public int[] SearchFilledBasic(String basic_name)
+	{
+		return mapper.SearchFilledBasic(basic_name);
+	}
 
 	@Override
 	public List<BasicRemain> SearchBasicRemain(String basic_name) {
@@ -69,6 +75,18 @@ public class BasicServiceImpl implements BasicService
 	public List<Standard> SearchBasicStandard(List<Detail> detail, int user_id, int basic_id)
 	{
 		return mapper.SearchBasicStandard(detail, user_id, basic_id);
+	}
+	
+	@Override
+	public List<Standard> SearchBasicStandard2(int user_id, String basic_name)
+	{
+		return mapper.SearchBasicStandard2(user_id, basic_name);
+	}
+	
+	@Override
+	public List<Standard> SelectStandardByBreedId(int breed_id)
+	{
+		return mapper.SelectStandardByBreedId(breed_id);
 	}
 
 	// 원종 등록

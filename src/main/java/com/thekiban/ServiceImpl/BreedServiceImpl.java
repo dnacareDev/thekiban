@@ -57,9 +57,9 @@ public class BreedServiceImpl implements BreedService
 	}
 	
 	@Override
-	public List<Standard> SearchBreedStandard2(List<Detail> detail, int user_id, String breed_name) 
+	public List<Standard> SearchBreedStandard2(int user_id, String breed_name) 
 	{
-		return mapper.SearchBreedStandard2(detail, user_id, breed_name);
+		return mapper.SearchBreedStandard2(user_id, breed_name);
 	}
  
 	// 품종 등록
@@ -241,8 +241,8 @@ public class BreedServiceImpl implements BreedService
 	}
 
 	@Override
-	public int[] SearchBasicIdByBasicNum(String basic_num) {
-		return mapper.SearchBasicIdByBasicNum(basic_num);
+	public int[] SearchBasicIdByBasicNum(String basic_name, String basic_num) {
+		return mapper.SearchBasicIdByBasicNum(basic_name, basic_num);
 	}
 
 	@Override
@@ -269,6 +269,11 @@ public class BreedServiceImpl implements BreedService
 	@Override
 	public List<Breed> SearchBreedList(String breed_name) {
 		return mapper.SearchBreedList(breed_name);
+	}
+	
+	@Override
+	public int[] SearchBreedList2(String breed_name) {
+		return mapper.SearchBreedList2(breed_name);
 	}
 
 	@Override

@@ -11,6 +11,8 @@ public interface AnalysisService
 {
 	// 품종 조회
 	List<Breed> SelectBreed(String name, int[] total_id, int type);
+	
+	int[] SelectFilledBreed(String name, int[] total_id, int type);
 
 	// 원종 조회
 	List<Basic> SelectBasic(String name, int[] total_id, int type);
@@ -21,4 +23,5 @@ public interface AnalysisService
 	List<Detail> SelectDetail(String detail_name, int detail_type);
 
 	List<Standard> SelectStandard(int[] target_id, int detail_type);
+	List<Standard> SelectStandard2(int target_id, int detail_type);
 }

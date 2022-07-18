@@ -33,7 +33,7 @@ public interface BreedMapper
 
 	// 품종별 정보값 조회
 	List<Standard> SearchBreedStandard(@Param("detail") List<Detail> detail, @Param("user_id") int user_id, @Param("breed_id") int breed_id);
-	List<Standard> SearchBreedStandard2(@Param("detail") List<Detail> detail, @Param("user_id") int user_id, @Param("breed_name") String breed_name);
+	List<Standard> SearchBreedStandard2(@Param("user_id") int user_id, @Param("breed_name") String breed_name);
 	
 	// 품종 등록
 	int InsertBreed(Breed breed);
@@ -119,7 +119,7 @@ public interface BreedMapper
 	// 원종별 정보값 조회
 	List<Standard> SearchBasicStandard(@Param("detail") List<Detail> detail, @Param("user_id") int user_id, @Param("basic_id") int basic_id);
 
-	int[] SearchBasicIdByBasicNum(@Param("basic_num") String basic_num);
+	int[] SearchBasicIdByBasicNum(@Param("basic_name") String basic_name, @Param("basic_num") String basic_num);
 
 	List<Standard> SelectStandardById(@Param("basic_id") int basic_id);
 	List<Standard> SelectStandardById2(@Param("basic_id") int[] basic_id);
@@ -129,7 +129,9 @@ public interface BreedMapper
 	List<Detail> SelectDetail();
 
 	List<Breed> SearchBreedList(@Param("breed_name") String breed_name);
-
+	int[] SearchBreedList2(@Param("breed_name") String breed_name);
+	
+	
 	List<Breed> SearchBreedExcel(@Param("breed_name") String breed_name);
 
 	List<Breed> SelectBreedExcel(int breed_id);

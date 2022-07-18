@@ -17,6 +17,8 @@ public interface BasicService
 
 	// 원종 검색
 	List<Basic> SearchBasic(String basic_name);
+	
+	int[] SearchFilledBasic(String basic_name);
 
 	List<BasicRemain> SearchBasicRemain(String basic_name);
 
@@ -30,6 +32,9 @@ public interface BasicService
 	
 	// 원종별 정보값 조회
 	List<Standard> SearchBasicStandard(List<Detail> detail, int user_id, int basic_id);
+	List<Standard> SearchBasicStandard2(int user_id, String basic_name);
+	
+	List<Standard> SelectStandardByBreedId(int breed_id);
 
 	// 원종 등록
 	int InsertBasic(Basic basic);

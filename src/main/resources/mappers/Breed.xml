@@ -52,7 +52,12 @@
     
     <select id="SearchFilledBreed" resultType="int">
     	SELECT distinct b.breed_id from breed a, standard b, detail c
-		WHERE b.breed_id=a.breed_id AND b.detail_id=c.detail_id AND c.detail_spec != '기본 정보' AND b.standard IS NOT NULL AND a.breed_name = #{breed_name} 
+		WHERE b.breed_id=a.breed_id 
+			AND b.detail_id=c.detail_id 
+			AND c.detail_spec != '기본 정보' 
+			AND b.standard IS NOT NULL
+			AND b.standard != '' 
+			AND a.breed_name = #{breed_name} 
 		ORDER BY b.breed_id DESC;
     </select>
     
@@ -371,15 +376,26 @@
     </select>
 
     <select id="SearchBasicIdByBasicNum" resultType="int">
+        <!--  
         select basic_id from standard
         where basic_id in (select basic_id from standard where standard = #{basic_num} AND basic_id is not null)
         group by basic_id
+        -->
+        SELECT s.basic_id FROM standard s 
+        	LEFT JOIN basic b ON s.basic_id = b.basic_id
+        	LEFT JOIN detail d ON s.detail_id = d.detail_id
+        WHERE b.basic_id IS NOT NULL 
+        	AND s.standard = #{basic_num} 
+        	AND b.basic_name = #{basic_name} 
+        	AND d.detail_title = '계통명 (ID)'
+        GROUP BY s.basic_id
     </select>
 
     <select id="SelectStandardById" resultType="Standard">
         select * from standard s
         left join detail d on d.detail_id = s.detail_id
         where s.basic_id = #{basic_id}
+        ORDER BY s.basic_id DESC
     </select>
     
     <select id="SelectStandardById2" resultType="Standard">
@@ -401,6 +417,12 @@
             </when>
         </choose>
         ORDER BY b.breed_id DESC
+    </select>
+    
+    <select id="SearchBreedList2" resultType="int">
+    	SELECT breed_id from breed 
+    	WHERE breed_name = #{breed_name}
+    	ORDER BY breed_id desc
     </select>
 
     <select id="SelectBreedExcel" resultType="Breed">

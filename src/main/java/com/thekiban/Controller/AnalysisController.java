@@ -26,12 +26,20 @@ import com.thekiban.Entity.Standard;
 import com.thekiban.RModule.RunCorrlation;
 import com.thekiban.RModule.RunTrait;
 import com.thekiban.Service.AnalysisService;
+import com.thekiban.Service.BasicService;
+import com.thekiban.Service.BreedService;
 
 @Controller
 public class AnalysisController
 {
 	@Autowired
 	private AnalysisService service;
+	
+	@Autowired
+	private BreedService breedService;
+	
+	@Autowired
+	private BasicService basicService;
 	
 	// 통합 분석 페이지
 	@RequestMapping("/analysis")
@@ -46,6 +54,7 @@ public class AnalysisController
 		return mv;
 	}
 	
+	// 400~500ms
 	// 작목 조회
 	@ResponseBody
 	@RequestMapping("/selectTarget")
@@ -55,17 +64,38 @@ public class AnalysisController
 		
 		List<Breed> breed = new ArrayList<Breed>();
 		List<Basic> basic = new ArrayList<Basic>();
+		List<Standard> standard = new ArrayList<>();
+
+		//System.out.println(type);
 		
-		if(type == 1)
+		if(type == 0)
 		{
+//			int[] filledBreed = service.SelectFilledBreed(name, total_id, type);
 			breed = service.SelectBreed(name, total_id, type);
+			List<Detail> detail = breedService.SearchBreedDetail(name);
 			
+			for(int i=0 ; i<breed.size() ; i++) {
+				standard = service.SelectStandard2(breed.get(i).getBreed_id(), type);
+				
+				breed.get(i).setBreed_standard(standard);
+			}
+			//result.put("detail", detail);
+//			result.put("filledBreed", filledBreed);
 			result.put("breed", breed);
 		}
-		else if(type == 2)
+		else if(type == 1)
 		{
 			basic = service.SelectBasic(name, total_id, type);
+			List<Detail> detail = basicService.SearchBasicDetail(name);
 			
+			for(int i=0 ; i<basic.size() ; i++) {
+				standard = service.SelectStandard2(basic.get(i).getBasic_id(), type);
+				
+				basic.get(i).setBasic_standard(standard);
+			}
+			
+			//System.out.println(basic);
+			//result.put("detail", detail);
 			result.put("basic", basic);
 		}
 		

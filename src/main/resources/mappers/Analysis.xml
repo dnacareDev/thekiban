@@ -3,12 +3,34 @@
 <mapper namespace="com.thekiban.Mapper.AnalysisMapper">
 	<!-- 품종 조회 -->
 	<select id="SelectBreed" resultType="Breed">
-		SELECT *,
+		SELECT *<!--  ,
 		(SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE s.breed_id = b.breed_id AND d.detail_origin = 1 AND s.standard IS NOT NULL) AS standard_count
+		-->
 		FROM breed b
 		LEFT JOIN detail d ON b.breed_name = d.detail_name
 		LEFT JOIN standard s ON d.detail_id = s.detail_id
-		WHERE b.breed_name = #{name} AND d.detail_title = '시교명 (ID)' AND s.breed_id = b.breed_id AND s.standard IS NOT NULL
+		WHERE b.breed_name = #{name} 
+			AND d.detail_title = '시교명 (ID)' 
+			AND s.breed_id = b.breed_id 
+			AND s.standard IS NOT NULL 
+			AND s.standard != ''
+		<choose>
+			<when test="type != '0' and total_id != null">
+				<foreach collection="total_id" item="item" open="AND (" close=")" separator="OR">
+					b.breed_id = #{item}
+				</foreach>
+			</when>
+		</choose>
+	</select>
+	
+	<select id="SelectFilledBreed" resultType="int">
+		SELECT distinct b.breed_id from breed a, standard b, detail c
+		WHERE b.breed_id=a.breed_id 
+			AND b.detail_id=c.detail_id 
+			AND c.detail_spec != '기본 정보' 
+			AND b.standard IS NOT NULL
+			AND b.standard != '' 
+			AND a.breed_name = #{name} 
 		<choose>
 			<when test="type != '0' and total_id != null">
 				<foreach collection="total_id" item="item" open="AND (" close=")" separator="OR">
@@ -20,12 +42,18 @@
 	
 	<!-- 원종 조회 -->
 	<select id="SelectBasic" resultType="Basic">
-		SELECT *,
+		SELECT *<!-- ,
 		(SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE s.basic_id = b.basic_id AND d.detail_origin = 1 AND s.standard IS NOT NULL) AS standard_count
+		-->
 		FROM basic b
 		LEFT JOIN detail d ON b.basic_name = d.detail_name
 		LEFT JOIN standard s ON d.detail_id = s.detail_id
-		WHERE b.basic_name = #{name} AND d.detail_title = '계통명 (ID)'AND s.basic_id = b.basic_id AND s.standard IS NOT NULL
+		WHERE b.basic_name = #{name} 
+			AND d.detail_title = '계통명 (ID)'
+			AND s.basic_id = b.basic_id 
+			AND s.standard IS NOT NULL
+			<!-- empty null check가 되는지 확인 필요 -->
+			AND s.standard != ''
 		<choose>
 			<when test="type != '0' and total_id != null">
 				<foreach collection="total_id" item="item" open="AND (" close=")" separator="OR">
@@ -48,6 +76,12 @@
 	</select>
 	
 	<!--  -->
+	<select id="SelectDetail2" resultType="Detail">
+		SELECT * FROM detail
+		WHERE detail_type = #{detail_type} AND detail_origin = 1 AND detail_spec != '마커 정보'
+	</select>
+	
+	<!--  -->
 	<select id="SelectStandard" resultType="Standard">
 		SELECT * FROM standard s
 		LEFT JOIN detail d ON s.detail_id = d.detail_id
@@ -62,5 +96,20 @@
     			</when>
     		</choose>
         </foreach>
+	</select>
+	
+	<select id="SelectStandard2" resultType="Standard">
+		SELECT * FROM standard s
+		LEFT JOIN detail d ON s.detail_id = d.detail_id
+		WHERE d.detail_origin = 1  
+			<!--  AND detail_spec != '마커 정보' --> AND 
+			<choose>
+				<when test="detail_type == 0">
+					breed_id = #{target_id}
+				</when>
+				<when test="detail_type == 1">
+					basic_id = #{target_id}
+				</when>
+			</choose> 
 	</select>
 </mapper>

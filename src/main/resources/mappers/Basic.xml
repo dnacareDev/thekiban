@@ -27,8 +27,9 @@
 
     <!-- 원종 검색 -->
     <select id="SearchBasic" resultType="Basic">
-        SELECT *,
+        SELECT * <!-- ,
         (SELECT COUNT(*) FROM standard s LEFT JOIN detail d ON s.detail_id = d.detail_id WHERE s.basic_id = b.basic_id AND d.detail_origin = 1 AND s.standard IS NOT NULL) AS standard_count
+        -->
         FROM basic b
         <choose>
             <when test="basic_name != 'none'">
@@ -36,6 +37,17 @@
             </when>
         </choose>
         ORDER BY b.basic_id DESC
+    </select>
+    
+    <select id="SearchFilledBasic" resultType="int">
+    	SELECT distinct b.basic_id from basic a, standard b, detail c
+		WHERE b.basic_id=a.basic_id 
+			AND b.detail_id=c.detail_id 
+			AND c.detail_spec != '기본 정보' 
+			AND b.standard IS NOT NULL 
+			AND b.standard != '' 
+			AND a.basic_name = #{basic_name} 
+		ORDER BY b.basic_id DESC;
     </select>
 
     <!-- 원종별 세부 정보 조회 -->
@@ -60,6 +72,19 @@
         <foreach collection="detail" item="item" open="AND (" close=")" separator="OR">
             dp.detail_id = #{item.detail_id}
         </foreach>
+    </select>
+    <select id="SearchBasicStandard2" resultType="Standard">
+        SELECT * FROM standard s
+        LEFT JOIN detail d ON s.detail_id = d.detail_id
+        LEFT JOIN display dp ON d.detail_id = dp.detail_id
+        WHERE dp.user_id = #{user_id} AND dp.basic_name = #{basic_name}
+        ORDER BY s.basic_id DESC, s.detail_id ASC
+    </select>
+    
+    <select id="SelectStandardByBreedId" resultType="Standard">
+        SELECT * FROM standard s
+        LEFT JOIN detail d ON d.detail_id = s.detail_id
+        where s.breed_id = #{breed_id}
     </select>
 
     <!-- 재고자원 개수 -->
