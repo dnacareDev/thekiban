@@ -2964,9 +2964,9 @@
 
         var data = {"basic_name": basic_name, "page_num": e, "limit": limit};
 
-        var loading = document.querySelector('.load_wrap');
-
+        let loading = document.querySelector('.load_wrap');
         loading.classList.add('on')
+        
         let rowArr_global;
 		let map = new Map();
 
@@ -3301,8 +3301,7 @@
 
         var data1 = {"basic_name": basic_name1, "page_num": e, "limit": limit1};
 
-        var loading = document.querySelector('.load_wrap');
-
+        let loading = document.querySelector('.load_wrap');
         loading.classList.add('on');
 
         $.ajax(
@@ -4183,6 +4182,8 @@
             
             //console.log("total_arr : ", total_arr);
 
+            let loading = document.querySelector('.load_wrap');
+            loading.classList.add('on');
             
             $.ajax(
                 {
@@ -4203,7 +4204,7 @@
                         let lData = {"datalist_type": 'basic', "datalist_date": now, "basic_name": basic_name};
 
                         listData.push(lData);
-
+                        
                         $.ajax(
                             {
                                 url: 'insertBasicDataList',
@@ -4213,6 +4214,7 @@
                                     "listData": JSON.stringify(listData)
                                 },
                                 success: function (result) {
+                                	loading.classList.remove('on');
                                     return location.reload();
                                 }
                             })
@@ -4438,8 +4440,7 @@
         
         let data = {"breed_name": breed_name};
 
-        var loading = document.querySelector('.load_wrap');
-
+        let loading = document.querySelector('.load_wrap');
         loading.classList.add('on');
 
         $.ajax(
@@ -4677,8 +4678,7 @@
 
         basic_list.empty();
 
-        var loading = document.querySelector('.load_wrap');
-
+        let loading = document.querySelector('.load_wrap');
         loading.classList.add('on');
         
         $.ajax(

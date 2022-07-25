@@ -1048,7 +1048,15 @@
                 	let target_list = $("#target_list");
                     let add_list = "";
                 	
-                	
+                	//데이터가 하나도 없으면 return
+                	if(!result.basic && result.breed.length == 0) {
+                		loading.classList.remove('on');
+                		return;
+                	}
+                	if(!result.breed && result.basic.length == 0) {
+                		loading.classList.remove('on');
+                		return;
+                	}
                 	
                 	// type=0:품종 | type=1:원종
                 	if(type == 0) {
