@@ -1077,14 +1077,6 @@
                                         </button>
                                         <input type="hidden" id="offset">
                                     </div>
-                                    <div class="col-4" id="btn2" style="display: none;">
-                                        <button class="btn btn-icon btn-light btn-circle" onclick="InsertInventory()">
-                                            <span data-feather="plus"></span>
-                                        </button>
-                                        <button class="btn btn-icon btn-light btn-circle" onclick="DeleteInventory()">
-                                            <span data-feather="trash-2"></span>
-                                        </button>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -2237,6 +2229,7 @@
     $(document).ready(function () {
         $("#CropSelect").val(getLocalS("basic_crop"));
 
+        //SearchBasicRemain(1)
         SearchBasic(1);
         SearchBasicgrid(1);
         $(".plus_btn_submit1").css("display", "none");
@@ -2970,6 +2963,25 @@
         let rowArr_global;
 		let map = new Map();
 
+		let remain_num_arr = [];
+		$.ajax(
+		{
+			url: 'searchBasicRemain',
+			method: 'POST',
+			dataType: 'json',
+			data: data,
+			success: function (result_1) {
+				
+				for(let i=0 ; i<result_1.basicRemain.length ; i++) {
+					remain_num_arr.push({
+						'basic_remain_num' : result_1.basicRemain[i].basic_remain_num,
+						'basic_remain_re' : result_1.basicRemain[i].basic_remain_re
+					});
+				}
+				console.log("remain_num_arr : ", remain_num_arr);
+			}
+		});
+		
 		
 		$.ajax(
 				{
@@ -3049,6 +3061,7 @@
 
 						var arr = {};
 						var remaincnt;
+						var seed_number;
 						
 						let k = 0;
 						for (let i = 0; i < result.display.length; i++) {
@@ -3059,6 +3072,11 @@
 							if (colHeader == '현 종자량 (g)') {
 								//alert(i);
 								remaincnt=i;
+							}
+							
+							if(colHeader == '종자번호 (ID)') {
+								seed_number = i;
+								console.log("seed_number : ", seed_number);
 							}
 
 							var filter = {type: 'text', showApplyBtn: true, showClearBtn: true};
@@ -3085,16 +3103,13 @@
 	                    	headerArrKeys.push(headerArr[i].name);
 	                    }
 	                    
-	                    console.log("headerArrKeys", headerArrKeys);
+	                    //console.log("headerArrKeys", headerArrKeys);
 	                    
 	                    const basicgridExportOption = { fileName: '품종관리' ,
 														columnNames: headerArrKeys }		
 	                    //
-						
-	                    
 	                    
 						const dataArr = [];
-	                    
 						
 	                    for(let i=0 ; i<result.basic.length ; i++) {
 	                    	
@@ -3120,9 +3135,29 @@
 	                    		} 
 	                    	}
 	                    	
+	                    	/*
 	                    	for(let j=0 ; j<result.display.length ; j++) {
 	                    		rowArr[headerName[j]] = result.standard[k].standard;
 	                    		k++;
+	                    	}
+	                    	*/
+	                    	for(let j=0 ; j<result.display.length ; j++) {
+	                    		
+	                    		rowArr[headerName[j]] = result.standard[k].standard;
+	                    		k++;
+	                    		if(j==remaincnt) {
+	                    			//console.log(rowArr[headerName[remaincnt]]);
+	                    			console.log(rowArr[headerName[remaincnt-1]]);
+	                    			for(let t=0 ; t<remain_num_arr.length ; t++) {
+	                    				if(rowArr[headerName[remaincnt-1]] == remain_num_arr[t].basic_remain_num) {
+	                    					console.log("일치");
+	                    					rowArr[headerName[remaincnt]] = remain_num_arr[t].basic_remain_re;
+	                    					break;
+	                    				}
+	                    			}
+	                    			
+	                    			
+	                    		}
 	                    	}
 	                    	
 	                    	
@@ -3131,68 +3166,8 @@
 	                    	dataArr.push(rowArr);
 	                    }
 	                    
+	                    console.log(dataArr);
 	                    
-	                    
-						/*
-						$.ajax({
-							url: 'selectBasicFileAll',	// 모든 파일리스트를 조회하여 일치하는 id의 아이콘 변경
-							method: 'POST',
-							dataType: 'json',
-							async: false,				// async: false -> 동기화하여 그리드가 출력되지 않는것 방지
-							data: data,
-							success: function(file_list) {			// file_list : basic_file 테이블에 있는 모든 basic_id(=파일 업로드가 된 id 목록)
-								//console.log("file_list",file_list);
-								
-								for (let i = 0; i < result.basic.length; i++) {
-
-									let isMatch = false
-									
-									for(let j = 0; j < file_list.basic_file.length; j++) {
-										if(result.basic[i].basic_id == file_list.basic_file[j].basic_id) {
-											isMatch = true;
-										}
-									}
-									
-									let rowArr = {};
-
-									if(isMatch == true) {	// file_list에 속해있다면 arrow-down이 있는, 아니면 없는 아이콘을 출력
-										rowArr = {'file': '<i class="bi bi-file-earmark-arrow-down-fill"></i>', 'basic_id': result.basic[i].basic_id};
-									} else {
-										rowArr = {'file': '<i class="bi bi-file-earmark"></i>', 'basic_id': result.basic[i].basic_id};
-									}
-									
-									
-									if (result.basic[i].standard_count == 0) {
-										rowArr['status'] = '<span style="color:red">EMPTY</span>';
-
-									} else {
-										rowArr['status'] = '<span style="color:blue">PROGRESS</span>';
-									}
-
-									for (var j = 0; j < result.basic[i].basic_standard.length; j++) {												
-										if (j == remaincnt) {   
-											//console.log( map.get(result.basic[i].basic_standard[6].standard));
-											// console.log("value : " + map.get("P17C0123"));
-											var rowData = map.get(result.basic[i].basic_standard[6].standard);
-										}
-
-										else{
-											var rowData = result.basic[i].basic_standard[j].standard;
-										}
-
-										rowArr[headerName[j]] = rowData;
-									}
-
-									dataArr.push(rowArr);
-									
-								}
-								
-							}
-						});
-						
-						//console.log("map : ", map);
-						*/
-						
 						basicgrid.resetData(dataArr);
 						
 						

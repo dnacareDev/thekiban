@@ -105,7 +105,7 @@ public class BasicController {
 	
 		List<Standard> standard = new ArrayList<Standard>();
 		standard = service.SearchBasicStandard2(user.getUser_id(), basic_name);
-	
+		
 		int[] filledBasic = service.SearchFilledBasic(basic_name);
 		
 		result.put("basic", basic);
