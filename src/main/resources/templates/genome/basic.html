@@ -3141,16 +3141,18 @@
 	                    		k++;
 	                    	}
 	                    	*/
+	                    	
+	                    	// 2022-09-11 | 원종관리의 현종자량(g)과 원종재고관리의 재고량 연동
 	                    	for(let j=0 ; j<result.display.length ; j++) {
 	                    		
 	                    		rowArr[headerName[j]] = result.standard[k].standard;
 	                    		k++;
 	                    		if(j==remaincnt) {
 	                    			//console.log(rowArr[headerName[remaincnt]]);
-	                    			console.log(rowArr[headerName[remaincnt-1]]);
+	                    			//console.log(rowArr[headerName[remaincnt-1]]);
 	                    			for(let t=0 ; t<remain_num_arr.length ; t++) {
 	                    				if(rowArr[headerName[remaincnt-1]] == remain_num_arr[t].basic_remain_num) {
-	                    					console.log("일치");
+	                    					//console.log("일치");
 	                    					rowArr[headerName[remaincnt]] = remain_num_arr[t].basic_remain_re;
 	                    					break;
 	                    				}
@@ -3231,43 +3233,6 @@
                         loading.classList.remove('on');
                     }
                 });
-		/*
-        $.ajax(
-			{
-				url: 'searchBasicRemain',
-				method: 'POST',
-				dataType: 'json',
-				data: data,
-				success: function (result_global) {
-					for (let i = 0; i < result_global.basicRemain.length; i++) {
-							rowArr_global = {
-								'basic_remain_id': result_global.basicRemain[i].basic_remain_id,
-								'basic_remain_num': result_global.basicRemain[i].basic_remain_num,
-								'basic_remain_amount': result_global.basicRemain[i].basic_remain_amount,
-								'basic_remain_in': result_global.basicRemain[i].basic_remain_in,
-								'basic_remain_out': result_global.basicRemain[i].basic_remain_out,
-								'basic_remain_re': result_global.basicRemain[i].basic_remain_re,
-								'basic_remain_person': result_global.basicRemain[i].basic_remain_person,
-								'basic_remain_date': result_global.basicRemain[i].basic_remain_date
-							}
-	
-							//console.log("rowArr_global : " + rowArr_global['basic_remain_id']);
-							//console.log("rowArr_global_num : " + rowArr_global['basic_remain_num']);
-							//console.log("rowArr_global_re : " + rowArr_global['basic_remain_re']);
-							
-							if(map.get(rowArr_global['basic_remain_num']) == null){
-								map.set(rowArr_global['basic_remain_num'], rowArr_global['basic_remain_re']); 
-							} else {
-								continue;
-							}
-					}
-
-                
-
-                }
-
-            });
-		*/
     }
 
     function SearchBasicRemain(e) {
