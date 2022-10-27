@@ -157,33 +157,33 @@ public class IncomeController {
     if (!obj.isNull("income_remain_amount")) {
       String income_remain_amount = (String) obj.get("income_remain_amount");
       income_remain_amount = income_remain_amount.trim();
-      incomeRemain.setIncome_remain_amount(Integer.parseInt(income_remain_amount));
+      incomeRemain.setIncome_remain_amount(Double.parseDouble(income_remain_amount));
     } else {
-      incomeRemain.setIncome_remain_amount(0);
+      incomeRemain.setIncome_remain_amount(0.0);
     }
 
     if (!obj.isNull("income_remain_in")) {
       String income_remain_in = (String) obj.get("income_remain_in");
       income_remain_in = income_remain_in.trim();
-      incomeRemain.setIncome_remain_in(Integer.parseInt(income_remain_in));
+      incomeRemain.setIncome_remain_in(Double.parseDouble(income_remain_in));
     } else {
-      incomeRemain.setIncome_remain_in(0);
+      incomeRemain.setIncome_remain_in(0.0);
     }
 
     if (!obj.isNull("income_remain_out")) {
       String income_remain_out = (String) obj.get("income_remain_out");
       income_remain_out = income_remain_out.trim();
-      incomeRemain.setIncome_remain_out(Integer.parseInt(income_remain_out));
+      incomeRemain.setIncome_remain_out(Double.parseDouble(income_remain_out));
     } else {
-      incomeRemain.setIncome_remain_out(0);
+      incomeRemain.setIncome_remain_out(0.0);
     }
 
     if (!obj.isNull("income_remain_re")) {
       String income_remain_re = (String) obj.get("income_remain_re");
       income_remain_re = income_remain_re.trim();
-      incomeRemain.setIncome_remain_re(Integer.parseInt(income_remain_re));
+      incomeRemain.setIncome_remain_re(Double.parseDouble(income_remain_re));
     } else {
-      incomeRemain.setIncome_remain_re(0);
+      incomeRemain.setIncome_remain_re(0.0);
     }
 
     if (!obj.isNull("income_remain_person")) {
@@ -387,7 +387,7 @@ public class IncomeController {
   public int remainExcelUpload(ModelAndView mv, @ModelAttribute IncomeRemain incomeRemain, @RequestParam("excel_list") String excel_list) {
     JSONArray arr = new JSONArray(excel_list);
 
-    System.out.println(arr);
+    //System.out.println(arr);
 
     for (int i=0 ; i<arr.length() ; i++) {
 
@@ -400,13 +400,13 @@ public class IncomeController {
         if (k.equals("도입번호 (ID)")) {
           incomeRemain.setIncome_remain_num(obj.getString(k));
         } else if (k.equals("종자 보유량")) {
-          incomeRemain.setIncome_remain_amount(Integer.parseInt(obj.getString(k)));
+          incomeRemain.setIncome_remain_amount(Double.parseDouble(obj.getString(k)));
         } else if (k.equals("입고량")) {
-          incomeRemain.setIncome_remain_in(Integer.parseInt(obj.getString(k)));
+          incomeRemain.setIncome_remain_in(Double.parseDouble(obj.getString(k)));
         } else if (k.equals("출고량")) {
-          incomeRemain.setIncome_remain_out(Integer.parseInt(obj.getString(k)));
+          incomeRemain.setIncome_remain_out(Double.parseDouble(obj.getString(k)));
         } else if (k.equals("재고량")) {
-          incomeRemain.setIncome_remain_re(Integer.parseInt(obj.getString(k)));
+          incomeRemain.setIncome_remain_re(Double.parseDouble(obj.getString(k)));
         } else if (k.equals("담당자")) {
           incomeRemain.setIncome_remain_person(obj.getString(k));
         } else if (k.equals("일자")) {

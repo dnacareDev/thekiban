@@ -449,13 +449,13 @@ public class SampleController {
         } else if (k.equals("종자번호 (ID)")) {
           sampleOutcome.setSample_outcome_num(obj.getString(k));
         } else if (k.equals("종자 보유량")) {
-          sampleOutcome.setSample_outcome_amount(Integer.parseInt(obj.getString(k)));
+          sampleOutcome.setSample_outcome_amount(Double.parseDouble(obj.getString(k)));
         } else if (k.equals("입고량")) {
-          sampleOutcome.setSample_outcome_in(Integer.parseInt(obj.getString(k)));
+          sampleOutcome.setSample_outcome_in(Double.parseDouble(obj.getString(k)));
         } else if (k.equals("출고량")) {
-          sampleOutcome.setSample_outcome_out(Integer.parseInt(obj.getString(k)));
+          sampleOutcome.setSample_outcome_out(Double.parseDouble(obj.getString(k)));
         } else if (k.equals("재고량")) {
-          sampleOutcome.setSample_outcome_remain(Integer.parseInt(obj.getString(k)));
+          sampleOutcome.setSample_outcome_remain(Double.parseDouble(obj.getString(k)));
         } else if (k.equals("담당자")) {
           sampleOutcome.setSample_outcome_person(obj.getString(k));
         } else if (k.equals("인수자")) {

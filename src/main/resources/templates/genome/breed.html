@@ -2213,10 +2213,23 @@
                 dataType: 'json',
                 data: data,
                 success: function (result) {
+                	//console.log("standard list : ", result);
                     var empty_list = $(".empty_list");
 
-                    for (var i = 0; i < empty_list.length; i++) {
-                        empty_list.eq(i).val(result[i].standard);
+                    loop1:
+                    for (let i = 0; i < empty_list.length; i++) {
+                    	for(let j=0 ; j<result.length ; j++) {
+                    		if(empty_list.eq(i).siblings("input[name=detail_id]").val() == result[j].detail_id) {
+								//console.log("===")
+                    			//console.log(i);
+                    			//console.log(j);
+                    			//console.log(empty_list.eq(i).siblings("input[name=detail_id]").val());
+                    			//console.log("===")
+                    			empty_list.eq(i).val(result[j].standard);
+                    			continue loop1;
+                    		}
+                    	}
+                    	//empty_list.eq(i).val(result[i].standard);
                     }
                 }
             });

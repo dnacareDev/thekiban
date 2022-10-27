@@ -15,10 +15,10 @@ public class SampleOutcome {
   private String sample_name;
   private String sample_outcome_code;
   private String sample_outcome_num;
-  private int sample_outcome_amount;
-  private int sample_outcome_in;
-  private int sample_outcome_out;
-  private int sample_outcome_remain;
+  private double sample_outcome_amount;
+  private double sample_outcome_in;
+  private double sample_outcome_out;
+  private double sample_outcome_remain;
   private String sample_outcome_person;
   private String sample_outcome_reciever;
   private LocalDate sample_outcome_date;

@@ -320,33 +320,33 @@ public class BasicController {
     if (!obj.isNull("basic_remain_amount")) {
       String basic_remain_amount = (String) obj.get("basic_remain_amount");
       basic_remain_amount = basic_remain_amount.trim();
-      basicRemain.setBasic_remain_amount(Integer.parseInt(basic_remain_amount));
+      basicRemain.setBasic_remain_amount(Double.parseDouble(basic_remain_amount));
     } else {
-      basicRemain.setBasic_remain_amount(0);
+      basicRemain.setBasic_remain_amount(0.0);
     }
 
     if (!obj.isNull("basic_remain_in")) {
       String basic_remain_in = (String) obj.get("basic_remain_in");
       basic_remain_in = basic_remain_in.trim();
-      basicRemain.setBasic_remain_in(Integer.parseInt(basic_remain_in));
+      basicRemain.setBasic_remain_in(Double.parseDouble(basic_remain_in));
     } else {
-      basicRemain.setBasic_remain_in(0);
+      basicRemain.setBasic_remain_in(0.0);
     }
 
     if (!obj.isNull("basic_remain_out")) {
       String basic_remain_out = (String) obj.get("basic_remain_out");
       basic_remain_out = basic_remain_out.trim();
-      basicRemain.setBasic_remain_out(Integer.parseInt(basic_remain_out));
+      basicRemain.setBasic_remain_out(Double.parseDouble(basic_remain_out));
     } else {
-      basicRemain.setBasic_remain_out(0);
+      basicRemain.setBasic_remain_out(0.0);
     }
 
     if (!obj.isNull("basic_remain_re")) {
       String basic_remain_re = (String) obj.get("basic_remain_re");
       basic_remain_re = basic_remain_re.trim();
-      basicRemain.setBasic_remain_re(Integer.parseInt(basic_remain_re));
+      basicRemain.setBasic_remain_re(Double.parseDouble(basic_remain_re));
     } else {
-      basicRemain.setBasic_remain_re(0);
+      basicRemain.setBasic_remain_re(0.0);
     }
 
     if (!obj.isNull("basic_remain_person")) {
@@ -555,26 +555,33 @@ public class BasicController {
   @ResponseBody
   @RequestMapping("excelRemain")
   public int remainExcelUpload(ModelAndView mv, @ModelAttribute BasicRemain basicRemain, @RequestParam("excel_list") String excel_list) {
-    JSONArray arr = new JSONArray(excel_list);
+    
+	  System.out.println("excel_list : " + excel_list);
+	  
+	  JSONArray arr = new JSONArray(excel_list);
 
     //for (int i = arr.length() - 1; i > -1; i--) {
     for (int i = 0; i < arr.length(); i++) {
       JSONObject obj = arr.getJSONObject(i);
 
+      System.out.println(obj);
+      
       Set<String> key = obj.keySet();
 
       for (String k : key) {
+    	  System.out.println(key);
+    	  System.out.println(k);
 
         if (k.equals("종자번호 (ID)")) {
           basicRemain.setBasic_remain_num(obj.getString(k));
         } else if (k.equals("종자 보유량")) {
-          basicRemain.setBasic_remain_amount(Integer.parseInt(obj.getString(k)));
+          basicRemain.setBasic_remain_amount(Double.parseDouble(obj.getString(k)));
         } else if (k.equals("입고량")) {
-          basicRemain.setBasic_remain_in(Integer.parseInt(obj.getString(k)));
+          basicRemain.setBasic_remain_in(Double.parseDouble(obj.getString(k)));
         } else if (k.equals("출고량")) {
-          basicRemain.setBasic_remain_out(Integer.parseInt(obj.getString(k)));
+          basicRemain.setBasic_remain_out(Double.parseDouble(obj.getString(k)));
         } else if (k.equals("재고량")) {
-          basicRemain.setBasic_remain_re(Integer.parseInt(obj.getString(k)));
+          basicRemain.setBasic_remain_re(Double.parseDouble(obj.getString(k)));
         } else if (k.equals("담당자")) {
           basicRemain.setBasic_remain_person(obj.getString(k));
         } else if (k.equals("일자")) {
