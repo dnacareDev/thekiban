@@ -180,7 +180,7 @@ public class SampleController {
     if (!obj.isNull("sample_outcome_amount")) {
       String sample_outcome_amount = (String) obj.get("sample_outcome_amount");
       sample_outcome_amount = sample_outcome_amount.trim();
-      sampleOutcome.setSample_outcome_amount(Integer.parseInt(sample_outcome_amount));
+      sampleOutcome.setSample_outcome_amount(Double.parseDouble(sample_outcome_amount));
     } else {
       sampleOutcome.setSample_outcome_amount(0);
     }
@@ -188,7 +188,7 @@ public class SampleController {
     if (!obj.isNull("sample_outcome_in")) {
       String sample_outcome_in = (String) obj.get("sample_outcome_in");
       sample_outcome_in = sample_outcome_in.trim();
-      sampleOutcome.setSample_outcome_in(Integer.parseInt(sample_outcome_in));
+      sampleOutcome.setSample_outcome_in(Double.parseDouble(sample_outcome_in));
     } else {
       sampleOutcome.setSample_outcome_in(0);
     }
@@ -196,7 +196,7 @@ public class SampleController {
     if (!obj.isNull("sample_outcome_out")) {
       String sample_outcome_out = (String) obj.get("sample_outcome_out");
       sample_outcome_out = sample_outcome_out.trim();
-      sampleOutcome.setSample_outcome_out(Integer.parseInt(sample_outcome_out));
+      sampleOutcome.setSample_outcome_out(Double.parseDouble(sample_outcome_out));
     } else {
       sampleOutcome.setSample_outcome_out(0);
     }
@@ -204,7 +204,7 @@ public class SampleController {
     if (!obj.isNull("sample_outcome_remain")) {
       String sample_outcome_remain = (String) obj.get("sample_outcome_remain");
       sample_outcome_remain = sample_outcome_remain.trim();
-      sampleOutcome.setSample_outcome_remain(Integer.parseInt(sample_outcome_remain));
+      sampleOutcome.setSample_outcome_remain(Double.parseDouble(sample_outcome_remain));
     } else {
       sampleOutcome.setSample_outcome_remain(0);
     }
@@ -709,8 +709,8 @@ public class SampleController {
     User user = (User) auth.getPrincipal();
     
     List<Breed> breed = breedService.SearchBreedTest(breed_name);
-//    List<Display> display = breedService.SelectDisplay(user.getUser_id(), breed_name);
-    List<Detail> detail = breedService.SearchBreedDetail(breed_name); 
+//    List<Detail> detail = breedService.SearchBreedDetail(breed_name); 
+    List<Display> display = breedService.SelectDisplay(user.getUser_id(), breed_name);
     List<Standard> standard = new ArrayList<Standard>();
     
 	standard = breedService.SearchBreedStandard2(user.getUser_id(), breed_name);
@@ -740,8 +740,8 @@ public class SampleController {
 
 	
 	result.put("breed", breed);
-	result.put("detail", detail);
-//	result.put("display", display);
+//	result.put("detail", detail);
+	result.put("display", display);
 	result.put("standard", standard);
 	
     return result;

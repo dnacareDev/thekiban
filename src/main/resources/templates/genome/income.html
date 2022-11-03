@@ -2007,9 +2007,10 @@
 
                 data.push(arr);
             });
-
+            
             var jsonObj = tableToJson(document.getElementById("excel_data"));
-
+            
+			console.time("excelIncome");
             $.ajax(
                 {
                     url: 'excelIncome',
@@ -2019,6 +2020,7 @@
                         "excel_list": JSON.stringify(jsonObj)
                     },
                     success: function (result) {
+                    	console.timeEnd("excelIncome");
                         now = new Date(+new Date() + 3240 * 10000).toISOString().split("T")[0];
 
                         let listData = [];
@@ -2040,7 +2042,10 @@
                                 success: function (result) {
                                     location.reload();
                                 }
-                            })
+                        })
+                        
+                        setTimeout(() => location.reload(), 1000);    
+                        
                     }
                 }
             )
@@ -2103,6 +2108,9 @@
 
     // table to json
     function tableToJson(table) {
+    	
+    	//console.log("table : ", table);
+    	
         var data = [];
 
         var headers = [];
@@ -2115,12 +2123,24 @@
 
             var rowData = {};
 
+            /*
             for (var j = 0; j < tableRow.cells.length; j++) {
                 rowData[headers[j]] = tableRow.cells[j].innerText;
+            }
+            */
+            
+            for (var j = 0 ; j < table.rows[0].cells.length ; j++) {
+                if(tableRow?.cells[j]) {
+	            	rowData[headers[j]] = tableRow.cells[j].innerText;
+                } else {
+                	rowData[headers[j]] = "";
+                }
             }
 
             data.push(rowData);
         }
+        
+        //console.log("data : ", data);
 
         return data;
     }

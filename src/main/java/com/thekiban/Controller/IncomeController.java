@@ -366,7 +366,7 @@ public class IncomeController {
           LocalDate ldate = LocalDate.parse(date, formatter);
           income.setIncome_date(ldate);
         } else if (k.equals("현 종자량")) {
-          income.setIncome_num(Integer.parseInt(obj.getString(k)));
+          income.setIncome_num(Double.parseDouble(obj.getString(k)));
         } else if (k.equals("타입")) {
           income.setIncome_type(obj.getString(k));
         } else if (k.equals("주요 특성")) {

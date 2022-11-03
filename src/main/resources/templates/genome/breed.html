@@ -2259,6 +2259,10 @@
 
     // 작물 선택
     $("#CropSelect").change(function () {
+    	
+    	//작물 변경시에도 추가 데이터 창 비활성화
+    	//insertCheck = 0;
+    	
         var user_type = $("#user_type").val();
 
         if (user_type == 2) {
@@ -2988,6 +2992,7 @@
                 	
                     if (Object.keys(result2).length == 0) {
                         Alert1("해당 원종이 존재하지 않습니다.");
+                        loading.classList.remove('on');
                         return;
                     } else {
                         $("#pop_data2").modal();
@@ -3874,7 +3879,8 @@
                                 	loading.classList.remove('on');
                                     return location.reload();
                                 }
-                            })
+                        })
+                        setTimeout(() => location.reload(), 1000); 
                     } else {
                         return Alert1("잘못된 엑셀 파일입니다.")
                     }

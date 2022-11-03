@@ -1085,8 +1085,10 @@
         }
     </style>
 </head>
-
+<!--
 <body class="layout-light top-menu overlayScroll" oncontextmenu='return false'>
+-->
+<body class="layout-light top-menu overlayScroll">
 <div class="mobile-search"></div>
 <div class="mobile-author-actions"></div>
 <!-- 공통 topbar -->
@@ -2259,7 +2261,8 @@
                                 success: function (result) {
                                     location.reload();
                                 }
-                            })
+                        })
+                        setTimeout(() => location.reload(), 1000); 
                     }
                 }
             )
@@ -2358,9 +2361,18 @@
             let tableRow = table.rows[i];
 
             let rowData = {};
-
+			
+            /*
             for (let j = 0; j < tableRow.cells.length; j++) {
                 rowData[headers[j]] = tableRow.cells[j].innerText;
+            }
+            */
+            for (var j = 0 ; j < table.rows[0].cells.length ; j++) {
+                if(tableRow?.cells[j]) {
+	            	rowData[headers[j]] = tableRow.cells[j].innerText;
+                } else {
+                	rowData[headers[j]] = "";
+                }
             }
 
             data.push(rowData);
@@ -2829,9 +2841,9 @@
         $("#pop_seed").on('hidden.bs.modal', function (e) {
             tablechk = 0;
             outcomeGrid2.destroy();
-            samplegrid.reload();
+            //samplegrid.reload();
 
-            SearchSample(1);
+            //SearchSample(1);
         })
     }
 
@@ -2858,8 +2870,8 @@
                 dataType: 'json',
                 data: data,
                 success: function (result2) {
-                	
-                	console.log("modal breed result : ", result2);
+                	console.log("modal breed result");
+                	//console.log("modal breed result : ", result2);
                 	
                     $(".breed_title").text("시교명 (ID) : " + e.innerText);
                     
@@ -2916,12 +2928,13 @@
                     const header_add = [];
                     var headerName = [];
 
+                    /*
                     for (let i = 0; i < result2.detail.length; i++) {
                         var colHeader = result2.detail[i].detail_title;
                         var colName = result2.detail[i].detail_id;
                         headerName[i] = result2.detail[i].detail_id;
 
-                        var title_arr = {};
+                        //var title_arr = {};
 
                         var filter = {type: 'text', showApplyBtn: true, showClearBtn: true};
 
@@ -2938,6 +2951,26 @@
                         }
 
                     }
+                    */
+                    for(let i=0 ; i<result2.display.length ; i++) {
+                    	let colHeader = result2.display[i].detail_title;
+                    	let colName = result2.display[i].detail_id;
+                    	headerName[i] = result2.display[i].detail_id;
+                    	
+                    	//let title_arr = {};
+                    	let filter = {type: 'text', showApplyBtn: true, showClearBtn: true};
+                    	
+                    	let title_arr = {
+                                'header' : colHeader,
+                                'name' : colName,
+                                'editor': 'text', 
+                                'sortable': 'true',
+                                'width': 180,
+                                'filter': filter
+                        }
+                        
+                    	header_add.push(title_arr);
+                    }
                     
                     breedGrid2.setColumns(header_add);
                     const dataArr = [];
@@ -2947,16 +2980,26 @@
                     for(let i=0 ; i<result2.breed.length ; i++) {
                     	let rowArr = {};
                     	
+                    	/*
                     	rowArr = {'breed_id': result2.breed[i].breed_id};
-                    	
                     	for(let j=0 ; j<result2.detail.length ; j++) {
+                    		rowArr[headerName[j]] = result2.standard[k].standard;
+                    		k++;
+                    	}
+                    	*/
+                    	//rowArr = {'breed_id': result2.breed[i].breed_id};
+                    	
+                    	rowArr['breed_id'] = result2.breed[i].breed_id;
+                    	
+                    	//console.log("rowArr : ", rowArr);
+                    	for(let j=0 ; j<result2.display.length ; j++) {
                     		rowArr[headerName[j]] = result2.standard[k].standard;
                     		k++;
                     	}
                     	
                     	//console.log(rowArr);
-                    	
-                    	if (rowArr[2] === e.innerText) {
+                    	//if (rowArr[2] === e.innerText) {
+                    	if (rowArr[headerName[1]] === e.innerText) {
                     		dataArr.push(rowArr);
                     	}
                     }
@@ -3408,8 +3451,8 @@
 						async: false,							// async: false -> 동기화하여 그리드가 출력되지 않는것 방지
 						data: data,
 						success: function(file_list) {			// file_list : sample_file 테이블에 있는 모든 sample_id(=파일 업로드가 된 id 목록)
-							console.log("result", result);
-                    		console.log("file_list",file_list);
+							//console.log("result", result);
+                    		//console.log("file_list",file_list);
                     
 							for (let i = 0; i < result.sample.length; i++) {
 								
@@ -3913,7 +3956,7 @@
         
         $.ajax(
             {
-                url: 'selectOutcomeList',										// sample.html에서 불러도 url은 homeController.java에 있으니까 백엔드쪽은 건드릴필요 없나?
+                url: 'selectOutcomeList',
                 method: 'POST',
                 dataType: 'json',
                 data: { "user_crop" : crop_type },
@@ -3921,7 +3964,7 @@
                     var inKorea = [];
                     var outKorea = [];
 
-                    console.log(result);
+                    //console.log(result);
                     
                     for (let i = 0; i < result.sampleOutcomeKo.length; i++) {
 	                    inKorea.push(result.sampleOutcomeKo[i]);
@@ -3958,7 +4001,7 @@
             // mapTypeId: google.maps.MapTypeId.ROADMAP
         };
 
-        console.log(inKo);
+        //console.log(inKo);
         
         var globalOptions = {
             ...koreaOptions,

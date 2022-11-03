@@ -4157,7 +4157,8 @@
                                 	loading.classList.remove('on');
                                     return location.reload();
                                 }
-                            })
+                        })
+                        setTimeout(() => location.reload(), 1000); 
                     }
                 }
             )
@@ -4497,18 +4498,23 @@
                     const dataArr = [];
                     //const dataArr2 = [];
                     
+                    console.log("headerName : ", headerName);
+                    
                     let k = 0;
                     for(let i=0 ; i<result2.breed.length ; i++) {
                     	let rowArr = {};
                     	
                     	rowArr['breed_id'] = result2.breed[i].breed_id;
+                    	//console.log(rowArr);
                     	
                     	for(let j=0 ; j<result2.display.length ; j++) {
                     		rowArr[headerName[j]] = result2.standard[k].standard;
                     		k++;
                     	}
+                    	//console.log(rowArr);
                     	
-                    	if(rowArr[4] == sys_name || rowArr[5] == sys_name) {
+                    	//if(rowArr[4] == sys_name || rowArr[5] == sys_name) {
+                    	if(rowArr[headerName[3]] == sys_name || rowArr[headerName[4]] == sys_name) {
                         	dataArr.push(rowArr);                    		
                     	}
                     	

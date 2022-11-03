@@ -22,7 +22,7 @@ public class Income {
   private String income_country;
   private String income_person;
   private LocalDate income_date;
-  private int income_num;
+  private double income_num;
   private String income_type;
   private String income_trait;
   private String income_comment;
