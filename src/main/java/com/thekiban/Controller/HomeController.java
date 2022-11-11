@@ -1,5 +1,7 @@
 package com.thekiban.Controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -63,23 +65,282 @@ public class HomeController {
 
   @ResponseBody
   @RequestMapping("selectChartBar")
-  public Map<Integer, Object> SelectChartBar() {
+  public Map<Integer, Object> SelectChartBar() throws ParseException {
     Map<Integer, Object> result = new LinkedHashMap<Integer, Object>();
 
   
     Date date = new Date();
 
-    for (int i = 1; i > -4; i--) {
+    for (int i = 1; i > -6; i--) {
       String year = (date.getYear() + 1900 + i) + "-01-01";
 
-      //System.out.println("date.getYear()"+date.getYear());
-      //System.out.println("year"+year);
+      System.out.println("year : " + year);
       
-      List<Breed> breed = service.SelectChartBar(year);
-
-      result.put((date.getYear() + 1899 + i), breed);
+      //List<Breed> breed = service.SelectChartBar(year);
+      //System.out.println("breed : " + breed);
+      
+      SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+      Date fDate = formatter.parse(year);
+      Date sDate = formatter.parse("2023-01-01");
+      
+      
+      List<Breed> breed = new ArrayList<>();
+      if(fDate.compareTo(sDate) > 0) {
+    	  breed = service.SelectChartBar(year);
+    	  result.put((date.getYear() + 1899 + i), breed);
+      } else {
+    	  System.out.println(year);
+    	  Breed pepper = new Breed();
+    	  Breed welshOnion = new Breed();
+    	  Breed melon = new Breed();
+    	  Breed radish = new Breed();
+    	  Breed napacabbage = new Breed();
+    	  Breed watermelon = new Breed();
+    	  Breed cabbage = new Breed();
+    	  Breed onion = new Breed();
+    	  Breed koreanmelon = new Breed();
+    	  Breed tomato = new Breed();
+    	  
+    	  //주의 : switch에 들어가는 year변수는 1년씩 빼줘야 의미가 맞다. case "2017-01-01":은 2016년도의 데이터를 의미함. 
+    	  switch(year) {
+    	  	case "2017-01-01":
+    	  		pepper.setBreed_name("고추");
+    	  		pepper.setBreed_count(2);
+    	  		breed.add(pepper);
+//    	  		welshOnion.setBreed_name("대파");
+//    	  		welshOnion.setBreed_count(0);
+//    	  		breed.add(welshOnion);
+//    	  		melon.setBreed_name("멜론");
+//    	  		melon.setBreed_count(0);
+//    	  		breed.add(melon);
+//    	  		radish.setBreed_name("무");
+//    	  		radish.setBreed_count(0);
+//    	  		breed.add(radish);
+//    	  		napacabbage.setBreed_name("배추");
+//    	  		napacabbage.setBreed_count(0);
+//    	  		breed.add(napacabbage);
+//    	  		watermelon.setBreed_name("수박");
+//    	  		watermelon.setBreed_count(0);
+//    	  		breed.add(watermelon);
+//    	  		cabbage.setBreed_name("양배추");
+//    	  		cabbage.setBreed_count(0);
+//    	  		breed.add(cabbage);
+//    	  		onion.setBreed_name("양파");
+//    	  		onion.setBreed_count(0);
+//    	  		breed.add(onion);
+    	  		koreanmelon.setBreed_name("참외");
+    	  		koreanmelon.setBreed_count(1);
+    	  		breed.add(koreanmelon);
+//    	  		tomato.setBreed_name("토마토");
+//    	  		tomato.setBreed_count(0);
+//    	  		breed.add(tomato);
+    	  		result.put((date.getYear() + 1899 + i), breed);
+    	  		break;
+    	  	case "2018-01-01":
+    	  		pepper.setBreed_name("고추");
+    	  		pepper.setBreed_count(5);
+    	  		breed.add(pepper);
+//    	  		welshOnion.setBreed_name("대파");
+//    	  		welshOnion.setBreed_count(0);
+//    	  		breed.add(welshOnion);
+    	  		melon.setBreed_name("멜론");
+    	  		melon.setBreed_count(6);
+    	  		breed.add(melon);
+    	  		radish.setBreed_name("무");
+    	  		radish.setBreed_count(4);
+    	  		breed.add(radish);
+    	  		napacabbage.setBreed_name("배추");
+    	  		napacabbage.setBreed_count(4);
+    	  		breed.add(napacabbage);
+//    	  		watermelon.setBreed_name("수박");
+//    	  		watermelon.setBreed_count(0);
+//    	  		breed.add(watermelon);
+    	  		cabbage.setBreed_name("양배추");
+    	  		cabbage.setBreed_count(4);
+    	  		breed.add(cabbage);
+//    	  		onion.setBreed_name("양파");
+//    	  		onion.setBreed_count(0);
+//    	  		breed.add(onion);
+    	  		koreanmelon.setBreed_name("참외");
+    	  		koreanmelon.setBreed_count(4);
+    	  		breed.add(koreanmelon);
+    	  		tomato.setBreed_name("토마토");
+    	  		tomato.setBreed_count(2);
+    	  		breed.add(tomato);
+    	  		result.put((date.getYear() + 1899 + i), breed);
+    	  		break;
+    	  	case "2019-01-01":
+    	  		pepper.setBreed_name("고추");
+    	  		pepper.setBreed_count(11);
+    	  		breed.add(pepper);
+    	  		welshOnion.setBreed_name("대파");
+    	  		welshOnion.setBreed_count(1);
+    	  		breed.add(welshOnion);
+//    	  		melon.setBreed_name("멜론");
+//    	  		melon.setBreed_count(10);
+//    	  		breed.add(melon);
+    	  		radish.setBreed_name("무");
+    	  		radish.setBreed_count(2);
+    	  		breed.add(radish);
+    	  		napacabbage.setBreed_name("배추");
+    	  		napacabbage.setBreed_count(6);
+    	  		breed.add(napacabbage);
+//    	  		watermelon.setBreed_name("수박");
+//    	  		watermelon.setBreed_count(0);
+//    	  		breed.add(watermelon);
+//    	  		cabbage.setBreed_name("양배추");
+//    	  		cabbage.setBreed_count(0);
+//    	  		breed.add(cabbage);
+    	  		onion.setBreed_name("양파");
+    	  		onion.setBreed_count(6);
+    	  		breed.add(onion);
+    	  		koreanmelon.setBreed_name("참외");
+    	  		koreanmelon.setBreed_count(7);
+    	  		breed.add(koreanmelon);
+    	  		tomato.setBreed_name("토마토");
+    	  		tomato.setBreed_count(9);
+    	  		breed.add(tomato);
+    	  		result.put((date.getYear() + 1899 + i), breed);
+    	  		break;
+    	  	case "2020-01-01":
+    	  		pepper.setBreed_name("고추");
+    	  		pepper.setBreed_count(8);
+    	  		breed.add(pepper);
+//    	  		welshOnion.setBreed_name("대파");
+//    	  		welshOnion.setBreed_count(0);
+//    	  		breed.add(welshOnion);
+//    	  		melon.setBreed_name("멜론");
+//    	  		melon.setBreed_count(0);
+//    	  		breed.add(melon);
+    	  		radish.setBreed_name("무");
+    	  		radish.setBreed_count(3);
+    	  		breed.add(radish);
+    	  		napacabbage.setBreed_name("배추");
+    	  		napacabbage.setBreed_count(2);
+    	  		breed.add(napacabbage);
+//    	  		watermelon.setBreed_name("수박");
+//    	  		watermelon.setBreed_count(0);
+//    	  		breed.add(watermelon);
+    	  		cabbage.setBreed_name("양배추");
+    	  		cabbage.setBreed_count(3);
+    	  		breed.add(cabbage);
+//    	  		onion.setBreed_name("양파");
+//    	  		onion.setBreed_count(0);
+//    	  		breed.add(onion);
+    	  		koreanmelon.setBreed_name("참외");
+    	  		koreanmelon.setBreed_count(1);
+    	  		breed.add(koreanmelon);
+    	  		tomato.setBreed_name("토마토");
+    	  		tomato.setBreed_count(6);
+    	  		breed.add(tomato);
+    	  		result.put((date.getYear() + 1899 + i), breed);
+    	  		break;
+    	  	case "2021-01-01":
+    	  		pepper.setBreed_name("고추");
+    	  		pepper.setBreed_count(8);
+    	  		breed.add(pepper);
+//    	  		welshOnion.setBreed_name("대파");
+//    	  		welshOnion.setBreed_count(0);
+//    	  		breed.add(welshOnion);
+    	  		melon.setBreed_name("멜론");
+    	  		melon.setBreed_count(1);
+    	  		breed.add(melon);
+    	  		radish.setBreed_name("무");
+    	  		radish.setBreed_count(3);
+    	  		breed.add(radish);
+    	  		napacabbage.setBreed_name("배추");
+    	  		napacabbage.setBreed_count(6);
+    	  		breed.add(napacabbage);
+//    	  		watermelon.setBreed_name("수박");
+//    	  		watermelon.setBreed_count(0);
+//    	  		breed.add(watermelon);
+    	  		cabbage.setBreed_name("양배추");
+    	  		cabbage.setBreed_count(2);
+    	  		breed.add(cabbage);
+//    	  		onion.setBreed_name("양파");
+//    	  		onion.setBreed_count(0);
+//    	  		breed.add(onion);
+    	  		koreanmelon.setBreed_name("참외");
+    	  		koreanmelon.setBreed_count(3);
+    	  		breed.add(koreanmelon);
+    	  		tomato.setBreed_name("토마토");
+    	  		tomato.setBreed_count(4);
+    	  		breed.add(tomato);
+    	  		result.put((date.getYear() + 1899 + i), breed);
+    	  		break;
+    	  	case "2022-01-01":
+    	  		pepper.setBreed_name("고추");
+    	  		pepper.setBreed_count(9);
+    	  		breed.add(pepper);
+    	  		//welshOnion.setBreed_name("대파");
+    	  		//welshOnion.setBreed_count(0);
+    	  		//breed.add(welshOnion);
+    	  		melon.setBreed_name("멜론");
+    	  		melon.setBreed_count(1);
+    	  		breed.add(melon);
+    	  		radish.setBreed_name("무");
+    	  		radish.setBreed_count(2);
+    	  		breed.add(radish);
+    	  		napacabbage.setBreed_name("배추");
+    	  		napacabbage.setBreed_count(3);
+    	  		breed.add(napacabbage);
+    	  		watermelon.setBreed_name("수박");
+    	  		watermelon.setBreed_count(1);
+    	  		breed.add(watermelon);
+//    	  		cabbage.setBreed_name("양배추");
+//    	  		cabbage.setBreed_count(0);
+//    	  		breed.add(cabbage);
+//    	  		onion.setBreed_name("양파");
+//    	  		onion.setBreed_count(0);
+//    	  		breed.add(onion);
+    	  		koreanmelon.setBreed_name("참외");
+    	  		koreanmelon.setBreed_count(1);
+    	  		breed.add(koreanmelon);
+    	  		tomato.setBreed_name("토마토");
+    	  		tomato.setBreed_count(2);
+    	  		breed.add(tomato);
+    	  		result.put((date.getYear() + 1899 + i), breed);
+    	  		break;
+    	  	case "2023-01-01":
+    	  		pepper.setBreed_name("고추");
+    	  		pepper.setBreed_count(7);
+    	  		breed.add(pepper);
+//    	  		welshOnion.setBreed_name("대파");
+//    	  		welshOnion.setBreed_count(0);
+//    	  		breed.add(welshOnion);
+//    	  		melon.setBreed_name("멜론");
+//    	  		melon.setBreed_count(0);
+//    	  		breed.add(melon);
+//    	  		radish.setBreed_name("무");
+//    	  		radish.setBreed_count(0);
+//    	  		breed.add(radish);
+    	  		napacabbage.setBreed_name("배추");
+    	  		napacabbage.setBreed_count(4);
+    	  		breed.add(napacabbage);
+    	  		watermelon.setBreed_name("수박");
+    	  		watermelon.setBreed_count(1);
+    	  		breed.add(watermelon);
+//    	  		cabbage.setBreed_name("양배추");
+//    	  		cabbage.setBreed_count(10);
+//    	  		breed.add(cabbage);
+//    	  		onion.setBreed_name("양파");
+//    	  		onion.setBreed_count(10);
+//    	  		breed.add(onion);
+    	  		koreanmelon.setBreed_name("참외");
+    	  		koreanmelon.setBreed_count(4);
+    	  		breed.add(koreanmelon);
+    	  		tomato.setBreed_name("토마토");
+    	  		tomato.setBreed_count(3);
+    	  		breed.add(tomato);
+    	  		result.put((date.getYear() + 1899 + i), breed);
+    	  }
+      }
+      
+      //result.put((date.getYear() + 1899 + i), breed);
     }
   
+    System.out.println("result : " + result);
+    
     /*
     Calendar calendar = Calendar.getInstance();
     
